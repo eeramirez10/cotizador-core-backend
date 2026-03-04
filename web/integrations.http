@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+
+### ERP product search proxy
+GET {{baseUrl}}/integrations/erp/products/search?ean=TSC480&branchId=02
+Authorization: Bearer {{jwt}}
+
+### ERP customer search proxy
+GET {{baseUrl}}/integrations/erp/customers/search?q=garza&branchId=02&page=1&pageSize=10
+Authorization: Bearer {{jwt}}
+
+### AI extraction from text proxy
+POST {{baseUrl}}/integrations/ai/extraction/text
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "text": "Need 20 check valves 2 in, 80 m carbon steel pipe 4 in sch40",
+  "source": "email"
+}
+
+### AI extraction from file proxy
+POST {{baseUrl}}/integrations/ai/extraction/file
+Authorization: Bearer {{jwt}}
+Content-Type: multipart/form-data; boundary=Boundary
+
+--Boundary
+Content-Disposition: form-data; name="file"; filename="quote.pdf"
+Content-Type: application/pdf
+
+< /absolute/path/to/quote.pdf
+--Boundary--

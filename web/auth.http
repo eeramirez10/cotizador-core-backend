@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:4600/api
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI1ODE5MzUsImV4cCI6MTc3MjYxMDczNX0.HduhW53kSbqSU3TPBk1paB4lx3Kc5SQ_cqlp8azf2Tk
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@tuvansa.com",
+  "password": "Tuvansa123!"
+}
+
+### Me
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{jwt}}

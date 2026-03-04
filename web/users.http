@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:4600/api
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
+@managerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
+@sellerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
+
+### List users (admin)
+GET {{baseUrl}}/users?page=1&pageSize=10&search=
+Authorization: Bearer {{jwt}}
+
+### List users (admin filtered by branchCode)
+GET {{baseUrl}}/users?page=1&pageSize=10&search=&branchCode=02
+Authorization: Bearer {{jwt}}
+
+### List users (manager, only own branch)
+GET {{baseUrl}}/users?page=1&pageSize=10
+Authorization: Bearer {{managerJwt}}
+
+### List users (seller - forbidden)
+GET {{baseUrl}}/users?page=1&pageSize=10
+Authorization: Bearer {{sellerJwt}}
+
+### Create user (admin)
+POST {{baseUrl}}/users
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "firstName": "New",
+  "lastName": "Seller",
+  "username": "nseller",
+  "email": "new.seller@tuvansa.com",
+  "password": "Tuvansa123!",
+  "role": "SELLER",
+  "branchCode": "02",
+  "phone": "8119999999",
+  "erpUserCode": "ERP-SELLER-001"
+}

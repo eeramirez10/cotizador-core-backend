@@ -1,0 +1,62 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+@quoteId = REPLACE_QUOTE_ID
+
+### Create quote
+POST {{baseUrl}}/quotes
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "customerId": "REPLACE_CUSTOMER_ID",
+  "branchCode": "02",
+  "origin": "MANUAL",
+  "currency": "MXN",
+  "exchangeRate": 17.25,
+  "exchangeRateDate": "2026-03-03",
+  "taxRate": 0.16,
+  "notes": "Initial quote"
+}
+
+### List quotes
+GET {{baseUrl}}/quotes?page=1&pageSize=10&status=&search=
+Authorization: Bearer {{jwt}}
+
+### Get quote detail
+GET {{baseUrl}}/quotes/{{quoteId}}
+Authorization: Bearer {{jwt}}
+
+### Add quote item
+POST {{baseUrl}}/quotes/{{quoteId}}/items
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "productId": null,
+  "externalProductCode": null,
+  "ean": null,
+  "customerDescription": "valvula check 2 pulgadas",
+  "customerUnit": "PZA",
+  "erpDescription": null,
+  "unit": "PZA",
+  "qty": 10,
+  "stock": 0,
+  "deliveryTime": "2-4 weeks",
+  "cost": 100,
+  "costCurrency": "USD",
+  "marginPct": 15,
+  "unitPrice": 115,
+  "subtotal": 1150,
+  "sourceRequiresReview": false,
+  "requiresReview": false
+}
+
+### Change quote status
+PATCH {{baseUrl}}/quotes/{{quoteId}}/status
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "status": "QUOTED",
+  "note": "Quoted and sent to customer"
+}

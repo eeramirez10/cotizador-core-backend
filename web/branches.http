@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+
+### List branches
+GET {{baseUrl}}/branches
+Authorization: Bearer {{jwt}}

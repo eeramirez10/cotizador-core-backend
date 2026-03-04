@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+@customerId = REPLACE_CUSTOMER_ID
+
+### Search customers
+GET {{baseUrl}}/customers?page=1&pageSize=10&search=garza&source=
+Authorization: Bearer {{jwt}}
+
+### Create prospect customer (minimal required)
+POST {{baseUrl}}/customers
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Garza",
+  "phone": "8112345678",
+  "whatsapp": "8112345678",
+  "email": "juan.garza@cliente.com"
+}
+
+### Promote customer to fiscal profile
+PATCH {{baseUrl}}/customers/{{customerId}}/promote-fiscal
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "legalName": "Constructora del Norte SA de CV",
+  "taxId": "GAAJ850101AB1",
+  "taxRegime": "601",
+  "billingStreet": "Av. Principal 100",
+  "billingCity": "Monterrey",
+  "billingState": "Nuevo Leon",
+  "billingPostalCode": "64000",
+  "billingCountry": "MX"
+}

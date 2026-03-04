@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:4600/api
+
+### Health
+GET {{baseUrl}}/health

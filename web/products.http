@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+
+### Search products
+GET {{baseUrl}}/products?page=1&pageSize=10&search=tubo&source=
+Authorization: Bearer {{jwt}}
+
+### Create temporary local product
+POST {{baseUrl}}/products/local-temp
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "description": "Temporary flange 4 in class 150",
+  "unit": "PZA",
+  "currency": "USD",
+  "averageCost": 12.5,
+  "lastCost": 12.5,
+  "stock": 0,
+  "branchCode": "02"
+}
