@@ -2,6 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { UpdateQuoteItemRequestDto } from "../dtos/request/update-quote-item-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { isQuoteItemReady } from "./quote-item-review.helper";
 
 interface UpdateQuoteItemActorContext {
   id: string;
@@ -63,6 +64,23 @@ export class UpdateQuoteItemUseCase {
     }
 
     const subtotal = round4(qty * unitPrice);
+    const nextProductId = dto.productId !== undefined ? dto.productId : existingItem.productId;
+    const nextExternalProductCode =
+      dto.externalProductCode !== undefined
+        ? dto.externalProductCode
+        : existingItem.externalProductCode;
+    const nextEan = dto.ean !== undefined ? dto.ean : existingItem.ean;
+    const nextErpDescription =
+      dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription;
+    const nextUnit = dto.unit !== undefined ? dto.unit : existingItem.unit;
+    const requiresReview = !isQuoteItemReady({
+      productId: nextProductId,
+      externalProductCode: nextExternalProductCode,
+      ean: nextEan,
+      erpDescription: nextErpDescription,
+      qty,
+      unit: nextUnit,
+    });
 
     const updatedQuote = await this.quoteRepository.updateItem({
       quoteId,
@@ -72,17 +90,14 @@ export class UpdateQuoteItemUseCase {
         branchId: actor.branchId,
       },
       data: {
-        productId: dto.productId !== undefined ? dto.productId : existingItem.productId,
-        externalProductCode:
-          dto.externalProductCode !== undefined
-            ? dto.externalProductCode
-            : existingItem.externalProductCode,
-        ean: dto.ean !== undefined ? dto.ean : existingItem.ean,
+        productId: nextProductId,
+        externalProductCode: nextExternalProductCode,
+        ean: nextEan,
         customerDescription:
           dto.customerDescription !== undefined ? dto.customerDescription : existingItem.customerDescription,
         customerUnit: dto.customerUnit !== undefined ? dto.customerUnit : existingItem.customerUnit,
-        erpDescription: dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription,
-        unit: dto.unit !== undefined ? dto.unit : existingItem.unit,
+        erpDescription: nextErpDescription,
+        unit: nextUnit,
         qty,
         stock: dto.stock !== undefined ? dto.stock : existingItem.stock,
         deliveryTime: dto.deliveryTime !== undefined ? dto.deliveryTime : existingItem.deliveryTime,
@@ -93,7 +108,7 @@ export class UpdateQuoteItemUseCase {
         subtotal,
         sourceRequiresReview:
           dto.sourceRequiresReview !== undefined ? dto.sourceRequiresReview : existingItem.sourceRequiresReview,
-        requiresReview: dto.requiresReview !== undefined ? dto.requiresReview : existingItem.requiresReview,
+        requiresReview,
         updatedByUserId: actor.id,
       },
     });

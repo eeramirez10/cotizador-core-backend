@@ -1,27 +1,33 @@
 import { Request, Response } from "express";
 import { ChangeQuoteStatusRequestDto } from "../../domain/dtos/request/change-quote-status-request.dto";
 import { CreateQuoteItemRequestDto } from "../../domain/dtos/request/create-quote-item-request.dto";
+import { CreateQuoteFromExtractionRequestDto } from "../../domain/dtos/request/create-quote-from-extraction-request.dto";
 import { CreateQuoteRequestDto } from "../../domain/dtos/request/create-quote-request.dto";
 import { GetQuotesQueryRequestDto } from "../../domain/dtos/request/get-quotes-query-request.dto";
+import { MatchQuoteItemErpRequestDto } from "../../domain/dtos/request/match-quote-item-erp-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
 import { CreateQuoteUseCase } from "../../domain/use-cases/create-quote.use-case";
+import { CreateQuoteFromExtractionUseCase } from "../../domain/use-cases/create-quote-from-extraction.use-case";
 import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item.use-case";
 import { GenerateQuoteOrderUseCase } from "../../domain/use-cases/generate-quote-order.use-case";
 import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-case";
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
+import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 
 export class QuotesController {
   constructor(
     private readonly createQuoteUseCase: CreateQuoteUseCase,
+    private readonly createQuoteFromExtractionUseCase: CreateQuoteFromExtractionUseCase,
     private readonly getQuotesUseCase: GetQuotesUseCase,
     private readonly getQuoteByIdUseCase: GetQuoteByIdUseCase,
     private readonly updateQuoteUseCase: UpdateQuoteUseCase,
     private readonly addQuoteItemUseCase: AddQuoteItemUseCase,
+    private readonly matchQuoteItemErpUseCase: MatchQuoteItemErpUseCase,
     private readonly updateQuoteItemUseCase: UpdateQuoteItemUseCase,
     private readonly deleteQuoteItemUseCase: DeleteQuoteItemUseCase,
     private readonly changeQuoteStatusUseCase: ChangeQuoteStatusUseCase,
@@ -95,6 +101,30 @@ export class QuotesController {
       res.status(201).json(result.toJSON());
     } catch (err) {
       this.handleError(res, err, "Unexpected error while creating quote.");
+    }
+  };
+
+  createFromExtraction = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    const [bodyError, bodyDto] = CreateQuoteFromExtractionRequestDto.create(req.body);
+    if (bodyError) {
+      res.status(400).json({ error: bodyError });
+      return;
+    }
+
+    try {
+      const result = await this.createQuoteFromExtractionUseCase.execute(bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(201).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while creating quote from extraction.");
     }
   };
 
@@ -186,6 +216,37 @@ export class QuotesController {
       res.status(200).json(result.toJSON());
     } catch (err) {
       this.handleError(res, err, "Unexpected error while updating quote item.");
+    }
+  };
+
+  matchItemErp = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    const quoteId = this.getSingleParam(req.params.id);
+    const itemId = this.getSingleParam(req.params.itemId);
+    if (!quoteId || !itemId) {
+      res.status(400).json({ error: "Quote id and item id are required." });
+      return;
+    }
+
+    const [bodyError, bodyDto] = MatchQuoteItemErpRequestDto.create(req.body);
+    if (bodyError) {
+      res.status(400).json({ error: bodyError });
+      return;
+    }
+
+    try {
+      const result = await this.matchQuoteItemErpUseCase.execute(quoteId, itemId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while matching ERP product.");
     }
   };
 
