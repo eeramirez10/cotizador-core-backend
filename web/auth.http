@@ -6,6 +6,15 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
+  "email": "diana.ramirez@tuvansa.com",
+  "password": "Tuvansa123!"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
   "email": "admin@tuvansa.com",
   "password": "Tuvansa123!"
 }

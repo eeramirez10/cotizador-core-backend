@@ -1,12 +1,22 @@
 @baseUrl = http://localhost:4600/api
-@jwt = REPLACE_WITH_JWT
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ODQxZWIyMS1hNmE1LTQ5YTctYWI0YS1mMTI2ZjgzNGQxOTQiLCJyb2xlIjoiU0VMTEVSIiwiYnJhbmNoSWQiOiI5YThjNjgyZi0wMGE2LTQ2NTUtYmQ5ZC01ZDk0ODQzOTU1ZjciLCJlcnBVc2VyQ29kZSI6bnVsbCwiaWF0IjoxNzcyNzM4MTAzLCJleHAiOjE3NzI3NjY5MDN9.goYHNjZdwP3dAA582U3O8yGDfiuu2Hv-HZhXdbcSTCM
+@managerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ODQxZWIyMS1hNmE1LTQ5YTctYWI0YS1mMTI2ZjgzNGQxOTQiLCJyb2xlIjoiU0VMTEVSIiwiYnJhbmNoSWQiOiI5YThjNjgyZi0wMGE2LTQ2NTUtYmQ5ZC01ZDk0ODQzOTU1ZjciLCJlcnBVc2VyQ29kZSI6bnVsbCwiaWF0IjoxNzcyNzM4MTAzLCJleHAiOjE3NzI3NjY5MDN9.goYHNjZdwP3dAA582U3O8yGDfiuu2Hv-HZhXdbcSTCM
+@sellerJwt = REPLACE_WITH_SELLER_JWT
 @customerId = REPLACE_CUSTOMER_ID
 
-### Search customers
-GET {{baseUrl}}/customers?page=1&pageSize=10&search=garza&source=
+### List customers (admin)
+GET {{baseUrl}}/customers?page=1&pageSize=10&search=garza&source=LOCAL&profileStatus=PROSPECT
 Authorization: Bearer {{jwt}}
 
-### Create prospect customer (minimal required)
+### List customers (manager - branch scoped)
+GET {{baseUrl}}/customers?page=1&pageSize=10&search=
+Authorization: Bearer {{managerJwt}}
+
+### List customers (seller - branch scoped)
+GET {{baseUrl}}/customers?page=1&pageSize=10&search=
+Authorization: Bearer {{sellerJwt}}
+
+### Create customer (minimal required)
 POST {{baseUrl}}/customers
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
@@ -16,21 +26,32 @@ Content-Type: application/json
   "lastName": "Garza",
   "phone": "8112345678",
   "whatsapp": "8112345678",
-  "email": "juan.garza@cliente.com"
+  "email": "juan.garza@cliente.com",
+  "notes": "Cliente nuevo desde cotizador",
+  "profileStatus": "PROSPECT"
 }
 
-### Promote customer to fiscal profile
-PATCH {{baseUrl}}/customers/{{customerId}}/promote-fiscal
+### Get customer by id
+GET {{baseUrl}}/customers/{{customerId}}
+Authorization: Bearer {{jwt}}
+
+### Update customer
+PATCH {{baseUrl}}/customers/{{customerId}}
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
   "legalName": "Constructora del Norte SA de CV",
-  "taxId": "GAAJ850101AB1",
+  "taxId": "CNO850101AB1",
   "taxRegime": "601",
   "billingStreet": "Av. Principal 100",
   "billingCity": "Monterrey",
   "billingState": "Nuevo Leon",
   "billingPostalCode": "64000",
-  "billingCountry": "MX"
+  "billingCountry": "MX",
+  "profileStatus": "FISCAL_COMPLETED"
 }
+
+### Soft delete customer (admin/manager)
+DELETE {{baseUrl}}/customers/{{customerId}}
+Authorization: Bearer {{jwt}}

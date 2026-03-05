@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { AuthRoutes } from "./auth/auth.routes";
 import { BranchesRoutes } from "./branches/branches.routes";
+import { CustomersRoutes } from "./customers/customers.routes";
+import { QuotesRoutes } from "./quotes/quotes.routes";
 import { UsersRoutes } from "./users/users.routes";
 
 export class AppRoutes {
@@ -14,6 +16,8 @@ export class AppRoutes {
     router.use("/auth", AuthRoutes.routes());
     router.use("/branches", BranchesRoutes.routes());
     router.use("/users", UsersRoutes.routes());
+    router.use("/customers", CustomersRoutes.routes());
+    router.use("/quotes", QuotesRoutes.routes());
 
     return router;
   }

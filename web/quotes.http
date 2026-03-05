@@ -1,8 +1,25 @@
 @baseUrl = http://localhost:4600/api
-@jwt = REPLACE_WITH_JWT
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ODQxZWIyMS1hNmE1LTQ5YTctYWI0YS1mMTI2ZjgzNGQxOTQiLCJyb2xlIjoiU0VMTEVSIiwiYnJhbmNoSWQiOiI5YThjNjgyZi0wMGE2LTQ2NTUtYmQ5ZC01ZDk0ODQzOTU1ZjciLCJlcnBVc2VyQ29kZSI6bnVsbCwiaWF0IjoxNzcyNzM4MTAzLCJleHAiOjE3NzI3NjY5MDN9.goYHNjZdwP3dAA582U3O8yGDfiuu2Hv-HZhXdbcSTCM
+@managerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3ODQxZWIyMS1hNmE1LTQ5YTctYWI0YS1mMTI2ZjgzNGQxOTQiLCJyb2xlIjoiU0VMTEVSIiwiYnJhbmNoSWQiOiI5YThjNjgyZi0wMGE2LTQ2NTUtYmQ5ZC01ZDk0ODQzOTU1ZjciLCJlcnBVc2VyQ29kZSI6bnVsbCwiaWF0IjoxNzcyNzM4MTAzLCJleHAiOjE3NzI3NjY5MDN9.goYHNjZdwP3dAA582U3O8yGDfiuu2Hv-HZhXdbcSTCM
 @quoteId = REPLACE_QUOTE_ID
+@quoteItemId = REPLACE_QUOTE_ITEM_ID
 
-### Create quote
+### Create quote (seller/manager uses own branch)
+POST {{baseUrl}}/quotes
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "customerId": "9b6430a2-2562-4c48-9b2c-7d6c2f1b42c9",
+  "origin": "MANUAL",
+  "currency": "MXN",
+  "exchangeRate": 1,
+  "exchangeRateDate": "2026-03-03",
+  "taxRate": 0.16,
+  "notes": "Initial quote"
+}
+
+### Create quote for a specific branch (ADMIN only)
 POST {{baseUrl}}/quotes
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
@@ -11,18 +28,22 @@ Content-Type: application/json
   "customerId": "REPLACE_CUSTOMER_ID",
   "branchCode": "02",
   "origin": "MANUAL",
-  "currency": "MXN",
-  "exchangeRate": 17.25,
+  "currency": "USD",
+  "exchangeRate": 17.3,
   "exchangeRateDate": "2026-03-03",
   "taxRate": 0.16,
-  "notes": "Initial quote"
+  "notes": "Admin created quote for MTY branch"
 }
 
-### List quotes
-GET {{baseUrl}}/quotes?page=1&pageSize=10&status=&search=
+### List quotes (admin filter by status + branch)
+GET {{baseUrl}}/quotes?page=1&pageSize=10&status=DRAFT&search=&branchCode=02
 Authorization: Bearer {{jwt}}
 
-### Get quote detail
+### List quotes (manager scoped to own branch)
+GET {{baseUrl}}/quotes?page=1&pageSize=10
+Authorization: Bearer {{managerJwt}}
+
+### Get quote by id
 GET {{baseUrl}}/quotes/{{quoteId}}
 Authorization: Bearer {{jwt}}
 
@@ -45,13 +66,45 @@ Content-Type: application/json
   "cost": 100,
   "costCurrency": "USD",
   "marginPct": 15,
-  "unitPrice": 115,
-  "subtotal": 1150,
   "sourceRequiresReview": false,
   "requiresReview": false
 }
 
-### Change quote status
+### Update quote item
+PATCH {{baseUrl}}/quotes/{{quoteId}}/items/{{quoteItemId}}
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "qty": 12,
+  "cost": 102.5
+}
+
+### Remove quote item
+DELETE {{baseUrl}}/quotes/{{quoteId}}/items/{{quoteItemId}}
+Authorization: Bearer {{jwt}}
+
+### Update quote metadata
+PATCH {{baseUrl}}/quotes/{{quoteId}}
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "notes": "Updated note from seller",
+  "taxRate": 0.16
+}
+
+### Status transition: DRAFT -> PENDING
+PATCH {{baseUrl}}/quotes/{{quoteId}}/status
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "status": "PENDING",
+  "note": "Waiting internal approval"
+}
+
+### Status transition: PENDING -> QUOTED
 PATCH {{baseUrl}}/quotes/{{quoteId}}/status
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
@@ -59,4 +112,14 @@ Content-Type: application/json
 {
   "status": "QUOTED",
   "note": "Quoted and sent to customer"
+}
+
+### Status transition: QUOTED -> APPROVED
+PATCH {{baseUrl}}/quotes/{{quoteId}}/status
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "status": "APPROVED",
+  "note": "Customer accepted the quote"
 }
