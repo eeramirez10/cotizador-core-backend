@@ -9,6 +9,7 @@ import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-c
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
 import { CreateQuoteUseCase } from "../../domain/use-cases/create-quote.use-case";
 import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item.use-case";
+import { GenerateQuoteOrderUseCase } from "../../domain/use-cases/generate-quote-order.use-case";
 import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-case";
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
@@ -23,7 +24,8 @@ export class QuotesController {
     private readonly addQuoteItemUseCase: AddQuoteItemUseCase,
     private readonly updateQuoteItemUseCase: UpdateQuoteItemUseCase,
     private readonly deleteQuoteItemUseCase: DeleteQuoteItemUseCase,
-    private readonly changeQuoteStatusUseCase: ChangeQuoteStatusUseCase
+    private readonly changeQuoteStatusUseCase: ChangeQuoteStatusUseCase,
+    private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase
   ) {}
 
   list = async (req: Request, res: Response): Promise<void> => {
@@ -242,6 +244,30 @@ export class QuotesController {
     }
   };
 
+  generateOrder = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) {
+      res.status(400).json({ error: "Quote id is required." });
+      return;
+    }
+
+    try {
+      const result = await this.generateQuoteOrderUseCase.execute(quoteId, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while generating order.");
+    }
+  };
+
   private getSingleParam(value: string | string[] | undefined): string | null {
     if (typeof value === "string") return value;
     if (Array.isArray(value) && value.length > 0) return value[0];
@@ -267,7 +293,9 @@ export class QuotesController {
       message === "Quote items cannot be edited in current status." ||
       message === "Quote is already in the requested status." ||
       message.startsWith("Invalid status transition") ||
-      message === "Quote must contain at least one item before moving to QUOTED."
+      message === "Quote must contain at least one item before moving to QUOTED." ||
+      message === "Quote must be QUOTED or APPROVED to generate order." ||
+      message === "Quote must contain at least one item before generating order."
     ) {
       res.status(400).json({ error: message });
       return;

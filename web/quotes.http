@@ -123,3 +123,7 @@ Content-Type: application/json
   "status": "APPROVED",
   "note": "Customer accepted the quote"
 }
+
+### Generate order (quote must be QUOTED or APPROVED)
+POST {{baseUrl}}/quotes/{{quoteId}}/generate-order
+Authorization: Bearer {{jwt}}

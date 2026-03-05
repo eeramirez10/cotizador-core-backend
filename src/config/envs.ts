@@ -33,4 +33,8 @@ export class Envs {
   static get jwtExpiresIn(): string {
     return get('JWT_EXPIRES_IN').default('8h').asString()
   }
+
+  static get erpOutboxDir(): string {
+    return get("ERP_OUTBOX_DIR").default("storage/erp-outbox").asString();
+  }
 }
