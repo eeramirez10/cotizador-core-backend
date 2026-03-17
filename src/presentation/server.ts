@@ -6,7 +6,11 @@ import { AppRoutes } from "./app-routes";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ["Content-Disposition", "Content-Type"],
+  })
+);
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 

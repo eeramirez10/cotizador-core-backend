@@ -5,6 +5,8 @@ import {
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
+  MarkQuoteOrderGeneratedDatasourceParams,
+  RecordQuoteDeliveryAttemptDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
@@ -20,4 +22,6 @@ export abstract class QuoteRepository {
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
+  abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
+  abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
 }

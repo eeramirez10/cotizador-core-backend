@@ -392,6 +392,8 @@ export const ModelName = {
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
   QuoteEvent: 'QuoteEvent',
+  QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
+  QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
 } as const
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "user" | "customer" | "customerContact" | "product" | "quote" | "quoteItem" | "quoteEvent" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "user" | "customer" | "customerContact" | "product" | "quote" | "quoteItem" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1005,6 +1007,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QuoteDeliveryAttempt: {
+      payload: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>
+      fields: Prisma.QuoteDeliveryAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteDeliveryAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteDeliveryAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteDeliveryAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteDeliveryAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteDeliveryAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteDeliveryAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteDeliveryAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteDeliveryAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteDeliveryAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        update: {
+          args: Prisma.QuoteDeliveryAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteDeliveryAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteDeliveryAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteDeliveryAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteDeliveryAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteDeliveryAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteDeliveryAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteDeliveryAttempt>
+        }
+        groupBy: {
+          args: Prisma.QuoteDeliveryAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteDeliveryAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteDeliveryAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteDeliveryAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteOrderExport: {
+      payload: Prisma.$QuoteOrderExportPayload<ExtArgs>
+      fields: Prisma.QuoteOrderExportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteOrderExportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteOrderExportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteOrderExportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteOrderExportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteOrderExportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteOrderExportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteOrderExportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteOrderExportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteOrderExportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        update: {
+          args: Prisma.QuoteOrderExportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteOrderExportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteOrderExportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteOrderExportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteOrderExportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteOrderExportPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteOrderExportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteOrderExport>
+        }
+        groupBy: {
+          args: Prisma.QuoteOrderExportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteOrderExportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteOrderExportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteOrderExportCountAggregateOutputType> | number
+        }
+      }
+    }
     RefreshToken: {
       payload: Prisma.$RefreshTokenPayload<ExtArgs>
       fields: Prisma.RefreshTokenFieldRefs
@@ -1300,6 +1450,11 @@ export const QuoteScalarFieldEnum = {
   id: 'id',
   quoteNumber: 'quoteNumber',
   status: 'status',
+  deliveryStatus: 'deliveryStatus',
+  firstSentAt: 'firstSentAt',
+  orderStatus: 'orderStatus',
+  orderGeneratedAt: 'orderGeneratedAt',
+  orderReference: 'orderReference',
   origin: 'origin',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
@@ -1357,6 +1512,39 @@ export const QuoteEventScalarFieldEnum = {
 } as const
 
 export type QuoteEventScalarFieldEnum = (typeof QuoteEventScalarFieldEnum)[keyof typeof QuoteEventScalarFieldEnum]
+
+
+export const QuoteDeliveryAttemptScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  channel: 'channel',
+  recipient: 'recipient',
+  status: 'status',
+  providerMessageId: 'providerMessageId',
+  errorMessage: 'errorMessage',
+  sentByUserId: 'sentByUserId',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteDeliveryAttemptScalarFieldEnum = (typeof QuoteDeliveryAttemptScalarFieldEnum)[keyof typeof QuoteDeliveryAttemptScalarFieldEnum]
+
+
+export const QuoteOrderExportScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  orderReference: 'orderReference',
+  fileName: 'fileName',
+  transferStatus: 'transferStatus',
+  generatedByUserId: 'generatedByUserId',
+  generatedAt: 'generatedAt',
+  uploadedAt: 'uploadedAt',
+  remotePath: 'remotePath',
+  lastError: 'lastError',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteOrderExportScalarFieldEnum = (typeof QuoteOrderExportScalarFieldEnum)[keyof typeof QuoteOrderExportScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
@@ -1565,6 +1753,34 @@ export type ListEnumQuoteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'QuoteDeliveryStatus'
+ */
+export type EnumQuoteDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteDeliveryStatus[]'
+ */
+export type ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderGenerationStatus'
+ */
+export type EnumOrderGenerationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderGenerationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'OrderGenerationStatus[]'
+ */
+export type ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderGenerationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'QuoteOrigin'
  */
 export type EnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteOrigin'>
@@ -1575,6 +1791,48 @@ export type EnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'QuoteOrigin[]'
  */
 export type ListEnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteOrigin[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteDeliveryChannel'
+ */
+export type EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryChannel'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteDeliveryChannel[]'
+ */
+export type ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryChannel[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteDeliveryAttemptStatus'
+ */
+export type EnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryAttemptStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteDeliveryAttemptStatus[]'
+ */
+export type ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryAttemptStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ErpTransferStatus'
+ */
+export type EnumErpTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpTransferStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ErpTransferStatus[]'
+ */
+export type ListEnumErpTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ErpTransferStatus[]'>
     
 
 
@@ -1708,6 +1966,8 @@ export type GlobalOmitConfig = {
   quote?: Prisma.QuoteOmit
   quoteItem?: Prisma.QuoteItemOmit
   quoteEvent?: Prisma.QuoteEventOmit
+  quoteDeliveryAttempt?: Prisma.QuoteDeliveryAttemptOmit
+  quoteOrderExport?: Prisma.QuoteOrderExportOmit
   refreshToken?: Prisma.RefreshTokenOmit
   auditLog?: Prisma.AuditLogOmit
 }

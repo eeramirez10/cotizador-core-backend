@@ -4,10 +4,12 @@ import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-st
 import { CreateQuoteUseCase } from "../../domain/use-cases/create-quote.use-case";
 import { CreateQuoteFromExtractionUseCase } from "../../domain/use-cases/create-quote-from-extraction.use-case";
 import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item.use-case";
+import { DownloadQuoteOrderFileUseCase } from "../../domain/use-cases/download-quote-order-file.use-case";
 import { GenerateQuoteOrderUseCase } from "../../domain/use-cases/generate-quote-order.use-case";
 import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-case";
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
+import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-branch.datasource";
@@ -50,6 +52,11 @@ export class QuotesRoutes {
     const updateQuoteItemUseCase = new UpdateQuoteItemUseCase(quoteRepository);
     const deleteQuoteItemUseCase = new DeleteQuoteItemUseCase(quoteRepository);
     const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(quoteRepository);
+    const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
+    const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
+      quoteRepository,
+      orderGenerationRepository
+    );
     const generateQuoteOrderUseCase = new GenerateQuoteOrderUseCase(
       quoteRepository,
       orderGenerationRepository
@@ -66,6 +73,8 @@ export class QuotesRoutes {
       updateQuoteItemUseCase,
       deleteQuoteItemUseCase,
       changeQuoteStatusUseCase,
+      registerQuoteDeliveryAttemptUseCase,
+      downloadQuoteOrderFileUseCase,
       generateQuoteOrderUseCase
     );
 
@@ -107,10 +116,22 @@ export class QuotesRoutes {
       controller.changeStatus
     );
     router.post(
+      "/:id/delivery-attempts",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      controller.registerDeliveryAttempt
+    );
+    router.post(
       "/:id/generate-order",
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.generateOrder
+    );
+    router.get(
+      "/:id/order-file",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      controller.downloadOrderFile
     );
 
     return router;

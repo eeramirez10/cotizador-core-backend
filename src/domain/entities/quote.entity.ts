@@ -1,4 +1,10 @@
-import type { Currency, QuoteOrigin, QuoteStatus } from "../../infrastructure/database/generated/enums";
+import type {
+  Currency,
+  OrderGenerationStatus,
+  QuoteDeliveryStatus,
+  QuoteOrigin,
+  QuoteStatus,
+} from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
 import { QuoteItemEntity } from "./quote-item.entity";
 
@@ -30,6 +36,11 @@ export interface QuoteEntity {
   id: string;
   quoteNumber: string;
   status: QuoteStatus;
+  deliveryStatus: QuoteDeliveryStatus;
+  firstSentAt: Date | null;
+  orderStatus: OrderGenerationStatus;
+  orderGeneratedAt: Date | null;
+  orderReference: string | null;
   origin: QuoteOrigin;
   currency: Currency;
   exchangeRate: number;

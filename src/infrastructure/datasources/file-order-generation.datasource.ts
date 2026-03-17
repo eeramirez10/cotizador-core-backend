@@ -1,63 +1,52 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Envs } from "../../config/envs";
 import {
   GenerateOrderResult,
+  GeneratedOrderFileResult,
   OrderGenerationDatasource,
 } from "../../domain/datasources/order-generation.datasource";
 import { QuoteEntity } from "../../domain/entities/quote.entity";
 
-const sanitize = (value: string | null | undefined): string => {
-  if (!value) return "";
-  return value.replaceAll("|", " ").replaceAll("\n", " ").replaceAll("\r", " ").trim();
+const TAB = "\t";
+const CRLF = "\r\n";
+const toSafeFileName = (value: string): string => value.replace(/[^A-Za-z0-9._-]/g, "_");
+
+const formatUnitPrice = (value: number): string => value.toFixed(2);
+
+const formatQty = (value: number): string => {
+  if (Number.isInteger(value)) return String(value);
+  return value.toFixed(4).replace(/\.?0+$/, "");
 };
 
-const formatNumber = (value: number): string => value.toFixed(4);
+const resolveProductCode = (quote: QuoteEntity, index: number): string => {
+  const item = quote.items[index];
+  const code = (item.externalProductCode ?? item.product?.code ?? "").trim();
+  if (!code) {
+    throw new Error("All quote items must have an ERP product code to generate order file.");
+  }
+  return code;
+};
 
 export class FileOrderGenerationDatasource implements OrderGenerationDatasource {
   async generateOrderFromQuote(quote: QuoteEntity): Promise<GenerateOrderResult> {
     const generatedAt = new Date();
     const timestamp = this.buildTimestamp(generatedAt);
     const orderReference = `ORD-${quote.quoteNumber}-${timestamp}`;
-    const fileName = `${orderReference}.txt`;
+    const fileName = `${toSafeFileName(quote.quoteNumber)}.txt`;
 
     const lines: string[] = [];
-    lines.push("H|ORDER_REFERENCE|QUOTE_NUMBER|CUSTOMER|CURRENCY|EXCHANGE_RATE|DATE");
-    lines.push(
-      [
-        "H",
-        orderReference,
-        quote.quoteNumber,
-        sanitize(quote.customer.displayName),
-        quote.currency,
-        formatNumber(quote.exchangeRate),
-        quote.exchangeRateDate.toISOString().split("T")[0],
-      ].join("|")
-    );
-
-    lines.push("D|LINE|CODE|EAN|DESCRIPTION|QTY|UNIT|UNIT_PRICE|CURRENCY|SUBTOTAL");
+    lines.push(`${TAB}0`);
+    lines.push("");
 
     quote.items.forEach((item, index) => {
-      lines.push(
-        [
-          "D",
-          String(index + 1),
-          sanitize(item.externalProductCode ?? item.product?.code ?? ""),
-          sanitize(item.ean ?? item.product?.ean ?? ""),
-          sanitize(item.erpDescription ?? item.customerDescription ?? item.product?.description ?? ""),
-          formatNumber(item.qty),
-          sanitize(item.unit),
-          formatNumber(item.unitPrice),
-          quote.currency,
-          formatNumber(item.subtotal),
-        ].join("|")
-      );
+      const code = resolveProductCode(quote, index);
+      const unitPrice = formatUnitPrice(item.unitPrice);
+      const qty = formatQty(item.qty);
+      lines.push([code, unitPrice, qty].join(TAB));
     });
 
-    lines.push("T|SUBTOTAL|TAX|TOTAL");
-    lines.push(["T", formatNumber(quote.subtotal), formatNumber(quote.tax), formatNumber(quote.total)].join("|"));
-
-    const content = `${lines.join("\n")}\n`;
+    const content = `${lines.join(CRLF)}${CRLF}`;
 
     const outboxPath = path.resolve(process.cwd(), Envs.erpOutboxDir);
     await mkdir(outboxPath, { recursive: true });
@@ -65,8 +54,30 @@ export class FileOrderGenerationDatasource implements OrderGenerationDatasource 
 
     return {
       orderReference,
+      fileName,
       generatedAt,
     };
+  }
+
+  async getOrderFileByFileName(fileName: string): Promise<GeneratedOrderFileResult | null> {
+    const safeFileName = toSafeFileName(fileName.trim());
+    if (!safeFileName) return null;
+
+    const outboxPath = path.resolve(process.cwd(), Envs.erpOutboxDir);
+    const filePath = path.join(outboxPath, safeFileName);
+
+    try {
+      const content = await readFile(filePath);
+      return {
+        fileName: safeFileName,
+        contentType: "text/plain; charset=utf-8",
+        content,
+      };
+    } catch (error) {
+      const err = error as NodeJS.ErrnoException;
+      if (err.code === "ENOENT") return null;
+      throw error;
+    }
   }
 
   private buildTimestamp(date: Date): string {

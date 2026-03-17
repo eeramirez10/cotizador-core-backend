@@ -1,5 +1,7 @@
 import type {
   Currency,
+  QuoteDeliveryAttemptStatus,
+  QuoteDeliveryChannel,
   QuoteOrigin,
   QuoteStatus,
   UserRole,
@@ -127,6 +129,33 @@ export interface ChangeQuoteStatusDatasourceParams {
   scope: QuoteAccessScope;
 }
 
+export interface RecordQuoteDeliveryAttemptDatasourceParams {
+  id: string;
+  actorUserId: string;
+  scope: QuoteAccessScope;
+  data: {
+    channel: QuoteDeliveryChannel;
+    recipient: string;
+    status: QuoteDeliveryAttemptStatus;
+    providerMessageId: string | null;
+    errorMessage: string | null;
+    note: string | null;
+    sentAt: Date;
+  };
+}
+
+export interface MarkQuoteOrderGeneratedDatasourceParams {
+  id: string;
+  actorUserId: string;
+  scope: QuoteAccessScope;
+  data: {
+    orderReference: string;
+    fileName: string;
+    generatedAt: Date;
+    note: string | null;
+  };
+}
+
 export abstract class QuoteDatasource {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
@@ -136,4 +165,6 @@ export abstract class QuoteDatasource {
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
+  abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
+  abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
 }

@@ -5,7 +5,9 @@ import {
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
+  MarkQuoteOrderGeneratedDatasourceParams,
   QuoteDatasource,
+  RecordQuoteDeliveryAttemptDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
@@ -46,5 +48,13 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.changeStatus(params);
+  }
+
+  recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.recordDeliveryAttempt(params);
+  }
+
+  markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.markOrderGenerated(params);
   }
 }

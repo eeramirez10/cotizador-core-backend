@@ -80,6 +80,16 @@ export type QuoteItem = Prisma.QuoteItemModel
  */
 export type QuoteEvent = Prisma.QuoteEventModel
 /**
+ * Model QuoteDeliveryAttempt
+ * 
+ */
+export type QuoteDeliveryAttempt = Prisma.QuoteDeliveryAttemptModel
+/**
+ * Model QuoteOrderExport
+ * 
+ */
+export type QuoteOrderExport = Prisma.QuoteOrderExportModel
+/**
  * Model RefreshToken
  * 
  */

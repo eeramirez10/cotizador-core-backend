@@ -14,6 +14,11 @@ interface QuoteRow {
   id: string;
   quoteNumber: string;
   status: QuoteEntity["status"];
+  deliveryStatus: QuoteEntity["deliveryStatus"];
+  firstSentAt: Date | null;
+  orderStatus: QuoteEntity["orderStatus"];
+  orderGeneratedAt: Date | null;
+  orderReference: string | null;
   origin: QuoteEntity["origin"];
   currency: QuoteEntity["currency"];
   exchangeRate: number | DecimalLike;
@@ -114,6 +119,11 @@ export class QuoteMapper {
       id: row.id,
       quoteNumber: row.quoteNumber,
       status: row.status,
+      deliveryStatus: row.deliveryStatus,
+      firstSentAt: row.firstSentAt,
+      orderStatus: row.orderStatus,
+      orderGeneratedAt: row.orderGeneratedAt,
+      orderReference: row.orderReference,
       origin: row.origin,
       currency: row.currency,
       exchangeRate: Number(toNumber(row.exchangeRate)),

@@ -69,3 +69,45 @@ export const QuoteOrigin = {
 } as const
 
 export type QuoteOrigin = (typeof QuoteOrigin)[keyof typeof QuoteOrigin]
+
+
+export const QuoteDeliveryStatus = {
+  NOT_SENT: 'NOT_SENT',
+  SENT: 'SENT'
+} as const
+
+export type QuoteDeliveryStatus = (typeof QuoteDeliveryStatus)[keyof typeof QuoteDeliveryStatus]
+
+
+export const QuoteDeliveryChannel = {
+  WHATSAPP: 'WHATSAPP',
+  EMAIL: 'EMAIL'
+} as const
+
+export type QuoteDeliveryChannel = (typeof QuoteDeliveryChannel)[keyof typeof QuoteDeliveryChannel]
+
+
+export const QuoteDeliveryAttemptStatus = {
+  SENT: 'SENT',
+  FAILED: 'FAILED'
+} as const
+
+export type QuoteDeliveryAttemptStatus = (typeof QuoteDeliveryAttemptStatus)[keyof typeof QuoteDeliveryAttemptStatus]
+
+
+export const OrderGenerationStatus = {
+  NOT_GENERATED: 'NOT_GENERATED',
+  GENERATED: 'GENERATED'
+} as const
+
+export type OrderGenerationStatus = (typeof OrderGenerationStatus)[keyof typeof OrderGenerationStatus]
+
+
+export const ErpTransferStatus = {
+  PENDING_UPLOAD: 'PENDING_UPLOAD',
+  UPLOADING: 'UPLOADING',
+  UPLOADED: 'UPLOADED',
+  FAILED: 'FAILED'
+} as const
+
+export type ErpTransferStatus = (typeof ErpTransferStatus)[keyof typeof ErpTransferStatus]

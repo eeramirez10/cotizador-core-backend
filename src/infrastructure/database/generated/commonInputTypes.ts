@@ -296,6 +296,31 @@ export type EnumQuoteStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteStatusFilter<$PrismaModel> | $Enums.QuoteStatus
 }
 
+export type EnumQuoteDeliveryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryStatus | Prisma.EnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel> | $Enums.QuoteDeliveryStatus
+}
+
+export type DateTimeNullableFilter<$PrismaModel = never> = {
+  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
+  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+}
+
+export type EnumOrderGenerationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderGenerationStatus | Prisma.EnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel> | $Enums.OrderGenerationStatus
+}
+
 export type EnumQuoteOriginFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteOrigin | Prisma.EnumQuoteOriginFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteOrigin[] | Prisma.ListEnumQuoteOriginFieldRefInput<$PrismaModel>
@@ -324,6 +349,40 @@ export type EnumQuoteStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumQuoteStatusFilter<$PrismaModel>
 }
 
+export type EnumQuoteDeliveryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryStatus | Prisma.EnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryStatusWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel>
+}
+
+export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
+  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type EnumOrderGenerationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderGenerationStatus | Prisma.EnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderGenerationStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderGenerationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel>
+}
+
 export type EnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteOrigin | Prisma.EnumQuoteOriginFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteOrigin[] | Prisma.ListEnumQuoteOriginFieldRefInput<$PrismaModel>
@@ -350,29 +409,55 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type DateTimeNullableFilter<$PrismaModel = never> = {
-  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
-  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+export type EnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryChannel | Prisma.EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel> | $Enums.QuoteDeliveryChannel
 }
 
-export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
-  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+export type EnumQuoteDeliveryAttemptStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryAttemptStatus | Prisma.EnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel> | $Enums.QuoteDeliveryAttemptStatus
+}
+
+export type EnumQuoteDeliveryChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryChannel | Prisma.EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryChannelWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel>
+}
+
+export type EnumQuoteDeliveryAttemptStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryAttemptStatus | Prisma.EnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryAttemptStatusWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryAttemptStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel>
+}
+
+export type EnumErpTransferStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ErpTransferStatus | Prisma.EnumErpTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel> | $Enums.ErpTransferStatus
+}
+
+export type EnumErpTransferStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ErpTransferStatus | Prisma.EnumErpTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumErpTransferStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpTransferStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel>
 }
 
 export type JsonNullableFilter<$PrismaModel = never> =
@@ -717,6 +802,31 @@ export type NestedEnumQuoteStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteStatusFilter<$PrismaModel> | $Enums.QuoteStatus
 }
 
+export type NestedEnumQuoteDeliveryStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryStatus | Prisma.EnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel> | $Enums.QuoteDeliveryStatus
+}
+
+export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
+  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+}
+
+export type NestedEnumOrderGenerationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderGenerationStatus | Prisma.EnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel> | $Enums.OrderGenerationStatus
+}
+
 export type NestedEnumQuoteOriginFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteOrigin | Prisma.EnumQuoteOriginFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteOrigin[] | Prisma.ListEnumQuoteOriginFieldRefInput<$PrismaModel>
@@ -745,6 +855,40 @@ export type NestedEnumQuoteStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumQuoteStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumQuoteDeliveryStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryStatus | Prisma.EnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryStatus[] | Prisma.ListEnumQuoteDeliveryStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryStatusWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryStatusFilter<$PrismaModel>
+}
+
+export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
+  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
+  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumOrderGenerationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OrderGenerationStatus | Prisma.EnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OrderGenerationStatus[] | Prisma.ListEnumOrderGenerationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOrderGenerationStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderGenerationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOrderGenerationStatusFilter<$PrismaModel>
+}
+
 export type NestedEnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteOrigin | Prisma.EnumQuoteOriginFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteOrigin[] | Prisma.ListEnumQuoteOriginFieldRefInput<$PrismaModel>
@@ -771,29 +915,55 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
 }
 
-export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
-  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+export type NestedEnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryChannel | Prisma.EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel> | $Enums.QuoteDeliveryChannel
 }
 
-export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
-  in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  notIn?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
-  lt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  lte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+export type NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryAttemptStatus | Prisma.EnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel> | $Enums.QuoteDeliveryAttemptStatus
+}
+
+export type NestedEnumQuoteDeliveryChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryChannel | Prisma.EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryChannelWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryChannelFilter<$PrismaModel>
+}
+
+export type NestedEnumQuoteDeliveryAttemptStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteDeliveryAttemptStatus | Prisma.EnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteDeliveryAttemptStatus[] | Prisma.ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteDeliveryAttemptStatusWithAggregatesFilter<$PrismaModel> | $Enums.QuoteDeliveryAttemptStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteDeliveryAttemptStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumErpTransferStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ErpTransferStatus | Prisma.EnumErpTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel> | $Enums.ErpTransferStatus
+}
+
+export type NestedEnumErpTransferStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ErpTransferStatus | Prisma.EnumErpTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ErpTransferStatus[] | Prisma.ListEnumErpTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumErpTransferStatusWithAggregatesFilter<$PrismaModel> | $Enums.ErpTransferStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumErpTransferStatusFilter<$PrismaModel>
 }
 
 export type NestedJsonNullableFilter<$PrismaModel = never> =

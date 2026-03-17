@@ -48,6 +48,33 @@ enum QuoteOrigin {
   TEXT_INPUT
 }
 
+enum QuoteDeliveryStatus {
+  NOT_SENT
+  SENT
+}
+
+enum QuoteDeliveryChannel {
+  WHATSAPP
+  EMAIL
+}
+
+enum QuoteDeliveryAttemptStatus {
+  SENT
+  FAILED
+}
+
+enum OrderGenerationStatus {
+  NOT_GENERATED
+  GENERATED
+}
+
+enum ErpTransferStatus {
+  PENDING_UPLOAD
+  UPLOADING
+  UPLOADED
+  FAILED
+}
+
 model Branch {
   id        String   @id @default(uuid()) @db.Uuid
   code      String   @unique @db.VarChar(10)
@@ -87,6 +114,8 @@ model User {
   updatedProducts  Product[]  @relation("ProductUpdatedBy")
   createdQuotes    Quote[]    @relation("QuoteCreatedBy")
   updatedQuotes    Quote[]    @relation("QuoteUpdatedBy")
+  quoteDeliveryAttempts QuoteDeliveryAttempt[] @relation("QuoteDeliveryAttemptSentBy")
+  quoteOrderExports  QuoteOrderExport[] @relation("QuoteOrderExportGeneratedBy")
   quoteEvents      QuoteEvent[] @relation("QuoteEventActor")
   refreshTokens    RefreshToken[]
   auditLogs        AuditLog[] @relation("AuditLogActor")
@@ -191,6 +220,11 @@ model Quote {
   id               String     @id @default(uuid()) @db.Uuid
   quoteNumber      String     @unique @map("quote_number") @db.VarChar(40)
   status           QuoteStatus @default(DRAFT)
+  deliveryStatus   QuoteDeliveryStatus @default(NOT_SENT) @map("delivery_status")
+  firstSentAt      DateTime?  @map("first_sent_at")
+  orderStatus      OrderGenerationStatus @default(NOT_GENERATED) @map("order_status")
+  orderGeneratedAt DateTime?  @map("order_generated_at")
+  orderReference   String?    @unique @map("order_reference") @db.VarChar(80)
   origin           QuoteOrigin @default(MANUAL)
   currency         Currency
   exchangeRate     Decimal    @map("exchange_rate") @db.Decimal(14, 6)
@@ -213,9 +247,13 @@ model Quote {
   updatedByUser User?    @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
 
   items  QuoteItem[]
+  deliveryAttempts QuoteDeliveryAttempt[]
+  orderExports QuoteOrderExport[]
   events QuoteEvent[]
 
   @@index([status])
+  @@index([deliveryStatus])
+  @@index([orderStatus])
   @@index([branchId])
   @@index([customerId])
   @@index([createdByUserId])
@@ -267,6 +305,48 @@ model QuoteEvent {
   @@index([quoteId])
   @@index([createdAt])
   @@map("quote_events")
+}
+
+model QuoteDeliveryAttempt {
+  id                String                   @id @default(uuid()) @db.Uuid
+  quoteId           String                   @map("quote_id") @db.Uuid
+  channel           QuoteDeliveryChannel
+  recipient         String                   @db.VarChar(180)
+  status            QuoteDeliveryAttemptStatus
+  providerMessageId String?                  @map("provider_message_id") @db.VarChar(160)
+  errorMessage      String?                  @map("error_message") @db.Text
+  sentByUserId      String?                  @map("sent_by_user_id") @db.Uuid
+  sentAt            DateTime                 @map("sent_at")
+  createdAt         DateTime                 @default(now()) @map("created_at")
+
+  quote      Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  sentByUser User? @relation("QuoteDeliveryAttemptSentBy", fields: [sentByUserId], references: [id], onDelete: SetNull)
+
+  @@index([quoteId])
+  @@index([sentAt])
+  @@map("quote_delivery_attempts")
+}
+
+model QuoteOrderExport {
+  id                String            @id @default(uuid()) @db.Uuid
+  quoteId           String            @map("quote_id") @db.Uuid
+  orderReference    String            @map("order_reference") @db.VarChar(80)
+  fileName          String            @map("file_name") @db.VarChar(180)
+  transferStatus    ErpTransferStatus @default(PENDING_UPLOAD) @map("transfer_status")
+  generatedByUserId String?           @map("generated_by_user_id") @db.Uuid
+  generatedAt       DateTime          @map("generated_at")
+  uploadedAt        DateTime?         @map("uploaded_at")
+  remotePath        String?           @map("remote_path") @db.VarChar(260)
+  lastError         String?           @map("last_error") @db.Text
+  createdAt         DateTime          @default(now()) @map("created_at")
+
+  quote           Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  generatedByUser User? @relation("QuoteOrderExportGeneratedBy", fields: [generatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([quoteId])
+  @@index([transferStatus])
+  @@index([generatedAt])
+  @@map("quote_order_exports")
 }
 
 model RefreshToken {

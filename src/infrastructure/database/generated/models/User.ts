@@ -253,6 +253,8 @@ export type UserWhereInput = {
   updatedProducts?: Prisma.ProductListRelationFilter
   createdQuotes?: Prisma.QuoteListRelationFilter
   updatedQuotes?: Prisma.QuoteListRelationFilter
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
+  quoteOrderExports?: Prisma.QuoteOrderExportListRelationFilter
   quoteEvents?: Prisma.QuoteEventListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
@@ -279,6 +281,8 @@ export type UserOrderByWithRelationInput = {
   updatedProducts?: Prisma.ProductOrderByRelationAggregateInput
   createdQuotes?: Prisma.QuoteOrderByRelationAggregateInput
   updatedQuotes?: Prisma.QuoteOrderByRelationAggregateInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptOrderByRelationAggregateInput
+  quoteOrderExports?: Prisma.QuoteOrderExportOrderByRelationAggregateInput
   quoteEvents?: Prisma.QuoteEventOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
@@ -308,6 +312,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedProducts?: Prisma.ProductListRelationFilter
   createdQuotes?: Prisma.QuoteListRelationFilter
   updatedQuotes?: Prisma.QuoteListRelationFilter
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
+  quoteOrderExports?: Prisma.QuoteOrderExportListRelationFilter
   quoteEvents?: Prisma.QuoteEventListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
@@ -371,6 +377,8 @@ export type UserCreateInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -396,6 +404,8 @@ export type UserUncheckedCreateInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -421,6 +431,8 @@ export type UserUpdateInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -446,6 +458,8 @@ export type UserUncheckedUpdateInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -722,6 +736,38 @@ export type UserUpdateOneWithoutQuoteEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutQuoteEventsInput, Prisma.UserUpdateWithoutQuoteEventsInput>, Prisma.UserUncheckedUpdateWithoutQuoteEventsInput>
 }
 
+export type UserCreateNestedOneWithoutQuoteDeliveryAttemptsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuoteDeliveryAttemptsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutQuoteDeliveryAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuoteDeliveryAttemptsInput
+  upsert?: Prisma.UserUpsertWithoutQuoteDeliveryAttemptsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutQuoteDeliveryAttemptsInput, Prisma.UserUpdateWithoutQuoteDeliveryAttemptsInput>, Prisma.UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+}
+
+export type UserCreateNestedOneWithoutQuoteOrderExportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedCreateWithoutQuoteOrderExportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuoteOrderExportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutQuoteOrderExportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedCreateWithoutQuoteOrderExportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuoteOrderExportsInput
+  upsert?: Prisma.UserUpsertWithoutQuoteOrderExportsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutQuoteOrderExportsInput, Prisma.UserUpdateWithoutQuoteOrderExportsInput>, Prisma.UserUncheckedUpdateWithoutQuoteOrderExportsInput>
+}
+
 export type UserCreateNestedOneWithoutRefreshTokensInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutRefreshTokensInput, Prisma.UserUncheckedCreateWithoutRefreshTokensInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutRefreshTokensInput
@@ -771,6 +817,8 @@ export type UserCreateWithoutBranchInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -795,6 +843,8 @@ export type UserUncheckedCreateWithoutBranchInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -864,6 +914,8 @@ export type UserCreateWithoutCreatedCustomersInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -888,6 +940,8 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -917,6 +971,8 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -941,6 +997,8 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -981,6 +1039,8 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1005,6 +1065,8 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1040,6 +1102,8 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1064,6 +1128,8 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1088,6 +1154,8 @@ export type UserCreateWithoutCreatedProductsInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -1112,6 +1180,8 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -1141,6 +1211,8 @@ export type UserCreateWithoutUpdatedProductsInput = {
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -1165,6 +1237,8 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -1205,6 +1279,8 @@ export type UserUpdateWithoutCreatedProductsInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1229,6 +1305,8 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1264,6 +1342,8 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1288,6 +1368,8 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1312,6 +1394,8 @@ export type UserCreateWithoutCreatedQuotesInput = {
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -1336,6 +1420,8 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -1365,6 +1451,8 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
@@ -1389,6 +1477,8 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
@@ -1429,6 +1519,8 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1453,6 +1545,8 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1488,6 +1582,8 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1512,6 +1608,8 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1537,6 +1635,8 @@ export type UserCreateWithoutQuoteEventsInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
 }
@@ -1561,6 +1661,8 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
 }
@@ -1601,6 +1703,8 @@ export type UserUpdateWithoutQuoteEventsInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
 }
@@ -1625,6 +1729,248 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+}
+
+export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+}
+
+export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+}
+
+export type UserCreateOrConnectWithoutQuoteDeliveryAttemptsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+}
+
+export type UserUpsertWithoutQuoteDeliveryAttemptsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutQuoteDeliveryAttemptsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutQuoteDeliveryAttemptsInput, Prisma.UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+}
+
+export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+}
+
+export type UserCreateWithoutQuoteOrderExportsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+}
+
+export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+}
+
+export type UserCreateOrConnectWithoutQuoteOrderExportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedCreateWithoutQuoteOrderExportsInput>
+}
+
+export type UserUpsertWithoutQuoteOrderExportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedUpdateWithoutQuoteOrderExportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedCreateWithoutQuoteOrderExportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutQuoteOrderExportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedUpdateWithoutQuoteOrderExportsInput>
+}
+
+export type UserUpdateWithoutQuoteOrderExportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
 }
@@ -1649,6 +1995,8 @@ export type UserCreateWithoutRefreshTokensInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
 }
@@ -1673,6 +2021,8 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
 }
@@ -1713,6 +2063,8 @@ export type UserUpdateWithoutRefreshTokensInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
 }
@@ -1737,6 +2089,8 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
 }
@@ -1761,6 +2115,8 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
 }
@@ -1785,6 +2141,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
   quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1825,6 +2183,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
 }
@@ -1849,6 +2209,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1887,6 +2249,8 @@ export type UserUpdateWithoutBranchInput = {
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
@@ -1911,6 +2275,8 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
   quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
@@ -1943,6 +2309,8 @@ export type UserCountOutputType = {
   updatedProducts: number
   createdQuotes: number
   updatedQuotes: number
+  quoteDeliveryAttempts: number
+  quoteOrderExports: number
   quoteEvents: number
   refreshTokens: number
   auditLogs: number
@@ -1955,6 +2323,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedProducts?: boolean | UserCountOutputTypeCountUpdatedProductsArgs
   createdQuotes?: boolean | UserCountOutputTypeCountCreatedQuotesArgs
   updatedQuotes?: boolean | UserCountOutputTypeCountUpdatedQuotesArgs
+  quoteDeliveryAttempts?: boolean | UserCountOutputTypeCountQuoteDeliveryAttemptsArgs
+  quoteOrderExports?: boolean | UserCountOutputTypeCountQuoteOrderExportsArgs
   quoteEvents?: boolean | UserCountOutputTypeCountQuoteEventsArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
@@ -2015,6 +2385,20 @@ export type UserCountOutputTypeCountUpdatedQuotesArgs<ExtArgs extends runtime.Ty
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountQuoteDeliveryAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteDeliveryAttemptWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountQuoteOrderExportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteOrderExportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountQuoteEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteEventWhereInput
 }
@@ -2055,6 +2439,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedProducts?: boolean | Prisma.User$updatedProductsArgs<ExtArgs>
   createdQuotes?: boolean | Prisma.User$createdQuotesArgs<ExtArgs>
   updatedQuotes?: boolean | Prisma.User$updatedQuotesArgs<ExtArgs>
+  quoteDeliveryAttempts?: boolean | Prisma.User$quoteDeliveryAttemptsArgs<ExtArgs>
+  quoteOrderExports?: boolean | Prisma.User$quoteOrderExportsArgs<ExtArgs>
   quoteEvents?: boolean | Prisma.User$quoteEventsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
@@ -2120,6 +2506,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedProducts?: boolean | Prisma.User$updatedProductsArgs<ExtArgs>
   createdQuotes?: boolean | Prisma.User$createdQuotesArgs<ExtArgs>
   updatedQuotes?: boolean | Prisma.User$updatedQuotesArgs<ExtArgs>
+  quoteDeliveryAttempts?: boolean | Prisma.User$quoteDeliveryAttemptsArgs<ExtArgs>
+  quoteOrderExports?: boolean | Prisma.User$quoteOrderExportsArgs<ExtArgs>
   quoteEvents?: boolean | Prisma.User$quoteEventsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
@@ -2142,6 +2530,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedProducts: Prisma.$ProductPayload<ExtArgs>[]
     createdQuotes: Prisma.$QuotePayload<ExtArgs>[]
     updatedQuotes: Prisma.$QuotePayload<ExtArgs>[]
+    quoteDeliveryAttempts: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>[]
+    quoteOrderExports: Prisma.$QuoteOrderExportPayload<ExtArgs>[]
     quoteEvents: Prisma.$QuoteEventPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
@@ -2561,6 +2951,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedProducts<T extends Prisma.User$updatedProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdQuotes<T extends Prisma.User$createdQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedQuotes<T extends Prisma.User$updatedQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  quoteDeliveryAttempts<T extends Prisma.User$quoteDeliveryAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quoteDeliveryAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  quoteOrderExports<T extends Prisma.User$quoteOrderExportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quoteOrderExportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteOrderExportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quoteEvents<T extends Prisma.User$quoteEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quoteEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3143,6 +3535,54 @@ export type User$updatedQuotesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.QuoteScalarFieldEnum | Prisma.QuoteScalarFieldEnum[]
+}
+
+/**
+ * User.quoteDeliveryAttempts
+ */
+export type User$quoteDeliveryAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteDeliveryAttempt
+   */
+  select?: Prisma.QuoteDeliveryAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteDeliveryAttempt
+   */
+  omit?: Prisma.QuoteDeliveryAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteDeliveryAttemptInclude<ExtArgs> | null
+  where?: Prisma.QuoteDeliveryAttemptWhereInput
+  orderBy?: Prisma.QuoteDeliveryAttemptOrderByWithRelationInput | Prisma.QuoteDeliveryAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteDeliveryAttemptScalarFieldEnum | Prisma.QuoteDeliveryAttemptScalarFieldEnum[]
+}
+
+/**
+ * User.quoteOrderExports
+ */
+export type User$quoteOrderExportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteOrderExport
+   */
+  select?: Prisma.QuoteOrderExportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteOrderExport
+   */
+  omit?: Prisma.QuoteOrderExportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteOrderExportInclude<ExtArgs> | null
+  where?: Prisma.QuoteOrderExportWhereInput
+  orderBy?: Prisma.QuoteOrderExportOrderByWithRelationInput | Prisma.QuoteOrderExportOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteOrderExportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteOrderExportScalarFieldEnum | Prisma.QuoteOrderExportScalarFieldEnum[]
 }
 
 /**

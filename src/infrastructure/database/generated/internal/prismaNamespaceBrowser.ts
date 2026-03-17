@@ -59,6 +59,8 @@ export const ModelName = {
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
   QuoteEvent: 'QuoteEvent',
+  QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
+  QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
 } as const
@@ -187,6 +189,11 @@ export const QuoteScalarFieldEnum = {
   id: 'id',
   quoteNumber: 'quoteNumber',
   status: 'status',
+  deliveryStatus: 'deliveryStatus',
+  firstSentAt: 'firstSentAt',
+  orderStatus: 'orderStatus',
+  orderGeneratedAt: 'orderGeneratedAt',
+  orderReference: 'orderReference',
   origin: 'origin',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
@@ -244,6 +251,39 @@ export const QuoteEventScalarFieldEnum = {
 } as const
 
 export type QuoteEventScalarFieldEnum = (typeof QuoteEventScalarFieldEnum)[keyof typeof QuoteEventScalarFieldEnum]
+
+
+export const QuoteDeliveryAttemptScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  channel: 'channel',
+  recipient: 'recipient',
+  status: 'status',
+  providerMessageId: 'providerMessageId',
+  errorMessage: 'errorMessage',
+  sentByUserId: 'sentByUserId',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteDeliveryAttemptScalarFieldEnum = (typeof QuoteDeliveryAttemptScalarFieldEnum)[keyof typeof QuoteDeliveryAttemptScalarFieldEnum]
+
+
+export const QuoteOrderExportScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  orderReference: 'orderReference',
+  fileName: 'fileName',
+  transferStatus: 'transferStatus',
+  generatedByUserId: 'generatedByUserId',
+  generatedAt: 'generatedAt',
+  uploadedAt: 'uploadedAt',
+  remotePath: 'remotePath',
+  lastError: 'lastError',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteOrderExportScalarFieldEnum = (typeof QuoteOrderExportScalarFieldEnum)[keyof typeof QuoteOrderExportScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {

@@ -5,8 +5,10 @@ import {
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
+  MarkQuoteOrderGeneratedDatasourceParams,
   QuoteAccessScope,
   QuoteDatasource,
+  RecordQuoteDeliveryAttemptDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
@@ -368,6 +370,113 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           quoteId: quote.id,
           status: params.status,
           note: params.note,
+          actorUserId: params.actorUserId,
+        },
+      });
+
+      return this.findByIdWithClient(quote.id, params.scope, tx);
+    });
+  }
+
+  async recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null> {
+    return await prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findFirst({
+        where: {
+          id: params.id,
+          ...this.buildScopeWhere(params.scope),
+        },
+        select: {
+          id: true,
+          status: true,
+          firstSentAt: true,
+        },
+      });
+      if (!quote) return null;
+
+      await tx.quoteDeliveryAttempt.create({
+        data: {
+          quoteId: quote.id,
+          channel: params.data.channel,
+          recipient: params.data.recipient,
+          status: params.data.status,
+          providerMessageId: params.data.providerMessageId,
+          errorMessage: params.data.errorMessage,
+          sentByUserId: params.actorUserId,
+          sentAt: params.data.sentAt,
+        },
+      });
+
+      if (params.data.status === "SENT") {
+        await tx.quote.update({
+          where: { id: quote.id },
+          data: {
+            deliveryStatus: "SENT",
+            firstSentAt: quote.firstSentAt ?? params.data.sentAt,
+            updatedByUserId: params.actorUserId,
+          },
+        });
+      } else {
+        await tx.quote.update({
+          where: { id: quote.id },
+          data: {
+            updatedByUserId: params.actorUserId,
+          },
+        });
+      }
+
+      await tx.quoteEvent.create({
+        data: {
+          quoteId: quote.id,
+          status: quote.status,
+          note: params.data.note,
+          actorUserId: params.actorUserId,
+        },
+      });
+
+      return this.findByIdWithClient(quote.id, params.scope, tx);
+    });
+  }
+
+  async markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null> {
+    return await prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findFirst({
+        where: {
+          id: params.id,
+          ...this.buildScopeWhere(params.scope),
+        },
+        select: {
+          id: true,
+          status: true,
+        },
+      });
+      if (!quote) return null;
+
+      await tx.quote.update({
+        where: { id: quote.id },
+        data: {
+          orderStatus: "GENERATED",
+          orderGeneratedAt: params.data.generatedAt,
+          orderReference: params.data.orderReference,
+          updatedByUserId: params.actorUserId,
+        },
+      });
+
+      await tx.quoteOrderExport.create({
+        data: {
+          quoteId: quote.id,
+          orderReference: params.data.orderReference,
+          fileName: params.data.fileName,
+          transferStatus: "PENDING_UPLOAD",
+          generatedByUserId: params.actorUserId,
+          generatedAt: params.data.generatedAt,
+        },
+      });
+
+      await tx.quoteEvent.create({
+        data: {
+          quoteId: quote.id,
+          status: quote.status,
+          note: params.data.note,
           actorUserId: params.actorUserId,
         },
       });
