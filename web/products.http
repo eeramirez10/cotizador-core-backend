@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:4600/api
-@jwt = REPLACE_WITH_JWT
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI4MjYwMzQsImV4cCI6MTc3Mjg1NDgzNH0.-Li4pp_3wZBBxyaqbscCVFmKnpIBDCUdbmFUjAPzvRQ
 
 ### Search products
 GET {{baseUrl}}/products?page=1&pageSize=10&search=tubo&source=
@@ -18,4 +18,32 @@ Content-Type: application/json
   "lastCost": 12.5,
   "stock": 0,
   "branchCode": "02"
+}
+
+### Batch create temporary local products from extracted items
+POST {{baseUrl}}/products/local-temp/batch-from-items
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "defaultCurrency": "USD",
+  "items": [
+    {
+      "itemId": "itm_001",
+      "description": "VALVULA DE COMPUERTA BRIDADA 4 PULGADAS CLASE 150",
+      "unit": "PZA",
+      "eanSuggested": null,
+      "averageCost": 125.50,
+      "lastCost": 130.25,
+      "stock": 0
+    },
+    {
+      "itemId": "itm_002",
+      "description": "TUBO DE ACERO AL CARBON CED 40 4 PULGADAS",
+      "unit": "M",
+      "averageCost": 54.75,
+      "lastCost": 58.10,
+      "stock": 0
+    }
+  ]
 }

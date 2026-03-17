@@ -1,7 +1,10 @@
 import {
   CreateUserDatasourceParams,
+  FindUserByIdDatasourceParams,
   FindUsersDatasourceParams,
   FindUsersDatasourceResult,
+  SoftDeactivateUserByIdDatasourceParams,
+  UpdateUserByIdDatasourceParams,
   UserDatasource,
 } from "../../domain/datasources/user.datasource";
 import { UserEntity } from "../../domain/entities/user.entity";
@@ -12,6 +15,10 @@ export class UserRepositoryImpl implements UserRepository {
 
   findPaginated(params: FindUsersDatasourceParams): Promise<FindUsersDatasourceResult> {
     return this.datasource.findPaginated(params);
+  }
+
+  findById(params: FindUserByIdDatasourceParams): Promise<UserEntity | null> {
+    return this.datasource.findById(params);
   }
 
   existsByEmail(email: string): Promise<boolean> {
@@ -28,5 +35,13 @@ export class UserRepositoryImpl implements UserRepository {
 
   create(params: CreateUserDatasourceParams): Promise<UserEntity> {
     return this.datasource.create(params);
+  }
+
+  updateById(params: UpdateUserByIdDatasourceParams): Promise<UserEntity | null> {
+    return this.datasource.updateById(params);
+  }
+
+  softDeactivateById(params: SoftDeactivateUserByIdDatasourceParams): Promise<boolean> {
+    return this.datasource.softDeactivateById(params);
   }
 }

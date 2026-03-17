@@ -32,6 +32,7 @@ export class GetUsersUseCase {
       pageSize: dto.pageSize,
       search: dto.search,
       branchId: branchIdFilter,
+      isActive: dto.isActive,
     });
 
     return new PaginatedUsersResponseDto({

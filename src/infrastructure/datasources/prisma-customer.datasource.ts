@@ -71,7 +71,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       where: {
         id: params.id,
         isActive: true,
-        ...this.buildScopeWhere(params.scope),
+        ...this.buildReadScopeWhere(params.scope),
       },
       include: customerInclude,
     });
@@ -81,36 +81,88 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
   }
 
   async create(params: CreateCustomerDatasourceParams): Promise<CustomerEntity> {
-    const row = await prisma.customer.create({
-      data: {
-        source: params.source,
-        externalId: params.externalId,
-        externalSystem: params.externalSystem,
-        code: params.code,
-        firstName: params.firstName,
-        lastName: params.lastName,
-        displayName: params.displayName,
-        legalName: params.legalName,
-        email: params.email,
-        phone: params.phone,
-        whatsapp: params.whatsapp,
-        taxId: params.taxId,
-        taxRegime: params.taxRegime,
-        billingStreet: params.billingStreet,
-        billingCity: params.billingCity,
-        billingState: params.billingState,
-        billingPostalCode: params.billingPostalCode,
-        billingCountry: params.billingCountry,
-        profileStatus: params.profileStatus,
-        notes: params.notes,
-        createdByUserId: params.createdByUserId,
-        updatedByUserId: params.updatedByUserId,
-        isActive: true,
-      },
-      include: customerInclude,
-    });
+    const isErpIdentity =
+      params.source === "ERP" && !!params.externalId?.trim() && !!params.externalSystem?.trim();
 
-    return CustomerMapper.toEntity(row);
+    if (!isErpIdentity) {
+      const row = await prisma.customer.create({
+        data: this.buildCreateData(params, {
+          attachActorReferences: true,
+        }),
+        include: customerInclude,
+      });
+
+      return CustomerMapper.toEntity(row);
+    }
+
+    const normalizedExternalId = params.externalId!.trim();
+    const normalizedExternalSystem = params.externalSystem!.trim().toUpperCase();
+
+    try {
+      const customer = await prisma.$transaction(async (tx) => {
+        const existing = await tx.customer.findFirst({
+          where: {
+            source: "ERP",
+            externalId: normalizedExternalId,
+            externalSystem: normalizedExternalSystem,
+          },
+          include: customerInclude,
+          orderBy: [{ isActive: "desc" }, { createdAt: "asc" }, { id: "asc" }],
+        });
+
+        if (!existing) {
+          return tx.customer.create({
+            data: this.buildCreateData(params, {
+              externalId: normalizedExternalId,
+              externalSystem: normalizedExternalSystem,
+              attachActorReferences: false,
+            }),
+            include: customerInclude,
+          });
+        }
+
+        return tx.customer.update({
+          where: { id: existing.id },
+          data: this.buildErpRefreshData(params, {
+            externalId: normalizedExternalId,
+            externalSystem: normalizedExternalSystem,
+          }),
+          include: customerInclude,
+        });
+      });
+
+      return CustomerMapper.toEntity(customer);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+        const existing = await prisma.customer.findFirst({
+          where: {
+            source: "ERP",
+            externalId: normalizedExternalId,
+            externalSystem: normalizedExternalSystem,
+          },
+          include: customerInclude,
+          orderBy: [{ isActive: "desc" }, { createdAt: "asc" }, { id: "asc" }],
+        });
+
+        if (existing) {
+          const row =
+            existing.isActive
+              ? existing
+              : await prisma.customer.update({
+                  where: { id: existing.id },
+                  data: this.buildErpRefreshData(params, {
+                    externalId: normalizedExternalId,
+                    externalSystem: normalizedExternalSystem,
+                  }),
+                  include: customerInclude,
+                });
+
+          return CustomerMapper.toEntity(row);
+        }
+      }
+
+      throw error;
+    }
   }
 
   async updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null> {
@@ -118,7 +170,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       where: {
         id: params.id,
         isActive: true,
-        ...this.buildScopeWhere(params.scope),
+        ...this.buildWriteScopeWhere(params.scope),
       },
       data: {
         source: params.data.source,
@@ -158,7 +210,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       where: {
         id: params.id,
         isActive: true,
-        ...this.buildScopeWhere(params.scope),
+        ...this.buildWriteScopeWhere(params.scope),
       },
       data: {
         isActive: false,
@@ -172,7 +224,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
   private buildFindWhere(params: FindCustomersDatasourceParams): Prisma.CustomerWhereInput {
     const andFilters: Prisma.CustomerWhereInput[] = [
       { isActive: true },
-      this.buildScopeWhere(params.scope),
+      this.buildReadScopeWhere(params.scope),
     ];
 
     if (params.source) {
@@ -202,7 +254,26 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
     return { AND: andFilters };
   }
 
-  private buildScopeWhere(scope: CustomerAccessScope): Prisma.CustomerWhereInput {
+  private buildReadScopeWhere(scope: CustomerAccessScope): Prisma.CustomerWhereInput {
+    if (scope.role === "ADMIN") {
+      return {};
+    }
+
+    return {
+      OR: [
+        { source: "ERP" },
+        {
+          createdByUser: {
+            is: {
+              branchId: scope.branchId,
+            },
+          },
+        },
+      ],
+    };
+  }
+
+  private buildWriteScopeWhere(scope: CustomerAccessScope): Prisma.CustomerWhereInput {
     if (scope.role === "ADMIN") {
       return {};
     }
@@ -213,6 +284,74 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           branchId: scope.branchId,
         },
       },
+    };
+  }
+
+  private buildCreateData(
+    params: CreateCustomerDatasourceParams,
+    overrides?: {
+      externalId?: string | null;
+      externalSystem?: string | null;
+      attachActorReferences?: boolean;
+    }
+  ): Prisma.CustomerUncheckedCreateInput {
+    const attachActorReferences = overrides?.attachActorReferences ?? true;
+
+    return {
+      source: params.source,
+      externalId: overrides?.externalId ?? params.externalId,
+      externalSystem: overrides?.externalSystem ?? params.externalSystem,
+      code: params.code,
+      firstName: params.firstName,
+      lastName: params.lastName,
+      displayName: params.displayName,
+      legalName: params.legalName,
+      email: params.email,
+      phone: params.phone,
+      whatsapp: params.whatsapp,
+      taxId: params.taxId,
+      taxRegime: params.taxRegime,
+      billingStreet: params.billingStreet,
+      billingCity: params.billingCity,
+      billingState: params.billingState,
+      billingPostalCode: params.billingPostalCode,
+      billingCountry: params.billingCountry,
+      profileStatus: params.profileStatus,
+      notes: params.notes,
+      createdByUserId: attachActorReferences ? params.createdByUserId : null,
+      updatedByUserId: attachActorReferences ? params.updatedByUserId : null,
+      isActive: true,
+    };
+  }
+
+  private buildErpRefreshData(
+    params: CreateCustomerDatasourceParams,
+    identity: { externalId: string; externalSystem: string }
+  ): Prisma.CustomerUncheckedUpdateInput {
+    return {
+      source: "ERP",
+      externalId: identity.externalId,
+      externalSystem: identity.externalSystem,
+      code: params.code,
+      firstName: params.firstName,
+      lastName: params.lastName,
+      displayName: params.displayName,
+      legalName: params.legalName,
+      email: params.email,
+      phone: params.phone,
+      whatsapp: params.whatsapp,
+      taxId: params.taxId,
+      taxRegime: params.taxRegime,
+      billingStreet: params.billingStreet,
+      billingCity: params.billingCity,
+      billingState: params.billingState,
+      billingPostalCode: params.billingPostalCode,
+      billingCountry: params.billingCountry,
+      profileStatus: params.profileStatus,
+      notes: params.notes,
+      createdByUserId: null,
+      updatedByUserId: null,
+      isActive: true,
     };
   }
 }

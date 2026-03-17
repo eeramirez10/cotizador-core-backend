@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:4600/api
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
-@managerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
-@sellerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI2MDU0OTEsImV4cCI6MTc3MjYzNDI5MX0.cWaZXkyQDPykgwIMHIUikh3PystS7HJPJFJWxIntSxk
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI3NDQwNzksImV4cCI6MTc3Mjc3Mjg3OX0.PpamD9P93EJc1VPmIConYOv9xo2jRq0eCfmW360FVK8
+@managerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI3NDQwNzksImV4cCI6MTc3Mjc3Mjg3OX0.PpamD9P93EJc1VPmIConYOv9xo2jRq0eCfmW360FVK8
+@sellerJwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYWY2ZmY4Yy0wMGUyLTRlMzMtYTAwZC1lMTY2NDU5NWVjMjQiLCJyb2xlIjoiQURNSU4iLCJicmFuY2hJZCI6IjNhYTRkNjY2LTY2NmEtNDBmZi1hOGI5LTM2NzU2NTg1YTBkZCIsImVycFVzZXJDb2RlIjpudWxsLCJpYXQiOjE3NzI3NDQwNzksImV4cCI6MTc3Mjc3Mjg3OX0.PpamD9P93EJc1VPmIConYOv9xo2jRq0eCfmW360FVK8
 
 ### List users (admin)
 GET {{baseUrl}}/users?page=1&pageSize=10&search=
@@ -35,3 +35,38 @@ Content-Type: application/json
   "phone": "8119999999",
   "erpUserCode": "ERP-SELLER-001"
 }
+
+### Create user (manager, own branch only)
+POST {{baseUrl}}/users
+Authorization: Bearer {{managerJwt}}
+Content-Type: application/json
+
+{
+  "firstName": "Branch",
+  "lastName": "Seller",
+  "username": "branchseller",
+  "email": "branch.seller@tuvansa.com",
+  "password": "Tuvansa123!",
+  "role": "SELLER",
+  "branchCode": "02"
+}
+
+### Update user (admin/manager)
+PATCH {{baseUrl}}/users/REPLACE_USER_ID
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "firstName": "Updated",
+  "lastName": "User",
+  "username": "updated.user",
+  "email": "updated.user@tuvansa.com",
+  "role": "SELLER",
+  "branchCode": "02",
+  "phone": "8119999999",
+  "erpUserCode": "ERP-SELLER-001"
+}
+
+### Deactivate user (admin only)
+PATCH {{baseUrl}}/users/REPLACE_USER_ID/deactivate
+Authorization: Bearer {{jwt}}

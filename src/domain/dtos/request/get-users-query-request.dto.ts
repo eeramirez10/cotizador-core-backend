@@ -3,6 +3,7 @@ interface GetUsersQueryRequestDtoProps {
   pageSize: number;
   search?: string;
   branchCode?: string;
+  isActive?: boolean;
 }
 
 export class GetUsersQueryRequestDto {
@@ -10,12 +11,14 @@ export class GetUsersQueryRequestDto {
   public readonly pageSize: number;
   public readonly search?: string;
   public readonly branchCode?: string;
+  public readonly isActive?: boolean;
 
   constructor(props: GetUsersQueryRequestDtoProps) {
     this.page = props.page;
     this.pageSize = props.pageSize;
     this.search = props.search;
     this.branchCode = props.branchCode;
+    this.isActive = props.isActive;
   }
 
   static create(input: unknown): [string?, GetUsersQueryRequestDto?] {
@@ -29,6 +32,7 @@ export class GetUsersQueryRequestDto {
     const pageSizeRaw = source.pageSize;
     const searchRaw = source.search;
     const branchCodeRaw = source.branchCode;
+    const isActiveRaw = source.isActive;
 
     const page = GetUsersQueryRequestDto.parseNumber(pageRaw, 1);
     const pageSize = GetUsersQueryRequestDto.parseNumber(pageSizeRaw, 20);
@@ -47,6 +51,10 @@ export class GetUsersQueryRequestDto {
       typeof branchCodeRaw === "string" && branchCodeRaw.trim().length > 0
         ? branchCodeRaw.trim().toUpperCase()
         : undefined;
+    const isActive = GetUsersQueryRequestDto.parseOptionalBoolean(isActiveRaw);
+    if (typeof isActiveRaw !== "undefined" && typeof isActive === "undefined") {
+      return ["isActive must be boolean."];
+    }
 
     return [
       ,
@@ -55,6 +63,7 @@ export class GetUsersQueryRequestDto {
         pageSize,
         search,
         branchCode,
+        isActive,
       }),
     ];
   }
@@ -68,5 +77,17 @@ export class GetUsersQueryRequestDto {
     }
 
     return Number.NaN;
+  }
+
+  private static parseOptionalBoolean(value: unknown): boolean | undefined {
+    if (typeof value === "undefined") return undefined;
+    if (typeof value === "boolean") return value;
+    if (typeof value === "string") {
+      const normalized = value.trim().toLowerCase();
+      if (normalized === "true") return true;
+      if (normalized === "false") return false;
+    }
+
+    return undefined;
   }
 }

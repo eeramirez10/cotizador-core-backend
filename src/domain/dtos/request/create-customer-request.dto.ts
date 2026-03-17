@@ -101,12 +101,20 @@ export class CreateCustomerRequestDto {
       return ["profileStatus is invalid."];
     }
 
+    const externalId = CreateCustomerRequestDto.normalizeNullableString(body.externalId);
+    const externalSystemRaw = CreateCustomerRequestDto.normalizeNullableString(body.externalSystem);
+    const externalSystem = source === "ERP" ? (externalSystemRaw || "ERP") : externalSystemRaw;
+
+    if (source === "ERP" && !externalId) {
+      return ["externalId is required when source is ERP."];
+    }
+
     return [
       ,
       new CreateCustomerRequestDto({
         source,
-        externalId: CreateCustomerRequestDto.normalizeNullableString(body.externalId),
-        externalSystem: CreateCustomerRequestDto.normalizeNullableString(body.externalSystem),
+        externalId,
+        externalSystem,
         code: CreateCustomerRequestDto.normalizeNullableString(body.code),
         firstName,
         lastName,

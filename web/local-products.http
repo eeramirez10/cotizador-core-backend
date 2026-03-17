@@ -1,0 +1,69 @@
+@baseUrl = http://localhost:4600/api
+@jwt = REPLACE_WITH_JWT
+
+### List local temporary products
+GET {{baseUrl}}/local-products?page=1&pageSize=10&search=valvula
+Authorization: Bearer {{jwt}}
+
+### List local temporary products (active + inactive)
+GET {{baseUrl}}/local-products?page=1&pageSize=10&includeInactive=true
+Authorization: Bearer {{jwt}}
+
+### List local temporary products (only inactive)
+GET {{baseUrl}}/local-products?page=1&pageSize=10&isActive=false
+Authorization: Bearer {{jwt}}
+
+### Create local temporary product
+POST {{baseUrl}}/local-products
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "description": "VALVULA GLOBO BRIDADA 4 PULGADAS CLASE 150",
+  "unit": "PZA",
+  "currency": "USD",
+  "averageCost": 214.45,
+  "lastCost": 220.10,
+  "stock": 0
+}
+
+### Batch create local temporary products from extracted/IA items
+POST {{baseUrl}}/local-products/batch-from-items
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "defaultCurrency": "USD",
+  "items": [
+    {
+      "item_id": "tmp_001",
+      "description_normalized": "valvula check bridada 4 pulgadas clase 150",
+      "ean_suggested": null
+    },
+    {
+      "item_id": "tmp_002",
+      "description_original": "TUBO DE ACERO AL CARBON CED 40 4 PULGADAS",
+      "unit_original": "M",
+      "averageCost": 54.75
+    }
+  ]
+}
+
+### Update local temporary product by id
+PATCH {{baseUrl}}/local-products/REPLACE_WITH_LOCAL_PRODUCT_ID
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "description": "VALVULA CHECK BRIDADA 4 PULGADAS CLASE 150",
+  "unit": "PZA",
+  "currency": "USD",
+  "averageCost": 175.25,
+  "lastCost": 180.10,
+  "stock": 3,
+  "ean": "TMP-VALV-CHECK-4"
+}
+
+### Delete local temporary product by id (soft delete)
+DELETE {{baseUrl}}/local-products/REPLACE_WITH_LOCAL_PRODUCT_ID
+Authorization: Bearer {{jwt}}
