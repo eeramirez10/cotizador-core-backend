@@ -91,7 +91,7 @@ export class CreateCustomerRequestDto {
 
     if (!firstName) return ["firstName is required."];
     if (!lastName) return ["lastName is required."];
-    if (!whatsapp) return ["whatsapp is required."];
+    if (source !== "ERP" && !whatsapp) return ["whatsapp is required."];
 
     const profileStatusRaw =
       typeof body.profileStatus === "string" ? body.profileStatus.trim().toUpperCase() : "PROSPECT";
