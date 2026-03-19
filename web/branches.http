@@ -4,3 +4,29 @@
 ### List branches
 GET {{baseUrl}}/branches
 Authorization: Bearer {{jwt}}
+
+### Create branch (ADMIN)
+POST {{baseUrl}}/branches
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "code": "07",
+  "name": "Puebla",
+  "address": "Av. Reforma 123"
+}
+
+### Update branch (ADMIN)
+PATCH {{baseUrl}}/branches/REPLACE_WITH_BRANCH_ID
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "code": "07",
+  "name": "Puebla Centro",
+  "address": "Av. Reforma 123, Centro"
+}
+
+### Deactivate branch (ADMIN)
+PATCH {{baseUrl}}/branches/REPLACE_WITH_BRANCH_ID/deactivate
+Authorization: Bearer {{jwt}}
