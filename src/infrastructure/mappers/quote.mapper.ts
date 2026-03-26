@@ -27,6 +27,10 @@ interface QuoteRow {
   subtotal: number | DecimalLike;
   tax: number | DecimalLike;
   total: number | DecimalLike;
+  deliveryPlace: string | null;
+  paymentTerms: string;
+  validityDays: number;
+  validUntil: Date;
   branchId: string;
   customerId: string;
   createdByUserId: string;
@@ -132,6 +136,10 @@ export class QuoteMapper {
       subtotal: Number(toNumber(row.subtotal)),
       tax: Number(toNumber(row.tax)),
       total: Number(toNumber(row.total)),
+      deliveryPlace: row.deliveryPlace,
+      paymentTerms: row.paymentTerms,
+      validityDays: row.validityDays,
+      validUntil: row.validUntil,
       branchId: row.branchId,
       customerId: row.customerId,
       createdByUserId: row.createdByUserId,

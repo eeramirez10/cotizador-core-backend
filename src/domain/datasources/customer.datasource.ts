@@ -3,7 +3,7 @@ import type {
   CustomerSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
-import { CustomerEntity } from "../entities/customer.entity";
+import { CustomerContactEntity, CustomerEntity } from "../entities/customer.entity";
 
 export interface CustomerAccessScope {
   role: UserRole;
@@ -90,10 +90,52 @@ export interface SoftDeleteCustomerByIdDatasourceParams {
   scope: CustomerAccessScope;
 }
 
+export interface FindCustomerContactsDatasourceParams {
+  customerId: string;
+  scope: CustomerAccessScope;
+}
+
+export interface CreateCustomerContactDatasourceParams {
+  customerId: string;
+  data: {
+    name: string;
+    jobTitle: string | null;
+    email: string | null;
+    phone: string | null;
+    mobile: string | null;
+    isPrimary: boolean;
+  };
+  scope: CustomerAccessScope;
+}
+
+export interface UpdateCustomerContactDatasourceParams {
+  customerId: string;
+  contactId: string;
+  data: {
+    name?: string;
+    jobTitle?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    mobile?: string | null;
+    isPrimary?: boolean;
+  };
+  scope: CustomerAccessScope;
+}
+
+export interface DeleteCustomerContactDatasourceParams {
+  customerId: string;
+  contactId: string;
+  scope: CustomerAccessScope;
+}
+
 export abstract class CustomerDatasource {
   abstract findPaginated(params: FindCustomersDatasourceParams): Promise<FindCustomersDatasourceResult>;
   abstract findById(params: FindCustomerByIdDatasourceParams): Promise<CustomerEntity | null>;
   abstract create(params: CreateCustomerDatasourceParams): Promise<CustomerEntity>;
   abstract updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null>;
   abstract softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean>;
+  abstract findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]>;
+  abstract createContact(params: CreateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;
+  abstract updateContact(params: UpdateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;
+  abstract deleteContact(params: DeleteCustomerContactDatasourceParams): Promise<boolean>;
 }

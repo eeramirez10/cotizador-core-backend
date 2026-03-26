@@ -16,7 +16,7 @@ const computeMarginPct = (cost: number, unitPrice: number): number => {
   if (cost === 0) return 0;
   return round4(((unitPrice - cost) / cost) * 100);
 };
-const canEditItems = (status: string): boolean => status === "DRAFT" || status === "PENDING";
+const canEditItems = (status: string): boolean => status !== "CANCELLED";
 
 export class UpdateQuoteItemUseCase {
   constructor(private readonly quoteRepository: QuoteRepository) {}

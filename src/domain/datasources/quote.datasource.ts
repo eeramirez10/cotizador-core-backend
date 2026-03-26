@@ -34,6 +34,9 @@ export interface CreateQuoteDatasourceParams {
   exchangeRate: number;
   exchangeRateDate: Date;
   taxRate: number;
+  deliveryPlace: string | null;
+  paymentTerms: string;
+  validityDays: number;
   branchId: string;
   customerId: string;
   createdByUserId: string;
@@ -48,6 +51,9 @@ export interface UpdateQuoteDatasourceData {
   exchangeRate?: number;
   exchangeRateDate?: Date;
   taxRate?: number;
+  deliveryPlace?: string | null;
+  paymentTerms?: string;
+  validityDays?: number;
   notes?: string | null;
   updatedByUserId: string;
 }

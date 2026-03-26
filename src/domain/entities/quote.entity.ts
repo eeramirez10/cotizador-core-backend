@@ -49,6 +49,10 @@ export interface QuoteEntity {
   subtotal: number;
   tax: number;
   total: number;
+  deliveryPlace: string | null;
+  paymentTerms: string;
+  validityDays: number;
+  validUntil: Date;
   branchId: string;
   customerId: string;
   createdByUserId: string;

@@ -12,6 +12,19 @@ interface CustomerUserInfo {
   branchName: string;
 }
 
+export interface CustomerContactEntity {
+  id: string;
+  customerId: string;
+  name: string;
+  jobTitle: string | null;
+  email: string | null;
+  phone: string | null;
+  mobile: string | null;
+  isPrimary: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface CustomerEntity {
   id: string;
   source: CustomerSource;

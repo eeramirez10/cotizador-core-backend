@@ -32,6 +32,7 @@ export type QuoteAvgAggregateOutputType = {
   subtotal: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  validityDays: number | null
 }
 
 export type QuoteSumAggregateOutputType = {
@@ -40,6 +41,7 @@ export type QuoteSumAggregateOutputType = {
   subtotal: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  validityDays: number | null
 }
 
 export type QuoteMinAggregateOutputType = {
@@ -59,6 +61,10 @@ export type QuoteMinAggregateOutputType = {
   subtotal: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  deliveryPlace: string | null
+  paymentTerms: string | null
+  validityDays: number | null
+  validUntil: Date | null
   branchId: string | null
   customerId: string | null
   createdByUserId: string | null
@@ -85,6 +91,10 @@ export type QuoteMaxAggregateOutputType = {
   subtotal: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  deliveryPlace: string | null
+  paymentTerms: string | null
+  validityDays: number | null
+  validUntil: Date | null
   branchId: string | null
   customerId: string | null
   createdByUserId: string | null
@@ -111,6 +121,10 @@ export type QuoteCountAggregateOutputType = {
   subtotal: number
   tax: number
   total: number
+  deliveryPlace: number
+  paymentTerms: number
+  validityDays: number
+  validUntil: number
   branchId: number
   customerId: number
   createdByUserId: number
@@ -128,6 +142,7 @@ export type QuoteAvgAggregateInputType = {
   subtotal?: true
   tax?: true
   total?: true
+  validityDays?: true
 }
 
 export type QuoteSumAggregateInputType = {
@@ -136,6 +151,7 @@ export type QuoteSumAggregateInputType = {
   subtotal?: true
   tax?: true
   total?: true
+  validityDays?: true
 }
 
 export type QuoteMinAggregateInputType = {
@@ -155,6 +171,10 @@ export type QuoteMinAggregateInputType = {
   subtotal?: true
   tax?: true
   total?: true
+  deliveryPlace?: true
+  paymentTerms?: true
+  validityDays?: true
+  validUntil?: true
   branchId?: true
   customerId?: true
   createdByUserId?: true
@@ -181,6 +201,10 @@ export type QuoteMaxAggregateInputType = {
   subtotal?: true
   tax?: true
   total?: true
+  deliveryPlace?: true
+  paymentTerms?: true
+  validityDays?: true
+  validUntil?: true
   branchId?: true
   customerId?: true
   createdByUserId?: true
@@ -207,6 +231,10 @@ export type QuoteCountAggregateInputType = {
   subtotal?: true
   tax?: true
   total?: true
+  deliveryPlace?: true
+  paymentTerms?: true
+  validityDays?: true
+  validUntil?: true
   branchId?: true
   customerId?: true
   createdByUserId?: true
@@ -320,6 +348,10 @@ export type QuoteGroupByOutputType = {
   subtotal: runtime.Decimal
   tax: runtime.Decimal
   total: runtime.Decimal
+  deliveryPlace: string | null
+  paymentTerms: string
+  validityDays: number
+  validUntil: Date
   branchId: string
   customerId: string
   createdByUserId: string
@@ -369,6 +401,10 @@ export type QuoteWhereInput = {
   subtotal?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
+  paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  validityDays?: Prisma.IntFilter<"Quote"> | number
+  validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
   customerId?: Prisma.UuidFilter<"Quote"> | string
   createdByUserId?: Prisma.UuidFilter<"Quote"> | string
@@ -403,6 +439,10 @@ export type QuoteOrderByWithRelationInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
@@ -440,6 +480,10 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   subtotal?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
+  paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  validityDays?: Prisma.IntFilter<"Quote"> | number
+  validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
   customerId?: Prisma.UuidFilter<"Quote"> | string
   createdByUserId?: Prisma.UuidFilter<"Quote"> | string
@@ -474,6 +518,10 @@ export type QuoteOrderByWithAggregationInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
@@ -508,6 +556,10 @@ export type QuoteScalarWhereWithAggregatesInput = {
   subtotal?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  paymentTerms?: Prisma.StringWithAggregatesFilter<"Quote"> | string
+  validityDays?: Prisma.IntWithAggregatesFilter<"Quote"> | number
+  validUntil?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidWithAggregatesFilter<"Quote"> | string
   customerId?: Prisma.UuidWithAggregatesFilter<"Quote"> | string
   createdByUserId?: Prisma.UuidWithAggregatesFilter<"Quote"> | string
@@ -534,6 +586,10 @@ export type QuoteCreateInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -564,6 +620,10 @@ export type QuoteUncheckedCreateInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -594,6 +654,10 @@ export type QuoteUpdateInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -624,6 +688,10 @@ export type QuoteUncheckedUpdateInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -654,6 +722,10 @@ export type QuoteCreateManyInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -680,6 +752,10 @@ export type QuoteUpdateManyMutationInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -702,6 +778,10 @@ export type QuoteUncheckedUpdateManyInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -738,6 +818,10 @@ export type QuoteCountOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  deliveryPlace?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
@@ -753,6 +837,7 @@ export type QuoteAvgOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type QuoteMaxOrderByAggregateInput = {
@@ -772,6 +857,10 @@ export type QuoteMaxOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  deliveryPlace?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
@@ -798,6 +887,10 @@ export type QuoteMinOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  deliveryPlace?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
+  validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
@@ -813,6 +906,7 @@ export type QuoteSumOrderByAggregateInput = {
   subtotal?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  validityDays?: Prisma.SortOrder
 }
 
 export type QuoteScalarRelationFilter = {
@@ -1016,6 +1110,14 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type QuoteCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutItemsInput, Prisma.QuoteUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutItemsInput
@@ -1089,6 +1191,10 @@ export type QuoteCreateWithoutBranchInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1118,6 +1224,10 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   customerId: string
   createdByUserId: string
   updatedByUserId?: string | null
@@ -1176,6 +1286,10 @@ export type QuoteScalarWhereInput = {
   subtotal?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
+  paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  validityDays?: Prisma.IntFilter<"Quote"> | number
+  validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
   customerId?: Prisma.UuidFilter<"Quote"> | string
   createdByUserId?: Prisma.UuidFilter<"Quote"> | string
@@ -1202,6 +1316,10 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1231,6 +1349,10 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   updatedByUserId?: string | null
@@ -1270,6 +1392,10 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1299,6 +1425,10 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -1370,6 +1500,10 @@ export type QuoteCreateWithoutCustomerInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1399,6 +1533,10 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   createdByUserId: string
   updatedByUserId?: string | null
@@ -1454,6 +1592,10 @@ export type QuoteCreateWithoutItemsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1483,6 +1625,10 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -1528,6 +1674,10 @@ export type QuoteUpdateWithoutItemsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1557,6 +1707,10 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1586,6 +1740,10 @@ export type QuoteCreateWithoutEventsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1615,6 +1773,10 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -1660,6 +1822,10 @@ export type QuoteUpdateWithoutEventsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1689,6 +1855,10 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1718,6 +1888,10 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1747,6 +1921,10 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -1792,6 +1970,10 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1821,6 +2003,10 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1850,6 +2036,10 @@ export type QuoteCreateWithoutOrderExportsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1879,6 +2069,10 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -1924,6 +2118,10 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1953,6 +2151,10 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1982,6 +2184,10 @@ export type QuoteCreateManyBranchInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   customerId: string
   createdByUserId: string
   updatedByUserId?: string | null
@@ -2007,6 +2213,10 @@ export type QuoteUpdateWithoutBranchInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2036,6 +2246,10 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2065,6 +2279,10 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2090,6 +2308,10 @@ export type QuoteCreateManyCreatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   updatedByUserId?: string | null
@@ -2115,6 +2337,10 @@ export type QuoteCreateManyUpdatedByUserInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   customerId: string
   createdByUserId: string
@@ -2140,6 +2366,10 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2169,6 +2399,10 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2198,6 +2432,10 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2223,6 +2461,10 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2252,6 +2494,10 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2281,6 +2527,10 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2306,6 +2556,10 @@ export type QuoteCreateManyCustomerInput = {
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   tax: runtime.Decimal | runtime.DecimalJsLike | number | string
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
   branchId: string
   createdByUserId: string
   updatedByUserId?: string | null
@@ -2331,6 +2585,10 @@ export type QuoteUpdateWithoutCustomerInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2360,6 +2618,10 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2389,6 +2651,10 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2472,6 +2738,10 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   subtotal?: boolean
   tax?: boolean
   total?: boolean
+  deliveryPlace?: boolean
+  paymentTerms?: boolean
+  validityDays?: boolean
+  validUntil?: boolean
   branchId?: boolean
   customerId?: boolean
   createdByUserId?: boolean
@@ -2507,6 +2777,10 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   subtotal?: boolean
   tax?: boolean
   total?: boolean
+  deliveryPlace?: boolean
+  paymentTerms?: boolean
+  validityDays?: boolean
+  validUntil?: boolean
   branchId?: boolean
   customerId?: boolean
   createdByUserId?: boolean
@@ -2537,6 +2811,10 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   subtotal?: boolean
   tax?: boolean
   total?: boolean
+  deliveryPlace?: boolean
+  paymentTerms?: boolean
+  validityDays?: boolean
+  validUntil?: boolean
   branchId?: boolean
   customerId?: boolean
   createdByUserId?: boolean
@@ -2567,6 +2845,10 @@ export type QuoteSelectScalar = {
   subtotal?: boolean
   tax?: boolean
   total?: boolean
+  deliveryPlace?: boolean
+  paymentTerms?: boolean
+  validityDays?: boolean
+  validUntil?: boolean
   branchId?: boolean
   customerId?: boolean
   createdByUserId?: boolean
@@ -2576,7 +2858,7 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -2630,6 +2912,10 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     subtotal: runtime.Decimal
     tax: runtime.Decimal
     total: runtime.Decimal
+    deliveryPlace: string | null
+    paymentTerms: string
+    validityDays: number
+    validUntil: Date
     branchId: string
     customerId: string
     createdByUserId: string
@@ -3084,6 +3370,10 @@ export interface QuoteFieldRefs {
   readonly subtotal: Prisma.FieldRef<"Quote", 'Decimal'>
   readonly tax: Prisma.FieldRef<"Quote", 'Decimal'>
   readonly total: Prisma.FieldRef<"Quote", 'Decimal'>
+  readonly deliveryPlace: Prisma.FieldRef<"Quote", 'String'>
+  readonly paymentTerms: Prisma.FieldRef<"Quote", 'String'>
+  readonly validityDays: Prisma.FieldRef<"Quote", 'Int'>
+  readonly validUntil: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly branchId: Prisma.FieldRef<"Quote", 'String'>
   readonly customerId: Prisma.FieldRef<"Quote", 'String'>
   readonly createdByUserId: Prisma.FieldRef<"Quote", 'String'>

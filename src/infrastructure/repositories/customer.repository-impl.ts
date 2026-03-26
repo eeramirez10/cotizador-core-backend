@@ -1,13 +1,17 @@
 import {
   CreateCustomerDatasourceParams,
+  CreateCustomerContactDatasourceParams,
+  DeleteCustomerContactDatasourceParams,
   FindCustomerByIdDatasourceParams,
+  FindCustomerContactsDatasourceParams,
   FindCustomersDatasourceParams,
   FindCustomersDatasourceResult,
   SoftDeleteCustomerByIdDatasourceParams,
+  UpdateCustomerContactDatasourceParams,
   UpdateCustomerByIdDatasourceParams,
   CustomerDatasource,
 } from "../../domain/datasources/customer.datasource";
-import { CustomerEntity } from "../../domain/entities/customer.entity";
+import { CustomerContactEntity, CustomerEntity } from "../../domain/entities/customer.entity";
 import { CustomerRepository } from "../../domain/repositories/customer.repository";
 
 export class CustomerRepositoryImpl implements CustomerRepository {
@@ -31,5 +35,21 @@ export class CustomerRepositoryImpl implements CustomerRepository {
 
   softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean> {
     return this.datasource.softDeleteById(params);
+  }
+
+  findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]> {
+    return this.datasource.findContacts(params);
+  }
+
+  createContact(params: CreateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null> {
+    return this.datasource.createContact(params);
+  }
+
+  updateContact(params: UpdateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null> {
+    return this.datasource.updateContact(params);
+  }
+
+  deleteContact(params: DeleteCustomerContactDatasourceParams): Promise<boolean> {
+    return this.datasource.deleteContact(params);
   }
 }

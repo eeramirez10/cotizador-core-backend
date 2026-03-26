@@ -1463,6 +1463,10 @@ export const QuoteScalarFieldEnum = {
   subtotal: 'subtotal',
   tax: 'tax',
   total: 'total',
+  deliveryPlace: 'deliveryPlace',
+  paymentTerms: 'paymentTerms',
+  validityDays: 'validityDays',
+  validUntil: 'validUntil',
   branchId: 'branchId',
   customerId: 'customerId',
   createdByUserId: 'createdByUserId',
@@ -1795,6 +1799,20 @@ export type ListEnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'QuoteDeliveryChannel'
  */
 export type EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryChannel'>
@@ -1851,16 +1869,16 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
- * Reference to a field of type 'Int'
+ * Reference to a field of type 'Float'
  */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
 /**
- * Reference to a field of type 'Int[]'
+ * Reference to a field of type 'Float[]'
  */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**

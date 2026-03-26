@@ -16,6 +16,9 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   exchangeRate: number;
   exchangeRateDate: Date;
   taxRate: number;
+  deliveryPlace: string | null;
+  paymentTerms: string;
+  validityDays: number;
   origin: QuoteOrigin;
   notes: string | null;
   items: ExtractionItemDto[];
@@ -28,6 +31,9 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly exchangeRate: number;
   public readonly exchangeRateDate: Date;
   public readonly taxRate: number;
+  public readonly deliveryPlace: string | null;
+  public readonly paymentTerms: string;
+  public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
   public readonly notes: string | null;
   public readonly items: ExtractionItemDto[];
@@ -39,6 +45,9 @@ export class CreateQuoteFromExtractionRequestDto {
     this.exchangeRate = props.exchangeRate;
     this.exchangeRateDate = props.exchangeRateDate;
     this.taxRate = props.taxRate;
+    this.deliveryPlace = props.deliveryPlace;
+    this.paymentTerms = props.paymentTerms;
+    this.validityDays = props.validityDays;
     this.origin = props.origin;
     this.notes = props.notes;
     this.items = props.items;
@@ -81,6 +90,22 @@ export class CreateQuoteFromExtractionRequestDto {
     const taxRate = CreateQuoteFromExtractionRequestDto.parseNumber(body.taxRate);
     if (!Number.isFinite(taxRate) || taxRate < 0) {
       return ["taxRate must be greater than or equal to 0."];
+    }
+
+    const deliveryPlace =
+      typeof body.deliveryPlace === "string" && body.deliveryPlace.trim().length > 0
+        ? body.deliveryPlace.trim()
+        : null;
+
+    const paymentTerms =
+      typeof body.paymentTerms === "string" && body.paymentTerms.trim().length > 0
+        ? body.paymentTerms.trim()
+        : "CONTADO";
+
+    const validityDaysInput = body.validityDays ?? 10;
+    const validityDays = Math.trunc(CreateQuoteFromExtractionRequestDto.parseNumber(validityDaysInput));
+    if (!Number.isFinite(validityDays) || validityDays < 1 || validityDays > 180) {
+      return ["validityDays must be an integer between 1 and 180."];
     }
 
     const originRaw =
@@ -158,6 +183,9 @@ export class CreateQuoteFromExtractionRequestDto {
         exchangeRate,
         exchangeRateDate,
         taxRate,
+        deliveryPlace,
+        paymentTerms,
+        validityDays,
         origin: originRaw as QuoteOrigin,
         notes,
         items,

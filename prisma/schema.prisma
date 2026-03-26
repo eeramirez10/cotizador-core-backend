@@ -233,6 +233,10 @@ model Quote {
   subtotal         Decimal    @db.Decimal(14, 4)
   tax              Decimal    @db.Decimal(14, 4)
   total            Decimal    @db.Decimal(14, 4)
+  deliveryPlace    String?    @map("delivery_place") @db.VarChar(255)
+  paymentTerms     String     @default("CONTADO") @map("payment_terms") @db.VarChar(220)
+  validityDays     Int        @default(10) @map("validity_days")
+  validUntil       DateTime   @map("valid_until") @db.Date
   branchId         String     @map("branch_id") @db.Uuid
   customerId       String     @map("customer_id") @db.Uuid
   createdByUserId  String     @map("created_by_user_id") @db.Uuid

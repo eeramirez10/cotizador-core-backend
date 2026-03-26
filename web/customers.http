@@ -55,3 +55,36 @@ Content-Type: application/json
 ### Soft delete customer (admin/manager)
 DELETE {{baseUrl}}/customers/{{customerId}}
 Authorization: Bearer {{jwt}}
+
+### List customer contacts
+GET {{baseUrl}}/customers/{{customerId}}/contacts
+Authorization: Bearer {{jwt}}
+
+### Create customer contact
+POST {{baseUrl}}/customers/{{customerId}}/contacts
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "name": "Carlos Medina",
+  "jobTitle": "Compras",
+  "email": "cmedina@cliente.com",
+  "phone": "8112233445",
+  "mobile": "8119988776",
+  "isPrimary": true
+}
+
+### Update customer contact
+PATCH {{baseUrl}}/customers/{{customerId}}/contacts/REPLACE_CONTACT_ID
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "email": "compras.norte@cliente.com",
+  "mobile": "8115566778",
+  "isPrimary": true
+}
+
+### Delete customer contact
+DELETE {{baseUrl}}/customers/{{customerId}}/contacts/REPLACE_CONTACT_ID
+Authorization: Bearer {{jwt}}

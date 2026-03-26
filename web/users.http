@@ -20,16 +20,16 @@ GET {{baseUrl}}/users?page=1&pageSize=10
 Authorization: Bearer {{sellerJwt}}
 
 ### Create user (admin)
-POST {{baseUrl}}/users
+POST https://cotizador-core-a7900f43ba87.herokuapp.com/api/users
 Authorization: Bearer {{jwt}}
 Content-Type: application/json
 
 {
-  "firstName": "New",
-  "lastName": "Seller",
-  "username": "nseller",
-  "email": "new.seller@tuvansa.com",
-  "password": "Tuvansa123!",
+  "firstName": "Erick",
+  "lastName": "Ramirez",
+  "username": "eeramirez",
+  "email": "eeramirez@tuvansa.com.mx",
+  "password": "Ag7348pp**",
   "role": "SELLER",
   "branchCode": "02",
   "phone": "8119999999",

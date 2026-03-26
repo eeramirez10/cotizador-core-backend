@@ -98,6 +98,12 @@ const quoteInclude = {
 } satisfies Prisma.QuoteInclude;
 
 const round4 = (value: number): number => Number(value.toFixed(4));
+const shouldMoveBackToQuoted = (status: string): boolean => status === "APPROVED" || status === "REJECTED";
+const addDaysToDateOnly = (baseDate: Date, days: number): Date => {
+  const dateOnly = new Date(Date.UTC(baseDate.getUTCFullYear(), baseDate.getUTCMonth(), baseDate.getUTCDate()));
+  dateOnly.setUTCDate(dateOnly.getUTCDate() + Math.max(0, days));
+  return dateOnly;
+};
 
 type DbClient = Prisma.TransactionClient | typeof prisma;
 
@@ -141,6 +147,10 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           subtotal: 0,
           tax: 0,
           total: 0,
+          deliveryPlace: params.deliveryPlace,
+          paymentTerms: params.paymentTerms,
+          validityDays: params.validityDays,
+          validUntil: addDaysToDateOnly(params.exchangeRateDate, params.validityDays),
           branchId: params.branchId,
           customerId: params.customerId,
           createdByUserId: params.createdByUserId,
@@ -185,8 +195,11 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         where,
         select: {
           id: true,
+          status: true,
           subtotal: true,
           taxRate: true,
+          exchangeRateDate: true,
+          validityDays: true,
         },
       });
       if (!existing) return null;
@@ -194,12 +207,17 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       const subtotal = Number(existing.subtotal.toString());
       const nextTaxRate =
         typeof params.data.taxRate === "number" ? params.data.taxRate : Number(existing.taxRate.toString());
+      const nextExchangeRateDate = params.data.exchangeRateDate ?? existing.exchangeRateDate;
+      const nextValidityDays =
+        typeof params.data.validityDays === "number" ? params.data.validityDays : existing.validityDays;
       const tax = round4(subtotal * nextTaxRate);
       const total = round4(subtotal + tax);
+      const validUntil = addDaysToDateOnly(nextExchangeRateDate, nextValidityDays);
 
       await tx.quote.update({
         where: { id: existing.id },
         data: {
+          status: shouldMoveBackToQuoted(existing.status) ? "QUOTED" : undefined,
           customerId: params.data.customerId,
           origin: params.data.origin,
           currency: params.data.currency,
@@ -208,10 +226,25 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           taxRate: params.data.taxRate,
           tax,
           total,
+          deliveryPlace: params.data.deliveryPlace,
+          paymentTerms: params.data.paymentTerms,
+          validityDays: params.data.validityDays,
+          validUntil,
           notes: params.data.notes,
           updatedByUserId: params.data.updatedByUserId,
         },
       });
+
+      if (shouldMoveBackToQuoted(existing.status)) {
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: existing.id,
+            status: "QUOTED",
+            note: "Quote edited and moved back to QUOTED status.",
+            actorUserId: params.data.updatedByUserId,
+          },
+        });
+      }
 
       return this.findByIdWithClient(existing.id, params.scope, tx);
     });
@@ -226,6 +259,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
         select: {
           id: true,
+          status: true,
           taxRate: true,
         },
       });
@@ -261,6 +295,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         Number(quote.taxRate.toString()),
         params.data.updatedByUserId
       );
+      await this.moveToQuotedAfterEditionIfNeeded(tx, quote.id, quote.status, params.data.updatedByUserId);
 
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
@@ -275,6 +310,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
         select: {
           id: true,
+          status: true,
           taxRate: true,
         },
       });
@@ -314,6 +350,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         Number(quote.taxRate.toString()),
         params.data.updatedByUserId
       );
+      await this.moveToQuotedAfterEditionIfNeeded(tx, quote.id, quote.status, params.data.updatedByUserId);
 
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
@@ -328,6 +365,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
         select: {
           id: true,
+          status: true,
           taxRate: true,
         },
       });
@@ -342,6 +380,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       if (deleted.count === 0) return null;
 
       await this.recalculateQuoteTotals(tx, quote.id, Number(quote.taxRate.toString()), params.updatedByUserId);
+      await this.moveToQuotedAfterEditionIfNeeded(tx, quote.id, quote.status, params.updatedByUserId);
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
   }
@@ -562,6 +601,32 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         tax,
         total,
         updatedByUserId,
+      },
+    });
+  }
+
+  private async moveToQuotedAfterEditionIfNeeded(
+    tx: Prisma.TransactionClient,
+    quoteId: string,
+    currentStatus: string,
+    actorUserId: string
+  ): Promise<void> {
+    if (!shouldMoveBackToQuoted(currentStatus)) return;
+
+    await tx.quote.update({
+      where: { id: quoteId },
+      data: {
+        status: "QUOTED",
+        updatedByUserId: actorUserId,
+      },
+    });
+
+    await tx.quoteEvent.create({
+      data: {
+        quoteId,
+        status: "QUOTED",
+        note: "Quote edited and moved back to QUOTED status.",
+        actorUserId,
       },
     });
   }

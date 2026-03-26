@@ -10,8 +10,7 @@ interface UpdateQuoteActorContext {
   branchId: string;
 }
 
-const isLockedStatus = (status: string): boolean =>
-  status === "APPROVED" || status === "REJECTED" || status === "CANCELLED";
+const isLockedStatus = (status: string): boolean => status === "CANCELLED";
 
 export class UpdateQuoteUseCase {
   constructor(
@@ -54,6 +53,9 @@ export class UpdateQuoteUseCase {
         exchangeRate: dto.exchangeRate,
         exchangeRateDate: dto.exchangeRateDate,
         taxRate: dto.taxRate,
+        deliveryPlace: dto.deliveryPlace,
+        paymentTerms: dto.paymentTerms,
+        validityDays: dto.validityDays,
         notes: dto.notes,
         updatedByUserId: actor.id,
       },
