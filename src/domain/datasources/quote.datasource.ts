@@ -82,6 +82,7 @@ export interface AddQuoteItemDatasourceParams {
     qty: number;
     stock: number | null;
     deliveryTime: string | null;
+    itemComment: string | null;
     cost: number;
     costCurrency: Currency;
     marginPct: number;
@@ -108,6 +109,7 @@ export interface UpdateQuoteItemDatasourceParams {
     qty?: number;
     stock?: number | null;
     deliveryTime?: string | null;
+    itemComment?: string | null;
     cost?: number;
     costCurrency?: Currency;
     marginPct?: number;

@@ -101,6 +101,7 @@ export class UpdateQuoteItemUseCase {
         qty,
         stock: dto.stock !== undefined ? dto.stock : existingItem.stock,
         deliveryTime: dto.deliveryTime !== undefined ? dto.deliveryTime : existingItem.deliveryTime,
+        itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         cost: round4(cost),
         costCurrency: dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency,
         marginPct,

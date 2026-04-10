@@ -11,6 +11,7 @@ interface UpdateQuoteItemRequestDtoProps {
   qty?: number;
   stock?: number | null;
   deliveryTime?: string | null;
+  itemComment?: string | null;
   cost?: number;
   costCurrency?: Currency;
   marginPct?: number;
@@ -30,6 +31,7 @@ export class UpdateQuoteItemRequestDto {
   public readonly qty?: number;
   public readonly stock?: number | null;
   public readonly deliveryTime?: string | null;
+  public readonly itemComment?: string | null;
   public readonly cost?: number;
   public readonly costCurrency?: Currency;
   public readonly marginPct?: number;
@@ -48,6 +50,7 @@ export class UpdateQuoteItemRequestDto {
     this.qty = props.qty;
     this.stock = props.stock;
     this.deliveryTime = props.deliveryTime;
+    this.itemComment = props.itemComment;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.marginPct = props.marginPct;
@@ -122,6 +125,7 @@ export class UpdateQuoteItemRequestDto {
         qty,
         stock: typeof stock === "undefined" ? undefined : stock,
         deliveryTime: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.deliveryTime),
+        itemComment: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.itemComment),
         cost,
         costCurrency,
         marginPct,

@@ -277,6 +277,7 @@ model QuoteItem {
   qty                  Decimal  @db.Decimal(14, 4)
   stock                Decimal? @db.Decimal(14, 4)
   deliveryTime         String?  @map("delivery_time") @db.VarChar(80)
+  itemComment          String?  @map("item_comment") @db.VarChar(500)
   cost                 Decimal  @db.Decimal(14, 4)
   costCurrency         Currency @map("cost_currency")
   marginPct            Decimal  @map("margin_pct") @db.Decimal(10, 4)

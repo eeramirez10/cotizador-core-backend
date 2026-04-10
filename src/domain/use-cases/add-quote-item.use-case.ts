@@ -81,6 +81,7 @@ export class AddQuoteItemUseCase {
         qty: dto.qty,
         stock: dto.stock,
         deliveryTime: dto.deliveryTime,
+        itemComment: dto.itemComment,
         cost: round4(dto.cost),
         costCurrency: dto.costCurrency,
         marginPct,

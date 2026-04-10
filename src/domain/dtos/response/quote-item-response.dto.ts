@@ -17,6 +17,7 @@ export class QuoteItemResponseDto {
       qty: this.item.qty,
       stock: this.item.stock,
       deliveryTime: this.item.deliveryTime,
+      itemComment: this.item.itemComment,
       cost: this.item.cost,
       costCurrency: this.item.costCurrency,
       marginPct: this.item.marginPct,

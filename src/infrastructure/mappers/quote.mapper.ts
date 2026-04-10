@@ -84,6 +84,7 @@ interface QuoteRow {
     qty: number | DecimalLike;
     stock: number | DecimalLike | null;
     deliveryTime: string | null;
+    itemComment: string | null;
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
@@ -180,6 +181,7 @@ export class QuoteMapper {
         qty: Number(toNumber(item.qty)),
         stock: toNumber(item.stock),
         deliveryTime: item.deliveryTime,
+        itemComment: item.itemComment,
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),

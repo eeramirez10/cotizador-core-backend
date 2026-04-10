@@ -22,6 +22,7 @@ export interface QuoteItemEntity {
   qty: number;
   stock: number | null;
   deliveryTime: string | null;
+  itemComment: string | null;
   cost: number;
   costCurrency: Currency;
   marginPct: number;

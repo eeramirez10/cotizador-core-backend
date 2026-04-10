@@ -95,6 +95,7 @@ export class CreateQuoteFromExtractionUseCase {
           qty: round4(qty),
           stock: null,
           deliveryTime: inferredRequiresReview ? "Requires review" : "To be defined",
+          itemComment: null,
           cost: 0,
           costCurrency: dto.currency,
           marginPct: 0,

@@ -57,6 +57,7 @@ export type QuoteItemMinAggregateOutputType = {
   qty: runtime.Decimal | null
   stock: runtime.Decimal | null
   deliveryTime: string | null
+  itemComment: string | null
   cost: runtime.Decimal | null
   costCurrency: $Enums.Currency | null
   marginPct: runtime.Decimal | null
@@ -81,6 +82,7 @@ export type QuoteItemMaxAggregateOutputType = {
   qty: runtime.Decimal | null
   stock: runtime.Decimal | null
   deliveryTime: string | null
+  itemComment: string | null
   cost: runtime.Decimal | null
   costCurrency: $Enums.Currency | null
   marginPct: runtime.Decimal | null
@@ -105,6 +107,7 @@ export type QuoteItemCountAggregateOutputType = {
   qty: number
   stock: number
   deliveryTime: number
+  itemComment: number
   cost: number
   costCurrency: number
   marginPct: number
@@ -149,6 +152,7 @@ export type QuoteItemMinAggregateInputType = {
   qty?: true
   stock?: true
   deliveryTime?: true
+  itemComment?: true
   cost?: true
   costCurrency?: true
   marginPct?: true
@@ -173,6 +177,7 @@ export type QuoteItemMaxAggregateInputType = {
   qty?: true
   stock?: true
   deliveryTime?: true
+  itemComment?: true
   cost?: true
   costCurrency?: true
   marginPct?: true
@@ -197,6 +202,7 @@ export type QuoteItemCountAggregateInputType = {
   qty?: true
   stock?: true
   deliveryTime?: true
+  itemComment?: true
   cost?: true
   costCurrency?: true
   marginPct?: true
@@ -308,6 +314,7 @@ export type QuoteItemGroupByOutputType = {
   qty: runtime.Decimal
   stock: runtime.Decimal | null
   deliveryTime: string | null
+  itemComment: string | null
   cost: runtime.Decimal
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal
@@ -355,6 +362,7 @@ export type QuoteItemWhereInput = {
   qty?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
+  itemComment?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -381,6 +389,7 @@ export type QuoteItemOrderByWithRelationInput = {
   qty?: Prisma.SortOrder
   stock?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  itemComment?: Prisma.SortOrderInput | Prisma.SortOrder
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
@@ -410,6 +419,7 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   qty?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
+  itemComment?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -436,6 +446,7 @@ export type QuoteItemOrderByWithAggregationInput = {
   qty?: Prisma.SortOrder
   stock?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  itemComment?: Prisma.SortOrderInput | Prisma.SortOrder
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
@@ -468,6 +479,7 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
   qty?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
+  itemComment?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
   cost?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyWithAggregatesFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -490,6 +502,7 @@ export type QuoteItemCreateInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -516,6 +529,7 @@ export type QuoteItemUncheckedCreateInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -538,6 +552,7 @@ export type QuoteItemUpdateInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -564,6 +579,7 @@ export type QuoteItemUncheckedUpdateInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -588,6 +604,7 @@ export type QuoteItemCreateManyInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -610,6 +627,7 @@ export type QuoteItemUpdateManyMutationInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -634,6 +652,7 @@ export type QuoteItemUncheckedUpdateManyInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -668,6 +687,7 @@ export type QuoteItemCountOrderByAggregateInput = {
   qty?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  itemComment?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
@@ -701,6 +721,7 @@ export type QuoteItemMaxOrderByAggregateInput = {
   qty?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  itemComment?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
@@ -725,6 +746,7 @@ export type QuoteItemMinOrderByAggregateInput = {
   qty?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  itemComment?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
@@ -840,6 +862,7 @@ export type QuoteItemCreateWithoutProductInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -864,6 +887,7 @@ export type QuoteItemUncheckedCreateWithoutProductInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -917,6 +941,7 @@ export type QuoteItemScalarWhereInput = {
   qty?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
+  itemComment?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -939,6 +964,7 @@ export type QuoteItemCreateWithoutQuoteInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -963,6 +989,7 @@ export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1012,6 +1039,7 @@ export type QuoteItemCreateManyProductInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1034,6 +1062,7 @@ export type QuoteItemUpdateWithoutProductInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1058,6 +1087,7 @@ export type QuoteItemUncheckedUpdateWithoutProductInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1081,6 +1111,7 @@ export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1104,6 +1135,7 @@ export type QuoteItemCreateManyQuoteInput = {
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: string | null
+  itemComment?: string | null
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1126,6 +1158,7 @@ export type QuoteItemUpdateWithoutQuoteInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1150,6 +1183,7 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1173,6 +1207,7 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1199,6 +1234,7 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   qty?: boolean
   stock?: boolean
   deliveryTime?: boolean
+  itemComment?: boolean
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
@@ -1225,6 +1261,7 @@ export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   qty?: boolean
   stock?: boolean
   deliveryTime?: boolean
+  itemComment?: boolean
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
@@ -1251,6 +1288,7 @@ export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   qty?: boolean
   stock?: boolean
   deliveryTime?: boolean
+  itemComment?: boolean
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
@@ -1277,6 +1315,7 @@ export type QuoteItemSelectScalar = {
   qty?: boolean
   stock?: boolean
   deliveryTime?: boolean
+  itemComment?: boolean
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
@@ -1288,7 +1327,7 @@ export type QuoteItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "cost" | "costCurrency" | "marginPct" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
+export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "cost" | "costCurrency" | "marginPct" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   product?: boolean | Prisma.QuoteItem$productArgs<ExtArgs>
@@ -1321,6 +1360,7 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     qty: runtime.Decimal
     stock: runtime.Decimal | null
     deliveryTime: string | null
+    itemComment: string | null
     cost: runtime.Decimal
     costCurrency: $Enums.Currency
     marginPct: runtime.Decimal
@@ -1767,6 +1807,7 @@ export interface QuoteItemFieldRefs {
   readonly qty: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly stock: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly deliveryTime: Prisma.FieldRef<"QuoteItem", 'String'>
+  readonly itemComment: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly cost: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly costCurrency: Prisma.FieldRef<"QuoteItem", 'Currency'>
   readonly marginPct: Prisma.FieldRef<"QuoteItem", 'Decimal'>

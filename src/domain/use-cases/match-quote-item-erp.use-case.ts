@@ -89,6 +89,7 @@ export class MatchQuoteItemErpUseCase {
         qty,
         stock: dto.stock,
         deliveryTime: dto.deliveryTime ?? existingItem.deliveryTime,
+        itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         cost,
         costCurrency: dto.costCurrency,
         marginPct,

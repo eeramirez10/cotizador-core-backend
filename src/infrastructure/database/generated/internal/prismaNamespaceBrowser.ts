@@ -231,6 +231,7 @@ export const QuoteItemScalarFieldEnum = {
   qty: 'qty',
   stock: 'stock',
   deliveryTime: 'deliveryTime',
+  itemComment: 'itemComment',
   cost: 'cost',
   costCurrency: 'costCurrency',
   marginPct: 'marginPct',

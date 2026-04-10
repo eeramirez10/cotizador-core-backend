@@ -10,6 +10,7 @@ interface MatchQuoteItemErpRequestDtoProps {
   cost: number;
   costCurrency: Currency;
   deliveryTime: string | null;
+  itemComment?: string | null;
   qty?: number;
   unitPrice?: number;
   marginPct?: number;
@@ -25,6 +26,7 @@ export class MatchQuoteItemErpRequestDto {
   public readonly cost: number;
   public readonly costCurrency: Currency;
   public readonly deliveryTime: string | null;
+  public readonly itemComment?: string | null;
   public readonly qty?: number;
   public readonly unitPrice?: number;
   public readonly marginPct?: number;
@@ -39,6 +41,7 @@ export class MatchQuoteItemErpRequestDto {
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.deliveryTime = props.deliveryTime;
+    this.itemComment = props.itemComment;
     this.qty = props.qty;
     this.unitPrice = props.unitPrice;
     this.marginPct = props.marginPct;
@@ -105,6 +108,7 @@ export class MatchQuoteItemErpRequestDto {
         cost,
         costCurrency: costCurrencyRaw as Currency,
         deliveryTime: MatchQuoteItemErpRequestDto.normalizeNullableString(body.deliveryTime),
+        itemComment: MatchQuoteItemErpRequestDto.normalizeNullableString(body.itemComment),
         qty,
         unitPrice,
         marginPct,
