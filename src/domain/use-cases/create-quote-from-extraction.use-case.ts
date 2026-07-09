@@ -75,7 +75,9 @@ export class CreateQuoteFromExtractionUseCase {
       const qty = item.quantity ?? 1;
       const normalizedUnit = item.unitNormalized ?? item.unitOriginal ?? "N/A";
       const description =
-        item.descriptionNormalized ?? item.descriptionOriginal ?? "Descripcion pendiente de revision";
+        (item.descriptionNormalized ?? item.descriptionOriginal ?? "Descripcion pendiente de revision")
+          .trim()
+          .toUpperCase();
       const inferredRequiresReview =
         item.requiresReview || item.quantity === null || !item.unitNormalized;
 

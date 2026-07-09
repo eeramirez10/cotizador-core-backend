@@ -13,7 +13,8 @@ interface CreateLocalTempProductActorContext {
 const normalizeText = (value: string): string =>
   value
     .trim()
-    .replace(/\s+/g, " ");
+    .replace(/\s+/g, " ")
+    .toUpperCase();
 
 export class CreateLocalTempProductUseCase {
   constructor(

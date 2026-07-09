@@ -49,6 +49,24 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "QUOTED" && quote.sourceChannel === "UNSPECIFIED") {
       throw new Error("Quote source channel is required before moving to QUOTED.");
     }
+    if (dto.status === "QUOTED") {
+      const unlinkedItems = quote.items.filter(
+        (item) => !item.productId && !item.externalProductCode
+      );
+      if (unlinkedItems.length > 0) {
+        throw new Error("All quote items must be linked to an ERP or local product before moving to QUOTED.");
+      }
+
+      const reviewItems = quote.items.filter((item) => item.requiresReview);
+      if (reviewItems.length > 0) {
+        throw new Error("All quote items must be reviewed before moving to QUOTED.");
+      }
+
+      const itemsWithoutSellerPrice = quote.items.filter((item) => item.unitPrice <= 0);
+      if (itemsWithoutSellerPrice.length > 0) {
+        throw new Error("All quote items must have a seller price before moving to QUOTED.");
+      }
+    }
 
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,
