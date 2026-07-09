@@ -1,4 +1,5 @@
 import {
+  ActivateUserByIdDatasourceParams,
   CreateUserDatasourceParams,
   FindUserByIdDatasourceParams,
   FindUsersDatasourceParams,
@@ -103,45 +104,60 @@ export class PrismaUserDatasource implements UserDatasource {
     return !!user;
   }
 
-  async create(params: CreateUserDatasourceParams): Promise<UserEntity> {
-    const row = await prisma.user.create({
-      data: {
-        firstName: params.firstName,
-        lastName: params.lastName,
-        username: params.username,
-        email: params.email,
-        passwordHash: params.passwordHash,
-        role: params.role,
-        phone: params.phone,
-        erpUserCode: params.erpUserCode,
-        branchId: params.branchId,
-        isActive: true,
+  async existsByPhone(phone: string): Promise<boolean> {
+    const user = await prisma.user.findFirst({
+      where: {
+        phone: phone.trim(),
       },
-      include: userInclude,
+      select: { id: true },
     });
+
+    return !!user;
+  }
+
+  async create(params: CreateUserDatasourceParams): Promise<UserEntity> {
+    const row = await this.mapUniqueError(async () =>
+      prisma.user.create({
+        data: {
+          firstName: params.firstName,
+          lastName: params.lastName,
+          username: params.username,
+          email: params.email,
+          passwordHash: params.passwordHash,
+          role: params.role,
+          phone: params.phone,
+          erpUserCode: params.erpUserCode,
+          branchId: params.branchId,
+          isActive: true,
+        },
+        include: userInclude,
+      })
+    );
 
     return UserMapper.toEntity(row);
   }
 
   async updateById(params: UpdateUserByIdDatasourceParams): Promise<UserEntity | null> {
-    const updated = await prisma.user.updateMany({
-      where: {
-        id: params.id,
-        isActive: true,
-        ...this.buildScopeWhere(params.scope),
-      },
-      data: {
-        firstName: params.data.firstName,
-        lastName: params.data.lastName,
-        username: params.data.username,
-        email: params.data.email,
-        role: params.data.role,
-        phone: params.data.phone,
-        erpUserCode: params.data.erpUserCode,
-        branchId: params.data.branchId,
-        ...(params.data.passwordHash ? { passwordHash: params.data.passwordHash } : {}),
-      },
-    });
+    const updated = await this.mapUniqueError(async () =>
+      prisma.user.updateMany({
+        where: {
+          id: params.id,
+          isActive: true,
+          ...this.buildScopeWhere(params.scope),
+        },
+        data: {
+          firstName: params.data.firstName,
+          lastName: params.data.lastName,
+          username: params.data.username,
+          email: params.data.email,
+          role: params.data.role,
+          phone: params.data.phone,
+          erpUserCode: params.data.erpUserCode,
+          branchId: params.data.branchId,
+          ...(params.data.passwordHash ? { passwordHash: params.data.passwordHash } : {}),
+        },
+      })
+    );
 
     if (updated.count === 0) return null;
     return this.findById({
@@ -165,6 +181,21 @@ export class PrismaUserDatasource implements UserDatasource {
     return updated.count > 0;
   }
 
+  async activateById(params: ActivateUserByIdDatasourceParams): Promise<boolean> {
+    const updated = await prisma.user.updateMany({
+      where: {
+        id: params.id,
+        isActive: false,
+        ...this.buildScopeWhere(params.scope),
+      },
+      data: {
+        isActive: true,
+      },
+    });
+
+    return updated.count > 0;
+  }
+
   private buildScopeWhere(scope: UserAccessScope): Prisma.UserWhereInput {
     if (scope.role === "ADMIN") {
       return {};
@@ -176,5 +207,25 @@ export class PrismaUserDatasource implements UserDatasource {
         not: "ADMIN",
       },
     };
+  }
+
+  private async mapUniqueError<T>(operation: () => Promise<T>): Promise<T> {
+    try {
+      return await operation();
+    } catch (error) {
+      if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") {
+        throw error;
+      }
+
+      const target = JSON.stringify(error.meta?.target || "").toLowerCase();
+      if (target.includes("username")) throw new Error("Username already exists.");
+      if (target.includes("email")) throw new Error("Email already exists.");
+      if (target.includes("phone")) throw new Error("Phone already exists.");
+      if (target.includes("erp_user_code") || target.includes("erpusercode")) {
+        throw new Error("ERP user code already exists.");
+      }
+
+      throw new Error("User unique field already exists.");
+    }
   }
 }

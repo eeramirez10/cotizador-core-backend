@@ -63,9 +63,11 @@ export class UpdateUserRequestDto {
     if (!lastName) return ["lastName is required."];
     if (!username) return ["username is required."];
     if (!email) return ["email is required."];
+    if (!UpdateUserRequestDto.isValidEmail(email)) return ["email is invalid."];
     if (!branchCode) return ["branchCode is required."];
     if (password && password.length < 8) return ["password must contain at least 8 characters."];
     if (!Object.values(UserRole).includes(roleRaw as UserRole)) return ["role is invalid."];
+    if (phone && !UpdateUserRequestDto.isValidPhone(phone)) return ["phone is invalid."];
 
     return [
       ,
@@ -81,5 +83,16 @@ export class UpdateUserRequestDto {
         password,
       }),
     ];
+  }
+
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
   }
 }

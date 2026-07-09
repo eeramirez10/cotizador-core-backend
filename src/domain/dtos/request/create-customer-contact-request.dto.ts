@@ -41,6 +41,9 @@ export class CreateCustomerContactRequestDto {
     if (!email && !phone && !mobile) {
       return ["At least one contact field is required: email, phone, or mobile."];
     }
+    if (email && !CreateCustomerContactRequestDto.isValidEmail(email)) return ["email is invalid."];
+    if (phone && !CreateCustomerContactRequestDto.isValidPhone(phone)) return ["phone is invalid."];
+    if (mobile && !CreateCustomerContactRequestDto.isValidPhone(mobile)) return ["mobile is invalid."];
 
     return [
       ,
@@ -66,5 +69,15 @@ export class CreateCustomerContactRequestDto {
     const trimmed = value.trim().toLowerCase();
     return trimmed.length > 0 ? trimmed : null;
   }
-}
 
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
+  }
+}

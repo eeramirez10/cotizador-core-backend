@@ -57,6 +57,11 @@ export class UpdateUserUseCase {
       if (usernameExists) throw new Error("Username already exists.");
     }
 
+    if (dto.phone && dto.phone !== target.phone) {
+      const phoneExists = await this.userRepository.existsByPhone(dto.phone);
+      if (phoneExists) throw new Error("Phone already exists.");
+    }
+
     if (dto.erpUserCode && dto.erpUserCode !== target.erpUserCode) {
       const erpCodeExists = await this.userRepository.existsByErpUserCode(dto.erpUserCode);
       if (erpCodeExists) throw new Error("ERP user code already exists.");

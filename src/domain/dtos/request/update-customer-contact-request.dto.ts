@@ -41,6 +41,9 @@ export class UpdateCustomerContactRequestDto {
     });
 
     if (typeof body.name !== "undefined" && !dto.name) return ["name cannot be empty."];
+    if (dto.email && !UpdateCustomerContactRequestDto.isValidEmail(dto.email)) return ["email is invalid."];
+    if (dto.phone && !UpdateCustomerContactRequestDto.isValidPhone(dto.phone)) return ["phone is invalid."];
+    if (dto.mobile && !UpdateCustomerContactRequestDto.isValidPhone(dto.mobile)) return ["mobile is invalid."];
 
     const hasAnyField = Object.keys(body).length > 0;
     if (!hasAnyField) return ["At least one field is required to update contact."];
@@ -67,5 +70,15 @@ export class UpdateCustomerContactRequestDto {
     const trimmed = value.trim().toLowerCase();
     return trimmed.length > 0 ? trimmed : null;
   }
-}
 
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
+  }
+}

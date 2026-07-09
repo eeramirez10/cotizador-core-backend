@@ -88,10 +88,17 @@ export class CreateCustomerRequestDto {
     const firstName = CreateCustomerRequestDto.normalizeRequiredString(body.firstName);
     const lastName = CreateCustomerRequestDto.normalizeRequiredString(body.lastName);
     const whatsapp = CreateCustomerRequestDto.normalizeRequiredString(body.whatsapp);
+    const email = CreateCustomerRequestDto.normalizeEmail(body.email);
 
     if (!firstName) return ["firstName is required."];
     if (!lastName) return ["lastName is required."];
     if (source !== "ERP" && !whatsapp) return ["whatsapp is required."];
+    if (!email) return ["email is required."];
+    if (!CreateCustomerRequestDto.isValidEmail(email)) return ["email is invalid."];
+    if (whatsapp && !CreateCustomerRequestDto.isValidPhone(whatsapp)) return ["whatsapp is invalid."];
+
+    const phone = CreateCustomerRequestDto.normalizeNullableString(body.phone);
+    if (phone && !CreateCustomerRequestDto.isValidPhone(phone)) return ["phone is invalid."];
 
     const profileStatusRaw =
       typeof body.profileStatus === "string" ? body.profileStatus.trim().toUpperCase() : "PROSPECT";
@@ -120,8 +127,8 @@ export class CreateCustomerRequestDto {
         lastName,
         displayName: CreateCustomerRequestDto.normalizeNullableString(body.displayName),
         legalName: CreateCustomerRequestDto.normalizeNullableString(body.legalName),
-        email: CreateCustomerRequestDto.normalizeEmail(body.email),
-        phone: CreateCustomerRequestDto.normalizeNullableString(body.phone),
+        email,
+        phone,
         whatsapp,
         taxId: CreateCustomerRequestDto.normalizeNullableString(body.taxId),
         taxRegime: CreateCustomerRequestDto.normalizeNullableString(body.taxRegime),
@@ -146,5 +153,16 @@ export class CreateCustomerRequestDto {
 
   private static normalizeEmail(value: unknown): string | null {
     return typeof value === "string" && value.trim().length > 0 ? value.trim().toLowerCase() : null;
+  }
+
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
   }
 }

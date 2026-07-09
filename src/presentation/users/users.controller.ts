@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ActivateUserUseCase } from "../../domain/use-cases/activate-user.use-case";
 import { CreateUserRequestDto } from "../../domain/dtos/request/create-user-request.dto";
 import { GetUsersQueryRequestDto } from "../../domain/dtos/request/get-users-query-request.dto";
 import { UpdateUserRequestDto } from "../../domain/dtos/request/update-user-request.dto";
@@ -12,7 +13,8 @@ export class UsersController {
     private readonly getUsersUseCase: GetUsersUseCase,
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deactivateUserUseCase: DeactivateUserUseCase
+    private readonly deactivateUserUseCase: DeactivateUserUseCase,
+    private readonly activateUserUseCase: ActivateUserUseCase
   ) {}
 
   list = async (req: Request, res: Response): Promise<void> => {
@@ -118,6 +120,30 @@ export class UsersController {
     }
   };
 
+  activate = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    const userId = String(req.params.id ?? "").trim();
+    if (!userId) {
+      res.status(400).json({ error: "User id is required." });
+      return;
+    }
+
+    try {
+      await this.activateUserUseCase.execute(userId, {
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+
+      res.status(204).send();
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while activating user.");
+    }
+  };
+
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
     const message = error instanceof Error ? error.message : fallbackMessage;
 
@@ -129,6 +155,7 @@ export class UsersController {
     if (
       message === "Email already exists." ||
       message === "Username already exists." ||
+      message === "Phone already exists." ||
       message === "ERP user code already exists."
     ) {
       res.status(409).json({ error: message });

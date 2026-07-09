@@ -98,8 +98,13 @@ export class CustomersController {
         branchId: req.user.branchId,
       });
       res.status(201).json(result.toJSON());
-    } catch {
-      res.status(500).json({ error: "Unexpected error while creating customer." });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unexpected error while creating customer.";
+      if (message.startsWith("Ya existe un cliente")) {
+        res.status(400).json({ error: message });
+        return;
+      }
+      res.status(500).json({ error: message });
     }
   };
 

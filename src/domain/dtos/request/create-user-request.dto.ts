@@ -60,10 +60,12 @@ export class CreateUserRequestDto {
     if (!lastName) return ["lastName is required."];
     if (!username) return ["username is required."];
     if (!email) return ["email is required."];
+    if (!CreateUserRequestDto.isValidEmail(email)) return ["email is invalid."];
     if (!password) return ["password is required."];
     if (password.length < 8) return ["password must contain at least 8 characters."];
     if (!branchCode) return ["branchCode is required."];
     if (!Object.values(UserRole).includes(roleRaw as UserRole)) return ["role is invalid."];
+    if (phone && !CreateUserRequestDto.isValidPhone(phone)) return ["phone is invalid."];
 
     return [
       ,
@@ -79,5 +81,16 @@ export class CreateUserRequestDto {
         erpUserCode,
       }),
     ];
+  }
+
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
   }
 }

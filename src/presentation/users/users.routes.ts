@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { ActivateUserUseCase } from "../../domain/use-cases/activate-user.use-case";
 import { CreateUserUseCase } from "../../domain/use-cases/create-user.use-case";
 import { DeactivateUserUseCase } from "../../domain/use-cases/deactivate-user.use-case";
 import { GetUsersUseCase } from "../../domain/use-cases/get-users.use-case";
@@ -25,18 +26,21 @@ export class UsersRoutes {
     const createUserUseCase = new CreateUserUseCase(userRepository, branchRepository);
     const updateUserUseCase = new UpdateUserUseCase(userRepository, branchRepository);
     const deactivateUserUseCase = new DeactivateUserUseCase(userRepository);
+    const activateUserUseCase = new ActivateUserUseCase(userRepository);
 
     const controller = new UsersController(
       getUsersUseCase,
       createUserUseCase,
       updateUserUseCase,
-      deactivateUserUseCase
+      deactivateUserUseCase,
+      activateUserUseCase
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.list);
     router.post("/", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.create);
     router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.update);
     router.patch("/:id/deactivate", requireAuth, requireRoles("ADMIN"), controller.deactivate);
+    router.patch("/:id/activate", requireAuth, requireRoles("ADMIN"), controller.activate);
 
     return router;
   }

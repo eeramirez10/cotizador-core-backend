@@ -107,6 +107,10 @@ export class UpdateCustomerRequestDto {
     if (typeof body.firstName !== "undefined" && !dto.firstName) return ["firstName cannot be empty."];
     if (typeof body.lastName !== "undefined" && !dto.lastName) return ["lastName cannot be empty."];
     if (typeof body.whatsapp !== "undefined" && !dto.whatsapp) return ["whatsapp cannot be empty."];
+    if (typeof body.email !== "undefined" && !dto.email) return ["email cannot be empty."];
+    if (dto.email && !UpdateCustomerRequestDto.isValidEmail(dto.email)) return ["email is invalid."];
+    if (dto.whatsapp && !UpdateCustomerRequestDto.isValidPhone(dto.whatsapp)) return ["whatsapp is invalid."];
+    if (dto.phone && !UpdateCustomerRequestDto.isValidPhone(dto.phone)) return ["phone is invalid."];
 
     const hasAnyField = Object.keys(body).length > 0;
     if (!hasAnyField) {
@@ -141,5 +145,16 @@ export class UpdateCustomerRequestDto {
   private static normalizeEmailWhenDefined(value: unknown): string | null | undefined {
     if (typeof value === "undefined") return undefined;
     return typeof value === "string" && value.trim().length > 0 ? value.trim().toLowerCase() : null;
+  }
+
+  private static isValidEmail(value: string): boolean {
+    return /^\S+@\S+\.\S+$/.test(value);
+  }
+
+  private static isValidPhone(value: string): boolean {
+    const trimmed = value.trim();
+    if (!/^\+?[\d\s().-]+$/.test(trimmed)) return false;
+    const digits = trimmed.replace(/\D/g, "");
+    return digits.length >= 10 && digits.length <= 15;
   }
 }

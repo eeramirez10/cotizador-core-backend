@@ -3,6 +3,7 @@ import {
   FindUserByIdDatasourceParams,
   FindUsersDatasourceParams,
   FindUsersDatasourceResult,
+  ActivateUserByIdDatasourceParams,
   SoftDeactivateUserByIdDatasourceParams,
   UpdateUserByIdDatasourceParams,
 } from "../datasources/user.datasource";
@@ -14,7 +15,9 @@ export abstract class UserRepository {
   abstract existsByEmail(email: string): Promise<boolean>;
   abstract existsByUsername(username: string): Promise<boolean>;
   abstract existsByErpUserCode(erpUserCode: string): Promise<boolean>;
+  abstract existsByPhone(phone: string): Promise<boolean>;
   abstract create(params: CreateUserDatasourceParams): Promise<UserEntity>;
   abstract updateById(params: UpdateUserByIdDatasourceParams): Promise<UserEntity | null>;
   abstract softDeactivateById(params: SoftDeactivateUserByIdDatasourceParams): Promise<boolean>;
+  abstract activateById(params: ActivateUserByIdDatasourceParams): Promise<boolean>;
 }

@@ -28,13 +28,15 @@ export class CreateUserUseCase {
       throw new Error("MANAGER can only assign users from own branch.");
     }
 
-    const [emailExists, usernameExists] = await Promise.all([
+    const [emailExists, usernameExists, phoneExists] = await Promise.all([
       this.userRepository.existsByEmail(dto.email),
       this.userRepository.existsByUsername(dto.username),
+      dto.phone ? this.userRepository.existsByPhone(dto.phone) : Promise.resolve(false),
     ]);
 
     if (emailExists) throw new Error("Email already exists.");
     if (usernameExists) throw new Error("Username already exists.");
+    if (phoneExists) throw new Error("Phone already exists.");
 
     if (dto.erpUserCode) {
       const erpCodeExists = await this.userRepository.existsByErpUserCode(dto.erpUserCode);

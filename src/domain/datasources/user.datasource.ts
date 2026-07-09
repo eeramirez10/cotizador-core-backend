@@ -59,13 +59,20 @@ export interface SoftDeactivateUserByIdDatasourceParams {
   scope: UserAccessScope;
 }
 
+export interface ActivateUserByIdDatasourceParams {
+  id: string;
+  scope: UserAccessScope;
+}
+
 export abstract class UserDatasource {
   abstract findPaginated(params: FindUsersDatasourceParams): Promise<FindUsersDatasourceResult>;
   abstract findById(params: FindUserByIdDatasourceParams): Promise<UserEntity | null>;
   abstract existsByEmail(email: string): Promise<boolean>;
   abstract existsByUsername(username: string): Promise<boolean>;
   abstract existsByErpUserCode(erpUserCode: string): Promise<boolean>;
+  abstract existsByPhone(phone: string): Promise<boolean>;
   abstract create(params: CreateUserDatasourceParams): Promise<UserEntity>;
   abstract updateById(params: UpdateUserByIdDatasourceParams): Promise<UserEntity | null>;
   abstract softDeactivateById(params: SoftDeactivateUserByIdDatasourceParams): Promise<boolean>;
+  abstract activateById(params: ActivateUserByIdDatasourceParams): Promise<boolean>;
 }

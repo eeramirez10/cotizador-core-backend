@@ -89,14 +89,24 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       params.source === "ERP" && !!params.externalId?.trim() && !!params.externalSystem?.trim();
 
     if (!isErpIdentity) {
-      const row = await prisma.customer.create({
-        data: this.buildCreateData(params, {
-          attachActorReferences: true,
-        }),
-        include: customerInclude,
-      });
+      try {
+        await this.assertUniqueCustomerFields(prisma, {
+          email: params.email,
+          whatsapp: params.whatsapp,
+          taxId: params.taxId,
+        });
 
-      return CustomerMapper.toEntity(row);
+        const row = await prisma.customer.create({
+          data: this.buildCreateData(params, {
+            attachActorReferences: true,
+          }),
+          include: customerInclude,
+        });
+
+        return CustomerMapper.toEntity(row);
+      } catch (error) {
+        throw this.mapCustomerUniqueError(error);
+      }
     }
 
     const normalizedExternalId = params.externalId!.trim();
@@ -113,6 +123,16 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           include: customerInclude,
           orderBy: [{ isActive: "desc" }, { createdAt: "asc" }, { id: "asc" }],
         });
+
+        await this.assertUniqueCustomerFields(
+          tx,
+          {
+            email: params.email,
+            whatsapp: params.whatsapp,
+            taxId: params.taxId,
+          },
+          existing?.id
+        );
 
         if (!existing) {
           return tx.customer.create({
@@ -137,6 +157,9 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
 
       return CustomerMapper.toEntity(customer);
     } catch (error) {
+      const mappedError = this.mapCustomerUniqueError(error);
+      if (mappedError !== error) throw mappedError;
+
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
         const existing = await prisma.customer.findFirst({
           where: {
@@ -170,43 +193,57 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
   }
 
   async updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null> {
-    const updated = await prisma.customer.updateMany({
-      where: {
+    try {
+      await this.assertUniqueCustomerFields(
+        prisma,
+        {
+          email: params.data.email,
+          whatsapp: params.data.whatsapp,
+          taxId: params.data.taxId,
+        },
+        params.id
+      );
+
+      const updated = await prisma.customer.updateMany({
+        where: {
+          id: params.id,
+          isActive: true,
+          ...this.buildWriteScopeWhere(params.scope),
+        },
+        data: {
+          source: params.data.source,
+          externalId: params.data.externalId,
+          externalSystem: params.data.externalSystem,
+          code: params.data.code,
+          firstName: params.data.firstName,
+          lastName: params.data.lastName,
+          displayName: params.data.displayName,
+          legalName: params.data.legalName,
+          email: params.data.email,
+          phone: params.data.phone,
+          whatsapp: params.data.whatsapp,
+          taxId: params.data.taxId,
+          taxRegime: params.data.taxRegime,
+          billingStreet: params.data.billingStreet,
+          billingCity: params.data.billingCity,
+          billingState: params.data.billingState,
+          billingPostalCode: params.data.billingPostalCode,
+          billingCountry: params.data.billingCountry,
+          profileStatus: params.data.profileStatus,
+          notes: params.data.notes,
+          updatedByUserId: params.data.updatedByUserId,
+        },
+      });
+
+      if (updated.count === 0) return null;
+
+      return this.findById({
         id: params.id,
-        isActive: true,
-        ...this.buildWriteScopeWhere(params.scope),
-      },
-      data: {
-        source: params.data.source,
-        externalId: params.data.externalId,
-        externalSystem: params.data.externalSystem,
-        code: params.data.code,
-        firstName: params.data.firstName,
-        lastName: params.data.lastName,
-        displayName: params.data.displayName,
-        legalName: params.data.legalName,
-        email: params.data.email,
-        phone: params.data.phone,
-        whatsapp: params.data.whatsapp,
-        taxId: params.data.taxId,
-        taxRegime: params.data.taxRegime,
-        billingStreet: params.data.billingStreet,
-        billingCity: params.data.billingCity,
-        billingState: params.data.billingState,
-        billingPostalCode: params.data.billingPostalCode,
-        billingCountry: params.data.billingCountry,
-        profileStatus: params.data.profileStatus,
-        notes: params.data.notes,
-        updatedByUserId: params.data.updatedByUserId,
-      },
-    });
-
-    if (updated.count === 0) return null;
-
-    return this.findById({
-      id: params.id,
-      scope: params.scope,
-    });
+        scope: params.scope,
+      });
+    } catch (error) {
+      throw this.mapCustomerUniqueError(error);
+    }
   }
 
   async softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean> {
@@ -337,6 +374,71 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       await this.syncCustomerFromPrimaryContact(tx, customer.id);
       return true;
     });
+  }
+
+  private async assertUniqueCustomerFields(
+    client: Prisma.TransactionClient | typeof prisma,
+    fields: {
+      email?: string | null;
+      whatsapp?: string | null;
+      taxId?: string | null;
+    },
+    excludeCustomerId?: string
+  ): Promise<void> {
+    const excludeCurrentCustomer = excludeCustomerId ? { id: { not: excludeCustomerId } } : {};
+    const baseWhere = {
+      isActive: true,
+      ...excludeCurrentCustomer,
+    };
+
+    const email = fields.email?.trim().toLowerCase();
+    if (email) {
+      const duplicate = await client.customer.findFirst({
+        where: {
+          ...baseWhere,
+          email: { equals: email, mode: "insensitive" },
+        },
+        select: { id: true },
+      });
+      if (duplicate) throw new Error("Ya existe un cliente con ese correo.");
+    }
+
+    const whatsapp = fields.whatsapp?.trim();
+    if (whatsapp) {
+      const duplicate = await client.customer.findFirst({
+        where: {
+          ...baseWhere,
+          whatsapp,
+        },
+        select: { id: true },
+      });
+      if (duplicate) throw new Error("Ya existe un cliente con ese WhatsApp.");
+    }
+
+    const taxId = fields.taxId?.trim();
+    if (taxId) {
+      const duplicate = await client.customer.findFirst({
+        where: {
+          ...baseWhere,
+          taxId: { equals: taxId, mode: "insensitive" },
+        },
+        select: { id: true },
+      });
+      if (duplicate) throw new Error("Ya existe un cliente con ese RFC.");
+    }
+  }
+
+  private mapCustomerUniqueError(error: unknown): Error | unknown {
+    if (!(error instanceof Prisma.PrismaClientKnownRequestError) || error.code !== "P2002") {
+      return error;
+    }
+
+    const target = JSON.stringify(error.meta?.target || "").toLowerCase();
+    if (target.includes("email")) return new Error("Ya existe un cliente con ese correo.");
+    if (target.includes("whatsapp")) return new Error("Ya existe un cliente con ese WhatsApp.");
+    if (target.includes("tax") || target.includes("rfc")) return new Error("Ya existe un cliente con ese RFC.");
+
+    return new Error("Ya existe un cliente con ese correo, WhatsApp o RFC.");
   }
 
   private buildFindWhere(params: FindCustomersDatasourceParams): Prisma.CustomerWhereInput {

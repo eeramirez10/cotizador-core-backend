@@ -1,4 +1,5 @@
 import {
+  ActivateUserByIdDatasourceParams,
   CreateUserDatasourceParams,
   FindUserByIdDatasourceParams,
   FindUsersDatasourceParams,
@@ -33,6 +34,10 @@ export class UserRepositoryImpl implements UserRepository {
     return this.datasource.existsByErpUserCode(erpUserCode);
   }
 
+  existsByPhone(phone: string): Promise<boolean> {
+    return this.datasource.existsByPhone(phone);
+  }
+
   create(params: CreateUserDatasourceParams): Promise<UserEntity> {
     return this.datasource.create(params);
   }
@@ -43,5 +48,9 @@ export class UserRepositoryImpl implements UserRepository {
 
   softDeactivateById(params: SoftDeactivateUserByIdDatasourceParams): Promise<boolean> {
     return this.datasource.softDeactivateById(params);
+  }
+
+  activateById(params: ActivateUserByIdDatasourceParams): Promise<boolean> {
+    return this.datasource.activateById(params);
   }
 }
