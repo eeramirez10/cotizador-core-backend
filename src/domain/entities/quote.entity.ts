@@ -3,6 +3,7 @@ import type {
   OrderGenerationStatus,
   QuoteDeliveryStatus,
   QuoteOrigin,
+  QuoteSourceChannel,
   QuoteStatus,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
@@ -42,6 +43,7 @@ export interface QuoteEntity {
   orderGeneratedAt: Date | null;
   orderReference: string | null;
   origin: QuoteOrigin;
+  sourceChannel: QuoteSourceChannel;
   currency: Currency;
   exchangeRate: number;
   exchangeRateDate: Date;

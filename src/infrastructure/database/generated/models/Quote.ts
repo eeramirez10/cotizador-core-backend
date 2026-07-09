@@ -54,6 +54,7 @@ export type QuoteMinAggregateOutputType = {
   orderGeneratedAt: Date | null
   orderReference: string | null
   origin: $Enums.QuoteOrigin | null
+  sourceChannel: $Enums.QuoteSourceChannel | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
   exchangeRateDate: Date | null
@@ -84,6 +85,7 @@ export type QuoteMaxAggregateOutputType = {
   orderGeneratedAt: Date | null
   orderReference: string | null
   origin: $Enums.QuoteOrigin | null
+  sourceChannel: $Enums.QuoteSourceChannel | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
   exchangeRateDate: Date | null
@@ -114,6 +116,7 @@ export type QuoteCountAggregateOutputType = {
   orderGeneratedAt: number
   orderReference: number
   origin: number
+  sourceChannel: number
   currency: number
   exchangeRate: number
   exchangeRateDate: number
@@ -164,6 +167,7 @@ export type QuoteMinAggregateInputType = {
   orderGeneratedAt?: true
   orderReference?: true
   origin?: true
+  sourceChannel?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -194,6 +198,7 @@ export type QuoteMaxAggregateInputType = {
   orderGeneratedAt?: true
   orderReference?: true
   origin?: true
+  sourceChannel?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -224,6 +229,7 @@ export type QuoteCountAggregateInputType = {
   orderGeneratedAt?: true
   orderReference?: true
   origin?: true
+  sourceChannel?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -341,6 +347,7 @@ export type QuoteGroupByOutputType = {
   orderGeneratedAt: Date | null
   orderReference: string | null
   origin: $Enums.QuoteOrigin
+  sourceChannel: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal
   exchangeRateDate: Date
@@ -394,6 +401,7 @@ export type QuoteWhereInput = {
   orderGeneratedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   orderReference?: Prisma.StringNullableFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -432,6 +440,7 @@ export type QuoteOrderByWithRelationInput = {
   orderGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   orderReference?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrder
+  sourceChannel?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -473,6 +482,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   orderStatus?: Prisma.EnumOrderGenerationStatusFilter<"Quote"> | $Enums.OrderGenerationStatus
   orderGeneratedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -511,6 +521,7 @@ export type QuoteOrderByWithAggregationInput = {
   orderGeneratedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   orderReference?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrder
+  sourceChannel?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -549,6 +560,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   orderGeneratedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   orderReference?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginWithAggregatesFilter<"Quote"> | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelWithAggregatesFilter<"Quote"> | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyWithAggregatesFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
@@ -579,6 +591,7 @@ export type QuoteCreateInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -613,6 +626,7 @@ export type QuoteUncheckedCreateInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -647,6 +661,7 @@ export type QuoteUpdateInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -681,6 +696,7 @@ export type QuoteUncheckedUpdateInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -715,6 +731,7 @@ export type QuoteCreateManyInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -745,6 +762,7 @@ export type QuoteUpdateManyMutationInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -771,6 +789,7 @@ export type QuoteUncheckedUpdateManyInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -811,6 +830,7 @@ export type QuoteCountOrderByAggregateInput = {
   orderGeneratedAt?: Prisma.SortOrder
   orderReference?: Prisma.SortOrder
   origin?: Prisma.SortOrder
+  sourceChannel?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -850,6 +870,7 @@ export type QuoteMaxOrderByAggregateInput = {
   orderGeneratedAt?: Prisma.SortOrder
   orderReference?: Prisma.SortOrder
   origin?: Prisma.SortOrder
+  sourceChannel?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -880,6 +901,7 @@ export type QuoteMinOrderByAggregateInput = {
   orderGeneratedAt?: Prisma.SortOrder
   orderReference?: Prisma.SortOrder
   origin?: Prisma.SortOrder
+  sourceChannel?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -1102,6 +1124,10 @@ export type EnumQuoteOriginFieldUpdateOperationsInput = {
   set?: $Enums.QuoteOrigin
 }
 
+export type EnumQuoteSourceChannelFieldUpdateOperationsInput = {
+  set?: $Enums.QuoteSourceChannel
+}
+
 export type DecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1184,6 +1210,7 @@ export type QuoteCreateWithoutBranchInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1217,6 +1244,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1279,6 +1307,7 @@ export type QuoteScalarWhereInput = {
   orderGeneratedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   orderReference?: Prisma.StringNullableFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -1309,6 +1338,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1342,6 +1372,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1385,6 +1416,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1418,6 +1450,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1493,6 +1526,7 @@ export type QuoteCreateWithoutCustomerInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1526,6 +1560,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1585,6 +1620,7 @@ export type QuoteCreateWithoutItemsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1618,6 +1654,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1667,6 +1704,7 @@ export type QuoteUpdateWithoutItemsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1700,6 +1738,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1733,6 +1772,7 @@ export type QuoteCreateWithoutEventsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1766,6 +1806,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1815,6 +1856,7 @@ export type QuoteUpdateWithoutEventsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1848,6 +1890,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1881,6 +1924,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1914,6 +1958,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1963,6 +2008,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1996,6 +2042,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2029,6 +2076,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2062,6 +2110,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2111,6 +2160,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2144,6 +2194,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2177,6 +2228,7 @@ export type QuoteCreateManyBranchInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2206,6 +2258,7 @@ export type QuoteUpdateWithoutBranchInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2239,6 +2292,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2272,6 +2326,7 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2301,6 +2356,7 @@ export type QuoteCreateManyCreatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2330,6 +2386,7 @@ export type QuoteCreateManyUpdatedByUserInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2359,6 +2416,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2392,6 +2450,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2425,6 +2484,7 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2454,6 +2514,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2487,6 +2548,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2520,6 +2582,7 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2549,6 +2612,7 @@ export type QuoteCreateManyCustomerInput = {
   orderGeneratedAt?: Date | string | null
   orderReference?: string | null
   origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2578,6 +2642,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2611,6 +2676,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2644,6 +2710,7 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2731,6 +2798,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orderGeneratedAt?: boolean
   orderReference?: boolean
   origin?: boolean
+  sourceChannel?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -2770,6 +2838,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   orderGeneratedAt?: boolean
   orderReference?: boolean
   origin?: boolean
+  sourceChannel?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -2804,6 +2873,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   orderGeneratedAt?: boolean
   orderReference?: boolean
   origin?: boolean
+  sourceChannel?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -2838,6 +2908,7 @@ export type QuoteSelectScalar = {
   orderGeneratedAt?: boolean
   orderReference?: boolean
   origin?: boolean
+  sourceChannel?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -2858,7 +2929,7 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -2905,6 +2976,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     orderGeneratedAt: Date | null
     orderReference: string | null
     origin: $Enums.QuoteOrigin
+    sourceChannel: $Enums.QuoteSourceChannel
     currency: $Enums.Currency
     exchangeRate: runtime.Decimal
     exchangeRateDate: Date
@@ -3363,6 +3435,7 @@ export interface QuoteFieldRefs {
   readonly orderGeneratedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly orderReference: Prisma.FieldRef<"Quote", 'String'>
   readonly origin: Prisma.FieldRef<"Quote", 'QuoteOrigin'>
+  readonly sourceChannel: Prisma.FieldRef<"Quote", 'QuoteSourceChannel'>
   readonly currency: Prisma.FieldRef<"Quote", 'Currency'>
   readonly exchangeRate: Prisma.FieldRef<"Quote", 'Decimal'>
   readonly exchangeRateDate: Prisma.FieldRef<"Quote", 'DateTime'>

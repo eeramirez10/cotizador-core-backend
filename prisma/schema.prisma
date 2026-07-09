@@ -48,6 +48,16 @@ enum QuoteOrigin {
   TEXT_INPUT
 }
 
+enum QuoteSourceChannel {
+  UNSPECIFIED
+  EMAIL
+  PHONE
+  WHATSAPP
+  AI_ASSISTANT
+  IN_PERSON
+  OTHER
+}
+
 enum QuoteDeliveryStatus {
   NOT_SENT
   SENT
@@ -226,6 +236,7 @@ model Quote {
   orderGeneratedAt DateTime?  @map("order_generated_at")
   orderReference   String?    @unique @map("order_reference") @db.VarChar(80)
   origin           QuoteOrigin @default(MANUAL)
+  sourceChannel    QuoteSourceChannel @default(UNSPECIFIED) @map("source_channel")
   currency         Currency
   exchangeRate     Decimal    @map("exchange_rate") @db.Decimal(14, 6)
   exchangeRateDate DateTime   @map("exchange_rate_date") @db.Date

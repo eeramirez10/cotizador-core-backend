@@ -328,6 +328,13 @@ export type EnumQuoteOriginFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel> | $Enums.QuoteOrigin
 }
 
+export type EnumQuoteSourceChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel> | $Enums.QuoteSourceChannel
+}
+
 export type DecimalFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
@@ -402,6 +409,16 @@ export type EnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
+}
+
+export type EnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel> | $Enums.QuoteSourceChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
 }
 
 export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -861,6 +878,13 @@ export type NestedEnumQuoteOriginFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel> | $Enums.QuoteOrigin
 }
 
+export type NestedEnumQuoteSourceChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel> | $Enums.QuoteSourceChannel
+}
+
 export type NestedDecimalFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel>
@@ -924,6 +948,16 @@ export type NestedEnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
+}
+
+export type NestedEnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel> | $Enums.QuoteSourceChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
 }
 
 export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {

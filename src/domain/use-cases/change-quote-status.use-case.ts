@@ -46,6 +46,9 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "QUOTED" && quote.items.length === 0) {
       throw new Error("Quote must contain at least one item before moving to QUOTED.");
     }
+    if (dto.status === "QUOTED" && quote.sourceChannel === "UNSPECIFIED") {
+      throw new Error("Quote source channel is required before moving to QUOTED.");
+    }
 
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,

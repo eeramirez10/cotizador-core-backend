@@ -1,4 +1,8 @@
-import { Currency, QuoteOrigin } from "../../../infrastructure/database/generated/enums";
+import {
+  Currency,
+  QuoteOrigin,
+  QuoteSourceChannel,
+} from "../../../infrastructure/database/generated/enums";
 
 interface ExtractionItemDto {
   descriptionOriginal: string | null;
@@ -20,6 +24,7 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   paymentTerms: string;
   validityDays: number;
   origin: QuoteOrigin;
+  sourceChannel: QuoteSourceChannel;
   notes: string | null;
   items: ExtractionItemDto[];
 }
@@ -35,6 +40,7 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly paymentTerms: string;
   public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
+  public readonly sourceChannel: QuoteSourceChannel;
   public readonly notes: string | null;
   public readonly items: ExtractionItemDto[];
 
@@ -49,6 +55,7 @@ export class CreateQuoteFromExtractionRequestDto {
     this.paymentTerms = props.paymentTerms;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
+    this.sourceChannel = props.sourceChannel;
     this.notes = props.notes;
     this.items = props.items;
   }
@@ -114,6 +121,14 @@ export class CreateQuoteFromExtractionRequestDto {
         : "FILE_UPLOAD";
     if (!Object.values(QuoteOrigin).includes(originRaw as QuoteOrigin)) {
       return ["origin is invalid."];
+    }
+
+    const sourceChannelRaw =
+      typeof body.sourceChannel === "string" && body.sourceChannel.trim().length > 0
+        ? body.sourceChannel.trim().toUpperCase()
+        : "UNSPECIFIED";
+    if (!Object.values(QuoteSourceChannel).includes(sourceChannelRaw as QuoteSourceChannel)) {
+      return ["sourceChannel is invalid."];
     }
 
     const notes =
@@ -187,6 +202,7 @@ export class CreateQuoteFromExtractionRequestDto {
         paymentTerms,
         validityDays,
         origin: originRaw as QuoteOrigin,
+        sourceChannel: sourceChannelRaw as QuoteSourceChannel,
         notes,
         items,
       }),

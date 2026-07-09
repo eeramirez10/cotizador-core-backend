@@ -15,6 +15,7 @@ export class QuoteResponseDto {
       orderGeneratedAt: this.quote.orderGeneratedAt ? this.quote.orderGeneratedAt.toISOString() : null,
       orderReference: this.quote.orderReference,
       origin: this.quote.origin,
+      sourceChannel: this.quote.sourceChannel,
       currency: this.quote.currency,
       exchangeRate: this.quote.exchangeRate,
       exchangeRateDate: this.quote.exchangeRateDate.toISOString().split("T")[0],

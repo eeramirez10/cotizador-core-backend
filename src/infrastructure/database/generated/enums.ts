@@ -71,6 +71,19 @@ export const QuoteOrigin = {
 export type QuoteOrigin = (typeof QuoteOrigin)[keyof typeof QuoteOrigin]
 
 
+export const QuoteSourceChannel = {
+  UNSPECIFIED: 'UNSPECIFIED',
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE',
+  WHATSAPP: 'WHATSAPP',
+  AI_ASSISTANT: 'AI_ASSISTANT',
+  IN_PERSON: 'IN_PERSON',
+  OTHER: 'OTHER'
+} as const
+
+export type QuoteSourceChannel = (typeof QuoteSourceChannel)[keyof typeof QuoteSourceChannel]
+
+
 export const QuoteDeliveryStatus = {
   NOT_SENT: 'NOT_SENT',
   SENT: 'SENT'

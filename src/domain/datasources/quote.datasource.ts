@@ -3,6 +3,7 @@ import type {
   QuoteDeliveryAttemptStatus,
   QuoteDeliveryChannel,
   QuoteOrigin,
+  QuoteSourceChannel,
   QuoteStatus,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
@@ -30,6 +31,7 @@ export interface FindQuotesDatasourceResult {
 export interface CreateQuoteDatasourceParams {
   quoteNumber: string;
   origin: QuoteOrigin;
+  sourceChannel: QuoteSourceChannel;
   currency: Currency;
   exchangeRate: number;
   exchangeRateDate: Date;
@@ -47,6 +49,7 @@ export interface CreateQuoteDatasourceParams {
 export interface UpdateQuoteDatasourceData {
   customerId?: string;
   origin?: QuoteOrigin;
+  sourceChannel?: QuoteSourceChannel;
   currency?: Currency;
   exchangeRate?: number;
   exchangeRateDate?: Date;

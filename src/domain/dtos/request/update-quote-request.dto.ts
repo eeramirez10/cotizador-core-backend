@@ -1,4 +1,8 @@
-import { Currency, QuoteOrigin } from "../../../infrastructure/database/generated/enums";
+import {
+  Currency,
+  QuoteOrigin,
+  QuoteSourceChannel,
+} from "../../../infrastructure/database/generated/enums";
 
 interface UpdateQuoteRequestDtoProps {
   customerId?: string;
@@ -10,6 +14,7 @@ interface UpdateQuoteRequestDtoProps {
   paymentTerms?: string;
   validityDays?: number;
   origin?: QuoteOrigin;
+  sourceChannel?: QuoteSourceChannel;
   notes?: string | null;
 }
 
@@ -23,6 +28,7 @@ export class UpdateQuoteRequestDto {
   public readonly paymentTerms?: string;
   public readonly validityDays?: number;
   public readonly origin?: QuoteOrigin;
+  public readonly sourceChannel?: QuoteSourceChannel;
   public readonly notes?: string | null;
 
   constructor(props: UpdateQuoteRequestDtoProps) {
@@ -35,6 +41,7 @@ export class UpdateQuoteRequestDto {
     this.paymentTerms = props.paymentTerms;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
+    this.sourceChannel = props.sourceChannel;
     this.notes = props.notes;
   }
 
@@ -124,6 +131,18 @@ export class UpdateQuoteRequestDto {
       origin = raw as QuoteOrigin;
     }
 
+    let sourceChannel: QuoteSourceChannel | undefined;
+    if (typeof body.sourceChannel !== "undefined") {
+      const raw =
+        typeof body.sourceChannel === "string"
+          ? body.sourceChannel.trim().toUpperCase()
+          : "";
+      if (!Object.values(QuoteSourceChannel).includes(raw as QuoteSourceChannel)) {
+        return ["sourceChannel is invalid."];
+      }
+      sourceChannel = raw as QuoteSourceChannel;
+    }
+
     const notes =
       typeof body.notes === "undefined"
         ? undefined
@@ -143,6 +162,7 @@ export class UpdateQuoteRequestDto {
         paymentTerms,
         validityDays,
         origin,
+        sourceChannel,
         notes,
       }),
     ];

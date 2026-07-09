@@ -49,6 +49,7 @@ export class UpdateQuoteUseCase {
       data: {
         customerId: dto.customerId,
         origin: dto.origin,
+        sourceChannel: dto.sourceChannel,
         currency: dto.currency,
         exchangeRate: dto.exchangeRate,
         exchangeRateDate: dto.exchangeRateDate,
