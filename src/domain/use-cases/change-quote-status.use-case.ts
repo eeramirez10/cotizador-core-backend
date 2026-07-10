@@ -49,6 +49,18 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "QUOTED" && quote.sourceChannel === "UNSPECIFIED") {
       throw new Error("Quote source channel is required before moving to QUOTED.");
     }
+    if (dto.status === "REJECTED" && !dto.rejectionReason) {
+      throw new Error("Rejection reason is required before moving to REJECTED.");
+    }
+    if (dto.status === "REJECTED" && dto.rejectionReason === "OTHER" && !dto.rejectionComment) {
+      throw new Error("Rejection comment is required when rejection reason is OTHER.");
+    }
+    if (dto.status === "CANCELLED" && !dto.cancellationReason) {
+      throw new Error("Cancellation reason is required before moving to CANCELLED.");
+    }
+    if (dto.status === "CANCELLED" && dto.cancellationReason === "OTHER" && !dto.cancellationComment) {
+      throw new Error("Cancellation comment is required when cancellation reason is OTHER.");
+    }
     if (dto.status === "QUOTED") {
       const unlinkedItems = quote.items.filter(
         (item) => !item.productId && !item.externalProductCode
@@ -71,7 +83,16 @@ export class ChangeQuoteStatusUseCase {
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,
       status: dto.status,
-      note: dto.note,
+      note:
+        dto.status === "REJECTED"
+          ? `Rejected: ${dto.rejectionReason}.${dto.rejectionComment ? ` ${dto.rejectionComment}` : ""}`
+          : dto.status === "CANCELLED"
+            ? `Cancelled: ${dto.cancellationReason}.${dto.cancellationComment ? ` ${dto.cancellationComment}` : ""}`
+          : dto.note,
+      rejectionReason: dto.status === "REJECTED" ? dto.rejectionReason : null,
+      rejectionComment: dto.status === "REJECTED" ? dto.rejectionComment : null,
+      cancellationReason: dto.status === "CANCELLED" ? dto.cancellationReason : null,
+      cancellationComment: dto.status === "CANCELLED" ? dto.cancellationComment : null,
       actorUserId: actor.id,
       scope: {
         role: actor.role,

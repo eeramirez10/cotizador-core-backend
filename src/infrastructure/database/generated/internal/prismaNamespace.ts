@@ -1477,6 +1477,14 @@ export const QuoteScalarFieldEnum = {
   providedByBranchNameSnapshot: 'providedByBranchNameSnapshot',
   providedAt: 'providedAt',
   providedByAssignedByUserId: 'providedByAssignedByUserId',
+  rejectionReason: 'rejectionReason',
+  rejectionComment: 'rejectionComment',
+  rejectedAt: 'rejectedAt',
+  rejectedByUserId: 'rejectedByUserId',
+  cancellationReason: 'cancellationReason',
+  cancellationComment: 'cancellationComment',
+  cancelledAt: 'cancelledAt',
+  cancelledByUserId: 'cancelledByUserId',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1830,6 +1838,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteRejectionReason'
+ */
+export type EnumQuoteRejectionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRejectionReason'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteRejectionReason[]'
+ */
+export type ListEnumQuoteRejectionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRejectionReason[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteCancellationReason'
+ */
+export type EnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCancellationReason'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteCancellationReason[]'
+ */
+export type ListEnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCancellationReason[]'>
     
 
 

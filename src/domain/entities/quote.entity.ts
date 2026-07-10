@@ -4,6 +4,8 @@ import type {
   QuoteDeliveryStatus,
   QuoteOrigin,
   QuoteSourceChannel,
+  QuoteCancellationReason,
+  QuoteRejectionReason,
   QuoteStatus,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
@@ -64,6 +66,14 @@ export interface QuoteEntity {
   providedByBranchNameSnapshot: string | null;
   providedAt: Date | null;
   providedByAssignedByUserId: string | null;
+  rejectionReason: QuoteRejectionReason | null;
+  rejectionComment: string | null;
+  rejectedAt: Date | null;
+  rejectedByUserId: string | null;
+  cancellationReason: QuoteCancellationReason | null;
+  cancellationComment: string | null;
+  cancelledAt: Date | null;
+  cancelledByUserId: string | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -71,6 +81,8 @@ export interface QuoteEntity {
   customer: QuoteCustomerSummary;
   createdByUser: QuoteUserSummary;
   updatedByUser: QuoteUserSummary | null;
+  rejectedByUser: QuoteUserSummary | null;
+  cancelledByUser: QuoteUserSummary | null;
   items: QuoteItemEntity[];
   events: QuoteEventEntity[];
 }

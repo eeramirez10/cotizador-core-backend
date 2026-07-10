@@ -32,6 +32,10 @@ export class PrismaUserDatasource implements UserDatasource {
       where.branchId = params.branchId;
     }
 
+    if (params.excludeRoles?.length) {
+      where.role = { notIn: params.excludeRoles };
+    }
+
     if (params.search) {
       where.OR = [
         { firstName: { contains: params.search, mode: "insensitive" } },

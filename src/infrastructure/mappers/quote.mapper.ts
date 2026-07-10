@@ -36,6 +36,14 @@ interface QuoteRow {
   customerId: string;
   createdByUserId: string;
   updatedByUserId: string | null;
+  rejectionReason: QuoteEntity["rejectionReason"];
+  rejectionComment: string | null;
+  rejectedAt: Date | null;
+  rejectedByUserId: string | null;
+  cancellationReason: QuoteEntity["cancellationReason"];
+  cancellationComment: string | null;
+  cancelledAt: Date | null;
+  cancelledByUserId: string | null;
   providedByUserId: string | null;
   providedByNameSnapshot: string | null;
   providedByBranchNameSnapshot: string | null;
@@ -76,6 +84,20 @@ interface QuoteRow {
       code: string;
       name: string;
     };
+  } | null;
+  rejectedByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    branchId: string;
+    branch: { code: string; name: string };
+  } | null;
+  cancelledByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    branchId: string;
+    branch: { code: string; name: string };
   } | null;
   items: Array<{
     id: string;
@@ -152,6 +174,14 @@ export class QuoteMapper {
       customerId: row.customerId,
       createdByUserId: row.createdByUserId,
       updatedByUserId: row.updatedByUserId,
+      rejectionReason: row.rejectionReason,
+      rejectionComment: row.rejectionComment,
+      rejectedAt: row.rejectedAt,
+      rejectedByUserId: row.rejectedByUserId,
+      cancellationReason: row.cancellationReason,
+      cancellationComment: row.cancellationComment,
+      cancelledAt: row.cancelledAt,
+      cancelledByUserId: row.cancelledByUserId,
       providedByUserId: row.providedByUserId,
       providedByNameSnapshot: row.providedByNameSnapshot,
       providedByBranchNameSnapshot: row.providedByBranchNameSnapshot,
@@ -178,6 +208,26 @@ export class QuoteMapper {
             branchId: row.updatedByUser.branchId,
             branchCode: row.updatedByUser.branch.code,
             branchName: row.updatedByUser.branch.name,
+          }
+        : null,
+      rejectedByUser: row.rejectedByUser
+        ? {
+            id: row.rejectedByUser.id,
+            firstName: row.rejectedByUser.firstName,
+            lastName: row.rejectedByUser.lastName,
+            branchId: row.rejectedByUser.branchId,
+            branchCode: row.rejectedByUser.branch.code,
+            branchName: row.rejectedByUser.branch.name,
+          }
+        : null,
+      cancelledByUser: row.cancelledByUser
+        ? {
+            id: row.cancelledByUser.id,
+            firstName: row.cancelledByUser.firstName,
+            lastName: row.cancelledByUser.lastName,
+            branchId: row.cancelledByUser.branchId,
+            branchCode: row.cancelledByUser.branch.code,
+            branchName: row.cancelledByUser.branch.name,
           }
         : null,
       items: row.items.map((item) => ({

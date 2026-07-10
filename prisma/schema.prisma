@@ -42,6 +42,32 @@ enum QuoteStatus {
   CANCELLED
 }
 
+enum QuoteRejectionReason {
+  PRICE_HIGH
+  COST_HIGH
+  MATERIAL_UNAVAILABLE
+  DELIVERY_TIME
+  COMPETITOR_SELECTED
+  COMMERCIAL_TERMS
+  SPECIFICATION_MISMATCH
+  LATE_QUOTATION
+  PROJECT_CANCELLED
+  NO_CUSTOMER_RESPONSE
+  DUPLICATE_OR_ERROR
+  OTHER
+}
+
+enum QuoteCancellationReason {
+  DATA_ENTRY_ERROR
+  DUPLICATE_REQUEST
+  INSUFFICIENT_INFORMATION
+  INCORRECT_ITEMS
+  REPLACED_BY_REVISION
+  OUT_OF_SCOPE
+  ADMINISTRATIVE
+  OTHER
+}
+
 enum QuoteOrigin {
   MANUAL
   FILE_UPLOAD
@@ -124,6 +150,8 @@ model User {
   updatedProducts  Product[]  @relation("ProductUpdatedBy")
   createdQuotes    Quote[]    @relation("QuoteCreatedBy")
   updatedQuotes    Quote[]    @relation("QuoteUpdatedBy")
+  rejectedQuotes   Quote[]    @relation("QuoteRejectedBy")
+  cancelledQuotes  Quote[]    @relation("QuoteCancelledBy")
   providedQuotes   Quote[]    @relation("QuoteProvidedBy")
   providerAssignments Quote[] @relation("QuoteProviderAssignedBy")
   quoteDeliveryAttempts QuoteDeliveryAttempt[] @relation("QuoteDeliveryAttemptSentBy")
@@ -259,6 +287,14 @@ model Quote {
   providedByBranchNameSnapshot String? @map("provided_by_branch_name_snapshot") @db.VarChar(120)
   providedAt DateTime? @map("provided_at")
   providedByAssignedByUserId String? @map("provided_by_assigned_by_user_id") @db.Uuid
+  rejectionReason QuoteRejectionReason? @map("rejection_reason")
+  rejectionComment String? @map("rejection_comment") @db.Text
+  rejectedAt DateTime? @map("rejected_at")
+  rejectedByUserId String? @map("rejected_by_user_id") @db.Uuid
+  cancellationReason QuoteCancellationReason? @map("cancellation_reason")
+  cancellationComment String? @map("cancellation_comment") @db.Text
+  cancelledAt DateTime? @map("cancelled_at")
+  cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
   notes            String?    @db.Text
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
@@ -269,6 +305,8 @@ model Quote {
   updatedByUser User?    @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
   providedByUser User? @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
   providedByAssignedByUser User? @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
+  rejectedByUser User? @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
+  cancelledByUser User? @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
 
   items  QuoteItem[]
   deliveryAttempts QuoteDeliveryAttempt[]
@@ -282,6 +320,10 @@ model Quote {
   @@index([customerId])
   @@index([createdByUserId])
   @@index([providedByUserId])
+  @@index([rejectionReason])
+  @@index([rejectedByUserId])
+  @@index([cancellationReason])
+  @@index([cancelledByUserId])
   @@map("quotes")
 }
 
