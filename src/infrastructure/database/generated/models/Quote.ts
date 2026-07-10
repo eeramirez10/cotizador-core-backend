@@ -75,6 +75,14 @@ export type QuoteMinAggregateOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
+  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionComment: string | null
+  rejectedAt: Date | null
+  rejectedByUserId: string | null
+  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationComment: string | null
+  cancelledAt: Date | null
+  cancelledByUserId: string | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -111,6 +119,14 @@ export type QuoteMaxAggregateOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
+  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionComment: string | null
+  rejectedAt: Date | null
+  rejectedByUserId: string | null
+  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationComment: string | null
+  cancelledAt: Date | null
+  cancelledByUserId: string | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -147,6 +163,14 @@ export type QuoteCountAggregateOutputType = {
   providedByBranchNameSnapshot: number
   providedAt: number
   providedByAssignedByUserId: number
+  rejectionReason: number
+  rejectionComment: number
+  rejectedAt: number
+  rejectedByUserId: number
+  cancellationReason: number
+  cancellationComment: number
+  cancelledAt: number
+  cancelledByUserId: number
   notes: number
   createdAt: number
   updatedAt: number
@@ -203,6 +227,14 @@ export type QuoteMinAggregateInputType = {
   providedByBranchNameSnapshot?: true
   providedAt?: true
   providedByAssignedByUserId?: true
+  rejectionReason?: true
+  rejectionComment?: true
+  rejectedAt?: true
+  rejectedByUserId?: true
+  cancellationReason?: true
+  cancellationComment?: true
+  cancelledAt?: true
+  cancelledByUserId?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -239,6 +271,14 @@ export type QuoteMaxAggregateInputType = {
   providedByBranchNameSnapshot?: true
   providedAt?: true
   providedByAssignedByUserId?: true
+  rejectionReason?: true
+  rejectionComment?: true
+  rejectedAt?: true
+  rejectedByUserId?: true
+  cancellationReason?: true
+  cancellationComment?: true
+  cancelledAt?: true
+  cancelledByUserId?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -275,6 +315,14 @@ export type QuoteCountAggregateInputType = {
   providedByBranchNameSnapshot?: true
   providedAt?: true
   providedByAssignedByUserId?: true
+  rejectionReason?: true
+  rejectionComment?: true
+  rejectedAt?: true
+  rejectedByUserId?: true
+  cancellationReason?: true
+  cancellationComment?: true
+  cancelledAt?: true
+  cancelledByUserId?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -398,6 +446,14 @@ export type QuoteGroupByOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
+  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionComment: string | null
+  rejectedAt: Date | null
+  rejectedByUserId: string | null
+  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationComment: string | null
+  cancelledAt: Date | null
+  cancelledByUserId: string | null
   notes: string | null
   createdAt: Date
   updatedAt: Date
@@ -457,6 +513,14 @@ export type QuoteWhereInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -466,6 +530,8 @@ export type QuoteWhereInput = {
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   providedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   providedByAssignedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  rejectedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  cancelledByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.QuoteItemListRelationFilter
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
@@ -503,6 +569,14 @@ export type QuoteOrderByWithRelationInput = {
   providedByBranchNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   providedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   providedByAssignedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -512,6 +586,8 @@ export type QuoteOrderByWithRelationInput = {
   updatedByUser?: Prisma.UserOrderByWithRelationInput
   providedByUser?: Prisma.UserOrderByWithRelationInput
   providedByAssignedByUser?: Prisma.UserOrderByWithRelationInput
+  rejectedByUser?: Prisma.UserOrderByWithRelationInput
+  cancelledByUser?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.QuoteItemOrderByRelationAggregateInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptOrderByRelationAggregateInput
   orderExports?: Prisma.QuoteOrderExportOrderByRelationAggregateInput
@@ -552,6 +628,14 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -561,6 +645,8 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   providedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   providedByAssignedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  rejectedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  cancelledByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.QuoteItemListRelationFilter
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
@@ -598,6 +684,14 @@ export type QuoteOrderByWithAggregationInput = {
   providedByBranchNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   providedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   providedByAssignedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancellationComment?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  cancelledByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -642,6 +736,14 @@ export type QuoteScalarWhereWithAggregatesInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
+  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
+  rejectedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
+  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
+  cancelledByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
@@ -672,6 +774,12 @@ export type QuoteCreateInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -681,6 +789,8 @@ export type QuoteCreateInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -718,6 +828,14 @@ export type QuoteUncheckedCreateInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -752,6 +870,12 @@ export type QuoteUpdateInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -761,6 +885,8 @@ export type QuoteUpdateInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -798,6 +924,14 @@ export type QuoteUncheckedUpdateInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -838,6 +972,14 @@ export type QuoteCreateManyInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -868,6 +1010,12 @@ export type QuoteUpdateManyMutationInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -904,6 +1052,14 @@ export type QuoteUncheckedUpdateManyInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -950,6 +1106,14 @@ export type QuoteCountOrderByAggregateInput = {
   providedByBranchNameSnapshot?: Prisma.SortOrder
   providedAt?: Prisma.SortOrder
   providedByAssignedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  rejectionComment?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedByUserId?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancellationComment?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  cancelledByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -995,6 +1159,14 @@ export type QuoteMaxOrderByAggregateInput = {
   providedByBranchNameSnapshot?: Prisma.SortOrder
   providedAt?: Prisma.SortOrder
   providedByAssignedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  rejectionComment?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedByUserId?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancellationComment?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  cancelledByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1031,6 +1203,14 @@ export type QuoteMinOrderByAggregateInput = {
   providedByBranchNameSnapshot?: Prisma.SortOrder
   providedAt?: Prisma.SortOrder
   providedByAssignedByUserId?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
+  rejectionComment?: Prisma.SortOrder
+  rejectedAt?: Prisma.SortOrder
+  rejectedByUserId?: Prisma.SortOrder
+  cancellationReason?: Prisma.SortOrder
+  cancellationComment?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
+  cancelledByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1106,6 +1286,20 @@ export type QuoteCreateNestedManyWithoutUpdatedByUserInput = {
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
 }
 
+export type QuoteCreateNestedManyWithoutRejectedByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput> | Prisma.QuoteCreateWithoutRejectedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput | Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput[]
+  createMany?: Prisma.QuoteCreateManyRejectedByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteCreateNestedManyWithoutCancelledByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput> | Prisma.QuoteCreateWithoutCancelledByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput | Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput[]
+  createMany?: Prisma.QuoteCreateManyCancelledByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
 export type QuoteCreateNestedManyWithoutProvidedByUserInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutProvidedByUserInput, Prisma.QuoteUncheckedCreateWithoutProvidedByUserInput> | Prisma.QuoteCreateWithoutProvidedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutProvidedByUserInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProvidedByUserInput | Prisma.QuoteCreateOrConnectWithoutProvidedByUserInput[]
@@ -1131,6 +1325,20 @@ export type QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutUpdatedByUserInput, Prisma.QuoteUncheckedCreateWithoutUpdatedByUserInput> | Prisma.QuoteCreateWithoutUpdatedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutUpdatedByUserInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutUpdatedByUserInput | Prisma.QuoteCreateOrConnectWithoutUpdatedByUserInput[]
   createMany?: Prisma.QuoteCreateManyUpdatedByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput> | Prisma.QuoteCreateWithoutRejectedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput | Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput[]
+  createMany?: Prisma.QuoteCreateManyRejectedByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput> | Prisma.QuoteCreateWithoutCancelledByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput | Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput[]
+  createMany?: Prisma.QuoteCreateManyCancelledByUserInputEnvelope
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
 }
 
@@ -1173,6 +1381,34 @@ export type QuoteUpdateManyWithoutUpdatedByUserNestedInput = {
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
   update?: Prisma.QuoteUpdateWithWhereUniqueWithoutUpdatedByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutUpdatedByUserInput[]
   updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutUpdatedByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutUpdatedByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUpdateManyWithoutRejectedByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput> | Prisma.QuoteCreateWithoutRejectedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput | Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutRejectedByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutRejectedByUserInput[]
+  createMany?: Prisma.QuoteCreateManyRejectedByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutRejectedByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutRejectedByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutRejectedByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutRejectedByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUpdateManyWithoutCancelledByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput> | Prisma.QuoteCreateWithoutCancelledByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput | Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutCancelledByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutCancelledByUserInput[]
+  createMany?: Prisma.QuoteCreateManyCancelledByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutCancelledByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutCancelledByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutCancelledByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutCancelledByUserInput[]
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
@@ -1229,6 +1465,34 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput = {
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
   update?: Prisma.QuoteUpdateWithWhereUniqueWithoutUpdatedByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutUpdatedByUserInput[]
   updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutUpdatedByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutUpdatedByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput> | Prisma.QuoteCreateWithoutRejectedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput | Prisma.QuoteCreateOrConnectWithoutRejectedByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutRejectedByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutRejectedByUserInput[]
+  createMany?: Prisma.QuoteCreateManyRejectedByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutRejectedByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutRejectedByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutRejectedByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutRejectedByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput> | Prisma.QuoteCreateWithoutCancelledByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput | Prisma.QuoteCreateOrConnectWithoutCancelledByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutCancelledByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutCancelledByUserInput[]
+  createMany?: Prisma.QuoteCreateManyCancelledByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutCancelledByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutCancelledByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutCancelledByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutCancelledByUserInput[]
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
@@ -1342,6 +1606,14 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput = {
+  set?: $Enums.QuoteRejectionReason | null
+}
+
+export type NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput = {
+  set?: $Enums.QuoteCancellationReason | null
+}
+
 export type QuoteCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutItemsInput, Prisma.QuoteUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutItemsInput
@@ -1423,6 +1695,12 @@ export type QuoteCreateWithoutBranchInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1431,6 +1709,8 @@ export type QuoteCreateWithoutBranchInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -1467,6 +1747,14 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1536,6 +1824,14 @@ export type QuoteScalarWhereInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
+  cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -1566,6 +1862,12 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1574,6 +1876,8 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -1610,6 +1914,14 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1654,6 +1966,12 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1662,6 +1980,8 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -1698,6 +2018,14 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1714,6 +2042,214 @@ export type QuoteCreateOrConnectWithoutUpdatedByUserInput = {
 
 export type QuoteCreateManyUpdatedByUserInputEnvelope = {
   data: Prisma.QuoteCreateManyUpdatedByUserInput | Prisma.QuoteCreateManyUpdatedByUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteCreateWithoutRejectedByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutRejectedByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput>
+}
+
+export type QuoteCreateManyRejectedByUserInputEnvelope = {
+  data: Prisma.QuoteCreateManyRejectedByUserInput | Prisma.QuoteCreateManyRejectedByUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteCreateWithoutCancelledByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutCancelledByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput>
+}
+
+export type QuoteCreateManyCancelledByUserInputEnvelope = {
+  data: Prisma.QuoteCreateManyCancelledByUserInput | Prisma.QuoteCreateManyCancelledByUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -1742,6 +2278,12 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1750,6 +2292,8 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -1786,6 +2330,14 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1830,6 +2382,12 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1838,6 +2396,8 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -1874,6 +2434,14 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1923,6 +2491,38 @@ export type QuoteUpdateWithWhereUniqueWithoutUpdatedByUserInput = {
 export type QuoteUpdateManyWithWhereWithoutUpdatedByUserInput = {
   where: Prisma.QuoteScalarWhereInput
   data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserInput>
+}
+
+export type QuoteUpsertWithWhereUniqueWithoutRejectedByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutRejectedByUserInput, Prisma.QuoteUncheckedUpdateWithoutRejectedByUserInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutRejectedByUserInput, Prisma.QuoteUncheckedCreateWithoutRejectedByUserInput>
+}
+
+export type QuoteUpdateWithWhereUniqueWithoutRejectedByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutRejectedByUserInput, Prisma.QuoteUncheckedUpdateWithoutRejectedByUserInput>
+}
+
+export type QuoteUpdateManyWithWhereWithoutRejectedByUserInput = {
+  where: Prisma.QuoteScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserInput>
+}
+
+export type QuoteUpsertWithWhereUniqueWithoutCancelledByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutCancelledByUserInput, Prisma.QuoteUncheckedUpdateWithoutCancelledByUserInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutCancelledByUserInput, Prisma.QuoteUncheckedCreateWithoutCancelledByUserInput>
+}
+
+export type QuoteUpdateWithWhereUniqueWithoutCancelledByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutCancelledByUserInput, Prisma.QuoteUncheckedUpdateWithoutCancelledByUserInput>
+}
+
+export type QuoteUpdateManyWithWhereWithoutCancelledByUserInput = {
+  where: Prisma.QuoteScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserInput>
 }
 
 export type QuoteUpsertWithWhereUniqueWithoutProvidedByUserInput = {
@@ -1982,6 +2582,12 @@ export type QuoteCreateWithoutCustomerInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1990,6 +2596,8 @@ export type QuoteCreateWithoutCustomerInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -2026,6 +2634,14 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2086,6 +2702,12 @@ export type QuoteCreateWithoutItemsInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2095,6 +2717,8 @@ export type QuoteCreateWithoutItemsInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
@@ -2131,6 +2755,14 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2180,6 +2812,12 @@ export type QuoteUpdateWithoutItemsInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2189,6 +2827,8 @@ export type QuoteUpdateWithoutItemsInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
@@ -2225,6 +2865,14 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2258,6 +2906,12 @@ export type QuoteCreateWithoutEventsInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2267,6 +2921,8 @@ export type QuoteCreateWithoutEventsInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
@@ -2303,6 +2959,14 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2352,6 +3016,12 @@ export type QuoteUpdateWithoutEventsInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2361,6 +3031,8 @@ export type QuoteUpdateWithoutEventsInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -2397,6 +3069,14 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2430,6 +3110,12 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2439,6 +3125,8 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
@@ -2475,6 +3163,14 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2524,6 +3220,12 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2533,6 +3235,8 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
@@ -2569,6 +3273,14 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2602,6 +3314,12 @@ export type QuoteCreateWithoutOrderExportsInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2611,6 +3329,8 @@ export type QuoteCreateWithoutOrderExportsInput = {
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
   providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
@@ -2647,6 +3367,14 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2696,6 +3424,12 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2705,6 +3439,8 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
@@ -2741,6 +3477,14 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2779,6 +3523,14 @@ export type QuoteCreateManyBranchInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2809,6 +3561,12 @@ export type QuoteUpdateWithoutBranchInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2817,6 +3575,8 @@ export type QuoteUpdateWithoutBranchInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -2853,6 +3613,14 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2892,6 +3660,14 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2927,6 +3703,14 @@ export type QuoteCreateManyCreatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2962,6 +3746,100 @@ export type QuoteCreateManyUpdatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteCreateManyRejectedByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteCreateManyCancelledByUserInput = {
+  id?: string
+  quoteNumber: string
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2997,6 +3875,14 @@ export type QuoteCreateManyProvidedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3032,6 +3918,14 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3062,6 +3956,12 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3070,6 +3970,8 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -3106,6 +4008,14 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3145,6 +4055,14 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3175,6 +4093,12 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3183,6 +4107,8 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -3219,6 +4145,14 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3258,6 +4192,288 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteUpdateWithoutRejectedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteUpdateWithoutCancelledByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3288,6 +4504,12 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3296,6 +4518,8 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -3332,6 +4556,14 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3371,6 +4603,14 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3401,6 +4641,12 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3409,6 +4655,8 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -3445,6 +4693,14 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3484,6 +4740,14 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3519,6 +4783,14 @@ export type QuoteCreateManyCustomerInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
+  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3549,6 +4821,12 @@ export type QuoteUpdateWithoutCustomerInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3557,6 +4835,8 @@ export type QuoteUpdateWithoutCustomerInput = {
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
   providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
@@ -3593,6 +4873,14 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3632,6 +4920,14 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3726,6 +5022,14 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   providedByBranchNameSnapshot?: boolean
   providedAt?: boolean
   providedByAssignedByUserId?: boolean
+  rejectionReason?: boolean
+  rejectionComment?: boolean
+  rejectedAt?: boolean
+  rejectedByUserId?: boolean
+  cancellationReason?: boolean
+  cancellationComment?: boolean
+  cancelledAt?: boolean
+  cancelledByUserId?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3735,6 +5039,8 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   items?: boolean | Prisma.Quote$itemsArgs<ExtArgs>
   deliveryAttempts?: boolean | Prisma.Quote$deliveryAttemptsArgs<ExtArgs>
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
@@ -3773,6 +5079,14 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   providedByBranchNameSnapshot?: boolean
   providedAt?: boolean
   providedByAssignedByUserId?: boolean
+  rejectionReason?: boolean
+  rejectionComment?: boolean
+  rejectedAt?: boolean
+  rejectedByUserId?: boolean
+  cancellationReason?: boolean
+  cancellationComment?: boolean
+  cancelledAt?: boolean
+  cancelledByUserId?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3782,6 +5096,8 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
 export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -3815,6 +5131,14 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   providedByBranchNameSnapshot?: boolean
   providedAt?: boolean
   providedByAssignedByUserId?: boolean
+  rejectionReason?: boolean
+  rejectionComment?: boolean
+  rejectedAt?: boolean
+  rejectedByUserId?: boolean
+  cancellationReason?: boolean
+  cancellationComment?: boolean
+  cancelledAt?: boolean
+  cancelledByUserId?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3824,6 +5148,8 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
 export type QuoteSelectScalar = {
@@ -3857,12 +5183,20 @@ export type QuoteSelectScalar = {
   providedByBranchNameSnapshot?: boolean
   providedAt?: boolean
   providedByAssignedByUserId?: boolean
+  rejectionReason?: boolean
+  rejectionComment?: boolean
+  rejectedAt?: boolean
+  rejectedByUserId?: boolean
+  cancellationReason?: boolean
+  cancellationComment?: boolean
+  cancelledAt?: boolean
+  cancelledByUserId?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -3870,6 +5204,8 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   items?: boolean | Prisma.Quote$itemsArgs<ExtArgs>
   deliveryAttempts?: boolean | Prisma.Quote$deliveryAttemptsArgs<ExtArgs>
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
@@ -3883,6 +5219,8 @@ export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
 }
 export type QuoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -3891,6 +5229,8 @@ export type QuoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
   providedByUser?: boolean | Prisma.Quote$providedByUserArgs<ExtArgs>
   providedByAssignedByUser?: boolean | Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>
+  rejectedByUser?: boolean | Prisma.Quote$rejectedByUserArgs<ExtArgs>
+  cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
 }
 
 export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3902,6 +5242,8 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     updatedByUser: Prisma.$UserPayload<ExtArgs> | null
     providedByUser: Prisma.$UserPayload<ExtArgs> | null
     providedByAssignedByUser: Prisma.$UserPayload<ExtArgs> | null
+    rejectedByUser: Prisma.$UserPayload<ExtArgs> | null
+    cancelledByUser: Prisma.$UserPayload<ExtArgs> | null
     items: Prisma.$QuoteItemPayload<ExtArgs>[]
     deliveryAttempts: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>[]
     orderExports: Prisma.$QuoteOrderExportPayload<ExtArgs>[]
@@ -3938,6 +5280,14 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     providedByBranchNameSnapshot: string | null
     providedAt: Date | null
     providedByAssignedByUserId: string | null
+    rejectionReason: $Enums.QuoteRejectionReason | null
+    rejectionComment: string | null
+    rejectedAt: Date | null
+    rejectedByUserId: string | null
+    cancellationReason: $Enums.QuoteCancellationReason | null
+    cancellationComment: string | null
+    cancelledAt: Date | null
+    cancelledByUserId: string | null
     notes: string | null
     createdAt: Date
     updatedAt: Date
@@ -4341,6 +5691,8 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   updatedByUser<T extends Prisma.Quote$updatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$updatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   providedByUser<T extends Prisma.Quote$providedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$providedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   providedByAssignedByUser<T extends Prisma.Quote$providedByAssignedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$providedByAssignedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  rejectedByUser<T extends Prisma.Quote$rejectedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$rejectedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  cancelledByUser<T extends Prisma.Quote$cancelledByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$cancelledByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Quote$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   deliveryAttempts<T extends Prisma.Quote$deliveryAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$deliveryAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderExports<T extends Prisma.Quote$orderExportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$orderExportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteOrderExportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4404,6 +5756,14 @@ export interface QuoteFieldRefs {
   readonly providedByBranchNameSnapshot: Prisma.FieldRef<"Quote", 'String'>
   readonly providedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly providedByAssignedByUserId: Prisma.FieldRef<"Quote", 'String'>
+  readonly rejectionReason: Prisma.FieldRef<"Quote", 'QuoteRejectionReason'>
+  readonly rejectionComment: Prisma.FieldRef<"Quote", 'String'>
+  readonly rejectedAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly rejectedByUserId: Prisma.FieldRef<"Quote", 'String'>
+  readonly cancellationReason: Prisma.FieldRef<"Quote", 'QuoteCancellationReason'>
+  readonly cancellationComment: Prisma.FieldRef<"Quote", 'String'>
+  readonly cancelledAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly cancelledByUserId: Prisma.FieldRef<"Quote", 'String'>
   readonly notes: Prisma.FieldRef<"Quote", 'String'>
   readonly createdAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Quote", 'DateTime'>
@@ -4844,6 +6204,44 @@ export type Quote$providedByUserArgs<ExtArgs extends runtime.Types.Extensions.In
  * Quote.providedByAssignedByUser
  */
 export type Quote$providedByAssignedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Quote.rejectedByUser
+ */
+export type Quote$rejectedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Quote.cancelledByUser
+ */
+export type Quote$cancelledByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

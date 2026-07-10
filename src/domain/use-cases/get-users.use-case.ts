@@ -18,6 +18,7 @@ export class GetUsersUseCase {
 
   async execute(dto: GetUsersQueryRequestDto, actor: GetUsersActorContext): Promise<PaginatedUsersResponseDto> {
     let branchIdFilter: string | undefined;
+    const excludeRoles = actor.role === "MANAGER" ? ["ADMIN" as const] : undefined;
 
     if (actor.role === "MANAGER") {
       branchIdFilter = actor.branchId;
@@ -33,6 +34,7 @@ export class GetUsersUseCase {
       search: dto.search,
       branchId: branchIdFilter,
       isActive: dto.isActive,
+      excludeRoles,
     });
 
     return new PaginatedUsersResponseDto({

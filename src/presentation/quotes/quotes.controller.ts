@@ -416,6 +416,8 @@ export class QuotesController {
       message.startsWith("Invalid status transition") ||
       message === "Quote must contain at least one item before moving to QUOTED." ||
       message === "Quote source channel is required before moving to QUOTED." ||
+      message === "Rejection reason is required before moving to REJECTED." ||
+      message === "Rejection comment is required when rejection reason is OTHER." ||
       message === "Quote must be APPROVED to generate order." ||
       message === "Order was already generated for this quote." ||
       message === "Quote must contain at least one item before generating order." ||

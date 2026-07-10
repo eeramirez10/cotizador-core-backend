@@ -62,6 +62,38 @@ export const QuoteStatus = {
 export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
 
 
+export const QuoteRejectionReason = {
+  PRICE_HIGH: 'PRICE_HIGH',
+  COST_HIGH: 'COST_HIGH',
+  MATERIAL_UNAVAILABLE: 'MATERIAL_UNAVAILABLE',
+  DELIVERY_TIME: 'DELIVERY_TIME',
+  COMPETITOR_SELECTED: 'COMPETITOR_SELECTED',
+  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
+  SPECIFICATION_MISMATCH: 'SPECIFICATION_MISMATCH',
+  LATE_QUOTATION: 'LATE_QUOTATION',
+  PROJECT_CANCELLED: 'PROJECT_CANCELLED',
+  NO_CUSTOMER_RESPONSE: 'NO_CUSTOMER_RESPONSE',
+  DUPLICATE_OR_ERROR: 'DUPLICATE_OR_ERROR',
+  OTHER: 'OTHER'
+} as const
+
+export type QuoteRejectionReason = (typeof QuoteRejectionReason)[keyof typeof QuoteRejectionReason]
+
+
+export const QuoteCancellationReason = {
+  DATA_ENTRY_ERROR: 'DATA_ENTRY_ERROR',
+  DUPLICATE_REQUEST: 'DUPLICATE_REQUEST',
+  INSUFFICIENT_INFORMATION: 'INSUFFICIENT_INFORMATION',
+  INCORRECT_ITEMS: 'INCORRECT_ITEMS',
+  REPLACED_BY_REVISION: 'REPLACED_BY_REVISION',
+  OUT_OF_SCOPE: 'OUT_OF_SCOPE',
+  ADMINISTRATIVE: 'ADMINISTRATIVE',
+  OTHER: 'OTHER'
+} as const
+
+export type QuoteCancellationReason = (typeof QuoteCancellationReason)[keyof typeof QuoteCancellationReason]
+
+
 export const QuoteOrigin = {
   MANUAL: 'MANUAL',
   FILE_UPLOAD: 'FILE_UPLOAD',

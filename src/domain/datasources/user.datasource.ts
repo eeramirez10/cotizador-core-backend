@@ -7,6 +7,7 @@ export interface FindUsersDatasourceParams {
   search?: string;
   branchId?: string;
   isActive?: boolean;
+  excludeRoles?: UserRole[];
 }
 
 export interface FindUsersDatasourceResult {

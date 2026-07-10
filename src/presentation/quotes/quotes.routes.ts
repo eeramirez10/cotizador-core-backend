@@ -85,11 +85,11 @@ export class QuotesRoutes {
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.getById);
-    router.post("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.create);
+    router.post("/", requireAuth, requireRoles("SELLER"), controller.create);
     router.post(
       "/from-extraction",
       requireAuth,
-      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      requireRoles("SELLER"),
       controller.createFromExtraction
     );
     router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.update);

@@ -64,6 +64,24 @@ const quoteInclude = {
       },
     },
   },
+  rejectedByUser: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      branchId: true,
+      branch: { select: { code: true, name: true } },
+    },
+  },
+  cancelledByUser: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      branchId: true,
+      branch: { select: { code: true, name: true } },
+    },
+  },
   items: {
     orderBy: {
       createdAt: "asc",
@@ -427,6 +445,14 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         where: { id: quote.id },
         data: {
           status: params.status,
+          rejectionReason: params.rejectionReason,
+          rejectionComment: params.rejectionComment,
+          rejectedAt: params.status === "REJECTED" ? new Date() : null,
+          rejectedByUserId: params.status === "REJECTED" ? params.actorUserId : null,
+          cancellationReason: params.cancellationReason,
+          cancellationComment: params.cancellationComment,
+          cancelledAt: params.status === "CANCELLED" ? new Date() : null,
+          cancelledByUserId: params.status === "CANCELLED" ? params.actorUserId : null,
           updatedByUserId: params.actorUserId,
         },
       });

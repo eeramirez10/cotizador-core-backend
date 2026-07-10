@@ -5,6 +5,8 @@ import type {
   QuoteOrigin,
   QuoteSourceChannel,
   QuoteStatus,
+  QuoteRejectionReason,
+  QuoteCancellationReason,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEntity } from "../entities/quote.entity";
@@ -147,6 +149,10 @@ export interface ChangeQuoteStatusDatasourceParams {
   id: string;
   status: QuoteStatus;
   note: string | null;
+  rejectionReason: QuoteRejectionReason | null;
+  rejectionComment: string | null;
+  cancellationReason: QuoteCancellationReason | null;
+  cancellationComment: string | null;
   actorUserId: string;
   scope: QuoteAccessScope;
 }
