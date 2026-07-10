@@ -43,6 +43,11 @@ export interface CreateQuoteDatasourceParams {
   customerId: string;
   createdByUserId: string;
   updatedByUserId: string;
+  providedByUserId: string | null;
+  providedByNameSnapshot: string | null;
+  providedByBranchNameSnapshot: string | null;
+  providedAt: Date | null;
+  providedByAssignedByUserId: string | null;
   notes: string | null;
 }
 
@@ -58,6 +63,12 @@ export interface UpdateQuoteDatasourceData {
   paymentTerms?: string;
   validityDays?: number;
   notes?: string | null;
+  providedByUserId?: string | null;
+  providedByNameSnapshot?: string | null;
+  providedByBranchNameSnapshot?: string | null;
+  providedAt?: Date | null;
+  providedByAssignedByUserId?: string | null;
+  providerAttributionEventNote?: string;
   updatedByUserId: string;
 }
 

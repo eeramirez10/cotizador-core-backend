@@ -3,6 +3,7 @@ import { UpdateQuoteRequestDto } from "../dtos/request/update-quote-request.dto"
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { CustomerRepository } from "../repositories/customer.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { UserRepository } from "../repositories/user.repository";
 
 interface UpdateQuoteActorContext {
   id: string;
@@ -10,12 +11,13 @@ interface UpdateQuoteActorContext {
   branchId: string;
 }
 
-const isLockedStatus = (status: string): boolean => status === "CANCELLED";
+const isLockedStatus = (status: string): boolean => ["QUOTED", "APPROVED", "REJECTED", "CANCELLED"].includes(status);
 
 export class UpdateQuoteUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
-    private readonly customerRepository: CustomerRepository
+    private readonly customerRepository: CustomerRepository,
+    private readonly userRepository: UserRepository
   ) {}
 
   async execute(id: string, dto: UpdateQuoteRequestDto, actor: UpdateQuoteActorContext): Promise<QuoteResponseDto> {
@@ -40,6 +42,11 @@ export class UpdateQuoteUseCase {
       if (!customer) throw new Error("Customer not found.");
     }
 
+    const providerWasUpdated = typeof dto.providedByUserId !== "undefined";
+    const providedByUser = dto.providedByUserId ? await this.userRepository.findActiveById(dto.providedByUserId) : null;
+    if (dto.providedByUserId && !providedByUser) throw new Error("Provided by user not found or inactive.");
+    const providerChanged = providerWasUpdated && existing.providedByUserId !== (providedByUser?.id ?? null);
+
     const quote = await this.quoteRepository.updateById({
       id,
       scope: {
@@ -58,6 +65,20 @@ export class UpdateQuoteUseCase {
         paymentTerms: dto.paymentTerms,
         validityDays: dto.validityDays,
         notes: dto.notes,
+        ...(providerWasUpdated
+          ? {
+              providedByUserId: providedByUser?.id ?? null,
+              providedByNameSnapshot: providedByUser ? `${providedByUser.firstName} ${providedByUser.lastName}`.trim() : null,
+              providedByBranchNameSnapshot: providedByUser?.branch.name ?? null,
+              providedAt: providedByUser ? new Date() : null,
+              providedByAssignedByUserId: providedByUser ? actor.id : null,
+              providerAttributionEventNote: providerChanged
+                ? providedByUser
+                  ? `Provided by assigned to ${providedByUser.firstName} ${providedByUser.lastName}.`
+                  : "Provided by attribution removed."
+                : undefined,
+            }
+          : {}),
         updatedByUserId: actor.id,
       },
     });

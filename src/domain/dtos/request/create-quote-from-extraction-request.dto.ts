@@ -25,6 +25,7 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   validityDays: number;
   origin: QuoteOrigin;
   sourceChannel: QuoteSourceChannel;
+  providedByUserId: string | null;
   notes: string | null;
   items: ExtractionItemDto[];
 }
@@ -41,6 +42,7 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
   public readonly sourceChannel: QuoteSourceChannel;
+  public readonly providedByUserId: string | null;
   public readonly notes: string | null;
   public readonly items: ExtractionItemDto[];
 
@@ -56,6 +58,7 @@ export class CreateQuoteFromExtractionRequestDto {
     this.validityDays = props.validityDays;
     this.origin = props.origin;
     this.sourceChannel = props.sourceChannel;
+    this.providedByUserId = props.providedByUserId;
     this.notes = props.notes;
     this.items = props.items;
   }
@@ -131,6 +134,16 @@ export class CreateQuoteFromExtractionRequestDto {
       return ["sourceChannel is invalid."];
     }
 
+    const providedByUserId =
+      typeof body.providedByUserId === "undefined" || body.providedByUserId === null
+        ? null
+        : typeof body.providedByUserId === "string"
+          ? body.providedByUserId.trim()
+          : "";
+    if (typeof body.providedByUserId !== "undefined" && body.providedByUserId !== null && !providedByUserId) {
+      return ["providedByUserId is invalid."];
+    }
+
     const notes =
       typeof body.notes === "string" && body.notes.trim().length > 0 ? body.notes.trim() : null;
 
@@ -203,6 +216,7 @@ export class CreateQuoteFromExtractionRequestDto {
         validityDays,
         origin: originRaw as QuoteOrigin,
         sourceChannel: sourceChannelRaw as QuoteSourceChannel,
+        providedByUserId,
         notes,
         items,
       }),

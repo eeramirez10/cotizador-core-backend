@@ -15,6 +15,7 @@ interface UpdateQuoteRequestDtoProps {
   validityDays?: number;
   origin?: QuoteOrigin;
   sourceChannel?: QuoteSourceChannel;
+  providedByUserId?: string | null;
   notes?: string | null;
 }
 
@@ -29,6 +30,7 @@ export class UpdateQuoteRequestDto {
   public readonly validityDays?: number;
   public readonly origin?: QuoteOrigin;
   public readonly sourceChannel?: QuoteSourceChannel;
+  public readonly providedByUserId?: string | null;
   public readonly notes?: string | null;
 
   constructor(props: UpdateQuoteRequestDtoProps) {
@@ -42,6 +44,7 @@ export class UpdateQuoteRequestDto {
     this.validityDays = props.validityDays;
     this.origin = props.origin;
     this.sourceChannel = props.sourceChannel;
+    this.providedByUserId = props.providedByUserId;
     this.notes = props.notes;
   }
 
@@ -143,6 +146,18 @@ export class UpdateQuoteRequestDto {
       sourceChannel = raw as QuoteSourceChannel;
     }
 
+    const providedByUserId =
+      typeof body.providedByUserId === "undefined"
+        ? undefined
+        : body.providedByUserId === null
+          ? null
+          : typeof body.providedByUserId === "string"
+            ? body.providedByUserId.trim()
+            : "";
+    if (typeof providedByUserId === "string" && !providedByUserId) {
+      return ["providedByUserId is invalid."];
+    }
+
     const notes =
       typeof body.notes === "undefined"
         ? undefined
@@ -163,6 +178,7 @@ export class UpdateQuoteRequestDto {
         validityDays,
         origin,
         sourceChannel,
+        providedByUserId,
         notes,
       }),
     ];

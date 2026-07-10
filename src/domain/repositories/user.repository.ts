@@ -12,6 +12,7 @@ import { UserEntity } from "../entities/user.entity";
 export abstract class UserRepository {
   abstract findPaginated(params: FindUsersDatasourceParams): Promise<FindUsersDatasourceResult>;
   abstract findById(params: FindUserByIdDatasourceParams): Promise<UserEntity | null>;
+  abstract findActiveById(id: string): Promise<UserEntity | null>;
   abstract existsByEmail(email: string): Promise<boolean>;
   abstract existsByUsername(username: string): Promise<boolean>;
   abstract existsByErpUserCode(erpUserCode: string): Promise<boolean>;

@@ -156,6 +156,11 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           customerId: params.customerId,
           createdByUserId: params.createdByUserId,
           updatedByUserId: params.updatedByUserId,
+          providedByUserId: params.providedByUserId,
+          providedByNameSnapshot: params.providedByNameSnapshot,
+          providedByBranchNameSnapshot: params.providedByBranchNameSnapshot,
+          providedAt: params.providedAt,
+          providedByAssignedByUserId: params.providedByAssignedByUserId,
           notes: params.notes,
         },
       });
@@ -164,7 +169,9 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         data: {
           quoteId: created.id,
           status: "DRAFT",
-          note: "Quote created",
+          note: params.providedByNameSnapshot
+            ? `Quote created. Provided by ${params.providedByNameSnapshot}.`
+            : "Quote created",
           actorUserId: params.createdByUserId,
         },
       });
@@ -233,6 +240,11 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           validityDays: params.data.validityDays,
           validUntil,
           notes: params.data.notes,
+          providedByUserId: params.data.providedByUserId,
+          providedByNameSnapshot: params.data.providedByNameSnapshot,
+          providedByBranchNameSnapshot: params.data.providedByBranchNameSnapshot,
+          providedAt: params.data.providedAt,
+          providedByAssignedByUserId: params.data.providedByAssignedByUserId,
           updatedByUserId: params.data.updatedByUserId,
         },
       });
@@ -243,6 +255,17 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
             quoteId: existing.id,
             status: "QUOTED",
             note: "Quote edited and moved back to QUOTED status.",
+            actorUserId: params.data.updatedByUserId,
+          },
+        });
+      }
+
+      if (params.data.providerAttributionEventNote) {
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: existing.id,
+            status: existing.status,
+            note: params.data.providerAttributionEventNote,
             actorUserId: params.data.updatedByUserId,
           },
         });

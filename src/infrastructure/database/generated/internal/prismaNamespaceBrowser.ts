@@ -211,6 +211,11 @@ export const QuoteScalarFieldEnum = {
   customerId: 'customerId',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
+  providedByUserId: 'providedByUserId',
+  providedByNameSnapshot: 'providedByNameSnapshot',
+  providedByBranchNameSnapshot: 'providedByBranchNameSnapshot',
+  providedAt: 'providedAt',
+  providedByAssignedByUserId: 'providedByAssignedByUserId',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -124,6 +124,8 @@ model User {
   updatedProducts  Product[]  @relation("ProductUpdatedBy")
   createdQuotes    Quote[]    @relation("QuoteCreatedBy")
   updatedQuotes    Quote[]    @relation("QuoteUpdatedBy")
+  providedQuotes   Quote[]    @relation("QuoteProvidedBy")
+  providerAssignments Quote[] @relation("QuoteProviderAssignedBy")
   quoteDeliveryAttempts QuoteDeliveryAttempt[] @relation("QuoteDeliveryAttemptSentBy")
   quoteOrderExports  QuoteOrderExport[] @relation("QuoteOrderExportGeneratedBy")
   quoteEvents      QuoteEvent[] @relation("QuoteEventActor")
@@ -252,6 +254,11 @@ model Quote {
   customerId       String     @map("customer_id") @db.Uuid
   createdByUserId  String     @map("created_by_user_id") @db.Uuid
   updatedByUserId  String?    @map("updated_by_user_id") @db.Uuid
+  providedByUserId String?    @map("provided_by_user_id") @db.Uuid
+  providedByNameSnapshot String? @map("provided_by_name_snapshot") @db.VarChar(260)
+  providedByBranchNameSnapshot String? @map("provided_by_branch_name_snapshot") @db.VarChar(120)
+  providedAt DateTime? @map("provided_at")
+  providedByAssignedByUserId String? @map("provided_by_assigned_by_user_id") @db.Uuid
   notes            String?    @db.Text
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
@@ -260,6 +267,8 @@ model Quote {
   customer      Customer @relation(fields: [customerId], references: [id], onDelete: Restrict)
   createdByUser User     @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
   updatedByUser User?    @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  providedByUser User? @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
+  providedByAssignedByUser User? @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
 
   items  QuoteItem[]
   deliveryAttempts QuoteDeliveryAttempt[]
@@ -272,6 +281,7 @@ model Quote {
   @@index([branchId])
   @@index([customerId])
   @@index([createdByUserId])
+  @@index([providedByUserId])
   @@map("quotes")
 }
 

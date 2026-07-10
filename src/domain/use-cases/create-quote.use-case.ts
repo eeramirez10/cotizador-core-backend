@@ -4,6 +4,7 @@ import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { CustomerRepository } from "../repositories/customer.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { UserRepository } from "../repositories/user.repository";
 
 interface CreateQuoteActorContext {
   id: string;
@@ -24,7 +25,8 @@ export class CreateQuoteUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
     private readonly customerRepository: CustomerRepository,
-    private readonly branchRepository: BranchRepository
+    private readonly branchRepository: BranchRepository,
+    private readonly userRepository: UserRepository
   ) {}
 
   async execute(dto: CreateQuoteRequestDto, actor: CreateQuoteActorContext): Promise<QuoteResponseDto> {
@@ -50,6 +52,9 @@ export class CreateQuoteUseCase {
 
     if (!customer) throw new Error("Customer not found.");
 
+    const providedByUser = dto.providedByUserId ? await this.userRepository.findActiveById(dto.providedByUserId) : null;
+    if (dto.providedByUserId && !providedByUser) throw new Error("Provided by user not found or inactive.");
+
     const quote = await this.quoteRepository.createDraft({
       quoteNumber: buildQuoteNumber(),
       origin: dto.origin,
@@ -65,6 +70,11 @@ export class CreateQuoteUseCase {
       customerId: dto.customerId,
       createdByUserId: actor.id,
       updatedByUserId: actor.id,
+      providedByUserId: providedByUser?.id ?? null,
+      providedByNameSnapshot: providedByUser ? `${providedByUser.firstName} ${providedByUser.lastName}`.trim() : null,
+      providedByBranchNameSnapshot: providedByUser?.branch.name ?? null,
+      providedAt: providedByUser ? new Date() : null,
+      providedByAssignedByUserId: providedByUser ? actor.id : null,
       notes: dto.notes,
     });
 

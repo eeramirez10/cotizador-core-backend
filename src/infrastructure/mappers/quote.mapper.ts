@@ -36,6 +36,11 @@ interface QuoteRow {
   customerId: string;
   createdByUserId: string;
   updatedByUserId: string | null;
+  providedByUserId: string | null;
+  providedByNameSnapshot: string | null;
+  providedByBranchNameSnapshot: string | null;
+  providedAt: Date | null;
+  providedByAssignedByUserId: string | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -147,6 +152,11 @@ export class QuoteMapper {
       customerId: row.customerId,
       createdByUserId: row.createdByUserId,
       updatedByUserId: row.updatedByUserId,
+      providedByUserId: row.providedByUserId,
+      providedByNameSnapshot: row.providedByNameSnapshot,
+      providedByBranchNameSnapshot: row.providedByBranchNameSnapshot,
+      providedAt: row.providedAt,
+      providedByAssignedByUserId: row.providedByAssignedByUserId,
       notes: row.notes,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,

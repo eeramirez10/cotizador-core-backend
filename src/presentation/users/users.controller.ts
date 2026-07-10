@@ -7,6 +7,7 @@ import { CreateUserUseCase } from "../../domain/use-cases/create-user.use-case";
 import { DeactivateUserUseCase } from "../../domain/use-cases/deactivate-user.use-case";
 import { GetUsersUseCase } from "../../domain/use-cases/get-users.use-case";
 import { UpdateUserUseCase } from "../../domain/use-cases/update-user.use-case";
+import { GetActiveQuoteProvidersUseCase } from "../../domain/use-cases/get-active-quote-providers.use-case";
 
 export class UsersController {
   constructor(
@@ -14,8 +15,24 @@ export class UsersController {
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly deactivateUserUseCase: DeactivateUserUseCase,
-    private readonly activateUserUseCase: ActivateUserUseCase
+    private readonly activateUserUseCase: ActivateUserUseCase,
+    private readonly getActiveQuoteProvidersUseCase: GetActiveQuoteProvidersUseCase
   ) {}
+
+  listActiveForQuoteProvider = async (req: Request, res: Response): Promise<void> => {
+    const [queryError, queryDto] = GetUsersQueryRequestDto.create(req.query);
+    if (queryError) {
+      res.status(400).json({ error: queryError });
+      return;
+    }
+
+    try {
+      const result = await this.getActiveQuoteProvidersUseCase.execute(queryDto!);
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while listing active quote providers.");
+    }
+  };
 
   list = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {

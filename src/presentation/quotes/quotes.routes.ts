@@ -16,10 +16,12 @@ import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-
 import { PrismaCustomerDatasource } from "../../infrastructure/datasources/prisma-customer.datasource";
 import { FileOrderGenerationDatasource } from "../../infrastructure/datasources/file-order-generation.datasource";
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
+import { PrismaUserDatasource } from "../../infrastructure/datasources/prisma-user.datasource";
 import { BranchRepositoryImpl } from "../../infrastructure/repositories/branch.repository-impl";
 import { CustomerRepositoryImpl } from "../../infrastructure/repositories/customer.repository-impl";
 import { OrderGenerationRepositoryImpl } from "../../infrastructure/repositories/order-generation.repository-impl";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
+import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repository-impl";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { QuotesController } from "./quotes.controller";
@@ -31,22 +33,25 @@ export class QuotesRoutes {
     const branchDatasource = new PrismaBranchDatasource();
     const customerDatasource = new PrismaCustomerDatasource();
     const quoteDatasource = new PrismaQuoteDatasource();
+    const userDatasource = new PrismaUserDatasource();
     const orderGenerationDatasource = new FileOrderGenerationDatasource();
 
     const branchRepository = new BranchRepositoryImpl(branchDatasource);
     const customerRepository = new CustomerRepositoryImpl(customerDatasource);
     const quoteRepository = new QuoteRepositoryImpl(quoteDatasource);
+    const userRepository = new UserRepositoryImpl(userDatasource);
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
 
-    const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository);
+    const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository, userRepository);
     const createQuoteFromExtractionUseCase = new CreateQuoteFromExtractionUseCase(
       quoteRepository,
       customerRepository,
-      branchRepository
+      branchRepository,
+      userRepository
     );
     const getQuotesUseCase = new GetQuotesUseCase(quoteRepository, branchRepository);
     const getQuoteByIdUseCase = new GetQuoteByIdUseCase(quoteRepository);
-    const updateQuoteUseCase = new UpdateQuoteUseCase(quoteRepository, customerRepository);
+    const updateQuoteUseCase = new UpdateQuoteUseCase(quoteRepository, customerRepository, userRepository);
     const addQuoteItemUseCase = new AddQuoteItemUseCase(quoteRepository);
     const matchQuoteItemErpUseCase = new MatchQuoteItemErpUseCase(quoteRepository);
     const updateQuoteItemUseCase = new UpdateQuoteItemUseCase(quoteRepository);

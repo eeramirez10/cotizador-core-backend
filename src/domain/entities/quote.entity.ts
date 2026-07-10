@@ -59,6 +59,11 @@ export interface QuoteEntity {
   customerId: string;
   createdByUserId: string;
   updatedByUserId: string | null;
+  providedByUserId: string | null;
+  providedByNameSnapshot: string | null;
+  providedByBranchNameSnapshot: string | null;
+  providedAt: Date | null;
+  providedByAssignedByUserId: string | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;

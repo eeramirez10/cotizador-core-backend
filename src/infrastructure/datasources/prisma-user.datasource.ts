@@ -71,6 +71,15 @@ export class PrismaUserDatasource implements UserDatasource {
     return UserMapper.toEntity(row);
   }
 
+  async findActiveById(id: string): Promise<UserEntity | null> {
+    const row = await prisma.user.findFirst({
+      where: { id, isActive: true },
+      include: userInclude,
+    });
+
+    return row ? UserMapper.toEntity(row) : null;
+  }
+
   async existsByEmail(email: string): Promise<boolean> {
     const user = await prisma.user.findFirst({
       where: {

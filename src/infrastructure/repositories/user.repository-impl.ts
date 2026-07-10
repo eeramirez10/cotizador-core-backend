@@ -22,6 +22,10 @@ export class UserRepositoryImpl implements UserRepository {
     return this.datasource.findById(params);
   }
 
+  findActiveById(id: string): Promise<UserEntity | null> {
+    return this.datasource.findActiveById(id);
+  }
+
   existsByEmail(email: string): Promise<boolean> {
     return this.datasource.existsByEmail(email);
   }
