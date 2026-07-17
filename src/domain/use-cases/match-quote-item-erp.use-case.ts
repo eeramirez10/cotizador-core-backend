@@ -31,6 +31,7 @@ export class MatchQuoteItemErpUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });
@@ -78,6 +79,7 @@ export class MatchQuoteItemErpUseCase {
       itemId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
       data: {

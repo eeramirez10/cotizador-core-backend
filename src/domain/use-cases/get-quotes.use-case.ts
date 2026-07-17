@@ -6,6 +6,7 @@ import { BranchRepository } from "../repositories/branch.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 
 interface GetQuotesActorContext {
+  id: string;
   role: UserRole;
   branchId: string;
 }
@@ -35,6 +36,7 @@ export class GetQuotesUseCase {
       branchId: branchIdFilter,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });

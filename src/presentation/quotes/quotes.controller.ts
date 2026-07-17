@@ -53,6 +53,7 @@ export class QuotesController {
 
     try {
       const result = await this.getQuotesUseCase.execute(queryDto!, {
+        id: req.user.id,
         role: req.user.role,
         branchId: req.user.branchId,
       });
@@ -76,6 +77,7 @@ export class QuotesController {
 
     try {
       const result = await this.getQuoteByIdUseCase.execute(quoteId, {
+        id: req.user.id,
         role: req.user.role,
         branchId: req.user.branchId,
       });
@@ -348,6 +350,7 @@ export class QuotesController {
 
     try {
       const result = await this.downloadQuoteOrderFileUseCase.execute(quoteId, {
+        id: req.user.id,
         role: req.user.role,
         branchId: req.user.branchId,
       });

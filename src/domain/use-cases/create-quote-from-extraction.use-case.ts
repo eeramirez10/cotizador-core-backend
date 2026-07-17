@@ -95,6 +95,7 @@ export class CreateQuoteFromExtractionUseCase {
         quoteId: quote.id,
         scope: {
           role: actor.role,
+          userId: actor.id,
           branchId: actor.branchId,
         },
         data: {

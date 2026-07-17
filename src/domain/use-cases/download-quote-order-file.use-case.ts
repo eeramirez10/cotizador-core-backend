@@ -4,6 +4,7 @@ import { OrderGenerationRepository } from "../repositories/order-generation.repo
 import { QuoteRepository } from "../repositories/quote.repository";
 
 interface DownloadQuoteOrderFileActorContext {
+  id: string;
   role: UserRole;
   branchId: string;
 }
@@ -19,6 +20,7 @@ export class DownloadQuoteOrderFileUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });

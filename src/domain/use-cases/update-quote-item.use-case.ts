@@ -31,6 +31,7 @@ export class UpdateQuoteItemUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });
@@ -87,6 +88,7 @@ export class UpdateQuoteItemUseCase {
       itemId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
       data: {

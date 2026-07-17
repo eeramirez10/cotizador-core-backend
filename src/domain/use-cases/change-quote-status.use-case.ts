@@ -34,6 +34,7 @@ export class ChangeQuoteStatusUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });
@@ -96,6 +97,7 @@ export class ChangeQuoteStatusUseCase {
       actorUserId: actor.id,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });

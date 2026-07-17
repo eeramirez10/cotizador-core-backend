@@ -3,6 +3,7 @@ import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 
 interface GetQuoteByIdActorContext {
+  id: string;
   role: UserRole;
   branchId: string;
 }
@@ -15,6 +16,7 @@ export class GetQuoteByIdUseCase {
       id,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });

@@ -18,6 +18,7 @@ export class DeleteQuoteItemUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });
@@ -33,6 +34,7 @@ export class DeleteQuoteItemUseCase {
       updatedByUserId: actor.id,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });

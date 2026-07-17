@@ -198,6 +198,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         created.id,
         {
           role: "ADMIN",
+          userId: params.createdByUserId,
           branchId: params.branchId,
         },
         tx
@@ -629,6 +630,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
   private buildScopeWhere(scope: QuoteAccessScope): Prisma.QuoteWhereInput {
     if (scope.role === "ADMIN") return {};
+    if (scope.role === "SELLER") {
+      return {
+        branchId: scope.branchId,
+        createdByUserId: scope.userId,
+      };
+    }
     return { branchId: scope.branchId };
   }
 

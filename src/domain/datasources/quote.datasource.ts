@@ -13,6 +13,7 @@ import { QuoteEntity } from "../entities/quote.entity";
 
 export interface QuoteAccessScope {
   role: UserRole;
+  userId: string;
   branchId: string;
 }
 

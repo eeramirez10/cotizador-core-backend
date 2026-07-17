@@ -26,6 +26,7 @@ export class RegisterQuoteDeliveryAttemptUseCase {
       id: quoteId,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
     });
@@ -46,6 +47,7 @@ export class RegisterQuoteDeliveryAttemptUseCase {
       actorUserId: actor.id,
       scope: {
         role: actor.role,
+        userId: actor.id,
         branchId: actor.branchId,
       },
       data: {
