@@ -1487,6 +1487,8 @@ export const QuoteScalarFieldEnum = {
   cancellationComment: 'cancellationComment',
   cancelledAt: 'cancelledAt',
   cancelledByUserId: 'cancelledByUserId',
+  approvalReturnReason: 'approvalReturnReason',
+  approvalReturnComment: 'approvalReturnComment',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1883,6 +1885,20 @@ export type EnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInp
  */
 export type ListEnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCancellationReason[]'>
     
+
+
+/**
+ * Reference to a field of type 'QuoteApprovalReturnReason'
+ */
+export type EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteApprovalReturnReason'>
+
+
+
+/**
+ * Reference to a field of type 'QuoteApprovalReturnReason[]'
+ */
+export type ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteApprovalReturnReason[]'>
+
 
 
 /**

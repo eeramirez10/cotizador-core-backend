@@ -10,8 +10,10 @@ interface ChangeQuoteStatusActorContext {
 }
 
 const allowedTransitions: Record<QuoteStatus, QuoteStatus[]> = {
-  DRAFT: ["PENDING", "CANCELLED"],
-  PENDING: ["QUOTED", "CANCELLED"],
+  DRAFT: ["PENDING", "PENDING_APPROVAL", "CANCELLED"],
+  PENDING: ["PENDING_APPROVAL", "CANCELLED"],
+  PENDING_APPROVAL: ["QUOTED", "CHANGES_REQUESTED", "CANCELLED"],
+  CHANGES_REQUESTED: ["PENDING_APPROVAL", "CANCELLED"],
   QUOTED: ["APPROVED", "REJECTED", "CANCELLED"],
   APPROVED: [],
   REJECTED: [],
@@ -44,11 +46,21 @@ export class ChangeQuoteStatusUseCase {
     if (!isTransitionAllowed(quote.status, dto.status)) {
       throw new Error(`Invalid status transition from ${quote.status} to ${dto.status}.`);
     }
-    if (dto.status === "QUOTED" && quote.items.length === 0) {
+    const isApprovalDecision = dto.status === "QUOTED" || dto.status === "CHANGES_REQUESTED";
+    if (isApprovalDecision && !["ADMIN", "MANAGER"].includes(actor.role)) {
+      throw new Error("Only ADMIN or MANAGER can approve or request changes to a quote.");
+    }
+    if (dto.status === "PENDING_APPROVAL" && actor.role !== "SELLER") {
+      throw new Error("Only SELLER can submit a quote for approval.");
+    }
+    if (dto.status === "PENDING_APPROVAL" && quote.items.length === 0) {
       throw new Error("Quote must contain at least one item before moving to QUOTED.");
     }
-    if (dto.status === "QUOTED" && quote.sourceChannel === "UNSPECIFIED") {
+    if (dto.status === "PENDING_APPROVAL" && quote.sourceChannel === "UNSPECIFIED") {
       throw new Error("Quote source channel is required before moving to QUOTED.");
+    }
+    if (dto.status === "CHANGES_REQUESTED" && !dto.approvalReturnReason) {
+      throw new Error("Approval return reason is required before requesting changes.");
     }
     if (dto.status === "REJECTED" && !dto.rejectionReason) {
       throw new Error("Rejection reason is required before moving to REJECTED.");
@@ -62,7 +74,7 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "CANCELLED" && dto.cancellationReason === "OTHER" && !dto.cancellationComment) {
       throw new Error("Cancellation comment is required when cancellation reason is OTHER.");
     }
-    if (dto.status === "QUOTED") {
+    if (dto.status === "PENDING_APPROVAL") {
       const unlinkedItems = quote.items.filter(
         (item) => !item.productId && !item.externalProductCode
       );
@@ -89,11 +101,15 @@ export class ChangeQuoteStatusUseCase {
           ? `Rejected: ${dto.rejectionReason}.${dto.rejectionComment ? ` ${dto.rejectionComment}` : ""}`
           : dto.status === "CANCELLED"
             ? `Cancelled: ${dto.cancellationReason}.${dto.cancellationComment ? ` ${dto.cancellationComment}` : ""}`
-          : dto.note,
+            : dto.status === "CHANGES_REQUESTED"
+              ? `Changes requested: ${dto.approvalReturnReason}.${dto.approvalReturnComment ? ` ${dto.approvalReturnComment}` : ""}`
+              : dto.note,
       rejectionReason: dto.status === "REJECTED" ? dto.rejectionReason : null,
       rejectionComment: dto.status === "REJECTED" ? dto.rejectionComment : null,
       cancellationReason: dto.status === "CANCELLED" ? dto.cancellationReason : null,
       cancellationComment: dto.status === "CANCELLED" ? dto.cancellationComment : null,
+      approvalReturnReason: dto.status === "CHANGES_REQUESTED" ? dto.approvalReturnReason : null,
+      approvalReturnComment: dto.status === "CHANGES_REQUESTED" ? dto.approvalReturnComment : null,
       actorUserId: actor.id,
       scope: {
         role: actor.role,

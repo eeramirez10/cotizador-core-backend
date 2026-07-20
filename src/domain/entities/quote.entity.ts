@@ -7,6 +7,7 @@ import type {
   QuoteSourceChannel,
   QuoteCancellationReason,
   QuoteRejectionReason,
+  QuoteApprovalReturnReason,
   QuoteStatus,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
@@ -77,6 +78,8 @@ export interface QuoteEntity {
   cancellationComment: string | null;
   cancelledAt: Date | null;
   cancelledByUserId: string | null;
+  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnComment: string | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;

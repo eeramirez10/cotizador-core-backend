@@ -8,6 +8,7 @@ import type {
   QuoteStatus,
   QuoteRejectionReason,
   QuoteCancellationReason,
+  QuoteApprovalReturnReason,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEntity } from "../entities/quote.entity";
@@ -159,6 +160,8 @@ export interface ChangeQuoteStatusDatasourceParams {
   rejectionComment: string | null;
   cancellationReason: QuoteCancellationReason | null;
   cancellationComment: string | null;
+  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnComment: string | null;
   actorUserId: string;
   scope: QuoteAccessScope;
 }

@@ -36,10 +36,23 @@ enum Currency {
 enum QuoteStatus {
   DRAFT
   PENDING
+  PENDING_APPROVAL
+  CHANGES_REQUESTED
   QUOTED
   APPROVED
   REJECTED
   CANCELLED
+}
+
+enum QuoteApprovalReturnReason {
+  MARGIN_TOO_LOW
+  PRICE_BELOW_POLICY
+  INCORRECT_COST
+  INCORRECT_PRICE
+  MISSING_INFORMATION
+  COMMERCIAL_TERMS
+  DELIVERY_TIME
+  OTHER
 }
 
 enum QuoteRejectionReason {
@@ -302,6 +315,8 @@ model Quote {
   cancellationComment String? @map("cancellation_comment") @db.Text
   cancelledAt DateTime? @map("cancelled_at")
   cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
+  approvalReturnReason QuoteApprovalReturnReason? @map("approval_return_reason")
+  approvalReturnComment String? @map("approval_return_comment") @db.Text
   notes            String?    @db.Text
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
@@ -332,6 +347,7 @@ model Quote {
   @@index([rejectedByUserId])
   @@index([cancellationReason])
   @@index([cancelledByUserId])
+  @@index([approvalReturnReason])
   @@map("quotes")
 }
 

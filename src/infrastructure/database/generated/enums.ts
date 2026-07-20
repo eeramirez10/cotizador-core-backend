@@ -53,6 +53,8 @@ export type Currency = (typeof Currency)[keyof typeof Currency]
 export const QuoteStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
+  PENDING_APPROVAL: 'PENDING_APPROVAL',
+  CHANGES_REQUESTED: 'CHANGES_REQUESTED',
   QUOTED: 'QUOTED',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',
@@ -60,6 +62,20 @@ export const QuoteStatus = {
 } as const
 
 export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
+
+
+export const QuoteApprovalReturnReason = {
+  MARGIN_TOO_LOW: 'MARGIN_TOO_LOW',
+  PRICE_BELOW_POLICY: 'PRICE_BELOW_POLICY',
+  INCORRECT_COST: 'INCORRECT_COST',
+  INCORRECT_PRICE: 'INCORRECT_PRICE',
+  MISSING_INFORMATION: 'MISSING_INFORMATION',
+  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
+  DELIVERY_TIME: 'DELIVERY_TIME',
+  OTHER: 'OTHER'
+} as const
+
+export type QuoteApprovalReturnReason = (typeof QuoteApprovalReturnReason)[keyof typeof QuoteApprovalReturnReason]
 
 
 export const QuoteRejectionReason = {

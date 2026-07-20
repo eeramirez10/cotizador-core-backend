@@ -11,7 +11,7 @@ interface UpdateQuoteActorContext {
   branchId: string;
 }
 
-const isLockedStatus = (status: string): boolean => ["QUOTED", "APPROVED", "REJECTED", "CANCELLED"].includes(status);
+const isEditableStatus = (status: string): boolean => ["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(status);
 
 export class UpdateQuoteUseCase {
   constructor(
@@ -30,7 +30,7 @@ export class UpdateQuoteUseCase {
       },
     });
     if (!existing) throw new Error("Quote not found.");
-    if (isLockedStatus(existing.status)) throw new Error("Quote cannot be edited in current status.");
+    if (!isEditableStatus(existing.status)) throw new Error("Quote cannot be edited in current status.");
     const nextCaptureMethod = dto.captureMethod ?? existing.captureMethod;
     const nextOriginalQuoteDate =
       typeof dto.originalQuoteDate === "undefined"

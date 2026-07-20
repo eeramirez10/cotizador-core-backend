@@ -226,6 +226,8 @@ export const QuoteScalarFieldEnum = {
   cancellationComment: 'cancellationComment',
   cancelledAt: 'cancelledAt',
   cancelledByUserId: 'cancelledByUserId',
+  approvalReturnReason: 'approvalReturnReason',
+  approvalReturnComment: 'approvalReturnComment',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

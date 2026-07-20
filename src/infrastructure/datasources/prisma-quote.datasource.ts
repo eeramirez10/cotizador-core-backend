@@ -458,6 +458,8 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           cancellationComment: params.cancellationComment,
           cancelledAt: params.status === "CANCELLED" ? new Date() : null,
           cancelledByUserId: params.status === "CANCELLED" ? params.actorUserId : null,
+          approvalReturnReason: params.approvalReturnReason,
+          approvalReturnComment: params.approvalReturnComment,
           updatedByUserId: params.actorUserId,
         },
       });

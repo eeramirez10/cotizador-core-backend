@@ -50,6 +50,8 @@ export class QuoteResponseDto {
       cancelledAt: this.quote.cancelledAt ? this.quote.cancelledAt.toISOString() : null,
       cancelledByUserId: this.quote.cancelledByUserId,
       cancelledByUser: this.quote.cancelledByUser,
+      approvalReturnReason: this.quote.approvalReturnReason,
+      approvalReturnComment: this.quote.approvalReturnComment,
       notes: this.quote.notes,
       createdAt: this.quote.createdAt.toISOString(),
       updatedAt: this.quote.updatedAt.toISOString(),

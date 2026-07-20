@@ -2,6 +2,7 @@ import {
   QuoteCancellationReason,
   QuoteRejectionReason,
   QuoteStatus,
+  QuoteApprovalReturnReason,
 } from "../../../infrastructure/database/generated/enums";
 
 interface ChangeQuoteStatusRequestDtoProps {
@@ -11,6 +12,8 @@ interface ChangeQuoteStatusRequestDtoProps {
   rejectionComment: string | null;
   cancellationReason: QuoteCancellationReason | null;
   cancellationComment: string | null;
+  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnComment: string | null;
 }
 
 export class ChangeQuoteStatusRequestDto {
@@ -20,6 +23,8 @@ export class ChangeQuoteStatusRequestDto {
   public readonly rejectionComment: string | null;
   public readonly cancellationReason: QuoteCancellationReason | null;
   public readonly cancellationComment: string | null;
+  public readonly approvalReturnReason: QuoteApprovalReturnReason | null;
+  public readonly approvalReturnComment: string | null;
 
   constructor(props: ChangeQuoteStatusRequestDtoProps) {
     this.status = props.status;
@@ -28,6 +33,8 @@ export class ChangeQuoteStatusRequestDto {
     this.rejectionComment = props.rejectionComment;
     this.cancellationReason = props.cancellationReason;
     this.cancellationComment = props.cancellationComment;
+    this.approvalReturnReason = props.approvalReturnReason;
+    this.approvalReturnComment = props.approvalReturnComment;
   }
 
   static create(input: unknown): [string?, ChangeQuoteStatusRequestDto?] {
@@ -57,6 +64,15 @@ export class ChangeQuoteStatusRequestDto {
         ? body.cancellationComment.trim()
         : null;
     const cancellationReason = cancellationReasonRaw ? cancellationReasonRaw as QuoteCancellationReason : null;
+    const approvalReturnReasonRaw =
+      typeof body.approvalReturnReason === "string" ? body.approvalReturnReason.trim().toUpperCase() : "";
+    const approvalReturnComment =
+      typeof body.approvalReturnComment === "string" && body.approvalReturnComment.trim().length > 0
+        ? body.approvalReturnComment.trim()
+        : null;
+    const approvalReturnReason = approvalReturnReasonRaw
+      ? approvalReturnReasonRaw as QuoteApprovalReturnReason
+      : null;
 
     if (statusRaw === "REJECTED") {
       if (!rejectionReason || !Object.values(QuoteRejectionReason).includes(rejectionReason)) {
@@ -76,6 +92,15 @@ export class ChangeQuoteStatusRequestDto {
       }
     }
 
+    if (statusRaw === "CHANGES_REQUESTED") {
+      if (!approvalReturnReason || !Object.values(QuoteApprovalReturnReason).includes(approvalReturnReason)) {
+        return ["approvalReturnReason is required when requesting changes."];
+      }
+      if (approvalReturnReason === "OTHER" && !approvalReturnComment) {
+        return ["approvalReturnComment is required when approvalReturnReason is OTHER."];
+      }
+    }
+
     return [
       ,
       new ChangeQuoteStatusRequestDto({
@@ -85,6 +110,8 @@ export class ChangeQuoteStatusRequestDto {
         rejectionComment,
         cancellationReason,
         cancellationComment,
+        approvalReturnReason,
+        approvalReturnComment,
       }),
     ];
   }

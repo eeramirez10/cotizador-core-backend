@@ -167,7 +167,7 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
     }
 
     const pendingQuotes = workedRows
-      .filter((row) => row.status === "DRAFT" || row.status === "PENDING")
+      .filter((row) => ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(row.status))
       .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
       .slice(0, 10)
       .map((row) => ({
@@ -194,7 +194,7 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
         approvedAmount: round2(approvedAmount),
         averageTicket: approvedRows.length > 0 ? round2(approvedAmount / approvedRows.length) : 0,
         conversionRate: quotedRows.length > 0 ? round2((approvedRows.length / quotedRows.length) * 100) : 0,
-        pending: workedRows.filter((row) => row.status === "DRAFT" || row.status === "PENDING").length,
+        pending: workedRows.filter((row) => ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(row.status)).length,
         ordersGenerated: orderRows.length,
         orderAmount: round2(orderRows.reduce((sum, row) => sum + Number(row.total), 0)),
         pendingItems: workedRows.reduce(

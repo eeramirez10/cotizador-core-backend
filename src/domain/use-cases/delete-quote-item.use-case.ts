@@ -8,7 +8,7 @@ interface DeleteQuoteItemActorContext {
   branchId: string;
 }
 
-const canEditItems = (status: string): boolean => status !== "CANCELLED";
+const canEditItems = (status: string): boolean => ["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(status);
 
 export class DeleteQuoteItemUseCase {
   constructor(private readonly quoteRepository: QuoteRepository) {}

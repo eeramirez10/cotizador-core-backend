@@ -378,6 +378,13 @@ export type EnumQuoteCancellationReasonNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel> | $Enums.QuoteCancellationReason | null
 }
 
+export type EnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteApprovalReturnReason | Prisma.EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel> | $Enums.QuoteApprovalReturnReason | null
+}
+
 export type EnumQuoteStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteStatus | Prisma.EnumQuoteStatusFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteStatus[] | Prisma.ListEnumQuoteStatusFieldRefInput<$PrismaModel>
@@ -502,6 +509,16 @@ export type EnumQuoteCancellationReasonNullableWithAggregatesFilter<$PrismaModel
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel>
+}
+
+export type EnumQuoteApprovalReturnReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteApprovalReturnReason | Prisma.EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.QuoteApprovalReturnReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel>
 }
 
 export type EnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {
@@ -968,6 +985,13 @@ export type NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel = never
   not?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel> | $Enums.QuoteCancellationReason | null
 }
 
+export type NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteApprovalReturnReason | Prisma.EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel> | $Enums.QuoteApprovalReturnReason | null
+}
+
 export type NestedEnumQuoteStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteStatus | Prisma.EnumQuoteStatusFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteStatus[] | Prisma.ListEnumQuoteStatusFieldRefInput<$PrismaModel>
@@ -1103,6 +1127,16 @@ export type NestedEnumQuoteCancellationReasonNullableWithAggregatesFilter<$Prism
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteCancellationReasonNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumQuoteApprovalReturnReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteApprovalReturnReason | Prisma.EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.QuoteApprovalReturnReason[] | Prisma.ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.QuoteApprovalReturnReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteApprovalReturnReasonNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {

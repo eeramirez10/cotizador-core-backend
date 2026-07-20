@@ -46,6 +46,8 @@ interface QuoteRow {
   cancellationComment: string | null;
   cancelledAt: Date | null;
   cancelledByUserId: string | null;
+  approvalReturnReason: QuoteEntity["approvalReturnReason"];
+  approvalReturnComment: string | null;
   providedByUserId: string | null;
   providedByNameSnapshot: string | null;
   providedByBranchNameSnapshot: string | null;
@@ -186,6 +188,8 @@ export class QuoteMapper {
       cancellationComment: row.cancellationComment,
       cancelledAt: row.cancelledAt,
       cancelledByUserId: row.cancelledByUserId,
+      approvalReturnReason: row.approvalReturnReason,
+      approvalReturnComment: row.approvalReturnComment,
       providedByUserId: row.providedByUserId,
       providedByNameSnapshot: row.providedByNameSnapshot,
       providedByBranchNameSnapshot: row.providedByBranchNameSnapshot,
