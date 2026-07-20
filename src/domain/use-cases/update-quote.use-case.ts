@@ -31,6 +31,14 @@ export class UpdateQuoteUseCase {
     });
     if (!existing) throw new Error("Quote not found.");
     if (isLockedStatus(existing.status)) throw new Error("Quote cannot be edited in current status.");
+    const nextCaptureMethod = dto.captureMethod ?? existing.captureMethod;
+    const nextOriginalQuoteDate =
+      typeof dto.originalQuoteDate === "undefined"
+        ? existing.originalQuoteDate
+        : dto.originalQuoteDate;
+    if (nextCaptureMethod === "EXCEL_IMPORT" && !nextOriginalQuoteDate) {
+      throw new Error("Original quote date is required for EXCEL_IMPORT.");
+    }
 
     if (dto.customerId) {
       const customer = await this.customerRepository.findById({
@@ -58,6 +66,8 @@ export class UpdateQuoteUseCase {
       data: {
         customerId: dto.customerId,
         origin: dto.origin,
+        captureMethod: dto.captureMethod,
+        originalQuoteDate: dto.originalQuoteDate,
         sourceChannel: dto.sourceChannel,
         currency: dto.currency,
         exchangeRate: dto.exchangeRate,

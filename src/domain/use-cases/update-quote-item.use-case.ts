@@ -2,7 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { UpdateQuoteItemRequestDto } from "../dtos/request/update-quote-item-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
-import { isQuoteItemReady } from "./quote-item-review.helper";
+import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
 
 interface UpdateQuoteItemActorContext {
   id: string;
@@ -73,15 +73,25 @@ export class UpdateQuoteItemUseCase {
     const nextEan = dto.ean !== undefined ? dto.ean : existingItem.ean;
     const nextErpDescription =
       dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription;
+    const nextCustomerDescription =
+      dto.customerDescription !== undefined ? dto.customerDescription : existingItem.customerDescription;
+    const nextDeliveryTime =
+      dto.deliveryTime !== undefined ? dto.deliveryTime : existingItem.deliveryTime;
     const nextUnit = dto.unit !== undefined ? dto.unit : existingItem.unit;
-    const requiresReview = !isQuoteItemReady({
+    const readinessInput = {
       productId: nextProductId,
       externalProductCode: nextExternalProductCode,
       ean: nextEan,
       erpDescription: nextErpDescription,
+      customerDescription: nextCustomerDescription,
       qty,
       unit: nextUnit,
-    });
+      unitPrice,
+      deliveryTime: nextDeliveryTime,
+    };
+    const requiresReview = quote.captureMethod === "EXCEL_IMPORT"
+      ? !isImportedExcelItemReady(readinessInput)
+      : !isQuoteItemReady(readinessInput);
 
     const updatedQuote = await this.quoteRepository.updateItem({
       quoteId,
@@ -95,14 +105,13 @@ export class UpdateQuoteItemUseCase {
         productId: nextProductId,
         externalProductCode: nextExternalProductCode,
         ean: nextEan,
-        customerDescription:
-          dto.customerDescription !== undefined ? dto.customerDescription : existingItem.customerDescription,
+        customerDescription: nextCustomerDescription,
         customerUnit: dto.customerUnit !== undefined ? dto.customerUnit : existingItem.customerUnit,
         erpDescription: nextErpDescription,
         unit: nextUnit,
         qty,
         stock: dto.stock !== undefined ? dto.stock : existingItem.stock,
-        deliveryTime: dto.deliveryTime !== undefined ? dto.deliveryTime : existingItem.deliveryTime,
+        deliveryTime: nextDeliveryTime,
         itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         cost: round4(cost),
         costCurrency: dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency,

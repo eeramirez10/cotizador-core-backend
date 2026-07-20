@@ -3,6 +3,7 @@ import type {
   QuoteDeliveryAttemptStatus,
   QuoteDeliveryChannel,
   QuoteOrigin,
+  QuoteCaptureMethod,
   QuoteSourceChannel,
   QuoteStatus,
   QuoteRejectionReason,
@@ -34,6 +35,8 @@ export interface FindQuotesDatasourceResult {
 export interface CreateQuoteDatasourceParams {
   quoteNumber: string;
   origin: QuoteOrigin;
+  captureMethod: QuoteCaptureMethod;
+  originalQuoteDate: Date | null;
   sourceChannel: QuoteSourceChannel;
   currency: Currency;
   exchangeRate: number;
@@ -57,6 +60,8 @@ export interface CreateQuoteDatasourceParams {
 export interface UpdateQuoteDatasourceData {
   customerId?: string;
   origin?: QuoteOrigin;
+  captureMethod?: QuoteCaptureMethod;
+  originalQuoteDate?: Date | null;
   sourceChannel?: QuoteSourceChannel;
   currency?: Currency;
   exchangeRate?: number;

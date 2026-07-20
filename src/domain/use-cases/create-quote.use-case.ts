@@ -58,6 +58,8 @@ export class CreateQuoteUseCase {
     const quote = await this.quoteRepository.createDraft({
       quoteNumber: buildQuoteNumber(),
       origin: dto.origin,
+      captureMethod: dto.captureMethod,
+      originalQuoteDate: dto.originalQuoteDate,
       sourceChannel: dto.sourceChannel,
       currency: dto.currency,
       exchangeRate: dto.exchangeRate,

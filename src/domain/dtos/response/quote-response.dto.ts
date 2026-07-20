@@ -15,6 +15,10 @@ export class QuoteResponseDto {
       orderGeneratedAt: this.quote.orderGeneratedAt ? this.quote.orderGeneratedAt.toISOString() : null,
       orderReference: this.quote.orderReference,
       origin: this.quote.origin,
+      captureMethod: this.quote.captureMethod,
+      originalQuoteDate: this.quote.originalQuoteDate
+        ? this.quote.originalQuoteDate.toISOString().split("T")[0]
+        : null,
       sourceChannel: this.quote.sourceChannel,
       currency: this.quote.currency,
       exchangeRate: this.quote.exchangeRate,

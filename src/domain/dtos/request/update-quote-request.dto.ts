@@ -1,5 +1,6 @@
 import {
   Currency,
+  QuoteCaptureMethod,
   QuoteOrigin,
   QuoteSourceChannel,
 } from "../../../infrastructure/database/generated/enums";
@@ -14,6 +15,8 @@ interface UpdateQuoteRequestDtoProps {
   paymentTerms?: string;
   validityDays?: number;
   origin?: QuoteOrigin;
+  captureMethod?: QuoteCaptureMethod;
+  originalQuoteDate?: Date | null;
   sourceChannel?: QuoteSourceChannel;
   providedByUserId?: string | null;
   notes?: string | null;
@@ -29,6 +32,8 @@ export class UpdateQuoteRequestDto {
   public readonly paymentTerms?: string;
   public readonly validityDays?: number;
   public readonly origin?: QuoteOrigin;
+  public readonly captureMethod?: QuoteCaptureMethod;
+  public readonly originalQuoteDate?: Date | null;
   public readonly sourceChannel?: QuoteSourceChannel;
   public readonly providedByUserId?: string | null;
   public readonly notes?: string | null;
@@ -43,6 +48,8 @@ export class UpdateQuoteRequestDto {
     this.paymentTerms = props.paymentTerms;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
+    this.captureMethod = props.captureMethod;
+    this.originalQuoteDate = props.originalQuoteDate;
     this.sourceChannel = props.sourceChannel;
     this.providedByUserId = props.providedByUserId;
     this.notes = props.notes;
@@ -146,6 +153,27 @@ export class UpdateQuoteRequestDto {
       sourceChannel = raw as QuoteSourceChannel;
     }
 
+    let captureMethod: QuoteCaptureMethod | undefined;
+    if (typeof body.captureMethod !== "undefined") {
+      const raw = typeof body.captureMethod === "string" ? body.captureMethod.trim().toUpperCase() : "";
+      if (!Object.values(QuoteCaptureMethod).includes(raw as QuoteCaptureMethod)) {
+        return ["captureMethod is invalid."];
+      }
+      captureMethod = raw as QuoteCaptureMethod;
+    }
+
+    let originalQuoteDate: Date | null | undefined;
+    if (typeof body.originalQuoteDate !== "undefined") {
+      if (body.originalQuoteDate === null || body.originalQuoteDate === "") {
+        originalQuoteDate = null;
+      } else {
+        const raw = typeof body.originalQuoteDate === "string" ? body.originalQuoteDate.trim() : "";
+        const parsed = raw ? new Date(raw) : new Date(Number.NaN);
+        if (Number.isNaN(parsed.getTime())) return ["originalQuoteDate is invalid."];
+        originalQuoteDate = parsed;
+      }
+    }
+
     const providedByUserId =
       typeof body.providedByUserId === "undefined"
         ? undefined
@@ -177,6 +205,8 @@ export class UpdateQuoteRequestDto {
         paymentTerms,
         validityDays,
         origin,
+        captureMethod,
+        originalQuoteDate,
         sourceChannel,
         providedByUserId,
         notes,

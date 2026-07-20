@@ -74,6 +74,11 @@ enum QuoteOrigin {
   TEXT_INPUT
 }
 
+enum QuoteCaptureMethod {
+  SYSTEM
+  EXCEL_IMPORT
+}
+
 enum QuoteSourceChannel {
   UNSPECIFIED
   EMAIL
@@ -266,6 +271,8 @@ model Quote {
   orderGeneratedAt DateTime?  @map("order_generated_at")
   orderReference   String?    @unique @map("order_reference") @db.VarChar(80)
   origin           QuoteOrigin @default(MANUAL)
+  captureMethod    QuoteCaptureMethod @default(SYSTEM) @map("capture_method")
+  originalQuoteDate DateTime? @map("original_quote_date") @db.Date
   sourceChannel    QuoteSourceChannel @default(UNSPECIFIED) @map("source_channel")
   currency         Currency
   exchangeRate     Decimal    @map("exchange_rate") @db.Decimal(14, 6)
@@ -314,6 +321,7 @@ model Quote {
   events QuoteEvent[]
 
   @@index([status])
+  @@index([captureMethod])
   @@index([deliveryStatus])
   @@index([orderStatus])
   @@index([branchId])

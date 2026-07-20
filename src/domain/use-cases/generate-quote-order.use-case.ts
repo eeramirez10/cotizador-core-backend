@@ -35,6 +35,15 @@ export class GenerateQuoteOrderUseCase {
     if (quote.orderStatus === "GENERATED") {
       throw new Error("Order was already generated for this quote.");
     }
+    const unlinkedItems = quote.items.filter(
+      (item) => !item.productId && !item.externalProductCode && !item.ean
+    );
+    if (unlinkedItems.length > 0) {
+      throw new Error("All quote items must be linked to an ERP or local product before generating order.");
+    }
+    if (quote.items.some((item) => item.requiresReview)) {
+      throw new Error("All quote items must be reviewed before generating order.");
+    }
 
     const result = await this.orderGenerationRepository.generateOrderFromQuote(quote);
 

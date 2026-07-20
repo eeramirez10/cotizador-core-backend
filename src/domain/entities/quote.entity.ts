@@ -3,6 +3,7 @@ import type {
   OrderGenerationStatus,
   QuoteDeliveryStatus,
   QuoteOrigin,
+  QuoteCaptureMethod,
   QuoteSourceChannel,
   QuoteCancellationReason,
   QuoteRejectionReason,
@@ -45,6 +46,8 @@ export interface QuoteEntity {
   orderGeneratedAt: Date | null;
   orderReference: string | null;
   origin: QuoteOrigin;
+  captureMethod: QuoteCaptureMethod;
+  originalQuoteDate: Date | null;
   sourceChannel: QuoteSourceChannel;
   currency: Currency;
   exchangeRate: number;

@@ -30,6 +30,7 @@ export interface AnalyticsDashboard {
   trend: Array<{ date: string; created: number; quoted: number; approved: number; orders: number }>;
   pipeline: Array<{ status: string; count: number; amount: number }>;
   channels: Array<{ channel: string; count: number; amount: number }>;
+  captureMethods: Array<{ method: "SYSTEM" | "EXCEL_IMPORT"; count: number; amount: number }>;
   rejectionReasons: Array<{ reason: string; count: number; amount: number }>;
   sellerRanking: Array<{
     userId: string;

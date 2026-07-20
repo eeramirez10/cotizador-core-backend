@@ -1456,6 +1456,8 @@ export const QuoteScalarFieldEnum = {
   orderGeneratedAt: 'orderGeneratedAt',
   orderReference: 'orderReference',
   origin: 'origin',
+  captureMethod: 'captureMethod',
+  originalQuoteDate: 'originalQuoteDate',
   sourceChannel: 'sourceChannel',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
@@ -1810,6 +1812,20 @@ export type EnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'QuoteOrigin[]'
  */
 export type ListEnumQuoteOriginFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteOrigin[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteCaptureMethod'
+ */
+export type EnumQuoteCaptureMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCaptureMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteCaptureMethod[]'
+ */
+export type ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCaptureMethod[]'>
     
 
 

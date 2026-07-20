@@ -328,6 +328,13 @@ export type EnumQuoteOriginFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel> | $Enums.QuoteOrigin
 }
 
+export type EnumQuoteCaptureMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteCaptureMethod | Prisma.EnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel> | $Enums.QuoteCaptureMethod
+}
+
 export type EnumQuoteSourceChannelFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
@@ -423,6 +430,16 @@ export type EnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
+}
+
+export type EnumQuoteCaptureMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteCaptureMethod | Prisma.EnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteCaptureMethodWithAggregatesFilter<$PrismaModel> | $Enums.QuoteCaptureMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel>
 }
 
 export type EnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = never> = {
@@ -912,6 +929,13 @@ export type NestedEnumQuoteOriginFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel> | $Enums.QuoteOrigin
 }
 
+export type NestedEnumQuoteCaptureMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteCaptureMethod | Prisma.EnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel> | $Enums.QuoteCaptureMethod
+}
+
 export type NestedEnumQuoteSourceChannelFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteSourceChannel | Prisma.EnumQuoteSourceChannelFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteSourceChannel[] | Prisma.ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel>
@@ -996,6 +1020,16 @@ export type NestedEnumQuoteOriginWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
   _max?: Prisma.NestedEnumQuoteOriginFilter<$PrismaModel>
+}
+
+export type NestedEnumQuoteCaptureMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteCaptureMethod | Prisma.EnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteCaptureMethod[] | Prisma.ListEnumQuoteCaptureMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteCaptureMethodWithAggregatesFilter<$PrismaModel> | $Enums.QuoteCaptureMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteCaptureMethodFilter<$PrismaModel>
 }
 
 export type NestedEnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = never> = {

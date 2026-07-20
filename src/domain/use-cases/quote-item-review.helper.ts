@@ -5,6 +5,9 @@ interface QuoteItemReviewInput {
   erpDescription?: string | null;
   qty: number;
   unit: string;
+  customerDescription?: string | null;
+  unitPrice?: number;
+  deliveryTime?: string | null;
 }
 
 const hasText = (value: string | null | undefined): boolean =>
@@ -17,4 +20,14 @@ export const isQuoteItemReady = (input: QuoteItemReviewInput): boolean => {
   const hasValidUnit = hasText(input.unit);
 
   return hasIdentifier && hasErpDescription && hasValidQty && hasValidUnit;
+};
+
+export const isImportedExcelItemReady = (input: QuoteItemReviewInput): boolean => {
+  const hasDescription = hasText(input.customerDescription) || hasText(input.erpDescription);
+  const hasValidQty = Number.isFinite(input.qty) && input.qty > 0;
+  const hasValidUnit = hasText(input.unit);
+  const hasValidPrice = Number.isFinite(input.unitPrice) && Number(input.unitPrice) > 0;
+  const hasDeliveryTime = hasText(input.deliveryTime);
+
+  return hasDescription && hasValidQty && hasValidUnit && hasValidPrice && hasDeliveryTime;
 };

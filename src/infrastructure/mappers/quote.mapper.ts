@@ -20,6 +20,8 @@ interface QuoteRow {
   orderGeneratedAt: Date | null;
   orderReference: string | null;
   origin: QuoteEntity["origin"];
+  captureMethod: QuoteEntity["captureMethod"];
+  originalQuoteDate: Date | null;
   sourceChannel: QuoteEntity["sourceChannel"];
   currency: QuoteEntity["currency"];
   exchangeRate: number | DecimalLike;
@@ -158,6 +160,8 @@ export class QuoteMapper {
       orderGeneratedAt: row.orderGeneratedAt,
       orderReference: row.orderReference,
       origin: row.origin,
+      captureMethod: row.captureMethod,
+      originalQuoteDate: row.originalQuoteDate,
       sourceChannel: row.sourceChannel,
       currency: row.currency,
       exchangeRate: Number(toNumber(row.exchangeRate)),

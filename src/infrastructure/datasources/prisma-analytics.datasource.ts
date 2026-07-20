@@ -22,37 +22,52 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
             ],
           };
 
-    const rows = await prisma.quote.findMany({
-      where: {
-        ...scopeWhere,
-        createdAt: { gte: params.from, lt: params.toExclusive },
-        currency: params.currency,
-      },
-      select: {
-        id: true,
-        quoteNumber: true,
-        status: true,
-        sourceChannel: true,
-        rejectionReason: true,
-        total: true,
-        orderStatus: true,
-        createdAt: true,
-        createdByUserId: true,
-        providedByUserId: true,
-        providedByNameSnapshot: true,
-        providedByBranchNameSnapshot: true,
-        customer: { select: { displayName: true, legalName: true } },
-        createdByUser: { select: { firstName: true, lastName: true } },
-        items: {
-          select: {
-            requiresReview: true,
-            productId: true,
-            externalProductCode: true,
+    const captureScopeWhere = params.scopeType === "BRANCH"
+      ? { branchId: params.scopeId }
+      : { createdByUserId: params.scopeId };
+
+    const [rows, captureCountRows] = await Promise.all([
+      prisma.quote.findMany({
+        where: {
+          ...scopeWhere,
+          createdAt: { gte: params.from, lt: params.toExclusive },
+          currency: params.currency,
+        },
+        select: {
+          id: true,
+          quoteNumber: true,
+          status: true,
+          sourceChannel: true,
+          captureMethod: true,
+          rejectionReason: true,
+          total: true,
+          orderStatus: true,
+          createdAt: true,
+          createdByUserId: true,
+          providedByUserId: true,
+          providedByNameSnapshot: true,
+          providedByBranchNameSnapshot: true,
+          customer: { select: { displayName: true, legalName: true } },
+          createdByUser: { select: { firstName: true, lastName: true } },
+          items: {
+            select: {
+              requiresReview: true,
+              productId: true,
+              externalProductCode: true,
+            },
           },
         },
-      },
-      orderBy: { createdAt: "asc" },
-    });
+        orderBy: { createdAt: "asc" },
+      }),
+      prisma.quote.groupBy({
+        by: ["captureMethod"],
+        where: {
+          ...captureScopeWhere,
+          createdAt: { gte: params.from, lt: params.toExclusive },
+        },
+        _count: { _all: true },
+      }),
+    ]);
 
     const workedRows = params.scopeType === "USER" ? rows.filter((row) => row.createdByUserId === params.scopeId) : rows;
     const providedRows = params.scopeType === "USER" ? rows.filter((row) => row.providedByUserId === params.scopeId) : [];
@@ -65,6 +80,7 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
     const trend = new Map<string, { date: string; created: number; quoted: number; approved: number; orders: number }>();
     const pipeline = new Map<string, { status: string; count: number; amount: number }>();
     const channels = new Map<string, { channel: string; count: number; amount: number }>();
+    const captureMethods = new Map<"SYSTEM" | "EXCEL_IMPORT", { method: "SYSTEM" | "EXCEL_IMPORT"; count: number; amount: number }>();
     const rejectionReasons = new Map<string, { reason: string; count: number; amount: number }>();
     const sellers = new Map<string, { userId: string; name: string; quotes: number; approved: number; quotedAmount: number; approvedAmount: number }>();
     const providers = new Map<string, { userId: string; name: string; branchName: string; quotes: number; approved: number; approvedAmount: number }>();
@@ -88,6 +104,15 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
       channel.count += 1;
       channel.amount += amount;
       channels.set(row.sourceChannel, channel);
+
+      const captureMethod = captureMethods.get(row.captureMethod) ?? {
+        method: row.captureMethod,
+        count: 0,
+        amount: 0,
+      };
+      captureMethod.count += 1;
+      captureMethod.amount += amount;
+      captureMethods.set(row.captureMethod, captureMethod);
 
       if (row.status === "REJECTED" && row.rejectionReason) {
         const reason = rejectionReasons.get(row.rejectionReason) ?? { reason: row.rejectionReason, count: 0, amount: 0 };
@@ -131,6 +156,16 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
       }
     }
 
+    for (const row of captureCountRows) {
+      const current = captureMethods.get(row.captureMethod) ?? {
+        method: row.captureMethod,
+        count: 0,
+        amount: 0,
+      };
+      current.count = row._count._all;
+      captureMethods.set(row.captureMethod, current);
+    }
+
     const pendingQuotes = workedRows
       .filter((row) => row.status === "DRAFT" || row.status === "PENDING")
       .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
@@ -170,6 +205,7 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
       trend: [...trend.values()],
       pipeline: [...pipeline.values()].map((row) => ({ ...row, amount: round2(row.amount) })),
       channels: [...channels.values()].map((row) => ({ ...row, amount: round2(row.amount) })),
+      captureMethods: [...captureMethods.values()].map((row) => ({ ...row, amount: round2(row.amount) })),
       rejectionReasons: [...rejectionReasons.values()]
         .map((row) => ({ ...row, amount: round2(row.amount) }))
         .sort((a, b) => b.count - a.count),

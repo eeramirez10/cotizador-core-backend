@@ -66,7 +66,7 @@ export class ChangeQuoteStatusUseCase {
       const unlinkedItems = quote.items.filter(
         (item) => !item.productId && !item.externalProductCode
       );
-      if (unlinkedItems.length > 0) {
+      if (quote.captureMethod !== "EXCEL_IMPORT" && unlinkedItems.length > 0) {
         throw new Error("All quote items must be linked to an ERP or local product before moving to QUOTED.");
       }
 

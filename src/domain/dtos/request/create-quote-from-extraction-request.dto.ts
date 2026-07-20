@@ -1,5 +1,6 @@
 import {
   Currency,
+  QuoteCaptureMethod,
   QuoteOrigin,
   QuoteSourceChannel,
 } from "../../../infrastructure/database/generated/enums";
@@ -24,6 +25,8 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   paymentTerms: string;
   validityDays: number;
   origin: QuoteOrigin;
+  captureMethod: QuoteCaptureMethod;
+  originalQuoteDate: Date | null;
   sourceChannel: QuoteSourceChannel;
   providedByUserId: string | null;
   notes: string | null;
@@ -41,6 +44,8 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly paymentTerms: string;
   public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
+  public readonly captureMethod: QuoteCaptureMethod;
+  public readonly originalQuoteDate: Date | null;
   public readonly sourceChannel: QuoteSourceChannel;
   public readonly providedByUserId: string | null;
   public readonly notes: string | null;
@@ -57,6 +62,8 @@ export class CreateQuoteFromExtractionRequestDto {
     this.paymentTerms = props.paymentTerms;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
+    this.captureMethod = props.captureMethod;
+    this.originalQuoteDate = props.originalQuoteDate;
     this.sourceChannel = props.sourceChannel;
     this.providedByUserId = props.providedByUserId;
     this.notes = props.notes;
@@ -124,6 +131,24 @@ export class CreateQuoteFromExtractionRequestDto {
         : "FILE_UPLOAD";
     if (!Object.values(QuoteOrigin).includes(originRaw as QuoteOrigin)) {
       return ["origin is invalid."];
+    }
+
+    const captureMethodRaw =
+      typeof body.captureMethod === "string" && body.captureMethod.trim().length > 0
+        ? body.captureMethod.trim().toUpperCase()
+        : "SYSTEM";
+    if (!Object.values(QuoteCaptureMethod).includes(captureMethodRaw as QuoteCaptureMethod)) {
+      return ["captureMethod is invalid."];
+    }
+
+    const originalQuoteDateRaw =
+      typeof body.originalQuoteDate === "string" ? body.originalQuoteDate.trim() : "";
+    const originalQuoteDate = originalQuoteDateRaw ? new Date(originalQuoteDateRaw) : null;
+    if (originalQuoteDate && Number.isNaN(originalQuoteDate.getTime())) {
+      return ["originalQuoteDate is invalid."];
+    }
+    if (captureMethodRaw === "EXCEL_IMPORT" && !originalQuoteDate) {
+      return ["originalQuoteDate is required for EXCEL_IMPORT."];
     }
 
     const sourceChannelRaw =
@@ -215,6 +240,8 @@ export class CreateQuoteFromExtractionRequestDto {
         paymentTerms,
         validityDays,
         origin: originRaw as QuoteOrigin,
+        captureMethod: captureMethodRaw as QuoteCaptureMethod,
+        originalQuoteDate,
         sourceChannel: sourceChannelRaw as QuoteSourceChannel,
         providedByUserId,
         notes,

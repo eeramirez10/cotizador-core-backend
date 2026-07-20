@@ -195,6 +195,8 @@ export const QuoteScalarFieldEnum = {
   orderGeneratedAt: 'orderGeneratedAt',
   orderReference: 'orderReference',
   origin: 'origin',
+  captureMethod: 'captureMethod',
+  originalQuoteDate: 'originalQuoteDate',
   sourceChannel: 'sourceChannel',
   currency: 'currency',
   exchangeRate: 'exchangeRate',

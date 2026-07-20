@@ -103,6 +103,14 @@ export const QuoteOrigin = {
 export type QuoteOrigin = (typeof QuoteOrigin)[keyof typeof QuoteOrigin]
 
 
+export const QuoteCaptureMethod = {
+  SYSTEM: 'SYSTEM',
+  EXCEL_IMPORT: 'EXCEL_IMPORT'
+} as const
+
+export type QuoteCaptureMethod = (typeof QuoteCaptureMethod)[keyof typeof QuoteCaptureMethod]
+
+
 export const QuoteSourceChannel = {
   UNSPECIFIED: 'UNSPECIFIED',
   EMAIL: 'EMAIL',

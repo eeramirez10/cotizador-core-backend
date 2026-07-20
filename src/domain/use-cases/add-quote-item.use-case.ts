@@ -2,7 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { CreateQuoteItemRequestDto } from "../dtos/request/create-quote-item-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
-import { isQuoteItemReady } from "./quote-item-review.helper";
+import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
 
 interface AddQuoteItemActorContext {
   id: string;
@@ -56,14 +56,20 @@ export class AddQuoteItemUseCase {
     }
 
     const subtotal = round4(dto.qty * unitPrice);
-    const requiresReview = !isQuoteItemReady({
+    const readinessInput = {
       productId: dto.productId,
       externalProductCode: dto.externalProductCode,
       ean: dto.ean,
       erpDescription: dto.erpDescription,
+      customerDescription: dto.customerDescription,
       qty: dto.qty,
       unit: dto.unit,
-    });
+      unitPrice,
+      deliveryTime: dto.deliveryTime,
+    };
+    const requiresReview = quote.captureMethod === "EXCEL_IMPORT"
+      ? !isImportedExcelItemReady(readinessInput)
+      : !isQuoteItemReady(readinessInput);
 
     const updatedQuote = await this.quoteRepository.addItem({
       quoteId,
