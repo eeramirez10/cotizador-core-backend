@@ -14,6 +14,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "NODE_ENV=development prisma migrate dev --name init",
     "prisma:seed": "NODE_ENV=development prisma db seed",
+    "prisma:demo": "NODE_ENV=development tsx prisma/demo-seed.ts",
     "prisma:deploy": "NODE_ENV=production prisma migrate deploy",
     "prisma:studio": "NODE_ENV=development prisma studio"
   },
