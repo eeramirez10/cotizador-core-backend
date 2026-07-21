@@ -3,13 +3,28 @@ import { BranchEntity } from "../entities/branch.entity";
 export interface CreateBranchDatasourceParams {
   code: string;
   name: string;
-  address: string | null;
+  contact: BranchContactData;
 }
 
 export interface UpdateBranchDatasourceParams {
   code: string;
   name: string;
-  address: string | null;
+  contact: BranchContactData;
+}
+
+export interface BranchContactData {
+  street: string | null;
+  exteriorNumber: string | null;
+  interiorNumber: string | null;
+  neighborhood: string | null;
+  city: string | null;
+  municipality: string | null;
+  state: string | null;
+  postalCode: string | null;
+  country: string | null;
+  email: string | null;
+  phone: string | null;
+  secondaryPhone: string | null;
 }
 
 export abstract class BranchDatasource {

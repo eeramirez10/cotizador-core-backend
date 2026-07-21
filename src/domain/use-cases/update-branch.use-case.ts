@@ -15,7 +15,7 @@ export class UpdateBranchUseCase {
     const updated = await this.branchRepository.updateById(branchId, {
       code: dto.code,
       name: dto.name,
-      address: dto.address,
+      contact: dto.contact,
     });
 
     if (!updated) throw new Error("Branch not found.");

@@ -18,6 +18,18 @@ export interface QuoteBranchSummary {
   id: string;
   code: string;
   name: string;
+  street: string | null;
+  exteriorNumber: string | null;
+  interiorNumber: string | null;
+  neighborhood: string | null;
+  city: string | null;
+  municipality: string | null;
+  state: string | null;
+  postalCode: string | null;
+  country: string | null;
+  email: string | null;
+  phone: string | null;
+  secondaryPhone: string | null;
 }
 
 export interface QuoteCustomerSummary {
@@ -36,6 +48,8 @@ export interface QuoteUserSummary {
   branchId: string;
   branchCode: string;
   branchName: string;
+  email?: string;
+  phone?: string | null;
 }
 
 export interface QuoteRevisionSummary {

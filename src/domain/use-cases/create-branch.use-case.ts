@@ -12,7 +12,7 @@ export class CreateBranchUseCase {
     const created = await this.branchRepository.create({
       code: dto.code,
       name: dto.name,
-      address: dto.address,
+      contact: dto.contact,
     });
 
     return new BranchResponseDto(created);

@@ -30,6 +30,18 @@ const quoteInclude = {
       id: true,
       code: true,
       name: true,
+      street: true,
+      exteriorNumber: true,
+      interiorNumber: true,
+      neighborhood: true,
+      city: true,
+      municipality: true,
+      state: true,
+      postalCode: true,
+      country: true,
+      email: true,
+      phone: true,
+      secondaryPhone: true,
     },
   },
   customer: {
@@ -47,6 +59,8 @@ const quoteInclude = {
       id: true,
       firstName: true,
       lastName: true,
+      email: true,
+      phone: true,
       branchId: true,
       branch: {
         select: {

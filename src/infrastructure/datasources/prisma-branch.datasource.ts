@@ -58,7 +58,18 @@ export class PrismaBranchDatasource implements BranchDatasource {
       data: {
         code: params.code.trim().toUpperCase(),
         name: params.name.trim(),
-        address: params.address,
+        street: params.contact.street,
+        exteriorNumber: params.contact.exteriorNumber,
+        interiorNumber: params.contact.interiorNumber,
+        neighborhood: params.contact.neighborhood,
+        city: params.contact.city,
+        municipality: params.contact.municipality,
+        state: params.contact.state,
+        postalCode: params.contact.postalCode,
+        country: params.contact.country,
+        email: params.contact.email,
+        phone: params.contact.phone,
+        secondaryPhone: params.contact.secondaryPhone,
       },
     });
 
@@ -74,7 +85,18 @@ export class PrismaBranchDatasource implements BranchDatasource {
       data: {
         code: data.code.trim().toUpperCase(),
         name: data.name.trim(),
-        address: data.address,
+        street: data.contact.street,
+        exteriorNumber: data.contact.exteriorNumber,
+        interiorNumber: data.contact.interiorNumber,
+        neighborhood: data.contact.neighborhood,
+        city: data.contact.city,
+        municipality: data.contact.municipality,
+        state: data.contact.state,
+        postalCode: data.contact.postalCode,
+        country: data.contact.country,
+        email: data.contact.email,
+        phone: data.contact.phone,
+        secondaryPhone: data.contact.secondaryPhone,
       },
     });
 

@@ -29,6 +29,18 @@ export type BranchMinAggregateOutputType = {
   code: string | null
   name: string | null
   address: string | null
+  street: string | null
+  exteriorNumber: string | null
+  interiorNumber: string | null
+  neighborhood: string | null
+  city: string | null
+  municipality: string | null
+  state: string | null
+  postalCode: string | null
+  country: string | null
+  email: string | null
+  phone: string | null
+  secondaryPhone: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -39,6 +51,18 @@ export type BranchMaxAggregateOutputType = {
   code: string | null
   name: string | null
   address: string | null
+  street: string | null
+  exteriorNumber: string | null
+  interiorNumber: string | null
+  neighborhood: string | null
+  city: string | null
+  municipality: string | null
+  state: string | null
+  postalCode: string | null
+  country: string | null
+  email: string | null
+  phone: string | null
+  secondaryPhone: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -49,6 +73,18 @@ export type BranchCountAggregateOutputType = {
   code: number
   name: number
   address: number
+  street: number
+  exteriorNumber: number
+  interiorNumber: number
+  neighborhood: number
+  city: number
+  municipality: number
+  state: number
+  postalCode: number
+  country: number
+  email: number
+  phone: number
+  secondaryPhone: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -61,6 +97,18 @@ export type BranchMinAggregateInputType = {
   code?: true
   name?: true
   address?: true
+  street?: true
+  exteriorNumber?: true
+  interiorNumber?: true
+  neighborhood?: true
+  city?: true
+  municipality?: true
+  state?: true
+  postalCode?: true
+  country?: true
+  email?: true
+  phone?: true
+  secondaryPhone?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -71,6 +119,18 @@ export type BranchMaxAggregateInputType = {
   code?: true
   name?: true
   address?: true
+  street?: true
+  exteriorNumber?: true
+  interiorNumber?: true
+  neighborhood?: true
+  city?: true
+  municipality?: true
+  state?: true
+  postalCode?: true
+  country?: true
+  email?: true
+  phone?: true
+  secondaryPhone?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +141,18 @@ export type BranchCountAggregateInputType = {
   code?: true
   name?: true
   address?: true
+  street?: true
+  exteriorNumber?: true
+  interiorNumber?: true
+  neighborhood?: true
+  city?: true
+  municipality?: true
+  state?: true
+  postalCode?: true
+  country?: true
+  email?: true
+  phone?: true
+  secondaryPhone?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -164,6 +236,18 @@ export type BranchGroupByOutputType = {
   code: string
   name: string
   address: string | null
+  street: string | null
+  exteriorNumber: string | null
+  interiorNumber: string | null
+  neighborhood: string | null
+  city: string | null
+  municipality: string | null
+  state: string | null
+  postalCode: string | null
+  country: string | null
+  email: string | null
+  phone: string | null
+  secondaryPhone: string | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -195,6 +279,18 @@ export type BranchWhereInput = {
   code?: Prisma.StringFilter<"Branch"> | string
   name?: Prisma.StringFilter<"Branch"> | string
   address?: Prisma.StringNullableFilter<"Branch"> | string | null
+  street?: Prisma.StringNullableFilter<"Branch"> | string | null
+  exteriorNumber?: Prisma.StringNullableFilter<"Branch"> | string | null
+  interiorNumber?: Prisma.StringNullableFilter<"Branch"> | string | null
+  neighborhood?: Prisma.StringNullableFilter<"Branch"> | string | null
+  city?: Prisma.StringNullableFilter<"Branch"> | string | null
+  municipality?: Prisma.StringNullableFilter<"Branch"> | string | null
+  state?: Prisma.StringNullableFilter<"Branch"> | string | null
+  postalCode?: Prisma.StringNullableFilter<"Branch"> | string | null
+  country?: Prisma.StringNullableFilter<"Branch"> | string | null
+  email?: Prisma.StringNullableFilter<"Branch"> | string | null
+  phone?: Prisma.StringNullableFilter<"Branch"> | string | null
+  secondaryPhone?: Prisma.StringNullableFilter<"Branch"> | string | null
   isActive?: Prisma.BoolFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
@@ -208,6 +304,18 @@ export type BranchOrderByWithRelationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  street?: Prisma.SortOrderInput | Prisma.SortOrder
+  exteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  interiorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  neighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  municipality?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -224,6 +332,18 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.BranchWhereInput | Prisma.BranchWhereInput[]
   name?: Prisma.StringFilter<"Branch"> | string
   address?: Prisma.StringNullableFilter<"Branch"> | string | null
+  street?: Prisma.StringNullableFilter<"Branch"> | string | null
+  exteriorNumber?: Prisma.StringNullableFilter<"Branch"> | string | null
+  interiorNumber?: Prisma.StringNullableFilter<"Branch"> | string | null
+  neighborhood?: Prisma.StringNullableFilter<"Branch"> | string | null
+  city?: Prisma.StringNullableFilter<"Branch"> | string | null
+  municipality?: Prisma.StringNullableFilter<"Branch"> | string | null
+  state?: Prisma.StringNullableFilter<"Branch"> | string | null
+  postalCode?: Prisma.StringNullableFilter<"Branch"> | string | null
+  country?: Prisma.StringNullableFilter<"Branch"> | string | null
+  email?: Prisma.StringNullableFilter<"Branch"> | string | null
+  phone?: Prisma.StringNullableFilter<"Branch"> | string | null
+  secondaryPhone?: Prisma.StringNullableFilter<"Branch"> | string | null
   isActive?: Prisma.BoolFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
@@ -237,6 +357,18 @@ export type BranchOrderByWithAggregationInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  street?: Prisma.SortOrderInput | Prisma.SortOrder
+  exteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  interiorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  neighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  municipality?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  secondaryPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -253,6 +385,18 @@ export type BranchScalarWhereWithAggregatesInput = {
   code?: Prisma.StringWithAggregatesFilter<"Branch"> | string
   name?: Prisma.StringWithAggregatesFilter<"Branch"> | string
   address?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  street?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  exteriorNumber?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  interiorNumber?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  neighborhood?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  municipality?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  state?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  postalCode?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
+  secondaryPhone?: Prisma.StringNullableWithAggregatesFilter<"Branch"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Branch"> | Date | string
@@ -263,6 +407,18 @@ export type BranchCreateInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -276,6 +432,18 @@ export type BranchUncheckedCreateInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -289,6 +457,18 @@ export type BranchUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -302,6 +482,18 @@ export type BranchUncheckedUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,6 +507,18 @@ export type BranchCreateManyInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -325,6 +529,18 @@ export type BranchUpdateManyMutationInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,6 +551,18 @@ export type BranchUncheckedUpdateManyInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -345,6 +573,18 @@ export type BranchCountOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  street?: Prisma.SortOrder
+  exteriorNumber?: Prisma.SortOrder
+  interiorNumber?: Prisma.SortOrder
+  neighborhood?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  secondaryPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -355,6 +595,18 @@ export type BranchMaxOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  street?: Prisma.SortOrder
+  exteriorNumber?: Prisma.SortOrder
+  interiorNumber?: Prisma.SortOrder
+  neighborhood?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  secondaryPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -365,6 +617,18 @@ export type BranchMinOrderByAggregateInput = {
   code?: Prisma.SortOrder
   name?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  street?: Prisma.SortOrder
+  exteriorNumber?: Prisma.SortOrder
+  interiorNumber?: Prisma.SortOrder
+  neighborhood?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  postalCode?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  secondaryPhone?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -445,6 +709,18 @@ export type BranchCreateWithoutUsersInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -457,6 +733,18 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -485,6 +773,18 @@ export type BranchUpdateWithoutUsersInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -497,6 +797,18 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -509,6 +821,18 @@ export type BranchCreateWithoutProductsInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -521,6 +845,18 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -549,6 +885,18 @@ export type BranchUpdateWithoutProductsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -561,6 +909,18 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -573,6 +933,18 @@ export type BranchCreateWithoutQuotesInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -585,6 +957,18 @@ export type BranchUncheckedCreateWithoutQuotesInput = {
   code: string
   name: string
   address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -613,6 +997,18 @@ export type BranchUpdateWithoutQuotesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -625,6 +1021,18 @@ export type BranchUncheckedUpdateWithoutQuotesInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -686,6 +1094,18 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   code?: boolean
   name?: boolean
   address?: boolean
+  street?: boolean
+  exteriorNumber?: boolean
+  interiorNumber?: boolean
+  neighborhood?: boolean
+  city?: boolean
+  municipality?: boolean
+  state?: boolean
+  postalCode?: boolean
+  country?: boolean
+  email?: boolean
+  phone?: boolean
+  secondaryPhone?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -700,6 +1120,18 @@ export type BranchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   code?: boolean
   name?: boolean
   address?: boolean
+  street?: boolean
+  exteriorNumber?: boolean
+  interiorNumber?: boolean
+  neighborhood?: boolean
+  city?: boolean
+  municipality?: boolean
+  state?: boolean
+  postalCode?: boolean
+  country?: boolean
+  email?: boolean
+  phone?: boolean
+  secondaryPhone?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -710,6 +1142,18 @@ export type BranchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   code?: boolean
   name?: boolean
   address?: boolean
+  street?: boolean
+  exteriorNumber?: boolean
+  interiorNumber?: boolean
+  neighborhood?: boolean
+  city?: boolean
+  municipality?: boolean
+  state?: boolean
+  postalCode?: boolean
+  country?: boolean
+  email?: boolean
+  phone?: boolean
+  secondaryPhone?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -720,12 +1164,24 @@ export type BranchSelectScalar = {
   code?: boolean
   name?: boolean
   address?: boolean
+  street?: boolean
+  exteriorNumber?: boolean
+  interiorNumber?: boolean
+  neighborhood?: boolean
+  city?: boolean
+  municipality?: boolean
+  state?: boolean
+  postalCode?: boolean
+  country?: boolean
+  email?: boolean
+  phone?: boolean
+  secondaryPhone?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BranchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "address" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["branch"]>
+export type BranchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "address" | "street" | "exteriorNumber" | "interiorNumber" | "neighborhood" | "city" | "municipality" | "state" | "postalCode" | "country" | "email" | "phone" | "secondaryPhone" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["branch"]>
 export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Branch$usersArgs<ExtArgs>
   quotes?: boolean | Prisma.Branch$quotesArgs<ExtArgs>
@@ -747,6 +1203,18 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     code: string
     name: string
     address: string | null
+    street: string | null
+    exteriorNumber: string | null
+    interiorNumber: string | null
+    neighborhood: string | null
+    city: string | null
+    municipality: string | null
+    state: string | null
+    postalCode: string | null
+    country: string | null
+    email: string | null
+    phone: string | null
+    secondaryPhone: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1180,6 +1648,18 @@ export interface BranchFieldRefs {
   readonly code: Prisma.FieldRef<"Branch", 'String'>
   readonly name: Prisma.FieldRef<"Branch", 'String'>
   readonly address: Prisma.FieldRef<"Branch", 'String'>
+  readonly street: Prisma.FieldRef<"Branch", 'String'>
+  readonly exteriorNumber: Prisma.FieldRef<"Branch", 'String'>
+  readonly interiorNumber: Prisma.FieldRef<"Branch", 'String'>
+  readonly neighborhood: Prisma.FieldRef<"Branch", 'String'>
+  readonly city: Prisma.FieldRef<"Branch", 'String'>
+  readonly municipality: Prisma.FieldRef<"Branch", 'String'>
+  readonly state: Prisma.FieldRef<"Branch", 'String'>
+  readonly postalCode: Prisma.FieldRef<"Branch", 'String'>
+  readonly country: Prisma.FieldRef<"Branch", 'String'>
+  readonly email: Prisma.FieldRef<"Branch", 'String'>
+  readonly phone: Prisma.FieldRef<"Branch", 'String'>
+  readonly secondaryPhone: Prisma.FieldRef<"Branch", 'String'>
   readonly isActive: Prisma.FieldRef<"Branch", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Branch", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Branch", 'DateTime'>

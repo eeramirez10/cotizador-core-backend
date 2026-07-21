@@ -77,6 +77,18 @@ interface QuoteRow {
     id: string;
     code: string;
     name: string;
+    street: string | null;
+    exteriorNumber: string | null;
+    interiorNumber: string | null;
+    neighborhood: string | null;
+    city: string | null;
+    municipality: string | null;
+    state: string | null;
+    postalCode: string | null;
+    country: string | null;
+    email: string | null;
+    phone: string | null;
+    secondaryPhone: string | null;
   };
   customer: {
     id: string;
@@ -90,6 +102,8 @@ interface QuoteRow {
     id: string;
     firstName: string;
     lastName: string;
+    email: string;
+    phone: string | null;
     branchId: string;
     branch: {
       code: string;
@@ -240,6 +254,8 @@ export class QuoteMapper {
         id: row.createdByUser.id,
         firstName: row.createdByUser.firstName,
         lastName: row.createdByUser.lastName,
+        email: row.createdByUser.email,
+        phone: row.createdByUser.phone,
         branchId: row.createdByUser.branchId,
         branchCode: row.createdByUser.branch.code,
         branchName: row.createdByUser.branch.name,

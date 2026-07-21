@@ -8,8 +8,39 @@ const run = async (): Promise<void> => {
   const passwordHash = await hash(ADMIN_PASSWORD, 10);
   const branch = await prisma.branch.upsert({
     where: { code: "01" },
-    update: { name: "Mexico", address: "CDMX", isActive: true },
-    create: { code: "01", name: "Mexico", address: "CDMX", isActive: true },
+    update: {
+      name: "Mexico",
+      address: "CDMX",
+      street: "Av. Insurgentes Sur",
+      exteriorNumber: "1602",
+      neighborhood: "Crédito Constructor",
+      city: "Ciudad de México",
+      municipality: "Benito Juárez",
+      state: "Ciudad de México",
+      postalCode: "03940",
+      country: "México",
+      email: "ventas@tuvansa.com.mx",
+      phone: "5550000000",
+      secondaryPhone: "5550000001",
+      isActive: true,
+    },
+    create: {
+      code: "01",
+      name: "Mexico",
+      address: "CDMX",
+      street: "Av. Insurgentes Sur",
+      exteriorNumber: "1602",
+      neighborhood: "Crédito Constructor",
+      city: "Ciudad de México",
+      municipality: "Benito Juárez",
+      state: "Ciudad de México",
+      postalCode: "03940",
+      country: "México",
+      email: "ventas@tuvansa.com.mx",
+      phone: "5550000000",
+      secondaryPhone: "5550000001",
+      isActive: true,
+    },
   });
 
   await prisma.user.upsert({
