@@ -3,6 +3,7 @@ import { UpdateQuoteItemRequestDto } from "../dtos/request/update-quote-item-req
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
+import { convertQuoteAmount } from "./quote-currency.helper";
 
 interface UpdateQuoteItemActorContext {
   id: string;
@@ -44,6 +45,8 @@ export class UpdateQuoteItemUseCase {
 
     const qty = typeof dto.qty === "number" ? dto.qty : existingItem.qty;
     const cost = typeof dto.cost === "number" ? dto.cost : existingItem.cost;
+    const costCurrency = dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency;
+    const quoteCurrencyCost = convertQuoteAmount(cost, costCurrency, quote.currency, quote.exchangeRate);
 
     const hasUnitPrice = typeof dto.unitPrice === "number";
     const hasMarginPct = typeof dto.marginPct === "number";
@@ -53,16 +56,18 @@ export class UpdateQuoteItemUseCase {
 
     if (hasUnitPrice && hasMarginPct) {
       unitPrice = round4(dto.unitPrice!);
-      marginPct = round4(dto.marginPct!);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (hasUnitPrice) {
       unitPrice = round4(dto.unitPrice!);
-      marginPct = computeMarginPct(cost, unitPrice);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (hasMarginPct) {
       marginPct = round4(dto.marginPct!);
-      unitPrice = computeUnitPrice(cost, marginPct);
+      unitPrice = computeUnitPrice(quoteCurrencyCost, marginPct);
     } else {
       unitPrice = round4(existingItem.unitPrice);
-      marginPct = typeof dto.cost === "number" ? computeMarginPct(cost, unitPrice) : round4(existingItem.marginPct);
+      marginPct = typeof dto.cost === "number" || dto.costCurrency !== undefined
+        ? computeMarginPct(quoteCurrencyCost, unitPrice)
+        : round4(existingItem.marginPct);
     }
 
     const subtotal = round4(qty * unitPrice);
@@ -115,7 +120,7 @@ export class UpdateQuoteItemUseCase {
         deliveryTime: nextDeliveryTime,
         itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         cost: round4(cost),
-        costCurrency: dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency,
+        costCurrency,
         marginPct,
         unitPrice,
         subtotal,

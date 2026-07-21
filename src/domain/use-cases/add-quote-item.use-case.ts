@@ -3,6 +3,7 @@ import { CreateQuoteItemRequestDto } from "../dtos/request/create-quote-item-req
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
+import { convertQuoteAmount } from "./quote-currency.helper";
 
 interface AddQuoteItemActorContext {
   id: string;
@@ -41,18 +42,19 @@ export class AddQuoteItemUseCase {
 
     let unitPrice: number;
     let marginPct: number;
+    const quoteCurrencyCost = convertQuoteAmount(dto.cost, dto.costCurrency, quote.currency, quote.exchangeRate);
 
     if (typeof dto.unitPrice === "number" && typeof dto.marginPct === "number") {
       unitPrice = round4(dto.unitPrice);
-      marginPct = round4(dto.marginPct);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (typeof dto.unitPrice === "number") {
       unitPrice = round4(dto.unitPrice);
-      marginPct = computeMarginPct(dto.cost, unitPrice);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (typeof dto.marginPct === "number") {
       marginPct = round4(dto.marginPct);
-      unitPrice = computeUnitPrice(dto.cost, marginPct);
+      unitPrice = computeUnitPrice(quoteCurrencyCost, marginPct);
     } else {
-      unitPrice = round4(dto.cost);
+      unitPrice = round4(quoteCurrencyCost);
       marginPct = 0;
     }
 

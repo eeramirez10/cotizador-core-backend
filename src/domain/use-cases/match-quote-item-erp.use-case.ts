@@ -3,6 +3,7 @@ import { MatchQuoteItemErpRequestDto } from "../dtos/request/match-quote-item-er
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isQuoteItemReady } from "./quote-item-review.helper";
+import { convertQuoteAmount } from "./quote-currency.helper";
 
 interface MatchQuoteItemErpActorContext {
   id: string;
@@ -44,6 +45,7 @@ export class MatchQuoteItemErpUseCase {
 
     const qty = typeof dto.qty === "number" ? dto.qty : existingItem.qty;
     const cost = round4(dto.cost);
+    const quoteCurrencyCost = convertQuoteAmount(cost, dto.costCurrency, quote.currency, quote.exchangeRate);
 
     const hasUnitPrice = typeof dto.unitPrice === "number";
     const hasMarginPct = typeof dto.marginPct === "number";
@@ -53,16 +55,16 @@ export class MatchQuoteItemErpUseCase {
 
     if (hasUnitPrice && hasMarginPct) {
       unitPrice = round4(dto.unitPrice!);
-      marginPct = round4(dto.marginPct!);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (hasUnitPrice) {
       unitPrice = round4(dto.unitPrice!);
-      marginPct = computeMarginPct(cost, unitPrice);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     } else if (hasMarginPct) {
       marginPct = round4(dto.marginPct!);
-      unitPrice = computeUnitPrice(cost, marginPct);
+      unitPrice = computeUnitPrice(quoteCurrencyCost, marginPct);
     } else {
-      unitPrice = round4(existingItem.unitPrice > 0 ? existingItem.unitPrice : cost);
-      marginPct = computeMarginPct(cost, unitPrice);
+      unitPrice = round4(existingItem.unitPrice > 0 ? existingItem.unitPrice : quoteCurrencyCost);
+      marginPct = computeMarginPct(quoteCurrencyCost, unitPrice);
     }
 
     const subtotal = round4(qty * unitPrice);

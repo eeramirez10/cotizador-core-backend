@@ -24,7 +24,7 @@ export class PrismaQuoteCatalogDatasource implements QuoteCatalogDatasource {
 
   async listManaged(actor: QuoteCatalogActorScope): Promise<QuoteCatalogOptionEntity[]> {
     const rows = await prisma.quoteCatalogOption.findMany({
-      where: actor.role === "ADMIN" ? {} : { branchId: actor.branchId },
+      where: actor.role === "ADMIN" ? {} : { OR: [{ branchId: null }, { branchId: actor.branchId }] },
       orderBy: [{ type: "asc" }, { sortOrder: "asc" }, { label: "asc" }],
     });
     return rows.map(QuoteCatalogMapper.toEntity);

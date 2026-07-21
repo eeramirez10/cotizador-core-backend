@@ -5,6 +5,7 @@ import { CustomerRepository } from "../repositories/customer.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { UserRepository } from "../repositories/user.repository";
 import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
+import { convertQuoteAmount } from "./quote-currency.helper";
 
 interface SaveQuoteDraftActorContext {
   id: string;
@@ -51,18 +52,24 @@ export class SaveQuoteDraftUseCase {
     const items = dto.items.map((item) => {
       let unitPrice: number;
       let marginPct: number;
+      const quoteCurrencyCost = convertQuoteAmount(
+        item.cost,
+        item.costCurrency,
+        dto.quote.currency,
+        dto.quote.exchangeRate
+      );
 
       if (typeof item.unitPrice === "number" && typeof item.marginPct === "number") {
         unitPrice = round4(item.unitPrice);
-        marginPct = round4(item.marginPct);
+        marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
       } else if (typeof item.unitPrice === "number") {
         unitPrice = round4(item.unitPrice);
-        marginPct = item.cost === 0 ? 0 : round4(((unitPrice - item.cost) / item.cost) * 100);
+        marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
       } else if (typeof item.marginPct === "number") {
         marginPct = round4(item.marginPct);
-        unitPrice = round4(item.cost * (1 + marginPct / 100));
+        unitPrice = round4(quoteCurrencyCost * (1 + marginPct / 100));
       } else {
-        unitPrice = round4(item.cost);
+        unitPrice = round4(quoteCurrencyCost);
         marginPct = 0;
       }
 
@@ -107,6 +114,9 @@ export class SaveQuoteDraftUseCase {
       if (items.length === 0) throw new Error("Quote must contain at least one item before submitting for approval.");
       if (dto.quote.sourceChannel === "UNSPECIFIED") {
         throw new Error("Quote source channel is required before submitting for approval.");
+      }
+      if (!dto.quote.commercialConditions?.trim()) {
+        throw new Error("Commercial conditions are required before submitting for approval.");
       }
       if (dto.quote.captureMethod !== "EXCEL_IMPORT" && items.some((item) => !item.productId && !item.externalProductCode)) {
         throw new Error("All quote items must be linked to an ERP or local product before submitting for approval.");

@@ -73,6 +73,9 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "PENDING_APPROVAL" && quote.sourceChannel === "UNSPECIFIED") {
       throw new Error("Quote source channel is required before moving to QUOTED.");
     }
+    if (dto.status === "PENDING_APPROVAL" && !quote.commercialConditions?.trim()) {
+      throw new Error("Commercial conditions are required before moving to QUOTED.");
+    }
     await this.validateCatalogReason(dto.status === "CHANGES_REQUESTED" ? "APPROVAL_RETURN_REASON" : null, dto.approvalReturnReason, dto.approvalReturnComment, actor.branchId, "Approval return reason is required before requesting changes.");
     await this.validateCatalogReason(dto.status === "REJECTED" ? "REJECTION_REASON" : null, dto.rejectionReason, dto.rejectionComment, actor.branchId, "Rejection reason is required before moving to REJECTED.");
     await this.validateCatalogReason(dto.status === "CANCELLED" ? "CANCELLATION_REASON" : null, dto.cancellationReason, dto.cancellationComment, actor.branchId, "Cancellation reason is required before moving to CANCELLED.");
