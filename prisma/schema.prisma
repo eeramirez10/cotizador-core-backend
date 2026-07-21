@@ -288,6 +288,7 @@ model Product {
 model Quote {
   id               String     @id @default(uuid()) @db.Uuid
   quoteNumber      String     @unique @map("quote_number") @db.VarChar(40)
+  clientDraftId    String?    @map("client_draft_id") @db.VarChar(80)
   status           QuoteStatus @default(DRAFT)
   deliveryStatus   QuoteDeliveryStatus @default(NOT_SENT) @map("delivery_status")
   firstSentAt      DateTime?  @map("first_sent_at")
@@ -380,6 +381,7 @@ model Quote {
   @@index([archivedByUserId])
   @@index([rootQuoteId])
   @@index([previousVersionId])
+  @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
   @@map("quotes")
 }

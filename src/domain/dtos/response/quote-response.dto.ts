@@ -8,6 +8,7 @@ export class QuoteResponseDto {
     return {
       id: this.quote.id,
       quoteNumber: this.quote.quoteNumber,
+      clientDraftId: this.quote.clientDraftId,
       status: this.quote.status,
       deliveryStatus: this.quote.deliveryStatus,
       firstSentAt: this.quote.firstSentAt ? this.quote.firstSentAt.toISOString() : null,

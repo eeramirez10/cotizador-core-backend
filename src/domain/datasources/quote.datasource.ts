@@ -31,7 +31,10 @@ export interface FindQuotesDatasourceParams {
 }
 
 export interface FindQuotesDatasourceResult {
-  items: QuoteEntity[];
+  items: Array<{
+    current: QuoteEntity;
+    relatedVersions: QuoteEntity[];
+  }>;
   total: number;
 }
 
@@ -58,6 +61,44 @@ export interface CreateQuoteDatasourceParams {
   providedAt: Date | null;
   providedByAssignedByUserId: string | null;
   notes: string | null;
+}
+
+export interface SaveQuoteDraftItemDatasourceData {
+  productId: string | null;
+  externalProductCode: string | null;
+  ean: string | null;
+  customerDescription: string | null;
+  customerUnit: string | null;
+  erpDescription: string | null;
+  unit: string;
+  qty: number;
+  stock: number | null;
+  deliveryTime: string | null;
+  itemComment: string | null;
+  cost: number;
+  costCurrency: Currency;
+  marginPct: number;
+  unitPrice: number;
+  subtotal: number;
+  sourceRequiresReview: boolean;
+  requiresReview: boolean;
+}
+
+export interface SaveQuoteDraftDatasourceParams {
+  clientDraftId: string;
+  quoteId: string | null;
+  quoteNumber: string;
+  action: "SAVE_DRAFT" | "SUBMIT_FOR_APPROVAL";
+  data: Omit<CreateQuoteDatasourceParams, "quoteNumber">;
+  items: SaveQuoteDraftItemDatasourceData[];
+  scope: QuoteAccessScope;
+}
+
+export interface SaveQuoteDraftDatasourceResult {
+  id: string;
+  quoteNumber: string;
+  clientDraftId: string;
+  status: QuoteStatus;
 }
 
 export interface UpdateQuoteDatasourceData {
@@ -225,6 +266,7 @@ export abstract class QuoteDatasource {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity>;
+  abstract saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult>;
   abstract updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract addItem(params: AddQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;

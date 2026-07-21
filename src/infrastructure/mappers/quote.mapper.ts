@@ -13,6 +13,7 @@ const toNumber = (value: number | DecimalLike | null): number | null => {
 interface QuoteRow {
   id: string;
   quoteNumber: string;
+  clientDraftId: string | null;
   status: QuoteEntity["status"];
   deliveryStatus: QuoteEntity["deliveryStatus"];
   firstSentAt: Date | null;
@@ -178,6 +179,7 @@ export class QuoteMapper {
     return {
       id: row.id,
       quoteNumber: row.quoteNumber,
+      clientDraftId: row.clientDraftId,
       status: row.status,
       deliveryStatus: row.deliveryStatus,
       firstSentAt: row.firstSentAt,

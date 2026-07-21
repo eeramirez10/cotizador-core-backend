@@ -9,6 +9,7 @@ import { CreateQuoteRevisionRequestDto } from "../../domain/dtos/request/create-
 import { GetQuotesQueryRequestDto } from "../../domain/dtos/request/get-quotes-query-request.dto";
 import { MatchQuoteItemErpRequestDto } from "../../domain/dtos/request/match-quote-item-erp-request.dto";
 import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/request/register-quote-delivery-attempt-request.dto";
+import { SaveQuoteDraftRequestDto } from "../../domain/dtos/request/save-quote-draft-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
@@ -26,12 +27,14 @@ import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
+import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 
 export class QuotesController {
   constructor(
     private readonly createQuoteUseCase: CreateQuoteUseCase,
+    private readonly saveQuoteDraftUseCase: SaveQuoteDraftUseCase,
     private readonly createQuoteFromExtractionUseCase: CreateQuoteFromExtractionUseCase,
     private readonly createQuoteRevisionUseCase: CreateQuoteRevisionUseCase,
     private readonly archiveQuoteUseCase: ArchiveQuoteUseCase,
@@ -49,6 +52,26 @@ export class QuotesController {
     private readonly downloadQuoteOrderFileUseCase: DownloadQuoteOrderFileUseCase,
     private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase
   ) {}
+
+  saveDraft = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const clientDraftId = this.getSingleParam(req.params.clientDraftId)?.trim();
+    if (!clientDraftId) return void res.status(400).json({ error: "clientDraftId is required." });
+
+    const [bodyError, bodyDto] = SaveQuoteDraftRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+
+    try {
+      const result = await this.saveQuoteDraftUseCase.execute(clientDraftId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while saving quote draft.");
+    }
+  };
 
   archive = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });

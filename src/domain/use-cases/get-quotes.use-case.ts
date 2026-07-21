@@ -46,7 +46,10 @@ export class GetQuotesUseCase {
     });
 
     return new PaginatedQuotesResponseDto({
-      items: result.items.map((item) => new QuoteResponseDto(item)),
+      items: result.items.map((item) => ({
+        current: new QuoteResponseDto(item.current),
+        relatedVersions: item.relatedVersions.map((version) => new QuoteResponseDto(version)),
+      })),
       total: result.total,
       page: dto.page,
       pageSize: dto.pageSize,

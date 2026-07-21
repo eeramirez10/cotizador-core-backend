@@ -48,6 +48,7 @@ export interface QuoteRevisionSummary {
 export interface QuoteEntity {
   id: string;
   quoteNumber: string;
+  clientDraftId: string | null;
   status: QuoteStatus;
   deliveryStatus: QuoteDeliveryStatus;
   firstSentAt: Date | null;

@@ -14,6 +14,8 @@ import {
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RemoveQuoteItemDatasourceParams,
+  SaveQuoteDraftDatasourceParams,
+  SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
@@ -151,7 +153,12 @@ type DbClient = Prisma.TransactionClient | typeof prisma;
 export class PrismaQuoteDatasource implements QuoteDatasource {
   async findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult> {
     const skip = (params.page - 1) * params.pageSize;
-    const where = this.buildFindWhere(params);
+    const where: Prisma.QuoteWhereInput = {
+      AND: [
+        this.buildFindWhere(params),
+        { nextVersions: { none: {} } },
+      ],
+    };
 
     const [total, rows] = await prisma.$transaction([
       prisma.quote.count({ where }),
@@ -164,8 +171,40 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       }),
     ]);
 
+    const currentIds = rows.map((row) => row.id);
+    const rootIds = rows.map((row) => row.rootQuoteId ?? row.id);
+    const relatedRows = rootIds.length > 0
+      ? await prisma.quote.findMany({
+          where: {
+            AND: [
+              this.buildScopeWhere(params.scope),
+              {
+                OR: [
+                  { id: { in: rootIds } },
+                  { rootQuoteId: { in: rootIds } },
+                ],
+              },
+              { id: { notIn: currentIds } },
+            ],
+          },
+          include: quoteInclude,
+          orderBy: [{ revisionNumber: "desc" }, { createdAt: "desc" }],
+        })
+      : [];
+
+    const relatedByRootId = new Map<string, QuoteEntity[]>();
+    for (const row of relatedRows) {
+      const rootId = row.rootQuoteId ?? row.id;
+      const versions = relatedByRootId.get(rootId) ?? [];
+      versions.push(QuoteMapper.toEntity(row));
+      relatedByRootId.set(rootId, versions);
+    }
+
     return {
-      items: rows.map((row) => QuoteMapper.toEntity(row)),
+      items: rows.map((row) => ({
+        current: QuoteMapper.toEntity(row),
+        relatedVersions: relatedByRootId.get(row.rootQuoteId ?? row.id) ?? [],
+      })),
       total,
     };
   }
@@ -234,6 +273,195 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     });
 
     return quote;
+  }
+
+  async saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult> {
+    const execute = async (): Promise<SaveQuoteDraftDatasourceResult> => prisma.$transaction(async (tx) => {
+      const existing = params.quoteId
+        ? await tx.quote.findFirst({
+            where: { id: params.quoteId, ...this.buildScopeWhere(params.scope) },
+            select: {
+              id: true,
+              quoteNumber: true,
+              clientDraftId: true,
+              status: true,
+              archivedAt: true,
+              providedByUserId: true,
+            },
+          })
+        : await tx.quote.findUnique({
+            where: {
+              createdByUserId_clientDraftId: {
+                createdByUserId: params.data.createdByUserId,
+                clientDraftId: params.clientDraftId,
+              },
+            },
+            select: {
+              id: true,
+              quoteNumber: true,
+              clientDraftId: true,
+              status: true,
+              archivedAt: true,
+              providedByUserId: true,
+            },
+          });
+
+      if (params.quoteId && !existing) throw new Error("Quote not found.");
+      if (existing?.archivedAt) throw new Error("Archived quotes are read-only.");
+      if (existing?.clientDraftId && existing.clientDraftId !== params.clientDraftId) {
+        throw new Error("Quote belongs to a different client draft.");
+      }
+
+      if (existing?.status === "PENDING_APPROVAL" && params.action === "SUBMIT_FOR_APPROVAL") {
+        return {
+          id: existing.id,
+          quoteNumber: existing.quoteNumber,
+          clientDraftId: existing.clientDraftId ?? params.clientDraftId,
+          status: existing.status,
+        };
+      }
+      if (existing && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(existing.status)) {
+        throw new Error("Quote cannot be edited in current status.");
+      }
+
+      const subtotal = round4(params.items.reduce((sum, item) => sum + item.subtotal, 0));
+      const tax = round4(subtotal * params.data.taxRate);
+      const total = round4(subtotal + tax);
+      const validUntil = addDaysToDateOnly(params.data.exchangeRateDate, params.data.validityDays);
+      const wasCreated = !existing;
+
+      const quote = existing ?? await tx.quote.create({
+        data: {
+          quoteNumber: params.quoteNumber,
+          clientDraftId: params.clientDraftId,
+          status: "DRAFT",
+          origin: params.data.origin,
+          captureMethod: params.data.captureMethod,
+          originalQuoteDate: params.data.originalQuoteDate,
+          sourceChannel: params.data.sourceChannel,
+          currency: params.data.currency,
+          exchangeRate: params.data.exchangeRate,
+          exchangeRateDate: params.data.exchangeRateDate,
+          taxRate: params.data.taxRate,
+          subtotal: 0,
+          tax: 0,
+          total: 0,
+          deliveryPlace: params.data.deliveryPlace,
+          paymentTerms: params.data.paymentTerms,
+          validityDays: params.data.validityDays,
+          validUntil,
+          branchId: params.data.branchId,
+          customerId: params.data.customerId,
+          createdByUserId: params.data.createdByUserId,
+          updatedByUserId: params.data.updatedByUserId,
+          providedByUserId: params.data.providedByUserId,
+          providedByNameSnapshot: params.data.providedByNameSnapshot,
+          providedByBranchNameSnapshot: params.data.providedByBranchNameSnapshot,
+          providedAt: params.data.providedAt,
+          providedByAssignedByUserId: params.data.providedByAssignedByUserId,
+          notes: params.data.notes,
+        },
+        select: {
+          id: true,
+          quoteNumber: true,
+          clientDraftId: true,
+          status: true,
+          archivedAt: true,
+          providedByUserId: true,
+        },
+      });
+
+      if (wasCreated) {
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.id,
+            status: "DRAFT",
+            note: params.data.providedByNameSnapshot
+              ? `Quote created. Provided by ${params.data.providedByNameSnapshot}.`
+              : "Quote created",
+            actorUserId: params.data.createdByUserId,
+          },
+        });
+      }
+
+      await tx.quoteItem.deleteMany({ where: { quoteId: quote.id } });
+      if (params.items.length > 0) {
+        await tx.quoteItem.createMany({
+          data: params.items.map((item) => ({ quoteId: quote.id, ...item })),
+        });
+      }
+
+      const targetStatus = params.action === "SUBMIT_FOR_APPROVAL" ? "PENDING_APPROVAL" : quote.status;
+      await tx.quote.update({
+        where: { id: quote.id },
+        data: {
+          clientDraftId: params.clientDraftId,
+          status: targetStatus,
+          origin: wasCreated ? params.data.origin : undefined,
+          captureMethod: params.data.captureMethod,
+          originalQuoteDate: params.data.originalQuoteDate,
+          sourceChannel: params.data.sourceChannel,
+          currency: params.data.currency,
+          exchangeRate: params.data.exchangeRate,
+          exchangeRateDate: params.data.exchangeRateDate,
+          taxRate: params.data.taxRate,
+          subtotal,
+          tax,
+          total,
+          deliveryPlace: params.data.deliveryPlace,
+          paymentTerms: params.data.paymentTerms,
+          validityDays: params.data.validityDays,
+          validUntil,
+          customerId: params.data.customerId,
+          updatedByUserId: params.data.updatedByUserId,
+          providedByUserId: params.data.providedByUserId,
+          providedByNameSnapshot: params.data.providedByNameSnapshot,
+          providedByBranchNameSnapshot: params.data.providedByBranchNameSnapshot,
+          providedAt: params.data.providedAt,
+          providedByAssignedByUserId: params.data.providedByAssignedByUserId,
+          notes: params.data.notes,
+        },
+      });
+
+      if (!wasCreated && quote.providedByUserId !== params.data.providedByUserId) {
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.id,
+            status: quote.status,
+            note: params.data.providedByNameSnapshot
+              ? `Provided by assigned to ${params.data.providedByNameSnapshot}.`
+              : "Provided by attribution removed.",
+            actorUserId: params.data.updatedByUserId,
+          },
+        });
+      }
+
+      if (params.action === "SUBMIT_FOR_APPROVAL" && quote.status !== "PENDING_APPROVAL") {
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.id,
+            status: "PENDING_APPROVAL",
+            note: "Quote submitted for internal approval.",
+            actorUserId: params.data.updatedByUserId,
+          },
+        });
+      }
+
+      return {
+        id: quote.id,
+        quoteNumber: quote.quoteNumber,
+        clientDraftId: params.clientDraftId,
+        status: targetStatus,
+      };
+    }, { maxWait: 5_000, timeout: 15_000 });
+
+    try {
+      return await execute();
+    } catch (error) {
+      // A concurrent retry can race the first insert; the unique draft key makes the retry safe.
+      if ((error as { code?: string }).code === "P2002" && !params.quoteId) return execute();
+      throw error;
+    }
   }
 
   async createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity> {

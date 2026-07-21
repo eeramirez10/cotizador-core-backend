@@ -49,6 +49,7 @@ export type QuoteSumAggregateOutputType = {
 export type QuoteMinAggregateOutputType = {
   id: string | null
   quoteNumber: string | null
+  clientDraftId: string | null
   status: $Enums.QuoteStatus | null
   deliveryStatus: $Enums.QuoteDeliveryStatus | null
   firstSentAt: Date | null
@@ -107,6 +108,7 @@ export type QuoteMinAggregateOutputType = {
 export type QuoteMaxAggregateOutputType = {
   id: string | null
   quoteNumber: string | null
+  clientDraftId: string | null
   status: $Enums.QuoteStatus | null
   deliveryStatus: $Enums.QuoteDeliveryStatus | null
   firstSentAt: Date | null
@@ -165,6 +167,7 @@ export type QuoteMaxAggregateOutputType = {
 export type QuoteCountAggregateOutputType = {
   id: number
   quoteNumber: number
+  clientDraftId: number
   status: number
   deliveryStatus: number
   firstSentAt: number
@@ -245,6 +248,7 @@ export type QuoteSumAggregateInputType = {
 export type QuoteMinAggregateInputType = {
   id?: true
   quoteNumber?: true
+  clientDraftId?: true
   status?: true
   deliveryStatus?: true
   firstSentAt?: true
@@ -303,6 +307,7 @@ export type QuoteMinAggregateInputType = {
 export type QuoteMaxAggregateInputType = {
   id?: true
   quoteNumber?: true
+  clientDraftId?: true
   status?: true
   deliveryStatus?: true
   firstSentAt?: true
@@ -361,6 +366,7 @@ export type QuoteMaxAggregateInputType = {
 export type QuoteCountAggregateInputType = {
   id?: true
   quoteNumber?: true
+  clientDraftId?: true
   status?: true
   deliveryStatus?: true
   firstSentAt?: true
@@ -506,6 +512,7 @@ export type QuoteGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type QuoteGroupByOutputType = {
   id: string
   quoteNumber: string
+  clientDraftId: string | null
   status: $Enums.QuoteStatus
   deliveryStatus: $Enums.QuoteDeliveryStatus
   firstSentAt: Date | null
@@ -587,6 +594,7 @@ export type QuoteWhereInput = {
   NOT?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
   id?: Prisma.UuidFilter<"Quote"> | string
   quoteNumber?: Prisma.StringFilter<"Quote"> | string
+  clientDraftId?: Prisma.StringNullableFilter<"Quote"> | string | null
   status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFilter<"Quote"> | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -664,6 +672,7 @@ export type QuoteWhereInput = {
 export type QuoteOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   quoteNumber?: Prisma.SortOrder
+  clientDraftId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   firstSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -743,10 +752,12 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   quoteNumber?: string
   orderReference?: string
   supersededByQuoteId?: string
+  createdByUserId_clientDraftId?: Prisma.QuoteCreatedByUserIdClientDraftIdCompoundUniqueInput
   rootQuoteId_revisionNumber?: Prisma.QuoteRootQuoteIdRevisionNumberCompoundUniqueInput
   AND?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
   OR?: Prisma.QuoteWhereInput[]
   NOT?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
+  clientDraftId?: Prisma.StringNullableFilter<"Quote"> | string | null
   status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFilter<"Quote"> | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -817,11 +828,12 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
   events?: Prisma.QuoteEventListRelationFilter
-}, "id" | "quoteNumber" | "orderReference" | "supersededByQuoteId" | "rootQuoteId_revisionNumber">
+}, "id" | "quoteNumber" | "orderReference" | "supersededByQuoteId" | "createdByUserId_clientDraftId" | "rootQuoteId_revisionNumber">
 
 export type QuoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   quoteNumber?: Prisma.SortOrder
+  clientDraftId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   firstSentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -888,6 +900,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   NOT?: Prisma.QuoteScalarWhereWithAggregatesInput | Prisma.QuoteScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Quote"> | string
   quoteNumber?: Prisma.StringWithAggregatesFilter<"Quote"> | string
+  clientDraftId?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   status?: Prisma.EnumQuoteStatusWithAggregatesFilter<"Quote"> | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusWithAggregatesFilter<"Quote"> | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -946,6 +959,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
 export type QuoteCreateInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -1011,6 +1025,7 @@ export type QuoteCreateInput = {
 export type QuoteUncheckedCreateInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -1076,6 +1091,7 @@ export type QuoteUncheckedCreateInput = {
 export type QuoteUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1141,6 +1157,7 @@ export type QuoteUpdateInput = {
 export type QuoteUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1206,6 +1223,7 @@ export type QuoteUncheckedUpdateInput = {
 export type QuoteCreateManyInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -1264,6 +1282,7 @@ export type QuoteCreateManyInput = {
 export type QuoteUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1310,6 +1329,7 @@ export type QuoteUpdateManyMutationInput = {
 export type QuoteUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1380,6 +1400,11 @@ export type QuoteNullableScalarRelationFilter = {
   isNot?: Prisma.QuoteWhereInput | null
 }
 
+export type QuoteCreatedByUserIdClientDraftIdCompoundUniqueInput = {
+  createdByUserId: string
+  clientDraftId: string
+}
+
 export type QuoteRootQuoteIdRevisionNumberCompoundUniqueInput = {
   rootQuoteId: string
   revisionNumber: number
@@ -1388,6 +1413,7 @@ export type QuoteRootQuoteIdRevisionNumberCompoundUniqueInput = {
 export type QuoteCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteNumber?: Prisma.SortOrder
+  clientDraftId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   firstSentAt?: Prisma.SortOrder
@@ -1456,6 +1482,7 @@ export type QuoteAvgOrderByAggregateInput = {
 export type QuoteMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteNumber?: Prisma.SortOrder
+  clientDraftId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   firstSentAt?: Prisma.SortOrder
@@ -1514,6 +1541,7 @@ export type QuoteMaxOrderByAggregateInput = {
 export type QuoteMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteNumber?: Prisma.SortOrder
+  clientDraftId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   deliveryStatus?: Prisma.SortOrder
   firstSentAt?: Prisma.SortOrder
@@ -2245,6 +2273,7 @@ export type QuoteUpdateOneRequiredWithoutOrderExportsNestedInput = {
 export type QuoteCreateWithoutBranchInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2309,6 +2338,7 @@ export type QuoteCreateWithoutBranchInput = {
 export type QuoteUncheckedCreateWithoutBranchInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2402,6 +2432,7 @@ export type QuoteScalarWhereInput = {
   NOT?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
   id?: Prisma.UuidFilter<"Quote"> | string
   quoteNumber?: Prisma.StringFilter<"Quote"> | string
+  clientDraftId?: Prisma.StringNullableFilter<"Quote"> | string | null
   status?: Prisma.EnumQuoteStatusFilter<"Quote"> | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFilter<"Quote"> | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -2460,6 +2491,7 @@ export type QuoteScalarWhereInput = {
 export type QuoteCreateWithoutCreatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2524,6 +2556,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
 export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2598,6 +2631,7 @@ export type QuoteCreateManyCreatedByUserInputEnvelope = {
 export type QuoteCreateWithoutUpdatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2662,6 +2696,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
 export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2736,6 +2771,7 @@ export type QuoteCreateManyUpdatedByUserInputEnvelope = {
 export type QuoteCreateWithoutRejectedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2800,6 +2836,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
 export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2874,6 +2911,7 @@ export type QuoteCreateManyRejectedByUserInputEnvelope = {
 export type QuoteCreateWithoutCancelledByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -2938,6 +2976,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
 export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3012,6 +3051,7 @@ export type QuoteCreateManyCancelledByUserInputEnvelope = {
 export type QuoteCreateWithoutArchivedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3076,6 +3116,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
 export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3150,6 +3191,7 @@ export type QuoteCreateManyArchivedByUserInputEnvelope = {
 export type QuoteCreateWithoutProvidedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3214,6 +3256,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
 export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3288,6 +3331,7 @@ export type QuoteCreateManyProvidedByUserInputEnvelope = {
 export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3352,6 +3396,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
 export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3538,6 +3583,7 @@ export type QuoteUpdateManyWithWhereWithoutProvidedByAssignedByUserInput = {
 export type QuoteCreateWithoutCustomerInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3602,6 +3648,7 @@ export type QuoteCreateWithoutCustomerInput = {
 export type QuoteUncheckedCreateWithoutCustomerInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3692,6 +3739,7 @@ export type QuoteUpdateManyWithWhereWithoutCustomerInput = {
 export type QuoteCreateWithoutRevisionsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3756,6 +3804,7 @@ export type QuoteCreateWithoutRevisionsInput = {
 export type QuoteUncheckedCreateWithoutRevisionsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3825,6 +3874,7 @@ export type QuoteCreateOrConnectWithoutRevisionsInput = {
 export type QuoteCreateWithoutRootQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3889,6 +3939,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
 export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -3963,6 +4014,7 @@ export type QuoteCreateManyRootQuoteInputEnvelope = {
 export type QuoteCreateWithoutNextVersionsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4027,6 +4079,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
 export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4096,6 +4149,7 @@ export type QuoteCreateOrConnectWithoutNextVersionsInput = {
 export type QuoteCreateWithoutPreviousVersionInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4160,6 +4214,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
 export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4234,6 +4289,7 @@ export type QuoteCreateManyPreviousVersionInputEnvelope = {
 export type QuoteCreateWithoutSupersedesQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4298,6 +4354,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
 export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4367,6 +4424,7 @@ export type QuoteCreateOrConnectWithoutSupersedesQuoteInput = {
 export type QuoteCreateWithoutSupersededByQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4431,6 +4489,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
 export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -4511,6 +4570,7 @@ export type QuoteUpdateToOneWithWhereWithoutRevisionsInput = {
 export type QuoteUpdateWithoutRevisionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4575,6 +4635,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
 export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4666,6 +4727,7 @@ export type QuoteUpdateToOneWithWhereWithoutNextVersionsInput = {
 export type QuoteUpdateWithoutNextVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4730,6 +4792,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
 export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4821,6 +4884,7 @@ export type QuoteUpdateToOneWithWhereWithoutSupersedesQuoteInput = {
 export type QuoteUpdateWithoutSupersedesQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4885,6 +4949,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
 export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4960,6 +5025,7 @@ export type QuoteUpdateToOneWithWhereWithoutSupersededByQuoteInput = {
 export type QuoteUpdateWithoutSupersededByQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5024,6 +5090,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
 export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5088,6 +5155,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
 export type QuoteCreateWithoutItemsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5152,6 +5220,7 @@ export type QuoteCreateWithoutItemsInput = {
 export type QuoteUncheckedCreateWithoutItemsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5232,6 +5301,7 @@ export type QuoteUpdateToOneWithWhereWithoutItemsInput = {
 export type QuoteUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5296,6 +5366,7 @@ export type QuoteUpdateWithoutItemsInput = {
 export type QuoteUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5360,6 +5431,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
 export type QuoteCreateWithoutEventsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5424,6 +5496,7 @@ export type QuoteCreateWithoutEventsInput = {
 export type QuoteUncheckedCreateWithoutEventsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5504,6 +5577,7 @@ export type QuoteUpdateToOneWithWhereWithoutEventsInput = {
 export type QuoteUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5568,6 +5642,7 @@ export type QuoteUpdateWithoutEventsInput = {
 export type QuoteUncheckedUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5632,6 +5707,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
 export type QuoteCreateWithoutDeliveryAttemptsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5696,6 +5772,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
 export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5776,6 +5853,7 @@ export type QuoteUpdateToOneWithWhereWithoutDeliveryAttemptsInput = {
 export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5840,6 +5918,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
 export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5904,6 +5983,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
 export type QuoteCreateWithoutOrderExportsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -5968,6 +6048,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
 export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6048,6 +6129,7 @@ export type QuoteUpdateToOneWithWhereWithoutOrderExportsInput = {
 export type QuoteUpdateWithoutOrderExportsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6112,6 +6194,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
 export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6176,6 +6259,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
 export type QuoteCreateManyBranchInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6233,6 +6317,7 @@ export type QuoteCreateManyBranchInput = {
 export type QuoteUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6297,6 +6382,7 @@ export type QuoteUpdateWithoutBranchInput = {
 export type QuoteUncheckedUpdateWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6361,6 +6447,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
 export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6418,6 +6505,7 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
 export type QuoteCreateManyCreatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6475,6 +6563,7 @@ export type QuoteCreateManyCreatedByUserInput = {
 export type QuoteCreateManyUpdatedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6532,6 +6621,7 @@ export type QuoteCreateManyUpdatedByUserInput = {
 export type QuoteCreateManyRejectedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6589,6 +6679,7 @@ export type QuoteCreateManyRejectedByUserInput = {
 export type QuoteCreateManyCancelledByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6646,6 +6737,7 @@ export type QuoteCreateManyCancelledByUserInput = {
 export type QuoteCreateManyArchivedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6703,6 +6795,7 @@ export type QuoteCreateManyArchivedByUserInput = {
 export type QuoteCreateManyProvidedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6760,6 +6853,7 @@ export type QuoteCreateManyProvidedByUserInput = {
 export type QuoteCreateManyProvidedByAssignedByUserInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -6817,6 +6911,7 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
 export type QuoteUpdateWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6881,6 +6976,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
 export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6945,6 +7041,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7002,6 +7099,7 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
 export type QuoteUpdateWithoutUpdatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7066,6 +7164,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
 export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7130,6 +7229,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7187,6 +7287,7 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
 export type QuoteUpdateWithoutRejectedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7251,6 +7352,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
 export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7315,6 +7417,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7372,6 +7475,7 @@ export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
 export type QuoteUpdateWithoutCancelledByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7436,6 +7540,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
 export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7500,6 +7605,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7557,6 +7663,7 @@ export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
 export type QuoteUpdateWithoutArchivedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7621,6 +7728,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
 export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7685,6 +7793,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7742,6 +7851,7 @@ export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
 export type QuoteUpdateWithoutProvidedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7806,6 +7916,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
 export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7870,6 +7981,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7927,6 +8039,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
 export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7991,6 +8104,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
 export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8055,6 +8169,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
 export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8112,6 +8227,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
 export type QuoteCreateManyCustomerInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -8169,6 +8285,7 @@ export type QuoteCreateManyCustomerInput = {
 export type QuoteUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8233,6 +8350,7 @@ export type QuoteUpdateWithoutCustomerInput = {
 export type QuoteUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8297,6 +8415,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
 export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8354,6 +8473,7 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
 export type QuoteCreateManyRootQuoteInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -8411,6 +8531,7 @@ export type QuoteCreateManyRootQuoteInput = {
 export type QuoteCreateManyPreviousVersionInput = {
   id?: string
   quoteNumber: string
+  clientDraftId?: string | null
   status?: $Enums.QuoteStatus
   deliveryStatus?: $Enums.QuoteDeliveryStatus
   firstSentAt?: Date | string | null
@@ -8468,6 +8589,7 @@ export type QuoteCreateManyPreviousVersionInput = {
 export type QuoteUpdateWithoutRootQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8532,6 +8654,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
 export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8596,6 +8719,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
 export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8653,6 +8777,7 @@ export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
 export type QuoteUpdateWithoutPreviousVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8717,6 +8842,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
 export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8781,6 +8907,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
 export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
   deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
   firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8914,6 +9041,7 @@ export type QuoteCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Ex
 export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteNumber?: boolean
+  clientDraftId?: boolean
   status?: boolean
   deliveryStatus?: boolean
   firstSentAt?: boolean
@@ -8992,6 +9120,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteNumber?: boolean
+  clientDraftId?: boolean
   status?: boolean
   deliveryStatus?: boolean
   firstSentAt?: boolean
@@ -9062,6 +9191,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteNumber?: boolean
+  clientDraftId?: boolean
   status?: boolean
   deliveryStatus?: boolean
   firstSentAt?: boolean
@@ -9132,6 +9262,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type QuoteSelectScalar = {
   id?: boolean
   quoteNumber?: boolean
+  clientDraftId?: boolean
   status?: boolean
   deliveryStatus?: boolean
   firstSentAt?: boolean
@@ -9187,7 +9318,7 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -9265,6 +9396,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     quoteNumber: string
+    clientDraftId: string | null
     status: $Enums.QuoteStatus
     deliveryStatus: $Enums.QuoteDeliveryStatus
     firstSentAt: Date | null
@@ -9762,6 +9894,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface QuoteFieldRefs {
   readonly id: Prisma.FieldRef<"Quote", 'String'>
   readonly quoteNumber: Prisma.FieldRef<"Quote", 'String'>
+  readonly clientDraftId: Prisma.FieldRef<"Quote", 'String'>
   readonly status: Prisma.FieldRef<"Quote", 'QuoteStatus'>
   readonly deliveryStatus: Prisma.FieldRef<"Quote", 'QuoteDeliveryStatus'>
   readonly firstSentAt: Prisma.FieldRef<"Quote", 'DateTime'>

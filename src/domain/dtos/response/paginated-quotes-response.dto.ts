@@ -1,14 +1,17 @@
 import { QuoteResponseDto } from "./quote-response.dto";
 
 interface PaginatedQuotesResponseDtoProps {
-  items: QuoteResponseDto[];
+  items: Array<{
+    current: QuoteResponseDto;
+    relatedVersions: QuoteResponseDto[];
+  }>;
   total: number;
   page: number;
   pageSize: number;
 }
 
 export class PaginatedQuotesResponseDto {
-  private readonly items: QuoteResponseDto[];
+  private readonly items: PaginatedQuotesResponseDtoProps["items"];
   private readonly total: number;
   private readonly page: number;
   private readonly pageSize: number;
@@ -24,7 +27,10 @@ export class PaginatedQuotesResponseDto {
     const totalPages = Math.max(1, Math.ceil(this.total / this.pageSize));
 
     return {
-      items: this.items.map((item) => item.toJSON()),
+      items: this.items.map((item) => ({
+        ...item.current.toJSON(),
+        relatedVersions: item.relatedVersions.map((version) => version.toJSON()),
+      })),
       total: this.total,
       page: this.page,
       pageSize: this.pageSize,

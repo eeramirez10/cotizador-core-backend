@@ -188,6 +188,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 export const QuoteScalarFieldEnum = {
   id: 'id',
   quoteNumber: 'quoteNumber',
+  clientDraftId: 'clientDraftId',
   status: 'status',
   deliveryStatus: 'deliveryStatus',
   firstSentAt: 'firstSentAt',

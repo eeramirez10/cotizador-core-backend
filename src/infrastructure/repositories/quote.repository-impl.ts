@@ -13,6 +13,8 @@ import {
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RemoveQuoteItemDatasourceParams,
+  SaveQuoteDraftDatasourceParams,
+  SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
@@ -32,6 +34,10 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity> {
     return this.datasource.createDraft(params);
+  }
+
+  saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult> {
+    return this.datasource.saveDraft(params);
   }
 
   updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null> {

@@ -14,6 +14,7 @@ import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
+import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-branch.datasource";
@@ -47,6 +48,7 @@ export class QuotesRoutes {
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
 
     const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository, userRepository);
+    const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(quoteRepository, customerRepository, userRepository);
     const createQuoteFromExtractionUseCase = new CreateQuoteFromExtractionUseCase(
       quoteRepository,
       customerRepository,
@@ -77,6 +79,7 @@ export class QuotesRoutes {
 
     const controller = new QuotesController(
       createQuoteUseCase,
+      saveQuoteDraftUseCase,
       createQuoteFromExtractionUseCase,
       createQuoteRevisionUseCase,
       archiveQuoteUseCase,
@@ -96,6 +99,12 @@ export class QuotesRoutes {
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
+    router.put(
+      "/drafts/:clientDraftId",
+      requireAuth,
+      requireRoles("SELLER"),
+      controller.saveDraft
+    );
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.getById);
     router.post("/", requireAuth, requireRoles("SELLER"), controller.create);
     router.post(
