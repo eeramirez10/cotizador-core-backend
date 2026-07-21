@@ -69,6 +69,7 @@ export type QuoteMinAggregateOutputType = {
   total: runtime.Decimal | null
   deliveryPlace: string | null
   paymentTerms: string | null
+  commercialConditions: string | null
   validityDays: number | null
   validUntil: Date | null
   branchId: string | null
@@ -80,21 +81,21 @@ export type QuoteMinAggregateOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
-  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionReason: string | null
   rejectionComment: string | null
   rejectedAt: Date | null
   rejectedByUserId: string | null
-  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationReason: string | null
   cancellationComment: string | null
   cancelledAt: Date | null
   cancelledByUserId: string | null
-  approvalReturnReason: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason: string | null
   approvalReturnComment: string | null
   rootQuoteId: string | null
   previousVersionId: string | null
   supersededByQuoteId: string | null
   revisionNumber: number | null
-  revisionReason: $Enums.QuoteRevisionReason | null
+  revisionReason: string | null
   revisionComment: string | null
   supersededAt: Date | null
   archivedAt: Date | null
@@ -128,6 +129,7 @@ export type QuoteMaxAggregateOutputType = {
   total: runtime.Decimal | null
   deliveryPlace: string | null
   paymentTerms: string | null
+  commercialConditions: string | null
   validityDays: number | null
   validUntil: Date | null
   branchId: string | null
@@ -139,21 +141,21 @@ export type QuoteMaxAggregateOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
-  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionReason: string | null
   rejectionComment: string | null
   rejectedAt: Date | null
   rejectedByUserId: string | null
-  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationReason: string | null
   cancellationComment: string | null
   cancelledAt: Date | null
   cancelledByUserId: string | null
-  approvalReturnReason: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason: string | null
   approvalReturnComment: string | null
   rootQuoteId: string | null
   previousVersionId: string | null
   supersededByQuoteId: string | null
   revisionNumber: number | null
-  revisionReason: $Enums.QuoteRevisionReason | null
+  revisionReason: string | null
   revisionComment: string | null
   supersededAt: Date | null
   archivedAt: Date | null
@@ -187,6 +189,7 @@ export type QuoteCountAggregateOutputType = {
   total: number
   deliveryPlace: number
   paymentTerms: number
+  commercialConditions: number
   validityDays: number
   validUntil: number
   branchId: number
@@ -268,6 +271,7 @@ export type QuoteMinAggregateInputType = {
   total?: true
   deliveryPlace?: true
   paymentTerms?: true
+  commercialConditions?: true
   validityDays?: true
   validUntil?: true
   branchId?: true
@@ -327,6 +331,7 @@ export type QuoteMaxAggregateInputType = {
   total?: true
   deliveryPlace?: true
   paymentTerms?: true
+  commercialConditions?: true
   validityDays?: true
   validUntil?: true
   branchId?: true
@@ -386,6 +391,7 @@ export type QuoteCountAggregateInputType = {
   total?: true
   deliveryPlace?: true
   paymentTerms?: true
+  commercialConditions?: true
   validityDays?: true
   validUntil?: true
   branchId?: true
@@ -532,6 +538,7 @@ export type QuoteGroupByOutputType = {
   total: runtime.Decimal
   deliveryPlace: string | null
   paymentTerms: string
+  commercialConditions: string | null
   validityDays: number
   validUntil: Date
   branchId: string
@@ -543,21 +550,21 @@ export type QuoteGroupByOutputType = {
   providedByBranchNameSnapshot: string | null
   providedAt: Date | null
   providedByAssignedByUserId: string | null
-  rejectionReason: $Enums.QuoteRejectionReason | null
+  rejectionReason: string | null
   rejectionComment: string | null
   rejectedAt: Date | null
   rejectedByUserId: string | null
-  cancellationReason: $Enums.QuoteCancellationReason | null
+  cancellationReason: string | null
   cancellationComment: string | null
   cancelledAt: Date | null
   cancelledByUserId: string | null
-  approvalReturnReason: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason: string | null
   approvalReturnComment: string | null
   rootQuoteId: string | null
   previousVersionId: string | null
   supersededByQuoteId: string | null
   revisionNumber: number
-  revisionReason: $Enums.QuoteRevisionReason | null
+  revisionReason: string | null
   revisionComment: string | null
   supersededAt: Date | null
   archivedAt: Date | null
@@ -614,6 +621,7 @@ export type QuoteWhereInput = {
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  commercialConditions?: Prisma.StringNullableFilter<"Quote"> | string | null
   validityDays?: Prisma.IntFilter<"Quote"> | number
   validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
@@ -625,21 +633,21 @@ export type QuoteWhereInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  approvalReturnReason?: Prisma.EnumQuoteApprovalReturnReasonNullableFilter<"Quote"> | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   approvalReturnComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rootQuoteId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   previousVersionId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   supersededByQuoteId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   revisionNumber?: Prisma.IntFilter<"Quote"> | number
-  revisionReason?: Prisma.EnumQuoteRevisionReasonNullableFilter<"Quote"> | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   revisionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   supersededAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -692,6 +700,7 @@ export type QuoteOrderByWithRelationInput = {
   total?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
+  commercialConditions?: Prisma.SortOrderInput | Prisma.SortOrder
   validityDays?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
@@ -776,6 +785,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  commercialConditions?: Prisma.StringNullableFilter<"Quote"> | string | null
   validityDays?: Prisma.IntFilter<"Quote"> | number
   validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
@@ -787,20 +797,20 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  approvalReturnReason?: Prisma.EnumQuoteApprovalReturnReasonNullableFilter<"Quote"> | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   approvalReturnComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rootQuoteId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   previousVersionId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   revisionNumber?: Prisma.IntFilter<"Quote"> | number
-  revisionReason?: Prisma.EnumQuoteRevisionReasonNullableFilter<"Quote"> | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   revisionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   supersededAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -853,6 +863,7 @@ export type QuoteOrderByWithAggregationInput = {
   total?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
+  commercialConditions?: Prisma.SortOrderInput | Prisma.SortOrder
   validityDays?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
@@ -920,6 +931,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   total?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   paymentTerms?: Prisma.StringWithAggregatesFilter<"Quote"> | string
+  commercialConditions?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   validityDays?: Prisma.IntWithAggregatesFilter<"Quote"> | number
   validUntil?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidWithAggregatesFilter<"Quote"> | string
@@ -931,21 +943,21 @@ export type QuoteScalarWhereWithAggregatesInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
-  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   rejectionComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   rejectedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
-  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   cancellationComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   cancelledByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
-  approvalReturnReason?: Prisma.EnumQuoteApprovalReturnReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   approvalReturnComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   rootQuoteId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   previousVersionId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   supersededByQuoteId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   revisionNumber?: Prisma.IntWithAggregatesFilter<"Quote"> | number
-  revisionReason?: Prisma.EnumQuoteRevisionReasonNullableWithAggregatesFilter<"Quote"> | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   revisionComment?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   supersededAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -979,21 +991,22 @@ export type QuoteCreateInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -1045,6 +1058,7 @@ export type QuoteUncheckedCreateInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -1056,21 +1070,21 @@ export type QuoteUncheckedCreateInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -1111,21 +1125,22 @@ export type QuoteUpdateInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1177,6 +1192,7 @@ export type QuoteUncheckedUpdateInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1188,21 +1204,21 @@ export type QuoteUncheckedUpdateInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1243,6 +1259,7 @@ export type QuoteCreateManyInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -1254,21 +1271,21 @@ export type QuoteCreateManyInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -1302,21 +1319,22 @@ export type QuoteUpdateManyMutationInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1349,6 +1367,7 @@ export type QuoteUncheckedUpdateManyInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1360,21 +1379,21 @@ export type QuoteUncheckedUpdateManyInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1433,6 +1452,7 @@ export type QuoteCountOrderByAggregateInput = {
   total?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
+  commercialConditions?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
@@ -1502,6 +1522,7 @@ export type QuoteMaxOrderByAggregateInput = {
   total?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
+  commercialConditions?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
@@ -1561,6 +1582,7 @@ export type QuoteMinOrderByAggregateInput = {
   total?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
+  commercialConditions?: Prisma.SortOrder
   validityDays?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
@@ -2084,30 +2106,6 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput = {
-  set?: $Enums.QuoteRejectionReason | null
-}
-
-export type NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput = {
-  set?: $Enums.QuoteCancellationReason | null
-}
-
-export type NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput = {
-  set?: $Enums.QuoteApprovalReturnReason | null
-}
-
-export type NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput = {
-  set?: $Enums.QuoteRevisionReason | null
-}
-
 export type QuoteUpdateOneWithoutRevisionsNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutRevisionsInput, Prisma.QuoteUncheckedCreateWithoutRevisionsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutRevisionsInput
@@ -2293,21 +2291,22 @@ export type QuoteCreateWithoutBranchInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2358,6 +2357,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   customerId: string
@@ -2368,21 +2368,21 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2452,6 +2452,7 @@ export type QuoteScalarWhereInput = {
   total?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.StringNullableFilter<"Quote"> | string | null
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
+  commercialConditions?: Prisma.StringNullableFilter<"Quote"> | string | null
   validityDays?: Prisma.IntFilter<"Quote"> | number
   validUntil?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branchId?: Prisma.UuidFilter<"Quote"> | string
@@ -2463,21 +2464,21 @@ export type QuoteScalarWhereInput = {
   providedByBranchNameSnapshot?: Prisma.StringNullableFilter<"Quote"> | string | null
   providedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   providedByAssignedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  rejectionReason?: Prisma.EnumQuoteRejectionReasonNullableFilter<"Quote"> | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rejectedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   rejectedByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  cancellationReason?: Prisma.EnumQuoteCancellationReasonNullableFilter<"Quote"> | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancellationComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   cancelledByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
-  approvalReturnReason?: Prisma.EnumQuoteApprovalReturnReasonNullableFilter<"Quote"> | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   approvalReturnComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   rootQuoteId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   previousVersionId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   supersededByQuoteId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   revisionNumber?: Prisma.IntFilter<"Quote"> | number
-  revisionReason?: Prisma.EnumQuoteRevisionReasonNullableFilter<"Quote"> | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.StringNullableFilter<"Quote"> | string | null
   revisionComment?: Prisma.StringNullableFilter<"Quote"> | string | null
   supersededAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -2511,21 +2512,22 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2576,6 +2578,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -2586,21 +2589,21 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2651,21 +2654,22 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2716,6 +2720,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -2726,21 +2731,21 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2791,21 +2796,22 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2856,6 +2862,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -2867,20 +2874,20 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2931,21 +2938,22 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -2996,6 +3004,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3007,20 +3016,20 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3071,21 +3080,22 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3136,6 +3146,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3147,21 +3158,21 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3211,21 +3222,22 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3276,6 +3288,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3286,21 +3299,21 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3351,21 +3364,22 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3416,6 +3430,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3426,21 +3441,21 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3603,21 +3618,22 @@ export type QuoteCreateWithoutCustomerInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3668,6 +3684,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3678,21 +3695,21 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3759,21 +3776,22 @@ export type QuoteCreateWithoutRevisionsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3824,6 +3842,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3835,21 +3854,21 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3894,21 +3913,22 @@ export type QuoteCreateWithoutRootQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -3959,6 +3979,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -3970,20 +3991,20 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4034,21 +4055,22 @@ export type QuoteCreateWithoutNextVersionsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4099,6 +4121,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -4110,21 +4133,21 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4169,21 +4192,22 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4234,6 +4258,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -4245,20 +4270,20 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4309,21 +4334,22 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4374,6 +4400,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -4385,21 +4412,21 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4444,21 +4471,22 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4509,6 +4537,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -4520,20 +4549,20 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -4590,21 +4619,22 @@ export type QuoteUpdateWithoutRevisionsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4655,6 +4685,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4666,21 +4697,21 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4747,21 +4778,22 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4812,6 +4844,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4823,21 +4856,21 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4904,21 +4937,22 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4969,6 +5003,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -4980,21 +5015,21 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5045,21 +5080,22 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5110,6 +5146,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5121,20 +5158,20 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5175,21 +5212,22 @@ export type QuoteCreateWithoutItemsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5240,6 +5278,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -5251,21 +5290,21 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5321,21 +5360,22 @@ export type QuoteUpdateWithoutItemsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5386,6 +5426,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5397,21 +5438,21 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5451,21 +5492,22 @@ export type QuoteCreateWithoutEventsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5516,6 +5558,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -5527,21 +5570,21 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5597,21 +5640,22 @@ export type QuoteUpdateWithoutEventsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5662,6 +5706,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5673,21 +5718,21 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5727,21 +5772,22 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5792,6 +5838,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -5803,21 +5850,21 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -5873,21 +5920,22 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5938,6 +5986,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -5949,21 +5998,21 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6003,21 +6052,22 @@ export type QuoteCreateWithoutOrderExportsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6068,6 +6118,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6079,21 +6130,21 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6149,21 +6200,22 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6214,6 +6266,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6225,21 +6278,21 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6279,6 +6332,7 @@ export type QuoteCreateManyBranchInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   customerId: string
@@ -6289,21 +6343,21 @@ export type QuoteCreateManyBranchInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6337,21 +6391,22 @@ export type QuoteUpdateWithoutBranchInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6402,6 +6457,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6412,21 +6468,21 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6467,6 +6523,7 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -6477,21 +6534,21 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6525,6 +6582,7 @@ export type QuoteCreateManyCreatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6535,21 +6593,21 @@ export type QuoteCreateManyCreatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6583,6 +6641,7 @@ export type QuoteCreateManyUpdatedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6593,21 +6652,21 @@ export type QuoteCreateManyUpdatedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6641,6 +6700,7 @@ export type QuoteCreateManyRejectedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6652,20 +6712,20 @@ export type QuoteCreateManyRejectedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6699,6 +6759,7 @@ export type QuoteCreateManyCancelledByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6710,20 +6771,20 @@ export type QuoteCreateManyCancelledByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6757,6 +6818,7 @@ export type QuoteCreateManyArchivedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6768,21 +6830,21 @@ export type QuoteCreateManyArchivedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6815,6 +6877,7 @@ export type QuoteCreateManyProvidedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6825,21 +6888,21 @@ export type QuoteCreateManyProvidedByUserInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6873,6 +6936,7 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -6883,21 +6947,21 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: string | null
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -6931,21 +6995,22 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6996,6 +7061,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7006,21 +7072,21 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7061,6 +7127,7 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7071,21 +7138,21 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7119,21 +7186,22 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7184,6 +7252,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7194,21 +7263,21 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7249,6 +7318,7 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7259,21 +7329,21 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7307,21 +7377,22 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7372,6 +7443,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7383,20 +7455,20 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7437,6 +7509,7 @@ export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7448,20 +7521,20 @@ export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7495,21 +7568,22 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7560,6 +7634,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7571,20 +7646,20 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7625,6 +7700,7 @@ export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7636,20 +7712,20 @@ export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7683,21 +7759,22 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7748,6 +7825,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7759,21 +7837,21 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7813,6 +7891,7 @@ export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7824,21 +7903,21 @@ export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7871,21 +7950,22 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7936,6 +8016,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -7946,21 +8027,21 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8001,6 +8082,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8011,21 +8093,21 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8059,21 +8141,22 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8124,6 +8207,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8134,21 +8218,21 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8189,6 +8273,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8199,21 +8284,21 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8247,6 +8332,7 @@ export type QuoteCreateManyCustomerInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -8257,21 +8343,21 @@ export type QuoteCreateManyCustomerInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -8305,21 +8391,22 @@ export type QuoteUpdateWithoutCustomerInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8370,6 +8457,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8380,21 +8468,21 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8435,6 +8523,7 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8445,21 +8534,21 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8493,6 +8582,7 @@ export type QuoteCreateManyRootQuoteInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -8504,20 +8594,20 @@ export type QuoteCreateManyRootQuoteInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   previousVersionId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -8551,6 +8641,7 @@ export type QuoteCreateManyPreviousVersionInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: string | null
   paymentTerms?: string
+  commercialConditions?: string | null
   validityDays?: number
   validUntil: Date | string
   branchId: string
@@ -8562,20 +8653,20 @@ export type QuoteCreateManyPreviousVersionInput = {
   providedByBranchNameSnapshot?: string | null
   providedAt?: Date | string | null
   providedByAssignedByUserId?: string | null
-  rejectionReason?: $Enums.QuoteRejectionReason | null
+  rejectionReason?: string | null
   rejectionComment?: string | null
   rejectedAt?: Date | string | null
   rejectedByUserId?: string | null
-  cancellationReason?: $Enums.QuoteCancellationReason | null
+  cancellationReason?: string | null
   cancellationComment?: string | null
   cancelledAt?: Date | string | null
   cancelledByUserId?: string | null
-  approvalReturnReason?: $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: string | null
   approvalReturnComment?: string | null
   rootQuoteId?: string | null
   supersededByQuoteId?: string | null
   revisionNumber?: number
-  revisionReason?: $Enums.QuoteRevisionReason | null
+  revisionReason?: string | null
   revisionComment?: string | null
   supersededAt?: Date | string | null
   archivedAt?: Date | string | null
@@ -8609,21 +8700,22 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8674,6 +8766,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8685,20 +8778,20 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8739,6 +8832,7 @@ export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8750,20 +8844,20 @@ export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8797,21 +8891,22 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8862,6 +8957,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8873,20 +8969,20 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8927,6 +9023,7 @@ export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   validityDays?: Prisma.IntFieldUpdateOperationsInput | number
   validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -8938,20 +9035,20 @@ export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  rejectionReason?: Prisma.NullableEnumQuoteRejectionReasonFieldUpdateOperationsInput | $Enums.QuoteRejectionReason | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cancellationReason?: Prisma.NullableEnumQuoteCancellationReasonFieldUpdateOperationsInput | $Enums.QuoteCancellationReason | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  approvalReturnReason?: Prisma.NullableEnumQuoteApprovalReturnReasonFieldUpdateOperationsInput | $Enums.QuoteApprovalReturnReason | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  revisionReason?: Prisma.NullableEnumQuoteRevisionReasonFieldUpdateOperationsInput | $Enums.QuoteRevisionReason | null
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9061,6 +9158,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   total?: boolean
   deliveryPlace?: boolean
   paymentTerms?: boolean
+  commercialConditions?: boolean
   validityDays?: boolean
   validUntil?: boolean
   branchId?: boolean
@@ -9140,6 +9238,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   total?: boolean
   deliveryPlace?: boolean
   paymentTerms?: boolean
+  commercialConditions?: boolean
   validityDays?: boolean
   validUntil?: boolean
   branchId?: boolean
@@ -9211,6 +9310,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   total?: boolean
   deliveryPlace?: boolean
   paymentTerms?: boolean
+  commercialConditions?: boolean
   validityDays?: boolean
   validUntil?: boolean
   branchId?: boolean
@@ -9282,6 +9382,7 @@ export type QuoteSelectScalar = {
   total?: boolean
   deliveryPlace?: boolean
   paymentTerms?: boolean
+  commercialConditions?: boolean
   validityDays?: boolean
   validUntil?: boolean
   branchId?: boolean
@@ -9318,7 +9419,7 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "commercialConditions" | "validityDays" | "validUntil" | "branchId" | "customerId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -9416,6 +9517,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     total: runtime.Decimal
     deliveryPlace: string | null
     paymentTerms: string
+    commercialConditions: string | null
     validityDays: number
     validUntil: Date
     branchId: string
@@ -9427,21 +9529,21 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     providedByBranchNameSnapshot: string | null
     providedAt: Date | null
     providedByAssignedByUserId: string | null
-    rejectionReason: $Enums.QuoteRejectionReason | null
+    rejectionReason: string | null
     rejectionComment: string | null
     rejectedAt: Date | null
     rejectedByUserId: string | null
-    cancellationReason: $Enums.QuoteCancellationReason | null
+    cancellationReason: string | null
     cancellationComment: string | null
     cancelledAt: Date | null
     cancelledByUserId: string | null
-    approvalReturnReason: $Enums.QuoteApprovalReturnReason | null
+    approvalReturnReason: string | null
     approvalReturnComment: string | null
     rootQuoteId: string | null
     previousVersionId: string | null
     supersededByQuoteId: string | null
     revisionNumber: number
-    revisionReason: $Enums.QuoteRevisionReason | null
+    revisionReason: string | null
     revisionComment: string | null
     supersededAt: Date | null
     archivedAt: Date | null
@@ -9914,6 +10016,7 @@ export interface QuoteFieldRefs {
   readonly total: Prisma.FieldRef<"Quote", 'Decimal'>
   readonly deliveryPlace: Prisma.FieldRef<"Quote", 'String'>
   readonly paymentTerms: Prisma.FieldRef<"Quote", 'String'>
+  readonly commercialConditions: Prisma.FieldRef<"Quote", 'String'>
   readonly validityDays: Prisma.FieldRef<"Quote", 'Int'>
   readonly validUntil: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly branchId: Prisma.FieldRef<"Quote", 'String'>
@@ -9925,21 +10028,21 @@ export interface QuoteFieldRefs {
   readonly providedByBranchNameSnapshot: Prisma.FieldRef<"Quote", 'String'>
   readonly providedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly providedByAssignedByUserId: Prisma.FieldRef<"Quote", 'String'>
-  readonly rejectionReason: Prisma.FieldRef<"Quote", 'QuoteRejectionReason'>
+  readonly rejectionReason: Prisma.FieldRef<"Quote", 'String'>
   readonly rejectionComment: Prisma.FieldRef<"Quote", 'String'>
   readonly rejectedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly rejectedByUserId: Prisma.FieldRef<"Quote", 'String'>
-  readonly cancellationReason: Prisma.FieldRef<"Quote", 'QuoteCancellationReason'>
+  readonly cancellationReason: Prisma.FieldRef<"Quote", 'String'>
   readonly cancellationComment: Prisma.FieldRef<"Quote", 'String'>
   readonly cancelledAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly cancelledByUserId: Prisma.FieldRef<"Quote", 'String'>
-  readonly approvalReturnReason: Prisma.FieldRef<"Quote", 'QuoteApprovalReturnReason'>
+  readonly approvalReturnReason: Prisma.FieldRef<"Quote", 'String'>
   readonly approvalReturnComment: Prisma.FieldRef<"Quote", 'String'>
   readonly rootQuoteId: Prisma.FieldRef<"Quote", 'String'>
   readonly previousVersionId: Prisma.FieldRef<"Quote", 'String'>
   readonly supersededByQuoteId: Prisma.FieldRef<"Quote", 'String'>
   readonly revisionNumber: Prisma.FieldRef<"Quote", 'Int'>
-  readonly revisionReason: Prisma.FieldRef<"Quote", 'QuoteRevisionReason'>
+  readonly revisionReason: Prisma.FieldRef<"Quote", 'String'>
   readonly revisionComment: Prisma.FieldRef<"Quote", 'String'>
   readonly supersededAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly archivedAt: Prisma.FieldRef<"Quote", 'DateTime'>

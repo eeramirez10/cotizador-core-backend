@@ -1,7 +1,9 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { CreateQuoteRevisionRequestDto } from "../dtos/request/create-quote-revision-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
+import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
 
 interface CreateQuoteRevisionActorContext {
   id: string;
@@ -10,7 +12,10 @@ interface CreateQuoteRevisionActorContext {
 }
 
 export class CreateQuoteRevisionUseCase {
-  constructor(private readonly quoteRepository: QuoteRepository) {}
+  constructor(
+    private readonly quoteRepository: QuoteRepository,
+    private readonly quoteCatalogRepository: QuoteCatalogRepository
+  ) {}
 
   async execute(
     quoteId: string,
@@ -31,6 +36,9 @@ export class CreateQuoteRevisionUseCase {
     if (source.orderStatus === "GENERATED") {
       throw new Error("A quote with a generated order cannot be revised.");
     }
+    const reason = await this.quoteCatalogRepository.findActiveByCode(actor.branchId, "REVISION_REASON" as QuoteCatalogType, dto.reason);
+    if (!reason) throw new Error("Selected revision reason is not available for this branch.");
+    if (reason.requiresComment && !dto.comment) throw new Error("A comment is required for the selected revision reason.");
 
     const revision = await this.quoteRepository.createRevision({
       sourceQuoteId: source.id,

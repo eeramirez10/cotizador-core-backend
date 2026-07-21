@@ -70,6 +70,7 @@ export class CreateQuoteFromExtractionUseCase {
       taxRate: dto.taxRate,
       deliveryPlace: dto.deliveryPlace,
       paymentTerms: dto.paymentTerms,
+      commercialConditions: dto.commercialConditions,
       validityDays: dto.validityDays,
       branchId,
       customerId: dto.customerId,

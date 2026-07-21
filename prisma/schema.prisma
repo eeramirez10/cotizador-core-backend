@@ -45,51 +45,15 @@ enum QuoteStatus {
   SUPERSEDED
 }
 
-enum QuoteRevisionReason {
-  CUSTOMER_REQUEST
-  ADD_REMOVE_ITEMS
-  PRICE_OR_QUANTITY_CHANGE
-  EXCHANGE_RATE_CHANGE
-  INFORMATION_CORRECTION
-  COMMERCIAL_TERMS
-  OTHER
-}
-
-enum QuoteApprovalReturnReason {
-  MARGIN_TOO_LOW
-  PRICE_BELOW_POLICY
-  INCORRECT_COST
-  INCORRECT_PRICE
-  MISSING_INFORMATION
-  COMMERCIAL_TERMS
+enum QuoteCatalogType {
+  VALIDITY_DAYS
+  PAYMENT_TERMS
+  COMMERCIAL_CONDITIONS
   DELIVERY_TIME
-  OTHER
-}
-
-enum QuoteRejectionReason {
-  PRICE_HIGH
-  COST_HIGH
-  MATERIAL_UNAVAILABLE
-  DELIVERY_TIME
-  COMPETITOR_SELECTED
-  COMMERCIAL_TERMS
-  SPECIFICATION_MISMATCH
-  LATE_QUOTATION
-  PROJECT_CANCELLED
-  NO_CUSTOMER_RESPONSE
-  DUPLICATE_OR_ERROR
-  OTHER
-}
-
-enum QuoteCancellationReason {
-  DATA_ENTRY_ERROR
-  DUPLICATE_REQUEST
-  INSUFFICIENT_INFORMATION
-  INCORRECT_ITEMS
-  REPLACED_BY_REVISION
-  OUT_OF_SCOPE
-  ADMINISTRATIVE
-  OTHER
+  REVISION_REASON
+  REJECTION_REASON
+  CANCELLATION_REASON
+  APPROVAL_RETURN_REASON
 }
 
 enum QuoteOrigin {
@@ -164,8 +128,31 @@ model Branch {
   users    User[]
   quotes   Quote[]
   products Product[]
+  quoteCatalogOptions QuoteCatalogOption[]
 
   @@map("branches")
+}
+
+model QuoteCatalogOption {
+  id              String           @id @default(uuid()) @db.Uuid
+  type            QuoteCatalogType
+  code            String           @db.VarChar(80)
+  label           String           @db.VarChar(260)
+  value           String?          @db.Text
+  numericValue    Int?             @map("numeric_value")
+  requiresComment Boolean          @default(false) @map("requires_comment")
+  sortOrder       Int              @default(0) @map("sort_order")
+  isActive        Boolean          @default(true) @map("is_active")
+  branchId        String?          @map("branch_id") @db.Uuid
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  branch Branch? @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@unique([type, code, branchId])
+  @@index([type, isActive])
+  @@index([branchId])
+  @@map("quote_catalog_options")
 }
 
 model User {
@@ -321,6 +308,7 @@ model Quote {
   total            Decimal    @db.Decimal(14, 4)
   deliveryPlace    String?    @map("delivery_place") @db.VarChar(255)
   paymentTerms     String     @default("CONTADO") @map("payment_terms") @db.VarChar(220)
+  commercialConditions String? @map("commercial_conditions") @db.Text
   validityDays     Int        @default(10) @map("validity_days")
   validUntil       DateTime   @map("valid_until") @db.Date
   branchId         String     @map("branch_id") @db.Uuid
@@ -332,21 +320,21 @@ model Quote {
   providedByBranchNameSnapshot String? @map("provided_by_branch_name_snapshot") @db.VarChar(120)
   providedAt DateTime? @map("provided_at")
   providedByAssignedByUserId String? @map("provided_by_assigned_by_user_id") @db.Uuid
-  rejectionReason QuoteRejectionReason? @map("rejection_reason")
+  rejectionReason String? @map("rejection_reason") @db.VarChar(80)
   rejectionComment String? @map("rejection_comment") @db.Text
   rejectedAt DateTime? @map("rejected_at")
   rejectedByUserId String? @map("rejected_by_user_id") @db.Uuid
-  cancellationReason QuoteCancellationReason? @map("cancellation_reason")
+  cancellationReason String? @map("cancellation_reason") @db.VarChar(80)
   cancellationComment String? @map("cancellation_comment") @db.Text
   cancelledAt DateTime? @map("cancelled_at")
   cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
-  approvalReturnReason QuoteApprovalReturnReason? @map("approval_return_reason")
+  approvalReturnReason String? @map("approval_return_reason") @db.VarChar(80)
   approvalReturnComment String? @map("approval_return_comment") @db.Text
   rootQuoteId      String? @map("root_quote_id") @db.Uuid
   previousVersionId String? @map("previous_version_id") @db.Uuid
   supersededByQuoteId String? @unique @map("superseded_by_quote_id") @db.Uuid
   revisionNumber  Int @default(0) @map("revision_number")
-  revisionReason  QuoteRevisionReason? @map("revision_reason")
+  revisionReason  String? @map("revision_reason") @db.VarChar(80)
   revisionComment String? @map("revision_comment") @db.Text
   supersededAt    DateTime? @map("superseded_at")
   archivedAt      DateTime? @map("archived_at")

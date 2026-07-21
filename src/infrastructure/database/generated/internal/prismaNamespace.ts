@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Branch: 'Branch',
+  QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "user" | "customer" | "customerContact" | "product" | "quote" | "quoteItem" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "quote" | "quoteItem" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -486,6 +487,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.BranchCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.BranchCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteCatalogOption: {
+      payload: Prisma.$QuoteCatalogOptionPayload<ExtArgs>
+      fields: Prisma.QuoteCatalogOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteCatalogOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteCatalogOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteCatalogOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteCatalogOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteCatalogOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteCatalogOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteCatalogOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteCatalogOptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteCatalogOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        update: {
+          args: Prisma.QuoteCatalogOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteCatalogOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteCatalogOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteCatalogOptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteCatalogOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCatalogOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteCatalogOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteCatalogOption>
+        }
+        groupBy: {
+          args: Prisma.QuoteCatalogOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteCatalogOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteCatalogOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteCatalogOptionCountAggregateOutputType> | number
         }
       }
     }
@@ -1367,6 +1442,24 @@ export const BranchScalarFieldEnum = {
 export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
 
 
+export const QuoteCatalogOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  code: 'code',
+  label: 'label',
+  value: 'value',
+  numericValue: 'numericValue',
+  requiresComment: 'requiresComment',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuoteCatalogOptionScalarFieldEnum = (typeof QuoteCatalogOptionScalarFieldEnum)[keyof typeof QuoteCatalogOptionScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   firstName: 'firstName',
@@ -1481,6 +1574,7 @@ export const QuoteScalarFieldEnum = {
   total: 'total',
   deliveryPlace: 'deliveryPlace',
   paymentTerms: 'paymentTerms',
+  commercialConditions: 'commercialConditions',
   validityDays: 'validityDays',
   validUntil: 'validUntil',
   branchId: 'branchId',
@@ -1701,6 +1795,34 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'QuoteCatalogType'
+ */
+export type EnumQuoteCatalogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCatalogType'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteCatalogType[]'
+ */
+export type ListEnumQuoteCatalogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCatalogType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'UserRole'
  */
 export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -1869,76 +1991,6 @@ export type ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteRejectionReason'
- */
-export type EnumQuoteRejectionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRejectionReason'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteRejectionReason[]'
- */
-export type ListEnumQuoteRejectionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRejectionReason[]'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteCancellationReason'
- */
-export type EnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCancellationReason'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteCancellationReason[]'
- */
-export type ListEnumQuoteCancellationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCancellationReason[]'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteApprovalReturnReason'
- */
-export type EnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteApprovalReturnReason'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteApprovalReturnReason[]'
- */
-export type ListEnumQuoteApprovalReturnReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteApprovalReturnReason[]'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteRevisionReason'
- */
-export type EnumQuoteRevisionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRevisionReason'>
-    
-
-
-/**
- * Reference to a field of type 'QuoteRevisionReason[]'
- */
-export type ListEnumQuoteRevisionReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteRevisionReason[]'>
-    
-
-
-/**
  * Reference to a field of type 'QuoteDeliveryChannel'
  */
 export type EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryChannel'>
@@ -2103,6 +2155,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   branch?: Prisma.BranchOmit
+  quoteCatalogOption?: Prisma.QuoteCatalogOptionOmit
   user?: Prisma.UserOmit
   customer?: Prisma.CustomerOmit
   customerContact?: Prisma.CustomerContactOmit

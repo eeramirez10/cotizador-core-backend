@@ -23,6 +23,11 @@ export * from './enums';
  */
 export type Branch = Prisma.BranchModel
 /**
+ * Model QuoteCatalogOption
+ * 
+ */
+export type QuoteCatalogOption = Prisma.QuoteCatalogOptionModel
+/**
  * Model User
  * 
  */

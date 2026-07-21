@@ -75,6 +75,7 @@ export class UpdateQuoteUseCase {
         taxRate: dto.taxRate,
         deliveryPlace: dto.deliveryPlace,
         paymentTerms: dto.paymentTerms,
+        commercialConditions: dto.commercialConditions,
         validityDays: dto.validityDays,
         notes: dto.notes,
         ...(providerWasUpdated

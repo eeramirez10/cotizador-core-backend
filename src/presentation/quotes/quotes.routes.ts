@@ -19,6 +19,7 @@ import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-branch.datasource";
 import { PrismaCustomerDatasource } from "../../infrastructure/datasources/prisma-customer.datasource";
+import { PrismaQuoteCatalogDatasource } from "../../infrastructure/datasources/prisma-quote-catalog.datasource";
 import { FileOrderGenerationDatasource } from "../../infrastructure/datasources/file-order-generation.datasource";
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
 import { PrismaUserDatasource } from "../../infrastructure/datasources/prisma-user.datasource";
@@ -26,6 +27,7 @@ import { BranchRepositoryImpl } from "../../infrastructure/repositories/branch.r
 import { CustomerRepositoryImpl } from "../../infrastructure/repositories/customer.repository-impl";
 import { OrderGenerationRepositoryImpl } from "../../infrastructure/repositories/order-generation.repository-impl";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
+import { QuoteCatalogRepositoryImpl } from "../../infrastructure/repositories/quote-catalog.repository-impl";
 import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repository-impl";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
@@ -44,6 +46,7 @@ export class QuotesRoutes {
     const branchRepository = new BranchRepositoryImpl(branchDatasource);
     const customerRepository = new CustomerRepositoryImpl(customerDatasource);
     const quoteRepository = new QuoteRepositoryImpl(quoteDatasource);
+    const quoteCatalogRepository = new QuoteCatalogRepositoryImpl(new PrismaQuoteCatalogDatasource());
     const userRepository = new UserRepositoryImpl(userDatasource);
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
 
@@ -55,7 +58,7 @@ export class QuotesRoutes {
       branchRepository,
       userRepository
     );
-    const createQuoteRevisionUseCase = new CreateQuoteRevisionUseCase(quoteRepository);
+    const createQuoteRevisionUseCase = new CreateQuoteRevisionUseCase(quoteRepository, quoteCatalogRepository);
     const archiveQuoteUseCase = new ArchiveQuoteUseCase(quoteRepository);
     const restoreQuoteUseCase = new RestoreQuoteUseCase(quoteRepository);
     const deleteQuoteUseCase = new DeleteQuoteUseCase(quoteRepository);
@@ -66,7 +69,7 @@ export class QuotesRoutes {
     const matchQuoteItemErpUseCase = new MatchQuoteItemErpUseCase(quoteRepository);
     const updateQuoteItemUseCase = new UpdateQuoteItemUseCase(quoteRepository);
     const deleteQuoteItemUseCase = new DeleteQuoteItemUseCase(quoteRepository);
-    const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(quoteRepository);
+    const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(quoteRepository, quoteCatalogRepository);
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,

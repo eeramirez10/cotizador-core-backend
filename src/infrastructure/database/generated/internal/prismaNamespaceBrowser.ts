@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Branch: 'Branch',
+  QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
@@ -104,6 +105,24 @@ export const BranchScalarFieldEnum = {
 } as const
 
 export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
+
+
+export const QuoteCatalogOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  code: 'code',
+  label: 'label',
+  value: 'value',
+  numericValue: 'numericValue',
+  requiresComment: 'requiresComment',
+  sortOrder: 'sortOrder',
+  isActive: 'isActive',
+  branchId: 'branchId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QuoteCatalogOptionScalarFieldEnum = (typeof QuoteCatalogOptionScalarFieldEnum)[keyof typeof QuoteCatalogOptionScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -220,6 +239,7 @@ export const QuoteScalarFieldEnum = {
   total: 'total',
   deliveryPlace: 'deliveryPlace',
   paymentTerms: 'paymentTerms',
+  commercialConditions: 'commercialConditions',
   validityDays: 'validityDays',
   validUntil: 'validUntil',
   branchId: 'branchId',

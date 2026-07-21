@@ -1,7 +1,9 @@
 import type { QuoteStatus, UserRole } from "../../infrastructure/database/generated/enums";
 import { ChangeQuoteStatusRequestDto } from "../dtos/request/change-quote-status-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
+import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -26,7 +28,10 @@ const isTransitionAllowed = (from: QuoteStatus, to: QuoteStatus): boolean => {
 };
 
 export class ChangeQuoteStatusUseCase {
-  constructor(private readonly quoteRepository: QuoteRepository) {}
+  constructor(
+    private readonly quoteRepository: QuoteRepository,
+    private readonly quoteCatalogRepository: QuoteCatalogRepository
+  ) {}
 
   async execute(
     quoteId: string,
@@ -68,21 +73,9 @@ export class ChangeQuoteStatusUseCase {
     if (dto.status === "PENDING_APPROVAL" && quote.sourceChannel === "UNSPECIFIED") {
       throw new Error("Quote source channel is required before moving to QUOTED.");
     }
-    if (dto.status === "CHANGES_REQUESTED" && !dto.approvalReturnReason) {
-      throw new Error("Approval return reason is required before requesting changes.");
-    }
-    if (dto.status === "REJECTED" && !dto.rejectionReason) {
-      throw new Error("Rejection reason is required before moving to REJECTED.");
-    }
-    if (dto.status === "REJECTED" && dto.rejectionReason === "OTHER" && !dto.rejectionComment) {
-      throw new Error("Rejection comment is required when rejection reason is OTHER.");
-    }
-    if (dto.status === "CANCELLED" && !dto.cancellationReason) {
-      throw new Error("Cancellation reason is required before moving to CANCELLED.");
-    }
-    if (dto.status === "CANCELLED" && dto.cancellationReason === "OTHER" && !dto.cancellationComment) {
-      throw new Error("Cancellation comment is required when cancellation reason is OTHER.");
-    }
+    await this.validateCatalogReason(dto.status === "CHANGES_REQUESTED" ? "APPROVAL_RETURN_REASON" : null, dto.approvalReturnReason, dto.approvalReturnComment, actor.branchId, "Approval return reason is required before requesting changes.");
+    await this.validateCatalogReason(dto.status === "REJECTED" ? "REJECTION_REASON" : null, dto.rejectionReason, dto.rejectionComment, actor.branchId, "Rejection reason is required before moving to REJECTED.");
+    await this.validateCatalogReason(dto.status === "CANCELLED" ? "CANCELLATION_REASON" : null, dto.cancellationReason, dto.cancellationComment, actor.branchId, "Cancellation reason is required before moving to CANCELLED.");
     if (dto.status === "PENDING_APPROVAL") {
       const unlinkedItems = quote.items.filter(
         (item) => !item.productId && !item.externalProductCode
@@ -129,5 +122,19 @@ export class ChangeQuoteStatusUseCase {
 
     if (!updatedQuote) throw new Error("Quote not found.");
     return new QuoteResponseDto(updatedQuote);
+  }
+
+  private async validateCatalogReason(
+    type: QuoteCatalogType | null,
+    code: string | null,
+    comment: string | null,
+    branchId: string,
+    requiredMessage: string
+  ): Promise<void> {
+    if (!type) return;
+    if (!code) throw new Error(requiredMessage);
+    const option = await this.quoteCatalogRepository.findActiveByCode(branchId, type, code);
+    if (!option) throw new Error("Selected reason is not available for this branch.");
+    if (option.requiresComment && !comment) throw new Error("A comment is required for the selected reason.");
   }
 }

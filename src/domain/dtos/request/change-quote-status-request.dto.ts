@@ -1,29 +1,26 @@
 import {
-  QuoteCancellationReason,
-  QuoteRejectionReason,
   QuoteStatus,
-  QuoteApprovalReturnReason,
 } from "../../../infrastructure/database/generated/enums";
 
 interface ChangeQuoteStatusRequestDtoProps {
   status: QuoteStatus;
   note: string | null;
-  rejectionReason: QuoteRejectionReason | null;
+  rejectionReason: string | null;
   rejectionComment: string | null;
-  cancellationReason: QuoteCancellationReason | null;
+  cancellationReason: string | null;
   cancellationComment: string | null;
-  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnReason: string | null;
   approvalReturnComment: string | null;
 }
 
 export class ChangeQuoteStatusRequestDto {
   public readonly status: QuoteStatus;
   public readonly note: string | null;
-  public readonly rejectionReason: QuoteRejectionReason | null;
+  public readonly rejectionReason: string | null;
   public readonly rejectionComment: string | null;
-  public readonly cancellationReason: QuoteCancellationReason | null;
+  public readonly cancellationReason: string | null;
   public readonly cancellationComment: string | null;
-  public readonly approvalReturnReason: QuoteApprovalReturnReason | null;
+  public readonly approvalReturnReason: string | null;
   public readonly approvalReturnComment: string | null;
 
   constructor(props: ChangeQuoteStatusRequestDtoProps) {
@@ -56,48 +53,37 @@ export class ChangeQuoteStatusRequestDto {
       typeof body.rejectionComment === "string" && body.rejectionComment.trim().length > 0
         ? body.rejectionComment.trim()
         : null;
-    const rejectionReason = rejectionReasonRaw ? rejectionReasonRaw as QuoteRejectionReason : null;
+    const rejectionReason = rejectionReasonRaw || null;
     const cancellationReasonRaw =
       typeof body.cancellationReason === "string" ? body.cancellationReason.trim().toUpperCase() : "";
     const cancellationComment =
       typeof body.cancellationComment === "string" && body.cancellationComment.trim().length > 0
         ? body.cancellationComment.trim()
         : null;
-    const cancellationReason = cancellationReasonRaw ? cancellationReasonRaw as QuoteCancellationReason : null;
+    const cancellationReason = cancellationReasonRaw || null;
     const approvalReturnReasonRaw =
       typeof body.approvalReturnReason === "string" ? body.approvalReturnReason.trim().toUpperCase() : "";
     const approvalReturnComment =
       typeof body.approvalReturnComment === "string" && body.approvalReturnComment.trim().length > 0
         ? body.approvalReturnComment.trim()
         : null;
-    const approvalReturnReason = approvalReturnReasonRaw
-      ? approvalReturnReasonRaw as QuoteApprovalReturnReason
-      : null;
+    const approvalReturnReason = approvalReturnReasonRaw || null;
 
     if (statusRaw === "REJECTED") {
-      if (!rejectionReason || !Object.values(QuoteRejectionReason).includes(rejectionReason)) {
+      if (!rejectionReason || !/^[A-Z0-9_]{2,80}$/.test(rejectionReason)) {
         return ["rejectionReason is required when rejecting a quote."];
-      }
-      if (rejectionReason === "OTHER" && !rejectionComment) {
-        return ["rejectionComment is required when rejectionReason is OTHER."];
       }
     }
 
     if (statusRaw === "CANCELLED") {
-      if (!cancellationReason || !Object.values(QuoteCancellationReason).includes(cancellationReason)) {
+      if (!cancellationReason || !/^[A-Z0-9_]{2,80}$/.test(cancellationReason)) {
         return ["cancellationReason is required when cancelling a quote."];
-      }
-      if (cancellationReason === "OTHER" && !cancellationComment) {
-        return ["cancellationComment is required when cancellationReason is OTHER."];
       }
     }
 
     if (statusRaw === "CHANGES_REQUESTED") {
-      if (!approvalReturnReason || !Object.values(QuoteApprovalReturnReason).includes(approvalReturnReason)) {
+      if (!approvalReturnReason || !/^[A-Z0-9_]{2,80}$/.test(approvalReturnReason)) {
         return ["approvalReturnReason is required when requesting changes."];
-      }
-      if (approvalReturnReason === "OTHER" && !approvalReturnComment) {
-        return ["approvalReturnComment is required when approvalReturnReason is OTHER."];
       }
     }
 

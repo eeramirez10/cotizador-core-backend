@@ -7,6 +7,7 @@ import { ProductsRoutes } from "./products/products.routes";
 import { QuotesRoutes } from "./quotes/quotes.routes";
 import { UsersRoutes } from "./users/users.routes";
 import { AnalyticsRoutes } from "./analytics/analytics.routes";
+import { QuoteCatalogsRoutes } from "./quote-catalogs/quote-catalogs.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -24,6 +25,7 @@ export class AppRoutes {
     router.use("/local-products", LocalProductsRoutes.routes());
     router.use("/quotes", QuotesRoutes.routes());
     router.use("/analytics", AnalyticsRoutes.routes());
+    router.use("/quote-catalogs", QuoteCatalogsRoutes.routes());
 
     return router;
   }

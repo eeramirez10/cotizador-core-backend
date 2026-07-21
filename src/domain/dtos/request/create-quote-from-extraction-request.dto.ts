@@ -23,6 +23,7 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   taxRate: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  commercialConditions: string | null;
   validityDays: number;
   origin: QuoteOrigin;
   captureMethod: QuoteCaptureMethod;
@@ -42,6 +43,7 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly taxRate: number;
   public readonly deliveryPlace: string | null;
   public readonly paymentTerms: string;
+  public readonly commercialConditions: string | null;
   public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
   public readonly captureMethod: QuoteCaptureMethod;
@@ -60,6 +62,7 @@ export class CreateQuoteFromExtractionRequestDto {
     this.taxRate = props.taxRate;
     this.deliveryPlace = props.deliveryPlace;
     this.paymentTerms = props.paymentTerms;
+    this.commercialConditions = props.commercialConditions;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
     this.captureMethod = props.captureMethod;
@@ -118,6 +121,14 @@ export class CreateQuoteFromExtractionRequestDto {
       typeof body.paymentTerms === "string" && body.paymentTerms.trim().length > 0
         ? body.paymentTerms.trim()
         : "CONTADO";
+
+    const commercialConditions =
+      typeof body.commercialConditions === "string" && body.commercialConditions.trim().length > 0
+        ? body.commercialConditions.trim()
+        : null;
+    if (commercialConditions && commercialConditions.length > 5000) {
+      return ["commercialConditions must not exceed 5000 characters."];
+    }
 
     const validityDaysInput = body.validityDays ?? 10;
     const validityDays = Math.trunc(CreateQuoteFromExtractionRequestDto.parseNumber(validityDaysInput));
@@ -238,6 +249,7 @@ export class CreateQuoteFromExtractionRequestDto {
         taxRate,
         deliveryPlace,
         paymentTerms,
+        commercialConditions,
         validityDays,
         origin: originRaw as QuoteOrigin,
         captureMethod: captureMethodRaw as QuoteCaptureMethod,

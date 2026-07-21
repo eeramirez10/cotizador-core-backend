@@ -1,12 +1,10 @@
-import { QuoteRevisionReason } from "../../../infrastructure/database/generated/enums";
-
 interface CreateQuoteRevisionRequestDtoProps {
-  reason: QuoteRevisionReason;
+  reason: string;
   comment: string | null;
 }
 
 export class CreateQuoteRevisionRequestDto {
-  public readonly reason: QuoteRevisionReason;
+  public readonly reason: string;
   public readonly comment: string | null;
 
   constructor(props: CreateQuoteRevisionRequestDtoProps) {
@@ -19,14 +17,10 @@ export class CreateQuoteRevisionRequestDto {
 
     const body = input as Record<string, unknown>;
     const reasonRaw = typeof body.reason === "string" ? body.reason.trim().toUpperCase() : "";
-    if (!Object.values(QuoteRevisionReason).includes(reasonRaw as QuoteRevisionReason)) {
-      return ["reason is invalid."];
-    }
+    if (!/^[A-Z0-9_]{2,80}$/.test(reasonRaw)) return ["reason is invalid."];
 
     const comment = typeof body.comment === "string" && body.comment.trim() ? body.comment.trim() : null;
     if (comment && comment.length > 500) return ["comment must be 500 characters or fewer."];
-    if (reasonRaw === "OTHER" && !comment) return ["comment is required when reason is OTHER."];
-
-    return [, new CreateQuoteRevisionRequestDto({ reason: reasonRaw as QuoteRevisionReason, comment })];
+    return [, new CreateQuoteRevisionRequestDto({ reason: reasonRaw, comment })];
   }
 }

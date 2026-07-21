@@ -33,6 +33,7 @@ interface QuoteRow {
   total: number | DecimalLike;
   deliveryPlace: string | null;
   paymentTerms: string;
+  commercialConditions: string | null;
   validityDays: number;
   validUntil: Date;
   branchId: string;
@@ -213,6 +214,7 @@ export class QuoteMapper {
       total: Number(toNumber(row.total)),
       deliveryPlace: row.deliveryPlace,
       paymentTerms: row.paymentTerms,
+      commercialConditions: row.commercialConditions,
       validityDays: row.validityDays,
       validUntil: row.validUntil,
       branchId: row.branchId,

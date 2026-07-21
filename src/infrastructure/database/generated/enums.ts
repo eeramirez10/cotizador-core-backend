@@ -65,63 +65,18 @@ export const QuoteStatus = {
 export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
 
 
-export const QuoteRevisionReason = {
-  CUSTOMER_REQUEST: 'CUSTOMER_REQUEST',
-  ADD_REMOVE_ITEMS: 'ADD_REMOVE_ITEMS',
-  PRICE_OR_QUANTITY_CHANGE: 'PRICE_OR_QUANTITY_CHANGE',
-  EXCHANGE_RATE_CHANGE: 'EXCHANGE_RATE_CHANGE',
-  INFORMATION_CORRECTION: 'INFORMATION_CORRECTION',
-  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
-  OTHER: 'OTHER'
-} as const
-
-export type QuoteRevisionReason = (typeof QuoteRevisionReason)[keyof typeof QuoteRevisionReason]
-
-
-export const QuoteApprovalReturnReason = {
-  MARGIN_TOO_LOW: 'MARGIN_TOO_LOW',
-  PRICE_BELOW_POLICY: 'PRICE_BELOW_POLICY',
-  INCORRECT_COST: 'INCORRECT_COST',
-  INCORRECT_PRICE: 'INCORRECT_PRICE',
-  MISSING_INFORMATION: 'MISSING_INFORMATION',
-  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
+export const QuoteCatalogType = {
+  VALIDITY_DAYS: 'VALIDITY_DAYS',
+  PAYMENT_TERMS: 'PAYMENT_TERMS',
+  COMMERCIAL_CONDITIONS: 'COMMERCIAL_CONDITIONS',
   DELIVERY_TIME: 'DELIVERY_TIME',
-  OTHER: 'OTHER'
+  REVISION_REASON: 'REVISION_REASON',
+  REJECTION_REASON: 'REJECTION_REASON',
+  CANCELLATION_REASON: 'CANCELLATION_REASON',
+  APPROVAL_RETURN_REASON: 'APPROVAL_RETURN_REASON'
 } as const
 
-export type QuoteApprovalReturnReason = (typeof QuoteApprovalReturnReason)[keyof typeof QuoteApprovalReturnReason]
-
-
-export const QuoteRejectionReason = {
-  PRICE_HIGH: 'PRICE_HIGH',
-  COST_HIGH: 'COST_HIGH',
-  MATERIAL_UNAVAILABLE: 'MATERIAL_UNAVAILABLE',
-  DELIVERY_TIME: 'DELIVERY_TIME',
-  COMPETITOR_SELECTED: 'COMPETITOR_SELECTED',
-  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
-  SPECIFICATION_MISMATCH: 'SPECIFICATION_MISMATCH',
-  LATE_QUOTATION: 'LATE_QUOTATION',
-  PROJECT_CANCELLED: 'PROJECT_CANCELLED',
-  NO_CUSTOMER_RESPONSE: 'NO_CUSTOMER_RESPONSE',
-  DUPLICATE_OR_ERROR: 'DUPLICATE_OR_ERROR',
-  OTHER: 'OTHER'
-} as const
-
-export type QuoteRejectionReason = (typeof QuoteRejectionReason)[keyof typeof QuoteRejectionReason]
-
-
-export const QuoteCancellationReason = {
-  DATA_ENTRY_ERROR: 'DATA_ENTRY_ERROR',
-  DUPLICATE_REQUEST: 'DUPLICATE_REQUEST',
-  INSUFFICIENT_INFORMATION: 'INSUFFICIENT_INFORMATION',
-  INCORRECT_ITEMS: 'INCORRECT_ITEMS',
-  REPLACED_BY_REVISION: 'REPLACED_BY_REVISION',
-  OUT_OF_SCOPE: 'OUT_OF_SCOPE',
-  ADMINISTRATIVE: 'ADMINISTRATIVE',
-  OTHER: 'OTHER'
-} as const
-
-export type QuoteCancellationReason = (typeof QuoteCancellationReason)[keyof typeof QuoteCancellationReason]
+export type QuoteCatalogType = (typeof QuoteCatalogType)[keyof typeof QuoteCatalogType]
 
 
 export const QuoteOrigin = {

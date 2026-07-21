@@ -5,10 +5,6 @@ import type {
   QuoteOrigin,
   QuoteCaptureMethod,
   QuoteSourceChannel,
-  QuoteCancellationReason,
-  QuoteRejectionReason,
-  QuoteApprovalReturnReason,
-  QuoteRevisionReason,
   QuoteStatus,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
@@ -82,6 +78,7 @@ export interface QuoteEntity {
   total: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  commercialConditions: string | null;
   validityDays: number;
   validUntil: Date;
   branchId: string;
@@ -93,21 +90,21 @@ export interface QuoteEntity {
   providedByBranchNameSnapshot: string | null;
   providedAt: Date | null;
   providedByAssignedByUserId: string | null;
-  rejectionReason: QuoteRejectionReason | null;
+  rejectionReason: string | null;
   rejectionComment: string | null;
   rejectedAt: Date | null;
   rejectedByUserId: string | null;
-  cancellationReason: QuoteCancellationReason | null;
+  cancellationReason: string | null;
   cancellationComment: string | null;
   cancelledAt: Date | null;
   cancelledByUserId: string | null;
-  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnReason: string | null;
   approvalReturnComment: string | null;
   rootQuoteId: string | null;
   previousVersionId: string | null;
   supersededByQuoteId: string | null;
   revisionNumber: number;
-  revisionReason: QuoteRevisionReason | null;
+  revisionReason: string | null;
   revisionComment: string | null;
   supersededAt: Date | null;
   archivedAt: Date | null;

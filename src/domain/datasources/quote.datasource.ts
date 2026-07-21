@@ -6,10 +6,6 @@ import type {
   QuoteCaptureMethod,
   QuoteSourceChannel,
   QuoteStatus,
-  QuoteRejectionReason,
-  QuoteCancellationReason,
-  QuoteApprovalReturnReason,
-  QuoteRevisionReason,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEntity } from "../entities/quote.entity";
@@ -50,6 +46,7 @@ export interface CreateQuoteDatasourceParams {
   taxRate: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  commercialConditions?: string | null;
   validityDays: number;
   branchId: string;
   customerId: string;
@@ -113,6 +110,7 @@ export interface UpdateQuoteDatasourceData {
   taxRate?: number;
   deliveryPlace?: string | null;
   paymentTerms?: string;
+  commercialConditions?: string | null;
   validityDays?: number;
   notes?: string | null;
   providedByUserId?: string | null;
@@ -199,11 +197,11 @@ export interface ChangeQuoteStatusDatasourceParams {
   id: string;
   status: QuoteStatus;
   note: string | null;
-  rejectionReason: QuoteRejectionReason | null;
+  rejectionReason: string | null;
   rejectionComment: string | null;
-  cancellationReason: QuoteCancellationReason | null;
+  cancellationReason: string | null;
   cancellationComment: string | null;
-  approvalReturnReason: QuoteApprovalReturnReason | null;
+  approvalReturnReason: string | null;
   approvalReturnComment: string | null;
   actorUserId: string;
   scope: QuoteAccessScope;
@@ -211,7 +209,7 @@ export interface ChangeQuoteStatusDatasourceParams {
 
 export interface CreateQuoteRevisionDatasourceParams {
   sourceQuoteId: string;
-  reason: QuoteRevisionReason;
+  reason: string;
   comment: string | null;
   actorUserId: string;
   scope: QuoteAccessScope;

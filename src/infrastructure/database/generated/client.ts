@@ -45,6 +45,11 @@ export { Prisma }
  */
 export type Branch = Prisma.BranchModel
 /**
+ * Model QuoteCatalogOption
+ * 
+ */
+export type QuoteCatalogOption = Prisma.QuoteCatalogOptionModel
+/**
  * Model User
  * 
  */
