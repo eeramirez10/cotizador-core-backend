@@ -58,10 +58,23 @@ export const QuoteStatus = {
   QUOTED: 'QUOTED',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  SUPERSEDED: 'SUPERSEDED'
 } as const
 
 export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
+
+
+export const QuoteRevisionReason = {
+  CUSTOMER_REQUEST: 'CUSTOMER_REQUEST',
+  ADD_REMOVE_ITEMS: 'ADD_REMOVE_ITEMS',
+  PRICE_OR_QUANTITY_CHANGE: 'PRICE_OR_QUANTITY_CHANGE',
+  INFORMATION_CORRECTION: 'INFORMATION_CORRECTION',
+  COMMERCIAL_TERMS: 'COMMERCIAL_TERMS',
+  OTHER: 'OTHER'
+} as const
+
+export type QuoteRevisionReason = (typeof QuoteRevisionReason)[keyof typeof QuoteRevisionReason]
 
 
 export const QuoteApprovalReturnReason = {

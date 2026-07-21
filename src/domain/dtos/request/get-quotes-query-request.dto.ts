@@ -6,6 +6,7 @@ interface GetQuotesQueryRequestDtoProps {
   search?: string;
   status?: QuoteStatus;
   branchCode?: string;
+  archived: boolean;
 }
 
 export class GetQuotesQueryRequestDto {
@@ -14,6 +15,7 @@ export class GetQuotesQueryRequestDto {
   public readonly search?: string;
   public readonly status?: QuoteStatus;
   public readonly branchCode?: string;
+  public readonly archived: boolean;
 
   constructor(props: GetQuotesQueryRequestDtoProps) {
     this.page = props.page;
@@ -21,6 +23,7 @@ export class GetQuotesQueryRequestDto {
     this.search = props.search;
     this.status = props.status;
     this.branchCode = props.branchCode;
+    this.archived = props.archived;
   }
 
   static create(input: unknown): [string?, GetQuotesQueryRequestDto?] {
@@ -53,7 +56,10 @@ export class GetQuotesQueryRequestDto {
     const branchCode =
       typeof query.branchCode === "string" && query.branchCode.trim().length > 0
         ? query.branchCode.trim().toUpperCase()
-        : undefined;
+      : undefined;
+
+    const archivedRaw = typeof query.archived === "string" ? query.archived.trim().toLowerCase() : "false";
+    if (!["true", "false"].includes(archivedRaw)) return ["archived must be true or false."];
 
     return [
       ,
@@ -63,6 +69,7 @@ export class GetQuotesQueryRequestDto {
         search,
         status: statusRaw as QuoteStatus | undefined,
         branchCode,
+        archived: archivedRaw === "true",
       }),
     ];
   }

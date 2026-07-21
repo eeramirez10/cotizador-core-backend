@@ -17,7 +17,7 @@ const run = async (): Promise<void> => {
     update: {
       firstName: "System",
       lastName: "Admin",
-      email: "admin@tuvansa.com",
+      email: "admin@tuvansa.com.mx",
       phone: "5550000000",
       role: "ADMIN",
       branchId: branch.id,
@@ -28,7 +28,7 @@ const run = async (): Promise<void> => {
       firstName: "System",
       lastName: "Admin",
       username: "admin",
-      email: "admin@tuvansa.com",
+      email: "admin@tuvansa.com.mx",
       phone: "5550000000",
       role: "ADMIN",
       branchId: branch.id,

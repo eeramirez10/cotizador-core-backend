@@ -18,6 +18,9 @@ export class GetQuotesUseCase {
   ) {}
 
   async execute(dto: GetQuotesQueryRequestDto, actor: GetQuotesActorContext): Promise<PaginatedQuotesResponseDto> {
+    if (dto.archived && actor.role !== "ADMIN") {
+      throw new Error("Only ADMIN can list archived quotes.");
+    }
     let branchIdFilter: string | undefined;
 
     if (actor.role !== "ADMIN") {
@@ -34,6 +37,7 @@ export class GetQuotesUseCase {
       search: dto.search,
       status: dto.status,
       branchId: branchIdFilter,
+      archived: dto.archived,
       scope: {
         role: actor.role,
         userId: actor.id,

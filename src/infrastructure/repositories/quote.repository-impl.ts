@@ -2,6 +2,10 @@ import {
   AddQuoteItemDatasourceParams,
   ChangeQuoteStatusDatasourceParams,
   CreateQuoteDatasourceParams,
+  CreateQuoteRevisionDatasourceParams,
+  ArchiveQuoteDatasourceParams,
+  RestoreQuoteDatasourceParams,
+  DeleteQuoteDatasourceParams,
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
@@ -48,6 +52,22 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.changeStatus(params);
+  }
+
+  createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity> {
+    return this.datasource.createRevision(params);
+  }
+
+  archive(params: ArchiveQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.archive(params);
+  }
+
+  restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.restore(params);
+  }
+
+  deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean> {
+    return this.datasource.deletePermanently(params);
   }
 
   recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null> {

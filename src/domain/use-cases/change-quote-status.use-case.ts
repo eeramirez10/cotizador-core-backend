@@ -18,6 +18,7 @@ const allowedTransitions: Record<QuoteStatus, QuoteStatus[]> = {
   APPROVED: [],
   REJECTED: [],
   CANCELLED: [],
+  SUPERSEDED: [],
 };
 
 const isTransitionAllowed = (from: QuoteStatus, to: QuoteStatus): boolean => {
@@ -41,6 +42,14 @@ export class ChangeQuoteStatusUseCase {
       },
     });
     if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+
+    const hasRevisionInProgress = Boolean(
+      quote.nextRevision && ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(quote.nextRevision.status)
+    );
+    if (hasRevisionInProgress) {
+      throw new Error("Quote status cannot change while a revision is in progress.");
+    }
 
     if (quote.status === dto.status) throw new Error("Quote is already in the requested status.");
     if (!isTransitionAllowed(quote.status, dto.status)) {

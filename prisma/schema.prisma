@@ -42,6 +42,16 @@ enum QuoteStatus {
   APPROVED
   REJECTED
   CANCELLED
+  SUPERSEDED
+}
+
+enum QuoteRevisionReason {
+  CUSTOMER_REQUEST
+  ADD_REMOVE_ITEMS
+  PRICE_OR_QUANTITY_CHANGE
+  INFORMATION_CORRECTION
+  COMMERCIAL_TERMS
+  OTHER
 }
 
 enum QuoteApprovalReturnReason {
@@ -170,6 +180,7 @@ model User {
   updatedQuotes    Quote[]    @relation("QuoteUpdatedBy")
   rejectedQuotes   Quote[]    @relation("QuoteRejectedBy")
   cancelledQuotes  Quote[]    @relation("QuoteCancelledBy")
+  archivedQuotes   Quote[]    @relation("QuoteArchivedBy")
   providedQuotes   Quote[]    @relation("QuoteProvidedBy")
   providerAssignments Quote[] @relation("QuoteProviderAssignedBy")
   quoteDeliveryAttempts QuoteDeliveryAttempt[] @relation("QuoteDeliveryAttemptSentBy")
@@ -317,6 +328,16 @@ model Quote {
   cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
   approvalReturnReason QuoteApprovalReturnReason? @map("approval_return_reason")
   approvalReturnComment String? @map("approval_return_comment") @db.Text
+  rootQuoteId      String? @map("root_quote_id") @db.Uuid
+  previousVersionId String? @map("previous_version_id") @db.Uuid
+  supersededByQuoteId String? @unique @map("superseded_by_quote_id") @db.Uuid
+  revisionNumber  Int @default(0) @map("revision_number")
+  revisionReason  QuoteRevisionReason? @map("revision_reason")
+  revisionComment String? @map("revision_comment") @db.Text
+  supersededAt    DateTime? @map("superseded_at")
+  archivedAt      DateTime? @map("archived_at")
+  archivedByUserId String? @map("archived_by_user_id") @db.Uuid
+  archiveReason   String? @map("archive_reason") @db.Text
   notes            String?    @db.Text
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
@@ -329,6 +350,13 @@ model Quote {
   providedByAssignedByUser User? @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
   rejectedByUser User? @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
   cancelledByUser User? @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
+  archivedByUser User? @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
+  rootQuote Quote? @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
+  revisions Quote[] @relation("QuoteRevisionRoot")
+  previousVersion Quote? @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
+  nextVersions Quote[] @relation("QuotePreviousVersion")
+  supersededByQuote Quote? @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
+  supersedesQuote Quote? @relation("QuoteSupersededBy")
 
   items  QuoteItem[]
   deliveryAttempts QuoteDeliveryAttempt[]
@@ -348,6 +376,11 @@ model Quote {
   @@index([cancellationReason])
   @@index([cancelledByUserId])
   @@index([approvalReturnReason])
+  @@index([archivedAt])
+  @@index([archivedByUserId])
+  @@index([rootQuoteId])
+  @@index([previousVersionId])
+  @@unique([rootQuoteId, revisionNumber])
   @@map("quotes")
 }
 

@@ -9,6 +9,7 @@ import type {
   QuoteRejectionReason,
   QuoteCancellationReason,
   QuoteApprovalReturnReason,
+  QuoteRevisionReason,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEntity } from "../entities/quote.entity";
@@ -25,6 +26,7 @@ export interface FindQuotesDatasourceParams {
   search?: string;
   status?: QuoteStatus;
   branchId?: string;
+  archived?: boolean;
   scope: QuoteAccessScope;
 }
 
@@ -166,6 +168,32 @@ export interface ChangeQuoteStatusDatasourceParams {
   scope: QuoteAccessScope;
 }
 
+export interface CreateQuoteRevisionDatasourceParams {
+  sourceQuoteId: string;
+  reason: QuoteRevisionReason;
+  comment: string | null;
+  actorUserId: string;
+  scope: QuoteAccessScope;
+}
+
+export interface ArchiveQuoteDatasourceParams {
+  id: string;
+  actorUserId: string;
+  reason: string;
+}
+
+export interface RestoreQuoteDatasourceParams {
+  id: string;
+  actorUserId: string;
+}
+
+export interface DeleteQuoteDatasourceParams {
+  id: string;
+  actorUserId: string;
+  confirmation: string;
+  reason: string;
+}
+
 export interface RecordQuoteDeliveryAttemptDatasourceParams {
   id: string;
   actorUserId: string;
@@ -202,6 +230,10 @@ export abstract class QuoteDatasource {
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
+  abstract createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity>;
+  abstract archive(params: ArchiveQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
 }

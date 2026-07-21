@@ -2,6 +2,10 @@ import {
   AddQuoteItemDatasourceParams,
   ChangeQuoteStatusDatasourceParams,
   CreateQuoteDatasourceParams,
+  CreateQuoteRevisionDatasourceParams,
+  ArchiveQuoteDatasourceParams,
+  RestoreQuoteDatasourceParams,
+  DeleteQuoteDatasourceParams,
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
@@ -82,6 +86,15 @@ const quoteInclude = {
       branch: { select: { code: true, name: true } },
     },
   },
+  archivedByUser: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      branchId: true,
+      branch: { select: { code: true, name: true } },
+    },
+  },
   items: {
     orderBy: {
       createdAt: "asc",
@@ -111,6 +124,16 @@ const quoteInclude = {
           lastName: true,
         },
       },
+    },
+  },
+  nextVersions: {
+    orderBy: { revisionNumber: "desc" },
+    take: 1,
+    select: {
+      id: true,
+      quoteNumber: true,
+      status: true,
+      revisionNumber: true,
     },
   },
 } satisfies Prisma.QuoteInclude;
@@ -211,6 +234,241 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     });
 
     return quote;
+  }
+
+  async createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity> {
+    return prisma.$transaction(async (tx) => {
+      const source = await tx.quote.findFirst({
+        where: {
+          id: params.sourceQuoteId,
+          ...this.buildScopeWhere(params.scope),
+        },
+        include: { items: true },
+      });
+      if (!source) throw new Error("Quote not found.");
+
+      const rootQuoteId = source.rootQuoteId ?? source.id;
+      const activeVersion = await tx.quote.findFirst({
+        where: {
+          OR: [{ id: rootQuoteId }, { rootQuoteId }],
+          status: { notIn: ["CANCELLED", "SUPERSEDED"] },
+        },
+        orderBy: { revisionNumber: "desc" },
+        select: { id: true, previousVersionId: true, revisionNumber: true },
+      });
+      if (activeVersion?.id !== source.id) {
+        throw new Error("Only the latest active quote version can be revised.");
+      }
+
+      const pendingRevision = await tx.quote.findFirst({
+        where: {
+          rootQuoteId,
+          status: { in: ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"] },
+        },
+        select: { id: true },
+      });
+      if (pendingRevision) throw new Error("This quote already has an active revision.");
+
+      const latestRevision = await tx.quote.findFirst({
+        where: { rootQuoteId },
+        orderBy: { revisionNumber: "desc" },
+        select: { revisionNumber: true },
+      });
+      const revisionNumber = (latestRevision?.revisionNumber ?? 0) + 1;
+      const baseQuoteNumber = source.quoteNumber.replace(/-R\d+$/i, "");
+      const quoteNumber = `${baseQuoteNumber}-R${String(revisionNumber).padStart(2, "0")}`;
+      const today = new Date();
+
+      const revision = await tx.quote.create({
+        data: {
+          quoteNumber,
+          status: "DRAFT",
+          origin: source.origin,
+          captureMethod: source.captureMethod,
+          originalQuoteDate: source.originalQuoteDate,
+          sourceChannel: source.sourceChannel,
+          currency: source.currency,
+          exchangeRate: source.exchangeRate,
+          exchangeRateDate: source.exchangeRateDate,
+          taxRate: source.taxRate,
+          subtotal: source.subtotal,
+          tax: source.tax,
+          total: source.total,
+          deliveryPlace: source.deliveryPlace,
+          paymentTerms: source.paymentTerms,
+          validityDays: source.validityDays,
+          validUntil: addDaysToDateOnly(today, source.validityDays),
+          branchId: source.branchId,
+          customerId: source.customerId,
+          createdByUserId: params.actorUserId,
+          updatedByUserId: params.actorUserId,
+          providedByUserId: source.providedByUserId,
+          providedByNameSnapshot: source.providedByNameSnapshot,
+          providedByBranchNameSnapshot: source.providedByBranchNameSnapshot,
+          providedAt: source.providedAt,
+          providedByAssignedByUserId: source.providedByAssignedByUserId,
+          rootQuoteId,
+          previousVersionId: source.id,
+          revisionNumber,
+          revisionReason: params.reason,
+          revisionComment: params.comment,
+          notes: source.notes,
+          items: {
+            create: source.items.map((item) => ({
+              productId: item.productId,
+              externalProductCode: item.externalProductCode,
+              ean: item.ean,
+              customerDescription: item.customerDescription,
+              customerUnit: item.customerUnit,
+              erpDescription: item.erpDescription,
+              unit: item.unit,
+              qty: item.qty,
+              stock: item.stock,
+              deliveryTime: item.deliveryTime,
+              itemComment: item.itemComment,
+              cost: item.cost,
+              costCurrency: item.costCurrency,
+              marginPct: item.marginPct,
+              unitPrice: item.unitPrice,
+              subtotal: item.subtotal,
+              sourceRequiresReview: item.sourceRequiresReview,
+              requiresReview: item.requiresReview,
+            })),
+          },
+        },
+      });
+
+      await tx.quoteEvent.create({
+        data: {
+          quoteId: revision.id,
+          status: "DRAFT",
+          note: `Revision R${String(revisionNumber).padStart(2, "0")} created from ${source.quoteNumber}. Reason: ${params.reason}.${params.comment ? ` ${params.comment}` : ""}`,
+          actorUserId: params.actorUserId,
+        },
+      });
+
+      const detail = await this.findByIdWithClient(revision.id, params.scope, tx);
+      if (!detail) throw new Error("Quote revision created but not found.");
+      return detail;
+    });
+  }
+
+  async archive(params: ArchiveQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    return prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findUnique({ where: { id: params.id }, select: { id: true, quoteNumber: true, archivedAt: true } });
+      if (!quote) return null;
+      if (quote.archivedAt) throw new Error("Quote is already archived.");
+
+      await tx.quote.update({
+        where: { id: quote.id },
+        data: {
+          archivedAt: new Date(),
+          archivedByUserId: params.actorUserId,
+          archiveReason: params.reason,
+          updatedByUserId: params.actorUserId,
+        },
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: params.actorUserId,
+          entityType: "QUOTE",
+          entityId: quote.id,
+          action: "ARCHIVE",
+          payload: { quoteNumber: quote.quoteNumber, reason: params.reason },
+        },
+      });
+
+      return this.findByIdWithClient(quote.id, { role: "ADMIN", userId: params.actorUserId, branchId: "" }, tx);
+    });
+  }
+
+  async restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    return prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findUnique({ where: { id: params.id }, select: { id: true, quoteNumber: true, archivedAt: true } });
+      if (!quote) return null;
+      if (!quote.archivedAt) throw new Error("Quote is not archived.");
+
+      await tx.quote.update({
+        where: { id: quote.id },
+        data: {
+          archivedAt: null,
+          archivedByUserId: null,
+          archiveReason: null,
+          updatedByUserId: params.actorUserId,
+        },
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: params.actorUserId,
+          entityType: "QUOTE",
+          entityId: quote.id,
+          action: "RESTORE",
+          payload: { quoteNumber: quote.quoteNumber },
+        },
+      });
+
+      return this.findByIdWithClient(quote.id, { role: "ADMIN", userId: params.actorUserId, branchId: "" }, tx);
+    });
+  }
+
+  async deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean> {
+    return prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findUnique({
+        where: { id: params.id },
+        select: {
+          id: true,
+          quoteNumber: true,
+          status: true,
+          orderStatus: true,
+          rootQuoteId: true,
+          previousVersionId: true,
+          supersededByQuoteId: true,
+          revisionNumber: true,
+          customerId: true,
+          createdByUserId: true,
+          subtotal: true,
+          tax: true,
+          total: true,
+          _count: { select: { revisions: true, nextVersions: true } },
+        },
+      });
+      if (!quote) return false;
+      if (params.confirmation !== quote.quoteNumber) throw new Error("Quote number confirmation does not match.");
+      if (!["DRAFT", "CANCELLED"].includes(quote.status)) {
+        throw new Error("Only DRAFT or CANCELLED quotes can be permanently deleted.");
+      }
+      if (quote.orderStatus === "GENERATED") throw new Error("A quote with a generated order cannot be deleted.");
+      const belongsToRevisionChain = Boolean(
+        quote.rootQuoteId ||
+        quote.previousVersionId ||
+        quote.supersededByQuoteId ||
+        quote.revisionNumber > 0 ||
+        quote._count.revisions > 0 ||
+        quote._count.nextVersions > 0
+      );
+      if (belongsToRevisionChain) throw new Error("A quote that belongs to a revision chain cannot be deleted.");
+
+      await tx.auditLog.create({
+        data: {
+          actorUserId: params.actorUserId,
+          entityType: "QUOTE",
+          entityId: quote.id,
+          action: "DELETE_PERMANENTLY",
+          payload: {
+            quoteNumber: quote.quoteNumber,
+            reason: params.reason,
+            status: quote.status,
+            customerId: quote.customerId,
+            createdByUserId: quote.createdByUserId,
+            subtotal: quote.subtotal.toString(),
+            tax: quote.tax.toString(),
+            total: quote.total.toString(),
+          },
+        },
+      });
+      await tx.quote.delete({ where: { id: quote.id } });
+      return true;
+    });
   }
 
   async updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null> {
@@ -442,7 +700,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: params.id,
           ...this.buildScopeWhere(params.scope),
         },
-        select: { id: true },
+        select: { id: true, previousVersionId: true, revisionNumber: true },
       });
       if (!quote) return null;
 
@@ -472,6 +730,26 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           actorUserId: params.actorUserId,
         },
       });
+
+      if (params.status === "QUOTED" && quote.previousVersionId) {
+        await tx.quote.update({
+          where: { id: quote.previousVersionId },
+          data: {
+            status: "SUPERSEDED",
+            supersededAt: new Date(),
+            supersededByQuoteId: quote.id,
+            updatedByUserId: params.actorUserId,
+          },
+        });
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.previousVersionId,
+            status: "SUPERSEDED",
+            note: `Superseded by authorized revision R${String(quote.revisionNumber).padStart(2, "0")}.`,
+            actorUserId: params.actorUserId,
+          },
+        });
+      }
 
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
@@ -599,6 +877,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
   private buildFindWhere(params: FindQuotesDatasourceParams): Prisma.QuoteWhereInput {
     const andFilters: Prisma.QuoteWhereInput[] = [this.buildScopeWhere(params.scope)];
+    andFilters.push({ archivedAt: params.archived ? { not: null } : null });
 
     if (params.branchId) {
       andFilters.push({ branchId: params.branchId });

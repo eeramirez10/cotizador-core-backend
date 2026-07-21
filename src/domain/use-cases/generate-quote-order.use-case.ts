@@ -26,6 +26,7 @@ export class GenerateQuoteOrderUseCase {
     });
 
     if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
     if (quote.status !== "APPROVED") {
       throw new Error("Quote must be APPROVED to generate order.");
     }
@@ -34,6 +35,9 @@ export class GenerateQuoteOrderUseCase {
     }
     if (quote.orderStatus === "GENERATED") {
       throw new Error("Order was already generated for this quote.");
+    }
+    if (quote.nextRevision && ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(quote.nextRevision.status)) {
+      throw new Error("Order cannot be generated while a quote revision is in progress.");
     }
     const unlinkedItems = quote.items.filter(
       (item) => !item.productId && !item.externalProductCode && !item.ean

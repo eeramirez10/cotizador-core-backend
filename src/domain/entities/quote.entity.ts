@@ -8,6 +8,7 @@ import type {
   QuoteCancellationReason,
   QuoteRejectionReason,
   QuoteApprovalReturnReason,
+  QuoteRevisionReason,
   QuoteStatus,
 } from "../../infrastructure/database/generated/enums";
 import { QuoteEventEntity } from "./quote-event.entity";
@@ -35,6 +36,13 @@ export interface QuoteUserSummary {
   branchId: string;
   branchCode: string;
   branchName: string;
+}
+
+export interface QuoteRevisionSummary {
+  id: string;
+  quoteNumber: string;
+  status: QuoteStatus;
+  revisionNumber: number;
 }
 
 export interface QuoteEntity {
@@ -80,6 +88,17 @@ export interface QuoteEntity {
   cancelledByUserId: string | null;
   approvalReturnReason: QuoteApprovalReturnReason | null;
   approvalReturnComment: string | null;
+  rootQuoteId: string | null;
+  previousVersionId: string | null;
+  supersededByQuoteId: string | null;
+  revisionNumber: number;
+  revisionReason: QuoteRevisionReason | null;
+  revisionComment: string | null;
+  supersededAt: Date | null;
+  archivedAt: Date | null;
+  archivedByUserId: string | null;
+  archiveReason: string | null;
+  nextRevision: QuoteRevisionSummary | null;
   notes: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -89,6 +108,7 @@ export interface QuoteEntity {
   updatedByUser: QuoteUserSummary | null;
   rejectedByUser: QuoteUserSummary | null;
   cancelledByUser: QuoteUserSummary | null;
+  archivedByUser: QuoteUserSummary | null;
   items: QuoteItemEntity[];
   events: QuoteEventEntity[];
 }

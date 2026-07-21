@@ -2,6 +2,10 @@ import {
   AddQuoteItemDatasourceParams,
   ChangeQuoteStatusDatasourceParams,
   CreateQuoteDatasourceParams,
+  CreateQuoteRevisionDatasourceParams,
+  ArchiveQuoteDatasourceParams,
+  RestoreQuoteDatasourceParams,
+  DeleteQuoteDatasourceParams,
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
@@ -22,6 +26,10 @@ export abstract class QuoteRepository {
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
+  abstract createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity>;
+  abstract archive(params: ArchiveQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
 }

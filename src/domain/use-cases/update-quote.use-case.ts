@@ -96,6 +96,7 @@ export class UpdateQuoteUseCase {
     });
 
     if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
     return new QuoteResponseDto(quote);
   }
 }

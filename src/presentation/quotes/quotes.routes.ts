@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
+import { ArchiveQuoteUseCase } from "../../domain/use-cases/archive-quote.use-case";
+import { RestoreQuoteUseCase } from "../../domain/use-cases/restore-quote.use-case";
+import { DeleteQuoteUseCase } from "../../domain/use-cases/delete-quote.use-case";
 import { CreateQuoteUseCase } from "../../domain/use-cases/create-quote.use-case";
+import { CreateQuoteRevisionUseCase } from "../../domain/use-cases/create-quote-revision.use-case";
 import { CreateQuoteFromExtractionUseCase } from "../../domain/use-cases/create-quote-from-extraction.use-case";
 import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item.use-case";
 import { DownloadQuoteOrderFileUseCase } from "../../domain/use-cases/download-quote-order-file.use-case";
@@ -49,6 +53,10 @@ export class QuotesRoutes {
       branchRepository,
       userRepository
     );
+    const createQuoteRevisionUseCase = new CreateQuoteRevisionUseCase(quoteRepository);
+    const archiveQuoteUseCase = new ArchiveQuoteUseCase(quoteRepository);
+    const restoreQuoteUseCase = new RestoreQuoteUseCase(quoteRepository);
+    const deleteQuoteUseCase = new DeleteQuoteUseCase(quoteRepository);
     const getQuotesUseCase = new GetQuotesUseCase(quoteRepository, branchRepository);
     const getQuoteByIdUseCase = new GetQuoteByIdUseCase(quoteRepository);
     const updateQuoteUseCase = new UpdateQuoteUseCase(quoteRepository, customerRepository, userRepository);
@@ -70,6 +78,10 @@ export class QuotesRoutes {
     const controller = new QuotesController(
       createQuoteUseCase,
       createQuoteFromExtractionUseCase,
+      createQuoteRevisionUseCase,
+      archiveQuoteUseCase,
+      restoreQuoteUseCase,
+      deleteQuoteUseCase,
       getQuotesUseCase,
       getQuoteByIdUseCase,
       updateQuoteUseCase,
@@ -92,6 +104,10 @@ export class QuotesRoutes {
       requireRoles("SELLER"),
       controller.createFromExtraction
     );
+    router.post("/:id/revisions", requireAuth, requireRoles("SELLER"), controller.createRevision);
+    router.patch("/:id/archive", requireAuth, requireRoles("ADMIN"), controller.archive);
+    router.patch("/:id/restore", requireAuth, requireRoles("ADMIN"), controller.restore);
+    router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.deletePermanently);
     router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.update);
 
     router.post("/:id/items", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.addItem);

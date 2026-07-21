@@ -23,6 +23,7 @@ export class DeleteQuoteItemUseCase {
       },
     });
     if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
     if (!canEditItems(quote.status)) throw new Error("Quote items cannot be edited in current status.");
 
     const itemExists = quote.items.some((item) => item.id === itemId);

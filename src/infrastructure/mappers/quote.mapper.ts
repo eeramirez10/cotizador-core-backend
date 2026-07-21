@@ -48,6 +48,22 @@ interface QuoteRow {
   cancelledByUserId: string | null;
   approvalReturnReason: QuoteEntity["approvalReturnReason"];
   approvalReturnComment: string | null;
+  rootQuoteId: string | null;
+  previousVersionId: string | null;
+  supersededByQuoteId: string | null;
+  revisionNumber: number;
+  revisionReason: QuoteEntity["revisionReason"];
+  revisionComment: string | null;
+  supersededAt: Date | null;
+  archivedAt: Date | null;
+  archivedByUserId: string | null;
+  archiveReason: string | null;
+  nextVersions: Array<{
+    id: string;
+    quoteNumber: string;
+    status: QuoteEntity["status"];
+    revisionNumber: number;
+  }>;
   providedByUserId: string | null;
   providedByNameSnapshot: string | null;
   providedByBranchNameSnapshot: string | null;
@@ -97,6 +113,13 @@ interface QuoteRow {
     branch: { code: string; name: string };
   } | null;
   cancelledByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    branchId: string;
+    branch: { code: string; name: string };
+  } | null;
+  archivedByUser: {
     id: string;
     firstName: string;
     lastName: string;
@@ -190,6 +213,17 @@ export class QuoteMapper {
       cancelledByUserId: row.cancelledByUserId,
       approvalReturnReason: row.approvalReturnReason,
       approvalReturnComment: row.approvalReturnComment,
+      rootQuoteId: row.rootQuoteId,
+      previousVersionId: row.previousVersionId,
+      supersededByQuoteId: row.supersededByQuoteId,
+      revisionNumber: row.revisionNumber,
+      revisionReason: row.revisionReason,
+      revisionComment: row.revisionComment,
+      supersededAt: row.supersededAt,
+      archivedAt: row.archivedAt,
+      archivedByUserId: row.archivedByUserId,
+      archiveReason: row.archiveReason,
+      nextRevision: row.nextVersions[0] ?? null,
       providedByUserId: row.providedByUserId,
       providedByNameSnapshot: row.providedByNameSnapshot,
       providedByBranchNameSnapshot: row.providedByBranchNameSnapshot,
@@ -236,6 +270,16 @@ export class QuoteMapper {
             branchId: row.cancelledByUser.branchId,
             branchCode: row.cancelledByUser.branch.code,
             branchName: row.cancelledByUser.branch.name,
+          }
+        : null,
+      archivedByUser: row.archivedByUser
+        ? {
+            id: row.archivedByUser.id,
+            firstName: row.archivedByUser.firstName,
+            lastName: row.archivedByUser.lastName,
+            branchId: row.archivedByUser.branchId,
+            branchCode: row.archivedByUser.branch.code,
+            branchName: row.archivedByUser.branch.name,
           }
         : null,
       items: row.items.map((item) => ({

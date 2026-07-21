@@ -22,12 +22,7 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
             ],
           };
 
-    const captureScopeWhere = params.scopeType === "BRANCH"
-      ? { branchId: params.scopeId }
-      : { createdByUserId: params.scopeId };
-
-    const [rows, captureCountRows] = await Promise.all([
-      prisma.quote.findMany({
+    const rows = await prisma.quote.findMany({
         where: {
           ...scopeWhere,
           createdAt: { gte: params.from, lt: params.toExclusive },
@@ -35,6 +30,8 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
         },
         select: {
           id: true,
+          rootQuoteId: true,
+          revisionNumber: true,
           quoteNumber: true,
           status: true,
           sourceChannel: true,
@@ -58,19 +55,24 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
           },
         },
         orderBy: { createdAt: "asc" },
-      }),
-      prisma.quote.groupBy({
-        by: ["captureMethod"],
-        where: {
-          ...captureScopeWhere,
-          createdAt: { gte: params.from, lt: params.toExclusive },
-        },
-        _count: { _all: true },
-      }),
-    ]);
+      });
 
-    const workedRows = params.scopeType === "USER" ? rows.filter((row) => row.createdByUserId === params.scopeId) : rows;
-    const providedRows = params.scopeType === "USER" ? rows.filter((row) => row.providedByUserId === params.scopeId) : [];
+    const effectiveByFamily = new Map<string, (typeof rows)[number]>();
+    const statusRank = (status: string): number => status === "SUPERSEDED" ? -2 : status === "CANCELLED" ? -1 : 0;
+    for (const row of rows) {
+      const familyId = row.rootQuoteId ?? row.id;
+      const current = effectiveByFamily.get(familyId);
+      if (
+        !current ||
+        statusRank(row.status) > statusRank(current.status) ||
+        (statusRank(row.status) === statusRank(current.status) && row.revisionNumber > current.revisionNumber)
+      ) {
+        effectiveByFamily.set(familyId, row);
+      }
+    }
+    const effectiveRows = [...effectiveByFamily.values()];
+    const workedRows = params.scopeType === "USER" ? effectiveRows.filter((row) => row.createdByUserId === params.scopeId) : effectiveRows;
+    const providedRows = params.scopeType === "USER" ? effectiveRows.filter((row) => row.providedByUserId === params.scopeId) : [];
     const quotedRows = workedRows.filter((row) => quotedStatuses.has(row.status));
     const approvedRows = workedRows.filter((row) => row.status === "APPROVED");
     const orderRows = workedRows.filter((row) => row.orderStatus === "GENERATED");
@@ -154,16 +156,6 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
         }
         providers.set(row.providedByUserId, provider);
       }
-    }
-
-    for (const row of captureCountRows) {
-      const current = captureMethods.get(row.captureMethod) ?? {
-        method: row.captureMethod,
-        count: 0,
-        amount: 0,
-      };
-      current.count = row._count._all;
-      captureMethods.set(row.captureMethod, current);
     }
 
     const pendingQuotes = workedRows

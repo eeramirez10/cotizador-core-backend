@@ -32,9 +32,13 @@ export class RegisterQuoteDeliveryAttemptUseCase {
     });
 
     if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
 
-    if (quote.status === "DRAFT" || quote.status === "PENDING" || quote.status === "CANCELLED") {
+    if (!["QUOTED", "APPROVED", "REJECTED"].includes(quote.status)) {
       throw new Error("Quote must be QUOTED, APPROVED or REJECTED to register delivery attempts.");
+    }
+    if (quote.nextRevision && ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(quote.nextRevision.status)) {
+      throw new Error("Quote cannot be sent while a revision is in progress.");
     }
 
     const statusNote =

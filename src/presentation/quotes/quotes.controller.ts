@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import { ChangeQuoteStatusRequestDto } from "../../domain/dtos/request/change-quote-status-request.dto";
+import { ArchiveQuoteRequestDto } from "../../domain/dtos/request/archive-quote-request.dto";
+import { DeleteQuoteRequestDto } from "../../domain/dtos/request/delete-quote-request.dto";
 import { CreateQuoteItemRequestDto } from "../../domain/dtos/request/create-quote-item-request.dto";
 import { CreateQuoteFromExtractionRequestDto } from "../../domain/dtos/request/create-quote-from-extraction-request.dto";
 import { CreateQuoteRequestDto } from "../../domain/dtos/request/create-quote-request.dto";
+import { CreateQuoteRevisionRequestDto } from "../../domain/dtos/request/create-quote-revision-request.dto";
 import { GetQuotesQueryRequestDto } from "../../domain/dtos/request/get-quotes-query-request.dto";
 import { MatchQuoteItemErpRequestDto } from "../../domain/dtos/request/match-quote-item-erp-request.dto";
 import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/request/register-quote-delivery-attempt-request.dto";
@@ -10,7 +13,11 @@ import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quot
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
+import { ArchiveQuoteUseCase } from "../../domain/use-cases/archive-quote.use-case";
+import { RestoreQuoteUseCase } from "../../domain/use-cases/restore-quote.use-case";
+import { DeleteQuoteUseCase } from "../../domain/use-cases/delete-quote.use-case";
 import { CreateQuoteUseCase } from "../../domain/use-cases/create-quote.use-case";
+import { CreateQuoteRevisionUseCase } from "../../domain/use-cases/create-quote-revision.use-case";
 import { CreateQuoteFromExtractionUseCase } from "../../domain/use-cases/create-quote-from-extraction.use-case";
 import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item.use-case";
 import { DownloadQuoteOrderFileUseCase } from "../../domain/use-cases/download-quote-order-file.use-case";
@@ -26,6 +33,10 @@ export class QuotesController {
   constructor(
     private readonly createQuoteUseCase: CreateQuoteUseCase,
     private readonly createQuoteFromExtractionUseCase: CreateQuoteFromExtractionUseCase,
+    private readonly createQuoteRevisionUseCase: CreateQuoteRevisionUseCase,
+    private readonly archiveQuoteUseCase: ArchiveQuoteUseCase,
+    private readonly restoreQuoteUseCase: RestoreQuoteUseCase,
+    private readonly deleteQuoteUseCase: DeleteQuoteUseCase,
     private readonly getQuotesUseCase: GetQuotesUseCase,
     private readonly getQuoteByIdUseCase: GetQuoteByIdUseCase,
     private readonly updateQuoteUseCase: UpdateQuoteUseCase,
@@ -38,6 +49,76 @@ export class QuotesController {
     private readonly downloadQuoteOrderFileUseCase: DownloadQuoteOrderFileUseCase,
     private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase
   ) {}
+
+  archive = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    const [bodyError, bodyDto] = ArchiveQuoteRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+    try {
+      const result = await this.archiveQuoteUseCase.execute(quoteId, bodyDto!, req.user);
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while archiving quote.");
+    }
+  };
+
+  restore = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    try {
+      const result = await this.restoreQuoteUseCase.execute(quoteId, req.user);
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while restoring quote.");
+    }
+  };
+
+  deletePermanently = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    const [bodyError, bodyDto] = DeleteQuoteRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+    try {
+      await this.deleteQuoteUseCase.execute(quoteId, bodyDto!, req.user);
+      res.status(204).send();
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while deleting quote.");
+    }
+  };
+
+  createRevision = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) {
+      res.status(400).json({ error: "Quote id is required." });
+      return;
+    }
+
+    const [bodyError, bodyDto] = CreateQuoteRevisionRequestDto.create(req.body);
+    if (bodyError) {
+      res.status(400).json({ error: bodyError });
+      return;
+    }
+
+    try {
+      const result = await this.createQuoteRevisionUseCase.execute(quoteId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(201).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while creating quote revision.");
+    }
+  };
 
   list = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
@@ -415,6 +496,23 @@ export class QuotesController {
       message === "branchCode is only allowed for ADMIN." ||
       message === "Quote cannot be edited in current status." ||
       message === "Quote items cannot be edited in current status." ||
+      message === "Only SELLER can create a quote revision." ||
+      message === "Only an authorized quote can be revised." ||
+      message === "A quote with a generated order cannot be revised." ||
+      message === "Only the latest active quote version can be revised." ||
+      message === "This quote already has an active revision." ||
+      message === "Quote status cannot change while a revision is in progress." ||
+      message === "Only ADMIN can list archived quotes." ||
+      message === "Only ADMIN can archive quotes." ||
+      message === "Only ADMIN can restore quotes." ||
+      message === "Only ADMIN can permanently delete quotes." ||
+      message === "Quote is already archived." ||
+      message === "Quote is not archived." ||
+      message === "Archived quotes are read-only." ||
+      message === "Quote number confirmation does not match." ||
+      message === "Only DRAFT or CANCELLED quotes can be permanently deleted." ||
+      message === "A quote with a generated order cannot be deleted." ||
+      message === "A quote that belongs to a revision chain cannot be deleted." ||
       message === "Quote is already in the requested status." ||
       message.startsWith("Invalid status transition") ||
       message === "Quote must contain at least one item before moving to QUOTED." ||
@@ -423,6 +521,8 @@ export class QuotesController {
       message === "Rejection comment is required when rejection reason is OTHER." ||
       message === "Quote must be APPROVED to generate order." ||
       message === "Order was already generated for this quote." ||
+      message === "Order cannot be generated while a quote revision is in progress." ||
+      message === "Quote cannot be sent while a revision is in progress." ||
       message === "Quote must contain at least one item before generating order." ||
       message === "Quote must be sent before moving to APPROVED or REJECTED." ||
       message === "Quote must be QUOTED, APPROVED or REJECTED to register delivery attempts." ||
