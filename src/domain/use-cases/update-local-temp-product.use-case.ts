@@ -1,4 +1,5 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
+import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import { UpdateLocalTempProductRequestDto } from "../dtos/request/update-local-temp-product-request.dto";
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
 import { ProductRepository } from "../repositories/product.repository";
@@ -16,7 +17,10 @@ const normalizeText = (value: string): string =>
     .toUpperCase();
 
 export class UpdateLocalTempProductUseCase {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly semanticPort: LocalProductSemanticPort,
+  ) {}
 
   async execute(
     productId: string,
@@ -44,6 +48,10 @@ export class UpdateLocalTempProductUseCase {
     });
 
     if (!updated) throw new Error("Local temp product not found.");
+    const sync = updated.isActive
+      ? this.semanticPort.upsert(updated)
+      : this.semanticPort.remove(updated.id);
+    await sync;
     return new ProductResponseDto(updated);
   }
 }

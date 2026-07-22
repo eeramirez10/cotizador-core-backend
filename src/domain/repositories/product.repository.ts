@@ -13,6 +13,8 @@ export abstract class ProductRepository {
   abstract findActiveLocalTempByDescriptionAndUnit(
     params: FindLocalTempByDescriptionAndUnitDatasourceParams
   ): Promise<ProductEntity | null>;
+  abstract findActiveLocalTempsByIds(ids: string[]): Promise<ProductEntity[]>;
+  abstract findAllActiveLocalTemps(): Promise<ProductEntity[]>;
   abstract createLocalTemp(params: CreateLocalTempProductDatasourceParams): Promise<ProductEntity>;
   abstract updateLocalTempById(params: UpdateLocalTempProductDatasourceParams): Promise<ProductEntity | null>;
   abstract softDeleteLocalTempById(

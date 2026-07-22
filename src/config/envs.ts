@@ -37,4 +37,22 @@ export class Envs {
   static get erpOutboxDir(): string {
     return get("ERP_OUTBOX_DIR").default("storage/erp-outbox").asString();
   }
+
+  static get gptLocalProductsUrl(): string {
+    return get("GPT_LOCAL_PRODUCTS_URL")
+      .default("http://localhost:5500/api/local-products-semantic")
+      .asString();
+  }
+
+  static get gptLocalProductsApiKey(): string | undefined {
+    return get("GPT_LOCAL_PRODUCTS_API_KEY").asString();
+  }
+
+  static get gptLocalProductsTimeoutMs(): number {
+    return get("GPT_LOCAL_PRODUCTS_TIMEOUT_MS").default("45000").asIntPositive();
+  }
+
+  static get localProductSemanticMinScore(): number {
+    return get("LOCAL_PRODUCT_SEMANTIC_MIN_SCORE").default("0.72").asFloatPositive();
+  }
 }

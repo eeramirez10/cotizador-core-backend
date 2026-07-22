@@ -3,11 +3,14 @@ import { CreateLocalProductsFromItemsRequestDto } from "../../domain/dtos/reques
 import { CreateLocalTempProductRequestDto } from "../../domain/dtos/request/create-local-temp-product-request.dto";
 import { GetProductsQueryRequestDto } from "../../domain/dtos/request/get-products-query-request.dto";
 import { UpdateLocalTempProductRequestDto } from "../../domain/dtos/request/update-local-temp-product-request.dto";
+import { SearchSimilarLocalProductsRequestDto } from "../../domain/dtos/request/search-similar-local-products-request.dto";
 import { CreateLocalProductsFromItemsUseCase } from "../../domain/use-cases/create-local-products-from-items.use-case";
 import { CreateLocalTempProductUseCase } from "../../domain/use-cases/create-local-temp-product.use-case";
 import { DeleteLocalTempProductUseCase } from "../../domain/use-cases/delete-local-temp-product.use-case";
 import { GetProductsUseCase } from "../../domain/use-cases/get-products.use-case";
 import { UpdateLocalTempProductUseCase } from "../../domain/use-cases/update-local-temp-product.use-case";
+import { SearchSimilarLocalProductsUseCase } from "../../domain/use-cases/search-similar-local-products.use-case";
+import { ReindexLocalProductsUseCase } from "../../domain/use-cases/reindex-local-products.use-case";
 
 export class LocalProductsController {
   constructor(
@@ -15,7 +18,9 @@ export class LocalProductsController {
     private readonly createLocalTempProductUseCase: CreateLocalTempProductUseCase,
     private readonly createLocalProductsFromItemsUseCase: CreateLocalProductsFromItemsUseCase,
     private readonly updateLocalTempProductUseCase: UpdateLocalTempProductUseCase,
-    private readonly deleteLocalTempProductUseCase: DeleteLocalTempProductUseCase
+    private readonly deleteLocalTempProductUseCase: DeleteLocalTempProductUseCase,
+    private readonly searchSimilarLocalProductsUseCase: SearchSimilarLocalProductsUseCase,
+    private readonly reindexLocalProductsUseCase: ReindexLocalProductsUseCase,
   ) {}
 
   list = async (req: Request, res: Response): Promise<void> => {
@@ -151,6 +156,29 @@ export class LocalProductsController {
     }
   };
 
+  searchSimilar = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const [bodyError, dto] = SearchSimilarLocalProductsRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+
+    try {
+      const result = await this.searchSimilarLocalProductsUseCase.execute(dto!);
+      res.status(200).json(result.toJSON());
+    } catch (error) {
+      this.handleError(res, error, "Unexpected error while searching similar local products.");
+    }
+  };
+
+  reindexSemantic = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    try {
+      const indexed = await this.reindexLocalProductsUseCase.execute(req.user.role);
+      res.status(200).json({ indexed });
+    } catch (error) {
+      this.handleError(res, error, "Unexpected error while reindexing local products.");
+    }
+  };
+
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
     const message = error instanceof Error ? error.message : fallbackMessage;
 
@@ -166,6 +194,11 @@ export class LocalProductsController {
 
     if (message === "Local temp product not found.") {
       res.status(404).json({ error: message });
+      return;
+    }
+
+    if (message === "Only ADMIN can reindex local products.") {
+      res.status(403).json({ error: message });
       return;
     }
 

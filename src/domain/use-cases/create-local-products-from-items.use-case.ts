@@ -1,4 +1,5 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
+import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import {
   DEFAULT_MEASUREMENT_UNIT,
   isAllowedMeasurementUnit,
@@ -24,7 +25,8 @@ const normalizeText = (value: string): string =>
 export class CreateLocalProductsFromItemsUseCase {
   constructor(
     private readonly productRepository: ProductRepository,
-    private readonly branchRepository: BranchRepository
+    private readonly branchRepository: BranchRepository,
+    private readonly semanticPort: LocalProductSemanticPort,
   ) {}
 
   async execute(
@@ -57,12 +59,12 @@ export class CreateLocalProductsFromItemsUseCase {
         : DEFAULT_MEASUREMENT_UNIT;
 
       const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({
-        branchId: targetBranchId,
         description: normalizedDescription,
         unit: normalizedUnit,
       });
 
       if (existing) {
+        await this.semanticPort.upsert(existing);
         resultItems.push({
           itemId: item.itemId,
           action: "matched",
@@ -83,6 +85,7 @@ export class CreateLocalProductsFromItemsUseCase {
         updatedByUserId: actor.id,
         branchId: targetBranchId,
       });
+      await this.semanticPort.upsert(created);
 
       resultItems.push({
         itemId: item.itemId,
