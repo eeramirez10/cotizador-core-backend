@@ -390,6 +390,7 @@ export const ModelName = {
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
   Product: 'Product',
+  LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
   QuoteEvent: 'QuoteEvent',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "quote" | "quoteItem" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -857,6 +858,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductCountAggregateOutputType> | number
+        }
+      }
+    }
+    LocalProductProcurementOffer: {
+      payload: Prisma.$LocalProductProcurementOfferPayload<ExtArgs>
+      fields: Prisma.LocalProductProcurementOfferFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LocalProductProcurementOfferFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LocalProductProcurementOfferFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        findFirst: {
+          args: Prisma.LocalProductProcurementOfferFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LocalProductProcurementOfferFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        findMany: {
+          args: Prisma.LocalProductProcurementOfferFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>[]
+        }
+        create: {
+          args: Prisma.LocalProductProcurementOfferCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        createMany: {
+          args: Prisma.LocalProductProcurementOfferCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LocalProductProcurementOfferCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>[]
+        }
+        delete: {
+          args: Prisma.LocalProductProcurementOfferDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        update: {
+          args: Prisma.LocalProductProcurementOfferUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        deleteMany: {
+          args: Prisma.LocalProductProcurementOfferDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LocalProductProcurementOfferUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LocalProductProcurementOfferUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>[]
+        }
+        upsert: {
+          args: Prisma.LocalProductProcurementOfferUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductProcurementOfferPayload>
+        }
+        aggregate: {
+          args: Prisma.LocalProductProcurementOfferAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLocalProductProcurementOffer>
+        }
+        groupBy: {
+          args: Prisma.LocalProductProcurementOfferGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocalProductProcurementOfferGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LocalProductProcurementOfferCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocalProductProcurementOfferCountAggregateOutputType> | number
         }
       }
     }
@@ -1544,11 +1619,40 @@ export const ProductScalarFieldEnum = {
   isActive: 'isActive',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
+  procurementStatus: 'procurementStatus',
+  procurementNotes: 'procurementNotes',
+  selectedProcurementOfferId: 'selectedProcurementOfferId',
+  procurementUpdatedAt: 'procurementUpdatedAt',
+  procurementUpdatedByUserId: 'procurementUpdatedByUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const LocalProductProcurementOfferScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  supplierName: 'supplierName',
+  contactName: 'contactName',
+  email: 'email',
+  phone: 'phone',
+  unitCost: 'unitCost',
+  currency: 'currency',
+  minimumQty: 'minimumQty',
+  deliveryTime: 'deliveryTime',
+  validUntil: 'validUntil',
+  notes: 'notes',
+  isSelected: 'isSelected',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocalProductProcurementOfferScalarFieldEnum = (typeof LocalProductProcurementOfferScalarFieldEnum)[keyof typeof LocalProductProcurementOfferScalarFieldEnum]
 
 
 export const QuoteScalarFieldEnum = {
@@ -1907,6 +2011,20 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
+ * Reference to a field of type 'ProductProcurementStatus'
+ */
+export type EnumProductProcurementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductProcurementStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ProductProcurementStatus[]'
+ */
+export type ListEnumProductProcurementStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProductProcurementStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'QuoteStatus'
  */
 export type EnumQuoteStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteStatus'>
@@ -2160,6 +2278,7 @@ export type GlobalOmitConfig = {
   customer?: Prisma.CustomerOmit
   customerContact?: Prisma.CustomerContactOmit
   product?: Prisma.ProductOmit
+  localProductProcurementOffer?: Prisma.LocalProductProcurementOfferOmit
   quote?: Prisma.QuoteOmit
   quoteItem?: Prisma.QuoteItemOmit
   quoteEvent?: Prisma.QuoteEventOmit

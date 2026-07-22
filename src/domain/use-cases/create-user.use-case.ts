@@ -17,8 +17,8 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(dto: CreateUserRequestDto, actor: CreateUserActorContext): Promise<UserResponseDto> {
-    if (actor.role === "MANAGER" && dto.role === "ADMIN") {
-      throw new Error("MANAGER cannot assign ADMIN role.");
+    if (actor.role === "MANAGER" && (dto.role === "ADMIN" || dto.role === "PURCHASING")) {
+      throw new Error("MANAGER cannot assign ADMIN or PURCHASING role.");
     }
 
     const branch = await this.branchRepository.findActiveByCode(dto.branchCode);

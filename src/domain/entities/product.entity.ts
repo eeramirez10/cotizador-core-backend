@@ -1,4 +1,4 @@
-import type { Currency, ProductSource } from "../../infrastructure/database/generated/enums";
+import type { Currency, ProductProcurementStatus, ProductSource } from "../../infrastructure/database/generated/enums";
 
 export interface ProductBranchSummary {
   id: string;
@@ -23,6 +23,11 @@ export interface ProductEntity {
   isActive: boolean;
   createdByUserId: string | null;
   updatedByUserId: string | null;
+  procurementStatus: ProductProcurementStatus;
+  procurementNotes: string | null;
+  selectedProcurementOfferId: string | null;
+  procurementUpdatedAt: Date | null;
+  procurementUpdatedByUserId: string | null;
   createdAt: Date;
   updatedAt: Date;
   branch: ProductBranchSummary | null;

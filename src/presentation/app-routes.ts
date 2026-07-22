@@ -8,6 +8,7 @@ import { QuotesRoutes } from "./quotes/quotes.routes";
 import { UsersRoutes } from "./users/users.routes";
 import { AnalyticsRoutes } from "./analytics/analytics.routes";
 import { QuoteCatalogsRoutes } from "./quote-catalogs/quote-catalogs.routes";
+import { LocalProductProcurementRoutes } from "./local-product-procurement/local-product-procurement.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -23,6 +24,7 @@ export class AppRoutes {
     router.use("/customers", CustomersRoutes.routes());
     router.use("/products", ProductsRoutes.routes());
     router.use("/local-products", LocalProductsRoutes.routes());
+    router.use("/local-product-procurement", LocalProductProcurementRoutes.routes());
     router.use("/quotes", QuotesRoutes.routes());
     router.use("/analytics", AnalyticsRoutes.routes());
     router.use("/quote-catalogs", QuoteCatalogsRoutes.routes());

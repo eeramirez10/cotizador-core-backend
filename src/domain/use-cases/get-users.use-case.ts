@@ -18,7 +18,9 @@ export class GetUsersUseCase {
 
   async execute(dto: GetUsersQueryRequestDto, actor: GetUsersActorContext): Promise<PaginatedUsersResponseDto> {
     let branchIdFilter: string | undefined;
-    const excludeRoles = actor.role === "MANAGER" ? ["ADMIN" as const] : undefined;
+    const excludeRoles = actor.role === "MANAGER"
+      ? ["ADMIN" as const, "PURCHASING" as const]
+      : undefined;
 
     if (actor.role === "MANAGER") {
       branchIdFilter = actor.branchId;
