@@ -6,6 +6,8 @@ import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-
 import { PrismaProductDatasource } from "../../infrastructure/datasources/prisma-product.datasource";
 import { BranchRepositoryImpl } from "../../infrastructure/repositories/branch.repository-impl";
 import { ProductRepositoryImpl } from "../../infrastructure/repositories/product.repository-impl";
+import { GptLocalProductSemanticAdapter } from "../../infrastructure/http/gpt-local-product-semantic.adapter";
+import { Envs } from "../../config/envs";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { ProductsController } from "./products.controller";
@@ -19,15 +21,22 @@ export class ProductsRoutes {
 
     const branchRepository = new BranchRepositoryImpl(branchDatasource);
     const productRepository = new ProductRepositoryImpl(productDatasource);
+    const semanticAdapter = new GptLocalProductSemanticAdapter(
+      Envs.gptLocalProductsUrl,
+      Envs.gptLocalProductsTimeoutMs,
+      Envs.gptLocalProductsApiKey,
+    );
 
     const getProductsUseCase = new GetProductsUseCase(productRepository, branchRepository);
     const createLocalTempProductUseCase = new CreateLocalTempProductUseCase(
       productRepository,
-      branchRepository
+      branchRepository,
+      semanticAdapter,
     );
     const createLocalProductsFromItemsUseCase = new CreateLocalProductsFromItemsUseCase(
       productRepository,
-      branchRepository
+      branchRepository,
+      semanticAdapter,
     );
 
     const controller = new ProductsController(

@@ -1,4 +1,5 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
+import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import { CreateLocalTempProductRequestDto } from "../dtos/request/create-local-temp-product-request.dto";
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
@@ -19,7 +20,8 @@ const normalizeText = (value: string): string =>
 export class CreateLocalTempProductUseCase {
   constructor(
     private readonly productRepository: ProductRepository,
-    private readonly branchRepository: BranchRepository
+    private readonly branchRepository: BranchRepository,
+    private readonly semanticPort: LocalProductSemanticPort,
   ) {}
 
   async execute(
@@ -38,9 +40,17 @@ export class CreateLocalTempProductUseCase {
       targetBranchId = branch.id;
     }
 
+    const description = normalizeText(dto.description);
+    const unit = normalizeText(dto.unit).toUpperCase();
+    const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({ description, unit });
+    if (existing) {
+      await this.semanticPort.upsert(existing);
+      return new ProductResponseDto(existing);
+    }
+
     const product = await this.productRepository.createLocalTemp({
-      description: normalizeText(dto.description),
-      unit: normalizeText(dto.unit).toUpperCase(),
+      description,
+      unit,
       currency: dto.currency,
       averageCost: dto.averageCost,
       lastCost: dto.lastCost,
@@ -50,6 +60,7 @@ export class CreateLocalTempProductUseCase {
       updatedByUserId: actor.id,
       branchId: targetBranchId,
     });
+    await this.semanticPort.upsert(product);
 
     return new ProductResponseDto(product);
   }

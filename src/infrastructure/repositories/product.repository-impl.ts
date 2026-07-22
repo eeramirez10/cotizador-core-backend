@@ -23,6 +23,14 @@ export class ProductRepositoryImpl implements ProductRepository {
     return this.datasource.findActiveLocalTempByDescriptionAndUnit(params);
   }
 
+  findActiveLocalTempsByIds(ids: string[]): Promise<ProductEntity[]> {
+    return this.datasource.findActiveLocalTempsByIds(ids);
+  }
+
+  findAllActiveLocalTemps(): Promise<ProductEntity[]> {
+    return this.datasource.findAllActiveLocalTemps();
+  }
+
   createLocalTemp(params: CreateLocalTempProductDatasourceParams): Promise<ProductEntity> {
     return this.datasource.createLocalTemp(params);
   }

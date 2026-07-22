@@ -51,7 +51,6 @@ export class PrismaProductDatasource implements ProductDatasource {
       where: {
         source: "LOCAL_TEMP",
         isActive: true,
-        branchId: params.branchId,
         description: {
           equals: params.description,
           mode: "insensitive",
@@ -67,6 +66,24 @@ export class PrismaProductDatasource implements ProductDatasource {
 
     if (!row) return null;
     return ProductMapper.toEntity(row);
+  }
+
+  async findActiveLocalTempsByIds(ids: string[]): Promise<ProductEntity[]> {
+    if (ids.length === 0) return [];
+    const rows = await prisma.product.findMany({
+      where: { id: { in: ids }, source: "LOCAL_TEMP", isActive: true },
+      include: productInclude,
+    });
+    return rows.map(ProductMapper.toEntity);
+  }
+
+  async findAllActiveLocalTemps(): Promise<ProductEntity[]> {
+    const rows = await prisma.product.findMany({
+      where: { source: "LOCAL_TEMP", isActive: true },
+      include: productInclude,
+      orderBy: [{ updatedAt: "asc" }, { id: "asc" }],
+    });
+    return rows.map(ProductMapper.toEntity);
   }
 
   async createLocalTemp(params: CreateLocalTempProductDatasourceParams): Promise<ProductEntity> {

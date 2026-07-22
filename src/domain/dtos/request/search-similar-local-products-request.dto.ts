@@ -1,0 +1,27 @@
+import { DEFAULT_MEASUREMENT_UNIT, isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+
+export class SearchSimilarLocalProductsRequestDto {
+  constructor(
+    public readonly description: string,
+    public readonly unit: string,
+    public readonly topK: number,
+  ) {}
+
+  static create(input: unknown): [string?, SearchSimilarLocalProductsRequestDto?] {
+    if (!input || typeof input !== "object") return ["Invalid request body."];
+    const body = input as Record<string, unknown>;
+    const description = typeof body.description === "string"
+      ? body.description.trim().replace(/\s+/g, " ").toUpperCase()
+      : "";
+    if (!description) return ["description is required."];
+    if (description.length > 500) return ["description must contain at most 500 characters."];
+
+    const unitCandidate = typeof body.unit === "string" ? body.unit.trim().toUpperCase() : "";
+    const unit = isAllowedMeasurementUnit(unitCandidate) ? unitCandidate : DEFAULT_MEASUREMENT_UNIT;
+    const topKCandidate = Number(body.topK);
+    const topK = Number.isInteger(topKCandidate) && topKCandidate >= 1 && topKCandidate <= 20
+      ? topKCandidate
+      : 8;
+    return [, new SearchSimilarLocalProductsRequestDto(description, unit, topK)];
+  }
+}
