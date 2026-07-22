@@ -2078,10 +2078,6 @@ export type EnumQuoteDeliveryStatusFieldUpdateOperationsInput = {
   set?: $Enums.QuoteDeliveryStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type EnumOrderGenerationStatusFieldUpdateOperationsInput = {
   set?: $Enums.OrderGenerationStatus
 }
@@ -2096,14 +2092,6 @@ export type EnumQuoteCaptureMethodFieldUpdateOperationsInput = {
 
 export type EnumQuoteSourceChannelFieldUpdateOperationsInput = {
   set?: $Enums.QuoteSourceChannel
-}
-
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type QuoteUpdateOneWithoutRevisionsNestedInput = {

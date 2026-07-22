@@ -12,7 +12,8 @@
 export const UserRole = {
   ADMIN: 'ADMIN',
   SELLER: 'SELLER',
-  MANAGER: 'MANAGER'
+  MANAGER: 'MANAGER',
+  PURCHASING: 'PURCHASING'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
@@ -40,6 +41,18 @@ export const ProductSource = {
 } as const
 
 export type ProductSource = (typeof ProductSource)[keyof typeof ProductSource]
+
+
+export const ProductProcurementStatus = {
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  QUOTING: 'QUOTING',
+  COSTED: 'COSTED',
+  PENDING_ERP: 'PENDING_ERP',
+  ERP_LINKED: 'ERP_LINKED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ProductProcurementStatus = (typeof ProductProcurementStatus)[keyof typeof ProductProcurementStatus]
 
 
 export const Currency = {

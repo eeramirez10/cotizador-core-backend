@@ -32,12 +32,12 @@ export class UpdateUserUseCase {
 
     if (!target) throw new Error("User not found.");
 
-    if (actor.role === "MANAGER" && target.role === "ADMIN") {
-      throw new Error("MANAGER cannot update ADMIN users.");
+    if (actor.role === "MANAGER" && (target.role === "ADMIN" || target.role === "PURCHASING")) {
+      throw new Error("MANAGER cannot update ADMIN or PURCHASING users.");
     }
 
-    if (actor.role === "MANAGER" && dto.role === "ADMIN") {
-      throw new Error("MANAGER cannot assign ADMIN role.");
+    if (actor.role === "MANAGER" && (dto.role === "ADMIN" || dto.role === "PURCHASING")) {
+      throw new Error("MANAGER cannot assign ADMIN or PURCHASING role.");
     }
 
     const branch = await this.branchRepository.findActiveByCode(dto.branchCode);

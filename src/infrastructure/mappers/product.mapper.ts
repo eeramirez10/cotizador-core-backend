@@ -27,6 +27,11 @@ interface ProductRow {
   isActive: boolean;
   createdByUserId: string | null;
   updatedByUserId: string | null;
+  procurementStatus: ProductEntity["procurementStatus"];
+  procurementNotes: string | null;
+  selectedProcurementOfferId: string | null;
+  procurementUpdatedAt: Date | null;
+  procurementUpdatedByUserId: string | null;
   createdAt: Date;
   updatedAt: Date;
   branch: {
@@ -55,6 +60,11 @@ export class ProductMapper {
       isActive: row.isActive,
       createdByUserId: row.createdByUserId,
       updatedByUserId: row.updatedByUserId,
+      procurementStatus: row.procurementStatus,
+      procurementNotes: row.procurementNotes,
+      selectedProcurementOfferId: row.selectedProcurementOfferId,
+      procurementUpdatedAt: row.procurementUpdatedAt,
+      procurementUpdatedByUserId: row.procurementUpdatedByUserId,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
       branch: row.branch

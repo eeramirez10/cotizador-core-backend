@@ -48,6 +48,11 @@ export type CustomerContact = Prisma.CustomerContactModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model LocalProductProcurementOffer
+ * 
+ */
+export type LocalProductProcurementOffer = Prisma.LocalProductProcurementOfferModel
+/**
  * Model Quote
  * 
  */

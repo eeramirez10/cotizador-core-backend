@@ -57,6 +57,7 @@ export const ModelName = {
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
   Product: 'Product',
+  LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
   QuoteEvent: 'QuoteEvent',
@@ -209,11 +210,40 @@ export const ProductScalarFieldEnum = {
   isActive: 'isActive',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
+  procurementStatus: 'procurementStatus',
+  procurementNotes: 'procurementNotes',
+  selectedProcurementOfferId: 'selectedProcurementOfferId',
+  procurementUpdatedAt: 'procurementUpdatedAt',
+  procurementUpdatedByUserId: 'procurementUpdatedByUserId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const LocalProductProcurementOfferScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  supplierName: 'supplierName',
+  contactName: 'contactName',
+  email: 'email',
+  phone: 'phone',
+  unitCost: 'unitCost',
+  currency: 'currency',
+  minimumQty: 'minimumQty',
+  deliveryTime: 'deliveryTime',
+  validUntil: 'validUntil',
+  notes: 'notes',
+  isSelected: 'isSelected',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LocalProductProcurementOfferScalarFieldEnum = (typeof LocalProductProcurementOfferScalarFieldEnum)[keyof typeof LocalProductProcurementOfferScalarFieldEnum]
 
 
 export const QuoteScalarFieldEnum = {
