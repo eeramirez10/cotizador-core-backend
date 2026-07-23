@@ -1610,6 +1610,7 @@ export const ProductScalarFieldEnum = {
   code: 'code',
   ean: 'ean',
   description: 'description',
+  canonicalDescription: 'canonicalDescription',
   unit: 'unit',
   currency: 'currency',
   averageCost: 'averageCost',

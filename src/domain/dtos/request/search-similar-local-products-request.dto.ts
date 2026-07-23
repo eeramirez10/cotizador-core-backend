@@ -1,4 +1,5 @@
 import { DEFAULT_MEASUREMENT_UNIT, isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { canonicalizeProductText } from "../../utils/canonical-product-text";
 
 export class SearchSimilarLocalProductsRequestDto {
   constructor(
@@ -11,7 +12,7 @@ export class SearchSimilarLocalProductsRequestDto {
     if (!input || typeof input !== "object") return ["Invalid request body."];
     const body = input as Record<string, unknown>;
     const description = typeof body.description === "string"
-      ? body.description.trim().replace(/\s+/g, " ").toUpperCase()
+      ? canonicalizeProductText(body.description)
       : "";
     if (!description) return ["description is required."];
     if (description.length > 500) return ["description must contain at most 500 characters."];

@@ -9,18 +9,13 @@ import { CreateLocalProductsFromItemsResponseDto } from "../dtos/response/create
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { ProductRepository } from "../repositories/product.repository";
+import { canonicalizeProductText, normalizeProductDisplayText } from "../utils/canonical-product-text";
 
 interface CreateLocalProductsFromItemsActorContext {
   id: string;
   role: UserRole;
   branchId: string;
 }
-
-const normalizeText = (value: string): string =>
-  value
-    .trim()
-    .replace(/\s+/g, " ")
-    .toUpperCase();
 
 export class CreateLocalProductsFromItemsUseCase {
   constructor(
@@ -52,14 +47,15 @@ export class CreateLocalProductsFromItemsUseCase {
     }> = [];
 
     for (const item of dto.items) {
-      const normalizedDescription = normalizeText(item.description);
-      const candidateUnit = normalizeText(item.unit || "").toUpperCase();
+      const normalizedDescription = normalizeProductDisplayText(item.description);
+      const canonicalDescription = canonicalizeProductText(item.description);
+      const candidateUnit = normalizeProductDisplayText(item.unit || "");
       const normalizedUnit = isAllowedMeasurementUnit(candidateUnit)
         ? candidateUnit
         : DEFAULT_MEASUREMENT_UNIT;
 
       const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({
-        description: normalizedDescription,
+        canonicalDescription,
         unit: normalizedUnit,
       });
 
@@ -75,6 +71,7 @@ export class CreateLocalProductsFromItemsUseCase {
 
       const created = await this.productRepository.createLocalTemp({
         description: normalizedDescription,
+        canonicalDescription,
         unit: normalizedUnit,
         currency: item.currency ?? dto.defaultCurrency,
         averageCost: item.averageCost,

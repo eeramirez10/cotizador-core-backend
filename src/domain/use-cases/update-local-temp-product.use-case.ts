@@ -3,18 +3,13 @@ import { LocalProductSemanticPort } from "../contracts/local-product-semantic.po
 import { UpdateLocalTempProductRequestDto } from "../dtos/request/update-local-temp-product-request.dto";
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
 import { ProductRepository } from "../repositories/product.repository";
+import { canonicalizeProductText, normalizeProductDisplayText } from "../utils/canonical-product-text";
 
 interface UpdateLocalTempProductActorContext {
   id: string;
   role: UserRole;
   branchId: string;
 }
-
-const normalizeText = (value: string): string =>
-  value
-    .trim()
-    .replace(/\s+/g, " ")
-    .toUpperCase();
 
 export class UpdateLocalTempProductUseCase {
   constructor(
@@ -34,10 +29,11 @@ export class UpdateLocalTempProductUseCase {
         branchId: actor.branchId,
       },
       data: {
-        code: typeof dto.code === "string" ? normalizeText(dto.code).toUpperCase() : dto.code,
-        ean: typeof dto.ean === "string" ? normalizeText(dto.ean).toUpperCase() : dto.ean,
-        description: typeof dto.description === "string" ? normalizeText(dto.description) : undefined,
-        unit: typeof dto.unit === "string" ? normalizeText(dto.unit).toUpperCase() : undefined,
+        code: typeof dto.code === "string" ? normalizeProductDisplayText(dto.code) : dto.code,
+        ean: typeof dto.ean === "string" ? normalizeProductDisplayText(dto.ean) : dto.ean,
+        description: typeof dto.description === "string" ? normalizeProductDisplayText(dto.description) : undefined,
+        canonicalDescription: typeof dto.description === "string" ? canonicalizeProductText(dto.description) : undefined,
+        unit: typeof dto.unit === "string" ? normalizeProductDisplayText(dto.unit) : undefined,
         currency: dto.currency,
         averageCost: dto.averageCost,
         lastCost: dto.lastCost,
