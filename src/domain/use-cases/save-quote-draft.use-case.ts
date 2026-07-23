@@ -59,7 +59,27 @@ export class SaveQuoteDraftUseCase {
         dto.quote.exchangeRate
       );
 
-      if (typeof item.unitPrice === "number" && typeof item.marginPct === "number") {
+      const sourceCurrency = dto.quote.captureMethod === "EXCEL_IMPORT"
+        ? item.sourceCurrency ?? dto.quote.currency
+        : null;
+      const sourceUnitPrice = dto.quote.captureMethod === "EXCEL_IMPORT"
+        ? typeof item.sourceUnitPrice === "number"
+          ? item.sourceUnitPrice
+          : typeof item.unitPrice === "number"
+            ? item.unitPrice
+            : 0
+        : null;
+      const sourceSubtotal = dto.quote.captureMethod === "EXCEL_IMPORT"
+        ? typeof item.sourceSubtotal === "number"
+          ? item.sourceSubtotal
+          : round4(item.qty * (sourceUnitPrice ?? 0))
+        : null;
+
+      if (dto.quote.captureMethod === "EXCEL_IMPORT") {
+        const importedUnitPrice = sourceUnitPrice ?? 0;
+        unitPrice = round4(convertQuoteAmount(importedUnitPrice, sourceCurrency!, dto.quote.currency, dto.quote.exchangeRate));
+        marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
+      } else if (typeof item.unitPrice === "number" && typeof item.marginPct === "number") {
         unitPrice = round4(item.unitPrice);
         marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
       } else if (typeof item.unitPrice === "number") {
@@ -103,6 +123,9 @@ export class SaveQuoteDraftUseCase {
         cost: round4(item.cost),
         costCurrency: item.costCurrency,
         marginPct,
+        sourceCurrency,
+        sourceUnitPrice: sourceUnitPrice === null ? null : round4(sourceUnitPrice),
+        sourceSubtotal: sourceSubtotal === null ? null : round4(sourceSubtotal),
         unitPrice,
         subtotal: round4(item.qty * unitPrice),
         sourceRequiresReview: item.sourceRequiresReview,

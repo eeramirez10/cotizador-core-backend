@@ -12,7 +12,7 @@ export class SearchSimilarLocalProductsUseCase {
 
   async execute(dto: SearchSimilarLocalProductsRequestDto): Promise<SimilarLocalProductsResponseDto> {
     const exact = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({
-      description: dto.description,
+      canonicalDescription: dto.description,
       unit: dto.unit,
     });
     if (exact) {

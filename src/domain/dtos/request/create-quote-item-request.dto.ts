@@ -15,6 +15,9 @@ interface CreateQuoteItemRequestDtoProps {
   cost: number;
   costCurrency: Currency;
   marginPct?: number;
+  sourceCurrency?: Currency | null;
+  sourceUnitPrice?: number | null;
+  sourceSubtotal?: number | null;
   unitPrice?: number;
   sourceRequiresReview: boolean;
   requiresReview: boolean;
@@ -35,6 +38,9 @@ export class CreateQuoteItemRequestDto {
   public readonly cost: number;
   public readonly costCurrency: Currency;
   public readonly marginPct?: number;
+  public readonly sourceCurrency?: Currency | null;
+  public readonly sourceUnitPrice?: number | null;
+  public readonly sourceSubtotal?: number | null;
   public readonly unitPrice?: number;
   public readonly sourceRequiresReview: boolean;
   public readonly requiresReview: boolean;
@@ -54,6 +60,9 @@ export class CreateQuoteItemRequestDto {
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.marginPct = props.marginPct;
+    this.sourceCurrency = props.sourceCurrency;
+    this.sourceUnitPrice = props.sourceUnitPrice;
+    this.sourceSubtotal = props.sourceSubtotal;
     this.unitPrice = props.unitPrice;
     this.sourceRequiresReview = props.sourceRequiresReview;
     this.requiresReview = props.requiresReview;
@@ -81,6 +90,8 @@ export class CreateQuoteItemRequestDto {
     }
 
     const marginPct = CreateQuoteItemRequestDto.parseOptionalNumber(body.marginPct);
+    const sourceUnitPrice = CreateQuoteItemRequestDto.parseOptionalNumber(body.sourceUnitPrice);
+    const sourceSubtotal = CreateQuoteItemRequestDto.parseOptionalNumber(body.sourceSubtotal);
     const unitPrice = CreateQuoteItemRequestDto.parseOptionalNumber(body.unitPrice);
     const stock = CreateQuoteItemRequestDto.parseOptionalNumber(body.stock);
 
@@ -92,6 +103,23 @@ export class CreateQuoteItemRequestDto {
     }
     if (typeof stock !== "undefined" && !Number.isFinite(stock)) {
       return ["stock is invalid."];
+    }
+    if (typeof sourceUnitPrice !== "undefined" && (!Number.isFinite(sourceUnitPrice) || sourceUnitPrice < 0)) {
+      return ["sourceUnitPrice is invalid."];
+    }
+    if (typeof sourceSubtotal !== "undefined" && (!Number.isFinite(sourceSubtotal) || sourceSubtotal < 0)) {
+      return ["sourceSubtotal is invalid."];
+    }
+
+    let sourceCurrency: Currency | null | undefined;
+    if (typeof body.sourceCurrency !== "undefined") {
+      if (body.sourceCurrency === null || body.sourceCurrency === "") {
+        sourceCurrency = null;
+      } else {
+        const raw = typeof body.sourceCurrency === "string" ? body.sourceCurrency.trim().toUpperCase() : "";
+        if (!Object.values(Currency).includes(raw as Currency)) return ["sourceCurrency is invalid."];
+        sourceCurrency = raw as Currency;
+      }
     }
 
     return [
@@ -111,6 +139,9 @@ export class CreateQuoteItemRequestDto {
         cost,
         costCurrency: costCurrencyRaw as Currency,
         marginPct,
+        sourceCurrency,
+        sourceUnitPrice: typeof sourceUnitPrice === "undefined" ? undefined : sourceUnitPrice,
+        sourceSubtotal: typeof sourceSubtotal === "undefined" ? undefined : sourceSubtotal,
         unitPrice,
         sourceRequiresReview: Boolean(body.sourceRequiresReview),
         requiresReview: Boolean(body.requiresReview),

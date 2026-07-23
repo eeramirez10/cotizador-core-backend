@@ -27,12 +27,13 @@ export interface FindProductsDatasourceResult {
 }
 
 export interface FindLocalTempByDescriptionAndUnitDatasourceParams {
-  description: string;
+  canonicalDescription: string;
   unit: string;
 }
 
 export interface CreateLocalTempProductDatasourceParams {
   description: string;
+  canonicalDescription: string;
   unit: string;
   currency: Currency;
   averageCost: number | null;
@@ -51,6 +52,7 @@ export interface UpdateLocalTempProductDatasourceParams {
     code?: string | null;
     ean?: string | null;
     description?: string;
+    canonicalDescription?: string;
     unit?: string;
     currency?: Currency;
     averageCost?: number | null;

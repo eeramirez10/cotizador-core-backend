@@ -51,8 +51,8 @@ export class PrismaProductDatasource implements ProductDatasource {
       where: {
         source: "LOCAL_TEMP",
         isActive: true,
-        description: {
-          equals: params.description,
+        canonicalDescription: {
+          equals: params.canonicalDescription,
           mode: "insensitive",
         },
         unit: {
@@ -95,6 +95,7 @@ export class PrismaProductDatasource implements ProductDatasource {
         code: null,
         ean: params.ean,
         description: params.description,
+        canonicalDescription: params.canonicalDescription,
         unit: params.unit,
         currency: params.currency,
         averageCost: params.averageCost,
@@ -130,6 +131,7 @@ export class PrismaProductDatasource implements ProductDatasource {
         code: params.data.code,
         ean: params.data.ean,
         description: params.data.description,
+        canonicalDescription: params.data.canonicalDescription,
         unit: params.data.unit,
         currency: params.data.currency,
         averageCost: params.data.averageCost,

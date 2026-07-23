@@ -4,18 +4,13 @@ import { CreateLocalTempProductRequestDto } from "../dtos/request/create-local-t
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { ProductRepository } from "../repositories/product.repository";
+import { canonicalizeProductText, normalizeProductDisplayText } from "../utils/canonical-product-text";
 
 interface CreateLocalTempProductActorContext {
   id: string;
   role: UserRole;
   branchId: string;
 }
-
-const normalizeText = (value: string): string =>
-  value
-    .trim()
-    .replace(/\s+/g, " ")
-    .toUpperCase();
 
 export class CreateLocalTempProductUseCase {
   constructor(
@@ -40,9 +35,10 @@ export class CreateLocalTempProductUseCase {
       targetBranchId = branch.id;
     }
 
-    const description = normalizeText(dto.description);
-    const unit = normalizeText(dto.unit).toUpperCase();
-    const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({ description, unit });
+    const description = normalizeProductDisplayText(dto.description);
+    const canonicalDescription = canonicalizeProductText(dto.description);
+    const unit = normalizeProductDisplayText(dto.unit);
+    const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({ canonicalDescription, unit });
     if (existing) {
       await this.semanticPort.upsert(existing);
       return new ProductResponseDto(existing);
@@ -50,6 +46,7 @@ export class CreateLocalTempProductUseCase {
 
     const product = await this.productRepository.createLocalTemp({
       description,
+      canonicalDescription,
       unit,
       currency: dto.currency,
       averageCost: dto.averageCost,
