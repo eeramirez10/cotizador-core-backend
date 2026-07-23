@@ -159,6 +159,9 @@ interface QuoteRow {
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
+    sourceCurrency: QuoteEntity["currency"] | null;
+    sourceUnitPrice: number | DecimalLike | null;
+    sourceSubtotal: number | DecimalLike | null;
     unitPrice: number | DecimalLike;
     subtotal: number | DecimalLike;
     sourceRequiresReview: boolean;
@@ -319,6 +322,9 @@ export class QuoteMapper {
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),
+        sourceCurrency: item.sourceCurrency,
+        sourceUnitPrice: toNumber(item.sourceUnitPrice),
+        sourceSubtotal: toNumber(item.sourceSubtotal),
         unitPrice: Number(toNumber(item.unitPrice)),
         subtotal: Number(toNumber(item.subtotal)),
         sourceRequiresReview: item.sourceRequiresReview,

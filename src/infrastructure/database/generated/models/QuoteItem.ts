@@ -31,6 +31,8 @@ export type QuoteItemAvgAggregateOutputType = {
   stock: runtime.Decimal | null
   cost: runtime.Decimal | null
   marginPct: runtime.Decimal | null
+  sourceUnitPrice: runtime.Decimal | null
+  sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
 }
@@ -40,6 +42,8 @@ export type QuoteItemSumAggregateOutputType = {
   stock: runtime.Decimal | null
   cost: runtime.Decimal | null
   marginPct: runtime.Decimal | null
+  sourceUnitPrice: runtime.Decimal | null
+  sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
 }
@@ -61,6 +65,9 @@ export type QuoteItemMinAggregateOutputType = {
   cost: runtime.Decimal | null
   costCurrency: $Enums.Currency | null
   marginPct: runtime.Decimal | null
+  sourceCurrency: $Enums.Currency | null
+  sourceUnitPrice: runtime.Decimal | null
+  sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   sourceRequiresReview: boolean | null
@@ -86,6 +93,9 @@ export type QuoteItemMaxAggregateOutputType = {
   cost: runtime.Decimal | null
   costCurrency: $Enums.Currency | null
   marginPct: runtime.Decimal | null
+  sourceCurrency: $Enums.Currency | null
+  sourceUnitPrice: runtime.Decimal | null
+  sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   sourceRequiresReview: boolean | null
@@ -111,6 +121,9 @@ export type QuoteItemCountAggregateOutputType = {
   cost: number
   costCurrency: number
   marginPct: number
+  sourceCurrency: number
+  sourceUnitPrice: number
+  sourceSubtotal: number
   unitPrice: number
   subtotal: number
   sourceRequiresReview: number
@@ -126,6 +139,8 @@ export type QuoteItemAvgAggregateInputType = {
   stock?: true
   cost?: true
   marginPct?: true
+  sourceUnitPrice?: true
+  sourceSubtotal?: true
   unitPrice?: true
   subtotal?: true
 }
@@ -135,6 +150,8 @@ export type QuoteItemSumAggregateInputType = {
   stock?: true
   cost?: true
   marginPct?: true
+  sourceUnitPrice?: true
+  sourceSubtotal?: true
   unitPrice?: true
   subtotal?: true
 }
@@ -156,6 +173,9 @@ export type QuoteItemMinAggregateInputType = {
   cost?: true
   costCurrency?: true
   marginPct?: true
+  sourceCurrency?: true
+  sourceUnitPrice?: true
+  sourceSubtotal?: true
   unitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
@@ -181,6 +201,9 @@ export type QuoteItemMaxAggregateInputType = {
   cost?: true
   costCurrency?: true
   marginPct?: true
+  sourceCurrency?: true
+  sourceUnitPrice?: true
+  sourceSubtotal?: true
   unitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
@@ -206,6 +229,9 @@ export type QuoteItemCountAggregateInputType = {
   cost?: true
   costCurrency?: true
   marginPct?: true
+  sourceCurrency?: true
+  sourceUnitPrice?: true
+  sourceSubtotal?: true
   unitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
@@ -318,6 +344,9 @@ export type QuoteItemGroupByOutputType = {
   cost: runtime.Decimal
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal
+  sourceCurrency: $Enums.Currency | null
+  sourceUnitPrice: runtime.Decimal | null
+  sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal
   subtotal: runtime.Decimal
   sourceRequiresReview: boolean
@@ -366,6 +395,9 @@ export type QuoteItemWhereInput = {
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -393,6 +425,9 @@ export type QuoteItemOrderByWithRelationInput = {
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
@@ -423,6 +458,9 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -450,6 +488,9 @@ export type QuoteItemOrderByWithAggregationInput = {
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
@@ -483,6 +524,9 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
   cost?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyWithAggregatesFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.EnumCurrencyNullableWithAggregatesFilter<"QuoteItem"> | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolWithAggregatesFilter<"QuoteItem"> | boolean
@@ -506,6 +550,9 @@ export type QuoteItemCreateInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -533,6 +580,9 @@ export type QuoteItemUncheckedCreateInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -556,6 +606,9 @@ export type QuoteItemUpdateInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -583,6 +636,9 @@ export type QuoteItemUncheckedUpdateInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -608,6 +664,9 @@ export type QuoteItemCreateManyInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -631,6 +690,9 @@ export type QuoteItemUpdateManyMutationInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -656,6 +718,9 @@ export type QuoteItemUncheckedUpdateManyInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -691,6 +756,9 @@ export type QuoteItemCountOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceCurrency?: Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
@@ -704,6 +772,8 @@ export type QuoteItemAvgOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
 }
@@ -725,6 +795,9 @@ export type QuoteItemMaxOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceCurrency?: Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
@@ -750,6 +823,9 @@ export type QuoteItemMinOrderByAggregateInput = {
   cost?: Prisma.SortOrder
   costCurrency?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceCurrency?: Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
@@ -763,6 +839,8 @@ export type QuoteItemSumOrderByAggregateInput = {
   stock?: Prisma.SortOrder
   cost?: Prisma.SortOrder
   marginPct?: Prisma.SortOrder
+  sourceUnitPrice?: Prisma.SortOrder
+  sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
 }
@@ -851,6 +929,10 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput = {
   deleteMany?: Prisma.QuoteItemScalarWhereInput | Prisma.QuoteItemScalarWhereInput[]
 }
 
+export type NullableEnumCurrencyFieldUpdateOperationsInput = {
+  set?: $Enums.Currency | null
+}
+
 export type QuoteItemCreateWithoutProductInput = {
   id?: string
   externalProductCode?: string | null
@@ -866,6 +948,9 @@ export type QuoteItemCreateWithoutProductInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -891,6 +976,9 @@ export type QuoteItemUncheckedCreateWithoutProductInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -945,6 +1033,9 @@ export type QuoteItemScalarWhereInput = {
   cost?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFilter<"QuoteItem"> | $Enums.Currency
   marginPct?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -968,6 +1059,9 @@ export type QuoteItemCreateWithoutQuoteInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -993,6 +1087,9 @@ export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -1043,6 +1140,9 @@ export type QuoteItemCreateManyProductInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -1066,6 +1166,9 @@ export type QuoteItemUpdateWithoutProductInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1091,6 +1194,9 @@ export type QuoteItemUncheckedUpdateWithoutProductInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1115,6 +1221,9 @@ export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1139,6 +1248,9 @@ export type QuoteItemCreateManyQuoteInput = {
   cost: runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency: $Enums.Currency
   marginPct: runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: $Enums.Currency | null
+  sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
@@ -1162,6 +1274,9 @@ export type QuoteItemUpdateWithoutQuoteInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1187,6 +1302,9 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1211,6 +1329,9 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
   cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   marginPct?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  sourceCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1238,6 +1359,9 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
+  sourceCurrency?: boolean
+  sourceUnitPrice?: boolean
+  sourceSubtotal?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
@@ -1265,6 +1389,9 @@ export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
+  sourceCurrency?: boolean
+  sourceUnitPrice?: boolean
+  sourceSubtotal?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
@@ -1292,6 +1419,9 @@ export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
+  sourceCurrency?: boolean
+  sourceUnitPrice?: boolean
+  sourceSubtotal?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
@@ -1319,6 +1449,9 @@ export type QuoteItemSelectScalar = {
   cost?: boolean
   costCurrency?: boolean
   marginPct?: boolean
+  sourceCurrency?: boolean
+  sourceUnitPrice?: boolean
+  sourceSubtotal?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
@@ -1327,7 +1460,7 @@ export type QuoteItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "cost" | "costCurrency" | "marginPct" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
+export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "cost" | "costCurrency" | "marginPct" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   product?: boolean | Prisma.QuoteItem$productArgs<ExtArgs>
@@ -1364,6 +1497,9 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     cost: runtime.Decimal
     costCurrency: $Enums.Currency
     marginPct: runtime.Decimal
+    sourceCurrency: $Enums.Currency | null
+    sourceUnitPrice: runtime.Decimal | null
+    sourceSubtotal: runtime.Decimal | null
     unitPrice: runtime.Decimal
     subtotal: runtime.Decimal
     sourceRequiresReview: boolean
@@ -1811,6 +1947,9 @@ export interface QuoteItemFieldRefs {
   readonly cost: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly costCurrency: Prisma.FieldRef<"QuoteItem", 'Currency'>
   readonly marginPct: Prisma.FieldRef<"QuoteItem", 'Decimal'>
+  readonly sourceCurrency: Prisma.FieldRef<"QuoteItem", 'Currency'>
+  readonly sourceUnitPrice: Prisma.FieldRef<"QuoteItem", 'Decimal'>
+  readonly sourceSubtotal: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly unitPrice: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly subtotal: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly sourceRequiresReview: Prisma.FieldRef<"QuoteItem", 'Boolean'>

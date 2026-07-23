@@ -75,6 +75,9 @@ export interface SaveQuoteDraftItemDatasourceData {
   cost: number;
   costCurrency: Currency;
   marginPct: number;
+  sourceCurrency: Currency | null;
+  sourceUnitPrice: number | null;
+  sourceSubtotal: number | null;
   unitPrice: number;
   subtotal: number;
   sourceRequiresReview: boolean;

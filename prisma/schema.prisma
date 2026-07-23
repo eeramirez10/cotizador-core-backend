@@ -442,28 +442,31 @@ model Quote {
 }
 
 model QuoteItem {
-  id                   String   @id @default(uuid()) @db.Uuid
-  quoteId              String   @map("quote_id") @db.Uuid
-  productId            String?  @map("product_id") @db.Uuid
-  externalProductCode  String?  @map("external_product_code") @db.VarChar(80)
-  ean                  String?  @db.VarChar(120)
-  customerDescription  String?  @map("customer_description") @db.VarChar(500)
-  customerUnit         String?  @map("customer_unit") @db.VarChar(30)
-  erpDescription       String?  @map("erp_description") @db.VarChar(500)
-  unit                 String   @db.VarChar(30)
-  qty                  Decimal  @db.Decimal(14, 4)
-  stock                Decimal? @db.Decimal(14, 4)
-  deliveryTime         String?  @map("delivery_time") @db.VarChar(80)
-  itemComment          String?  @map("item_comment") @db.VarChar(500)
-  cost                 Decimal  @db.Decimal(14, 4)
-  costCurrency         Currency @map("cost_currency")
-  marginPct            Decimal  @map("margin_pct") @db.Decimal(10, 4)
-  unitPrice            Decimal  @map("unit_price") @db.Decimal(14, 4)
-  subtotal             Decimal  @db.Decimal(14, 4)
-  sourceRequiresReview Boolean  @default(false) @map("source_requires_review")
-  requiresReview       Boolean  @default(false) @map("requires_review")
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
+  id                   String    @id @default(uuid()) @db.Uuid
+  quoteId              String    @map("quote_id") @db.Uuid
+  productId            String?   @map("product_id") @db.Uuid
+  externalProductCode  String?   @map("external_product_code") @db.VarChar(80)
+  ean                  String?   @db.VarChar(120)
+  customerDescription  String?   @map("customer_description") @db.VarChar(500)
+  customerUnit         String?   @map("customer_unit") @db.VarChar(30)
+  erpDescription       String?   @map("erp_description") @db.VarChar(500)
+  unit                 String    @db.VarChar(30)
+  qty                  Decimal   @db.Decimal(14, 4)
+  stock                Decimal?  @db.Decimal(14, 4)
+  deliveryTime         String?   @map("delivery_time") @db.VarChar(80)
+  itemComment          String?   @map("item_comment") @db.VarChar(500)
+  cost                 Decimal   @db.Decimal(14, 4)
+  costCurrency         Currency  @map("cost_currency")
+  marginPct            Decimal   @map("margin_pct") @db.Decimal(10, 4)
+  sourceCurrency       Currency? @map("source_currency")
+  sourceUnitPrice      Decimal?  @map("source_unit_price") @db.Decimal(14, 4)
+  sourceSubtotal       Decimal?  @map("source_subtotal") @db.Decimal(14, 4)
+  unitPrice            Decimal   @map("unit_price") @db.Decimal(14, 4)
+  subtotal             Decimal   @db.Decimal(14, 4)
+  sourceRequiresReview Boolean   @default(false) @map("source_requires_review")
+  requiresReview       Boolean   @default(false) @map("requires_review")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
 
   quote   Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
   product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
