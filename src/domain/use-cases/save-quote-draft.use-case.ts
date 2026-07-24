@@ -14,6 +14,15 @@ interface SaveQuoteDraftActorContext {
 }
 
 const round4 = (value: number): number => Number(value.toFixed(4));
+const isErpWithoutEnoughStock = (item: {
+  externalProductCode: string | null;
+  stock: number | null;
+  qty: number;
+}): boolean => {
+  return Boolean(item.externalProductCode?.trim())
+    && Math.max(0, item.stock ?? 0) < item.qty;
+};
+
 const buildQuoteNumber = (): string => {
   const now = new Date();
   const date = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, "0"), String(now.getDate()).padStart(2, "0")].join("");
@@ -162,7 +171,7 @@ export class SaveQuoteDraftUseCase {
       if (items.some((item) => item.unitPrice <= 0)) {
         throw new Error("All quote items must have a seller price before submitting for approval.");
       }
-      if (items.some((item) => item.marginPct < -0.0001)) {
+      if (items.some((item) => item.marginPct < -0.0001 && !isErpWithoutEnoughStock(item))) {
         throw new Error("Seller price cannot be lower than ERP cost.");
       }
       if (dto.quote.captureMethod !== "EXCEL_IMPORT") {
