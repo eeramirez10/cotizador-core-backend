@@ -38,6 +38,18 @@ export class Envs {
     return get("ERP_OUTBOX_DIR").default("storage/erp-outbox").asString();
   }
 
+  static get erpApiUrl(): string {
+    return get("ERP_API_URL").default("http://localhost:3500").asString();
+  }
+
+  static get erpProductsBasePath(): string {
+    return get("ERP_PRODUCTS_BASE_PATH").default("/api/erp/products").asString();
+  }
+
+  static get erpApiTimeoutMs(): number {
+    return get("ERP_API_TIMEOUT_MS").default("15000").asIntPositive();
+  }
+
   static get gptLocalProductsUrl(): string {
     return get("GPT_LOCAL_PRODUCTS_URL")
       .default("http://localhost:5500/api/local-products-semantic")

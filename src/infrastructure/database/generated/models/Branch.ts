@@ -298,6 +298,7 @@ export type BranchWhereInput = {
   quotes?: Prisma.QuoteListRelationFilter
   products?: Prisma.ProductListRelationFilter
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionListRelationFilter
+  purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
 }
 
 export type BranchOrderByWithRelationInput = {
@@ -324,6 +325,7 @@ export type BranchOrderByWithRelationInput = {
   quotes?: Prisma.QuoteOrderByRelationAggregateInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionOrderByRelationAggregateInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionOrderByRelationAggregateInput
 }
 
 export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -353,6 +355,7 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   quotes?: Prisma.QuoteListRelationFilter
   products?: Prisma.ProductListRelationFilter
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionListRelationFilter
+  purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
 }, "id" | "code">
 
 export type BranchOrderByWithAggregationInput = {
@@ -429,6 +432,7 @@ export type BranchCreateInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateInput = {
@@ -455,6 +459,7 @@ export type BranchUncheckedCreateInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUpdateInput = {
@@ -481,6 +486,7 @@ export type BranchUpdateInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateInput = {
@@ -507,6 +513,7 @@ export type BranchUncheckedUpdateInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyInput = {
@@ -727,6 +734,20 @@ export type BranchUpdateOneRequiredWithoutQuotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutQuotesInput, Prisma.BranchUpdateWithoutQuotesInput>, Prisma.BranchUncheckedUpdateWithoutQuotesInput>
 }
 
+export type BranchCreateNestedOneWithoutPurchaseRequisitionsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedCreateWithoutPurchaseRequisitionsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPurchaseRequisitionsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutPurchaseRequisitionsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedCreateWithoutPurchaseRequisitionsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPurchaseRequisitionsInput
+  upsert?: Prisma.BranchUpsertWithoutPurchaseRequisitionsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutPurchaseRequisitionsInput, Prisma.BranchUpdateWithoutPurchaseRequisitionsInput>, Prisma.BranchUncheckedUpdateWithoutPurchaseRequisitionsInput>
+}
+
 export type BranchCreateWithoutQuoteCatalogOptionsInput = {
   id?: string
   code: string
@@ -750,6 +771,7 @@ export type BranchCreateWithoutQuoteCatalogOptionsInput = {
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
@@ -775,6 +797,7 @@ export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuoteCatalogOptionsInput = {
@@ -816,6 +839,7 @@ export type BranchUpdateWithoutQuoteCatalogOptionsInput = {
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
@@ -841,6 +865,7 @@ export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutUsersInput = {
@@ -866,6 +891,7 @@ export type BranchCreateWithoutUsersInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutUsersInput = {
@@ -891,6 +917,7 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutUsersInput = {
@@ -932,6 +959,7 @@ export type BranchUpdateWithoutUsersInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutUsersInput = {
@@ -957,6 +985,7 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutProductsInput = {
@@ -982,6 +1011,7 @@ export type BranchCreateWithoutProductsInput = {
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutProductsInput = {
@@ -1007,6 +1037,7 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutProductsInput = {
@@ -1048,6 +1079,7 @@ export type BranchUpdateWithoutProductsInput = {
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutProductsInput = {
@@ -1073,6 +1105,7 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutQuotesInput = {
@@ -1098,6 +1131,7 @@ export type BranchCreateWithoutQuotesInput = {
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuotesInput = {
@@ -1123,6 +1157,7 @@ export type BranchUncheckedCreateWithoutQuotesInput = {
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuotesInput = {
@@ -1164,6 +1199,7 @@ export type BranchUpdateWithoutQuotesInput = {
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuotesInput = {
@@ -1189,6 +1225,127 @@ export type BranchUncheckedUpdateWithoutQuotesInput = {
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutPurchaseRequisitionsInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutPurchaseRequisitionsInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutPurchaseRequisitionsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedCreateWithoutPurchaseRequisitionsInput>
+}
+
+export type BranchUpsertWithoutPurchaseRequisitionsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedUpdateWithoutPurchaseRequisitionsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedCreateWithoutPurchaseRequisitionsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutPurchaseRequisitionsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutPurchaseRequisitionsInput, Prisma.BranchUncheckedUpdateWithoutPurchaseRequisitionsInput>
+}
+
+export type BranchUpdateWithoutPurchaseRequisitionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutPurchaseRequisitionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 
@@ -1201,6 +1358,7 @@ export type BranchCountOutputType = {
   quotes: number
   products: number
   quoteCatalogOptions: number
+  purchaseRequisitions: number
 }
 
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1208,6 +1366,7 @@ export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   quotes?: boolean | BranchCountOutputTypeCountQuotesArgs
   products?: boolean | BranchCountOutputTypeCountProductsArgs
   quoteCatalogOptions?: boolean | BranchCountOutputTypeCountQuoteCatalogOptionsArgs
+  purchaseRequisitions?: boolean | BranchCountOutputTypeCountPurchaseRequisitionsArgs
 }
 
 /**
@@ -1248,6 +1407,13 @@ export type BranchCountOutputTypeCountQuoteCatalogOptionsArgs<ExtArgs extends ru
   where?: Prisma.QuoteCatalogOptionWhereInput
 }
 
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountPurchaseRequisitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseRequisitionWhereInput
+}
+
 
 export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1273,6 +1439,7 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   quotes?: boolean | Prisma.Branch$quotesArgs<ExtArgs>
   products?: boolean | Prisma.Branch$productsArgs<ExtArgs>
   quoteCatalogOptions?: boolean | Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>
+  purchaseRequisitions?: boolean | Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1348,6 +1515,7 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quotes?: boolean | Prisma.Branch$quotesArgs<ExtArgs>
   products?: boolean | Prisma.Branch$productsArgs<ExtArgs>
   quoteCatalogOptions?: boolean | Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>
+  purchaseRequisitions?: boolean | Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1360,6 +1528,7 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     quotes: Prisma.$QuotePayload<ExtArgs>[]
     products: Prisma.$ProductPayload<ExtArgs>[]
     quoteCatalogOptions: Prisma.$QuoteCatalogOptionPayload<ExtArgs>[]
+    purchaseRequisitions: Prisma.$PurchaseRequisitionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1779,6 +1948,7 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   quotes<T extends Prisma.Branch$quotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   products<T extends Prisma.Branch$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quoteCatalogOptions<T extends Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteCatalogOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseRequisitions<T extends Prisma.Branch$purchaseRequisitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2308,6 +2478,30 @@ export type Branch$quoteCatalogOptionsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.QuoteCatalogOptionScalarFieldEnum | Prisma.QuoteCatalogOptionScalarFieldEnum[]
+}
+
+/**
+ * Branch.purchaseRequisitions
+ */
+export type Branch$purchaseRequisitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseRequisition
+   */
+  select?: Prisma.PurchaseRequisitionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseRequisition
+   */
+  omit?: Prisma.PurchaseRequisitionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseRequisitionInclude<ExtArgs> | null
+  where?: Prisma.PurchaseRequisitionWhereInput
+  orderBy?: Prisma.PurchaseRequisitionOrderByWithRelationInput | Prisma.PurchaseRequisitionOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseRequisitionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseRequisitionScalarFieldEnum | Prisma.PurchaseRequisitionScalarFieldEnum[]
 }
 
 /**

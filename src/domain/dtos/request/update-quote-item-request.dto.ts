@@ -12,6 +12,18 @@ interface UpdateQuoteItemRequestDtoProps {
   stock?: number | null;
   deliveryTime?: string | null;
   itemComment?: string | null;
+  sellerSupplierId?: string | null;
+  sellerSupplierNameSnapshot?: string | null;
+  sellerQuotedUnitCost?: number | null;
+  sellerQuotedCurrency?: Currency | null;
+  sellerQuotedBrand?: string | null;
+  sellerOriginRestrictions?: string[];
+  sellerDeliveryState?: string | null;
+  sellerSupplierDeliveryTime?: string | null;
+  purchaseStandard?: string | null;
+  purchaseDiameter?: string | null;
+  purchaseThickness?: string | null;
+  purchaseBore?: string | null;
   cost?: number;
   costCurrency?: Currency;
   marginPct?: number;
@@ -32,6 +44,18 @@ export class UpdateQuoteItemRequestDto {
   public readonly stock?: number | null;
   public readonly deliveryTime?: string | null;
   public readonly itemComment?: string | null;
+  public readonly sellerSupplierId?: string | null;
+  public readonly sellerSupplierNameSnapshot?: string | null;
+  public readonly sellerQuotedUnitCost?: number | null;
+  public readonly sellerQuotedCurrency?: Currency | null;
+  public readonly sellerQuotedBrand?: string | null;
+  public readonly sellerOriginRestrictions?: string[];
+  public readonly sellerDeliveryState?: string | null;
+  public readonly sellerSupplierDeliveryTime?: string | null;
+  public readonly purchaseStandard?: string | null;
+  public readonly purchaseDiameter?: string | null;
+  public readonly purchaseThickness?: string | null;
+  public readonly purchaseBore?: string | null;
   public readonly cost?: number;
   public readonly costCurrency?: Currency;
   public readonly marginPct?: number;
@@ -51,6 +75,18 @@ export class UpdateQuoteItemRequestDto {
     this.stock = props.stock;
     this.deliveryTime = props.deliveryTime;
     this.itemComment = props.itemComment;
+    this.sellerSupplierId = props.sellerSupplierId;
+    this.sellerSupplierNameSnapshot = props.sellerSupplierNameSnapshot;
+    this.sellerQuotedUnitCost = props.sellerQuotedUnitCost;
+    this.sellerQuotedCurrency = props.sellerQuotedCurrency;
+    this.sellerQuotedBrand = props.sellerQuotedBrand;
+    this.sellerOriginRestrictions = props.sellerOriginRestrictions;
+    this.sellerDeliveryState = props.sellerDeliveryState;
+    this.sellerSupplierDeliveryTime = props.sellerSupplierDeliveryTime;
+    this.purchaseStandard = props.purchaseStandard;
+    this.purchaseDiameter = props.purchaseDiameter;
+    this.purchaseThickness = props.purchaseThickness;
+    this.purchaseBore = props.purchaseBore;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.marginPct = props.marginPct;
@@ -97,6 +133,7 @@ export class UpdateQuoteItemRequestDto {
     const marginPct = UpdateQuoteItemRequestDto.parseOptionalNumber(body.marginPct);
     const unitPrice = UpdateQuoteItemRequestDto.parseOptionalNumber(body.unitPrice);
     const stock = UpdateQuoteItemRequestDto.parseOptionalNumber(body.stock);
+    const sellerQuotedUnitCost = UpdateQuoteItemRequestDto.parseOptionalNullableNumber(body.sellerQuotedUnitCost);
 
     if (typeof marginPct !== "undefined" && (!Number.isFinite(marginPct) || marginPct < -100)) {
       return ["marginPct is invalid."];
@@ -106,6 +143,29 @@ export class UpdateQuoteItemRequestDto {
     }
     if (typeof stock !== "undefined" && !Number.isFinite(stock)) {
       return ["stock is invalid."];
+    }
+    if (sellerQuotedUnitCost !== undefined && sellerQuotedUnitCost !== null && (!Number.isFinite(sellerQuotedUnitCost) || sellerQuotedUnitCost < 0)) {
+      return ["sellerQuotedUnitCost is invalid."];
+    }
+
+    let sellerQuotedCurrency: Currency | null | undefined;
+    if (typeof body.sellerQuotedCurrency !== "undefined") {
+      if (body.sellerQuotedCurrency === null || body.sellerQuotedCurrency === "") {
+        sellerQuotedCurrency = null;
+      } else {
+        const raw = typeof body.sellerQuotedCurrency === "string" ? body.sellerQuotedCurrency.trim().toUpperCase() : "";
+        if (!Object.values(Currency).includes(raw as Currency)) return ["sellerQuotedCurrency is invalid."];
+        sellerQuotedCurrency = raw as Currency;
+      }
+    }
+
+    let sellerOriginRestrictions: string[] | undefined;
+    if (typeof body.sellerOriginRestrictions !== "undefined") {
+      if (!Array.isArray(body.sellerOriginRestrictions)) return ["sellerOriginRestrictions must be an array."];
+      sellerOriginRestrictions = body.sellerOriginRestrictions
+        .filter((value): value is string => typeof value === "string")
+        .map((value) => value.trim())
+        .filter(Boolean);
     }
 
     return [
@@ -126,6 +186,18 @@ export class UpdateQuoteItemRequestDto {
         stock: typeof stock === "undefined" ? undefined : stock,
         deliveryTime: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.deliveryTime),
         itemComment: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.itemComment),
+        sellerSupplierId: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierId),
+        sellerSupplierNameSnapshot: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierNameSnapshot),
+        sellerQuotedUnitCost,
+        sellerQuotedCurrency,
+        sellerQuotedBrand: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerQuotedBrand),
+        sellerOriginRestrictions,
+        sellerDeliveryState: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerDeliveryState),
+        sellerSupplierDeliveryTime: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierDeliveryTime),
+        purchaseStandard: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseStandard),
+        purchaseDiameter: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseDiameter),
+        purchaseThickness: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseThickness),
+        purchaseBore: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseBore),
         cost,
         costCurrency,
         marginPct,
@@ -155,6 +227,12 @@ export class UpdateQuoteItemRequestDto {
 
   private static parseOptionalNumber(value: unknown): number | undefined {
     if (typeof value === "undefined" || value === null) return undefined;
+    return UpdateQuoteItemRequestDto.parseNumber(value);
+  }
+
+  private static parseOptionalNullableNumber(value: unknown): number | null | undefined {
+    if (typeof value === "undefined") return undefined;
+    if (value === null || value === "") return null;
     return UpdateQuoteItemRequestDto.parseNumber(value);
   }
 }

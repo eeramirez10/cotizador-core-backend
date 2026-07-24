@@ -540,9 +540,15 @@ export class QuotesController {
       message.startsWith("Invalid status transition") ||
       message === "Quote must contain at least one item before moving to QUOTED." ||
       message === "Quote source channel is required before moving to QUOTED." ||
+      message === "Commercial conditions are required before moving to QUOTED." ||
+      message === "All quote items must be linked to an ERP or local product before moving to QUOTED." ||
+      message === "All quote items must be reviewed before moving to QUOTED." ||
+      message === "All quote items must have a seller price before moving to QUOTED." ||
+      message === "Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item." ||
       message === "Rejection reason is required before moving to REJECTED." ||
       message === "Rejection comment is required when rejection reason is OTHER." ||
       message === "Quote must be APPROVED to generate order." ||
+      message === "Purchase requisition must be READY_FOR_ORDER before generating order." ||
       message === "Order was already generated for this quote." ||
       message === "Order cannot be generated while a quote revision is in progress." ||
       message === "Quote cannot be sent while a revision is in progress." ||

@@ -23,12 +23,14 @@ import { PrismaQuoteCatalogDatasource } from "../../infrastructure/datasources/p
 import { FileOrderGenerationDatasource } from "../../infrastructure/datasources/file-order-generation.datasource";
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
 import { PrismaUserDatasource } from "../../infrastructure/datasources/prisma-user.datasource";
+import { PrismaPurchaseRequisitionDatasource } from "../../infrastructure/datasources/prisma-purchase-requisition.datasource";
 import { BranchRepositoryImpl } from "../../infrastructure/repositories/branch.repository-impl";
 import { CustomerRepositoryImpl } from "../../infrastructure/repositories/customer.repository-impl";
 import { OrderGenerationRepositoryImpl } from "../../infrastructure/repositories/order-generation.repository-impl";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
 import { QuoteCatalogRepositoryImpl } from "../../infrastructure/repositories/quote-catalog.repository-impl";
 import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repository-impl";
+import { PurchaseRequisitionRepositoryImpl } from "../../infrastructure/repositories/purchase-requisition.repository-impl";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { QuotesController } from "./quotes.controller";
@@ -49,6 +51,9 @@ export class QuotesRoutes {
     const quoteCatalogRepository = new QuoteCatalogRepositoryImpl(new PrismaQuoteCatalogDatasource());
     const userRepository = new UserRepositoryImpl(userDatasource);
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
+    const purchaseRequisitionRepository = new PurchaseRequisitionRepositoryImpl(
+      new PrismaPurchaseRequisitionDatasource()
+    );
 
     const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository, userRepository);
     const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(quoteRepository, customerRepository, userRepository);
@@ -69,7 +74,11 @@ export class QuotesRoutes {
     const matchQuoteItemErpUseCase = new MatchQuoteItemErpUseCase(quoteRepository);
     const updateQuoteItemUseCase = new UpdateQuoteItemUseCase(quoteRepository);
     const deleteQuoteItemUseCase = new DeleteQuoteItemUseCase(quoteRepository);
-    const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(quoteRepository, quoteCatalogRepository);
+    const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(
+      quoteRepository,
+      quoteCatalogRepository,
+      purchaseRequisitionRepository
+    );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,
@@ -77,7 +86,8 @@ export class QuotesRoutes {
     );
     const generateQuoteOrderUseCase = new GenerateQuoteOrderUseCase(
       quoteRepository,
-      orderGenerationRepository
+      orderGenerationRepository,
+      purchaseRequisitionRepository
     );
 
     const controller = new QuotesController(

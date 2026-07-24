@@ -4,6 +4,7 @@ import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
+import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -30,7 +31,8 @@ const isTransitionAllowed = (from: QuoteStatus, to: QuoteStatus): boolean => {
 export class ChangeQuoteStatusUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
-    private readonly quoteCatalogRepository: QuoteCatalogRepository
+    private readonly quoteCatalogRepository: QuoteCatalogRepository,
+    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository
   ) {}
 
   async execute(
@@ -56,7 +58,13 @@ export class ChangeQuoteStatusUseCase {
       throw new Error("Quote status cannot change while a revision is in progress.");
     }
 
-    if (quote.status === dto.status) throw new Error("Quote is already in the requested status.");
+    if (quote.status === dto.status) {
+      if (dto.status === "APPROVED") {
+        await this.purchaseRequisitionRepository.ensureForApprovedQuote(quote);
+        return new QuoteResponseDto(quote);
+      }
+      throw new Error("Quote is already in the requested status.");
+    }
     if (!isTransitionAllowed(quote.status, dto.status)) {
       throw new Error(`Invalid status transition from ${quote.status} to ${dto.status}.`);
     }
@@ -96,6 +104,24 @@ export class ChangeQuoteStatusUseCase {
       if (itemsWithoutSellerPrice.length > 0) {
         throw new Error("All quote items must have a seller price before moving to QUOTED.");
       }
+
+      if (quote.captureMethod !== "EXCEL_IMPORT") {
+        const incompleteProcurementItems = quote.items.filter((item) => {
+          const hasErpCode = Boolean(item.externalProductCode?.trim());
+          const isLocalProduct = !hasErpCode && Boolean(item.productId);
+          const needsPurchase = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
+          if (!needsPurchase) return false;
+          return !item.sellerSupplierNameSnapshot?.trim()
+            || item.sellerQuotedUnitCost === null
+            || item.sellerQuotedUnitCost <= 0
+            || !item.sellerQuotedCurrency
+            || !item.sellerDeliveryState?.trim()
+            || !item.sellerSupplierDeliveryTime?.trim();
+        });
+        if (incompleteProcurementItems.length > 0) {
+          throw new Error("Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item.");
+        }
+      }
     }
 
     const updatedQuote = await this.quoteRepository.changeStatus({
@@ -124,6 +150,9 @@ export class ChangeQuoteStatusUseCase {
     });
 
     if (!updatedQuote) throw new Error("Quote not found.");
+    if (updatedQuote.status === "APPROVED") {
+      await this.purchaseRequisitionRepository.ensureForApprovedQuote(updatedQuote);
+    }
     return new QuoteResponseDto(updatedQuote);
   }
 

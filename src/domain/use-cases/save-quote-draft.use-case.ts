@@ -120,6 +120,18 @@ export class SaveQuoteDraftUseCase {
         stock: item.stock === null ? null : round4(item.stock),
         deliveryTime: item.deliveryTime,
         itemComment: item.itemComment,
+        sellerSupplierId: item.sellerSupplierId,
+        sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
+        sellerQuotedUnitCost: item.sellerQuotedUnitCost === null ? null : round4(item.sellerQuotedUnitCost),
+        sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedBrand: item.sellerQuotedBrand,
+        sellerOriginRestrictions: item.sellerOriginRestrictions,
+        sellerDeliveryState: item.sellerDeliveryState,
+        sellerSupplierDeliveryTime: item.sellerSupplierDeliveryTime,
+        purchaseStandard: item.purchaseStandard,
+        purchaseDiameter: item.purchaseDiameter,
+        purchaseThickness: item.purchaseThickness,
+        purchaseBore: item.purchaseBore,
         cost: round4(item.cost),
         costCurrency: item.costCurrency,
         marginPct,
@@ -152,6 +164,23 @@ export class SaveQuoteDraftUseCase {
       }
       if (items.some((item) => item.marginPct < -0.0001)) {
         throw new Error("Seller price cannot be lower than ERP cost.");
+      }
+      if (dto.quote.captureMethod !== "EXCEL_IMPORT") {
+        const incompletePurchaseData = items.filter((item) => {
+          const hasErpCode = Boolean(item.externalProductCode?.trim());
+          const isLocalProduct = !hasErpCode && Boolean(item.productId);
+          const requiresPurchasing = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
+          if (!requiresPurchasing) return false;
+          return !item.sellerSupplierNameSnapshot?.trim()
+            || !item.sellerQuotedCurrency
+            || item.sellerQuotedUnitCost === null
+            || item.sellerQuotedUnitCost <= 0
+            || !item.sellerDeliveryState?.trim()
+            || !item.sellerSupplierDeliveryTime?.trim();
+        });
+        if (incompletePurchaseData.length > 0) {
+          throw new Error("Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item.");
+        }
       }
     }
 

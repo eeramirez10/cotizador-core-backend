@@ -156,6 +156,18 @@ interface QuoteRow {
     stock: number | DecimalLike | null;
     deliveryTime: string | null;
     itemComment: string | null;
+    sellerSupplierId: string | null;
+    sellerSupplierNameSnapshot: string | null;
+    sellerQuotedUnitCost: number | DecimalLike | null;
+    sellerQuotedCurrency: QuoteEntity["currency"] | null;
+    sellerQuotedBrand: string | null;
+    sellerOriginRestrictions: string[];
+    sellerDeliveryState: string | null;
+    sellerSupplierDeliveryTime: string | null;
+    purchaseStandard: string | null;
+    purchaseDiameter: string | null;
+    purchaseThickness: string | null;
+    purchaseBore: string | null;
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
@@ -319,6 +331,18 @@ export class QuoteMapper {
         stock: toNumber(item.stock),
         deliveryTime: item.deliveryTime,
         itemComment: item.itemComment,
+        sellerSupplierId: item.sellerSupplierId,
+        sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
+        sellerQuotedUnitCost: toNumber(item.sellerQuotedUnitCost),
+        sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedBrand: item.sellerQuotedBrand,
+        sellerOriginRestrictions: item.sellerOriginRestrictions,
+        sellerDeliveryState: item.sellerDeliveryState,
+        sellerSupplierDeliveryTime: item.sellerSupplierDeliveryTime,
+        purchaseStandard: item.purchaseStandard,
+        purchaseDiameter: item.purchaseDiameter,
+        purchaseThickness: item.purchaseThickness,
+        purchaseBore: item.purchaseBore,
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),

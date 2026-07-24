@@ -55,6 +55,65 @@ export const ProductProcurementStatus = {
 export type ProductProcurementStatus = (typeof ProductProcurementStatus)[keyof typeof ProductProcurementStatus]
 
 
+export const SupplierSource = {
+  ERP: 'ERP',
+  LOCAL: 'LOCAL'
+} as const
+
+export type SupplierSource = (typeof SupplierSource)[keyof typeof SupplierSource]
+
+
+export const SupplierScope = {
+  NATIONAL: 'NATIONAL',
+  INTERNATIONAL: 'INTERNATIONAL'
+} as const
+
+export type SupplierScope = (typeof SupplierScope)[keyof typeof SupplierScope]
+
+
+export const PurchaseRequisitionStatus = {
+  DRAFT: 'DRAFT',
+  SUBMITTED: 'SUBMITTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  PARTIALLY_QUOTED: 'PARTIALLY_QUOTED',
+  COST_REVIEW: 'COST_REVIEW',
+  READY_FOR_ORDER: 'READY_FOR_ORDER',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type PurchaseRequisitionStatus = (typeof PurchaseRequisitionStatus)[keyof typeof PurchaseRequisitionStatus]
+
+
+export const PurchaseRequisitionItemStatus = {
+  PENDING: 'PENDING',
+  QUOTING: 'QUOTING',
+  OFFER_SELECTED: 'OFFER_SELECTED',
+  PENDING_ERP_CODE: 'PENDING_ERP_CODE',
+  READY: 'READY',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type PurchaseRequisitionItemStatus = (typeof PurchaseRequisitionItemStatus)[keyof typeof PurchaseRequisitionItemStatus]
+
+
+export const PurchaseItemSource = {
+  ERP_NO_STOCK: 'ERP_NO_STOCK',
+  LOCAL_NEW: 'LOCAL_NEW'
+} as const
+
+export type PurchaseItemSource = (typeof PurchaseItemSource)[keyof typeof PurchaseItemSource]
+
+
+export const PurchaseCostSource = {
+  ERP_COST: 'ERP_COST',
+  SELLER_SUPPLIER_QUOTE: 'SELLER_SUPPLIER_QUOTE',
+  ESTIMATED: 'ESTIMATED'
+} as const
+
+export type PurchaseCostSource = (typeof PurchaseCostSource)[keyof typeof PurchaseCostSource]
+
+
 export const Currency = {
   MXN: 'MXN',
   USD: 'USD'
@@ -86,7 +145,10 @@ export const QuoteCatalogType = {
   REVISION_REASON: 'REVISION_REASON',
   REJECTION_REASON: 'REJECTION_REASON',
   CANCELLATION_REASON: 'CANCELLATION_REASON',
-  APPROVAL_RETURN_REASON: 'APPROVAL_RETURN_REASON'
+  APPROVAL_RETURN_REASON: 'APPROVAL_RETURN_REASON',
+  PURCHASE_BRAND: 'PURCHASE_BRAND',
+  ORIGIN_RESTRICTION: 'ORIGIN_RESTRICTION',
+  DELIVERY_STATE: 'DELIVERY_STATE'
 } as const
 
 export type QuoteCatalogType = (typeof QuoteCatalogType)[keyof typeof QuoteCatalogType]

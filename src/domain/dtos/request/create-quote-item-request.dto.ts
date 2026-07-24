@@ -12,6 +12,18 @@ interface CreateQuoteItemRequestDtoProps {
   stock: number | null;
   deliveryTime: string | null;
   itemComment: string | null;
+  sellerSupplierId: string | null;
+  sellerSupplierNameSnapshot: string | null;
+  sellerQuotedUnitCost: number | null;
+  sellerQuotedCurrency: Currency | null;
+  sellerQuotedBrand: string | null;
+  sellerOriginRestrictions: string[];
+  sellerDeliveryState: string | null;
+  sellerSupplierDeliveryTime: string | null;
+  purchaseStandard: string | null;
+  purchaseDiameter: string | null;
+  purchaseThickness: string | null;
+  purchaseBore: string | null;
   cost: number;
   costCurrency: Currency;
   marginPct?: number;
@@ -35,6 +47,18 @@ export class CreateQuoteItemRequestDto {
   public readonly stock: number | null;
   public readonly deliveryTime: string | null;
   public readonly itemComment: string | null;
+  public readonly sellerSupplierId: string | null;
+  public readonly sellerSupplierNameSnapshot: string | null;
+  public readonly sellerQuotedUnitCost: number | null;
+  public readonly sellerQuotedCurrency: Currency | null;
+  public readonly sellerQuotedBrand: string | null;
+  public readonly sellerOriginRestrictions: string[];
+  public readonly sellerDeliveryState: string | null;
+  public readonly sellerSupplierDeliveryTime: string | null;
+  public readonly purchaseStandard: string | null;
+  public readonly purchaseDiameter: string | null;
+  public readonly purchaseThickness: string | null;
+  public readonly purchaseBore: string | null;
   public readonly cost: number;
   public readonly costCurrency: Currency;
   public readonly marginPct?: number;
@@ -57,6 +81,18 @@ export class CreateQuoteItemRequestDto {
     this.stock = props.stock;
     this.deliveryTime = props.deliveryTime;
     this.itemComment = props.itemComment;
+    this.sellerSupplierId = props.sellerSupplierId;
+    this.sellerSupplierNameSnapshot = props.sellerSupplierNameSnapshot;
+    this.sellerQuotedUnitCost = props.sellerQuotedUnitCost;
+    this.sellerQuotedCurrency = props.sellerQuotedCurrency;
+    this.sellerQuotedBrand = props.sellerQuotedBrand;
+    this.sellerOriginRestrictions = props.sellerOriginRestrictions;
+    this.sellerDeliveryState = props.sellerDeliveryState;
+    this.sellerSupplierDeliveryTime = props.sellerSupplierDeliveryTime;
+    this.purchaseStandard = props.purchaseStandard;
+    this.purchaseDiameter = props.purchaseDiameter;
+    this.purchaseThickness = props.purchaseThickness;
+    this.purchaseBore = props.purchaseBore;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.marginPct = props.marginPct;
@@ -94,6 +130,7 @@ export class CreateQuoteItemRequestDto {
     const sourceSubtotal = CreateQuoteItemRequestDto.parseOptionalNumber(body.sourceSubtotal);
     const unitPrice = CreateQuoteItemRequestDto.parseOptionalNumber(body.unitPrice);
     const stock = CreateQuoteItemRequestDto.parseOptionalNumber(body.stock);
+    const sellerQuotedUnitCost = CreateQuoteItemRequestDto.parseOptionalNumber(body.sellerQuotedUnitCost);
 
     if (typeof marginPct !== "undefined" && (!Number.isFinite(marginPct) || marginPct < -100)) {
       return ["marginPct is invalid."];
@@ -110,6 +147,9 @@ export class CreateQuoteItemRequestDto {
     if (typeof sourceSubtotal !== "undefined" && (!Number.isFinite(sourceSubtotal) || sourceSubtotal < 0)) {
       return ["sourceSubtotal is invalid."];
     }
+    if (typeof sellerQuotedUnitCost !== "undefined" && (!Number.isFinite(sellerQuotedUnitCost) || sellerQuotedUnitCost < 0)) {
+      return ["sellerQuotedUnitCost is invalid."];
+    }
 
     let sourceCurrency: Currency | null | undefined;
     if (typeof body.sourceCurrency !== "undefined") {
@@ -121,6 +161,19 @@ export class CreateQuoteItemRequestDto {
         sourceCurrency = raw as Currency;
       }
     }
+
+    let sellerQuotedCurrency: Currency | null = null;
+    if (body.sellerQuotedCurrency !== undefined && body.sellerQuotedCurrency !== null && body.sellerQuotedCurrency !== "") {
+      const raw = typeof body.sellerQuotedCurrency === "string" ? body.sellerQuotedCurrency.trim().toUpperCase() : "";
+      if (!Object.values(Currency).includes(raw as Currency)) return ["sellerQuotedCurrency is invalid."];
+      sellerQuotedCurrency = raw as Currency;
+    }
+    const sellerOriginRestrictions = Array.isArray(body.sellerOriginRestrictions)
+      ? [...new Set(body.sellerOriginRestrictions
+          .filter((value): value is string => typeof value === "string")
+          .map((value) => value.trim().toUpperCase())
+          .filter(Boolean))]
+      : [];
 
     return [
       ,
@@ -136,6 +189,18 @@ export class CreateQuoteItemRequestDto {
         stock: typeof stock === "undefined" ? null : stock,
         deliveryTime: CreateQuoteItemRequestDto.normalizeNullableString(body.deliveryTime),
         itemComment: CreateQuoteItemRequestDto.normalizeNullableString(body.itemComment),
+        sellerSupplierId: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierId),
+        sellerSupplierNameSnapshot: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierNameSnapshot),
+        sellerQuotedUnitCost: typeof sellerQuotedUnitCost === "undefined" ? null : sellerQuotedUnitCost,
+        sellerQuotedCurrency,
+        sellerQuotedBrand: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerQuotedBrand),
+        sellerOriginRestrictions,
+        sellerDeliveryState: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerDeliveryState),
+        sellerSupplierDeliveryTime: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierDeliveryTime),
+        purchaseStandard: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseStandard),
+        purchaseDiameter: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseDiameter),
+        purchaseThickness: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseThickness),
+        purchaseBore: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseBore),
         cost,
         costCurrency: costCurrencyRaw as Currency,
         marginPct,

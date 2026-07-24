@@ -85,6 +85,26 @@ export type Quote = Prisma.QuoteModel
  */
 export type QuoteItem = Prisma.QuoteItemModel
 /**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model PurchaseRequisition
+ * 
+ */
+export type PurchaseRequisition = Prisma.PurchaseRequisitionModel
+/**
+ * Model PurchaseRequisitionItem
+ * 
+ */
+export type PurchaseRequisitionItem = Prisma.PurchaseRequisitionItemModel
+/**
+ * Model PurchaseSupplierOffer
+ * 
+ */
+export type PurchaseSupplierOffer = Prisma.PurchaseSupplierOfferModel
+/**
  * Model QuoteEvent
  * 
  */

@@ -60,6 +60,10 @@ export const ModelName = {
   LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
+  Supplier: 'Supplier',
+  PurchaseRequisition: 'PurchaseRequisition',
+  PurchaseRequisitionItem: 'PurchaseRequisitionItem',
+  PurchaseSupplierOffer: 'PurchaseSupplierOffer',
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   QuoteOrderExport: 'QuoteOrderExport',
@@ -324,6 +328,18 @@ export const QuoteItemScalarFieldEnum = {
   stock: 'stock',
   deliveryTime: 'deliveryTime',
   itemComment: 'itemComment',
+  sellerSupplierId: 'sellerSupplierId',
+  sellerSupplierNameSnapshot: 'sellerSupplierNameSnapshot',
+  sellerQuotedUnitCost: 'sellerQuotedUnitCost',
+  sellerQuotedCurrency: 'sellerQuotedCurrency',
+  sellerQuotedBrand: 'sellerQuotedBrand',
+  sellerOriginRestrictions: 'sellerOriginRestrictions',
+  sellerDeliveryState: 'sellerDeliveryState',
+  sellerSupplierDeliveryTime: 'sellerSupplierDeliveryTime',
+  purchaseStandard: 'purchaseStandard',
+  purchaseDiameter: 'purchaseDiameter',
+  purchaseThickness: 'purchaseThickness',
+  purchaseBore: 'purchaseBore',
   cost: 'cost',
   costCurrency: 'costCurrency',
   marginPct: 'marginPct',
@@ -339,6 +355,117 @@ export const QuoteItemScalarFieldEnum = {
 } as const
 
 export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
+
+
+export const SupplierScalarFieldEnum = {
+  id: 'id',
+  erpCode: 'erpCode',
+  name: 'name',
+  canonicalName: 'canonicalName',
+  source: 'source',
+  scope: 'scope',
+  country: 'country',
+  contactName: 'contactName',
+  email: 'email',
+  phone: 'phone',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum]
+
+
+export const PurchaseRequisitionScalarFieldEnum = {
+  id: 'id',
+  requisitionNumber: 'requisitionNumber',
+  quoteId: 'quoteId',
+  branchId: 'branchId',
+  requestedByUserId: 'requestedByUserId',
+  assignedBuyerUserId: 'assignedBuyerUserId',
+  costApprovedByUserId: 'costApprovedByUserId',
+  status: 'status',
+  deliveryState: 'deliveryState',
+  deliveryPlace: 'deliveryPlace',
+  notes: 'notes',
+  submittedAt: 'submittedAt',
+  completedAt: 'completedAt',
+  costApprovedAt: 'costApprovedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseRequisitionScalarFieldEnum = (typeof PurchaseRequisitionScalarFieldEnum)[keyof typeof PurchaseRequisitionScalarFieldEnum]
+
+
+export const PurchaseRequisitionItemScalarFieldEnum = {
+  id: 'id',
+  requisitionId: 'requisitionId',
+  quoteItemId: 'quoteItemId',
+  position: 'position',
+  productId: 'productId',
+  source: 'source',
+  erpCode: 'erpCode',
+  erpEan: 'erpEan',
+  erpLinkedAt: 'erpLinkedAt',
+  erpLinkedByUserId: 'erpLinkedByUserId',
+  qty: 'qty',
+  unit: 'unit',
+  description: 'description',
+  standard: 'standard',
+  diameter: 'diameter',
+  thickness: 'thickness',
+  bore: 'bore',
+  sellerUnitCost: 'sellerUnitCost',
+  sellerCurrency: 'sellerCurrency',
+  sellerExchangeRate: 'sellerExchangeRate',
+  sellerCostSource: 'sellerCostSource',
+  sellerSupplierId: 'sellerSupplierId',
+  sellerSupplierName: 'sellerSupplierName',
+  sellerBrand: 'sellerBrand',
+  originRestrictions: 'originRestrictions',
+  sellerDeliveryTime: 'sellerDeliveryTime',
+  deliveryPlace: 'deliveryPlace',
+  status: 'status',
+  selectedOfferId: 'selectedOfferId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseRequisitionItemScalarFieldEnum = (typeof PurchaseRequisitionItemScalarFieldEnum)[keyof typeof PurchaseRequisitionItemScalarFieldEnum]
+
+
+export const PurchaseSupplierOfferScalarFieldEnum = {
+  id: 'id',
+  requisitionItemId: 'requisitionItemId',
+  supplierId: 'supplierId',
+  qty: 'qty',
+  unitCost: 'unitCost',
+  currency: 'currency',
+  exchangeRate: 'exchangeRate',
+  subtotal: 'subtotal',
+  taxRate: 'taxRate',
+  tax: 'tax',
+  total: 'total',
+  brand: 'brand',
+  origin: 'origin',
+  deliveryTime: 'deliveryTime',
+  validUntil: 'validUntil',
+  quoteDate: 'quoteDate',
+  sentAt: 'sentAt',
+  externalReference: 'externalReference',
+  notes: 'notes',
+  isSelected: 'isSelected',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
 
 
 export const QuoteEventScalarFieldEnum = {

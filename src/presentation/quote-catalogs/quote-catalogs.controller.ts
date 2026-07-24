@@ -71,7 +71,7 @@ export class QuoteCatalogsController {
 
   private handleError(res: Response, error: unknown, fallback: string): void {
     const message = error instanceof Error ? error.message : fallback;
-    if (["Catalog option not found.", "You can only manage catalog options from your branch.", "Catalog option type and code cannot be changed.", "Catalog option code already exists in this scope."].includes(message)) {
+    if (["Catalog option not found.", "You can only manage catalog options from your branch.", "Catalog option type and code cannot be changed.", "Catalog option code already exists in this scope.", "PURCHASING can only manage procurement catalog options.", "Procurement catalog options are managed by ADMIN or PURCHASING."].includes(message)) {
       res.status(message === "Catalog option not found." ? 404 : message.includes("already exists") ? 409 : 403).json({ error: message });
       return;
     }

@@ -23,6 +23,18 @@ export interface QuoteItemEntity {
   stock: number | null;
   deliveryTime: string | null;
   itemComment: string | null;
+  sellerSupplierId: string | null;
+  sellerSupplierNameSnapshot: string | null;
+  sellerQuotedUnitCost: number | null;
+  sellerQuotedCurrency: Currency | null;
+  sellerQuotedBrand: string | null;
+  sellerOriginRestrictions: string[];
+  sellerDeliveryState: string | null;
+  sellerSupplierDeliveryTime: string | null;
+  purchaseStandard: string | null;
+  purchaseDiameter: string | null;
+  purchaseThickness: string | null;
+  purchaseBore: string | null;
   cost: number;
   costCurrency: Currency;
   marginPct: number;

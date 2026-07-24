@@ -383,6 +383,7 @@ export type ProductWhereInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferListRelationFilter
   selectedProcurementOffer?: Prisma.XOR<Prisma.LocalProductProcurementOfferNullableScalarRelationFilter, Prisma.LocalProductProcurementOfferWhereInput> | null
   quoteItems?: Prisma.QuoteItemListRelationFilter
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -417,6 +418,7 @@ export type ProductOrderByWithRelationInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferOrderByRelationAggregateInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferOrderByWithRelationInput
   quoteItems?: Prisma.QuoteItemOrderByRelationAggregateInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -454,6 +456,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   procurementOffers?: Prisma.LocalProductProcurementOfferListRelationFilter
   selectedProcurementOffer?: Prisma.XOR<Prisma.LocalProductProcurementOfferNullableScalarRelationFilter, Prisma.LocalProductProcurementOfferWhereInput> | null
   quoteItems?: Prisma.QuoteItemListRelationFilter
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
 }, "id" | "selectedProcurementOfferId">
 
 export type ProductOrderByWithAggregationInput = {
@@ -545,6 +548,7 @@ export type ProductCreateInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -574,6 +578,7 @@ export type ProductUncheckedCreateInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -603,6 +608,7 @@ export type ProductUpdateInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -632,6 +638,7 @@ export type ProductUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -1077,6 +1084,22 @@ export type ProductUpdateOneWithoutQuoteItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutQuoteItemsInput, Prisma.ProductUpdateWithoutQuoteItemsInput>, Prisma.ProductUncheckedUpdateWithoutQuoteItemsInput>
 }
 
+export type ProductCreateNestedOneWithoutPurchaseRequisitionItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPurchaseRequisitionItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneWithoutPurchaseRequisitionItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPurchaseRequisitionItemsInput
+  upsert?: Prisma.ProductUpsertWithoutPurchaseRequisitionItemsInput
+  disconnect?: Prisma.ProductWhereInput | boolean
+  delete?: Prisma.ProductWhereInput | boolean
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutPurchaseRequisitionItemsInput, Prisma.ProductUpdateWithoutPurchaseRequisitionItemsInput>, Prisma.ProductUncheckedUpdateWithoutPurchaseRequisitionItemsInput>
+}
+
 export type ProductCreateWithoutBranchInput = {
   id?: string
   source?: $Enums.ProductSource
@@ -1103,6 +1126,7 @@ export type ProductCreateWithoutBranchInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBranchInput = {
@@ -1131,6 +1155,7 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBranchInput = {
@@ -1215,6 +1240,7 @@ export type ProductCreateWithoutCreatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutCreatedByUserInput = {
@@ -1243,6 +1269,7 @@ export type ProductUncheckedCreateWithoutCreatedByUserInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutCreatedByUserInput = {
@@ -1281,6 +1308,7 @@ export type ProductCreateWithoutUpdatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutUpdatedByUserInput = {
@@ -1309,6 +1337,7 @@ export type ProductUncheckedCreateWithoutUpdatedByUserInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutUpdatedByUserInput = {
@@ -1347,6 +1376,7 @@ export type ProductCreateWithoutProcurementUpdatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutProcurementUpdatedByUserInput = {
@@ -1375,6 +1405,7 @@ export type ProductUncheckedCreateWithoutProcurementUpdatedByUserInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutProcurementUpdatedByUserInput = {
@@ -1461,6 +1492,7 @@ export type ProductCreateWithoutProcurementOffersInput = {
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutProcurementOffersInput = {
@@ -1489,6 +1521,7 @@ export type ProductUncheckedCreateWithoutProcurementOffersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutProcurementOffersInput = {
@@ -1522,6 +1555,7 @@ export type ProductCreateWithoutSelectedProcurementOfferInput = {
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutSelectedProcurementOfferInput = {
@@ -1550,6 +1584,7 @@ export type ProductUncheckedCreateWithoutSelectedProcurementOfferInput = {
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutSelectedProcurementOfferInput = {
@@ -1594,6 +1629,7 @@ export type ProductUpdateWithoutProcurementOffersInput = {
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutProcurementOffersInput = {
@@ -1622,6 +1658,7 @@ export type ProductUncheckedUpdateWithoutProcurementOffersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUpsertWithoutSelectedProcurementOfferInput = {
@@ -1661,6 +1698,7 @@ export type ProductUpdateWithoutSelectedProcurementOfferInput = {
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutSelectedProcurementOfferInput = {
@@ -1689,6 +1727,7 @@ export type ProductUncheckedUpdateWithoutSelectedProcurementOfferInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutQuoteItemsInput = {
@@ -1717,6 +1756,7 @@ export type ProductCreateWithoutQuoteItemsInput = {
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutQuoteItemsInput = {
@@ -1745,6 +1785,7 @@ export type ProductUncheckedCreateWithoutQuoteItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutQuoteItemsInput = {
@@ -1789,6 +1830,7 @@ export type ProductUpdateWithoutQuoteItemsInput = {
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutQuoteItemsInput = {
@@ -1817,6 +1859,139 @@ export type ProductUncheckedUpdateWithoutQuoteItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutPurchaseRequisitionItemsInput = {
+  id?: string
+  source?: $Enums.ProductSource
+  externalId?: string | null
+  externalSystem?: string | null
+  code?: string | null
+  ean?: string | null
+  description: string
+  canonicalDescription?: string
+  unit: string
+  currency?: $Enums.Currency
+  averageCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isActive?: boolean
+  procurementStatus?: $Enums.ProductProcurementStatus
+  procurementNotes?: string | null
+  procurementUpdatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutProductsInput
+  createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
+  procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
+  selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
+  quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput = {
+  id?: string
+  source?: $Enums.ProductSource
+  externalId?: string | null
+  externalSystem?: string | null
+  code?: string | null
+  ean?: string | null
+  description: string
+  canonicalDescription?: string
+  unit: string
+  currency?: $Enums.Currency
+  averageCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  branchId?: string | null
+  isActive?: boolean
+  createdByUserId?: string | null
+  updatedByUserId?: string | null
+  procurementStatus?: $Enums.ProductProcurementStatus
+  procurementNotes?: string | null
+  selectedProcurementOfferId?: string | null
+  procurementUpdatedAt?: Date | string | null
+  procurementUpdatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
+  quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutPurchaseRequisitionItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput>
+}
+
+export type ProductUpsertWithoutPurchaseRequisitionItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedUpdateWithoutPurchaseRequisitionItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutPurchaseRequisitionItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutPurchaseRequisitionItemsInput, Prisma.ProductUncheckedUpdateWithoutPurchaseRequisitionItemsInput>
+}
+
+export type ProductUpdateWithoutPurchaseRequisitionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  averageCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  procurementStatus?: Prisma.EnumProductProcurementStatusFieldUpdateOperationsInput | $Enums.ProductProcurementStatus
+  procurementNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutProductsNestedInput
+  createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
+  procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
+  selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
+  quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutPurchaseRequisitionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  averageCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementStatus?: Prisma.EnumProductProcurementStatusFieldUpdateOperationsInput | $Enums.ProductProcurementStatus
+  procurementNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedProcurementOfferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
+  quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyBranchInput = {
@@ -1871,6 +2046,7 @@ export type ProductUpdateWithoutBranchInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBranchInput = {
@@ -1899,6 +2075,7 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutBranchInput = {
@@ -2031,6 +2208,7 @@ export type ProductUpdateWithoutCreatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutCreatedByUserInput = {
@@ -2059,6 +2237,7 @@ export type ProductUncheckedUpdateWithoutCreatedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -2113,6 +2292,7 @@ export type ProductUpdateWithoutUpdatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutUpdatedByUserInput = {
@@ -2141,6 +2321,7 @@ export type ProductUncheckedUpdateWithoutUpdatedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutUpdatedByUserInput = {
@@ -2195,6 +2376,7 @@ export type ProductUpdateWithoutProcurementUpdatedByUserInput = {
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutProcurementUpdatedByUserInput = {
@@ -2223,6 +2405,7 @@ export type ProductUncheckedUpdateWithoutProcurementUpdatedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserInput = {
@@ -2259,11 +2442,13 @@ export type ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserInput = {
 export type ProductCountOutputType = {
   procurementOffers: number
   quoteItems: number
+  purchaseRequisitionItems: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   procurementOffers?: boolean | ProductCountOutputTypeCountProcurementOffersArgs
   quoteItems?: boolean | ProductCountOutputTypeCountQuoteItemsArgs
+  purchaseRequisitionItems?: boolean | ProductCountOutputTypeCountPurchaseRequisitionItemsArgs
 }
 
 /**
@@ -2288,6 +2473,13 @@ export type ProductCountOutputTypeCountProcurementOffersArgs<ExtArgs extends run
  */
 export type ProductCountOutputTypeCountQuoteItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteItemWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountPurchaseRequisitionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseRequisitionItemWhereInput
 }
 
 
@@ -2323,6 +2515,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   procurementOffers?: boolean | Prisma.Product$procurementOffersArgs<ExtArgs>
   selectedProcurementOffer?: boolean | Prisma.Product$selectedProcurementOfferArgs<ExtArgs>
   quoteItems?: boolean | Prisma.Product$quoteItemsArgs<ExtArgs>
+  purchaseRequisitionItems?: boolean | Prisma.Product$purchaseRequisitionItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -2426,6 +2619,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   procurementOffers?: boolean | Prisma.Product$procurementOffersArgs<ExtArgs>
   selectedProcurementOffer?: boolean | Prisma.Product$selectedProcurementOfferArgs<ExtArgs>
   quoteItems?: boolean | Prisma.Product$quoteItemsArgs<ExtArgs>
+  purchaseRequisitionItems?: boolean | Prisma.Product$purchaseRequisitionItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2453,6 +2647,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     procurementOffers: Prisma.$LocalProductProcurementOfferPayload<ExtArgs>[]
     selectedProcurementOffer: Prisma.$LocalProductProcurementOfferPayload<ExtArgs> | null
     quoteItems: Prisma.$QuoteItemPayload<ExtArgs>[]
+    purchaseRequisitionItems: Prisma.$PurchaseRequisitionItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2880,6 +3075,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   procurementOffers<T extends Prisma.Product$procurementOffersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$procurementOffersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocalProductProcurementOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   selectedProcurementOffer<T extends Prisma.Product$selectedProcurementOfferArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$selectedProcurementOfferArgs<ExtArgs>>): Prisma.Prisma__LocalProductProcurementOfferClient<runtime.Types.Result.GetResult<Prisma.$LocalProductProcurementOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   quoteItems<T extends Prisma.Product$quoteItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$quoteItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseRequisitionItems<T extends Prisma.Product$purchaseRequisitionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$purchaseRequisitionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3469,6 +3665,30 @@ export type Product$quoteItemsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.QuoteItemScalarFieldEnum | Prisma.QuoteItemScalarFieldEnum[]
+}
+
+/**
+ * Product.purchaseRequisitionItems
+ */
+export type Product$purchaseRequisitionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseRequisitionItem
+   */
+  select?: Prisma.PurchaseRequisitionItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseRequisitionItem
+   */
+  omit?: Prisma.PurchaseRequisitionItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseRequisitionItemInclude<ExtArgs> | null
+  where?: Prisma.PurchaseRequisitionItemWhereInput
+  orderBy?: Prisma.PurchaseRequisitionItemOrderByWithRelationInput | Prisma.PurchaseRequisitionItemOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseRequisitionItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseRequisitionItemScalarFieldEnum | Prisma.PurchaseRequisitionItemScalarFieldEnum[]
 }
 
 /**

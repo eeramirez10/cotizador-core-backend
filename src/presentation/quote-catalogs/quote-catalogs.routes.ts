@@ -12,11 +12,11 @@ export class QuoteCatalogsRoutes {
     const repository = new QuoteCatalogRepositoryImpl(new PrismaQuoteCatalogDatasource());
     const controller = new QuoteCatalogsController(new QuoteCatalogOptionsUseCase(repository));
 
-    router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.listAvailable);
-    router.get("/manage", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.listManaged);
-    router.post("/", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.create);
-    router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.update);
-    router.patch("/:id/deactivate", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.deactivate);
+    router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.listAvailable);
+    router.get("/manage", requireAuth, requireRoles("ADMIN", "MANAGER", "PURCHASING"), controller.listManaged);
+    router.post("/", requireAuth, requireRoles("ADMIN", "MANAGER", "PURCHASING"), controller.create);
+    router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "PURCHASING"), controller.update);
+    router.patch("/:id/deactivate", requireAuth, requireRoles("ADMIN", "MANAGER", "PURCHASING"), controller.deactivate);
     return router;
   }
 }

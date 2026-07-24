@@ -2,6 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { GenerateOrderResponseDto } from "../dtos/response/generate-order-response.dto";
 import { OrderGenerationRepository } from "../repositories/order-generation.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
+import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
 
 interface GenerateQuoteOrderActorContext {
   id: string;
@@ -12,7 +13,8 @@ interface GenerateQuoteOrderActorContext {
 export class GenerateQuoteOrderUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
-    private readonly orderGenerationRepository: OrderGenerationRepository
+    private readonly orderGenerationRepository: OrderGenerationRepository,
+    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository
   ) {}
 
   async execute(quoteId: string, actor: GenerateQuoteOrderActorContext): Promise<GenerateOrderResponseDto> {
@@ -48,6 +50,14 @@ export class GenerateQuoteOrderUseCase {
     if (quote.items.some((item) => item.requiresReview)) {
       throw new Error("All quote items must be reviewed before generating order.");
     }
+    const requiresPurchasing = quote.items.some((item) => {
+      const erpCode = (item.externalProductCode || item.product?.code || "").trim();
+      const availableStock = Math.max(0, item.stock ?? 0);
+      return !erpCode || availableStock < item.qty;
+    });
+    if (requiresPurchasing && !(await this.purchaseRequisitionRepository.isReadyForOrder(quote.id))) {
+      throw new Error("Purchase requisition must be READY_FOR_ORDER before generating order.");
+    }
 
     const result = await this.orderGenerationRepository.generateOrderFromQuote(quote);
 
@@ -68,6 +78,9 @@ export class GenerateQuoteOrderUseCase {
     });
 
     if (!updatedQuote) throw new Error("Quote not found.");
+    if (requiresPurchasing) {
+      await this.purchaseRequisitionRepository.markCompletedByQuoteId(quote.id);
+    }
 
     return new GenerateOrderResponseDto({
       quoteId: updatedQuote.id,
