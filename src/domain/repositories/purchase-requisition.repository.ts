@@ -4,6 +4,7 @@ import type {
   LinkPurchaseRequisitionItemToErpData,
   PurchaseRequisitionActor,
   SavePurchaseSupplierOfferData,
+  SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
 } from "../datasources/purchase-requisition.datasource";
@@ -26,5 +27,6 @@ export abstract class PurchaseRequisitionRepository {
   abstract markCompletedByQuoteId(quoteId: string): Promise<void>;
   abstract listSuppliers(search: string | undefined, includeInactive: boolean): Promise<SupplierEntity[]>;
   abstract createSupplier(data: SaveSupplierData): Promise<SupplierEntity>;
+  abstract upsertErpSupplier(data: SaveErpSupplierData): Promise<SupplierEntity>;
   abstract updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null>;
 }

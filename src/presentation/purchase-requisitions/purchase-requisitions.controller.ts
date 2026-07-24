@@ -5,6 +5,7 @@ import {
   GetPurchaseRequisitionsQueryDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   SaveSupplierRequestDto,
+  SyncErpSupplierRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
 } from "../../domain/dtos/request/purchase-requisition-request.dto";
 import { PurchaseRequisitionUseCase } from "../../domain/use-cases/purchase-requisition.use-case";
@@ -165,6 +166,28 @@ export class PurchaseRequisitionsController {
       res.status(200).json(await this.useCase.listSuppliers(search, includeInactive));
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while listing suppliers.");
+    }
+  };
+
+  searchErpSuppliers = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const term = typeof req.query.q === "string" ? req.query.q.trim() : "";
+    if (!term) return void res.status(400).json({ error: "Supplier search term is required." });
+    try {
+      res.status(200).json(await this.useCase.searchErpSuppliers(term, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while searching ERP suppliers.");
+    }
+  };
+
+  syncErpSupplier = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const [error, dto] = SyncErpSupplierRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(200).json(await this.useCase.syncErpSupplier(dto!, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while syncing ERP supplier.");
     }
   };
 

@@ -5,6 +5,7 @@ import { PrismaPurchaseRequisitionDatasource } from "../../infrastructure/dataso
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
 import { GptLocalProductSemanticAdapter } from "../../infrastructure/http/gpt-local-product-semantic.adapter";
 import { ErpProductLookupAdapter } from "../../infrastructure/http/erp-product-lookup.adapter";
+import { ErpSupplierLookupAdapter } from "../../infrastructure/http/erp-supplier-lookup.adapter";
 import { PurchaseRequisitionRepositoryImpl } from "../../infrastructure/repositories/purchase-requisition.repository-impl";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
 import { requireAuth } from "../middlewares/auth.middleware";
@@ -26,14 +27,22 @@ export class PurchaseRequisitionsRoutes {
       Envs.erpProductsBasePath,
       Envs.erpApiTimeoutMs,
     );
+    const erpSupplierLookup = new ErpSupplierLookupAdapter(
+      Envs.erpApiUrl,
+      Envs.erpSuppliersBasePath,
+      Envs.erpApiTimeoutMs,
+      Envs.erpInternalApiKey,
+    );
     const controller = new PurchaseRequisitionsController(
-      new PurchaseRequisitionUseCase(repository, quoteRepository, semanticAdapter, erpProductLookup),
+      new PurchaseRequisitionUseCase(repository, quoteRepository, semanticAdapter, erpProductLookup, erpSupplierLookup),
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.list);
     router.get("/quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getByQuoteId);
     router.post("/from-quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.createFromQuote);
     router.get("/suppliers", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.listSuppliers);
+    router.get("/suppliers/erp/search", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.searchErpSuppliers);
+    router.post("/suppliers/erp/sync", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.syncErpSupplier);
     router.post("/suppliers", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.createSupplier);
     router.patch("/suppliers/:supplierId", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.updateSupplier);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getById);

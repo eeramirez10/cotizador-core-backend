@@ -3,6 +3,7 @@ import type {
   LinkPurchaseRequisitionItemToErpData,
   PurchaseRequisitionActor,
   SavePurchaseSupplierOfferData,
+  SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
 } from "../../domain/datasources/purchase-requisition.datasource";
@@ -28,5 +29,6 @@ export class PurchaseRequisitionRepositoryImpl extends PurchaseRequisitionReposi
   markCompletedByQuoteId(quoteId: string) { return this.datasource.markCompletedByQuoteId(quoteId); }
   listSuppliers(search: string | undefined, includeInactive: boolean) { return this.datasource.listSuppliers(search, includeInactive); }
   createSupplier(data: SaveSupplierData) { return this.datasource.createSupplier(data); }
+  upsertErpSupplier(data: SaveErpSupplierData) { return this.datasource.upsertErpSupplier(data); }
   updateSupplier(id: string, data: SaveSupplierData) { return this.datasource.updateSupplier(id, data); }
 }

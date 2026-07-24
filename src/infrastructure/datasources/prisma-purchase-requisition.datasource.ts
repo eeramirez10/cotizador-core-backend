@@ -4,6 +4,7 @@ import type {
   LinkPurchaseRequisitionItemToErpData,
   PurchaseRequisitionActor,
   SavePurchaseSupplierOfferData,
+  SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
 } from "../../domain/datasources/purchase-requisition.datasource";
@@ -79,10 +80,19 @@ const supplierEntity = (supplier: {
   name: string;
   source: SupplierEntity["source"];
   scope: SupplierEntity["scope"];
+  taxId: string | null;
+  state: string | null;
+  creditTerms: string | null;
+  currency: SupplierEntity["currency"];
   country: string | null;
   contactName: string | null;
+  contactPosition: string | null;
   email: string | null;
   phone: string | null;
+  phoneExtension: string | null;
+  mobile: string | null;
+  notes: string | null;
+  erpSyncedAt: Date | null;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -92,10 +102,19 @@ const supplierEntity = (supplier: {
   name: supplier.name,
   source: supplier.source,
   scope: supplier.scope,
+  taxId: supplier.taxId,
+  state: supplier.state,
+  creditTerms: supplier.creditTerms,
+  currency: supplier.currency,
   country: supplier.country,
   contactName: supplier.contactName,
+  contactPosition: supplier.contactPosition,
   email: supplier.email,
   phone: supplier.phone,
+  phoneExtension: supplier.phoneExtension,
+  mobile: supplier.mobile,
+  notes: supplier.notes,
+  erpSyncedAt: supplier.erpSyncedAt,
   isActive: supplier.isActive,
   createdAt: supplier.createdAt,
   updatedAt: supplier.updatedAt,
@@ -572,6 +591,8 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
               OR: [
                 { name: { contains: search, mode: "insensitive" as const } },
                 { erpCode: { contains: search, mode: "insensitive" as const } },
+                { taxId: { contains: search, mode: "insensitive" as const } },
+                { contactName: { contains: search, mode: "insensitive" as const } },
               ],
             }
           : {}),
@@ -584,21 +605,21 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
   async createSupplier(data: SaveSupplierData): Promise<SupplierEntity> {
     const duplicate = await prisma.supplier.findFirst({
       where: {
-        OR: [
-          ...(data.erpCode ? [{ erpCode: data.erpCode }] : []),
-          { canonicalName: data.canonicalName, isActive: true },
-        ],
+        canonicalName: data.canonicalName,
+        isActive: true,
       },
       select: { id: true },
     });
     if (duplicate) throw new Error("Supplier already exists.");
     const row = await prisma.supplier.create({
       data: {
-        erpCode: data.erpCode,
+        erpCode: null,
         name: data.name,
         canonicalName: data.canonicalName,
-        source: data.erpCode ? "ERP" : "LOCAL",
+        source: "LOCAL",
         scope: data.scope,
+        taxId: data.taxId,
+        state: data.state,
         country: data.country,
         contactName: data.contactName,
         email: data.email,
@@ -609,17 +630,54 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     return supplierEntity(row);
   }
 
+  async upsertErpSupplier(data: SaveErpSupplierData): Promise<SupplierEntity> {
+    const now = new Date();
+    const primaryData = {
+      name: data.name,
+      canonicalName: data.canonicalName,
+      source: "ERP" as const,
+      scope: "NATIONAL" as const,
+      taxId: data.taxId,
+      state: data.state,
+      creditTerms: data.creditTerms,
+      currency: data.currency,
+      country: "MEXICO",
+      contactName: data.contactName,
+      contactPosition: data.contactPosition,
+      email: data.email,
+      phone: data.phone,
+      phoneExtension: data.phoneExtension,
+      mobile: data.mobile,
+      notes: data.notes,
+      erpSyncedAt: now,
+      isActive: true,
+      updatedByUserId: data.actorUserId,
+    };
+    const row = await prisma.supplier.upsert({
+      where: { erpCode: data.erpCode },
+      update: primaryData,
+      create: {
+        ...primaryData,
+        erpCode: data.erpCode,
+        createdByUserId: data.actorUserId,
+      },
+    });
+    return supplierEntity(row);
+  }
+
   async updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null> {
-    const existing = await prisma.supplier.findUnique({ where: { id }, select: { id: true } });
+    const existing = await prisma.supplier.findUnique({ where: { id }, select: { id: true, source: true } });
     if (!existing) return null;
+    if (existing.source === "ERP") throw new Error("ERP suppliers must be refreshed from ERP.");
     const row = await prisma.supplier.update({
       where: { id },
       data: {
-        erpCode: data.erpCode,
         name: data.name,
         canonicalName: data.canonicalName,
-        source: data.erpCode ? "ERP" : "LOCAL",
+        source: "LOCAL",
         scope: data.scope,
+        taxId: data.taxId,
+        state: data.state,
         country: data.country,
         contactName: data.contactName,
         email: data.email,

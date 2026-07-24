@@ -555,10 +555,19 @@ model Supplier {
   canonicalName   String         @map("canonical_name") @db.VarChar(220)
   source          SupplierSource @default(LOCAL)
   scope           SupplierScope  @default(NATIONAL)
+  taxId           String?        @map("tax_id") @db.VarChar(60)
+  state           String?        @db.VarChar(120)
+  creditTerms     String?        @map("credit_terms") @db.VarChar(120)
+  currency        Currency?
   country         String?        @db.VarChar(100)
   contactName     String?        @map("contact_name") @db.VarChar(160)
+  contactPosition String?        @map("contact_position") @db.VarChar(160)
   email           String?        @db.VarChar(160)
   phone           String?        @db.VarChar(40)
+  phoneExtension  String?        @map("phone_extension") @db.VarChar(30)
+  mobile          String?        @db.VarChar(40)
+  notes           String?        @db.Text
+  erpSyncedAt     DateTime?      @map("erp_synced_at")
   isActive        Boolean        @default(true) @map("is_active")
   createdByUserId String         @map("created_by_user_id") @db.Uuid
   updatedByUserId String?        @map("updated_by_user_id") @db.Uuid
@@ -573,6 +582,7 @@ model Supplier {
 
   @@index([canonicalName])
   @@index([source, isActive])
+  @@index([taxId])
   @@map("suppliers")
 }
 

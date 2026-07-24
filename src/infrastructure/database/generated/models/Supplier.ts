@@ -31,10 +31,19 @@ export type SupplierMinAggregateOutputType = {
   canonicalName: string | null
   source: $Enums.SupplierSource | null
   scope: $Enums.SupplierScope | null
+  taxId: string | null
+  state: string | null
+  creditTerms: string | null
+  currency: $Enums.Currency | null
   country: string | null
   contactName: string | null
+  contactPosition: string | null
   email: string | null
   phone: string | null
+  phoneExtension: string | null
+  mobile: string | null
+  notes: string | null
+  erpSyncedAt: Date | null
   isActive: boolean | null
   createdByUserId: string | null
   updatedByUserId: string | null
@@ -49,10 +58,19 @@ export type SupplierMaxAggregateOutputType = {
   canonicalName: string | null
   source: $Enums.SupplierSource | null
   scope: $Enums.SupplierScope | null
+  taxId: string | null
+  state: string | null
+  creditTerms: string | null
+  currency: $Enums.Currency | null
   country: string | null
   contactName: string | null
+  contactPosition: string | null
   email: string | null
   phone: string | null
+  phoneExtension: string | null
+  mobile: string | null
+  notes: string | null
+  erpSyncedAt: Date | null
   isActive: boolean | null
   createdByUserId: string | null
   updatedByUserId: string | null
@@ -67,10 +85,19 @@ export type SupplierCountAggregateOutputType = {
   canonicalName: number
   source: number
   scope: number
+  taxId: number
+  state: number
+  creditTerms: number
+  currency: number
   country: number
   contactName: number
+  contactPosition: number
   email: number
   phone: number
+  phoneExtension: number
+  mobile: number
+  notes: number
+  erpSyncedAt: number
   isActive: number
   createdByUserId: number
   updatedByUserId: number
@@ -87,10 +114,19 @@ export type SupplierMinAggregateInputType = {
   canonicalName?: true
   source?: true
   scope?: true
+  taxId?: true
+  state?: true
+  creditTerms?: true
+  currency?: true
   country?: true
   contactName?: true
+  contactPosition?: true
   email?: true
   phone?: true
+  phoneExtension?: true
+  mobile?: true
+  notes?: true
+  erpSyncedAt?: true
   isActive?: true
   createdByUserId?: true
   updatedByUserId?: true
@@ -105,10 +141,19 @@ export type SupplierMaxAggregateInputType = {
   canonicalName?: true
   source?: true
   scope?: true
+  taxId?: true
+  state?: true
+  creditTerms?: true
+  currency?: true
   country?: true
   contactName?: true
+  contactPosition?: true
   email?: true
   phone?: true
+  phoneExtension?: true
+  mobile?: true
+  notes?: true
+  erpSyncedAt?: true
   isActive?: true
   createdByUserId?: true
   updatedByUserId?: true
@@ -123,10 +168,19 @@ export type SupplierCountAggregateInputType = {
   canonicalName?: true
   source?: true
   scope?: true
+  taxId?: true
+  state?: true
+  creditTerms?: true
+  currency?: true
   country?: true
   contactName?: true
+  contactPosition?: true
   email?: true
   phone?: true
+  phoneExtension?: true
+  mobile?: true
+  notes?: true
+  erpSyncedAt?: true
   isActive?: true
   createdByUserId?: true
   updatedByUserId?: true
@@ -214,10 +268,19 @@ export type SupplierGroupByOutputType = {
   canonicalName: string
   source: $Enums.SupplierSource
   scope: $Enums.SupplierScope
+  taxId: string | null
+  state: string | null
+  creditTerms: string | null
+  currency: $Enums.Currency | null
   country: string | null
   contactName: string | null
+  contactPosition: string | null
   email: string | null
   phone: string | null
+  phoneExtension: string | null
+  mobile: string | null
+  notes: string | null
+  erpSyncedAt: Date | null
   isActive: boolean
   createdByUserId: string
   updatedByUserId: string | null
@@ -253,10 +316,19 @@ export type SupplierWhereInput = {
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
+  taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  state?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  creditTerms?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  currency?: Prisma.EnumCurrencyNullableFilter<"Supplier"> | $Enums.Currency | null
   country?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  erpSyncedAt?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Supplier"> | boolean
   createdByUserId?: Prisma.UuidFilter<"Supplier"> | string
   updatedByUserId?: Prisma.UuidNullableFilter<"Supplier"> | string | null
@@ -276,10 +348,19 @@ export type SupplierOrderByWithRelationInput = {
   canonicalName?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
+  taxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  creditTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneExtension?: Prisma.SortOrderInput | Prisma.SortOrder
+  mobile?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   updatedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -302,10 +383,19 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
+  taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  state?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  creditTerms?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  currency?: Prisma.EnumCurrencyNullableFilter<"Supplier"> | $Enums.Currency | null
   country?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  erpSyncedAt?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Supplier"> | boolean
   createdByUserId?: Prisma.UuidFilter<"Supplier"> | string
   updatedByUserId?: Prisma.UuidNullableFilter<"Supplier"> | string | null
@@ -325,10 +415,19 @@ export type SupplierOrderByWithAggregationInput = {
   canonicalName?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
+  taxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  creditTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrderInput | Prisma.SortOrder
   country?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneExtension?: Prisma.SortOrderInput | Prisma.SortOrder
+  mobile?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpSyncedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   updatedByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -349,10 +448,19 @@ export type SupplierScalarWhereWithAggregatesInput = {
   canonicalName?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   source?: Prisma.EnumSupplierSourceWithAggregatesFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeWithAggregatesFilter<"Supplier"> | $Enums.SupplierScope
+  taxId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  state?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  creditTerms?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  currency?: Prisma.EnumCurrencyNullableWithAggregatesFilter<"Supplier"> | $Enums.Currency | null
   country?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   contactName?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  contactPosition?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  phoneExtension?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  mobile?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  erpSyncedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Supplier"> | Date | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Supplier"> | boolean
   createdByUserId?: Prisma.UuidWithAggregatesFilter<"Supplier"> | string
   updatedByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Supplier"> | string | null
@@ -367,10 +475,19 @@ export type SupplierCreateInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -388,10 +505,19 @@ export type SupplierUncheckedCreateInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   updatedByUserId?: string | null
@@ -409,10 +535,19 @@ export type SupplierUpdateInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -430,10 +565,19 @@ export type SupplierUncheckedUpdateInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -451,10 +595,19 @@ export type SupplierCreateManyInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   updatedByUserId?: string | null
@@ -469,10 +622,19 @@ export type SupplierUpdateManyMutationInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -485,10 +647,19 @@ export type SupplierUncheckedUpdateManyInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -518,10 +689,19 @@ export type SupplierCountOrderByAggregateInput = {
   canonicalName?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
+  taxId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  creditTerms?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   country?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  phoneExtension?: Prisma.SortOrder
+  mobile?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  erpSyncedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   updatedByUserId?: Prisma.SortOrder
@@ -536,10 +716,19 @@ export type SupplierMaxOrderByAggregateInput = {
   canonicalName?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
+  taxId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  creditTerms?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   country?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  phoneExtension?: Prisma.SortOrder
+  mobile?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  erpSyncedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   updatedByUserId?: Prisma.SortOrder
@@ -554,10 +743,19 @@ export type SupplierMinOrderByAggregateInput = {
   canonicalName?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
+  taxId?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  creditTerms?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   country?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  phoneExtension?: Prisma.SortOrder
+  mobile?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  erpSyncedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdByUserId?: Prisma.SortOrder
   updatedByUserId?: Prisma.SortOrder
@@ -715,10 +913,19 @@ export type SupplierCreateWithoutCreatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -735,10 +942,19 @@ export type SupplierUncheckedCreateWithoutCreatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   updatedByUserId?: string | null
   createdAt?: Date | string
@@ -765,10 +981,19 @@ export type SupplierCreateWithoutUpdatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -785,10 +1010,19 @@ export type SupplierUncheckedCreateWithoutUpdatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   createdAt?: Date | string
@@ -834,10 +1068,19 @@ export type SupplierScalarWhereInput = {
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
+  taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  state?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  creditTerms?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  currency?: Prisma.EnumCurrencyNullableFilter<"Supplier"> | $Enums.Currency | null
   country?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  erpSyncedAt?: Prisma.DateTimeNullableFilter<"Supplier"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Supplier"> | boolean
   createdByUserId?: Prisma.UuidFilter<"Supplier"> | string
   updatedByUserId?: Prisma.UuidNullableFilter<"Supplier"> | string | null
@@ -868,10 +1111,19 @@ export type SupplierCreateWithoutSellerQuotedItemsInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -888,10 +1140,19 @@ export type SupplierUncheckedCreateWithoutSellerQuotedItemsInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   updatedByUserId?: string | null
@@ -924,10 +1185,19 @@ export type SupplierUpdateWithoutSellerQuotedItemsInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -944,10 +1214,19 @@ export type SupplierUncheckedUpdateWithoutSellerQuotedItemsInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -964,10 +1243,19 @@ export type SupplierCreateWithoutSellerRequisitionItemsInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -984,10 +1272,19 @@ export type SupplierUncheckedCreateWithoutSellerRequisitionItemsInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   updatedByUserId?: string | null
@@ -1020,10 +1317,19 @@ export type SupplierUpdateWithoutSellerRequisitionItemsInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1040,10 +1346,19 @@ export type SupplierUncheckedUpdateWithoutSellerRequisitionItemsInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1060,10 +1375,19 @@ export type SupplierCreateWithoutOffersInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1080,10 +1404,19 @@ export type SupplierUncheckedCreateWithoutOffersInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   updatedByUserId?: string | null
@@ -1116,10 +1449,19 @@ export type SupplierUpdateWithoutOffersInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1136,10 +1478,19 @@ export type SupplierUncheckedUpdateWithoutOffersInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1156,10 +1507,19 @@ export type SupplierCreateManyCreatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   updatedByUserId?: string | null
   createdAt?: Date | string
@@ -1173,10 +1533,19 @@ export type SupplierCreateManyUpdatedByInput = {
   canonicalName: string
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
+  taxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
   country?: string | null
   contactName?: string | null
+  contactPosition?: string | null
   email?: string | null
   phone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
   isActive?: boolean
   createdByUserId: string
   createdAt?: Date | string
@@ -1190,10 +1559,19 @@ export type SupplierUpdateWithoutCreatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1210,10 +1588,19 @@ export type SupplierUncheckedUpdateWithoutCreatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1230,10 +1617,19 @@ export type SupplierUncheckedUpdateManyWithoutCreatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1247,10 +1643,19 @@ export type SupplierUpdateWithoutUpdatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1267,10 +1672,19 @@ export type SupplierUncheckedUpdateWithoutUpdatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1287,10 +1701,19 @@ export type SupplierUncheckedUpdateManyWithoutUpdatedByInput = {
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1353,10 +1776,19 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   canonicalName?: boolean
   source?: boolean
   scope?: boolean
+  taxId?: boolean
+  state?: boolean
+  creditTerms?: boolean
+  currency?: boolean
   country?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   email?: boolean
   phone?: boolean
+  phoneExtension?: boolean
+  mobile?: boolean
+  notes?: boolean
+  erpSyncedAt?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   updatedByUserId?: boolean
@@ -1377,10 +1809,19 @@ export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   canonicalName?: boolean
   source?: boolean
   scope?: boolean
+  taxId?: boolean
+  state?: boolean
+  creditTerms?: boolean
+  currency?: boolean
   country?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   email?: boolean
   phone?: boolean
+  phoneExtension?: boolean
+  mobile?: boolean
+  notes?: boolean
+  erpSyncedAt?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   updatedByUserId?: boolean
@@ -1397,10 +1838,19 @@ export type SupplierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   canonicalName?: boolean
   source?: boolean
   scope?: boolean
+  taxId?: boolean
+  state?: boolean
+  creditTerms?: boolean
+  currency?: boolean
   country?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   email?: boolean
   phone?: boolean
+  phoneExtension?: boolean
+  mobile?: boolean
+  notes?: boolean
+  erpSyncedAt?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   updatedByUserId?: boolean
@@ -1417,10 +1867,19 @@ export type SupplierSelectScalar = {
   canonicalName?: boolean
   source?: boolean
   scope?: boolean
+  taxId?: boolean
+  state?: boolean
+  creditTerms?: boolean
+  currency?: boolean
   country?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   email?: boolean
   phone?: boolean
+  phoneExtension?: boolean
+  mobile?: boolean
+  notes?: boolean
+  erpSyncedAt?: boolean
   isActive?: boolean
   createdByUserId?: boolean
   updatedByUserId?: boolean
@@ -1428,7 +1887,7 @@ export type SupplierSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "erpCode" | "name" | "canonicalName" | "source" | "scope" | "country" | "contactName" | "email" | "phone" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
+export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "erpCode" | "name" | "canonicalName" | "source" | "scope" | "taxId" | "state" | "creditTerms" | "currency" | "country" | "contactName" | "contactPosition" | "email" | "phone" | "phoneExtension" | "mobile" | "notes" | "erpSyncedAt" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
 export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Supplier$updatedByArgs<ExtArgs>
@@ -1462,10 +1921,19 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     canonicalName: string
     source: $Enums.SupplierSource
     scope: $Enums.SupplierScope
+    taxId: string | null
+    state: string | null
+    creditTerms: string | null
+    currency: $Enums.Currency | null
     country: string | null
     contactName: string | null
+    contactPosition: string | null
     email: string | null
     phone: string | null
+    phoneExtension: string | null
+    mobile: string | null
+    notes: string | null
+    erpSyncedAt: Date | null
     isActive: boolean
     createdByUserId: string
     updatedByUserId: string | null
@@ -1905,10 +2373,19 @@ export interface SupplierFieldRefs {
   readonly canonicalName: Prisma.FieldRef<"Supplier", 'String'>
   readonly source: Prisma.FieldRef<"Supplier", 'SupplierSource'>
   readonly scope: Prisma.FieldRef<"Supplier", 'SupplierScope'>
+  readonly taxId: Prisma.FieldRef<"Supplier", 'String'>
+  readonly state: Prisma.FieldRef<"Supplier", 'String'>
+  readonly creditTerms: Prisma.FieldRef<"Supplier", 'String'>
+  readonly currency: Prisma.FieldRef<"Supplier", 'Currency'>
   readonly country: Prisma.FieldRef<"Supplier", 'String'>
   readonly contactName: Prisma.FieldRef<"Supplier", 'String'>
+  readonly contactPosition: Prisma.FieldRef<"Supplier", 'String'>
   readonly email: Prisma.FieldRef<"Supplier", 'String'>
   readonly phone: Prisma.FieldRef<"Supplier", 'String'>
+  readonly phoneExtension: Prisma.FieldRef<"Supplier", 'String'>
+  readonly mobile: Prisma.FieldRef<"Supplier", 'String'>
+  readonly notes: Prisma.FieldRef<"Supplier", 'String'>
+  readonly erpSyncedAt: Prisma.FieldRef<"Supplier", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"Supplier", 'Boolean'>
   readonly createdByUserId: Prisma.FieldRef<"Supplier", 'String'>
   readonly updatedByUserId: Prisma.FieldRef<"Supplier", 'String'>

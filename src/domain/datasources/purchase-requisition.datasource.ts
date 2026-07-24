@@ -48,14 +48,33 @@ export interface LinkPurchaseRequisitionItemToErpData {
 }
 
 export interface SaveSupplierData {
-  erpCode: string | null;
   name: string;
   canonicalName: string;
   scope: SupplierScope;
+  taxId: string | null;
+  state: string | null;
   country: string | null;
   contactName: string | null;
   email: string | null;
   phone: string | null;
+  actorUserId: string;
+}
+
+export interface SaveErpSupplierData {
+  erpCode: string;
+  name: string;
+  canonicalName: string;
+  taxId: string | null;
+  state: string | null;
+  creditTerms: string | null;
+  currency: Currency;
+  contactName: string | null;
+  contactPosition: string | null;
+  email: string | null;
+  phone: string | null;
+  phoneExtension: string | null;
+  mobile: string | null;
+  notes: string | null;
   actorUserId: string;
 }
 
@@ -112,5 +131,6 @@ export abstract class PurchaseRequisitionDatasource {
   abstract markCompletedByQuoteId(quoteId: string): Promise<void>;
   abstract listSuppliers(search: string | undefined, includeInactive: boolean): Promise<SupplierEntity[]>;
   abstract createSupplier(data: SaveSupplierData): Promise<SupplierEntity>;
+  abstract upsertErpSupplier(data: SaveErpSupplierData): Promise<SupplierEntity>;
   abstract updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null>;
 }

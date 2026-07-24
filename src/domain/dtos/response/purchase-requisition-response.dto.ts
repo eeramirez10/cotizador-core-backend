@@ -33,6 +33,7 @@ export class SupplierResponseDto {
   static toJSON(supplier: SupplierEntity) {
     return {
       ...supplier,
+      erpSyncedAt: supplier.erpSyncedAt?.toISOString() ?? null,
       createdAt: supplier.createdAt.toISOString(),
       updatedAt: supplier.updatedAt.toISOString(),
     };

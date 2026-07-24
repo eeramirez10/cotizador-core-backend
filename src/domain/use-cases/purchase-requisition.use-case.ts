@@ -1,11 +1,13 @@
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import { ErpProductLookupPort } from "../contracts/erp-product-lookup.port";
+import { ErpSupplierLookupPort } from "../contracts/erp-supplier-lookup.port";
 import type { PurchaseRequisitionActor } from "../datasources/purchase-requisition.datasource";
 import {
   AssignPurchaseRequisitionRequestDto,
   CreatePurchaseSupplierOfferRequestDto,
   GetPurchaseRequisitionsQueryDto,
   SaveSupplierRequestDto,
+  SyncErpSupplierRequestDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
 } from "../dtos/request/purchase-requisition-request.dto";
@@ -21,6 +23,7 @@ export class PurchaseRequisitionUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly semanticPort: LocalProductSemanticPort,
     private readonly erpProductLookup: ErpProductLookupPort,
+    private readonly erpSupplierLookup: ErpSupplierLookupPort,
   ) {}
 
   async ensureAfterApproval(quote: QuoteEntity) {
@@ -161,13 +164,48 @@ export class PurchaseRequisitionUseCase {
     return suppliers.map(SupplierResponseDto.toJSON);
   }
 
+  async searchErpSuppliers(term: string, actor: PurchaseRequisitionActor) {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can search ERP suppliers.");
+    const normalized = term.trim();
+    if (!normalized) throw new Error("Supplier search term is required.");
+    return this.erpSupplierLookup.search(normalized, 20);
+  }
+
+  async syncErpSupplier(dto: SyncErpSupplierRequestDto, actor: PurchaseRequisitionActor) {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can sync ERP suppliers.");
+    const erpSupplier = await this.erpSupplierLookup.findByCode(dto.erpCode);
+    if (!erpSupplier) throw new Error("ERP supplier not found.");
+    const contact = erpSupplier.contacts.find((item) => item.email || item.mobile || item.phone)
+      ?? erpSupplier.contacts[0]
+      ?? null;
+    const supplier = await this.repository.upsertErpSupplier({
+      erpCode: erpSupplier.code,
+      name: normalizeProductDisplayText(erpSupplier.name),
+      canonicalName: canonicalizeProductText(erpSupplier.name),
+      taxId: erpSupplier.taxId || null,
+      state: erpSupplier.state || null,
+      creditTerms: erpSupplier.creditTerms || null,
+      currency: erpSupplier.currency,
+      contactName: contact?.name || null,
+      contactPosition: contact?.position || null,
+      email: contact?.email || null,
+      phone: contact?.phone || null,
+      phoneExtension: contact?.extension || null,
+      mobile: contact?.mobile || null,
+      notes: contact?.notes || null,
+      actorUserId: actor.id,
+    });
+    return SupplierResponseDto.toJSON(supplier);
+  }
+
   async createSupplier(dto: SaveSupplierRequestDto, actor: PurchaseRequisitionActor) {
     if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can create suppliers.");
     const supplier = await this.repository.createSupplier({
-      erpCode: dto.erpCode,
       name: normalizeProductDisplayText(dto.name),
       canonicalName: canonicalizeProductText(dto.name),
       scope: dto.scope,
+      taxId: dto.taxId,
+      state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
       email: dto.email,
@@ -180,10 +218,11 @@ export class PurchaseRequisitionUseCase {
   async updateSupplier(id: string, dto: SaveSupplierRequestDto, actor: PurchaseRequisitionActor) {
     if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can update suppliers.");
     const supplier = await this.repository.updateSupplier(id, {
-      erpCode: dto.erpCode,
       name: normalizeProductDisplayText(dto.name),
       canonicalName: canonicalizeProductText(dto.name),
       scope: dto.scope,
+      taxId: dto.taxId,
+      state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
       email: dto.email,

@@ -46,6 +46,14 @@ export class Envs {
     return get("ERP_PRODUCTS_BASE_PATH").default("/api/erp/products").asString();
   }
 
+  static get erpSuppliersBasePath(): string {
+    return get("ERP_SUPPLIERS_BASE_PATH").default("/api/erp/suppliers").asString();
+  }
+
+  static get erpInternalApiKey(): string | undefined {
+    return get("ERP_INTERNAL_API_KEY").asString();
+  }
+
   static get erpApiTimeoutMs(): number {
     return get("ERP_API_TIMEOUT_MS").default("15000").asIntPositive();
   }

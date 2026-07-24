@@ -176,9 +176,10 @@ export class CreatePurchaseSupplierOfferRequestDto {
 
 export class SaveSupplierRequestDto {
   constructor(
-    public readonly erpCode: string | null,
     public readonly name: string,
     public readonly scope: SupplierScope,
+    public readonly taxId: string | null,
+    public readonly state: string | null,
     public readonly country: string | null,
     public readonly contactName: string | null,
     public readonly email: string | null,
@@ -195,13 +196,25 @@ export class SaveSupplierRequestDto {
     if (scope !== "NATIONAL" && scope !== "INTERNATIONAL") return ["scope is invalid."];
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return ["email is invalid."];
     return [, new SaveSupplierRequestDto(
-      optionalText(body.erpCode)?.toUpperCase() ?? null,
       name,
       scope,
+      optionalText(body.taxId)?.toUpperCase() ?? null,
+      optionalText(body.state)?.toUpperCase() ?? null,
       optionalText(body.country) ?? null,
       optionalText(body.contactName) ?? null,
       email,
       optionalText(body.phone) ?? null,
     )];
+  }
+}
+
+export class SyncErpSupplierRequestDto {
+  private constructor(public readonly erpCode: string) {}
+
+  static create(input: unknown): [string?, SyncErpSupplierRequestDto?] {
+    const value = (input as Record<string, unknown> | null)?.erpCode;
+    const erpCode = typeof value === "string" ? value.trim().toUpperCase() : "";
+    if (!erpCode || !erpCode.startsWith("3")) return ["A valid ERP supplier code is required."];
+    return [, new SyncErpSupplierRequestDto(erpCode)];
   }
 }
