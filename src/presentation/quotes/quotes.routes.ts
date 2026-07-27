@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Envs } from "../../config/envs";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
 import { ArchiveQuoteUseCase } from "../../domain/use-cases/archive-quote.use-case";
@@ -52,11 +53,16 @@ export class QuotesRoutes {
     const userRepository = new UserRepositoryImpl(userDatasource);
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
     const purchaseRequisitionRepository = new PurchaseRequisitionRepositoryImpl(
-      new PrismaPurchaseRequisitionDatasource()
+      new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled)
     );
 
     const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository, userRepository);
-    const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(quoteRepository, customerRepository, userRepository);
+    const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(
+      quoteRepository,
+      customerRepository,
+      userRepository,
+      Envs.quoteInternalApprovalEnabled
+    );
     const createQuoteFromExtractionUseCase = new CreateQuoteFromExtractionUseCase(
       quoteRepository,
       customerRepository,
@@ -77,7 +83,8 @@ export class QuotesRoutes {
     const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(
       quoteRepository,
       quoteCatalogRepository,
-      purchaseRequisitionRepository
+      purchaseRequisitionRepository,
+      Envs.quoteInternalApprovalEnabled
     );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(

@@ -75,4 +75,12 @@ export class Envs {
   static get localProductSemanticMinScore(): number {
     return get("LOCAL_PRODUCT_SEMANTIC_MIN_SCORE").default("0.72").asFloatPositive();
   }
+
+  static get quoteInternalApprovalEnabled(): boolean {
+    return get("QUOTE_INTERNAL_APPROVAL_ENABLED").default("false").asBool();
+  }
+
+  static get requisitionInternalApprovalEnabled(): boolean {
+    return get("REQUISITION_INTERNAL_APPROVAL_ENABLED").default("false").asBool();
+  }
 }

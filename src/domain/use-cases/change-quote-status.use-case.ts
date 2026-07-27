@@ -32,7 +32,8 @@ export class ChangeQuoteStatusUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
     private readonly quoteCatalogRepository: QuoteCatalogRepository,
-    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository
+    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository,
+    private readonly internalApprovalEnabled = true
   ) {}
 
   async execute(
@@ -58,15 +59,19 @@ export class ChangeQuoteStatusUseCase {
       throw new Error("Quote status cannot change while a revision is in progress.");
     }
 
-    if (quote.status === dto.status) {
+    const bypassInternalApproval = dto.status === "PENDING_APPROVAL" && !this.internalApprovalEnabled;
+    const targetStatus: QuoteStatus = bypassInternalApproval ? "QUOTED" : dto.status;
+    const canBypassFromCurrentStatus = ["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status);
+
+    if (quote.status === targetStatus) {
       if (dto.status === "APPROVED") {
         await this.purchaseRequisitionRepository.ensureForApprovedQuote(quote);
         return new QuoteResponseDto(quote);
       }
       throw new Error("Quote is already in the requested status.");
     }
-    if (!isTransitionAllowed(quote.status, dto.status)) {
-      throw new Error(`Invalid status transition from ${quote.status} to ${dto.status}.`);
+    if ((bypassInternalApproval && !canBypassFromCurrentStatus) || (!bypassInternalApproval && !isTransitionAllowed(quote.status, targetStatus))) {
+      throw new Error(`Invalid status transition from ${quote.status} to ${targetStatus}.`);
     }
     const isApprovalDecision = dto.status === "QUOTED" || dto.status === "CHANGES_REQUESTED";
     if (isApprovalDecision && !["ADMIN", "MANAGER"].includes(actor.role)) {
@@ -126,9 +131,11 @@ export class ChangeQuoteStatusUseCase {
 
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,
-      status: dto.status,
+      status: targetStatus,
       note:
-        dto.status === "REJECTED"
+        bypassInternalApproval
+          ? "Quote generated. Internal approval bypassed by system configuration."
+          : dto.status === "REJECTED"
           ? `Rejected: ${dto.rejectionReason}.${dto.rejectionComment ? ` ${dto.rejectionComment}` : ""}`
           : dto.status === "CANCELLED"
             ? `Cancelled: ${dto.cancellationReason}.${dto.cancellationComment ? ` ${dto.cancellationComment}` : ""}`

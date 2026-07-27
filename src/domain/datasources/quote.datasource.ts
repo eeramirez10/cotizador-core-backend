@@ -101,6 +101,7 @@ export interface SaveQuoteDraftDatasourceParams {
   quoteId: string | null;
   quoteNumber: string;
   action: "SAVE_DRAFT" | "SUBMIT_FOR_APPROVAL";
+  submissionStatus: "PENDING_APPROVAL" | "QUOTED";
   data: Omit<CreateQuoteDatasourceParams, "quoteNumber">;
   items: SaveQuoteDraftItemDatasourceData[];
   scope: QuoteAccessScope;

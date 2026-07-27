@@ -15,7 +15,9 @@ import { PurchaseRequisitionsController } from "./purchase-requisitions.controll
 export class PurchaseRequisitionsRoutes {
   static routes(): Router {
     const router = Router();
-    const repository = new PurchaseRequisitionRepositoryImpl(new PrismaPurchaseRequisitionDatasource());
+    const repository = new PurchaseRequisitionRepositoryImpl(
+      new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled)
+    );
     const quoteRepository = new QuoteRepositoryImpl(new PrismaQuoteDatasource());
     const semanticAdapter = new GptLocalProductSemanticAdapter(
       Envs.gptLocalProductsUrl,

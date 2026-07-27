@@ -33,7 +33,8 @@ export class SaveQuoteDraftUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
     private readonly customerRepository: CustomerRepository,
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly internalApprovalEnabled = true
   ) {}
 
   async execute(
@@ -198,6 +199,7 @@ export class SaveQuoteDraftUseCase {
       quoteId: dto.quoteId,
       quoteNumber: buildQuoteNumber(),
       action: dto.action,
+      submissionStatus: this.internalApprovalEnabled ? "PENDING_APPROVAL" : "QUOTED",
       data: {
         origin: dto.quote.origin,
         captureMethod: dto.quote.captureMethod,

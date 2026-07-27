@@ -327,7 +327,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         throw new Error("Quote belongs to a different client draft.");
       }
 
-      if (existing?.status === "PENDING_APPROVAL" && params.action === "SUBMIT_FOR_APPROVAL") {
+      if (existing?.status === params.submissionStatus && params.action === "SUBMIT_FOR_APPROVAL") {
         return {
           id: existing.id,
           quoteNumber: existing.quoteNumber,
@@ -407,7 +407,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         });
       }
 
-      const targetStatus = params.action === "SUBMIT_FOR_APPROVAL" ? "PENDING_APPROVAL" : quote.status;
+      const targetStatus = params.action === "SUBMIT_FOR_APPROVAL" ? params.submissionStatus : quote.status;
       await tx.quote.update({
         where: { id: quote.id },
         data: {
@@ -453,12 +453,14 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         });
       }
 
-      if (params.action === "SUBMIT_FOR_APPROVAL" && quote.status !== "PENDING_APPROVAL") {
+      if (params.action === "SUBMIT_FOR_APPROVAL" && quote.status !== params.submissionStatus) {
         await tx.quoteEvent.create({
           data: {
             quoteId: quote.id,
-            status: "PENDING_APPROVAL",
-            note: "Quote submitted for internal approval.",
+            status: params.submissionStatus,
+            note: params.submissionStatus === "QUOTED"
+              ? "Quote generated. Internal approval bypassed by system configuration."
+              : "Quote submitted for internal approval.",
             actorUserId: params.data.updatedByUserId,
           },
         });
