@@ -12,6 +12,7 @@ export interface QuoteItemProductSummary {
 export interface QuoteItemEntity {
   id: string;
   quoteId: string;
+  clientItemId: string | null;
   productId: string | null;
   externalProductCode: string | null;
   ean: string | null;

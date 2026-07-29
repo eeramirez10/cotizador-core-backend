@@ -7,6 +7,7 @@ export class QuoteItemResponseDto {
     return {
       id: this.item.id,
       quoteId: this.item.quoteId,
+      clientItemId: this.item.clientItemId,
       productId: this.item.productId,
       externalProductCode: this.item.externalProductCode,
       ean: this.item.ean,

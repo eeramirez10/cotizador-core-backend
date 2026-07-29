@@ -4,4 +4,7 @@ dist
 .env.*
 !.env.example
 .prisma
-storage
+storage/*
+!storage/attachments/
+storage/attachments/*
+!storage/attachments/.gitkeep

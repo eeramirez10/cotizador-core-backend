@@ -397,6 +397,9 @@ export const ModelName = {
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
+  FileAsset: 'FileAsset',
+  QuoteAttachment: 'QuoteAttachment',
+  PurchaseOfferAttachment: 'PurchaseOfferAttachment',
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   QuoteOrderExport: 'QuoteOrderExport',
@@ -417,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1383,6 +1386,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FileAsset: {
+      payload: Prisma.$FileAssetPayload<ExtArgs>
+      fields: Prisma.FileAssetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FileAssetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FileAssetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        findFirst: {
+          args: Prisma.FileAssetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FileAssetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        findMany: {
+          args: Prisma.FileAssetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>[]
+        }
+        create: {
+          args: Prisma.FileAssetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        createMany: {
+          args: Prisma.FileAssetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FileAssetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>[]
+        }
+        delete: {
+          args: Prisma.FileAssetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        update: {
+          args: Prisma.FileAssetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        deleteMany: {
+          args: Prisma.FileAssetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FileAssetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FileAssetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>[]
+        }
+        upsert: {
+          args: Prisma.FileAssetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FileAssetPayload>
+        }
+        aggregate: {
+          args: Prisma.FileAssetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFileAsset>
+        }
+        groupBy: {
+          args: Prisma.FileAssetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FileAssetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FileAssetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FileAssetCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteAttachment: {
+      payload: Prisma.$QuoteAttachmentPayload<ExtArgs>
+      fields: Prisma.QuoteAttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteAttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteAttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteAttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteAttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteAttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteAttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteAttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteAttachmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteAttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        update: {
+          args: Prisma.QuoteAttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteAttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteAttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteAttachmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteAttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteAttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteAttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteAttachment>
+        }
+        groupBy: {
+          args: Prisma.QuoteAttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteAttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteAttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteAttachmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    PurchaseOfferAttachment: {
+      payload: Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>
+      fields: Prisma.PurchaseOfferAttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseOfferAttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseOfferAttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseOfferAttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseOfferAttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseOfferAttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseOfferAttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseOfferAttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseOfferAttachmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseOfferAttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        update: {
+          args: Prisma.PurchaseOfferAttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseOfferAttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseOfferAttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseOfferAttachmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseOfferAttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseOfferAttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseOfferAttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseOfferAttachment>
+        }
+        groupBy: {
+          args: Prisma.PurchaseOfferAttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseOfferAttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseOfferAttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseOfferAttachmentCountAggregateOutputType> | number
+        }
+      }
+    }
     QuoteEvent: {
       payload: Prisma.$QuoteEventPayload<ExtArgs>
       fields: Prisma.QuoteEventFieldRefs
@@ -2022,6 +2247,7 @@ export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof Qu
 export const QuoteItemScalarFieldEnum = {
   id: 'id',
   quoteId: 'quoteId',
+  clientItemId: 'clientItemId',
   productId: 'productId',
   externalProductCode: 'externalProductCode',
   ean: 'ean',
@@ -2180,6 +2406,45 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
 } as const
 
 export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
+
+
+export const FileAssetScalarFieldEnum = {
+  id: 'id',
+  originalName: 'originalName',
+  storageKey: 'storageKey',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  checksumSha256: 'checksumSha256',
+  status: 'status',
+  uploadedByUserId: 'uploadedByUserId',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FileAssetScalarFieldEnum = (typeof FileAssetScalarFieldEnum)[keyof typeof FileAssetScalarFieldEnum]
+
+
+export const QuoteAttachmentScalarFieldEnum = {
+  id: 'id',
+  fileAssetId: 'fileAssetId',
+  quoteId: 'quoteId',
+  clientDraftId: 'clientDraftId',
+  clientItemId: 'clientItemId',
+  category: 'category',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteAttachmentScalarFieldEnum = (typeof QuoteAttachmentScalarFieldEnum)[keyof typeof QuoteAttachmentScalarFieldEnum]
+
+
+export const PurchaseOfferAttachmentScalarFieldEnum = {
+  id: 'id',
+  fileAssetId: 'fileAssetId',
+  purchaseSupplierOfferId: 'purchaseSupplierOfferId',
+  createdAt: 'createdAt'
+} as const
+
+export type PurchaseOfferAttachmentScalarFieldEnum = (typeof PurchaseOfferAttachmentScalarFieldEnum)[keyof typeof PurchaseOfferAttachmentScalarFieldEnum]
 
 
 export const QuoteEventScalarFieldEnum = {
@@ -2629,6 +2894,34 @@ export type ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = F
 
 
 /**
+ * Reference to a field of type 'FileAssetStatus'
+ */
+export type EnumFileAssetStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileAssetStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'FileAssetStatus[]'
+ */
+export type ListEnumFileAssetStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileAssetStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteAttachmentCategory'
+ */
+export type EnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteAttachmentCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'QuoteAttachmentCategory[]'
+ */
+export type ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteAttachmentCategory[]'>
+    
+
+
+/**
  * Reference to a field of type 'QuoteDeliveryChannel'
  */
 export type EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteDeliveryChannel'>
@@ -2805,6 +3098,9 @@ export type GlobalOmitConfig = {
   purchaseRequisition?: Prisma.PurchaseRequisitionOmit
   purchaseRequisitionItem?: Prisma.PurchaseRequisitionItemOmit
   purchaseSupplierOffer?: Prisma.PurchaseSupplierOfferOmit
+  fileAsset?: Prisma.FileAssetOmit
+  quoteAttachment?: Prisma.QuoteAttachmentOmit
+  purchaseOfferAttachment?: Prisma.PurchaseOfferAttachmentOmit
   quoteEvent?: Prisma.QuoteEventOmit
   quoteDeliveryAttempt?: Prisma.QuoteDeliveryAttemptOmit
   quoteOrderExport?: Prisma.QuoteOrderExportOmit

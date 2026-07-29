@@ -114,6 +114,22 @@ export const PurchaseCostSource = {
 export type PurchaseCostSource = (typeof PurchaseCostSource)[keyof typeof PurchaseCostSource]
 
 
+export const FileAssetStatus = {
+  READY: 'READY',
+  DELETED: 'DELETED'
+} as const
+
+export type FileAssetStatus = (typeof FileAssetStatus)[keyof typeof FileAssetStatus]
+
+
+export const QuoteAttachmentCategory = {
+  SOURCE_DOCUMENT: 'SOURCE_DOCUMENT',
+  SELLER_SUPPLIER_QUOTE: 'SELLER_SUPPLIER_QUOTE'
+} as const
+
+export type QuoteAttachmentCategory = (typeof QuoteAttachmentCategory)[keyof typeof QuoteAttachmentCategory]
+
+
 export const Currency = {
   MXN: 'MXN',
   USD: 'USD'

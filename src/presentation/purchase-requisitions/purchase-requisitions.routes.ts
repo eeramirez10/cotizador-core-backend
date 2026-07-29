@@ -43,9 +43,9 @@ export class PurchaseRequisitionsRoutes {
     router.get("/quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getByQuoteId);
     router.post("/from-quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.createFromQuote);
     router.get("/suppliers", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.listSuppliers);
-    router.get("/suppliers/erp/search", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.searchErpSuppliers);
-    router.post("/suppliers/erp/sync", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.syncErpSupplier);
-    router.post("/suppliers", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.createSupplier);
+    router.get("/suppliers/erp/search", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.searchErpSuppliers);
+    router.post("/suppliers/erp/sync", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.syncErpSupplier);
+    router.post("/suppliers", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.createSupplier);
     router.patch("/suppliers/:supplierId", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.updateSupplier);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getById);
     router.patch("/:id/items/:itemId", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateItem);

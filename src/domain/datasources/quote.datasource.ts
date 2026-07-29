@@ -61,6 +61,7 @@ export interface CreateQuoteDatasourceParams {
 }
 
 export interface SaveQuoteDraftItemDatasourceData {
+  clientItemId: string;
   productId: string | null;
   externalProductCode: string | null;
   ean: string | null;

@@ -64,6 +64,9 @@ export const ModelName = {
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
+  FileAsset: 'FileAsset',
+  QuoteAttachment: 'QuoteAttachment',
+  PurchaseOfferAttachment: 'PurchaseOfferAttachment',
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   QuoteOrderExport: 'QuoteOrderExport',
@@ -317,6 +320,7 @@ export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof Qu
 export const QuoteItemScalarFieldEnum = {
   id: 'id',
   quoteId: 'quoteId',
+  clientItemId: 'clientItemId',
   productId: 'productId',
   externalProductCode: 'externalProductCode',
   ean: 'ean',
@@ -475,6 +479,45 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
 } as const
 
 export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
+
+
+export const FileAssetScalarFieldEnum = {
+  id: 'id',
+  originalName: 'originalName',
+  storageKey: 'storageKey',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  checksumSha256: 'checksumSha256',
+  status: 'status',
+  uploadedByUserId: 'uploadedByUserId',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type FileAssetScalarFieldEnum = (typeof FileAssetScalarFieldEnum)[keyof typeof FileAssetScalarFieldEnum]
+
+
+export const QuoteAttachmentScalarFieldEnum = {
+  id: 'id',
+  fileAssetId: 'fileAssetId',
+  quoteId: 'quoteId',
+  clientDraftId: 'clientDraftId',
+  clientItemId: 'clientItemId',
+  category: 'category',
+  createdAt: 'createdAt'
+} as const
+
+export type QuoteAttachmentScalarFieldEnum = (typeof QuoteAttachmentScalarFieldEnum)[keyof typeof QuoteAttachmentScalarFieldEnum]
+
+
+export const PurchaseOfferAttachmentScalarFieldEnum = {
+  id: 'id',
+  fileAssetId: 'fileAssetId',
+  purchaseSupplierOfferId: 'purchaseSupplierOfferId',
+  createdAt: 'createdAt'
+} as const
+
+export type PurchaseOfferAttachmentScalarFieldEnum = (typeof PurchaseOfferAttachmentScalarFieldEnum)[keyof typeof PurchaseOfferAttachmentScalarFieldEnum]
 
 
 export const QuoteEventScalarFieldEnum = {

@@ -1,6 +1,7 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
 
 interface CreateQuoteItemRequestDtoProps {
+  clientItemId: string;
   productId: string | null;
   externalProductCode: string | null;
   ean: string | null;
@@ -36,6 +37,7 @@ interface CreateQuoteItemRequestDtoProps {
 }
 
 export class CreateQuoteItemRequestDto {
+  public readonly clientItemId: string;
   public readonly productId: string | null;
   public readonly externalProductCode: string | null;
   public readonly ean: string | null;
@@ -70,6 +72,7 @@ export class CreateQuoteItemRequestDto {
   public readonly requiresReview: boolean;
 
   constructor(props: CreateQuoteItemRequestDtoProps) {
+    this.clientItemId = props.clientItemId;
     this.productId = props.productId;
     this.externalProductCode = props.externalProductCode;
     this.ean = props.ean;
@@ -110,6 +113,8 @@ export class CreateQuoteItemRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const clientItemId = typeof body.clientItemId === "string" ? body.clientItemId.trim() : "";
+    if (!clientItemId || clientItemId.length > 80) return ["clientItemId must contain between 1 and 80 characters."];
     const unit = typeof body.unit === "string" ? body.unit.trim() : "";
     if (!unit) return ["unit is required."];
 
@@ -178,6 +183,7 @@ export class CreateQuoteItemRequestDto {
     return [
       ,
       new CreateQuoteItemRequestDto({
+        clientItemId,
         productId: CreateQuoteItemRequestDto.normalizeNullableString(body.productId),
         externalProductCode: CreateQuoteItemRequestDto.normalizeNullableString(body.externalProductCode),
         ean: CreateQuoteItemRequestDto.normalizeNullableString(body.ean),

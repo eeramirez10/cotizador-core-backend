@@ -69,6 +69,7 @@ export interface PurchaseSupplierOfferEntity {
 export interface PurchaseRequisitionItemEntity {
   id: string;
   quoteItemId: string;
+  quoteClientItemId: string | null;
   position: number;
   productId: string | null;
   source: PurchaseItemSource;

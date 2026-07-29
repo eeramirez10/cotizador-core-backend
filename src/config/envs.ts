@@ -38,6 +38,14 @@ export class Envs {
     return get("ERP_OUTBOX_DIR").default("storage/erp-outbox").asString();
   }
 
+  static get fileStorageRoot(): string {
+    return get("FILE_STORAGE_ROOT").default("storage/attachments").asString();
+  }
+
+  static get fileUploadMaxMb(): number {
+    return get("FILE_UPLOAD_MAX_MB").default("20").asIntPositive();
+  }
+
   static get erpApiUrl(): string {
     return get("ERP_API_URL").default("http://localhost:3500").asString();
   }
