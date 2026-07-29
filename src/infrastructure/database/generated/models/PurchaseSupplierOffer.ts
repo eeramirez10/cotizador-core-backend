@@ -405,6 +405,7 @@ export type PurchaseSupplierOfferWhereInput = {
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  attachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
 }
 
 export type PurchaseSupplierOfferOrderByWithRelationInput = {
@@ -438,6 +439,7 @@ export type PurchaseSupplierOfferOrderByWithRelationInput = {
   supplier?: Prisma.SupplierOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
+  attachments?: Prisma.PurchaseOfferAttachmentOrderByRelationAggregateInput
 }
 
 export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
@@ -474,6 +476,7 @@ export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  attachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
 }, "id">
 
 export type PurchaseSupplierOfferOrderByWithAggregationInput = {
@@ -567,6 +570,7 @@ export type PurchaseSupplierOfferCreateInput = {
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateInput = {
@@ -596,6 +600,7 @@ export type PurchaseSupplierOfferUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUpdateInput = {
@@ -625,6 +630,7 @@ export type PurchaseSupplierOfferUpdateInput = {
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateInput = {
@@ -654,6 +660,7 @@ export type PurchaseSupplierOfferUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferCreateManyInput = {
@@ -855,6 +862,11 @@ export type PurchaseSupplierOfferSumOrderByAggregateInput = {
   total?: Prisma.SortOrder
 }
 
+export type PurchaseSupplierOfferScalarRelationFilter = {
+  is?: Prisma.PurchaseSupplierOfferWhereInput
+  isNot?: Prisma.PurchaseSupplierOfferWhereInput
+}
+
 export type PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutCreatedByInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput> | Prisma.PurchaseSupplierOfferCreateWithoutCreatedByInput[] | Prisma.PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutCreatedByInput | Prisma.PurchaseSupplierOfferCreateOrConnectWithoutCreatedByInput[]
@@ -1039,6 +1051,20 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemNested
   deleteMany?: Prisma.PurchaseSupplierOfferScalarWhereInput | Prisma.PurchaseSupplierOfferScalarWhereInput[]
 }
 
+export type PurchaseSupplierOfferCreateNestedOneWithoutAttachmentsInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutAttachmentsInput
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput
+}
+
+export type PurchaseSupplierOfferUpdateOneRequiredWithoutAttachmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutAttachmentsInput
+  upsert?: Prisma.PurchaseSupplierOfferUpsertWithoutAttachmentsInput
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUpdateWithoutAttachmentsInput>, Prisma.PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput>
+}
+
 export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
   id?: string
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1065,6 +1091,7 @@ export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput = {
@@ -1093,6 +1120,7 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferCreateOrConnectWithoutCreatedByInput = {
@@ -1131,6 +1159,7 @@ export type PurchaseSupplierOfferCreateWithoutUpdatedByInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutUpdatedByInput = {
@@ -1159,6 +1188,7 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferCreateOrConnectWithoutUpdatedByInput = {
@@ -1260,6 +1290,7 @@ export type PurchaseSupplierOfferCreateWithoutSupplierInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutSupplierInput = {
@@ -1288,6 +1319,7 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutSupplierInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferCreateOrConnectWithoutSupplierInput = {
@@ -1342,6 +1374,7 @@ export type PurchaseSupplierOfferCreateWithoutRequisitionItemInput = {
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutRequisitionItemInput = {
@@ -1370,6 +1403,7 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutRequisitionItemInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferCreateOrConnectWithoutRequisitionItemInput = {
@@ -1408,6 +1442,7 @@ export type PurchaseSupplierOfferCreateWithoutSelectedForItemInput = {
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutSelectedForItemInput = {
@@ -1436,6 +1471,7 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutSelectedForItemInput = {
   updatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
 export type PurchaseSupplierOfferCreateOrConnectWithoutSelectedForItemInput = {
@@ -1496,6 +1532,7 @@ export type PurchaseSupplierOfferUpdateWithoutSelectedForItemInput = {
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutSelectedForItemInput = {
@@ -1524,6 +1561,139 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSelectedForItemInput = {
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
+}
+
+export type PurchaseSupplierOfferCreateWithoutAttachmentsInput = {
+  id?: string
+  qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: $Enums.Currency
+  exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: string | null
+  origin?: string | null
+  deliveryTime?: string | null
+  validUntil?: Date | string | null
+  quoteDate?: Date | string
+  sentAt?: Date | string | null
+  externalReference?: string | null
+  notes?: string | null
+  isSelected?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
+  supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+}
+
+export type PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  requisitionItemId: string
+  supplierId: string
+  qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: $Enums.Currency
+  exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: string | null
+  origin?: string | null
+  deliveryTime?: string | null
+  validUntil?: Date | string | null
+  quoteDate?: Date | string
+  sentAt?: Date | string | null
+  externalReference?: string | null
+  notes?: string | null
+  isSelected?: boolean
+  isActive?: boolean
+  createdByUserId: string
+  updatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+}
+
+export type PurchaseSupplierOfferCreateOrConnectWithoutAttachmentsInput = {
+  where: Prisma.PurchaseSupplierOfferWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput>
+}
+
+export type PurchaseSupplierOfferUpsertWithoutAttachmentsInput = {
+  update: Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput>
+  create: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput>
+  where?: Prisma.PurchaseSupplierOfferWhereInput
+}
+
+export type PurchaseSupplierOfferUpdateToOneWithWhereWithoutAttachmentsInput = {
+  where?: Prisma.PurchaseSupplierOfferWhereInput
+  data: Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type PurchaseSupplierOfferUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  externalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSelected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
+  supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+}
+
+export type PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  externalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSelected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
 }
 
 export type PurchaseSupplierOfferCreateManyCreatedByInput = {
@@ -1606,6 +1776,7 @@ export type PurchaseSupplierOfferUpdateWithoutCreatedByInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutCreatedByInput = {
@@ -1634,6 +1805,7 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1689,6 +1861,7 @@ export type PurchaseSupplierOfferUpdateWithoutUpdatedByInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutUpdatedByInput = {
@@ -1717,6 +1890,7 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByInput = {
@@ -1799,6 +1973,7 @@ export type PurchaseSupplierOfferUpdateWithoutSupplierInput = {
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierInput = {
@@ -1827,6 +2002,7 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierInput = {
@@ -1909,6 +2085,7 @@ export type PurchaseSupplierOfferUpdateWithoutRequisitionItemInput = {
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutRequisitionItemInput = {
@@ -1937,6 +2114,7 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutRequisitionItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemInput = {
@@ -1966,6 +2144,35 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemInput 
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type PurchaseSupplierOfferCountOutputType
+ */
+
+export type PurchaseSupplierOfferCountOutputType = {
+  attachments: number
+}
+
+export type PurchaseSupplierOfferCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  attachments?: boolean | PurchaseSupplierOfferCountOutputTypeCountAttachmentsArgs
+}
+
+/**
+ * PurchaseSupplierOfferCountOutputType without action
+ */
+export type PurchaseSupplierOfferCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseSupplierOfferCountOutputType
+   */
+  select?: Prisma.PurchaseSupplierOfferCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PurchaseSupplierOfferCountOutputType without action
+ */
+export type PurchaseSupplierOfferCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseOfferAttachmentWhereInput
+}
 
 
 export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1999,6 +2206,8 @@ export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
+  attachments?: boolean | Prisma.PurchaseSupplierOffer$attachmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.PurchaseSupplierOfferCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseSupplierOffer"]>
 
 export type PurchaseSupplierOfferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2100,6 +2309,8 @@ export type PurchaseSupplierOfferInclude<ExtArgs extends runtime.Types.Extension
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
+  attachments?: boolean | Prisma.PurchaseSupplierOffer$attachmentsArgs<ExtArgs>
+  _count?: boolean | Prisma.PurchaseSupplierOfferCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PurchaseSupplierOfferIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
@@ -2122,6 +2333,7 @@ export type $PurchaseSupplierOfferPayload<ExtArgs extends runtime.Types.Extensio
     supplier: Prisma.$SupplierPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
+    attachments: Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2548,6 +2760,7 @@ export interface Prisma__PurchaseSupplierOfferClient<T, Null = never, ExtArgs ex
   supplier<T extends Prisma.SupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  attachments<T extends Prisma.PurchaseSupplierOffer$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseSupplierOffer$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3033,6 +3246,30 @@ export type PurchaseSupplierOffer$updatedByArgs<ExtArgs extends runtime.Types.Ex
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * PurchaseSupplierOffer.attachments
+ */
+export type PurchaseSupplierOffer$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseOfferAttachment
+   */
+  select?: Prisma.PurchaseOfferAttachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseOfferAttachment
+   */
+  omit?: Prisma.PurchaseOfferAttachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseOfferAttachmentInclude<ExtArgs> | null
+  where?: Prisma.PurchaseOfferAttachmentWhereInput
+  orderBy?: Prisma.PurchaseOfferAttachmentOrderByWithRelationInput | Prisma.PurchaseOfferAttachmentOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseOfferAttachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseOfferAttachmentScalarFieldEnum | Prisma.PurchaseOfferAttachmentScalarFieldEnum[]
 }
 
 /**

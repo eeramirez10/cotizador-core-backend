@@ -145,6 +145,7 @@ interface QuoteRow {
   items: Array<{
     id: string;
     quoteId: string;
+    clientItemId: string | null;
     productId: string | null;
     externalProductCode: string | null;
     ean: string | null;
@@ -320,6 +321,7 @@ export class QuoteMapper {
       items: row.items.map((item) => ({
         id: item.id,
         quoteId: item.quoteId,
+        clientItemId: item.clientItemId,
         productId: item.productId,
         externalProductCode: item.externalProductCode,
         ean: item.ean,

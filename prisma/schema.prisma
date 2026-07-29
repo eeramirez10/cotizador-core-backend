@@ -79,6 +79,16 @@ enum PurchaseCostSource {
   ESTIMATED
 }
 
+enum FileAssetStatus {
+  READY
+  DELETED
+}
+
+enum QuoteAttachmentCategory {
+  SOURCE_DOCUMENT
+  SELLER_SUPPLIER_QUOTE
+}
+
 enum Currency {
   MXN
   USD
@@ -254,6 +264,7 @@ model User {
   erpLinkedRequisitionItems PurchaseRequisitionItem[]      @relation("PurchaseRequisitionItemErpLinkedBy")
   createdSupplierOffers    PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferCreatedBy")
   updatedSupplierOffers    PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferUpdatedBy")
+  uploadedFileAssets       FileAsset[]                     @relation("FileAssetUploadedBy")
 
   @@index([branchId])
   @@map("users")
@@ -475,6 +486,7 @@ model Quote {
   orderExports        QuoteOrderExport[]
   events              QuoteEvent[]
   purchaseRequisition PurchaseRequisition?
+  attachments         QuoteAttachment[]
 
   @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
@@ -501,6 +513,7 @@ model Quote {
 model QuoteItem {
   id                         String    @id @default(uuid()) @db.Uuid
   quoteId                    String    @map("quote_id") @db.Uuid
+  clientItemId               String?   @map("client_item_id") @db.VarChar(80)
   productId                  String?   @map("product_id") @db.Uuid
   externalProductCode        String?   @map("external_product_code") @db.VarChar(80)
   ean                        String?   @db.VarChar(120)
@@ -543,6 +556,7 @@ model QuoteItem {
   purchaseRequisitionItem PurchaseRequisitionItem?
 
   @@index([quoteId])
+  @@unique([quoteId, clientItemId])
   @@index([productId])
   @@index([sellerSupplierId])
   @@map("quote_items")
@@ -700,11 +714,66 @@ model PurchaseSupplierOffer {
   supplier        Supplier                 @relation(fields: [supplierId], references: [id], onDelete: Restrict)
   createdBy       User                     @relation("PurchaseSupplierOfferCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
   updatedBy       User?                    @relation("PurchaseSupplierOfferUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  attachments     PurchaseOfferAttachment[]
 
   @@index([requisitionItemId, isActive])
   @@index([supplierId])
   @@index([createdByUserId])
   @@map("purchase_supplier_offers")
+}
+
+model FileAsset {
+  id               String          @id @default(uuid()) @db.Uuid
+  originalName     String          @map("original_name") @db.VarChar(255)
+  storageKey       String          @unique @map("storage_key") @db.VarChar(500)
+  mimeType         String          @map("mime_type") @db.VarChar(120)
+  sizeBytes        Int             @map("size_bytes")
+  checksumSha256   String          @map("checksum_sha256") @db.Char(64)
+  status           FileAssetStatus @default(READY)
+  uploadedByUserId String          @map("uploaded_by_user_id") @db.Uuid
+  deletedAt        DateTime?       @map("deleted_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+
+  uploadedBy              User                      @relation("FileAssetUploadedBy", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  quoteAttachments        QuoteAttachment[]
+  purchaseOfferAttachments PurchaseOfferAttachment[]
+
+  @@index([uploadedByUserId, createdAt])
+  @@index([checksumSha256])
+  @@map("file_assets")
+}
+
+model QuoteAttachment {
+  id            String                  @id @default(uuid()) @db.Uuid
+  fileAssetId   String                  @map("file_asset_id") @db.Uuid
+  quoteId       String?                 @map("quote_id") @db.Uuid
+  clientDraftId String                  @map("client_draft_id") @db.VarChar(80)
+  clientItemId  String?                 @map("client_item_id") @db.VarChar(80)
+  category      QuoteAttachmentCategory
+  createdAt     DateTime                @default(now()) @map("created_at")
+
+  fileAsset FileAsset @relation(fields: [fileAssetId], references: [id], onDelete: Cascade)
+  quote     Quote?    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  @@unique([fileAssetId, clientDraftId, clientItemId, category])
+  @@index([clientDraftId, category])
+  @@index([quoteId, category])
+  @@index([clientItemId])
+  @@map("quote_attachments")
+}
+
+model PurchaseOfferAttachment {
+  id                      String   @id @default(uuid()) @db.Uuid
+  fileAssetId             String   @map("file_asset_id") @db.Uuid
+  purchaseSupplierOfferId String   @map("purchase_supplier_offer_id") @db.Uuid
+  createdAt               DateTime @default(now()) @map("created_at")
+
+  fileAsset             FileAsset             @relation(fields: [fileAssetId], references: [id], onDelete: Cascade)
+  purchaseSupplierOffer PurchaseSupplierOffer @relation(fields: [purchaseSupplierOfferId], references: [id], onDelete: Cascade)
+
+  @@unique([fileAssetId, purchaseSupplierOfferId])
+  @@index([purchaseSupplierOfferId])
+  @@map("purchase_offer_attachments")
 }
 
 model QuoteEvent {

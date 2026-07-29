@@ -36,6 +36,7 @@ const requisitionInclude = {
   items: {
     orderBy: { position: "asc" as const },
     include: {
+      quoteItem: { select: { clientItemId: true } },
       offers: {
         where: { isActive: true },
         orderBy: [{ isSelected: "desc" as const }, { createdAt: "desc" as const }],
@@ -172,6 +173,7 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
   items: row.items.map((item): PurchaseRequisitionItemEntity => ({
     id: item.id,
     quoteItemId: item.quoteItemId,
+    quoteClientItemId: item.quoteItem.clientItemId,
     position: item.position,
     productId: item.productId,
     source: item.source,

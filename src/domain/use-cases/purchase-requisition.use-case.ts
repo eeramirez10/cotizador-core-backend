@@ -165,14 +165,14 @@ export class PurchaseRequisitionUseCase {
   }
 
   async searchErpSuppliers(term: string, actor: PurchaseRequisitionActor) {
-    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can search ERP suppliers.");
+    if (!["ADMIN", "SELLER", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN, SELLER or PURCHASING can search ERP suppliers.");
     const normalized = term.trim();
     if (!normalized) throw new Error("Supplier search term is required.");
     return this.erpSupplierLookup.search(normalized, 20);
   }
 
   async syncErpSupplier(dto: SyncErpSupplierRequestDto, actor: PurchaseRequisitionActor) {
-    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can sync ERP suppliers.");
+    if (!["ADMIN", "SELLER", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN, SELLER or PURCHASING can sync ERP suppliers.");
     const erpSupplier = await this.erpSupplierLookup.findByCode(dto.erpCode);
     if (!erpSupplier) throw new Error("ERP supplier not found.");
     const contact = erpSupplier.contacts.find((item) => item.email || item.mobile || item.phone)
@@ -199,7 +199,7 @@ export class PurchaseRequisitionUseCase {
   }
 
   async createSupplier(dto: SaveSupplierRequestDto, actor: PurchaseRequisitionActor) {
-    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can create suppliers.");
+    if (!["ADMIN", "SELLER", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN, SELLER or PURCHASING can create suppliers.");
     const supplier = await this.repository.createSupplier({
       name: normalizeProductDisplayText(dto.name),
       canonicalName: canonicalizeProductText(dto.name),

@@ -119,6 +119,7 @@ export class SaveQuoteDraftUseCase {
         : !isQuoteItemReady(readinessInput);
 
       return {
+        clientItemId: item.clientItemId,
         productId: item.productId,
         externalProductCode: item.externalProductCode,
         ean: item.ean,

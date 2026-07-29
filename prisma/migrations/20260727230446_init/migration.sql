@@ -1,0 +1,5 @@
+-- RenameIndex
+ALTER INDEX "purchase_offer_attachments_file_asset_id_purchase_supplier_offe" RENAME TO "purchase_offer_attachments_file_asset_id_purchase_supplier__key";
+
+-- RenameIndex
+ALTER INDEX "quote_attachments_file_asset_id_client_draft_id_client_item_id_" RENAME TO "quote_attachments_file_asset_id_client_draft_id_client_item_key";

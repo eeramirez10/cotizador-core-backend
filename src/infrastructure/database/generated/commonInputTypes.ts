@@ -650,6 +650,40 @@ export type EnumPurchaseRequisitionItemStatusWithAggregatesFilter<$PrismaModel =
   _max?: Prisma.NestedEnumPurchaseRequisitionItemStatusFilter<$PrismaModel>
 }
 
+export type EnumFileAssetStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FileAssetStatus | Prisma.EnumFileAssetStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel> | $Enums.FileAssetStatus
+}
+
+export type EnumFileAssetStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FileAssetStatus | Prisma.EnumFileAssetStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFileAssetStatusWithAggregatesFilter<$PrismaModel> | $Enums.FileAssetStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel>
+}
+
+export type EnumQuoteAttachmentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteAttachmentCategory | Prisma.EnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel> | $Enums.QuoteAttachmentCategory
+}
+
+export type EnumQuoteAttachmentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteAttachmentCategory | Prisma.EnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteAttachmentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.QuoteAttachmentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel>
+}
+
 export type EnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {
   equals?: $Enums.QuoteDeliveryChannel | Prisma.EnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
   in?: $Enums.QuoteDeliveryChannel[] | Prisma.ListEnumQuoteDeliveryChannelFieldRefInput<$PrismaModel>
@@ -1395,6 +1429,40 @@ export type NestedEnumPurchaseRequisitionItemStatusWithAggregatesFilter<$PrismaM
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPurchaseRequisitionItemStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPurchaseRequisitionItemStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumFileAssetStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FileAssetStatus | Prisma.EnumFileAssetStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel> | $Enums.FileAssetStatus
+}
+
+export type NestedEnumFileAssetStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FileAssetStatus | Prisma.EnumFileAssetStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FileAssetStatus[] | Prisma.ListEnumFileAssetStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFileAssetStatusWithAggregatesFilter<$PrismaModel> | $Enums.FileAssetStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFileAssetStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteAttachmentCategory | Prisma.EnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel> | $Enums.QuoteAttachmentCategory
+}
+
+export type NestedEnumQuoteAttachmentCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QuoteAttachmentCategory | Prisma.EnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QuoteAttachmentCategory[] | Prisma.ListEnumQuoteAttachmentCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQuoteAttachmentCategoryWithAggregatesFilter<$PrismaModel> | $Enums.QuoteAttachmentCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQuoteAttachmentCategoryFilter<$PrismaModel>
 }
 
 export type NestedEnumQuoteDeliveryChannelFilter<$PrismaModel = never> = {

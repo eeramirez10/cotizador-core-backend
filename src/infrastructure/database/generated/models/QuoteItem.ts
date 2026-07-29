@@ -53,6 +53,7 @@ export type QuoteItemSumAggregateOutputType = {
 export type QuoteItemMinAggregateOutputType = {
   id: string | null
   quoteId: string | null
+  clientItemId: string | null
   productId: string | null
   externalProductCode: string | null
   ean: string | null
@@ -92,6 +93,7 @@ export type QuoteItemMinAggregateOutputType = {
 export type QuoteItemMaxAggregateOutputType = {
   id: string | null
   quoteId: string | null
+  clientItemId: string | null
   productId: string | null
   externalProductCode: string | null
   ean: string | null
@@ -131,6 +133,7 @@ export type QuoteItemMaxAggregateOutputType = {
 export type QuoteItemCountAggregateOutputType = {
   id: number
   quoteId: number
+  clientItemId: number
   productId: number
   externalProductCode: number
   ean: number
@@ -197,6 +200,7 @@ export type QuoteItemSumAggregateInputType = {
 export type QuoteItemMinAggregateInputType = {
   id?: true
   quoteId?: true
+  clientItemId?: true
   productId?: true
   externalProductCode?: true
   ean?: true
@@ -236,6 +240,7 @@ export type QuoteItemMinAggregateInputType = {
 export type QuoteItemMaxAggregateInputType = {
   id?: true
   quoteId?: true
+  clientItemId?: true
   productId?: true
   externalProductCode?: true
   ean?: true
@@ -275,6 +280,7 @@ export type QuoteItemMaxAggregateInputType = {
 export type QuoteItemCountAggregateInputType = {
   id?: true
   quoteId?: true
+  clientItemId?: true
   productId?: true
   externalProductCode?: true
   ean?: true
@@ -402,6 +408,7 @@ export type QuoteItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type QuoteItemGroupByOutputType = {
   id: string
   quoteId: string
+  clientItemId: string | null
   productId: string | null
   externalProductCode: string | null
   ean: string | null
@@ -465,6 +472,7 @@ export type QuoteItemWhereInput = {
   NOT?: Prisma.QuoteItemWhereInput | Prisma.QuoteItemWhereInput[]
   id?: Prisma.UuidFilter<"QuoteItem"> | string
   quoteId?: Prisma.UuidFilter<"QuoteItem"> | string
+  clientItemId?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   productId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   externalProductCode?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   ean?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -509,6 +517,7 @@ export type QuoteItemWhereInput = {
 export type QuoteItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  clientItemId?: Prisma.SortOrderInput | Prisma.SortOrder
   productId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalProductCode?: Prisma.SortOrderInput | Prisma.SortOrder
   ean?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -552,10 +561,12 @@ export type QuoteItemOrderByWithRelationInput = {
 
 export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  quoteId_clientItemId?: Prisma.QuoteItemQuoteIdClientItemIdCompoundUniqueInput
   AND?: Prisma.QuoteItemWhereInput | Prisma.QuoteItemWhereInput[]
   OR?: Prisma.QuoteItemWhereInput[]
   NOT?: Prisma.QuoteItemWhereInput | Prisma.QuoteItemWhereInput[]
   quoteId?: Prisma.UuidFilter<"QuoteItem"> | string
+  clientItemId?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   productId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   externalProductCode?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   ean?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -595,11 +606,12 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
   sellerSupplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
   purchaseRequisitionItem?: Prisma.XOR<Prisma.PurchaseRequisitionItemNullableScalarRelationFilter, Prisma.PurchaseRequisitionItemWhereInput> | null
-}, "id">
+}, "id" | "quoteId_clientItemId">
 
 export type QuoteItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  clientItemId?: Prisma.SortOrderInput | Prisma.SortOrder
   productId?: Prisma.SortOrderInput | Prisma.SortOrder
   externalProductCode?: Prisma.SortOrderInput | Prisma.SortOrder
   ean?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -648,6 +660,7 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.QuoteItemScalarWhereWithAggregatesInput | Prisma.QuoteItemScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"QuoteItem"> | string
   quoteId?: Prisma.UuidWithAggregatesFilter<"QuoteItem"> | string
+  clientItemId?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
   productId?: Prisma.UuidNullableWithAggregatesFilter<"QuoteItem"> | string | null
   externalProductCode?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
   ean?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
@@ -687,6 +700,7 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
 
 export type QuoteItemCreateInput = {
   id?: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -729,6 +743,7 @@ export type QuoteItemCreateInput = {
 export type QuoteItemUncheckedCreateInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -769,6 +784,7 @@ export type QuoteItemUncheckedCreateInput = {
 
 export type QuoteItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -811,6 +827,7 @@ export type QuoteItemUpdateInput = {
 export type QuoteItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -852,6 +869,7 @@ export type QuoteItemUncheckedUpdateInput = {
 export type QuoteItemCreateManyInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -891,6 +909,7 @@ export type QuoteItemCreateManyInput = {
 
 export type QuoteItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -929,6 +948,7 @@ export type QuoteItemUpdateManyMutationInput = {
 export type QuoteItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -984,9 +1004,15 @@ export type StringNullableListFilter<$PrismaModel = never> = {
   isEmpty?: boolean
 }
 
+export type QuoteItemQuoteIdClientItemIdCompoundUniqueInput = {
+  quoteId: string
+  clientItemId: string
+}
+
 export type QuoteItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  clientItemId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   externalProductCode?: Prisma.SortOrder
   ean?: Prisma.SortOrder
@@ -1039,6 +1065,7 @@ export type QuoteItemAvgOrderByAggregateInput = {
 export type QuoteItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  clientItemId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   externalProductCode?: Prisma.SortOrder
   ean?: Prisma.SortOrder
@@ -1078,6 +1105,7 @@ export type QuoteItemMaxOrderByAggregateInput = {
 export type QuoteItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  clientItemId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   externalProductCode?: Prisma.SortOrder
   ean?: Prisma.SortOrder
@@ -1286,6 +1314,7 @@ export type QuoteItemUpdateOneRequiredWithoutPurchaseRequisitionItemNestedInput 
 
 export type QuoteItemCreateWithoutProductInput = {
   id?: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1327,6 +1356,7 @@ export type QuoteItemCreateWithoutProductInput = {
 export type QuoteItemUncheckedCreateWithoutProductInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1396,6 +1426,7 @@ export type QuoteItemScalarWhereInput = {
   NOT?: Prisma.QuoteItemScalarWhereInput | Prisma.QuoteItemScalarWhereInput[]
   id?: Prisma.UuidFilter<"QuoteItem"> | string
   quoteId?: Prisma.UuidFilter<"QuoteItem"> | string
+  clientItemId?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   productId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   externalProductCode?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   ean?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -1435,6 +1466,7 @@ export type QuoteItemScalarWhereInput = {
 
 export type QuoteItemCreateWithoutQuoteInput = {
   id?: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1475,6 +1507,7 @@ export type QuoteItemCreateWithoutQuoteInput = {
 
 export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   id?: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -1541,6 +1574,7 @@ export type QuoteItemUpdateManyWithWhereWithoutQuoteInput = {
 
 export type QuoteItemCreateWithoutSellerSupplierInput = {
   id?: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1582,6 +1616,7 @@ export type QuoteItemCreateWithoutSellerSupplierInput = {
 export type QuoteItemUncheckedCreateWithoutSellerSupplierInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -1647,6 +1682,7 @@ export type QuoteItemUpdateManyWithWhereWithoutSellerSupplierInput = {
 
 export type QuoteItemCreateWithoutPurchaseRequisitionItemInput = {
   id?: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1688,6 +1724,7 @@ export type QuoteItemCreateWithoutPurchaseRequisitionItemInput = {
 export type QuoteItemUncheckedCreateWithoutPurchaseRequisitionItemInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -1743,6 +1780,7 @@ export type QuoteItemUpdateToOneWithWhereWithoutPurchaseRequisitionItemInput = {
 
 export type QuoteItemUpdateWithoutPurchaseRequisitionItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1784,6 +1822,7 @@ export type QuoteItemUpdateWithoutPurchaseRequisitionItemInput = {
 export type QuoteItemUncheckedUpdateWithoutPurchaseRequisitionItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1824,6 +1863,7 @@ export type QuoteItemUncheckedUpdateWithoutPurchaseRequisitionItemInput = {
 export type QuoteItemCreateManyProductInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   externalProductCode?: string | null
   ean?: string | null
   customerDescription?: string | null
@@ -1862,6 +1902,7 @@ export type QuoteItemCreateManyProductInput = {
 
 export type QuoteItemUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1903,6 +1944,7 @@ export type QuoteItemUpdateWithoutProductInput = {
 export type QuoteItemUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1943,6 +1985,7 @@ export type QuoteItemUncheckedUpdateWithoutProductInput = {
 export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1981,6 +2024,7 @@ export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
 
 export type QuoteItemCreateManyQuoteInput = {
   id?: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -2020,6 +2064,7 @@ export type QuoteItemCreateManyQuoteInput = {
 
 export type QuoteItemUpdateWithoutQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2060,6 +2105,7 @@ export type QuoteItemUpdateWithoutQuoteInput = {
 
 export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2100,6 +2146,7 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
 
 export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2140,6 +2187,7 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
 export type QuoteItemCreateManySellerSupplierInput = {
   id?: string
   quoteId: string
+  clientItemId?: string | null
   productId?: string | null
   externalProductCode?: string | null
   ean?: string | null
@@ -2178,6 +2226,7 @@ export type QuoteItemCreateManySellerSupplierInput = {
 
 export type QuoteItemUpdateWithoutSellerSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2219,6 +2268,7 @@ export type QuoteItemUpdateWithoutSellerSupplierInput = {
 export type QuoteItemUncheckedUpdateWithoutSellerSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2259,6 +2309,7 @@ export type QuoteItemUncheckedUpdateWithoutSellerSupplierInput = {
 export type QuoteItemUncheckedUpdateManyWithoutSellerSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   externalProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2300,6 +2351,7 @@ export type QuoteItemUncheckedUpdateManyWithoutSellerSupplierInput = {
 export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteId?: boolean
+  clientItemId?: boolean
   productId?: boolean
   externalProductCode?: boolean
   ean?: boolean
@@ -2344,6 +2396,7 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteId?: boolean
+  clientItemId?: boolean
   productId?: boolean
   externalProductCode?: boolean
   ean?: boolean
@@ -2387,6 +2440,7 @@ export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   quoteId?: boolean
+  clientItemId?: boolean
   productId?: boolean
   externalProductCode?: boolean
   ean?: boolean
@@ -2430,6 +2484,7 @@ export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type QuoteItemSelectScalar = {
   id?: boolean
   quoteId?: boolean
+  clientItemId?: boolean
   productId?: boolean
   externalProductCode?: boolean
   ean?: boolean
@@ -2467,7 +2522,7 @@ export type QuoteItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerQuotedCurrency" | "sellerQuotedBrand" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "cost" | "costCurrency" | "marginPct" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
+export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "clientItemId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerQuotedCurrency" | "sellerQuotedBrand" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "cost" | "costCurrency" | "marginPct" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   product?: boolean | Prisma.QuoteItem$productArgs<ExtArgs>
@@ -2496,6 +2551,7 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     quoteId: string
+    clientItemId: string | null
     productId: string | null
     externalProductCode: string | null
     ean: string | null
@@ -2960,6 +3016,7 @@ export interface Prisma__QuoteItemClient<T, Null = never, ExtArgs extends runtim
 export interface QuoteItemFieldRefs {
   readonly id: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly quoteId: Prisma.FieldRef<"QuoteItem", 'String'>
+  readonly clientItemId: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly productId: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly externalProductCode: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly ean: Prisma.FieldRef<"QuoteItem", 'String'>

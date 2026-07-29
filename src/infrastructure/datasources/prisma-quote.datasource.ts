@@ -440,6 +440,32 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
       });
 
+      const currentClientItemIds = params.items.map((item) => item.clientItemId);
+      await tx.quoteAttachment.deleteMany({
+        where: {
+          clientDraftId: params.clientDraftId,
+          quoteId: null,
+          category: "SELLER_SUPPLIER_QUOTE",
+          clientItemId: { notIn: currentClientItemIds },
+          fileAsset: { uploadedByUserId: params.data.createdByUserId },
+        },
+      });
+      await tx.quoteAttachment.updateMany({
+        where: {
+          clientDraftId: params.clientDraftId,
+          quoteId: null,
+          OR: [
+            { category: "SOURCE_DOCUMENT" },
+            { category: "SELLER_SUPPLIER_QUOTE", clientItemId: { in: currentClientItemIds } },
+          ],
+          fileAsset: {
+            uploadedByUserId: params.data.createdByUserId,
+            status: "READY",
+          },
+        },
+        data: { quoteId: quote.id },
+      });
+
       if (!wasCreated && quote.providedByUserId !== params.data.providedByUserId) {
         await tx.quoteEvent.create({
           data: {
@@ -563,6 +589,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           notes: source.notes,
           items: {
             create: source.items.map((item) => ({
+              clientItemId: item.clientItemId,
               productId: item.productId,
               externalProductCode: item.externalProductCode,
               ean: item.ean,

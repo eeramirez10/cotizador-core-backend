@@ -30,12 +30,14 @@
     "env-var": "^7.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
     "pg": "^8.19.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.2.0",
     "@types/node": "^25.3.2",
     "prisma": "^7.0.0",
     "rimraf": "^6.1.3",

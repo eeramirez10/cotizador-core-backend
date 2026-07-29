@@ -676,6 +676,7 @@ export type QuoteWhereInput = {
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
   events?: Prisma.QuoteEventListRelationFilter
   purchaseRequisition?: Prisma.XOR<Prisma.PurchaseRequisitionNullableScalarRelationFilter, Prisma.PurchaseRequisitionWhereInput> | null
+  attachments?: Prisma.QuoteAttachmentListRelationFilter
 }
 
 export type QuoteOrderByWithRelationInput = {
@@ -756,6 +757,7 @@ export type QuoteOrderByWithRelationInput = {
   orderExports?: Prisma.QuoteOrderExportOrderByRelationAggregateInput
   events?: Prisma.QuoteEventOrderByRelationAggregateInput
   purchaseRequisition?: Prisma.PurchaseRequisitionOrderByWithRelationInput
+  attachments?: Prisma.QuoteAttachmentOrderByRelationAggregateInput
 }
 
 export type QuoteWhereUniqueInput = Prisma.AtLeast<{
@@ -841,6 +843,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
   events?: Prisma.QuoteEventListRelationFilter
   purchaseRequisition?: Prisma.XOR<Prisma.PurchaseRequisitionNullableScalarRelationFilter, Prisma.PurchaseRequisitionWhereInput> | null
+  attachments?: Prisma.QuoteAttachmentListRelationFilter
 }, "id" | "quoteNumber" | "orderReference" | "supersededByQuoteId" | "createdByUserId_clientDraftId" | "rootQuoteId_revisionNumber">
 
 export type QuoteOrderByWithAggregationInput = {
@@ -1037,6 +1040,7 @@ export type QuoteCreateInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateInput = {
@@ -1105,6 +1109,7 @@ export type QuoteUncheckedCreateInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUpdateInput = {
@@ -1173,6 +1178,7 @@ export type QuoteUpdateInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateInput = {
@@ -1241,6 +1247,7 @@ export type QuoteUncheckedUpdateInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyInput = {
@@ -2235,6 +2242,22 @@ export type QuoteUpdateOneRequiredWithoutPurchaseRequisitionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutPurchaseRequisitionInput, Prisma.QuoteUpdateWithoutPurchaseRequisitionInput>, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionInput>
 }
 
+export type QuoteCreateNestedOneWithoutAttachmentsInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutAttachmentsInput, Prisma.QuoteUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutAttachmentsInput
+  connect?: Prisma.QuoteWhereUniqueInput
+}
+
+export type QuoteUpdateOneWithoutAttachmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutAttachmentsInput, Prisma.QuoteUncheckedCreateWithoutAttachmentsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutAttachmentsInput
+  upsert?: Prisma.QuoteUpsertWithoutAttachmentsInput
+  disconnect?: Prisma.QuoteWhereInput | boolean
+  delete?: Prisma.QuoteWhereInput | boolean
+  connect?: Prisma.QuoteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutAttachmentsInput, Prisma.QuoteUpdateWithoutAttachmentsInput>, Prisma.QuoteUncheckedUpdateWithoutAttachmentsInput>
+}
+
 export type QuoteCreateNestedOneWithoutEventsInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutEventsInput, Prisma.QuoteUncheckedCreateWithoutEventsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutEventsInput
@@ -2342,6 +2365,7 @@ export type QuoteCreateWithoutBranchInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutBranchInput = {
@@ -2409,6 +2433,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutBranchInput = {
@@ -2565,6 +2590,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
@@ -2632,6 +2658,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCreatedByUserInput = {
@@ -2709,6 +2736,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
@@ -2776,6 +2804,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutUpdatedByUserInput = {
@@ -2853,6 +2882,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
@@ -2920,6 +2950,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRejectedByUserInput = {
@@ -2997,6 +3028,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
@@ -3064,6 +3096,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCancelledByUserInput = {
@@ -3141,6 +3174,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
@@ -3208,6 +3242,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutArchivedByUserInput = {
@@ -3285,6 +3320,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
@@ -3352,6 +3388,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProvidedByUserInput = {
@@ -3429,6 +3466,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
@@ -3496,6 +3534,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProvidedByAssignedByUserInput = {
@@ -3685,6 +3724,7 @@ export type QuoteCreateWithoutCustomerInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCustomerInput = {
@@ -3752,6 +3792,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCustomerInput = {
@@ -3845,6 +3886,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRevisionsInput = {
@@ -3912,6 +3954,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRevisionsInput = {
@@ -3984,6 +4027,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRootQuoteInput = {
@@ -4051,6 +4095,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRootQuoteInput = {
@@ -4128,6 +4173,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutNextVersionsInput = {
@@ -4195,6 +4241,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutNextVersionsInput = {
@@ -4267,6 +4314,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
@@ -4334,6 +4382,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutPreviousVersionInput = {
@@ -4411,6 +4460,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
@@ -4478,6 +4528,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSupersedesQuoteInput = {
@@ -4550,6 +4601,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
@@ -4617,6 +4669,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSupersededByQuoteInput = {
@@ -4700,6 +4753,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRevisionsInput = {
@@ -4767,6 +4821,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithWhereUniqueWithoutRootQuoteInput = {
@@ -4861,6 +4916,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
@@ -4928,6 +4984,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithWhereUniqueWithoutPreviousVersionInput = {
@@ -5022,6 +5079,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
@@ -5089,6 +5147,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithoutSupersededByQuoteInput = {
@@ -5167,6 +5226,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
@@ -5234,6 +5294,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutItemsInput = {
@@ -5301,6 +5362,7 @@ export type QuoteCreateWithoutItemsInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutItemsInput = {
@@ -5368,6 +5430,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutItemsInput = {
@@ -5451,6 +5514,7 @@ export type QuoteUpdateWithoutItemsInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutItemsInput = {
@@ -5518,6 +5582,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutPurchaseRequisitionInput = {
@@ -5585,6 +5650,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
@@ -5652,6 +5718,7 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutPurchaseRequisitionInput = {
@@ -5735,6 +5802,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
@@ -5802,6 +5870,295 @@ export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteCreateWithoutAttachmentsInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
+  revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
+  previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
+  nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
+  supersededByQuote?: Prisma.QuoteCreateNestedOneWithoutSupersedesQuoteInput
+  supersedesQuote?: Prisma.QuoteCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
+  nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
+  supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutAttachmentsInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutAttachmentsInput, Prisma.QuoteUncheckedCreateWithoutAttachmentsInput>
+}
+
+export type QuoteUpsertWithoutAttachmentsInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutAttachmentsInput, Prisma.QuoteUncheckedUpdateWithoutAttachmentsInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutAttachmentsInput, Prisma.QuoteUncheckedCreateWithoutAttachmentsInput>
+  where?: Prisma.QuoteWhereInput
+}
+
+export type QuoteUpdateToOneWithWhereWithoutAttachmentsInput = {
+  where?: Prisma.QuoteWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutAttachmentsInput, Prisma.QuoteUncheckedUpdateWithoutAttachmentsInput>
+}
+
+export type QuoteUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
+  revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
+  previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
+  nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
+  supersededByQuote?: Prisma.QuoteUpdateOneWithoutSupersedesQuoteNestedInput
+  supersedesQuote?: Prisma.QuoteUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
+  nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
+  supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutEventsInput = {
@@ -5869,6 +6226,7 @@ export type QuoteCreateWithoutEventsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutEventsInput = {
@@ -5936,6 +6294,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutEventsInput = {
@@ -6019,6 +6378,7 @@ export type QuoteUpdateWithoutEventsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutEventsInput = {
@@ -6086,6 +6446,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutDeliveryAttemptsInput = {
@@ -6153,6 +6514,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
@@ -6220,6 +6582,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutDeliveryAttemptsInput = {
@@ -6303,6 +6666,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
@@ -6370,6 +6734,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutOrderExportsInput = {
@@ -6437,6 +6802,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutOrderExportsInput = {
@@ -6504,6 +6870,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutOrderExportsInput = {
@@ -6587,6 +6954,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
@@ -6654,6 +7022,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyBranchInput = {
@@ -6780,6 +7149,7 @@ export type QuoteUpdateWithoutBranchInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutBranchInput = {
@@ -6847,6 +7217,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutBranchInput = {
@@ -7386,6 +7757,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
@@ -7453,6 +7825,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -7579,6 +7952,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
@@ -7646,6 +8020,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
@@ -7772,6 +8147,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
@@ -7839,6 +8215,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
@@ -7965,6 +8342,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
@@ -8032,6 +8410,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
@@ -8158,6 +8537,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
@@ -8225,6 +8605,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
@@ -8351,6 +8732,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
@@ -8418,6 +8800,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
@@ -8544,6 +8927,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
@@ -8611,6 +8995,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
@@ -8796,6 +9181,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCustomerInput = {
@@ -8863,6 +9249,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
@@ -9107,6 +9494,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
@@ -9174,6 +9562,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
@@ -9300,6 +9689,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
@@ -9367,6 +9757,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
@@ -9440,6 +9831,7 @@ export type QuoteCountOutputType = {
   deliveryAttempts: number
   orderExports: number
   events: number
+  attachments: number
 }
 
 export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9449,6 +9841,7 @@ export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   deliveryAttempts?: boolean | QuoteCountOutputTypeCountDeliveryAttemptsArgs
   orderExports?: boolean | QuoteCountOutputTypeCountOrderExportsArgs
   events?: boolean | QuoteCountOutputTypeCountEventsArgs
+  attachments?: boolean | QuoteCountOutputTypeCountAttachmentsArgs
 }
 
 /**
@@ -9501,6 +9894,13 @@ export type QuoteCountOutputTypeCountOrderExportsArgs<ExtArgs extends runtime.Ty
  */
 export type QuoteCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteEventWhereInput
+}
+
+/**
+ * QuoteCountOutputType without action
+ */
+export type QuoteCountOutputTypeCountAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteAttachmentWhereInput
 }
 
 
@@ -9582,6 +9982,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
   events?: boolean | Prisma.Quote$eventsArgs<ExtArgs>
   purchaseRequisition?: boolean | Prisma.Quote$purchaseRequisitionArgs<ExtArgs>
+  attachments?: boolean | Prisma.Quote$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
@@ -9811,6 +10212,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
   events?: boolean | Prisma.Quote$eventsArgs<ExtArgs>
   purchaseRequisition?: boolean | Prisma.Quote$purchaseRequisitionArgs<ExtArgs>
+  attachments?: boolean | Prisma.Quote$attachmentsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9865,6 +10267,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     orderExports: Prisma.$QuoteOrderExportPayload<ExtArgs>[]
     events: Prisma.$QuoteEventPayload<ExtArgs>[]
     purchaseRequisition: Prisma.$PurchaseRequisitionPayload<ExtArgs> | null
+    attachments: Prisma.$QuoteAttachmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -10338,6 +10741,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   orderExports<T extends Prisma.Quote$orderExportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$orderExportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteOrderExportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Quote$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseRequisition<T extends Prisma.Quote$purchaseRequisitionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$purchaseRequisitionArgs<ExtArgs>>): Prisma.Prisma__PurchaseRequisitionClient<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  attachments<T extends Prisma.Quote$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11170,6 +11574,30 @@ export type Quote$purchaseRequisitionArgs<ExtArgs extends runtime.Types.Extensio
    */
   include?: Prisma.PurchaseRequisitionInclude<ExtArgs> | null
   where?: Prisma.PurchaseRequisitionWhereInput
+}
+
+/**
+ * Quote.attachments
+ */
+export type Quote$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteAttachment
+   */
+  select?: Prisma.QuoteAttachmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteAttachment
+   */
+  omit?: Prisma.QuoteAttachmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteAttachmentInclude<ExtArgs> | null
+  where?: Prisma.QuoteAttachmentWhereInput
+  orderBy?: Prisma.QuoteAttachmentOrderByWithRelationInput | Prisma.QuoteAttachmentOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteAttachmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteAttachmentScalarFieldEnum | Prisma.QuoteAttachmentScalarFieldEnum[]
 }
 
 /**
