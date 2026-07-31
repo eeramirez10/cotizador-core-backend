@@ -65,7 +65,9 @@ export class ChangeQuoteStatusUseCase {
 
     if (quote.status === targetStatus) {
       if (dto.status === "APPROVED") {
-        await this.purchaseRequisitionRepository.ensureForApprovedQuote(quote);
+        if (quote.captureMethod !== "EXCEL_IMPORT") {
+          await this.purchaseRequisitionRepository.ensureForApprovedQuote(quote);
+        }
         return new QuoteResponseDto(quote);
       }
       throw new Error("Quote is already in the requested status.");
@@ -157,7 +159,7 @@ export class ChangeQuoteStatusUseCase {
     });
 
     if (!updatedQuote) throw new Error("Quote not found.");
-    if (updatedQuote.status === "APPROVED") {
+    if (updatedQuote.status === "APPROVED" && updatedQuote.captureMethod !== "EXCEL_IMPORT") {
       await this.purchaseRequisitionRepository.ensureForApprovedQuote(updatedQuote);
     }
     return new QuoteResponseDto(updatedQuote);

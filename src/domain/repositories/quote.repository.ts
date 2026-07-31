@@ -11,6 +11,7 @@ import {
   FindQuotesDatasourceResult,
   MarkQuoteOrderGeneratedDatasourceParams,
   RecordQuoteDeliveryAttemptDatasourceParams,
+  RegisterErpQuoteDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -35,4 +36,5 @@ export abstract class QuoteRepository {
   abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
+  abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
 }

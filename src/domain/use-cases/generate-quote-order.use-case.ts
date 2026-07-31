@@ -29,6 +29,9 @@ export class GenerateQuoteOrderUseCase {
 
     if (!quote) throw new Error("Quote not found.");
     if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+    if (quote.captureMethod === "EXCEL_IMPORT") {
+      throw new Error("Orders cannot be generated from Excel-imported quotes.");
+    }
     if (quote.status !== "APPROVED") {
       throw new Error("Quote must be APPROVED to generate order.");
     }

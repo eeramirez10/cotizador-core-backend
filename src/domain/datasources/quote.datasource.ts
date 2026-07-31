@@ -301,6 +301,13 @@ export interface MarkQuoteOrderGeneratedDatasourceParams {
   };
 }
 
+export interface RegisterErpQuoteDatasourceParams {
+  id: string;
+  actorUserId: string;
+  erpQuoteNumber: string;
+  scope: QuoteAccessScope;
+}
+
 export abstract class QuoteDatasource {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
@@ -317,4 +324,5 @@ export abstract class QuoteDatasource {
   abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
+  abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
 }

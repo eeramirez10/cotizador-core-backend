@@ -20,6 +20,9 @@ interface QuoteRow {
   orderStatus: QuoteEntity["orderStatus"];
   orderGeneratedAt: Date | null;
   orderReference: string | null;
+  erpQuoteNumber: string | null;
+  erpQuoteRegisteredAt: Date | null;
+  erpQuoteRegisteredByUserId: string | null;
   origin: QuoteEntity["origin"];
   captureMethod: QuoteEntity["captureMethod"];
   originalQuoteDate: Date | null;
@@ -142,6 +145,13 @@ interface QuoteRow {
     branchId: string;
     branch: { code: string; name: string };
   } | null;
+  erpQuoteRegisteredByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    branchId: string;
+    branch: { code: string; name: string };
+  } | null;
   items: Array<{
     id: string;
     quoteId: string;
@@ -217,6 +227,9 @@ export class QuoteMapper {
       orderStatus: row.orderStatus,
       orderGeneratedAt: row.orderGeneratedAt,
       orderReference: row.orderReference,
+      erpQuoteNumber: row.erpQuoteNumber,
+      erpQuoteRegisteredAt: row.erpQuoteRegisteredAt,
+      erpQuoteRegisteredByUserId: row.erpQuoteRegisteredByUserId,
       origin: row.origin,
       captureMethod: row.captureMethod,
       originalQuoteDate: row.originalQuoteDate,
@@ -316,6 +329,16 @@ export class QuoteMapper {
             branchId: row.archivedByUser.branchId,
             branchCode: row.archivedByUser.branch.code,
             branchName: row.archivedByUser.branch.name,
+          }
+        : null,
+      erpQuoteRegisteredByUser: row.erpQuoteRegisteredByUser
+        ? {
+            id: row.erpQuoteRegisteredByUser.id,
+            firstName: row.erpQuoteRegisteredByUser.firstName,
+            lastName: row.erpQuoteRegisteredByUser.lastName,
+            branchId: row.erpQuoteRegisteredByUser.branchId,
+            branchCode: row.erpQuoteRegisteredByUser.branch.code,
+            branchName: row.erpQuoteRegisteredByUser.branch.name,
           }
         : null,
       items: row.items.map((item) => ({

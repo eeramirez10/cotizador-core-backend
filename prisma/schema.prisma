@@ -237,34 +237,35 @@ model User {
 
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
-  createdCustomers         Customer[]                     @relation("CustomerCreatedBy")
-  updatedCustomers         Customer[]                     @relation("CustomerUpdatedBy")
-  createdProducts          Product[]                      @relation("ProductCreatedBy")
-  updatedProducts          Product[]                      @relation("ProductUpdatedBy")
-  procurementProducts      Product[]                      @relation("ProductProcurementUpdatedBy")
-  createdProcurementOffers LocalProductProcurementOffer[] @relation("ProcurementOfferCreatedBy")
-  updatedProcurementOffers LocalProductProcurementOffer[] @relation("ProcurementOfferUpdatedBy")
-  createdQuotes            Quote[]                        @relation("QuoteCreatedBy")
-  updatedQuotes            Quote[]                        @relation("QuoteUpdatedBy")
-  rejectedQuotes           Quote[]                        @relation("QuoteRejectedBy")
-  cancelledQuotes          Quote[]                        @relation("QuoteCancelledBy")
-  archivedQuotes           Quote[]                        @relation("QuoteArchivedBy")
-  providedQuotes           Quote[]                        @relation("QuoteProvidedBy")
-  providerAssignments      Quote[]                        @relation("QuoteProviderAssignedBy")
-  quoteDeliveryAttempts    QuoteDeliveryAttempt[]         @relation("QuoteDeliveryAttemptSentBy")
-  quoteOrderExports        QuoteOrderExport[]             @relation("QuoteOrderExportGeneratedBy")
-  quoteEvents              QuoteEvent[]                   @relation("QuoteEventActor")
-  refreshTokens            RefreshToken[]
-  auditLogs                AuditLog[]                     @relation("AuditLogActor")
-  createdSuppliers         Supplier[]                     @relation("SupplierCreatedBy")
-  updatedSuppliers         Supplier[]                     @relation("SupplierUpdatedBy")
-  requestedRequisitions    PurchaseRequisition[]          @relation("PurchaseRequisitionRequestedBy")
-  assignedRequisitions     PurchaseRequisition[]          @relation("PurchaseRequisitionAssignedBuyer")
-  approvedCostRequisitions PurchaseRequisition[]          @relation("PurchaseRequisitionCostApprovedBy")
+  createdCustomers          Customer[]                     @relation("CustomerCreatedBy")
+  updatedCustomers          Customer[]                     @relation("CustomerUpdatedBy")
+  createdProducts           Product[]                      @relation("ProductCreatedBy")
+  updatedProducts           Product[]                      @relation("ProductUpdatedBy")
+  procurementProducts       Product[]                      @relation("ProductProcurementUpdatedBy")
+  createdProcurementOffers  LocalProductProcurementOffer[] @relation("ProcurementOfferCreatedBy")
+  updatedProcurementOffers  LocalProductProcurementOffer[] @relation("ProcurementOfferUpdatedBy")
+  createdQuotes             Quote[]                        @relation("QuoteCreatedBy")
+  updatedQuotes             Quote[]                        @relation("QuoteUpdatedBy")
+  rejectedQuotes            Quote[]                        @relation("QuoteRejectedBy")
+  cancelledQuotes           Quote[]                        @relation("QuoteCancelledBy")
+  archivedQuotes            Quote[]                        @relation("QuoteArchivedBy")
+  providedQuotes            Quote[]                        @relation("QuoteProvidedBy")
+  providerAssignments       Quote[]                        @relation("QuoteProviderAssignedBy")
+  erpRegisteredQuotes       Quote[]                        @relation("QuoteErpRegisteredBy")
+  quoteDeliveryAttempts     QuoteDeliveryAttempt[]         @relation("QuoteDeliveryAttemptSentBy")
+  quoteOrderExports         QuoteOrderExport[]             @relation("QuoteOrderExportGeneratedBy")
+  quoteEvents               QuoteEvent[]                   @relation("QuoteEventActor")
+  refreshTokens             RefreshToken[]
+  auditLogs                 AuditLog[]                     @relation("AuditLogActor")
+  createdSuppliers          Supplier[]                     @relation("SupplierCreatedBy")
+  updatedSuppliers          Supplier[]                     @relation("SupplierUpdatedBy")
+  requestedRequisitions     PurchaseRequisition[]          @relation("PurchaseRequisitionRequestedBy")
+  assignedRequisitions      PurchaseRequisition[]          @relation("PurchaseRequisitionAssignedBuyer")
+  approvedCostRequisitions  PurchaseRequisition[]          @relation("PurchaseRequisitionCostApprovedBy")
   erpLinkedRequisitionItems PurchaseRequisitionItem[]      @relation("PurchaseRequisitionItemErpLinkedBy")
-  createdSupplierOffers    PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferCreatedBy")
-  updatedSupplierOffers    PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferUpdatedBy")
-  uploadedFileAssets       FileAsset[]                     @relation("FileAssetUploadedBy")
+  createdSupplierOffers     PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferCreatedBy")
+  updatedSupplierOffers     PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferUpdatedBy")
+  uploadedFileAssets        FileAsset[]                    @relation("FileAssetUploadedBy")
 
   @@index([branchId])
   @@map("users")
@@ -416,6 +417,9 @@ model Quote {
   orderStatus                  OrderGenerationStatus @default(NOT_GENERATED) @map("order_status")
   orderGeneratedAt             DateTime?             @map("order_generated_at")
   orderReference               String?               @unique @map("order_reference") @db.VarChar(80)
+  erpQuoteNumber               String?               @unique @map("erp_quote_number") @db.VarChar(80)
+  erpQuoteRegisteredAt         DateTime?             @map("erp_quote_registered_at")
+  erpQuoteRegisteredByUserId   String?               @map("erp_quote_registered_by_user_id") @db.Uuid
   origin                       QuoteOrigin           @default(MANUAL)
   captureMethod                QuoteCaptureMethod    @default(SYSTEM) @map("capture_method")
   originalQuoteDate            DateTime?             @map("original_quote_date") @db.Date
@@ -474,6 +478,7 @@ model Quote {
   rejectedByUser           User?    @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
   cancelledByUser          User?    @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
   archivedByUser           User?    @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
+  erpQuoteRegisteredByUser User?    @relation("QuoteErpRegisteredBy", fields: [erpQuoteRegisteredByUserId], references: [id], onDelete: SetNull)
   rootQuote                Quote?   @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
   revisions                Quote[]  @relation("QuoteRevisionRoot")
   previousVersion          Quote?   @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
@@ -490,6 +495,7 @@ model Quote {
 
   @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
+  @@index([erpQuoteRegisteredByUserId])
   @@index([status])
   @@index([captureMethod])
   @@index([deliveryStatus])
@@ -555,8 +561,8 @@ model QuoteItem {
   sellerSupplier          Supplier?                @relation("QuoteItemSellerSupplier", fields: [sellerSupplierId], references: [id], onDelete: SetNull)
   purchaseRequisitionItem PurchaseRequisitionItem?
 
-  @@index([quoteId])
   @@unique([quoteId, clientItemId])
+  @@index([quoteId])
   @@index([productId])
   @@index([sellerSupplierId])
   @@map("quote_items")
@@ -709,11 +715,11 @@ model PurchaseSupplierOffer {
   createdAt         DateTime  @default(now()) @map("created_at")
   updatedAt         DateTime  @updatedAt @map("updated_at")
 
-  requisitionItem PurchaseRequisitionItem  @relation("PurchaseRequisitionItemOffers", fields: [requisitionItemId], references: [id], onDelete: Cascade)
-  selectedForItem PurchaseRequisitionItem? @relation("SelectedPurchaseSupplierOffer")
-  supplier        Supplier                 @relation(fields: [supplierId], references: [id], onDelete: Restrict)
-  createdBy       User                     @relation("PurchaseSupplierOfferCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
-  updatedBy       User?                    @relation("PurchaseSupplierOfferUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  requisitionItem PurchaseRequisitionItem   @relation("PurchaseRequisitionItemOffers", fields: [requisitionItemId], references: [id], onDelete: Cascade)
+  selectedForItem PurchaseRequisitionItem?  @relation("SelectedPurchaseSupplierOffer")
+  supplier        Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  createdBy       User                      @relation("PurchaseSupplierOfferCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedBy       User?                     @relation("PurchaseSupplierOfferUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
   attachments     PurchaseOfferAttachment[]
 
   @@index([requisitionItemId, isActive])
@@ -734,8 +740,8 @@ model FileAsset {
   deletedAt        DateTime?       @map("deleted_at")
   createdAt        DateTime        @default(now()) @map("created_at")
 
-  uploadedBy              User                      @relation("FileAssetUploadedBy", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
-  quoteAttachments        QuoteAttachment[]
+  uploadedBy               User                      @relation("FileAssetUploadedBy", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  quoteAttachments         QuoteAttachment[]
   purchaseOfferAttachments PurchaseOfferAttachment[]
 
   @@index([uploadedByUserId, createdAt])

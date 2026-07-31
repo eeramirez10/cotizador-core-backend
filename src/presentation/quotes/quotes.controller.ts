@@ -9,6 +9,7 @@ import { CreateQuoteRevisionRequestDto } from "../../domain/dtos/request/create-
 import { GetQuotesQueryRequestDto } from "../../domain/dtos/request/get-quotes-query-request.dto";
 import { MatchQuoteItemErpRequestDto } from "../../domain/dtos/request/match-quote-item-erp-request.dto";
 import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/request/register-quote-delivery-attempt-request.dto";
+import { RegisterErpQuoteRequestDto } from "../../domain/dtos/request/register-erp-quote-request.dto";
 import { SaveQuoteDraftRequestDto } from "../../domain/dtos/request/save-quote-draft-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
@@ -27,6 +28,7 @@ import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
+import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -50,7 +52,8 @@ export class QuotesController {
     private readonly changeQuoteStatusUseCase: ChangeQuoteStatusUseCase,
     private readonly registerQuoteDeliveryAttemptUseCase: RegisterQuoteDeliveryAttemptUseCase,
     private readonly downloadQuoteOrderFileUseCase: DownloadQuoteOrderFileUseCase,
-    private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase
+    private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase,
+    private readonly registerErpQuoteUseCase: RegisterErpQuoteUseCase
   ) {}
 
   saveDraft = async (req: Request, res: Response): Promise<void> => {
@@ -496,6 +499,27 @@ export class QuotesController {
     }
   };
 
+  registerErpQuote = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+
+    const [bodyError, bodyDto] = RegisterErpQuoteRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+
+    try {
+      const result = await this.registerErpQuoteUseCase.execute(quoteId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while registering ERP quote.");
+    }
+  };
+
   private getSingleParam(value: string | string[] | undefined): string | null {
     if (typeof value === "string") return value;
     if (Array.isArray(value) && value.length > 0) return value[0];
@@ -556,7 +580,17 @@ export class QuotesController {
       message === "Quote must be sent before moving to APPROVED or REJECTED." ||
       message === "Quote must be QUOTED, APPROVED or REJECTED to register delivery attempts." ||
       message === "Order file is not available for this quote." ||
-      message === "All quote items must have an ERP product code to generate order file."
+      message === "All quote items must have an ERP product code to generate order file." ||
+      message === "Only Excel-imported quotes can be registered in ERP." ||
+      message === "Quote must be APPROVED before registering it in ERP." ||
+      message === "ERP quote number is already registered." ||
+      message === "Items from Excel-imported quotes are read-only." ||
+      message === "ERP matching is not available for Excel-imported quotes." ||
+      message === "Orders cannot be generated for Excel-imported quotes." ||
+      message === "Order files are not available for Excel-imported quotes." ||
+      message === "Purchase requisitions cannot be generated for Excel-imported quotes." ||
+      message === "Excel-imported quote items cannot be linked to ERP or local products." ||
+      message === "Quote capture method and imported currency cannot be changed after Excel import."
     ) {
       res.status(400).json({ error: message });
       return;

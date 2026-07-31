@@ -14,6 +14,8 @@ interface SaveQuoteDraftActorContext {
 }
 
 const round4 = (value: number): number => Number(value.toFixed(4));
+const sameNumber = (left: number, right: number): boolean => Math.abs(left - right) < 0.0001;
+const normalizedText = (value: string | null | undefined): string => (value || "").trim();
 const isErpWithoutEnoughStock = (item: {
   externalProductCode: string | null;
   stock: number | null;
@@ -46,6 +48,50 @@ export class SaveQuoteDraftUseCase {
       throw new Error("clientDraftId must contain between 1 and 80 characters.");
     }
 
+    const existingQuote = dto.quoteId
+      ? await this.quoteRepository.findById({
+          id: dto.quoteId,
+          scope: { role: actor.role, userId: actor.id, branchId: actor.branchId },
+        })
+      : null;
+    if (dto.quoteId && !existingQuote) throw new Error("Quote not found.");
+
+    if (existingQuote?.captureMethod === "EXCEL_IMPORT") {
+      if (dto.quote.captureMethod !== "EXCEL_IMPORT" || dto.quote.currency !== existingQuote.currency) {
+        throw new Error("Capture method and currency are locked for Excel-imported quotes.");
+      }
+
+      const incomingItems = new Map(dto.items.map((item) => [item.clientItemId, item]));
+      const itemsUnchanged = dto.items.length === existingQuote.items.length
+        && existingQuote.items.every((item) => {
+          const incoming = incomingItems.get(item.clientItemId || item.id);
+          if (!incoming) return false;
+          const incomingUnitPrice = incoming.sourceUnitPrice ?? incoming.unitPrice ?? 0;
+
+          return normalizedText(incoming.productId) === normalizedText(item.productId)
+            && normalizedText(incoming.externalProductCode) === normalizedText(item.externalProductCode)
+            && normalizedText(incoming.ean) === normalizedText(item.ean)
+            && normalizedText(incoming.customerDescription) === normalizedText(item.customerDescription)
+            && normalizedText(incoming.customerUnit) === normalizedText(item.customerUnit)
+            && normalizedText(incoming.unit) === normalizedText(item.unit)
+            && sameNumber(incoming.qty, item.qty)
+            && normalizedText(incoming.deliveryTime) === normalizedText(item.deliveryTime)
+            && normalizedText(incoming.itemComment) === normalizedText(item.itemComment)
+            && sameNumber(incomingUnitPrice, item.unitPrice);
+        });
+
+      if (!itemsUnchanged) {
+        throw new Error("Items from Excel-imported quotes are read-only.");
+      }
+    }
+
+    if (
+      dto.quote.captureMethod === "EXCEL_IMPORT"
+      && dto.items.some((item) => item.productId || item.externalProductCode || item.ean)
+    ) {
+      throw new Error("Excel-imported quote items cannot be linked to ERP or local products.");
+    }
+
     const customer = await this.customerRepository.findById({
       id: dto.quote.customerId,
       scope: { role: actor.role, branchId: actor.branchId },
@@ -70,7 +116,7 @@ export class SaveQuoteDraftUseCase {
       );
 
       const sourceCurrency = dto.quote.captureMethod === "EXCEL_IMPORT"
-        ? item.sourceCurrency ?? dto.quote.currency
+        ? dto.quote.currency
         : null;
       const sourceUnitPrice = dto.quote.captureMethod === "EXCEL_IMPORT"
         ? typeof item.sourceUnitPrice === "number"
@@ -87,7 +133,7 @@ export class SaveQuoteDraftUseCase {
 
       if (dto.quote.captureMethod === "EXCEL_IMPORT") {
         const importedUnitPrice = sourceUnitPrice ?? 0;
-        unitPrice = round4(convertQuoteAmount(importedUnitPrice, sourceCurrency!, dto.quote.currency, dto.quote.exchangeRate));
+        unitPrice = round4(importedUnitPrice);
         marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
       } else if (typeof item.unitPrice === "number" && typeof item.marginPct === "number") {
         unitPrice = round4(item.unitPrice);
