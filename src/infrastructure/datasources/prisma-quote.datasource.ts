@@ -13,6 +13,7 @@ import {
   QuoteAccessScope,
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
+  RegisterErpQuoteDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -103,6 +104,15 @@ const quoteInclude = {
     },
   },
   archivedByUser: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      branchId: true,
+      branch: { select: { code: true, name: true } },
+    },
+  },
+  erpQuoteRegisteredByUser: {
     select: {
       id: true,
       firstName: true,
@@ -1177,6 +1187,69 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     });
   }
 
+  async registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        const quote = await tx.quote.findFirst({
+          where: {
+            id: params.id,
+            ...this.buildScopeWhere(params.scope),
+          },
+          select: {
+            id: true,
+            status: true,
+            captureMethod: true,
+            archivedAt: true,
+            erpQuoteNumber: true,
+          },
+        });
+        if (!quote) return null;
+        if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+        if (quote.captureMethod !== "EXCEL_IMPORT") {
+          throw new Error("Only Excel-imported quotes can be registered in ERP.");
+        }
+        if (quote.status !== "APPROVED") {
+          throw new Error("Quote must be APPROVED before registering it in ERP.");
+        }
+
+        const registeredAt = new Date();
+        await tx.quote.update({
+          where: { id: quote.id },
+          data: {
+            erpQuoteNumber: params.erpQuoteNumber,
+            erpQuoteRegisteredAt: registeredAt,
+            erpQuoteRegisteredByUserId: params.actorUserId,
+            updatedByUserId: params.actorUserId,
+          },
+        });
+
+        const note = quote.erpQuoteNumber
+          ? `ERP quote registration changed from ${quote.erpQuoteNumber} to ${params.erpQuoteNumber}.`
+          : `ERP quote registered as ${params.erpQuoteNumber}.`;
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.id,
+            status: quote.status,
+            note,
+            actorUserId: params.actorUserId,
+          },
+        });
+
+        return this.findByIdWithClient(quote.id, params.scope, tx);
+      });
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        error.code === "P2002"
+      ) {
+        throw new Error("ERP quote number is already registered.");
+      }
+      throw error;
+    }
+  }
+
   private async findByIdWithClient(id: string, scope: QuoteAccessScope, client: DbClient): Promise<QuoteEntity | null> {
     const row = await client.quote.findFirst({
       where: {
@@ -1206,6 +1279,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       andFilters.push({
         OR: [
           { quoteNumber: { contains: params.search, mode: "insensitive" } },
+          { erpQuoteNumber: { contains: params.search, mode: "insensitive" } },
           { notes: { contains: params.search, mode: "insensitive" } },
           {
             customer: {

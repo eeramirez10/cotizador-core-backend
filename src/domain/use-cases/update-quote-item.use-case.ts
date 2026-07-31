@@ -2,7 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { UpdateQuoteItemRequestDto } from "../dtos/request/update-quote-item-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
-import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
+import { isQuoteItemReady } from "./quote-item-review.helper";
 import { convertQuoteAmount } from "./quote-currency.helper";
 
 interface UpdateQuoteItemActorContext {
@@ -38,6 +38,9 @@ export class UpdateQuoteItemUseCase {
     });
     if (!quote) throw new Error("Quote not found.");
     if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+    if (quote.captureMethod === "EXCEL_IMPORT") {
+      throw new Error("Items from Excel-imported quotes are read-only.");
+    }
     if (!canEditItems(quote.status)) throw new Error("Quote items cannot be edited in current status.");
 
     const existingItem = quote.items.find((item) => item.id === itemId);
@@ -95,9 +98,7 @@ export class UpdateQuoteItemUseCase {
       unitPrice,
       deliveryTime: nextDeliveryTime,
     };
-    const requiresReview = quote.captureMethod === "EXCEL_IMPORT"
-      ? !isImportedExcelItemReady(readinessInput)
-      : !isQuoteItemReady(readinessInput);
+    const requiresReview = !isQuoteItemReady(readinessInput);
 
     const updatedQuote = await this.quoteRepository.updateItem({
       quoteId,

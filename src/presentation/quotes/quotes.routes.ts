@@ -15,6 +15,7 @@ import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
+import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -87,6 +88,7 @@ export class QuotesRoutes {
       Envs.quoteInternalApprovalEnabled
     );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
+    const registerErpQuoteUseCase = new RegisterErpQuoteUseCase(quoteRepository);
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,
       orderGenerationRepository
@@ -115,7 +117,8 @@ export class QuotesRoutes {
       changeQuoteStatusUseCase,
       registerQuoteDeliveryAttemptUseCase,
       downloadQuoteOrderFileUseCase,
-      generateQuoteOrderUseCase
+      generateQuoteOrderUseCase,
+      registerErpQuoteUseCase
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
@@ -164,6 +167,12 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.changeStatus
+    );
+    router.patch(
+      "/:id/erp-registration",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      controller.registerErpQuote
     );
     router.post(
       "/:id/delivery-attempts",

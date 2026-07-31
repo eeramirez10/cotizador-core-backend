@@ -27,6 +27,7 @@ export class PurchaseRequisitionUseCase {
   ) {}
 
   async ensureAfterApproval(quote: QuoteEntity) {
+    if (quote.captureMethod === "EXCEL_IMPORT") return null;
     const requisition = await this.repository.ensureForApprovedQuote(quote);
     return requisition ? new PurchaseRequisitionResponseDto(requisition) : null;
   }
@@ -38,6 +39,9 @@ export class PurchaseRequisitionUseCase {
     });
     if (!quote) throw new Error("Quote not found.");
     if (quote.status !== "APPROVED") throw new Error("Quote must be APPROVED before creating a purchase requisition.");
+    if (quote.captureMethod === "EXCEL_IMPORT") {
+      throw new Error("Purchase requisitions cannot be created from Excel-imported quotes.");
+    }
     return this.ensureAfterApproval(quote);
   }
 

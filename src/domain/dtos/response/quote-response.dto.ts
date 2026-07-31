@@ -15,6 +15,12 @@ export class QuoteResponseDto {
       orderStatus: this.quote.orderStatus,
       orderGeneratedAt: this.quote.orderGeneratedAt ? this.quote.orderGeneratedAt.toISOString() : null,
       orderReference: this.quote.orderReference,
+      erpQuoteNumber: this.quote.erpQuoteNumber,
+      erpQuoteRegisteredAt: this.quote.erpQuoteRegisteredAt
+        ? this.quote.erpQuoteRegisteredAt.toISOString()
+        : null,
+      erpQuoteRegisteredByUserId: this.quote.erpQuoteRegisteredByUserId,
+      erpQuoteRegisteredByUser: this.quote.erpQuoteRegisteredByUser,
       origin: this.quote.origin,
       captureMethod: this.quote.captureMethod,
       originalQuoteDate: this.quote.originalQuoteDate

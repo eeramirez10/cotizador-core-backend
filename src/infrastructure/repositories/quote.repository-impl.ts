@@ -12,6 +12,7 @@ import {
   MarkQuoteOrderGeneratedDatasourceParams,
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
+  RegisterErpQuoteDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -82,5 +83,9 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.markOrderGenerated(params);
+  }
+
+  registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.registerErpQuote(params);
   }
 }

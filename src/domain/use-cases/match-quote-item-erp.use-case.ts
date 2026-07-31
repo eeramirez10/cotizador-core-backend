@@ -38,6 +38,9 @@ export class MatchQuoteItemErpUseCase {
     });
     if (!quote) throw new Error("Quote not found.");
     if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+    if (quote.captureMethod === "EXCEL_IMPORT") {
+      throw new Error("ERP matching is not available for Excel-imported quotes.");
+    }
     if (!canEditItems(quote.status)) throw new Error("Quote items cannot be edited in current status.");
 
     const existingItem = quote.items.find((item) => item.id === itemId);
