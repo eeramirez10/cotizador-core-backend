@@ -74,6 +74,11 @@ export class AddQuoteItemUseCase {
       deliveryTime: dto.deliveryTime,
     };
     const requiresReview = !isQuoteItemReady(readinessInput);
+    const customerDescriptionOriginal = dto.customerDescriptionOriginal ?? dto.customerDescription;
+    const customerDescriptionWasEdited = Boolean(
+      dto.customerDescriptionEditedAt
+      && (customerDescriptionOriginal || "").trim() !== (dto.customerDescription || "").trim()
+    );
 
     const updatedQuote = await this.quoteRepository.addItem({
       quoteId,
@@ -87,6 +92,9 @@ export class AddQuoteItemUseCase {
         externalProductCode: dto.externalProductCode,
         ean: dto.ean,
         customerDescription: dto.customerDescription,
+        customerDescriptionOriginal,
+        customerDescriptionEditedAt: customerDescriptionWasEdited ? new Date() : null,
+        customerDescriptionEditedByUserId: customerDescriptionWasEdited ? actor.id : null,
         customerUnit: dto.customerUnit,
         erpDescription: dto.erpDescription,
         unit: dto.unit,

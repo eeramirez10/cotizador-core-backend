@@ -17,6 +17,9 @@ export interface QuoteItemEntity {
   externalProductCode: string | null;
   ean: string | null;
   customerDescription: string | null;
+  customerDescriptionOriginal: string | null;
+  customerDescriptionEditedAt: Date | null;
+  customerDescriptionEditedByUserId: string | null;
   customerUnit: string | null;
   erpDescription: string | null;
   unit: string;
@@ -49,4 +52,9 @@ export interface QuoteItemEntity {
   createdAt: Date;
   updatedAt: Date;
   product: QuoteItemProductSummary | null;
+  customerDescriptionEditedByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  } | null;
 }

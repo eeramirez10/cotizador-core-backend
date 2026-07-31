@@ -6,6 +6,8 @@ interface CreateQuoteItemRequestDtoProps {
   externalProductCode: string | null;
   ean: string | null;
   customerDescription: string | null;
+  customerDescriptionOriginal: string | null;
+  customerDescriptionEditedAt: string | null;
   customerUnit: string | null;
   erpDescription: string | null;
   unit: string;
@@ -42,6 +44,8 @@ export class CreateQuoteItemRequestDto {
   public readonly externalProductCode: string | null;
   public readonly ean: string | null;
   public readonly customerDescription: string | null;
+  public readonly customerDescriptionOriginal: string | null;
+  public readonly customerDescriptionEditedAt: string | null;
   public readonly customerUnit: string | null;
   public readonly erpDescription: string | null;
   public readonly unit: string;
@@ -77,6 +81,8 @@ export class CreateQuoteItemRequestDto {
     this.externalProductCode = props.externalProductCode;
     this.ean = props.ean;
     this.customerDescription = props.customerDescription;
+    this.customerDescriptionOriginal = props.customerDescriptionOriginal;
+    this.customerDescriptionEditedAt = props.customerDescriptionEditedAt;
     this.customerUnit = props.customerUnit;
     this.erpDescription = props.erpDescription;
     this.unit = props.unit;
@@ -188,6 +194,12 @@ export class CreateQuoteItemRequestDto {
         externalProductCode: CreateQuoteItemRequestDto.normalizeNullableString(body.externalProductCode),
         ean: CreateQuoteItemRequestDto.normalizeNullableString(body.ean),
         customerDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.customerDescription),
+        customerDescriptionOriginal: CreateQuoteItemRequestDto.normalizeNullableString(
+          body.customerDescriptionOriginal
+        ),
+        customerDescriptionEditedAt: CreateQuoteItemRequestDto.normalizeNullableString(
+          body.customerDescriptionEditedAt
+        ),
         customerUnit: CreateQuoteItemRequestDto.normalizeNullableString(body.customerUnit),
         erpDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.erpDescription),
         unit,

@@ -66,6 +66,9 @@ export interface SaveQuoteDraftItemDatasourceData {
   externalProductCode: string | null;
   ean: string | null;
   customerDescription: string | null;
+  customerDescriptionOriginal: string | null;
+  customerDescriptionEditedAt: Date | null;
+  customerDescriptionEditedByUserId: string | null;
   customerUnit: string | null;
   erpDescription: string | null;
   unit: string;
@@ -157,6 +160,9 @@ export interface AddQuoteItemDatasourceParams {
     externalProductCode: string | null;
     ean: string | null;
     customerDescription: string | null;
+    customerDescriptionOriginal: string | null;
+    customerDescriptionEditedAt: Date | null;
+    customerDescriptionEditedByUserId: string | null;
     customerUnit: string | null;
     erpDescription: string | null;
     unit: string;
@@ -196,6 +202,8 @@ export interface UpdateQuoteItemDatasourceParams {
     externalProductCode?: string | null;
     ean?: string | null;
     customerDescription?: string | null;
+    customerDescriptionEditedAt?: Date | null;
+    customerDescriptionEditedByUserId?: string | null;
     customerUnit?: string | null;
     erpDescription?: string | null;
     unit?: string;

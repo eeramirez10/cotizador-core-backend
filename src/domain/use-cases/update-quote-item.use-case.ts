@@ -84,6 +84,8 @@ export class UpdateQuoteItemUseCase {
       dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription;
     const nextCustomerDescription =
       dto.customerDescription !== undefined ? dto.customerDescription : existingItem.customerDescription;
+    const customerDescriptionChanged = dto.customerDescription !== undefined
+      && (dto.customerDescription ?? "").trim() !== (existingItem.customerDescription ?? "").trim();
     const nextDeliveryTime =
       dto.deliveryTime !== undefined ? dto.deliveryTime : existingItem.deliveryTime;
     const nextUnit = dto.unit !== undefined ? dto.unit : existingItem.unit;
@@ -113,6 +115,12 @@ export class UpdateQuoteItemUseCase {
         externalProductCode: nextExternalProductCode,
         ean: nextEan,
         customerDescription: nextCustomerDescription,
+        customerDescriptionEditedAt: customerDescriptionChanged
+          ? new Date()
+          : existingItem.customerDescriptionEditedAt,
+        customerDescriptionEditedByUserId: customerDescriptionChanged
+          ? actor.id
+          : existingItem.customerDescriptionEditedByUserId,
         customerUnit: dto.customerUnit !== undefined ? dto.customerUnit : existingItem.customerUnit,
         erpDescription: nextErpDescription,
         unit: nextUnit,

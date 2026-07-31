@@ -160,6 +160,9 @@ interface QuoteRow {
     externalProductCode: string | null;
     ean: string | null;
     customerDescription: string | null;
+    customerDescriptionOriginal: string | null;
+    customerDescriptionEditedAt: Date | null;
+    customerDescriptionEditedByUserId: string | null;
     customerUnit: string | null;
     erpDescription: string | null;
     unit: string;
@@ -198,6 +201,11 @@ interface QuoteRow {
       description: string;
       unit: string;
       currency: QuoteEntity["currency"];
+    } | null;
+    customerDescriptionEditedByUser: {
+      id: string;
+      firstName: string;
+      lastName: string;
     } | null;
   }>;
   events: Array<{
@@ -349,6 +357,9 @@ export class QuoteMapper {
         externalProductCode: item.externalProductCode,
         ean: item.ean,
         customerDescription: item.customerDescription,
+        customerDescriptionOriginal: item.customerDescriptionOriginal,
+        customerDescriptionEditedAt: item.customerDescriptionEditedAt,
+        customerDescriptionEditedByUserId: item.customerDescriptionEditedByUserId,
         customerUnit: item.customerUnit,
         erpDescription: item.erpDescription,
         unit: item.unit,
@@ -390,6 +401,7 @@ export class QuoteMapper {
               currency: item.product.currency,
             }
           : null,
+        customerDescriptionEditedByUser: item.customerDescriptionEditedByUser,
       })),
       events: row.events.map((event) => ({
         id: event.id,

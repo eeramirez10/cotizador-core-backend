@@ -105,7 +105,21 @@ export class SaveQuoteDraftUseCase {
       throw new Error("Provided by user not found or inactive.");
     }
 
+    const existingItemsByClientId = new Map(
+      (existingQuote?.items ?? []).map((item) => [item.clientItemId ?? item.id, item])
+    );
+
     const items = dto.items.map((item) => {
+      const existingItem = existingItemsByClientId.get(item.clientItemId);
+      const customerDescriptionOriginal = existingItem?.customerDescriptionOriginal
+        ?? item.customerDescriptionOriginal
+        ?? item.customerDescription;
+      const customerDescriptionChanged = existingItem
+        ? normalizedText(existingItem.customerDescription) !== normalizedText(item.customerDescription)
+        : Boolean(
+            item.customerDescriptionEditedAt
+            && normalizedText(customerDescriptionOriginal) !== normalizedText(item.customerDescription)
+          );
       let unitPrice: number;
       let marginPct: number;
       const quoteCurrencyCost = convertQuoteAmount(
@@ -170,6 +184,13 @@ export class SaveQuoteDraftUseCase {
         externalProductCode: item.externalProductCode,
         ean: item.ean,
         customerDescription: item.customerDescription,
+        customerDescriptionOriginal,
+        customerDescriptionEditedAt: customerDescriptionChanged
+          ? new Date()
+          : existingItem?.customerDescriptionEditedAt ?? null,
+        customerDescriptionEditedByUserId: customerDescriptionChanged
+          ? actor.id
+          : existingItem?.customerDescriptionEditedByUserId ?? null,
         customerUnit: item.customerUnit,
         erpDescription: item.erpDescription,
         unit: item.unit,
