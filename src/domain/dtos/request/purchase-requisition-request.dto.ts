@@ -6,6 +6,10 @@ import type {
   SupplierContactChannel,
   SupplierPhoneKind,
 } from "../../../infrastructure/database/generated/enums";
+import {
+  normalizeSupplierEmail,
+  normalizeSupplierPhone,
+} from "../../utils/supplier-contact-normalizer";
 
 const optionalText = (value: unknown): string | null | undefined => {
   if (value === undefined) return undefined;
@@ -254,7 +258,9 @@ export class SaveSupplierRequestDto {
     public readonly contacts: Array<{
       channel: SupplierContactChannel;
       value: string;
+      normalizedValue: string;
       phoneKind: SupplierPhoneKind | null;
+      extension: string | null;
       isWhatsApp: boolean;
       contactName: string | null;
       label: string | null;
@@ -270,42 +276,51 @@ export class SaveSupplierRequestDto {
     const scope = body.scope as SupplierScope;
     const email = optionalText(body.email) ?? null;
     const phone = optionalText(body.phone) ?? null;
+    const country = optionalText(body.country) ?? (scope === "NATIONAL" ? "MÉXICO" : null);
     if (!name) return ["name is required."];
     if (scope !== "NATIONAL" && scope !== "INTERNATIONAL") return ["scope is invalid."];
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return ["email is invalid."];
     if (body.contacts !== undefined && !Array.isArray(body.contacts)) return ["contacts must be an array."];
+    const incomingContacts = [...(Array.isArray(body.contacts) ? body.contacts : [])];
+    if (!incomingContacts.some((value) => (value as Record<string, unknown> | null)?.channel === "EMAIL") && email) {
+      incomingContacts.push({ channel: "EMAIL", value: email, contactName: body.contactName, isPrimary: true });
+    }
+    if (!incomingContacts.some((value) => (value as Record<string, unknown> | null)?.channel === "PHONE") && phone) {
+      incomingContacts.push({ channel: "PHONE", value: phone, phoneKind: "UNKNOWN", contactName: body.contactName, isPrimary: true });
+    }
     const contacts: SaveSupplierRequestDto["contacts"] = [];
     const seenContacts = new Set<string>();
-    for (const value of Array.isArray(body.contacts) ? body.contacts : []) {
+    for (const value of incomingContacts) {
       if (!value || typeof value !== "object") return ["Each contact must be an object."];
       const contact = value as Record<string, unknown>;
       const channel = contact.channel as SupplierContactChannel;
       const contactValue = optionalText(contact.value) ?? null;
       if ((channel !== "EMAIL" && channel !== "PHONE") || !contactValue) return ["Each contact requires a valid channel and value."];
-      if (channel === "EMAIL" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactValue)) return ["A supplier contact email is invalid."];
       const phoneKind = channel === "PHONE"
         ? (["LANDLINE", "MOBILE", "UNKNOWN"].includes(String(contact.phoneKind)) ? contact.phoneKind as SupplierPhoneKind : "UNKNOWN")
         : null;
-      const normalized = channel === "EMAIL" ? contactValue.toLowerCase() : contactValue.replace(/\D/g, "");
-      if (channel === "PHONE" && normalized.length < 7) return ["A supplier contact phone is invalid."];
+      const normalizedEmail = channel === "EMAIL" ? normalizeSupplierEmail(contactValue) : null;
+      const normalizedPhone = channel === "PHONE"
+        ? normalizeSupplierPhone(contactValue, country, optionalText(contact.extension) ?? null)
+        : null;
+      if (channel === "EMAIL" && !normalizedEmail) return ["A supplier contact email is invalid."];
+      if (channel === "PHONE" && !normalizedPhone) {
+        return ["A supplier contact phone is invalid or requires an international prefix for the selected country."];
+      }
+      const normalized = normalizedEmail ?? normalizedPhone!.e164;
       const key = `${channel}:${normalized}`;
       if (seenContacts.has(key)) continue;
       seenContacts.add(key);
       contacts.push({
         channel,
-        value: contactValue,
+        value: channel === "EMAIL" ? normalized : contactValue,
+        normalizedValue: normalized,
         phoneKind,
+        extension: channel === "PHONE" ? normalizedPhone!.extension : null,
         isWhatsApp: channel === "PHONE" && contact.isWhatsApp === true,
         contactName: optionalText(contact.contactName) ?? null,
         label: optionalText(contact.label) ?? null,
         isPrimary: contact.isPrimary === true,
       });
-    }
-    if (!contacts.some((contact) => contact.channel === "EMAIL") && email) {
-      contacts.push({ channel: "EMAIL", value: email, phoneKind: null, isWhatsApp: false, contactName: optionalText(body.contactName) ?? null, label: null, isPrimary: true });
-    }
-    if (!contacts.some((contact) => contact.channel === "PHONE") && phone) {
-      contacts.push({ channel: "PHONE", value: phone, phoneKind: "UNKNOWN", isWhatsApp: false, contactName: optionalText(body.contactName) ?? null, label: null, isPrimary: true });
     }
     for (const channel of ["EMAIL", "PHONE"] as const) {
       const channelContacts = contacts.filter((contact) => contact.channel === channel);
@@ -316,18 +331,18 @@ export class SaveSupplierRequestDto {
         if (contact.isPrimary) primaryFound = true;
       });
     }
-    const primaryEmail = contacts.find((contact) => contact.channel === "EMAIL" && contact.isPrimary)?.value
-      ?? contacts.find((contact) => contact.channel === "EMAIL")?.value
-      ?? email;
-    const primaryPhone = contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.value
-      ?? contacts.find((contact) => contact.channel === "PHONE")?.value
-      ?? phone;
+    const primaryEmail = contacts.find((contact) => contact.channel === "EMAIL" && contact.isPrimary)?.normalizedValue
+      ?? contacts.find((contact) => contact.channel === "EMAIL")?.normalizedValue
+      ?? null;
+    const primaryPhone = contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.normalizedValue
+      ?? contacts.find((contact) => contact.channel === "PHONE")?.normalizedValue
+      ?? null;
     return [, new SaveSupplierRequestDto(
       name,
       scope,
       optionalText(body.taxId)?.toUpperCase() ?? null,
       optionalText(body.state)?.toUpperCase() ?? null,
-      optionalText(body.country) ?? null,
+      country,
       optionalText(body.contactName) ?? null,
       primaryEmail,
       primaryPhone,

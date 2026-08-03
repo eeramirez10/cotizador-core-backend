@@ -360,7 +360,7 @@ export type PurchaseSupplierQuoteGroupByOutputType = {
   _max: PurchaseSupplierQuoteMaxAggregateOutputType | null
 }
 
-export type GetPurchaseSupplierQuoteGroupByPayload<T extends PurchaseSupplierQuoteGroupByArgs> = Prisma.PrismaPromise<
+type GetPurchaseSupplierQuoteGroupByPayload<T extends PurchaseSupplierQuoteGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PurchaseSupplierQuoteGroupByOutputType, T['by']> &
       {
@@ -3079,11 +3079,6 @@ export type PurchaseSupplierQuoteFindManyArgs<ExtArgs extends runtime.Types.Exte
    * Skip the first `n` PurchaseSupplierQuotes.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of PurchaseSupplierQuotes.
-   */
   distinct?: Prisma.PurchaseSupplierQuoteScalarFieldEnum | Prisma.PurchaseSupplierQuoteScalarFieldEnum[]
 }
 

@@ -418,6 +418,7 @@ export const SupplierContactScalarFieldEnum = {
   value: 'value',
   normalizedValue: 'normalizedValue',
   phoneKind: 'phoneKind',
+  extension: 'extension',
   isWhatsApp: 'isWhatsApp',
   contactName: 'contactName',
   label: 'label',

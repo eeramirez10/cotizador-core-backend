@@ -30,6 +30,7 @@
     "env-var": "^7.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.3",
+    "libphonenumber-js": "^1.13.10",
     "multer": "^2.2.0",
     "pg": "^8.19.0"
   },

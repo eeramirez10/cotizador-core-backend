@@ -244,12 +244,7 @@ export class PurchaseRequisitionUseCase {
       normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
       normalizedPhone: normalizePhone(dto.phone),
-      contacts: dto.contacts.map((contact) => ({
-        ...contact,
-        normalizedValue: contact.channel === "EMAIL"
-          ? normalizeEmail(contact.value)!
-          : normalizePhone(contact.value)!,
-      })),
+      contacts: dto.contacts,
       allowPotentialDuplicate: dto.allowPotentialDuplicate,
       actorUserId: actor.id,
     });
@@ -271,12 +266,7 @@ export class PurchaseRequisitionUseCase {
       normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
       normalizedPhone: normalizePhone(dto.phone),
-      contacts: dto.contacts.map((contact) => ({
-        ...contact,
-        normalizedValue: contact.channel === "EMAIL"
-          ? normalizeEmail(contact.value)!
-          : normalizePhone(contact.value)!,
-      })),
+      contacts: dto.contacts,
       allowPotentialDuplicate: dto.allowPotentialDuplicate,
       actorUserId: actor.id,
     });

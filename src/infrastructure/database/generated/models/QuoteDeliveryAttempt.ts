@@ -193,7 +193,7 @@ export type QuoteDeliveryAttemptGroupByOutputType = {
   _max: QuoteDeliveryAttemptMaxAggregateOutputType | null
 }
 
-export type GetQuoteDeliveryAttemptGroupByPayload<T extends QuoteDeliveryAttemptGroupByArgs> = Prisma.PrismaPromise<
+type GetQuoteDeliveryAttemptGroupByPayload<T extends QuoteDeliveryAttemptGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<QuoteDeliveryAttemptGroupByOutputType, T['by']> &
       {
@@ -1455,11 +1455,6 @@ export type QuoteDeliveryAttemptFindManyArgs<ExtArgs extends runtime.Types.Exten
    * Skip the first `n` QuoteDeliveryAttempts.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of QuoteDeliveryAttempts.
-   */
   distinct?: Prisma.QuoteDeliveryAttemptScalarFieldEnum | Prisma.QuoteDeliveryAttemptScalarFieldEnum[]
 }
 

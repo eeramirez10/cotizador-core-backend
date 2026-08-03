@@ -53,6 +53,7 @@ export interface SupplierContactEntity {
   value: string;
   normalizedValue: string;
   phoneKind: SupplierPhoneKind | null;
+  extension: string | null;
   isWhatsApp: boolean;
   contactName: string | null;
   label: string | null;

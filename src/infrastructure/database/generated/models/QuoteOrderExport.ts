@@ -200,7 +200,7 @@ export type QuoteOrderExportGroupByOutputType = {
   _max: QuoteOrderExportMaxAggregateOutputType | null
 }
 
-export type GetQuoteOrderExportGroupByPayload<T extends QuoteOrderExportGroupByArgs> = Prisma.PrismaPromise<
+type GetQuoteOrderExportGroupByPayload<T extends QuoteOrderExportGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<QuoteOrderExportGroupByOutputType, T['by']> &
       {
@@ -1492,11 +1492,6 @@ export type QuoteOrderExportFindManyArgs<ExtArgs extends runtime.Types.Extension
    * Skip the first `n` QuoteOrderExports.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of QuoteOrderExports.
-   */
   distinct?: Prisma.QuoteOrderExportScalarFieldEnum | Prisma.QuoteOrderExportScalarFieldEnum[]
 }
 

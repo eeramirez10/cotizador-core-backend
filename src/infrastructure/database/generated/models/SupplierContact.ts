@@ -31,6 +31,7 @@ export type SupplierContactMinAggregateOutputType = {
   value: string | null
   normalizedValue: string | null
   phoneKind: $Enums.SupplierPhoneKind | null
+  extension: string | null
   isWhatsApp: boolean | null
   contactName: string | null
   label: string | null
@@ -46,6 +47,7 @@ export type SupplierContactMaxAggregateOutputType = {
   value: string | null
   normalizedValue: string | null
   phoneKind: $Enums.SupplierPhoneKind | null
+  extension: string | null
   isWhatsApp: boolean | null
   contactName: string | null
   label: string | null
@@ -61,6 +63,7 @@ export type SupplierContactCountAggregateOutputType = {
   value: number
   normalizedValue: number
   phoneKind: number
+  extension: number
   isWhatsApp: number
   contactName: number
   label: number
@@ -78,6 +81,7 @@ export type SupplierContactMinAggregateInputType = {
   value?: true
   normalizedValue?: true
   phoneKind?: true
+  extension?: true
   isWhatsApp?: true
   contactName?: true
   label?: true
@@ -93,6 +97,7 @@ export type SupplierContactMaxAggregateInputType = {
   value?: true
   normalizedValue?: true
   phoneKind?: true
+  extension?: true
   isWhatsApp?: true
   contactName?: true
   label?: true
@@ -108,6 +113,7 @@ export type SupplierContactCountAggregateInputType = {
   value?: true
   normalizedValue?: true
   phoneKind?: true
+  extension?: true
   isWhatsApp?: true
   contactName?: true
   label?: true
@@ -196,6 +202,7 @@ export type SupplierContactGroupByOutputType = {
   value: string
   normalizedValue: string
   phoneKind: $Enums.SupplierPhoneKind | null
+  extension: string | null
   isWhatsApp: boolean
   contactName: string | null
   label: string | null
@@ -207,7 +214,7 @@ export type SupplierContactGroupByOutputType = {
   _max: SupplierContactMaxAggregateOutputType | null
 }
 
-export type GetSupplierContactGroupByPayload<T extends SupplierContactGroupByArgs> = Prisma.PrismaPromise<
+type GetSupplierContactGroupByPayload<T extends SupplierContactGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<SupplierContactGroupByOutputType, T['by']> &
       {
@@ -232,6 +239,7 @@ export type SupplierContactWhereInput = {
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
   phoneKind?: Prisma.EnumSupplierPhoneKindNullableFilter<"SupplierContact"> | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
@@ -248,6 +256,7 @@ export type SupplierContactOrderByWithRelationInput = {
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
   phoneKind?: Prisma.SortOrderInput | Prisma.SortOrder
+  extension?: Prisma.SortOrderInput | Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -268,6 +277,7 @@ export type SupplierContactWhereUniqueInput = Prisma.AtLeast<{
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
   phoneKind?: Prisma.EnumSupplierPhoneKindNullableFilter<"SupplierContact"> | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
@@ -284,6 +294,7 @@ export type SupplierContactOrderByWithAggregationInput = {
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
   phoneKind?: Prisma.SortOrderInput | Prisma.SortOrder
+  extension?: Prisma.SortOrderInput | Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -305,6 +316,7 @@ export type SupplierContactScalarWhereWithAggregatesInput = {
   value?: Prisma.StringWithAggregatesFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringWithAggregatesFilter<"SupplierContact"> | string
   phoneKind?: Prisma.EnumSupplierPhoneKindNullableWithAggregatesFilter<"SupplierContact"> | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolWithAggregatesFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
@@ -319,6 +331,7 @@ export type SupplierContactCreateInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -335,6 +348,7 @@ export type SupplierContactUncheckedCreateInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -349,6 +363,7 @@ export type SupplierContactUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -365,6 +380,7 @@ export type SupplierContactUncheckedUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -380,6 +396,7 @@ export type SupplierContactCreateManyInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -394,6 +411,7 @@ export type SupplierContactUpdateManyMutationInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -409,6 +427,7 @@ export type SupplierContactUncheckedUpdateManyInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -440,6 +459,7 @@ export type SupplierContactCountOrderByAggregateInput = {
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
   phoneKind?: Prisma.SortOrder
+  extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   label?: Prisma.SortOrder
@@ -455,6 +475,7 @@ export type SupplierContactMaxOrderByAggregateInput = {
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
   phoneKind?: Prisma.SortOrder
+  extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   label?: Prisma.SortOrder
@@ -470,6 +491,7 @@ export type SupplierContactMinOrderByAggregateInput = {
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
   phoneKind?: Prisma.SortOrder
+  extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   label?: Prisma.SortOrder
@@ -534,6 +556,7 @@ export type SupplierContactCreateWithoutSupplierInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -548,6 +571,7 @@ export type SupplierContactUncheckedCreateWithoutSupplierInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -592,6 +616,7 @@ export type SupplierContactScalarWhereInput = {
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
   phoneKind?: Prisma.EnumSupplierPhoneKindNullableFilter<"SupplierContact"> | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
@@ -606,6 +631,7 @@ export type SupplierContactCreateManySupplierInput = {
   value: string
   normalizedValue: string
   phoneKind?: $Enums.SupplierPhoneKind | null
+  extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
   label?: string | null
@@ -620,6 +646,7 @@ export type SupplierContactUpdateWithoutSupplierInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -634,6 +661,7 @@ export type SupplierContactUncheckedUpdateWithoutSupplierInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -648,6 +676,7 @@ export type SupplierContactUncheckedUpdateManyWithoutSupplierInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
   phoneKind?: Prisma.NullableEnumSupplierPhoneKindFieldUpdateOperationsInput | $Enums.SupplierPhoneKind | null
+  extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -665,6 +694,7 @@ export type SupplierContactSelect<ExtArgs extends runtime.Types.Extensions.Inter
   value?: boolean
   normalizedValue?: boolean
   phoneKind?: boolean
+  extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
   label?: boolean
@@ -681,6 +711,7 @@ export type SupplierContactSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   value?: boolean
   normalizedValue?: boolean
   phoneKind?: boolean
+  extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
   label?: boolean
@@ -697,6 +728,7 @@ export type SupplierContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   value?: boolean
   normalizedValue?: boolean
   phoneKind?: boolean
+  extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
   label?: boolean
@@ -713,6 +745,7 @@ export type SupplierContactSelectScalar = {
   value?: boolean
   normalizedValue?: boolean
   phoneKind?: boolean
+  extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
   label?: boolean
@@ -721,7 +754,7 @@ export type SupplierContactSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SupplierContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierId" | "channel" | "value" | "normalizedValue" | "phoneKind" | "isWhatsApp" | "contactName" | "label" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplierContact"]>
+export type SupplierContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierId" | "channel" | "value" | "normalizedValue" | "phoneKind" | "extension" | "isWhatsApp" | "contactName" | "label" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplierContact"]>
 export type SupplierContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
 }
@@ -744,6 +777,7 @@ export type $SupplierContactPayload<ExtArgs extends runtime.Types.Extensions.Int
     value: string
     normalizedValue: string
     phoneKind: $Enums.SupplierPhoneKind | null
+    extension: string | null
     isWhatsApp: boolean
     contactName: string | null
     label: string | null
@@ -1180,6 +1214,7 @@ export interface SupplierContactFieldRefs {
   readonly value: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly normalizedValue: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly phoneKind: Prisma.FieldRef<"SupplierContact", 'SupplierPhoneKind'>
+  readonly extension: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly isWhatsApp: Prisma.FieldRef<"SupplierContact", 'Boolean'>
   readonly contactName: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly label: Prisma.FieldRef<"SupplierContact", 'String'>
@@ -1382,11 +1417,6 @@ export type SupplierContactFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` SupplierContacts.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of SupplierContacts.
-   */
   distinct?: Prisma.SupplierContactScalarFieldEnum | Prisma.SupplierContactScalarFieldEnum[]
 }
 

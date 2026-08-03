@@ -113,6 +113,7 @@ const supplierEntity = (supplier: {
     value: string;
     normalizedValue: string;
     phoneKind: "LANDLINE" | "MOBILE" | "UNKNOWN" | null;
+    extension: string | null;
     isWhatsApp: boolean;
     contactName: string | null;
     label: string | null;

@@ -256,7 +256,7 @@ export type BranchGroupByOutputType = {
   _max: BranchMaxAggregateOutputType | null
 }
 
-export type GetBranchGroupByPayload<T extends BranchGroupByArgs> = Prisma.PrismaPromise<
+type GetBranchGroupByPayload<T extends BranchGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<BranchGroupByOutputType, T['by']> &
       {
@@ -2193,11 +2193,6 @@ export type BranchFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Skip the first `n` Branches.
    */
   skip?: number
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-   * 
-   * Filter by unique combinations of Branches.
-   */
   distinct?: Prisma.BranchScalarFieldEnum | Prisma.BranchScalarFieldEnum[]
 }
 

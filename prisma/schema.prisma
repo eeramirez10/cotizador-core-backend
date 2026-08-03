@@ -659,6 +659,7 @@ model SupplierContact {
   value           String                 @db.VarChar(180)
   normalizedValue String                 @map("normalized_value") @db.VarChar(180)
   phoneKind       SupplierPhoneKind?     @map("phone_kind")
+  extension       String?                @db.VarChar(20)
   isWhatsApp      Boolean                @default(false) @map("is_whatsapp")
   contactName     String?                @map("contact_name") @db.VarChar(160)
   label           String?                @db.VarChar(100)
