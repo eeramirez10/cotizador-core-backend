@@ -31,4 +31,5 @@ export class PurchaseRequisitionRepositoryImpl extends PurchaseRequisitionReposi
   createSupplier(data: SaveSupplierData) { return this.datasource.createSupplier(data); }
   upsertErpSupplier(data: SaveErpSupplierData) { return this.datasource.upsertErpSupplier(data); }
   updateSupplier(id: string, data: SaveSupplierData) { return this.datasource.updateSupplier(id, data); }
+  setSupplierActive(id: string, isActive: boolean, actorUserId: string) { return this.datasource.setSupplierActive(id, isActive, actorUserId); }
 }

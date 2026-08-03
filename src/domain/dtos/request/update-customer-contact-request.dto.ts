@@ -1,8 +1,10 @@
 interface UpdateCustomerContactRequestDtoProps {
   name?: string;
   jobTitle?: string | null;
+  label?: string | null;
   email?: string | null;
   phone?: string | null;
+  phoneExtension?: string | null;
   mobile?: string | null;
   isPrimary?: boolean;
 }
@@ -10,16 +12,20 @@ interface UpdateCustomerContactRequestDtoProps {
 export class UpdateCustomerContactRequestDto {
   public readonly name?: string;
   public readonly jobTitle?: string | null;
+  public readonly label?: string | null;
   public readonly email?: string | null;
   public readonly phone?: string | null;
+  public readonly phoneExtension?: string | null;
   public readonly mobile?: string | null;
   public readonly isPrimary?: boolean;
 
   constructor(props: UpdateCustomerContactRequestDtoProps) {
     this.name = props.name;
     this.jobTitle = props.jobTitle;
+    this.label = props.label;
     this.email = props.email;
     this.phone = props.phone;
+    this.phoneExtension = props.phoneExtension;
     this.mobile = props.mobile;
     this.isPrimary = props.isPrimary;
   }
@@ -34,8 +40,10 @@ export class UpdateCustomerContactRequestDto {
     const dto = new UpdateCustomerContactRequestDto({
       name: UpdateCustomerContactRequestDto.normalizeRequiredStringWhenDefined(body.name),
       jobTitle: UpdateCustomerContactRequestDto.normalizeNullableStringWhenDefined(body.jobTitle),
+      label: UpdateCustomerContactRequestDto.normalizeNullableStringWhenDefined(body.label),
       email: UpdateCustomerContactRequestDto.normalizeEmailWhenDefined(body.email),
       phone: UpdateCustomerContactRequestDto.normalizeNullableStringWhenDefined(body.phone),
+      phoneExtension: UpdateCustomerContactRequestDto.normalizeNullableStringWhenDefined(body.phoneExtension),
       mobile: UpdateCustomerContactRequestDto.normalizeNullableStringWhenDefined(body.mobile),
       isPrimary: typeof body.isPrimary === "boolean" ? body.isPrimary : undefined,
     });

@@ -49,6 +49,7 @@ export interface SupplierEntity {
 
 export interface SupplierContactEntity {
   id: string;
+  contactKey: string;
   channel: SupplierContactChannel;
   value: string;
   normalizedValue: string;
@@ -56,6 +57,7 @@ export interface SupplierContactEntity {
   extension: string | null;
   isWhatsApp: boolean;
   contactName: string | null;
+  contactPosition: string | null;
   label: string | null;
   isPrimary: boolean;
 }

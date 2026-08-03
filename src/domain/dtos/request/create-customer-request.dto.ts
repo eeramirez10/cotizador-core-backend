@@ -2,6 +2,7 @@ import {
   CustomerProfileStatus,
   CustomerSource,
 } from "../../../infrastructure/database/generated/enums";
+import { CustomerContactWriteDto } from "./customer-contact-write.dto";
 
 interface CreateCustomerRequestDtoProps {
   source: CustomerSource;
@@ -18,12 +19,16 @@ interface CreateCustomerRequestDtoProps {
   taxId: string | null;
   taxRegime: string | null;
   billingStreet: string | null;
+  billingExteriorNumber: string | null;
+  billingInteriorNumber: string | null;
+  billingNeighborhood: string | null;
   billingCity: string | null;
   billingState: string | null;
   billingPostalCode: string | null;
   billingCountry: string | null;
   profileStatus: CustomerProfileStatus;
   notes: string | null;
+  contacts: CustomerContactWriteDto[];
 }
 
 export class CreateCustomerRequestDto {
@@ -41,12 +46,16 @@ export class CreateCustomerRequestDto {
   public readonly taxId: string | null;
   public readonly taxRegime: string | null;
   public readonly billingStreet: string | null;
+  public readonly billingExteriorNumber: string | null;
+  public readonly billingInteriorNumber: string | null;
+  public readonly billingNeighborhood: string | null;
   public readonly billingCity: string | null;
   public readonly billingState: string | null;
   public readonly billingPostalCode: string | null;
   public readonly billingCountry: string | null;
   public readonly profileStatus: CustomerProfileStatus;
   public readonly notes: string | null;
+  public readonly contacts: CustomerContactWriteDto[];
 
   constructor(props: CreateCustomerRequestDtoProps) {
     this.source = props.source;
@@ -63,12 +72,16 @@ export class CreateCustomerRequestDto {
     this.taxId = props.taxId;
     this.taxRegime = props.taxRegime;
     this.billingStreet = props.billingStreet;
+    this.billingExteriorNumber = props.billingExteriorNumber;
+    this.billingInteriorNumber = props.billingInteriorNumber;
+    this.billingNeighborhood = props.billingNeighborhood;
     this.billingCity = props.billingCity;
     this.billingState = props.billingState;
     this.billingPostalCode = props.billingPostalCode;
     this.billingCountry = props.billingCountry;
     this.profileStatus = props.profileStatus;
     this.notes = props.notes;
+    this.contacts = props.contacts;
   }
 
   static create(input: unknown): [string?, CreateCustomerRequestDto?] {
@@ -92,9 +105,7 @@ export class CreateCustomerRequestDto {
 
     if (!firstName) return ["firstName is required."];
     if (!lastName) return ["lastName is required."];
-    if (source !== "ERP" && !whatsapp) return ["whatsapp is required."];
-    if (!email) return ["email is required."];
-    if (!CreateCustomerRequestDto.isValidEmail(email)) return ["email is invalid."];
+    if (email && !CreateCustomerRequestDto.isValidEmail(email)) return ["email is invalid."];
     if (whatsapp && !CreateCustomerRequestDto.isValidPhone(whatsapp)) return ["whatsapp is invalid."];
 
     const phone = CreateCustomerRequestDto.normalizeNullableString(body.phone);
@@ -116,6 +127,12 @@ export class CreateCustomerRequestDto {
       return ["externalId is required when source is ERP."];
     }
 
+    const [contactsError, contacts = []] = CustomerContactWriteDto.parseMany(body.contacts);
+    if (contactsError) return [contactsError];
+    if (source !== "ERP" && !email && !whatsapp && !CustomerContactWriteDto.hasDeliveryChannel(contacts)) {
+      return ["At least one email or WhatsApp is required."];
+    }
+
     return [
       ,
       new CreateCustomerRequestDto({
@@ -133,12 +150,16 @@ export class CreateCustomerRequestDto {
         taxId: CreateCustomerRequestDto.normalizeNullableString(body.taxId),
         taxRegime: CreateCustomerRequestDto.normalizeNullableString(body.taxRegime),
         billingStreet: CreateCustomerRequestDto.normalizeNullableString(body.billingStreet),
+        billingExteriorNumber: CreateCustomerRequestDto.normalizeNullableString(body.billingExteriorNumber),
+        billingInteriorNumber: CreateCustomerRequestDto.normalizeNullableString(body.billingInteriorNumber),
+        billingNeighborhood: CreateCustomerRequestDto.normalizeNullableString(body.billingNeighborhood),
         billingCity: CreateCustomerRequestDto.normalizeNullableString(body.billingCity),
         billingState: CreateCustomerRequestDto.normalizeNullableString(body.billingState),
         billingPostalCode: CreateCustomerRequestDto.normalizeNullableString(body.billingPostalCode),
         billingCountry: CreateCustomerRequestDto.normalizeNullableString(body.billingCountry),
         profileStatus,
         notes: CreateCustomerRequestDto.normalizeNullableString(body.notes),
+        contacts,
       }),
     ];
   }

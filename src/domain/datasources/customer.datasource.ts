@@ -39,6 +39,9 @@ export interface CreateCustomerDatasourceParams {
   taxId: string | null;
   taxRegime: string | null;
   billingStreet: string | null;
+  billingExteriorNumber: string | null;
+  billingInteriorNumber: string | null;
+  billingNeighborhood: string | null;
   billingCity: string | null;
   billingState: string | null;
   billingPostalCode: string | null;
@@ -47,6 +50,18 @@ export interface CreateCustomerDatasourceParams {
   notes: string | null;
   createdByUserId: string;
   updatedByUserId: string;
+  contacts: CustomerContactWriteData[];
+}
+
+export interface CustomerContactWriteData {
+  name: string;
+  jobTitle: string | null;
+  label: string | null;
+  email: string | null;
+  phone: string | null;
+  phoneExtension: string | null;
+  mobile: string | null;
+  isPrimary: boolean;
 }
 
 export interface UpdateCustomerDatasourceParams {
@@ -64,6 +79,9 @@ export interface UpdateCustomerDatasourceParams {
   taxId?: string | null;
   taxRegime?: string | null;
   billingStreet?: string | null;
+  billingExteriorNumber?: string | null;
+  billingInteriorNumber?: string | null;
+  billingNeighborhood?: string | null;
   billingCity?: string | null;
   billingState?: string | null;
   billingPostalCode?: string | null;
@@ -71,6 +89,7 @@ export interface UpdateCustomerDatasourceParams {
   profileStatus?: CustomerProfileStatus;
   notes?: string | null;
   updatedByUserId: string;
+  contacts?: CustomerContactWriteData[];
 }
 
 export interface FindCustomerByIdDatasourceParams {
@@ -100,8 +119,10 @@ export interface CreateCustomerContactDatasourceParams {
   data: {
     name: string;
     jobTitle: string | null;
+    label: string | null;
     email: string | null;
     phone: string | null;
+    phoneExtension: string | null;
     mobile: string | null;
     isPrimary: boolean;
   };
@@ -114,8 +135,10 @@ export interface UpdateCustomerContactDatasourceParams {
   data: {
     name?: string;
     jobTitle?: string | null;
+    label?: string | null;
     email?: string | null;
     phone?: string | null;
+    phoneExtension?: string | null;
     mobile?: string | null;
     isPrimary?: boolean;
   };

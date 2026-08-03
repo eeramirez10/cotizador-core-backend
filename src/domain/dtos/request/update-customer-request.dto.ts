@@ -2,6 +2,7 @@ import {
   CustomerProfileStatus,
   CustomerSource,
 } from "../../../infrastructure/database/generated/enums";
+import { CustomerContactWriteDto } from "./customer-contact-write.dto";
 
 interface UpdateCustomerRequestDtoProps {
   source?: CustomerSource;
@@ -18,12 +19,16 @@ interface UpdateCustomerRequestDtoProps {
   taxId?: string | null;
   taxRegime?: string | null;
   billingStreet?: string | null;
+  billingExteriorNumber?: string | null;
+  billingInteriorNumber?: string | null;
+  billingNeighborhood?: string | null;
   billingCity?: string | null;
   billingState?: string | null;
   billingPostalCode?: string | null;
   billingCountry?: string | null;
   profileStatus?: CustomerProfileStatus;
   notes?: string | null;
+  contacts?: CustomerContactWriteDto[];
 }
 
 export class UpdateCustomerRequestDto {
@@ -41,12 +46,16 @@ export class UpdateCustomerRequestDto {
   public readonly taxId?: string | null;
   public readonly taxRegime?: string | null;
   public readonly billingStreet?: string | null;
+  public readonly billingExteriorNumber?: string | null;
+  public readonly billingInteriorNumber?: string | null;
+  public readonly billingNeighborhood?: string | null;
   public readonly billingCity?: string | null;
   public readonly billingState?: string | null;
   public readonly billingPostalCode?: string | null;
   public readonly billingCountry?: string | null;
   public readonly profileStatus?: CustomerProfileStatus;
   public readonly notes?: string | null;
+  public readonly contacts?: CustomerContactWriteDto[];
 
   constructor(props: UpdateCustomerRequestDtoProps) {
     this.source = props.source;
@@ -63,12 +72,16 @@ export class UpdateCustomerRequestDto {
     this.taxId = props.taxId;
     this.taxRegime = props.taxRegime;
     this.billingStreet = props.billingStreet;
+    this.billingExteriorNumber = props.billingExteriorNumber;
+    this.billingInteriorNumber = props.billingInteriorNumber;
+    this.billingNeighborhood = props.billingNeighborhood;
     this.billingCity = props.billingCity;
     this.billingState = props.billingState;
     this.billingPostalCode = props.billingPostalCode;
     this.billingCountry = props.billingCountry;
     this.profileStatus = props.profileStatus;
     this.notes = props.notes;
+    this.contacts = props.contacts;
   }
 
   static create(input: unknown): [string?, UpdateCustomerRequestDto?] {
@@ -77,6 +90,12 @@ export class UpdateCustomerRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const [contactsError, contacts] = CustomerContactWriteDto.parseMany(body.contacts);
+    if (contactsError) return [contactsError];
+    if (contacts && !CustomerContactWriteDto.hasDeliveryChannel(contacts)) {
+      return ["At least one customer contact must have email or WhatsApp."];
+    }
+
     const dto = new UpdateCustomerRequestDto({
       source: UpdateCustomerRequestDto.normalizeSource(body.source),
       externalId: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.externalId),
@@ -92,12 +111,16 @@ export class UpdateCustomerRequestDto {
       taxId: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.taxId),
       taxRegime: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.taxRegime),
       billingStreet: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingStreet),
+      billingExteriorNumber: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingExteriorNumber),
+      billingInteriorNumber: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingInteriorNumber),
+      billingNeighborhood: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingNeighborhood),
       billingCity: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingCity),
       billingState: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingState),
       billingPostalCode: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingPostalCode),
       billingCountry: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingCountry),
       profileStatus: UpdateCustomerRequestDto.normalizeProfileStatus(body.profileStatus),
       notes: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.notes),
+      contacts,
     });
 
     if (typeof body.source !== "undefined" && !dto.source) return ["source is invalid."];
@@ -106,8 +129,6 @@ export class UpdateCustomerRequestDto {
     }
     if (typeof body.firstName !== "undefined" && !dto.firstName) return ["firstName cannot be empty."];
     if (typeof body.lastName !== "undefined" && !dto.lastName) return ["lastName cannot be empty."];
-    if (typeof body.whatsapp !== "undefined" && !dto.whatsapp) return ["whatsapp cannot be empty."];
-    if (typeof body.email !== "undefined" && !dto.email) return ["email cannot be empty."];
     if (dto.email && !UpdateCustomerRequestDto.isValidEmail(dto.email)) return ["email is invalid."];
     if (dto.whatsapp && !UpdateCustomerRequestDto.isValidPhone(dto.whatsapp)) return ["whatsapp is invalid."];
     if (dto.phone && !UpdateCustomerRequestDto.isValidPhone(dto.phone)) return ["phone is invalid."];

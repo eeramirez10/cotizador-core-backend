@@ -63,6 +63,10 @@ export interface SaveSupplierData {
   state: string | null;
   country: string | null;
   contactName: string | null;
+  contactPosition: string | null;
+  creditTerms: string | null;
+  currency: Currency | null;
+  notes: string | null;
   email: string | null;
   normalizedEmail: string | null;
   phone: string | null;
@@ -73,6 +77,7 @@ export interface SaveSupplierData {
 }
 
 export interface SaveSupplierContactData {
+  contactKey: string;
   channel: SupplierContactChannel;
   value: string;
   normalizedValue: string;
@@ -80,6 +85,7 @@ export interface SaveSupplierContactData {
   extension: string | null;
   isWhatsApp: boolean;
   contactName: string | null;
+  contactPosition: string | null;
   label: string | null;
   isPrimary: boolean;
 }
@@ -178,4 +184,5 @@ export abstract class PurchaseRequisitionDatasource {
   abstract createSupplier(data: SaveSupplierData): Promise<SupplierEntity>;
   abstract upsertErpSupplier(data: SaveErpSupplierData): Promise<SupplierEntity>;
   abstract updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null>;
+  abstract setSupplierActive(id: string, isActive: boolean, actorUserId: string): Promise<SupplierEntity | null>;
 }

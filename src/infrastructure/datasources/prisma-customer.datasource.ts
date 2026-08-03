@@ -1,6 +1,7 @@
 import {
   CreateCustomerDatasourceParams,
   CreateCustomerContactDatasourceParams,
+  CustomerContactWriteData,
   CustomerAccessScope,
   CustomerDatasource,
   DeleteCustomerContactDatasourceParams,
@@ -18,6 +19,9 @@ import { prisma } from "../database/prisma-client";
 import { CustomerMapper } from "../mappers/customer.mapper";
 
 const customerInclude = {
+  contacts: {
+    orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
+  },
   createdByUser: {
     select: {
       id: true,
@@ -96,11 +100,14 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           taxId: params.taxId,
         });
 
-        const row = await prisma.customer.create({
-          data: this.buildCreateData(params, {
-            attachActorReferences: true,
-          }),
-          include: customerInclude,
+        const row = await prisma.$transaction(async (tx) => {
+          const created = await tx.customer.create({
+            data: this.buildCreateData(params, {
+              attachActorReferences: true,
+            }),
+          });
+          await this.replaceContacts(tx, created.id, params.contacts);
+          return tx.customer.findUniqueOrThrow({ where: { id: created.id }, include: customerInclude });
         });
 
         return CustomerMapper.toEntity(row);
@@ -134,25 +141,23 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           existing?.id
         );
 
-        if (!existing) {
-          return tx.customer.create({
+        const saved = !existing
+          ? await tx.customer.create({
             data: this.buildCreateData(params, {
               externalId: normalizedExternalId,
               externalSystem: normalizedExternalSystem,
               attachActorReferences: false,
             }),
-            include: customerInclude,
-          });
-        }
-
-        return tx.customer.update({
-          where: { id: existing.id },
-          data: this.buildErpRefreshData(params, {
-            externalId: normalizedExternalId,
-            externalSystem: normalizedExternalSystem,
-          }, existing),
-          include: customerInclude,
-        });
+          })
+          : await tx.customer.update({
+              where: { id: existing.id },
+              data: this.buildErpRefreshData(params, {
+                externalId: normalizedExternalId,
+                externalSystem: normalizedExternalSystem,
+              }, existing),
+            });
+        if (params.contacts.length > 0) await this.replaceContacts(tx, saved.id, params.contacts);
+        return tx.customer.findUniqueOrThrow({ where: { id: saved.id }, include: customerInclude });
       });
 
       return CustomerMapper.toEntity(customer);
@@ -194,23 +199,24 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
 
   async updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null> {
     try {
-      await this.assertUniqueCustomerFields(
-        prisma,
-        {
-          email: params.data.email,
-          whatsapp: params.data.whatsapp,
-          taxId: params.data.taxId,
-        },
-        params.id
-      );
+      const row = await prisma.$transaction(async (tx) => {
+        await this.assertUniqueCustomerFields(
+          tx,
+          {
+            email: params.data.email,
+            whatsapp: params.data.whatsapp,
+            taxId: params.data.taxId,
+          },
+          params.id
+        );
 
-      const updated = await prisma.customer.updateMany({
-        where: {
-          id: params.id,
-          isActive: true,
-          ...this.buildWriteScopeWhere(params.scope),
-        },
-        data: {
+        const updated = await tx.customer.updateMany({
+          where: {
+            id: params.id,
+            isActive: true,
+            ...this.buildWriteScopeWhere(params.scope),
+          },
+          data: {
           source: params.data.source,
           externalId: params.data.externalId,
           externalSystem: params.data.externalSystem,
@@ -225,6 +231,9 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           taxId: params.data.taxId,
           taxRegime: params.data.taxRegime,
           billingStreet: params.data.billingStreet,
+          billingExteriorNumber: params.data.billingExteriorNumber,
+          billingInteriorNumber: params.data.billingInteriorNumber,
+          billingNeighborhood: params.data.billingNeighborhood,
           billingCity: params.data.billingCity,
           billingState: params.data.billingState,
           billingPostalCode: params.data.billingPostalCode,
@@ -232,15 +241,16 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           profileStatus: params.data.profileStatus,
           notes: params.data.notes,
           updatedByUserId: params.data.updatedByUserId,
-        },
+          },
+        });
+        if (updated.count === 0) return null;
+        if (params.data.contacts) await this.replaceContacts(tx, params.id, params.data.contacts);
+        return tx.customer.findFirst({
+          where: { id: params.id, isActive: true, ...this.buildReadScopeWhere(params.scope) },
+          include: customerInclude,
+        });
       });
-
-      if (updated.count === 0) return null;
-
-      return this.findById({
-        id: params.id,
-        scope: params.scope,
-      });
+      return row ? CustomerMapper.toEntity(row) : null;
     } catch (error) {
       throw this.mapCustomerUniqueError(error);
     }
@@ -296,8 +306,10 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           customerId: customer.id,
           name: params.data.name,
           jobTitle: params.data.jobTitle,
+          label: params.data.label,
           email: params.data.email,
           phone: params.data.phone,
+          phoneExtension: params.data.phoneExtension,
           mobile: params.data.mobile,
           isPrimary: shouldBePrimary,
         },
@@ -336,8 +348,10 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
         data: {
           name: params.data.name,
           jobTitle: params.data.jobTitle,
+          label: params.data.label,
           email: params.data.email,
           phone: params.data.phone,
+          phoneExtension: params.data.phoneExtension,
           mobile: params.data.mobile,
           isPrimary: params.data.isPrimary,
         },
@@ -467,6 +481,18 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           { whatsapp: { contains: params.search, mode: "insensitive" } },
           { code: { contains: params.search, mode: "insensitive" } },
           { externalId: { contains: params.search, mode: "insensitive" } },
+          {
+            contacts: {
+              some: {
+                OR: [
+                  { name: { contains: params.search, mode: "insensitive" } },
+                  { email: { contains: params.search, mode: "insensitive" } },
+                  { phone: { contains: params.search, mode: "insensitive" } },
+                  { mobile: { contains: params.search, mode: "insensitive" } },
+                ],
+              },
+            },
+          },
         ],
       });
     }
@@ -537,8 +563,10 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
     customerId: string;
     name: string;
     jobTitle: string | null;
+    label: string | null;
     email: string | null;
     phone: string | null;
+    phoneExtension: string | null;
     mobile: string | null;
     isPrimary: boolean;
     createdAt: Date;
@@ -549,13 +577,37 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       customerId: row.customerId,
       name: row.name,
       jobTitle: row.jobTitle,
+      label: row.label,
       email: row.email,
       phone: row.phone,
+      phoneExtension: row.phoneExtension,
       mobile: row.mobile,
       isPrimary: row.isPrimary,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
     };
+  }
+
+  private async replaceContacts(
+    tx: Prisma.TransactionClient,
+    customerId: string,
+    contacts: CustomerContactWriteData[]
+  ): Promise<void> {
+    await tx.customerContact.deleteMany({ where: { customerId } });
+    if (contacts.length === 0) return;
+    await tx.customerContact.createMany({
+      data: contacts.map((contact, index) => ({
+        customerId,
+        name: contact.name,
+        jobTitle: contact.jobTitle,
+        label: contact.label,
+        email: contact.email,
+        phone: contact.phone,
+        phoneExtension: contact.phoneExtension,
+        mobile: contact.mobile,
+        isPrimary: contact.isPrimary || (index === 0 && !contacts.some((entry) => entry.isPrimary)),
+      })),
+    });
   }
 
   private async ensurePrimaryContact(tx: Prisma.TransactionClient, customerId: string): Promise<void> {
@@ -581,7 +633,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
   }
 
   private async syncCustomerFromPrimaryContact(tx: Prisma.TransactionClient, customerId: string): Promise<void> {
-    const [customer, primary] = await Promise.all([
+    const [customer, contacts] = await Promise.all([
       tx.customer.findUnique({
         where: { id: customerId },
         select: {
@@ -591,32 +643,35 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
           whatsapp: true,
         },
       }),
-      tx.customerContact.findFirst({
-        where: {
-          customerId,
-          isPrimary: true,
-        },
-        orderBy: { createdAt: "asc" },
+      tx.customerContact.findMany({
+        where: { customerId },
+        orderBy: [{ isPrimary: "desc" }, { createdAt: "asc" }],
         select: {
           email: true,
           phone: true,
           mobile: true,
+          isPrimary: true,
         },
       }),
     ]);
 
-    if (!customer || !primary) return;
+    if (!customer || contacts.length === 0) return;
 
-    const primaryEmail = primary.email?.trim() || null;
+    const primary = contacts.find((contact) => contact.isPrimary) || contacts[0];
+    const delivery = primary.email || primary.mobile
+      ? primary
+      : contacts.find((contact) => contact.email || contact.mobile);
+
+    const primaryEmail = delivery?.email?.trim() || null;
     const primaryPhone = primary.phone?.trim() || null;
-    const primaryMobile = primary.mobile?.trim() || null;
+    const primaryMobile = delivery?.mobile?.trim() || null;
 
     await tx.customer.update({
       where: { id: customer.id },
       data: {
-        email: primaryEmail || customer.email,
-        phone: primaryPhone || customer.phone,
-        whatsapp: primaryMobile || primaryPhone || customer.whatsapp || "",
+        email: delivery ? primaryEmail : customer.email,
+        phone: primaryPhone || delivery?.phone?.trim() || customer.phone,
+        whatsapp: delivery ? primaryMobile || "" : customer.whatsapp || "",
       },
     });
   }
@@ -646,6 +701,9 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
       taxId: params.taxId,
       taxRegime: params.taxRegime,
       billingStreet: params.billingStreet,
+      billingExteriorNumber: params.billingExteriorNumber,
+      billingInteriorNumber: params.billingInteriorNumber,
+      billingNeighborhood: params.billingNeighborhood,
       billingCity: params.billingCity,
       billingState: params.billingState,
       billingPostalCode: params.billingPostalCode,

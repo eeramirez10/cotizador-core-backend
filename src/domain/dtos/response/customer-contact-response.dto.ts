@@ -9,8 +9,10 @@ export class CustomerContactResponseDto {
       customerId: this.contact.customerId,
       name: this.contact.name,
       jobTitle: this.contact.jobTitle,
+      label: this.contact.label,
       email: this.contact.email,
       phone: this.contact.phone,
+      phoneExtension: this.contact.phoneExtension,
       mobile: this.contact.mobile,
       isPrimary: this.contact.isPrimary,
       createdAt: this.contact.createdAt.toISOString(),
@@ -18,4 +20,3 @@ export class CustomerContactResponseDto {
     };
   }
 }
-

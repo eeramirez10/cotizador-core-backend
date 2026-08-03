@@ -17,8 +17,10 @@ export interface CustomerContactEntity {
   customerId: string;
   name: string;
   jobTitle: string | null;
+  label: string | null;
   email: string | null;
   phone: string | null;
+  phoneExtension: string | null;
   mobile: string | null;
   isPrimary: boolean;
   createdAt: Date;
@@ -41,6 +43,9 @@ export interface CustomerEntity {
   taxId: string | null;
   taxRegime: string | null;
   billingStreet: string | null;
+  billingExteriorNumber: string | null;
+  billingInteriorNumber: string | null;
+  billingNeighborhood: string | null;
   billingCity: string | null;
   billingState: string | null;
   billingPostalCode: string | null;
@@ -54,4 +59,5 @@ export interface CustomerEntity {
   updatedAt: Date;
   createdByUser: CustomerUserInfo | null;
   updatedByUser: CustomerUserInfo | null;
+  contacts: CustomerContactEntity[];
 }

@@ -312,6 +312,9 @@ model Customer {
   taxId             String?               @map("tax_id") @db.VarChar(60)
   taxRegime         String?               @map("tax_regime") @db.VarChar(120)
   billingStreet     String?               @map("billing_street") @db.VarChar(255)
+  billingExteriorNumber String?           @map("billing_exterior_number") @db.VarChar(30)
+  billingInteriorNumber String?           @map("billing_interior_number") @db.VarChar(30)
+  billingNeighborhood String?             @map("billing_neighborhood") @db.VarChar(160)
   billingCity       String?               @map("billing_city") @db.VarChar(120)
   billingState      String?               @map("billing_state") @db.VarChar(120)
   billingPostalCode String?               @map("billing_postal_code") @db.VarChar(20)
@@ -342,8 +345,10 @@ model CustomerContact {
   customerId String   @map("customer_id") @db.Uuid
   name       String   @db.VarChar(160)
   jobTitle   String?  @map("job_title") @db.VarChar(120)
+  label      String?  @db.VarChar(100)
   email      String?  @db.VarChar(160)
   phone      String?  @db.VarChar(40)
+  phoneExtension String? @map("phone_extension") @db.VarChar(20)
   mobile     String?  @db.VarChar(40)
   isPrimary  Boolean  @default(false) @map("is_primary")
   createdAt  DateTime @default(now()) @map("created_at")
@@ -655,6 +660,7 @@ model Supplier {
 model SupplierContact {
   id              String                 @id @default(uuid()) @db.Uuid
   supplierId      String                 @map("supplier_id") @db.Uuid
+  contactKey      String                 @map("contact_key") @db.VarChar(60)
   channel         SupplierContactChannel
   value           String                 @db.VarChar(180)
   normalizedValue String                 @map("normalized_value") @db.VarChar(180)
@@ -662,6 +668,7 @@ model SupplierContact {
   extension       String?                @db.VarChar(20)
   isWhatsApp      Boolean                @default(false) @map("is_whatsapp")
   contactName     String?                @map("contact_name") @db.VarChar(160)
+  contactPosition String?                @map("contact_position") @db.VarChar(160)
   label           String?                @db.VarChar(100)
   isPrimary       Boolean                @default(false) @map("is_primary")
   createdAt       DateTime               @default(now()) @map("created_at")
@@ -672,6 +679,7 @@ model SupplierContact {
   @@unique([supplierId, channel, normalizedValue])
   @@index([normalizedValue])
   @@index([supplierId, channel])
+  @@index([supplierId, contactKey])
   @@map("supplier_contacts")
 }
 

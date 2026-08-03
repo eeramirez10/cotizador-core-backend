@@ -14,6 +14,22 @@ export class CreateCustomerUseCase {
 
   async execute(dto: CreateCustomerRequestDto, actor: CreateCustomerActorContext): Promise<CustomerResponseDto> {
     const displayName = dto.displayName ?? `${dto.firstName} ${dto.lastName}`.trim();
+    const contacts = dto.contacts.length > 0
+      ? dto.contacts
+      : (dto.email || dto.phone || dto.whatsapp
+          ? [{
+              name: displayName,
+              jobTitle: null,
+              label: "Contacto principal",
+              email: dto.email,
+              phone: dto.phone,
+              phoneExtension: null,
+              mobile: dto.whatsapp || null,
+              isPrimary: true,
+            }]
+          : []);
+    const deliveryContact = contacts.find((contact) => contact.isPrimary && (contact.email || contact.mobile))
+      || contacts.find((contact) => contact.email || contact.mobile);
 
     const customer = await this.customerRepository.create({
       source: dto.source,
@@ -24,12 +40,15 @@ export class CreateCustomerUseCase {
       lastName: dto.lastName,
       displayName,
       legalName: dto.legalName,
-      email: dto.email,
-      phone: dto.phone,
-      whatsapp: dto.whatsapp,
+      email: deliveryContact?.email ?? dto.email,
+      phone: deliveryContact?.phone ?? dto.phone,
+      whatsapp: deliveryContact?.mobile ?? dto.whatsapp,
       taxId: dto.taxId,
       taxRegime: dto.taxRegime,
       billingStreet: dto.billingStreet,
+      billingExteriorNumber: dto.billingExteriorNumber,
+      billingInteriorNumber: dto.billingInteriorNumber,
+      billingNeighborhood: dto.billingNeighborhood,
       billingCity: dto.billingCity,
       billingState: dto.billingState,
       billingPostalCode: dto.billingPostalCode,
@@ -38,6 +57,7 @@ export class CreateCustomerUseCase {
       notes: dto.notes,
       createdByUserId: actor.id,
       updatedByUserId: actor.id,
+      contacts,
     });
 
     return new CustomerResponseDto(customer);

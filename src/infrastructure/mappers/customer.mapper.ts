@@ -31,6 +31,9 @@ interface CustomerRow {
   taxId: string | null;
   taxRegime: string | null;
   billingStreet: string | null;
+  billingExteriorNumber: string | null;
+  billingInteriorNumber: string | null;
+  billingNeighborhood: string | null;
   billingCity: string | null;
   billingState: string | null;
   billingPostalCode: string | null;
@@ -44,6 +47,20 @@ interface CustomerRow {
   updatedAt: Date;
   createdByUser: CustomerUserRow | null;
   updatedByUser: CustomerUserRow | null;
+  contacts: Array<{
+    id: string;
+    customerId: string;
+    name: string;
+    jobTitle: string | null;
+    label: string | null;
+    email: string | null;
+    phone: string | null;
+    phoneExtension: string | null;
+    mobile: string | null;
+    isPrimary: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+  }>;
 }
 
 export class CustomerMapper {
@@ -64,6 +81,9 @@ export class CustomerMapper {
       taxId: row.taxId,
       taxRegime: row.taxRegime,
       billingStreet: row.billingStreet,
+      billingExteriorNumber: row.billingExteriorNumber,
+      billingInteriorNumber: row.billingInteriorNumber,
+      billingNeighborhood: row.billingNeighborhood,
       billingCity: row.billingCity,
       billingState: row.billingState,
       billingPostalCode: row.billingPostalCode,
@@ -95,6 +115,20 @@ export class CustomerMapper {
             branchName: row.updatedByUser.branch.name,
           }
         : null,
+      contacts: row.contacts.map((contact) => ({
+        id: contact.id,
+        customerId: contact.customerId,
+        name: contact.name,
+        jobTitle: contact.jobTitle,
+        label: contact.label,
+        email: contact.email,
+        phone: contact.phone,
+        phoneExtension: contact.phoneExtension,
+        mobile: contact.mobile,
+        isPrimary: contact.isPrimary,
+        createdAt: contact.createdAt,
+        updatedAt: contact.updatedAt,
+      })),
     };
   }
 }

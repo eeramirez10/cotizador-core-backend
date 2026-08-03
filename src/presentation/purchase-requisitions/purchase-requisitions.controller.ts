@@ -5,6 +5,7 @@ import {
   GetPurchaseRequisitionsQueryDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   SaveSupplierRequestDto,
+  SetSupplierActiveRequestDto,
   SyncErpSupplierRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
 } from "../../domain/dtos/request/purchase-requisition-request.dto";
@@ -212,6 +213,19 @@ export class PurchaseRequisitionsController {
       res.status(200).json(await this.useCase.updateSupplier(supplierId, dto!, req.user));
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while updating supplier.");
+    }
+  };
+
+  setSupplierActive = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const supplierId = this.param(req.params.supplierId);
+    if (!supplierId) return void res.status(400).json({ error: "Supplier id is required." });
+    const [error, dto] = SetSupplierActiveRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(200).json(await this.useCase.setSupplierActive(supplierId, dto!, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while changing supplier status.");
     }
   };
 
