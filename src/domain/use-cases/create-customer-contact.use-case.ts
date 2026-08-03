@@ -25,14 +25,26 @@ export class CreateCustomerContactUseCase {
     });
 
     if (!customer) throw new Error("Customer not found.");
+    const hasDeliveryChannel = Boolean(
+      dto.email
+      || dto.mobile
+      || customer.email
+      || customer.whatsapp
+      || customer.contacts.some((contact) => contact.email || contact.mobile)
+    );
+    if (!hasDeliveryChannel) {
+      throw new Error("El cliente debe tener al menos un correo o WhatsApp.");
+    }
 
     const contact = await this.customerRepository.createContact({
       customerId,
       data: {
         name: dto.name,
         jobTitle: dto.jobTitle,
+        label: dto.label,
         email: dto.email,
         phone: dto.phone,
+        phoneExtension: dto.phoneExtension,
         mobile: dto.mobile,
         isPrimary: dto.isPrimary,
       },
@@ -46,4 +58,3 @@ export class CreateCustomerContactUseCase {
     return new CustomerContactResponseDto(contact);
   }
 }
-

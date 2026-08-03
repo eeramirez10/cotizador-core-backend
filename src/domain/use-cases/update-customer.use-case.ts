@@ -25,6 +25,8 @@ export class UpdateCustomerUseCase {
 
     const nextFirstName = dto.firstName ?? existing.firstName;
     const nextLastName = dto.lastName ?? existing.lastName;
+    const deliveryContact = dto.contacts?.find((contact) => contact.isPrimary && (contact.email || contact.mobile))
+      || dto.contacts?.find((contact) => contact.email || contact.mobile);
 
     const customer = await this.customerRepository.updateById({
       id,
@@ -44,12 +46,15 @@ export class UpdateCustomerUseCase {
             ? `${nextFirstName} ${nextLastName}`.trim()
             : dto.displayName ?? `${nextFirstName} ${nextLastName}`.trim(),
         legalName: dto.legalName,
-        email: dto.email,
-        phone: dto.phone,
-        whatsapp: dto.whatsapp,
+        email: dto.contacts ? deliveryContact?.email ?? null : dto.email,
+        phone: dto.contacts ? deliveryContact?.phone ?? null : dto.phone,
+        whatsapp: dto.contacts ? deliveryContact?.mobile ?? "" : dto.whatsapp,
         taxId: dto.taxId,
         taxRegime: dto.taxRegime,
         billingStreet: dto.billingStreet,
+        billingExteriorNumber: dto.billingExteriorNumber,
+        billingInteriorNumber: dto.billingInteriorNumber,
+        billingNeighborhood: dto.billingNeighborhood,
         billingCity: dto.billingCity,
         billingState: dto.billingState,
         billingPostalCode: dto.billingPostalCode,
@@ -57,6 +62,7 @@ export class UpdateCustomerUseCase {
         profileStatus: dto.profileStatus,
         notes: dto.notes,
         updatedByUserId: actor.id,
+        contacts: dto.contacts,
       },
     });
 

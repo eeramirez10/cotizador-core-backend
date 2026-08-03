@@ -20,6 +20,11 @@ export class DeleteCustomerContactUseCase {
 
     if (!customer) throw new Error("Customer not found.");
 
+    const remainingContacts = customer.contacts.filter((contact) => contact.id !== contactId);
+    if (!remainingContacts.some((contact) => contact.email || contact.mobile)) {
+      throw new Error("No se puede eliminar el último contacto con correo o WhatsApp.");
+    }
+
     const deleted = await this.customerRepository.deleteContact({
       customerId,
       contactId,
@@ -32,4 +37,3 @@ export class DeleteCustomerContactUseCase {
     if (!deleted) throw new Error("Customer contact not found.");
   }
 }
-

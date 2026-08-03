@@ -1,8 +1,10 @@
 interface CreateCustomerContactRequestDtoProps {
   name: string;
   jobTitle: string | null;
+  label: string | null;
   email: string | null;
   phone: string | null;
+  phoneExtension: string | null;
   mobile: string | null;
   isPrimary: boolean;
 }
@@ -10,16 +12,20 @@ interface CreateCustomerContactRequestDtoProps {
 export class CreateCustomerContactRequestDto {
   public readonly name: string;
   public readonly jobTitle: string | null;
+  public readonly label: string | null;
   public readonly email: string | null;
   public readonly phone: string | null;
+  public readonly phoneExtension: string | null;
   public readonly mobile: string | null;
   public readonly isPrimary: boolean;
 
   constructor(props: CreateCustomerContactRequestDtoProps) {
     this.name = props.name;
     this.jobTitle = props.jobTitle;
+    this.label = props.label;
     this.email = props.email;
     this.phone = props.phone;
+    this.phoneExtension = props.phoneExtension;
     this.mobile = props.mobile;
     this.isPrimary = props.isPrimary;
   }
@@ -50,8 +56,10 @@ export class CreateCustomerContactRequestDto {
       new CreateCustomerContactRequestDto({
         name,
         jobTitle: CreateCustomerContactRequestDto.normalizeNullableString(body.jobTitle),
+        label: CreateCustomerContactRequestDto.normalizeNullableString(body.label),
         email,
         phone,
+        phoneExtension: CreateCustomerContactRequestDto.normalizeNullableString(body.phoneExtension),
         mobile,
         isPrimary: Boolean(body.isPrimary),
       }),

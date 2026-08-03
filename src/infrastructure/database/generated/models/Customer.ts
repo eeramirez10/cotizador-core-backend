@@ -40,6 +40,9 @@ export type CustomerMinAggregateOutputType = {
   taxId: string | null
   taxRegime: string | null
   billingStreet: string | null
+  billingExteriorNumber: string | null
+  billingInteriorNumber: string | null
+  billingNeighborhood: string | null
   billingCity: string | null
   billingState: string | null
   billingPostalCode: string | null
@@ -69,6 +72,9 @@ export type CustomerMaxAggregateOutputType = {
   taxId: string | null
   taxRegime: string | null
   billingStreet: string | null
+  billingExteriorNumber: string | null
+  billingInteriorNumber: string | null
+  billingNeighborhood: string | null
   billingCity: string | null
   billingState: string | null
   billingPostalCode: string | null
@@ -98,6 +104,9 @@ export type CustomerCountAggregateOutputType = {
   taxId: number
   taxRegime: number
   billingStreet: number
+  billingExteriorNumber: number
+  billingInteriorNumber: number
+  billingNeighborhood: number
   billingCity: number
   billingState: number
   billingPostalCode: number
@@ -129,6 +138,9 @@ export type CustomerMinAggregateInputType = {
   taxId?: true
   taxRegime?: true
   billingStreet?: true
+  billingExteriorNumber?: true
+  billingInteriorNumber?: true
+  billingNeighborhood?: true
   billingCity?: true
   billingState?: true
   billingPostalCode?: true
@@ -158,6 +170,9 @@ export type CustomerMaxAggregateInputType = {
   taxId?: true
   taxRegime?: true
   billingStreet?: true
+  billingExteriorNumber?: true
+  billingInteriorNumber?: true
+  billingNeighborhood?: true
   billingCity?: true
   billingState?: true
   billingPostalCode?: true
@@ -187,6 +202,9 @@ export type CustomerCountAggregateInputType = {
   taxId?: true
   taxRegime?: true
   billingStreet?: true
+  billingExteriorNumber?: true
+  billingInteriorNumber?: true
+  billingNeighborhood?: true
   billingCity?: true
   billingState?: true
   billingPostalCode?: true
@@ -289,6 +307,9 @@ export type CustomerGroupByOutputType = {
   taxId: string | null
   taxRegime: string | null
   billingStreet: string | null
+  billingExteriorNumber: string | null
+  billingInteriorNumber: string | null
+  billingNeighborhood: string | null
   billingCity: string | null
   billingState: string | null
   billingPostalCode: string | null
@@ -339,6 +360,9 @@ export type CustomerWhereInput = {
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   taxRegime?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingStreet?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingExteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingInteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingNeighborhood?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingCity?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingState?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingPostalCode?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -372,6 +396,9 @@ export type CustomerOrderByWithRelationInput = {
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
   taxRegime?: Prisma.SortOrderInput | Prisma.SortOrder
   billingStreet?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingExteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingInteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingNeighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
   billingCity?: Prisma.SortOrderInput | Prisma.SortOrder
   billingState?: Prisma.SortOrderInput | Prisma.SortOrder
   billingPostalCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -408,6 +435,9 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   taxRegime?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingStreet?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingExteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingInteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingNeighborhood?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingCity?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingState?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingPostalCode?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -441,6 +471,9 @@ export type CustomerOrderByWithAggregationInput = {
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
   taxRegime?: Prisma.SortOrderInput | Prisma.SortOrder
   billingStreet?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingExteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingInteriorNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingNeighborhood?: Prisma.SortOrderInput | Prisma.SortOrder
   billingCity?: Prisma.SortOrderInput | Prisma.SortOrder
   billingState?: Prisma.SortOrderInput | Prisma.SortOrder
   billingPostalCode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -476,6 +509,9 @@ export type CustomerScalarWhereWithAggregatesInput = {
   taxId?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   taxRegime?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   billingStreet?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  billingExteriorNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  billingInteriorNumber?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
+  billingNeighborhood?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   billingCity?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   billingState?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   billingPostalCode?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
@@ -505,6 +541,9 @@ export type CustomerCreateInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -536,6 +575,9 @@ export type CustomerUncheckedCreateInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -567,6 +609,9 @@ export type CustomerUpdateInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -598,6 +643,9 @@ export type CustomerUncheckedUpdateInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -629,6 +677,9 @@ export type CustomerCreateManyInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -658,6 +709,9 @@ export type CustomerUpdateManyMutationInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -685,6 +739,9 @@ export type CustomerUncheckedUpdateManyInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -724,6 +781,9 @@ export type CustomerCountOrderByAggregateInput = {
   taxId?: Prisma.SortOrder
   taxRegime?: Prisma.SortOrder
   billingStreet?: Prisma.SortOrder
+  billingExteriorNumber?: Prisma.SortOrder
+  billingInteriorNumber?: Prisma.SortOrder
+  billingNeighborhood?: Prisma.SortOrder
   billingCity?: Prisma.SortOrder
   billingState?: Prisma.SortOrder
   billingPostalCode?: Prisma.SortOrder
@@ -753,6 +813,9 @@ export type CustomerMaxOrderByAggregateInput = {
   taxId?: Prisma.SortOrder
   taxRegime?: Prisma.SortOrder
   billingStreet?: Prisma.SortOrder
+  billingExteriorNumber?: Prisma.SortOrder
+  billingInteriorNumber?: Prisma.SortOrder
+  billingNeighborhood?: Prisma.SortOrder
   billingCity?: Prisma.SortOrder
   billingState?: Prisma.SortOrder
   billingPostalCode?: Prisma.SortOrder
@@ -782,6 +845,9 @@ export type CustomerMinOrderByAggregateInput = {
   taxId?: Prisma.SortOrder
   taxRegime?: Prisma.SortOrder
   billingStreet?: Prisma.SortOrder
+  billingExteriorNumber?: Prisma.SortOrder
+  billingInteriorNumber?: Prisma.SortOrder
+  billingNeighborhood?: Prisma.SortOrder
   billingCity?: Prisma.SortOrder
   billingState?: Prisma.SortOrder
   billingPostalCode?: Prisma.SortOrder
@@ -936,6 +1002,9 @@ export type CustomerCreateWithoutCreatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -966,6 +1035,9 @@ export type CustomerUncheckedCreateWithoutCreatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1006,6 +1078,9 @@ export type CustomerCreateWithoutUpdatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1036,6 +1111,9 @@ export type CustomerUncheckedCreateWithoutUpdatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1095,6 +1173,9 @@ export type CustomerScalarWhereInput = {
   taxId?: Prisma.StringNullableFilter<"Customer"> | string | null
   taxRegime?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingStreet?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingExteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingInteriorNumber?: Prisma.StringNullableFilter<"Customer"> | string | null
+  billingNeighborhood?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingCity?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingState?: Prisma.StringNullableFilter<"Customer"> | string | null
   billingPostalCode?: Prisma.StringNullableFilter<"Customer"> | string | null
@@ -1140,6 +1221,9 @@ export type CustomerCreateWithoutContactsInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1170,6 +1254,9 @@ export type CustomerUncheckedCreateWithoutContactsInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1216,6 +1303,9 @@ export type CustomerUpdateWithoutContactsInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1246,6 +1336,9 @@ export type CustomerUncheckedUpdateWithoutContactsInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1276,6 +1369,9 @@ export type CustomerCreateWithoutQuotesInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1306,6 +1402,9 @@ export type CustomerUncheckedCreateWithoutQuotesInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1352,6 +1451,9 @@ export type CustomerUpdateWithoutQuotesInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1382,6 +1484,9 @@ export type CustomerUncheckedUpdateWithoutQuotesInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1412,6 +1517,9 @@ export type CustomerCreateManyCreatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1440,6 +1548,9 @@ export type CustomerCreateManyUpdatedByUserInput = {
   taxId?: string | null
   taxRegime?: string | null
   billingStreet?: string | null
+  billingExteriorNumber?: string | null
+  billingInteriorNumber?: string | null
+  billingNeighborhood?: string | null
   billingCity?: string | null
   billingState?: string | null
   billingPostalCode?: string | null
@@ -1468,6 +1579,9 @@ export type CustomerUpdateWithoutCreatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1498,6 +1612,9 @@ export type CustomerUncheckedUpdateWithoutCreatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1528,6 +1645,9 @@ export type CustomerUncheckedUpdateManyWithoutCreatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1556,6 +1676,9 @@ export type CustomerUpdateWithoutUpdatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1586,6 +1709,9 @@ export type CustomerUncheckedUpdateWithoutUpdatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1616,6 +1742,9 @@ export type CustomerUncheckedUpdateManyWithoutUpdatedByUserInput = {
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taxRegime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingStreet?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingExteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingInteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingNeighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingPostalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1684,6 +1813,9 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   taxId?: boolean
   taxRegime?: boolean
   billingStreet?: boolean
+  billingExteriorNumber?: boolean
+  billingInteriorNumber?: boolean
+  billingNeighborhood?: boolean
   billingCity?: boolean
   billingState?: boolean
   billingPostalCode?: boolean
@@ -1718,6 +1850,9 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   taxId?: boolean
   taxRegime?: boolean
   billingStreet?: boolean
+  billingExteriorNumber?: boolean
+  billingInteriorNumber?: boolean
+  billingNeighborhood?: boolean
   billingCity?: boolean
   billingState?: boolean
   billingPostalCode?: boolean
@@ -1749,6 +1884,9 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   taxId?: boolean
   taxRegime?: boolean
   billingStreet?: boolean
+  billingExteriorNumber?: boolean
+  billingInteriorNumber?: boolean
+  billingNeighborhood?: boolean
   billingCity?: boolean
   billingState?: boolean
   billingPostalCode?: boolean
@@ -1780,6 +1918,9 @@ export type CustomerSelectScalar = {
   taxId?: boolean
   taxRegime?: boolean
   billingStreet?: boolean
+  billingExteriorNumber?: boolean
+  billingInteriorNumber?: boolean
+  billingNeighborhood?: boolean
   billingCity?: boolean
   billingState?: boolean
   billingPostalCode?: boolean
@@ -1793,7 +1934,7 @@ export type CustomerSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "externalId" | "externalSystem" | "code" | "firstName" | "lastName" | "displayName" | "legalName" | "email" | "phone" | "whatsapp" | "taxId" | "taxRegime" | "billingStreet" | "billingCity" | "billingState" | "billingPostalCode" | "billingCountry" | "profileStatus" | "isActive" | "notes" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "externalId" | "externalSystem" | "code" | "firstName" | "lastName" | "displayName" | "legalName" | "email" | "phone" | "whatsapp" | "taxId" | "taxRegime" | "billingStreet" | "billingExteriorNumber" | "billingInteriorNumber" | "billingNeighborhood" | "billingCity" | "billingState" | "billingPostalCode" | "billingCountry" | "profileStatus" | "isActive" | "notes" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdByUser?: boolean | Prisma.Customer$createdByUserArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Customer$updatedByUserArgs<ExtArgs>
@@ -1834,6 +1975,9 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     taxId: string | null
     taxRegime: string | null
     billingStreet: string | null
+    billingExteriorNumber: string | null
+    billingInteriorNumber: string | null
+    billingNeighborhood: string | null
     billingCity: string | null
     billingState: string | null
     billingPostalCode: string | null
@@ -2287,6 +2431,9 @@ export interface CustomerFieldRefs {
   readonly taxId: Prisma.FieldRef<"Customer", 'String'>
   readonly taxRegime: Prisma.FieldRef<"Customer", 'String'>
   readonly billingStreet: Prisma.FieldRef<"Customer", 'String'>
+  readonly billingExteriorNumber: Prisma.FieldRef<"Customer", 'String'>
+  readonly billingInteriorNumber: Prisma.FieldRef<"Customer", 'String'>
+  readonly billingNeighborhood: Prisma.FieldRef<"Customer", 'String'>
   readonly billingCity: Prisma.FieldRef<"Customer", 'String'>
   readonly billingState: Prisma.FieldRef<"Customer", 'String'>
   readonly billingPostalCode: Prisma.FieldRef<"Customer", 'String'>
