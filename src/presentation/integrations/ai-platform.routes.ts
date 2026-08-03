@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { Envs } from "../../config/envs";
 import { AiPlatformHttpGateway } from "../../infrastructure/http/ai-platform-http.gateway";
+import { uploadSingleAiDocument } from "../middlewares/ai-platform-upload.middleware";
 import { requireAuth } from "../middlewares/auth.middleware";
-import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 import { AiPlatformController } from "./ai-platform.controller";
 
 export class AiPlatformRoutes {
@@ -15,9 +15,9 @@ export class AiPlatformRoutes {
     ));
 
     router.use(requireAuth);
-    router.post("/extract/jobs", uploadSingleAttachment, controller.createDocumentJob);
-    router.post("/extract/jobs/quoted-excel", uploadSingleAttachment, controller.createQuotedExcelJob);
-    router.post("/extract/jobs/supplier-quote", uploadSingleAttachment, controller.createSupplierQuoteJob);
+    router.post("/extract/jobs", uploadSingleAiDocument, controller.createDocumentJob);
+    router.post("/extract/jobs/quoted-excel", uploadSingleAiDocument, controller.createQuotedExcelJob);
+    router.post("/extract/jobs/supplier-quote", uploadSingleAiDocument, controller.createSupplierQuoteJob);
     router.post("/extract/jobs/text", controller.createTextJob);
     router.get("/extract/jobs/:id/status", controller.jobStatus);
     router.get("/extract/jobs/:id/result", controller.jobResult);
