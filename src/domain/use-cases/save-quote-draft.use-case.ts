@@ -36,7 +36,8 @@ export class SaveQuoteDraftUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly customerRepository: CustomerRepository,
     private readonly userRepository: UserRepository,
-    private readonly internalApprovalEnabled = true
+    private readonly internalApprovalEnabled = true,
+    private readonly sellerExcelImportEnabled = true
   ) {}
 
   async execute(
@@ -56,6 +57,12 @@ export class SaveQuoteDraftUseCase {
       : null;
     if (dto.quoteId && !existingQuote) throw new Error("Quote not found.");
 
+    if (dto.quote.captureMethod === "EXCEL_IMPORT" && !this.sellerExcelImportEnabled) {
+      throw new Error(existingQuote
+        ? "Excel-imported quotes are read-only because seller Excel import is disabled."
+        : "Seller Excel quote import is disabled.");
+    }
+
     if (existingQuote?.captureMethod === "EXCEL_IMPORT") {
       if (dto.quote.captureMethod !== "EXCEL_IMPORT" || dto.quote.currency !== existingQuote.currency) {
         throw new Error("Capture method and currency are locked for Excel-imported quotes.");
@@ -67,6 +74,9 @@ export class SaveQuoteDraftUseCase {
           const incoming = incomingItems.get(item.clientItemId || item.id);
           if (!incoming) return false;
           const incomingUnitPrice = incoming.sourceUnitPrice ?? incoming.unitPrice ?? 0;
+          const incomingSourceCurrency = incoming.sourceCurrency ?? existingQuote.currency;
+          const existingSourceCurrency = item.sourceCurrency ?? existingQuote.currency;
+          const existingSourceUnitPrice = item.sourceUnitPrice ?? item.unitPrice;
 
           return normalizedText(incoming.productId) === normalizedText(item.productId)
             && normalizedText(incoming.externalProductCode) === normalizedText(item.externalProductCode)
@@ -77,7 +87,8 @@ export class SaveQuoteDraftUseCase {
             && sameNumber(incoming.qty, item.qty)
             && normalizedText(incoming.deliveryTime) === normalizedText(item.deliveryTime)
             && normalizedText(incoming.itemComment) === normalizedText(item.itemComment)
-            && sameNumber(incomingUnitPrice, item.unitPrice);
+            && incomingSourceCurrency === existingSourceCurrency
+            && sameNumber(incomingUnitPrice, existingSourceUnitPrice);
         });
 
       if (!itemsUnchanged) {
@@ -130,7 +141,7 @@ export class SaveQuoteDraftUseCase {
       );
 
       const sourceCurrency = dto.quote.captureMethod === "EXCEL_IMPORT"
-        ? dto.quote.currency
+        ? item.sourceCurrency ?? dto.quote.currency
         : null;
       const sourceUnitPrice = dto.quote.captureMethod === "EXCEL_IMPORT"
         ? typeof item.sourceUnitPrice === "number"
@@ -146,7 +157,12 @@ export class SaveQuoteDraftUseCase {
         : null;
 
       if (dto.quote.captureMethod === "EXCEL_IMPORT") {
-        const importedUnitPrice = sourceUnitPrice ?? 0;
+        const importedUnitPrice = convertQuoteAmount(
+          sourceUnitPrice ?? 0,
+          sourceCurrency ?? dto.quote.currency,
+          dto.quote.currency,
+          dto.quote.exchangeRate
+        );
         unitPrice = round4(importedUnitPrice);
         marginPct = quoteCurrencyCost === 0 ? 0 : round4(((unitPrice - quoteCurrencyCost) / quoteCurrencyCost) * 100);
       } else if (typeof item.unitPrice === "number" && typeof item.marginPct === "number") {
@@ -175,7 +191,7 @@ export class SaveQuoteDraftUseCase {
         deliveryTime: item.deliveryTime,
       };
       const requiresReview = dto.quote.captureMethod === "EXCEL_IMPORT"
-        ? !isImportedExcelItemReady(readinessInput)
+        ? item.sourceRequiresReview || !isImportedExcelItemReady(readinessInput)
         : !isQuoteItemReady(readinessInput);
 
       return {

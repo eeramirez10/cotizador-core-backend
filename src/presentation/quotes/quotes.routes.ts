@@ -57,18 +57,26 @@ export class QuotesRoutes {
       new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled)
     );
 
-    const createQuoteUseCase = new CreateQuoteUseCase(quoteRepository, customerRepository, branchRepository, userRepository);
+    const createQuoteUseCase = new CreateQuoteUseCase(
+      quoteRepository,
+      customerRepository,
+      branchRepository,
+      userRepository,
+      Envs.sellerExcelImportEnabled
+    );
     const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(
       quoteRepository,
       customerRepository,
       userRepository,
-      Envs.quoteInternalApprovalEnabled
+      Envs.quoteInternalApprovalEnabled,
+      Envs.sellerExcelImportEnabled
     );
     const createQuoteFromExtractionUseCase = new CreateQuoteFromExtractionUseCase(
       quoteRepository,
       customerRepository,
       branchRepository,
-      userRepository
+      userRepository,
+      Envs.sellerExcelImportEnabled
     );
     const createQuoteRevisionUseCase = new CreateQuoteRevisionUseCase(quoteRepository, quoteCatalogRepository);
     const archiveQuoteUseCase = new ArchiveQuoteUseCase(quoteRepository);

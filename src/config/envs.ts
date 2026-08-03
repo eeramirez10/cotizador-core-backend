@@ -91,4 +91,8 @@ export class Envs {
   static get requisitionInternalApprovalEnabled(): boolean {
     return get("REQUISITION_INTERNAL_APPROVAL_ENABLED").default("false").asBool();
   }
+
+  static get sellerExcelImportEnabled(): boolean {
+    return get("SELLER_EXCEL_IMPORT_ENABLED").default("true").asBool();
+  }
 }

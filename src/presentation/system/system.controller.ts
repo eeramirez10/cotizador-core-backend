@@ -6,6 +6,7 @@ export class SystemController {
     res.status(200).json({
       quoteInternalApprovalEnabled: Envs.quoteInternalApprovalEnabled,
       requisitionInternalApprovalEnabled: Envs.requisitionInternalApprovalEnabled,
+      sellerExcelImportEnabled: Envs.sellerExcelImportEnabled,
     });
   };
 }

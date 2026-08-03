@@ -26,10 +26,14 @@ export class CreateQuoteUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly customerRepository: CustomerRepository,
     private readonly branchRepository: BranchRepository,
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly sellerExcelImportEnabled = true
   ) {}
 
   async execute(dto: CreateQuoteRequestDto, actor: CreateQuoteActorContext): Promise<QuoteResponseDto> {
+    if (dto.captureMethod === "EXCEL_IMPORT" && !this.sellerExcelImportEnabled) {
+      throw new Error("Seller Excel quote import is disabled.");
+    }
     let branchId = actor.branchId;
 
     if (dto.branchCode) {
