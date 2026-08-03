@@ -287,7 +287,7 @@ export type LocalProductProcurementOfferGroupByOutputType = {
   _max: LocalProductProcurementOfferMaxAggregateOutputType | null
 }
 
-type GetLocalProductProcurementOfferGroupByPayload<T extends LocalProductProcurementOfferGroupByArgs> = Prisma.PrismaPromise<
+export type GetLocalProductProcurementOfferGroupByPayload<T extends LocalProductProcurementOfferGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<LocalProductProcurementOfferGroupByOutputType, T['by']> &
       {
@@ -2175,6 +2175,11 @@ export type LocalProductProcurementOfferFindManyArgs<ExtArgs extends runtime.Typ
    * Skip the first `n` LocalProductProcurementOffers.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of LocalProductProcurementOffers.
+   */
   distinct?: Prisma.LocalProductProcurementOfferScalarFieldEnum | Prisma.LocalProductProcurementOfferScalarFieldEnum[]
 }
 

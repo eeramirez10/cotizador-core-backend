@@ -28,29 +28,42 @@ export type AggregatePurchaseSupplierOffer = {
 
 export type PurchaseSupplierOfferAvgAggregateOutputType = {
   qty: runtime.Decimal | null
+  listUnitPrice: runtime.Decimal | null
+  discountPct: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   exchangeRate: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  minimumQty: runtime.Decimal | null
 }
 
 export type PurchaseSupplierOfferSumAggregateOutputType = {
   qty: runtime.Decimal | null
+  listUnitPrice: runtime.Decimal | null
+  discountPct: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   exchangeRate: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   taxRate: runtime.Decimal | null
   tax: runtime.Decimal | null
   total: runtime.Decimal | null
+  minimumQty: runtime.Decimal | null
 }
 
 export type PurchaseSupplierOfferMinAggregateOutputType = {
   id: string | null
   requisitionItemId: string | null
+  supplierQuoteId: string | null
   supplierId: string | null
+  source: $Enums.PurchaseOfferSource | null
+  supplierProductCode: string | null
+  supplierDescription: string | null
   qty: runtime.Decimal | null
+  unit: string | null
+  listUnitPrice: runtime.Decimal | null
+  discountPct: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
@@ -61,6 +74,8 @@ export type PurchaseSupplierOfferMinAggregateOutputType = {
   brand: string | null
   origin: string | null
   deliveryTime: string | null
+  availableDate: Date | null
+  minimumQty: runtime.Decimal | null
   validUntil: Date | null
   quoteDate: Date | null
   sentAt: Date | null
@@ -77,8 +92,15 @@ export type PurchaseSupplierOfferMinAggregateOutputType = {
 export type PurchaseSupplierOfferMaxAggregateOutputType = {
   id: string | null
   requisitionItemId: string | null
+  supplierQuoteId: string | null
   supplierId: string | null
+  source: $Enums.PurchaseOfferSource | null
+  supplierProductCode: string | null
+  supplierDescription: string | null
   qty: runtime.Decimal | null
+  unit: string | null
+  listUnitPrice: runtime.Decimal | null
+  discountPct: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
@@ -89,6 +111,8 @@ export type PurchaseSupplierOfferMaxAggregateOutputType = {
   brand: string | null
   origin: string | null
   deliveryTime: string | null
+  availableDate: Date | null
+  minimumQty: runtime.Decimal | null
   validUntil: Date | null
   quoteDate: Date | null
   sentAt: Date | null
@@ -105,8 +129,16 @@ export type PurchaseSupplierOfferMaxAggregateOutputType = {
 export type PurchaseSupplierOfferCountAggregateOutputType = {
   id: number
   requisitionItemId: number
+  supplierQuoteId: number
   supplierId: number
+  source: number
+  supplierProductCode: number
+  alternateCodes: number
+  supplierDescription: number
   qty: number
+  unit: number
+  listUnitPrice: number
+  discountPct: number
   unitCost: number
   currency: number
   exchangeRate: number
@@ -117,6 +149,8 @@ export type PurchaseSupplierOfferCountAggregateOutputType = {
   brand: number
   origin: number
   deliveryTime: number
+  availableDate: number
+  minimumQty: number
   validUntil: number
   quoteDate: number
   sentAt: number
@@ -134,29 +168,42 @@ export type PurchaseSupplierOfferCountAggregateOutputType = {
 
 export type PurchaseSupplierOfferAvgAggregateInputType = {
   qty?: true
+  listUnitPrice?: true
+  discountPct?: true
   unitCost?: true
   exchangeRate?: true
   subtotal?: true
   taxRate?: true
   tax?: true
   total?: true
+  minimumQty?: true
 }
 
 export type PurchaseSupplierOfferSumAggregateInputType = {
   qty?: true
+  listUnitPrice?: true
+  discountPct?: true
   unitCost?: true
   exchangeRate?: true
   subtotal?: true
   taxRate?: true
   tax?: true
   total?: true
+  minimumQty?: true
 }
 
 export type PurchaseSupplierOfferMinAggregateInputType = {
   id?: true
   requisitionItemId?: true
+  supplierQuoteId?: true
   supplierId?: true
+  source?: true
+  supplierProductCode?: true
+  supplierDescription?: true
   qty?: true
+  unit?: true
+  listUnitPrice?: true
+  discountPct?: true
   unitCost?: true
   currency?: true
   exchangeRate?: true
@@ -167,6 +214,8 @@ export type PurchaseSupplierOfferMinAggregateInputType = {
   brand?: true
   origin?: true
   deliveryTime?: true
+  availableDate?: true
+  minimumQty?: true
   validUntil?: true
   quoteDate?: true
   sentAt?: true
@@ -183,8 +232,15 @@ export type PurchaseSupplierOfferMinAggregateInputType = {
 export type PurchaseSupplierOfferMaxAggregateInputType = {
   id?: true
   requisitionItemId?: true
+  supplierQuoteId?: true
   supplierId?: true
+  source?: true
+  supplierProductCode?: true
+  supplierDescription?: true
   qty?: true
+  unit?: true
+  listUnitPrice?: true
+  discountPct?: true
   unitCost?: true
   currency?: true
   exchangeRate?: true
@@ -195,6 +251,8 @@ export type PurchaseSupplierOfferMaxAggregateInputType = {
   brand?: true
   origin?: true
   deliveryTime?: true
+  availableDate?: true
+  minimumQty?: true
   validUntil?: true
   quoteDate?: true
   sentAt?: true
@@ -211,8 +269,16 @@ export type PurchaseSupplierOfferMaxAggregateInputType = {
 export type PurchaseSupplierOfferCountAggregateInputType = {
   id?: true
   requisitionItemId?: true
+  supplierQuoteId?: true
   supplierId?: true
+  source?: true
+  supplierProductCode?: true
+  alternateCodes?: true
+  supplierDescription?: true
   qty?: true
+  unit?: true
+  listUnitPrice?: true
+  discountPct?: true
   unitCost?: true
   currency?: true
   exchangeRate?: true
@@ -223,6 +289,8 @@ export type PurchaseSupplierOfferCountAggregateInputType = {
   brand?: true
   origin?: true
   deliveryTime?: true
+  availableDate?: true
+  minimumQty?: true
   validUntil?: true
   quoteDate?: true
   sentAt?: true
@@ -326,8 +394,16 @@ export type PurchaseSupplierOfferGroupByArgs<ExtArgs extends runtime.Types.Exten
 export type PurchaseSupplierOfferGroupByOutputType = {
   id: string
   requisitionItemId: string
+  supplierQuoteId: string | null
   supplierId: string
+  source: $Enums.PurchaseOfferSource
+  supplierProductCode: string | null
+  alternateCodes: string[]
+  supplierDescription: string | null
   qty: runtime.Decimal
+  unit: string | null
+  listUnitPrice: runtime.Decimal | null
+  discountPct: runtime.Decimal | null
   unitCost: runtime.Decimal
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | null
@@ -338,6 +414,8 @@ export type PurchaseSupplierOfferGroupByOutputType = {
   brand: string | null
   origin: string | null
   deliveryTime: string | null
+  availableDate: Date | null
+  minimumQty: runtime.Decimal | null
   validUntil: Date | null
   quoteDate: Date
   sentAt: Date | null
@@ -356,7 +434,7 @@ export type PurchaseSupplierOfferGroupByOutputType = {
   _max: PurchaseSupplierOfferMaxAggregateOutputType | null
 }
 
-type GetPurchaseSupplierOfferGroupByPayload<T extends PurchaseSupplierOfferGroupByArgs> = Prisma.PrismaPromise<
+export type GetPurchaseSupplierOfferGroupByPayload<T extends PurchaseSupplierOfferGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PurchaseSupplierOfferGroupByOutputType, T['by']> &
       {
@@ -377,8 +455,16 @@ export type PurchaseSupplierOfferWhereInput = {
   NOT?: Prisma.PurchaseSupplierOfferWhereInput | Prisma.PurchaseSupplierOfferWhereInput[]
   id?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
   requisitionItemId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  supplierQuoteId?: Prisma.UuidNullableFilter<"PurchaseSupplierOffer"> | string | null
   supplierId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  source?: Prisma.EnumPurchaseOfferSourceFilter<"PurchaseSupplierOffer"> | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  alternateCodes?: Prisma.StringNullableListFilter<"PurchaseSupplierOffer">
+  supplierDescription?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   qty?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  listUnitPrice?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFilter<"PurchaseSupplierOffer"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -389,6 +475,8 @@ export type PurchaseSupplierOfferWhereInput = {
   brand?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   origin?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   deliveryTime?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  availableDate?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
+  minimumQty?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
   quoteDate?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
@@ -401,6 +489,7 @@ export type PurchaseSupplierOfferWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   requisitionItem?: Prisma.XOR<Prisma.PurchaseRequisitionItemScalarRelationFilter, Prisma.PurchaseRequisitionItemWhereInput>
+  supplierQuote?: Prisma.XOR<Prisma.PurchaseSupplierQuoteNullableScalarRelationFilter, Prisma.PurchaseSupplierQuoteWhereInput> | null
   selectedForItem?: Prisma.XOR<Prisma.PurchaseRequisitionItemNullableScalarRelationFilter, Prisma.PurchaseRequisitionItemWhereInput> | null
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -411,8 +500,16 @@ export type PurchaseSupplierOfferWhereInput = {
 export type PurchaseSupplierOfferOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   requisitionItemId?: Prisma.SortOrder
+  supplierQuoteId?: Prisma.SortOrderInput | Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  supplierProductCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  alternateCodes?: Prisma.SortOrder
+  supplierDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   qty?: Prisma.SortOrder
+  unit?: Prisma.SortOrderInput | Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountPct?: Prisma.SortOrderInput | Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -423,6 +520,8 @@ export type PurchaseSupplierOfferOrderByWithRelationInput = {
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  availableDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  minimumQty?: Prisma.SortOrderInput | Prisma.SortOrder
   validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -435,6 +534,7 @@ export type PurchaseSupplierOfferOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   requisitionItem?: Prisma.PurchaseRequisitionItemOrderByWithRelationInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteOrderByWithRelationInput
   selectedForItem?: Prisma.PurchaseRequisitionItemOrderByWithRelationInput
   supplier?: Prisma.SupplierOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
@@ -448,8 +548,16 @@ export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PurchaseSupplierOfferWhereInput[]
   NOT?: Prisma.PurchaseSupplierOfferWhereInput | Prisma.PurchaseSupplierOfferWhereInput[]
   requisitionItemId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  supplierQuoteId?: Prisma.UuidNullableFilter<"PurchaseSupplierOffer"> | string | null
   supplierId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  source?: Prisma.EnumPurchaseOfferSourceFilter<"PurchaseSupplierOffer"> | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  alternateCodes?: Prisma.StringNullableListFilter<"PurchaseSupplierOffer">
+  supplierDescription?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   qty?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  listUnitPrice?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFilter<"PurchaseSupplierOffer"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -460,6 +568,8 @@ export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
   brand?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   origin?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   deliveryTime?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  availableDate?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
+  minimumQty?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
   quoteDate?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
@@ -472,6 +582,7 @@ export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   requisitionItem?: Prisma.XOR<Prisma.PurchaseRequisitionItemScalarRelationFilter, Prisma.PurchaseRequisitionItemWhereInput>
+  supplierQuote?: Prisma.XOR<Prisma.PurchaseSupplierQuoteNullableScalarRelationFilter, Prisma.PurchaseSupplierQuoteWhereInput> | null
   selectedForItem?: Prisma.XOR<Prisma.PurchaseRequisitionItemNullableScalarRelationFilter, Prisma.PurchaseRequisitionItemWhereInput> | null
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -482,8 +593,16 @@ export type PurchaseSupplierOfferWhereUniqueInput = Prisma.AtLeast<{
 export type PurchaseSupplierOfferOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   requisitionItemId?: Prisma.SortOrder
+  supplierQuoteId?: Prisma.SortOrderInput | Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  supplierProductCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  alternateCodes?: Prisma.SortOrder
+  supplierDescription?: Prisma.SortOrderInput | Prisma.SortOrder
   qty?: Prisma.SortOrder
+  unit?: Prisma.SortOrderInput | Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountPct?: Prisma.SortOrderInput | Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -494,6 +613,8 @@ export type PurchaseSupplierOfferOrderByWithAggregationInput = {
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  availableDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  minimumQty?: Prisma.SortOrderInput | Prisma.SortOrder
   validUntil?: Prisma.SortOrderInput | Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -518,8 +639,16 @@ export type PurchaseSupplierOfferScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PurchaseSupplierOfferScalarWhereWithAggregatesInput | Prisma.PurchaseSupplierOfferScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"PurchaseSupplierOffer"> | string
   requisitionItemId?: Prisma.UuidWithAggregatesFilter<"PurchaseSupplierOffer"> | string
+  supplierQuoteId?: Prisma.UuidNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
   supplierId?: Prisma.UuidWithAggregatesFilter<"PurchaseSupplierOffer"> | string
+  source?: Prisma.EnumPurchaseOfferSourceWithAggregatesFilter<"PurchaseSupplierOffer"> | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
+  alternateCodes?: Prisma.StringNullableListFilter<"PurchaseSupplierOffer">
+  supplierDescription?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
   qty?: Prisma.DecimalWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
+  listUnitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyWithAggregatesFilter<"PurchaseSupplierOffer"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -530,6 +659,8 @@ export type PurchaseSupplierOfferScalarWhereWithAggregatesInput = {
   brand?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
   origin?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
   deliveryTime?: Prisma.StringNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | string | null
+  availableDate?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | Date | string | null
+  minimumQty?: Prisma.DecimalNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | Date | string | null
   quoteDate?: Prisma.DateTimeWithAggregatesFilter<"PurchaseSupplierOffer"> | Date | string
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseSupplierOffer"> | Date | string | null
@@ -545,7 +676,14 @@ export type PurchaseSupplierOfferScalarWhereWithAggregatesInput = {
 
 export type PurchaseSupplierOfferCreateInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -556,6 +694,8 @@ export type PurchaseSupplierOfferCreateInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -566,6 +706,7 @@ export type PurchaseSupplierOfferCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
@@ -576,8 +717,16 @@ export type PurchaseSupplierOfferCreateInput = {
 export type PurchaseSupplierOfferUncheckedCreateInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -588,6 +737,8 @@ export type PurchaseSupplierOfferUncheckedCreateInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -605,7 +756,14 @@ export type PurchaseSupplierOfferUncheckedCreateInput = {
 
 export type PurchaseSupplierOfferUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -616,6 +774,8 @@ export type PurchaseSupplierOfferUpdateInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -626,6 +786,7 @@ export type PurchaseSupplierOfferUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
@@ -636,8 +797,16 @@ export type PurchaseSupplierOfferUpdateInput = {
 export type PurchaseSupplierOfferUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -648,6 +817,8 @@ export type PurchaseSupplierOfferUncheckedUpdateInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -666,8 +837,16 @@ export type PurchaseSupplierOfferUncheckedUpdateInput = {
 export type PurchaseSupplierOfferCreateManyInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -678,6 +857,8 @@ export type PurchaseSupplierOfferCreateManyInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -693,7 +874,14 @@ export type PurchaseSupplierOfferCreateManyInput = {
 
 export type PurchaseSupplierOfferUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -704,6 +892,8 @@ export type PurchaseSupplierOfferUpdateManyMutationInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -718,8 +908,16 @@ export type PurchaseSupplierOfferUpdateManyMutationInput = {
 export type PurchaseSupplierOfferUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -730,6 +928,8 @@ export type PurchaseSupplierOfferUncheckedUpdateManyInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -761,8 +961,16 @@ export type PurchaseSupplierOfferNullableScalarRelationFilter = {
 export type PurchaseSupplierOfferCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requisitionItemId?: Prisma.SortOrder
+  supplierQuoteId?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  supplierProductCode?: Prisma.SortOrder
+  alternateCodes?: Prisma.SortOrder
+  supplierDescription?: Prisma.SortOrder
   qty?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrder
+  discountPct?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
@@ -773,6 +981,8 @@ export type PurchaseSupplierOfferCountOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  availableDate?: Prisma.SortOrder
+  minimumQty?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -788,19 +998,29 @@ export type PurchaseSupplierOfferCountOrderByAggregateInput = {
 
 export type PurchaseSupplierOfferAvgOrderByAggregateInput = {
   qty?: Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrder
+  discountPct?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  minimumQty?: Prisma.SortOrder
 }
 
 export type PurchaseSupplierOfferMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requisitionItemId?: Prisma.SortOrder
+  supplierQuoteId?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  supplierProductCode?: Prisma.SortOrder
+  supplierDescription?: Prisma.SortOrder
   qty?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrder
+  discountPct?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
@@ -811,6 +1031,8 @@ export type PurchaseSupplierOfferMaxOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  availableDate?: Prisma.SortOrder
+  minimumQty?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -827,8 +1049,15 @@ export type PurchaseSupplierOfferMaxOrderByAggregateInput = {
 export type PurchaseSupplierOfferMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requisitionItemId?: Prisma.SortOrder
+  supplierQuoteId?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  source?: Prisma.SortOrder
+  supplierProductCode?: Prisma.SortOrder
+  supplierDescription?: Prisma.SortOrder
   qty?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrder
+  discountPct?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
@@ -839,6 +1068,8 @@ export type PurchaseSupplierOfferMinOrderByAggregateInput = {
   brand?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   deliveryTime?: Prisma.SortOrder
+  availableDate?: Prisma.SortOrder
+  minimumQty?: Prisma.SortOrder
   validUntil?: Prisma.SortOrder
   quoteDate?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -854,12 +1085,15 @@ export type PurchaseSupplierOfferMinOrderByAggregateInput = {
 
 export type PurchaseSupplierOfferSumOrderByAggregateInput = {
   qty?: Prisma.SortOrder
+  listUnitPrice?: Prisma.SortOrder
+  discountPct?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   taxRate?: Prisma.SortOrder
   tax?: Prisma.SortOrder
   total?: Prisma.SortOrder
+  minimumQty?: Prisma.SortOrder
 }
 
 export type PurchaseSupplierOfferScalarRelationFilter = {
@@ -1051,6 +1285,61 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemNested
   deleteMany?: Prisma.PurchaseSupplierOfferScalarWhereInput | Prisma.PurchaseSupplierOfferScalarWhereInput[]
 }
 
+export type PurchaseSupplierOfferCreatealternateCodesInput = {
+  set: string[]
+}
+
+export type EnumPurchaseOfferSourceFieldUpdateOperationsInput = {
+  set?: $Enums.PurchaseOfferSource
+}
+
+export type PurchaseSupplierOfferUpdatealternateCodesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type PurchaseSupplierOfferCreateNestedManyWithoutSupplierQuoteInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput> | Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput[] | Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput[]
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput[]
+  createMany?: Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInputEnvelope
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+}
+
+export type PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierQuoteInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput> | Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput[] | Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput[]
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput[]
+  createMany?: Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInputEnvelope
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+}
+
+export type PurchaseSupplierOfferUpdateManyWithoutSupplierQuoteNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput> | Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput[] | Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput[]
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput[]
+  upsert?: Prisma.PurchaseSupplierOfferUpsertWithWhereUniqueWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpsertWithWhereUniqueWithoutSupplierQuoteInput[]
+  createMany?: Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInputEnvelope
+  set?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  delete?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  update?: Prisma.PurchaseSupplierOfferUpdateWithWhereUniqueWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpdateWithWhereUniqueWithoutSupplierQuoteInput[]
+  updateMany?: Prisma.PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierQuoteInput[]
+  deleteMany?: Prisma.PurchaseSupplierOfferScalarWhereInput | Prisma.PurchaseSupplierOfferScalarWhereInput[]
+}
+
+export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierQuoteNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput> | Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput[] | Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput[]
+  connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput[]
+  upsert?: Prisma.PurchaseSupplierOfferUpsertWithWhereUniqueWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpsertWithWhereUniqueWithoutSupplierQuoteInput[]
+  createMany?: Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInputEnvelope
+  set?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  delete?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  connect?: Prisma.PurchaseSupplierOfferWhereUniqueInput | Prisma.PurchaseSupplierOfferWhereUniqueInput[]
+  update?: Prisma.PurchaseSupplierOfferUpdateWithWhereUniqueWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpdateWithWhereUniqueWithoutSupplierQuoteInput[]
+  updateMany?: Prisma.PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierQuoteInput | Prisma.PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierQuoteInput[]
+  deleteMany?: Prisma.PurchaseSupplierOfferScalarWhereInput | Prisma.PurchaseSupplierOfferScalarWhereInput[]
+}
+
 export type PurchaseSupplierOfferCreateNestedOneWithoutAttachmentsInput = {
   create?: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutAttachmentsInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput>
   connectOrCreate?: Prisma.PurchaseSupplierOfferCreateOrConnectWithoutAttachmentsInput
@@ -1067,7 +1356,14 @@ export type PurchaseSupplierOfferUpdateOneRequiredWithoutAttachmentsNestedInput 
 
 export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1078,6 +1374,8 @@ export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1088,6 +1386,7 @@ export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
@@ -1097,8 +1396,16 @@ export type PurchaseSupplierOfferCreateWithoutCreatedByInput = {
 export type PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1109,6 +1416,8 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutCreatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1135,7 +1444,14 @@ export type PurchaseSupplierOfferCreateManyCreatedByInputEnvelope = {
 
 export type PurchaseSupplierOfferCreateWithoutUpdatedByInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1146,6 +1462,8 @@ export type PurchaseSupplierOfferCreateWithoutUpdatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1156,6 +1474,7 @@ export type PurchaseSupplierOfferCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
@@ -1165,8 +1484,16 @@ export type PurchaseSupplierOfferCreateWithoutUpdatedByInput = {
 export type PurchaseSupplierOfferUncheckedCreateWithoutUpdatedByInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1177,6 +1504,8 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutUpdatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1223,8 +1552,16 @@ export type PurchaseSupplierOfferScalarWhereInput = {
   NOT?: Prisma.PurchaseSupplierOfferScalarWhereInput | Prisma.PurchaseSupplierOfferScalarWhereInput[]
   id?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
   requisitionItemId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  supplierQuoteId?: Prisma.UuidNullableFilter<"PurchaseSupplierOffer"> | string | null
   supplierId?: Prisma.UuidFilter<"PurchaseSupplierOffer"> | string
+  source?: Prisma.EnumPurchaseOfferSourceFilter<"PurchaseSupplierOffer"> | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  alternateCodes?: Prisma.StringNullableListFilter<"PurchaseSupplierOffer">
+  supplierDescription?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   qty?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  listUnitPrice?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFilter<"PurchaseSupplierOffer"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1235,6 +1572,8 @@ export type PurchaseSupplierOfferScalarWhereInput = {
   brand?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   origin?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
   deliveryTime?: Prisma.StringNullableFilter<"PurchaseSupplierOffer"> | string | null
+  availableDate?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
+  minimumQty?: Prisma.DecimalNullableFilter<"PurchaseSupplierOffer"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
   quoteDate?: Prisma.DateTimeFilter<"PurchaseSupplierOffer"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"PurchaseSupplierOffer"> | Date | string | null
@@ -1266,7 +1605,14 @@ export type PurchaseSupplierOfferUpdateManyWithWhereWithoutUpdatedByInput = {
 
 export type PurchaseSupplierOfferCreateWithoutSupplierInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1277,6 +1623,8 @@ export type PurchaseSupplierOfferCreateWithoutSupplierInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1287,6 +1635,7 @@ export type PurchaseSupplierOfferCreateWithoutSupplierInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
@@ -1296,7 +1645,15 @@ export type PurchaseSupplierOfferCreateWithoutSupplierInput = {
 export type PurchaseSupplierOfferUncheckedCreateWithoutSupplierInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1307,6 +1664,8 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutSupplierInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1350,7 +1709,14 @@ export type PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierInput = {
 
 export type PurchaseSupplierOfferCreateWithoutRequisitionItemInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1361,6 +1727,8 @@ export type PurchaseSupplierOfferCreateWithoutRequisitionItemInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1370,6 +1738,7 @@ export type PurchaseSupplierOfferCreateWithoutRequisitionItemInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
@@ -1379,8 +1748,16 @@ export type PurchaseSupplierOfferCreateWithoutRequisitionItemInput = {
 
 export type PurchaseSupplierOfferUncheckedCreateWithoutRequisitionItemInput = {
   id?: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1391,6 +1768,8 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutRequisitionItemInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1418,7 +1797,14 @@ export type PurchaseSupplierOfferCreateManyRequisitionItemInputEnvelope = {
 
 export type PurchaseSupplierOfferCreateWithoutSelectedForItemInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1429,6 +1815,8 @@ export type PurchaseSupplierOfferCreateWithoutSelectedForItemInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1439,6 +1827,7 @@ export type PurchaseSupplierOfferCreateWithoutSelectedForItemInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
@@ -1448,8 +1837,16 @@ export type PurchaseSupplierOfferCreateWithoutSelectedForItemInput = {
 export type PurchaseSupplierOfferUncheckedCreateWithoutSelectedForItemInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1460,6 +1857,8 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutSelectedForItemInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1508,7 +1907,14 @@ export type PurchaseSupplierOfferUpdateToOneWithWhereWithoutSelectedForItemInput
 
 export type PurchaseSupplierOfferUpdateWithoutSelectedForItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1519,6 +1925,8 @@ export type PurchaseSupplierOfferUpdateWithoutSelectedForItemInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1529,6 +1937,7 @@ export type PurchaseSupplierOfferUpdateWithoutSelectedForItemInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
@@ -1538,8 +1947,16 @@ export type PurchaseSupplierOfferUpdateWithoutSelectedForItemInput = {
 export type PurchaseSupplierOfferUncheckedUpdateWithoutSelectedForItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1550,6 +1967,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSelectedForItemInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1564,9 +1983,16 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSelectedForItemInput = {
   attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
 }
 
-export type PurchaseSupplierOfferCreateWithoutAttachmentsInput = {
+export type PurchaseSupplierOfferCreateWithoutSupplierQuoteInput = {
   id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1577,6 +2003,8 @@ export type PurchaseSupplierOfferCreateWithoutAttachmentsInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1591,13 +2019,21 @@ export type PurchaseSupplierOfferCreateWithoutAttachmentsInput = {
   supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+  attachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutPurchaseSupplierOfferInput
 }
 
-export type PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput = {
+export type PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput = {
   id?: string
   requisitionItemId: string
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1608,6 +2044,113 @@ export type PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Date | string | null
+  quoteDate?: Date | string
+  sentAt?: Date | string | null
+  externalReference?: string | null
+  notes?: string | null
+  isSelected?: boolean
+  isActive?: boolean
+  createdByUserId: string
+  updatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedOneWithoutSelectedOfferInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutPurchaseSupplierOfferInput
+}
+
+export type PurchaseSupplierOfferCreateOrConnectWithoutSupplierQuoteInput = {
+  where: Prisma.PurchaseSupplierOfferWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput>
+}
+
+export type PurchaseSupplierOfferCreateManySupplierQuoteInputEnvelope = {
+  data: Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInput | Prisma.PurchaseSupplierOfferCreateManySupplierQuoteInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseSupplierOfferUpsertWithWhereUniqueWithoutSupplierQuoteInput = {
+  where: Prisma.PurchaseSupplierOfferWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedUpdateWithoutSupplierQuoteInput>
+  create: Prisma.XOR<Prisma.PurchaseSupplierOfferCreateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedCreateWithoutSupplierQuoteInput>
+}
+
+export type PurchaseSupplierOfferUpdateWithWhereUniqueWithoutSupplierQuoteInput = {
+  where: Prisma.PurchaseSupplierOfferWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateWithoutSupplierQuoteInput, Prisma.PurchaseSupplierOfferUncheckedUpdateWithoutSupplierQuoteInput>
+}
+
+export type PurchaseSupplierOfferUpdateManyWithWhereWithoutSupplierQuoteInput = {
+  where: Prisma.PurchaseSupplierOfferScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseSupplierOfferUpdateManyMutationInput, Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierQuoteInput>
+}
+
+export type PurchaseSupplierOfferCreateWithoutAttachmentsInput = {
+  id?: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
+  qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: $Enums.Currency
+  exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: string | null
+  origin?: string | null
+  deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Date | string | null
+  quoteDate?: Date | string
+  sentAt?: Date | string | null
+  externalReference?: string | null
+  notes?: string | null
+  isSelected?: boolean
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  requisitionItem: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutOffersInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteCreateNestedOneWithoutOffersInput
+  selectedForItem?: Prisma.PurchaseRequisitionItemCreateNestedOneWithoutSelectedOfferInput
+  supplier: Prisma.SupplierCreateNestedOneWithoutOffersInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedSupplierOffersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSupplierOffersInput
+}
+
+export type PurchaseSupplierOfferUncheckedCreateWithoutAttachmentsInput = {
+  id?: string
+  requisitionItemId: string
+  supplierQuoteId?: string | null
+  supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
+  qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: $Enums.Currency
+  exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: string | null
+  origin?: string | null
+  deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1640,7 +2183,14 @@ export type PurchaseSupplierOfferUpdateToOneWithWhereWithoutAttachmentsInput = {
 
 export type PurchaseSupplierOfferUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1651,6 +2201,8 @@ export type PurchaseSupplierOfferUpdateWithoutAttachmentsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1661,6 +2213,7 @@ export type PurchaseSupplierOfferUpdateWithoutAttachmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
@@ -1670,8 +2223,16 @@ export type PurchaseSupplierOfferUpdateWithoutAttachmentsInput = {
 export type PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1682,6 +2243,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1699,8 +2262,16 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutAttachmentsInput = {
 export type PurchaseSupplierOfferCreateManyCreatedByInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1711,6 +2282,8 @@ export type PurchaseSupplierOfferCreateManyCreatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1726,8 +2299,16 @@ export type PurchaseSupplierOfferCreateManyCreatedByInput = {
 export type PurchaseSupplierOfferCreateManyUpdatedByInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1738,6 +2319,8 @@ export type PurchaseSupplierOfferCreateManyUpdatedByInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1752,7 +2335,14 @@ export type PurchaseSupplierOfferCreateManyUpdatedByInput = {
 
 export type PurchaseSupplierOfferUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1763,6 +2353,8 @@ export type PurchaseSupplierOfferUpdateWithoutCreatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1773,6 +2365,7 @@ export type PurchaseSupplierOfferUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
@@ -1782,8 +2375,16 @@ export type PurchaseSupplierOfferUpdateWithoutCreatedByInput = {
 export type PurchaseSupplierOfferUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1794,6 +2395,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutCreatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1811,8 +2414,16 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutCreatedByInput = {
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1823,6 +2434,8 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1837,7 +2450,14 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByInput = {
 
 export type PurchaseSupplierOfferUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1848,6 +2468,8 @@ export type PurchaseSupplierOfferUpdateWithoutUpdatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1858,6 +2480,7 @@ export type PurchaseSupplierOfferUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
@@ -1867,8 +2490,16 @@ export type PurchaseSupplierOfferUpdateWithoutUpdatedByInput = {
 export type PurchaseSupplierOfferUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1879,6 +2510,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutUpdatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1896,8 +2529,16 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutUpdatedByInput = {
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1908,6 +2549,8 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1923,7 +2566,15 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByInput = {
 export type PurchaseSupplierOfferCreateManySupplierInput = {
   id?: string
   requisitionItemId: string
+  supplierQuoteId?: string | null
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1934,6 +2585,8 @@ export type PurchaseSupplierOfferCreateManySupplierInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -1949,7 +2602,14 @@ export type PurchaseSupplierOfferCreateManySupplierInput = {
 
 export type PurchaseSupplierOfferUpdateWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1960,6 +2620,8 @@ export type PurchaseSupplierOfferUpdateWithoutSupplierInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1970,6 +2632,7 @@ export type PurchaseSupplierOfferUpdateWithoutSupplierInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
@@ -1979,7 +2642,15 @@ export type PurchaseSupplierOfferUpdateWithoutSupplierInput = {
 export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1990,6 +2661,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2008,7 +2681,15 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierInput = {
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2019,6 +2700,8 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2034,8 +2717,16 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierInput = {
 
 export type PurchaseSupplierOfferCreateManyRequisitionItemInput = {
   id?: string
+  supplierQuoteId?: string | null
   supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
   qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency: $Enums.Currency
   exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2046,6 +2737,8 @@ export type PurchaseSupplierOfferCreateManyRequisitionItemInput = {
   brand?: string | null
   origin?: string | null
   deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Date | string | null
   quoteDate?: Date | string
   sentAt?: Date | string | null
@@ -2061,7 +2754,14 @@ export type PurchaseSupplierOfferCreateManyRequisitionItemInput = {
 
 export type PurchaseSupplierOfferUpdateWithoutRequisitionItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2072,6 +2772,8 @@ export type PurchaseSupplierOfferUpdateWithoutRequisitionItemInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2081,6 +2783,7 @@ export type PurchaseSupplierOfferUpdateWithoutRequisitionItemInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  supplierQuote?: Prisma.PurchaseSupplierQuoteUpdateOneWithoutOffersNestedInput
   selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
   supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
@@ -2090,8 +2793,16 @@ export type PurchaseSupplierOfferUpdateWithoutRequisitionItemInput = {
 
 export type PurchaseSupplierOfferUncheckedUpdateWithoutRequisitionItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2102,6 +2813,8 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutRequisitionItemInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2119,8 +2832,16 @@ export type PurchaseSupplierOfferUncheckedUpdateWithoutRequisitionItemInput = {
 
 export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2131,6 +2852,160 @@ export type PurchaseSupplierOfferUncheckedUpdateManyWithoutRequisitionItemInput 
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  externalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSelected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PurchaseSupplierOfferCreateManySupplierQuoteInput = {
+  id?: string
+  requisitionItemId: string
+  supplierId: string
+  source?: $Enums.PurchaseOfferSource
+  supplierProductCode?: string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferCreatealternateCodesInput | string[]
+  supplierDescription?: string | null
+  qty: runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: string | null
+  listUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: $Enums.Currency
+  exchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: string | null
+  origin?: string | null
+  deliveryTime?: string | null
+  availableDate?: Date | string | null
+  minimumQty?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Date | string | null
+  quoteDate?: Date | string
+  sentAt?: Date | string | null
+  externalReference?: string | null
+  notes?: string | null
+  isSelected?: boolean
+  isActive?: boolean
+  createdByUserId: string
+  updatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PurchaseSupplierOfferUpdateWithoutSupplierQuoteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  externalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSelected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  requisitionItem?: Prisma.PurchaseRequisitionItemUpdateOneRequiredWithoutOffersNestedInput
+  selectedForItem?: Prisma.PurchaseRequisitionItemUpdateOneWithoutSelectedOfferNestedInput
+  supplier?: Prisma.SupplierUpdateOneRequiredWithoutOffersNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSupplierOffersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSupplierOffersNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutPurchaseSupplierOfferNestedInput
+}
+
+export type PurchaseSupplierOfferUncheckedUpdateWithoutSupplierQuoteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  externalReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSelected?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  selectedForItem?: Prisma.PurchaseRequisitionItemUncheckedUpdateOneWithoutSelectedOfferNestedInput
+  attachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutPurchaseSupplierOfferNestedInput
+}
+
+export type PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierQuoteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requisitionItemId?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumPurchaseOfferSourceFieldUpdateOperationsInput | $Enums.PurchaseOfferSource
+  supplierProductCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alternateCodes?: Prisma.PurchaseSupplierOfferUpdatealternateCodesInput | string[]
+  supplierDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qty?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  listUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  discountPct?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  minimumQty?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   validUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   quoteDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2178,8 +3053,16 @@ export type PurchaseSupplierOfferCountOutputTypeCountAttachmentsArgs<ExtArgs ext
 export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requisitionItemId?: boolean
+  supplierQuoteId?: boolean
   supplierId?: boolean
+  source?: boolean
+  supplierProductCode?: boolean
+  alternateCodes?: boolean
+  supplierDescription?: boolean
   qty?: boolean
+  unit?: boolean
+  listUnitPrice?: boolean
+  discountPct?: boolean
   unitCost?: boolean
   currency?: boolean
   exchangeRate?: boolean
@@ -2190,6 +3073,8 @@ export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions
   brand?: boolean
   origin?: boolean
   deliveryTime?: boolean
+  availableDate?: boolean
+  minimumQty?: boolean
   validUntil?: boolean
   quoteDate?: boolean
   sentAt?: boolean
@@ -2202,6 +3087,7 @@ export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions
   createdAt?: boolean
   updatedAt?: boolean
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   selectedForItem?: boolean | Prisma.PurchaseSupplierOffer$selectedForItemArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2213,8 +3099,16 @@ export type PurchaseSupplierOfferSelect<ExtArgs extends runtime.Types.Extensions
 export type PurchaseSupplierOfferSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requisitionItemId?: boolean
+  supplierQuoteId?: boolean
   supplierId?: boolean
+  source?: boolean
+  supplierProductCode?: boolean
+  alternateCodes?: boolean
+  supplierDescription?: boolean
   qty?: boolean
+  unit?: boolean
+  listUnitPrice?: boolean
+  discountPct?: boolean
   unitCost?: boolean
   currency?: boolean
   exchangeRate?: boolean
@@ -2225,6 +3119,8 @@ export type PurchaseSupplierOfferSelectCreateManyAndReturn<ExtArgs extends runti
   brand?: boolean
   origin?: boolean
   deliveryTime?: boolean
+  availableDate?: boolean
+  minimumQty?: boolean
   validUntil?: boolean
   quoteDate?: boolean
   sentAt?: boolean
@@ -2237,6 +3133,7 @@ export type PurchaseSupplierOfferSelectCreateManyAndReturn<ExtArgs extends runti
   createdAt?: boolean
   updatedAt?: boolean
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
@@ -2245,8 +3142,16 @@ export type PurchaseSupplierOfferSelectCreateManyAndReturn<ExtArgs extends runti
 export type PurchaseSupplierOfferSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   requisitionItemId?: boolean
+  supplierQuoteId?: boolean
   supplierId?: boolean
+  source?: boolean
+  supplierProductCode?: boolean
+  alternateCodes?: boolean
+  supplierDescription?: boolean
   qty?: boolean
+  unit?: boolean
+  listUnitPrice?: boolean
+  discountPct?: boolean
   unitCost?: boolean
   currency?: boolean
   exchangeRate?: boolean
@@ -2257,6 +3162,8 @@ export type PurchaseSupplierOfferSelectUpdateManyAndReturn<ExtArgs extends runti
   brand?: boolean
   origin?: boolean
   deliveryTime?: boolean
+  availableDate?: boolean
+  minimumQty?: boolean
   validUntil?: boolean
   quoteDate?: boolean
   sentAt?: boolean
@@ -2269,6 +3176,7 @@ export type PurchaseSupplierOfferSelectUpdateManyAndReturn<ExtArgs extends runti
   createdAt?: boolean
   updatedAt?: boolean
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
@@ -2277,8 +3185,16 @@ export type PurchaseSupplierOfferSelectUpdateManyAndReturn<ExtArgs extends runti
 export type PurchaseSupplierOfferSelectScalar = {
   id?: boolean
   requisitionItemId?: boolean
+  supplierQuoteId?: boolean
   supplierId?: boolean
+  source?: boolean
+  supplierProductCode?: boolean
+  alternateCodes?: boolean
+  supplierDescription?: boolean
   qty?: boolean
+  unit?: boolean
+  listUnitPrice?: boolean
+  discountPct?: boolean
   unitCost?: boolean
   currency?: boolean
   exchangeRate?: boolean
@@ -2289,6 +3205,8 @@ export type PurchaseSupplierOfferSelectScalar = {
   brand?: boolean
   origin?: boolean
   deliveryTime?: boolean
+  availableDate?: boolean
+  minimumQty?: boolean
   validUntil?: boolean
   quoteDate?: boolean
   sentAt?: boolean
@@ -2302,9 +3220,10 @@ export type PurchaseSupplierOfferSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PurchaseSupplierOfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionItemId" | "supplierId" | "qty" | "unitCost" | "currency" | "exchangeRate" | "subtotal" | "taxRate" | "tax" | "total" | "brand" | "origin" | "deliveryTime" | "validUntil" | "quoteDate" | "sentAt" | "externalReference" | "notes" | "isSelected" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseSupplierOffer"]>
+export type PurchaseSupplierOfferOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionItemId" | "supplierQuoteId" | "supplierId" | "source" | "supplierProductCode" | "alternateCodes" | "supplierDescription" | "qty" | "unit" | "listUnitPrice" | "discountPct" | "unitCost" | "currency" | "exchangeRate" | "subtotal" | "taxRate" | "tax" | "total" | "brand" | "origin" | "deliveryTime" | "availableDate" | "minimumQty" | "validUntil" | "quoteDate" | "sentAt" | "externalReference" | "notes" | "isSelected" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseSupplierOffer"]>
 export type PurchaseSupplierOfferInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   selectedForItem?: boolean | Prisma.PurchaseSupplierOffer$selectedForItemArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2314,12 +3233,14 @@ export type PurchaseSupplierOfferInclude<ExtArgs extends runtime.Types.Extension
 }
 export type PurchaseSupplierOfferIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
 }
 export type PurchaseSupplierOfferIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requisitionItem?: boolean | Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>
+  supplierQuote?: boolean | Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.PurchaseSupplierOffer$updatedByArgs<ExtArgs>
@@ -2329,6 +3250,7 @@ export type $PurchaseSupplierOfferPayload<ExtArgs extends runtime.Types.Extensio
   name: "PurchaseSupplierOffer"
   objects: {
     requisitionItem: Prisma.$PurchaseRequisitionItemPayload<ExtArgs>
+    supplierQuote: Prisma.$PurchaseSupplierQuotePayload<ExtArgs> | null
     selectedForItem: Prisma.$PurchaseRequisitionItemPayload<ExtArgs> | null
     supplier: Prisma.$SupplierPayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs>
@@ -2338,8 +3260,16 @@ export type $PurchaseSupplierOfferPayload<ExtArgs extends runtime.Types.Extensio
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     requisitionItemId: string
+    supplierQuoteId: string | null
     supplierId: string
+    source: $Enums.PurchaseOfferSource
+    supplierProductCode: string | null
+    alternateCodes: string[]
+    supplierDescription: string | null
     qty: runtime.Decimal
+    unit: string | null
+    listUnitPrice: runtime.Decimal | null
+    discountPct: runtime.Decimal | null
     unitCost: runtime.Decimal
     currency: $Enums.Currency
     exchangeRate: runtime.Decimal | null
@@ -2350,6 +3280,8 @@ export type $PurchaseSupplierOfferPayload<ExtArgs extends runtime.Types.Extensio
     brand: string | null
     origin: string | null
     deliveryTime: string | null
+    availableDate: Date | null
+    minimumQty: runtime.Decimal | null
     validUntil: Date | null
     quoteDate: Date
     sentAt: Date | null
@@ -2756,6 +3688,7 @@ readonly fields: PurchaseSupplierOfferFieldRefs;
 export interface Prisma__PurchaseSupplierOfferClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   requisitionItem<T extends Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseRequisitionItemDefaultArgs<ExtArgs>>): Prisma.Prisma__PurchaseRequisitionItemClient<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  supplierQuote<T extends Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs>>): Prisma.Prisma__PurchaseSupplierQuoteClient<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   selectedForItem<T extends Prisma.PurchaseSupplierOffer$selectedForItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseSupplierOffer$selectedForItemArgs<ExtArgs>>): Prisma.Prisma__PurchaseRequisitionItemClient<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   supplier<T extends Prisma.SupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2792,8 +3725,16 @@ export interface Prisma__PurchaseSupplierOfferClient<T, Null = never, ExtArgs ex
 export interface PurchaseSupplierOfferFieldRefs {
   readonly id: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
   readonly requisitionItemId: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
+  readonly supplierQuoteId: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
   readonly supplierId: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
+  readonly source: Prisma.FieldRef<"PurchaseSupplierOffer", 'PurchaseOfferSource'>
+  readonly supplierProductCode: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
+  readonly alternateCodes: Prisma.FieldRef<"PurchaseSupplierOffer", 'String[]'>
+  readonly supplierDescription: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
   readonly qty: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
+  readonly unit: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
+  readonly listUnitPrice: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
+  readonly discountPct: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
   readonly unitCost: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
   readonly currency: Prisma.FieldRef<"PurchaseSupplierOffer", 'Currency'>
   readonly exchangeRate: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
@@ -2804,6 +3745,8 @@ export interface PurchaseSupplierOfferFieldRefs {
   readonly brand: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
   readonly origin: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
   readonly deliveryTime: Prisma.FieldRef<"PurchaseSupplierOffer", 'String'>
+  readonly availableDate: Prisma.FieldRef<"PurchaseSupplierOffer", 'DateTime'>
+  readonly minimumQty: Prisma.FieldRef<"PurchaseSupplierOffer", 'Decimal'>
   readonly validUntil: Prisma.FieldRef<"PurchaseSupplierOffer", 'DateTime'>
   readonly quoteDate: Prisma.FieldRef<"PurchaseSupplierOffer", 'DateTime'>
   readonly sentAt: Prisma.FieldRef<"PurchaseSupplierOffer", 'DateTime'>
@@ -3011,6 +3954,11 @@ export type PurchaseSupplierOfferFindManyArgs<ExtArgs extends runtime.Types.Exte
    * Skip the first `n` PurchaseSupplierOffers.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PurchaseSupplierOffers.
+   */
   distinct?: Prisma.PurchaseSupplierOfferScalarFieldEnum | Prisma.PurchaseSupplierOfferScalarFieldEnum[]
 }
 
@@ -3208,6 +4156,25 @@ export type PurchaseSupplierOfferDeleteManyArgs<ExtArgs extends runtime.Types.Ex
    * Limit how many PurchaseSupplierOffers to delete.
    */
   limit?: number
+}
+
+/**
+ * PurchaseSupplierOffer.supplierQuote
+ */
+export type PurchaseSupplierOffer$supplierQuoteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseSupplierQuote
+   */
+  select?: Prisma.PurchaseSupplierQuoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseSupplierQuote
+   */
+  omit?: Prisma.PurchaseSupplierQuoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseSupplierQuoteInclude<ExtArgs> | null
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
 }
 
 /**

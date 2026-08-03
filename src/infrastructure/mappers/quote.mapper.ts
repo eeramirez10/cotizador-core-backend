@@ -160,6 +160,9 @@ interface QuoteRow {
     externalProductCode: string | null;
     ean: string | null;
     customerDescription: string | null;
+    customerDescriptionOriginal: string | null;
+    customerDescriptionEditedAt: Date | null;
+    customerDescriptionEditedByUserId: string | null;
     customerUnit: string | null;
     erpDescription: string | null;
     unit: string;
@@ -171,7 +174,13 @@ interface QuoteRow {
     sellerSupplierNameSnapshot: string | null;
     sellerQuotedUnitCost: number | DecimalLike | null;
     sellerQuotedCurrency: QuoteEntity["currency"] | null;
+    sellerQuotedExchangeRate: number | DecimalLike | null;
     sellerQuotedBrand: string | null;
+    sellerSupplierDescription: string | null;
+    sellerSupplierOrigin: string | null;
+    sellerSupplierQuoteValidUntil: Date | null;
+    sellerSupplierQuoteReference: string | null;
+    sellerSupplierQuoteNotes: string | null;
     sellerOriginRestrictions: string[];
     sellerDeliveryState: string | null;
     sellerSupplierDeliveryTime: string | null;
@@ -179,6 +188,8 @@ interface QuoteRow {
     purchaseDiameter: string | null;
     purchaseThickness: string | null;
     purchaseBore: string | null;
+    technicalFamily: string | null;
+    technicalAttributes: unknown;
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
@@ -198,6 +209,11 @@ interface QuoteRow {
       description: string;
       unit: string;
       currency: QuoteEntity["currency"];
+    } | null;
+    customerDescriptionEditedByUser: {
+      id: string;
+      firstName: string;
+      lastName: string;
     } | null;
   }>;
   events: Array<{
@@ -349,6 +365,9 @@ export class QuoteMapper {
         externalProductCode: item.externalProductCode,
         ean: item.ean,
         customerDescription: item.customerDescription,
+        customerDescriptionOriginal: item.customerDescriptionOriginal,
+        customerDescriptionEditedAt: item.customerDescriptionEditedAt,
+        customerDescriptionEditedByUserId: item.customerDescriptionEditedByUserId,
         customerUnit: item.customerUnit,
         erpDescription: item.erpDescription,
         unit: item.unit,
@@ -360,7 +379,13 @@ export class QuoteMapper {
         sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: toNumber(item.sellerQuotedUnitCost),
         sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedExchangeRate: toNumber(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
+        sellerSupplierDescription: item.sellerSupplierDescription,
+        sellerSupplierOrigin: item.sellerSupplierOrigin,
+        sellerSupplierQuoteValidUntil: item.sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: item.sellerSupplierQuoteReference,
+        sellerSupplierQuoteNotes: item.sellerSupplierQuoteNotes,
         sellerOriginRestrictions: item.sellerOriginRestrictions,
         sellerDeliveryState: item.sellerDeliveryState,
         sellerSupplierDeliveryTime: item.sellerSupplierDeliveryTime,
@@ -368,6 +393,11 @@ export class QuoteMapper {
         purchaseDiameter: item.purchaseDiameter,
         purchaseThickness: item.purchaseThickness,
         purchaseBore: item.purchaseBore,
+        technicalFamily: item.technicalFamily,
+        technicalAttributes:
+          item.technicalAttributes && typeof item.technicalAttributes === "object" && !Array.isArray(item.technicalAttributes)
+            ? Object.fromEntries(Object.entries(item.technicalAttributes).filter((entry): entry is [string, string] => typeof entry[1] === "string"))
+            : {},
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),
@@ -390,6 +420,7 @@ export class QuoteMapper {
               currency: item.product.currency,
             }
           : null,
+        customerDescriptionEditedByUser: item.customerDescriptionEditedByUser,
       })),
       events: row.events.map((event) => ({
         id: event.id,

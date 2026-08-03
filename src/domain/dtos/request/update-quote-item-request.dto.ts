@@ -16,7 +16,13 @@ interface UpdateQuoteItemRequestDtoProps {
   sellerSupplierNameSnapshot?: string | null;
   sellerQuotedUnitCost?: number | null;
   sellerQuotedCurrency?: Currency | null;
+  sellerQuotedExchangeRate?: number | null;
   sellerQuotedBrand?: string | null;
+  sellerSupplierDescription?: string | null;
+  sellerSupplierOrigin?: string | null;
+  sellerSupplierQuoteValidUntil?: Date | null;
+  sellerSupplierQuoteReference?: string | null;
+  sellerSupplierQuoteNotes?: string | null;
   sellerOriginRestrictions?: string[];
   sellerDeliveryState?: string | null;
   sellerSupplierDeliveryTime?: string | null;
@@ -48,7 +54,13 @@ export class UpdateQuoteItemRequestDto {
   public readonly sellerSupplierNameSnapshot?: string | null;
   public readonly sellerQuotedUnitCost?: number | null;
   public readonly sellerQuotedCurrency?: Currency | null;
+  public readonly sellerQuotedExchangeRate?: number | null;
   public readonly sellerQuotedBrand?: string | null;
+  public readonly sellerSupplierDescription?: string | null;
+  public readonly sellerSupplierOrigin?: string | null;
+  public readonly sellerSupplierQuoteValidUntil?: Date | null;
+  public readonly sellerSupplierQuoteReference?: string | null;
+  public readonly sellerSupplierQuoteNotes?: string | null;
   public readonly sellerOriginRestrictions?: string[];
   public readonly sellerDeliveryState?: string | null;
   public readonly sellerSupplierDeliveryTime?: string | null;
@@ -79,7 +91,13 @@ export class UpdateQuoteItemRequestDto {
     this.sellerSupplierNameSnapshot = props.sellerSupplierNameSnapshot;
     this.sellerQuotedUnitCost = props.sellerQuotedUnitCost;
     this.sellerQuotedCurrency = props.sellerQuotedCurrency;
+    this.sellerQuotedExchangeRate = props.sellerQuotedExchangeRate;
     this.sellerQuotedBrand = props.sellerQuotedBrand;
+    this.sellerSupplierDescription = props.sellerSupplierDescription;
+    this.sellerSupplierOrigin = props.sellerSupplierOrigin;
+    this.sellerSupplierQuoteValidUntil = props.sellerSupplierQuoteValidUntil;
+    this.sellerSupplierQuoteReference = props.sellerSupplierQuoteReference;
+    this.sellerSupplierQuoteNotes = props.sellerSupplierQuoteNotes;
     this.sellerOriginRestrictions = props.sellerOriginRestrictions;
     this.sellerDeliveryState = props.sellerDeliveryState;
     this.sellerSupplierDeliveryTime = props.sellerSupplierDeliveryTime;
@@ -134,6 +152,7 @@ export class UpdateQuoteItemRequestDto {
     const unitPrice = UpdateQuoteItemRequestDto.parseOptionalNumber(body.unitPrice);
     const stock = UpdateQuoteItemRequestDto.parseOptionalNumber(body.stock);
     const sellerQuotedUnitCost = UpdateQuoteItemRequestDto.parseOptionalNullableNumber(body.sellerQuotedUnitCost);
+    const sellerQuotedExchangeRate = UpdateQuoteItemRequestDto.parseOptionalNullableNumber(body.sellerQuotedExchangeRate);
 
     if (typeof marginPct !== "undefined" && (!Number.isFinite(marginPct) || marginPct < -100)) {
       return ["marginPct is invalid."];
@@ -147,6 +166,11 @@ export class UpdateQuoteItemRequestDto {
     if (sellerQuotedUnitCost !== undefined && sellerQuotedUnitCost !== null && (!Number.isFinite(sellerQuotedUnitCost) || sellerQuotedUnitCost < 0)) {
       return ["sellerQuotedUnitCost is invalid."];
     }
+    if (sellerQuotedExchangeRate !== undefined && sellerQuotedExchangeRate !== null && (!Number.isFinite(sellerQuotedExchangeRate) || sellerQuotedExchangeRate <= 0)) {
+      return ["sellerQuotedExchangeRate is invalid."];
+    }
+    const sellerSupplierQuoteValidUntil = UpdateQuoteItemRequestDto.parseOptionalNullableDate(body.sellerSupplierQuoteValidUntil);
+    if (sellerSupplierQuoteValidUntil === "INVALID") return ["sellerSupplierQuoteValidUntil is invalid."];
 
     let sellerQuotedCurrency: Currency | null | undefined;
     if (typeof body.sellerQuotedCurrency !== "undefined") {
@@ -190,7 +214,13 @@ export class UpdateQuoteItemRequestDto {
         sellerSupplierNameSnapshot: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierNameSnapshot),
         sellerQuotedUnitCost,
         sellerQuotedCurrency,
+        sellerQuotedExchangeRate,
         sellerQuotedBrand: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerQuotedBrand),
+        sellerSupplierDescription: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierDescription),
+        sellerSupplierOrigin: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierOrigin),
+        sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierQuoteReference),
+        sellerSupplierQuoteNotes: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierQuoteNotes),
         sellerOriginRestrictions,
         sellerDeliveryState: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerDeliveryState),
         sellerSupplierDeliveryTime: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierDeliveryTime),
@@ -234,5 +264,13 @@ export class UpdateQuoteItemRequestDto {
     if (typeof value === "undefined") return undefined;
     if (value === null || value === "") return null;
     return UpdateQuoteItemRequestDto.parseNumber(value);
+  }
+
+  private static parseOptionalNullableDate(value: unknown): Date | null | undefined | "INVALID" {
+    if (typeof value === "undefined") return undefined;
+    if (value === null || value === "") return null;
+    if (typeof value !== "string" && !(value instanceof Date)) return "INVALID";
+    const parsed = value instanceof Date ? value : new Date(`${value}T00:00:00.000Z`);
+    return Number.isNaN(parsed.getTime()) ? "INVALID" : parsed;
   }
 }

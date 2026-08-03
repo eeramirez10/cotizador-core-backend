@@ -87,7 +87,10 @@ export class CreateQuoteFromExtractionUseCase {
     for (const item of dto.items) {
       const qty = item.quantity ?? 1;
       const normalizedUnit = item.unitNormalized ?? item.unitOriginal ?? "N/A";
-      const description =
+      const descriptionOriginal =
+        (item.descriptionOriginal ?? item.descriptionNormalized ?? "Descripcion pendiente de revision")
+          .trim();
+      const customerDescription =
         (item.descriptionNormalized ?? item.descriptionOriginal ?? "Descripcion pendiente de revision")
           .trim()
           .toUpperCase();
@@ -105,7 +108,10 @@ export class CreateQuoteFromExtractionUseCase {
           productId: null,
           externalProductCode: null,
           ean: null,
-          customerDescription: description,
+          customerDescription,
+          customerDescriptionOriginal: descriptionOriginal,
+          customerDescriptionEditedAt: null,
+          customerDescriptionEditedByUserId: null,
           customerUnit: normalizedUnit !== "N/A" ? normalizedUnit : null,
           erpDescription: null,
           unit: normalizedUnit,
@@ -117,7 +123,13 @@ export class CreateQuoteFromExtractionUseCase {
           sellerSupplierNameSnapshot: null,
           sellerQuotedUnitCost: null,
           sellerQuotedCurrency: null,
+          sellerQuotedExchangeRate: null,
           sellerQuotedBrand: null,
+          sellerSupplierDescription: null,
+          sellerSupplierOrigin: null,
+          sellerSupplierQuoteValidUntil: null,
+          sellerSupplierQuoteReference: null,
+          sellerSupplierQuoteNotes: null,
           sellerOriginRestrictions: [],
           sellerDeliveryState: null,
           sellerSupplierDeliveryTime: null,
@@ -125,6 +137,8 @@ export class CreateQuoteFromExtractionUseCase {
           purchaseDiameter: null,
           purchaseThickness: null,
           purchaseBore: null,
+          technicalFamily: null,
+          technicalAttributes: {},
           cost: 0,
           costCurrency: dto.currency,
           marginPct: 0,

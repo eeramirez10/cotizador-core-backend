@@ -48,6 +48,17 @@ enum SupplierScope {
   INTERNATIONAL
 }
 
+enum SupplierStatus {
+  PROSPECT
+  PENDING_ERP
+  ERP_SYNCED
+}
+
+enum PurchaseOfferSource {
+  SELLER
+  PURCHASING
+}
+
 enum PurchaseRequisitionStatus {
   DRAFT
   SUBMITTED
@@ -237,35 +248,38 @@ model User {
 
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
-  createdCustomers          Customer[]                     @relation("CustomerCreatedBy")
-  updatedCustomers          Customer[]                     @relation("CustomerUpdatedBy")
-  createdProducts           Product[]                      @relation("ProductCreatedBy")
-  updatedProducts           Product[]                      @relation("ProductUpdatedBy")
-  procurementProducts       Product[]                      @relation("ProductProcurementUpdatedBy")
-  createdProcurementOffers  LocalProductProcurementOffer[] @relation("ProcurementOfferCreatedBy")
-  updatedProcurementOffers  LocalProductProcurementOffer[] @relation("ProcurementOfferUpdatedBy")
-  createdQuotes             Quote[]                        @relation("QuoteCreatedBy")
-  updatedQuotes             Quote[]                        @relation("QuoteUpdatedBy")
-  rejectedQuotes            Quote[]                        @relation("QuoteRejectedBy")
-  cancelledQuotes           Quote[]                        @relation("QuoteCancelledBy")
-  archivedQuotes            Quote[]                        @relation("QuoteArchivedBy")
-  providedQuotes            Quote[]                        @relation("QuoteProvidedBy")
-  providerAssignments       Quote[]                        @relation("QuoteProviderAssignedBy")
-  erpRegisteredQuotes       Quote[]                        @relation("QuoteErpRegisteredBy")
-  quoteDeliveryAttempts     QuoteDeliveryAttempt[]         @relation("QuoteDeliveryAttemptSentBy")
-  quoteOrderExports         QuoteOrderExport[]             @relation("QuoteOrderExportGeneratedBy")
-  quoteEvents               QuoteEvent[]                   @relation("QuoteEventActor")
-  refreshTokens             RefreshToken[]
-  auditLogs                 AuditLog[]                     @relation("AuditLogActor")
-  createdSuppliers          Supplier[]                     @relation("SupplierCreatedBy")
-  updatedSuppliers          Supplier[]                     @relation("SupplierUpdatedBy")
-  requestedRequisitions     PurchaseRequisition[]          @relation("PurchaseRequisitionRequestedBy")
-  assignedRequisitions      PurchaseRequisition[]          @relation("PurchaseRequisitionAssignedBuyer")
-  approvedCostRequisitions  PurchaseRequisition[]          @relation("PurchaseRequisitionCostApprovedBy")
-  erpLinkedRequisitionItems PurchaseRequisitionItem[]      @relation("PurchaseRequisitionItemErpLinkedBy")
-  createdSupplierOffers     PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferCreatedBy")
-  updatedSupplierOffers     PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferUpdatedBy")
-  uploadedFileAssets        FileAsset[]                    @relation("FileAssetUploadedBy")
+  createdCustomers            Customer[]                     @relation("CustomerCreatedBy")
+  updatedCustomers            Customer[]                     @relation("CustomerUpdatedBy")
+  createdProducts             Product[]                      @relation("ProductCreatedBy")
+  updatedProducts             Product[]                      @relation("ProductUpdatedBy")
+  procurementProducts         Product[]                      @relation("ProductProcurementUpdatedBy")
+  createdProcurementOffers    LocalProductProcurementOffer[] @relation("ProcurementOfferCreatedBy")
+  updatedProcurementOffers    LocalProductProcurementOffer[] @relation("ProcurementOfferUpdatedBy")
+  createdQuotes               Quote[]                        @relation("QuoteCreatedBy")
+  updatedQuotes               Quote[]                        @relation("QuoteUpdatedBy")
+  rejectedQuotes              Quote[]                        @relation("QuoteRejectedBy")
+  cancelledQuotes             Quote[]                        @relation("QuoteCancelledBy")
+  archivedQuotes              Quote[]                        @relation("QuoteArchivedBy")
+  providedQuotes              Quote[]                        @relation("QuoteProvidedBy")
+  providerAssignments         Quote[]                        @relation("QuoteProviderAssignedBy")
+  erpRegisteredQuotes         Quote[]                        @relation("QuoteErpRegisteredBy")
+  quoteDeliveryAttempts       QuoteDeliveryAttempt[]         @relation("QuoteDeliveryAttemptSentBy")
+  quoteOrderExports           QuoteOrderExport[]             @relation("QuoteOrderExportGeneratedBy")
+  quoteEvents                 QuoteEvent[]                   @relation("QuoteEventActor")
+  refreshTokens               RefreshToken[]
+  auditLogs                   AuditLog[]                     @relation("AuditLogActor")
+  createdSuppliers            Supplier[]                     @relation("SupplierCreatedBy")
+  updatedSuppliers            Supplier[]                     @relation("SupplierUpdatedBy")
+  requestedRequisitions       PurchaseRequisition[]          @relation("PurchaseRequisitionRequestedBy")
+  assignedRequisitions        PurchaseRequisition[]          @relation("PurchaseRequisitionAssignedBuyer")
+  approvedCostRequisitions    PurchaseRequisition[]          @relation("PurchaseRequisitionCostApprovedBy")
+  erpLinkedRequisitionItems   PurchaseRequisitionItem[]      @relation("PurchaseRequisitionItemErpLinkedBy")
+  createdSupplierOffers       PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferCreatedBy")
+  updatedSupplierOffers       PurchaseSupplierOffer[]        @relation("PurchaseSupplierOfferUpdatedBy")
+  createdSupplierQuotes       PurchaseSupplierQuote[]        @relation("PurchaseSupplierQuoteCreatedBy")
+  updatedSupplierQuotes       PurchaseSupplierQuote[]        @relation("PurchaseSupplierQuoteUpdatedBy")
+  uploadedFileAssets          FileAsset[]                    @relation("FileAssetUploadedBy")
+  editedQuoteItemDescriptions QuoteItem[]                    @relation("QuoteItemCustomerDescriptionEditedBy")
 
   @@index([branchId])
   @@map("users")
@@ -517,54 +531,67 @@ model Quote {
 }
 
 model QuoteItem {
-  id                         String    @id @default(uuid()) @db.Uuid
-  quoteId                    String    @map("quote_id") @db.Uuid
-  clientItemId               String?   @map("client_item_id") @db.VarChar(80)
-  productId                  String?   @map("product_id") @db.Uuid
-  externalProductCode        String?   @map("external_product_code") @db.VarChar(80)
-  ean                        String?   @db.VarChar(120)
-  customerDescription        String?   @map("customer_description") @db.VarChar(500)
-  customerUnit               String?   @map("customer_unit") @db.VarChar(30)
-  erpDescription             String?   @map("erp_description") @db.VarChar(500)
-  unit                       String    @db.VarChar(30)
-  qty                        Decimal   @db.Decimal(14, 4)
-  stock                      Decimal?  @db.Decimal(14, 4)
-  deliveryTime               String?   @map("delivery_time") @db.VarChar(80)
-  itemComment                String?   @map("item_comment") @db.VarChar(500)
-  sellerSupplierId           String?   @map("seller_supplier_id") @db.Uuid
-  sellerSupplierNameSnapshot String?   @map("seller_supplier_name_snapshot") @db.VarChar(220)
-  sellerQuotedUnitCost       Decimal?  @map("seller_quoted_unit_cost") @db.Decimal(14, 4)
-  sellerQuotedCurrency       Currency? @map("seller_quoted_currency")
-  sellerQuotedBrand          String?   @map("seller_quoted_brand") @db.VarChar(160)
-  sellerOriginRestrictions   String[]  @default([]) @map("seller_origin_restrictions")
-  sellerDeliveryState        String?   @map("seller_delivery_state") @db.VarChar(120)
-  sellerSupplierDeliveryTime String?   @map("seller_supplier_delivery_time") @db.VarChar(120)
-  purchaseStandard           String?   @map("purchase_standard") @db.VarChar(120)
-  purchaseDiameter           String?   @map("purchase_diameter") @db.VarChar(120)
-  purchaseThickness          String?   @map("purchase_thickness") @db.VarChar(120)
-  purchaseBore               String?   @map("purchase_bore") @db.VarChar(120)
-  cost                       Decimal   @db.Decimal(14, 4)
-  costCurrency               Currency  @map("cost_currency")
-  marginPct                  Decimal   @map("margin_pct") @db.Decimal(10, 4)
-  sourceCurrency             Currency? @map("source_currency")
-  sourceUnitPrice            Decimal?  @map("source_unit_price") @db.Decimal(14, 4)
-  sourceSubtotal             Decimal?  @map("source_subtotal") @db.Decimal(14, 4)
-  unitPrice                  Decimal   @map("unit_price") @db.Decimal(14, 4)
-  subtotal                   Decimal   @db.Decimal(14, 4)
-  sourceRequiresReview       Boolean   @default(false) @map("source_requires_review")
-  requiresReview             Boolean   @default(false) @map("requires_review")
-  createdAt                  DateTime  @default(now()) @map("created_at")
-  updatedAt                  DateTime  @updatedAt @map("updated_at")
+  id                                String    @id @default(uuid()) @db.Uuid
+  quoteId                           String    @map("quote_id") @db.Uuid
+  clientItemId                      String?   @map("client_item_id") @db.VarChar(80)
+  productId                         String?   @map("product_id") @db.Uuid
+  externalProductCode               String?   @map("external_product_code") @db.VarChar(80)
+  ean                               String?   @db.VarChar(120)
+  customerDescription               String?   @map("customer_description") @db.VarChar(500)
+  customerDescriptionOriginal       String?   @map("customer_description_original") @db.VarChar(500)
+  customerDescriptionEditedAt       DateTime? @map("customer_description_edited_at")
+  customerDescriptionEditedByUserId String?   @map("customer_description_edited_by_user_id") @db.Uuid
+  customerUnit                      String?   @map("customer_unit") @db.VarChar(30)
+  erpDescription                    String?   @map("erp_description") @db.VarChar(500)
+  unit                              String    @db.VarChar(30)
+  qty                               Decimal   @db.Decimal(14, 4)
+  stock                             Decimal?  @db.Decimal(14, 4)
+  deliveryTime                      String?   @map("delivery_time") @db.VarChar(80)
+  itemComment                       String?   @map("item_comment") @db.VarChar(500)
+  sellerSupplierId                  String?   @map("seller_supplier_id") @db.Uuid
+  sellerSupplierNameSnapshot        String?   @map("seller_supplier_name_snapshot") @db.VarChar(220)
+  sellerQuotedUnitCost              Decimal?  @map("seller_quoted_unit_cost") @db.Decimal(14, 4)
+  sellerQuotedCurrency              Currency? @map("seller_quoted_currency")
+  sellerQuotedExchangeRate          Decimal?  @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
+  sellerQuotedBrand                 String?   @map("seller_quoted_brand") @db.VarChar(160)
+  sellerSupplierDescription         String?   @map("seller_supplier_description") @db.VarChar(500)
+  sellerSupplierOrigin              String?   @map("seller_supplier_origin") @db.VarChar(120)
+  sellerSupplierQuoteValidUntil     DateTime? @map("seller_supplier_quote_valid_until") @db.Date
+  sellerSupplierQuoteReference      String?   @map("seller_supplier_quote_reference") @db.VarChar(160)
+  sellerSupplierQuoteNotes          String?   @map("seller_supplier_quote_notes") @db.Text
+  sellerOriginRestrictions          String[]  @default([]) @map("seller_origin_restrictions")
+  sellerDeliveryState               String?   @map("seller_delivery_state") @db.VarChar(120)
+  sellerSupplierDeliveryTime        String?   @map("seller_supplier_delivery_time") @db.VarChar(120)
+  purchaseStandard                  String?   @map("purchase_standard") @db.VarChar(120)
+  purchaseDiameter                  String?   @map("purchase_diameter") @db.VarChar(120)
+  purchaseThickness                 String?   @map("purchase_thickness") @db.VarChar(120)
+  purchaseBore                      String?   @map("purchase_bore") @db.VarChar(120)
+  technicalFamily                   String?   @map("technical_family") @db.VarChar(60)
+  technicalAttributes               Json?     @map("technical_attributes")
+  cost                              Decimal   @db.Decimal(14, 4)
+  costCurrency                      Currency  @map("cost_currency")
+  marginPct                         Decimal   @map("margin_pct") @db.Decimal(10, 4)
+  sourceCurrency                    Currency? @map("source_currency")
+  sourceUnitPrice                   Decimal?  @map("source_unit_price") @db.Decimal(14, 4)
+  sourceSubtotal                    Decimal?  @map("source_subtotal") @db.Decimal(14, 4)
+  unitPrice                         Decimal   @map("unit_price") @db.Decimal(14, 4)
+  subtotal                          Decimal   @db.Decimal(14, 4)
+  sourceRequiresReview              Boolean   @default(false) @map("source_requires_review")
+  requiresReview                    Boolean   @default(false) @map("requires_review")
+  createdAt                         DateTime  @default(now()) @map("created_at")
+  updatedAt                         DateTime  @updatedAt @map("updated_at")
 
-  quote                   Quote                    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
-  product                 Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
-  sellerSupplier          Supplier?                @relation("QuoteItemSellerSupplier", fields: [sellerSupplierId], references: [id], onDelete: SetNull)
-  purchaseRequisitionItem PurchaseRequisitionItem?
+  quote                           Quote                    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  product                         Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
+  sellerSupplier                  Supplier?                @relation("QuoteItemSellerSupplier", fields: [sellerSupplierId], references: [id], onDelete: SetNull)
+  customerDescriptionEditedByUser User?                    @relation("QuoteItemCustomerDescriptionEditedBy", fields: [customerDescriptionEditedByUserId], references: [id], onDelete: SetNull)
+  purchaseRequisitionItem         PurchaseRequisitionItem?
 
   @@unique([quoteId, clientItemId])
   @@index([quoteId])
   @@index([productId])
   @@index([sellerSupplierId])
+  @@index([customerDescriptionEditedByUserId])
   @@map("quote_items")
 }
 
@@ -573,9 +600,11 @@ model Supplier {
   erpCode         String?        @unique @map("erp_code") @db.VarChar(40)
   name            String         @db.VarChar(220)
   canonicalName   String         @map("canonical_name") @db.VarChar(220)
+  status          SupplierStatus @default(PROSPECT)
   source          SupplierSource @default(LOCAL)
   scope           SupplierScope  @default(NATIONAL)
   taxId           String?        @map("tax_id") @db.VarChar(60)
+  normalizedTaxId String?        @unique @map("normalized_tax_id") @db.VarChar(60)
   state           String?        @db.VarChar(120)
   creditTerms     String?        @map("credit_terms") @db.VarChar(120)
   currency        Currency?
@@ -583,7 +612,9 @@ model Supplier {
   contactName     String?        @map("contact_name") @db.VarChar(160)
   contactPosition String?        @map("contact_position") @db.VarChar(160)
   email           String?        @db.VarChar(160)
+  normalizedEmail String?        @map("normalized_email") @db.VarChar(160)
   phone           String?        @db.VarChar(40)
+  normalizedPhone String?        @map("normalized_phone") @db.VarChar(40)
   phoneExtension  String?        @map("phone_extension") @db.VarChar(30)
   mobile          String?        @db.VarChar(40)
   notes           String?        @db.Text
@@ -597,12 +628,15 @@ model Supplier {
   createdBy              User                      @relation("SupplierCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
   updatedBy              User?                     @relation("SupplierUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
   offers                 PurchaseSupplierOffer[]
+  supplierQuotes         PurchaseSupplierQuote[]
   sellerQuotedItems      QuoteItem[]               @relation("QuoteItemSellerSupplier")
   sellerRequisitionItems PurchaseRequisitionItem[] @relation("RequisitionSellerSupplier")
 
   @@index([canonicalName])
   @@index([source, isActive])
   @@index([taxId])
+  @@index([normalizedEmail])
+  @@index([normalizedPhone])
   @@map("suppliers")
 }
 
@@ -630,6 +664,7 @@ model PurchaseRequisition {
   assignedBuyer  User?                     @relation("PurchaseRequisitionAssignedBuyer", fields: [assignedBuyerUserId], references: [id], onDelete: SetNull)
   costApprovedBy User?                     @relation("PurchaseRequisitionCostApprovedBy", fields: [costApprovedByUserId], references: [id], onDelete: SetNull)
   items          PurchaseRequisitionItem[]
+  supplierQuotes PurchaseSupplierQuote[]
 
   @@index([status, createdAt])
   @@index([branchId])
@@ -657,6 +692,8 @@ model PurchaseRequisitionItem {
   diameter           String?                       @db.VarChar(120)
   thickness          String?                       @db.VarChar(120)
   bore               String?                       @db.VarChar(120)
+  technicalFamily    String?                       @map("technical_family") @db.VarChar(60)
+  technicalAttributes Json?                        @map("technical_attributes")
   sellerUnitCost     Decimal                       @map("seller_unit_cost") @db.Decimal(14, 4)
   sellerCurrency     Currency                      @map("seller_currency")
   sellerExchangeRate Decimal                       @map("seller_exchange_rate") @db.Decimal(14, 6)
@@ -691,8 +728,16 @@ model PurchaseRequisitionItem {
 model PurchaseSupplierOffer {
   id                String    @id @default(uuid()) @db.Uuid
   requisitionItemId String    @map("requisition_item_id") @db.Uuid
+  supplierQuoteId   String?   @map("supplier_quote_id") @db.Uuid
   supplierId        String    @map("supplier_id") @db.Uuid
+  source            PurchaseOfferSource @default(PURCHASING)
+  supplierProductCode String? @map("supplier_product_code") @db.VarChar(120)
+  alternateCodes    String[]  @default([]) @map("alternate_codes")
+  supplierDescription String? @map("supplier_description") @db.VarChar(500)
   qty               Decimal   @db.Decimal(14, 4)
+  unit              String?   @db.VarChar(30)
+  listUnitPrice     Decimal?  @map("list_unit_price") @db.Decimal(14, 4)
+  discountPct       Decimal?  @map("discount_pct") @db.Decimal(8, 4)
   unitCost          Decimal   @map("unit_cost") @db.Decimal(14, 4)
   currency          Currency
   exchangeRate      Decimal?  @map("exchange_rate") @db.Decimal(14, 6)
@@ -703,6 +748,8 @@ model PurchaseSupplierOffer {
   brand             String?   @db.VarChar(160)
   origin            String?   @db.VarChar(120)
   deliveryTime      String?   @map("delivery_time") @db.VarChar(120)
+  availableDate     DateTime? @map("available_date") @db.Date
+  minimumQty        Decimal?  @map("minimum_qty") @db.Decimal(14, 4)
   validUntil        DateTime? @map("valid_until") @db.Date
   quoteDate         DateTime  @default(now()) @map("quote_date") @db.Date
   sentAt            DateTime? @map("sent_at")
@@ -716,6 +763,7 @@ model PurchaseSupplierOffer {
   updatedAt         DateTime  @updatedAt @map("updated_at")
 
   requisitionItem PurchaseRequisitionItem   @relation("PurchaseRequisitionItemOffers", fields: [requisitionItemId], references: [id], onDelete: Cascade)
+  supplierQuote   PurchaseSupplierQuote?    @relation(fields: [supplierQuoteId], references: [id], onDelete: SetNull)
   selectedForItem PurchaseRequisitionItem?  @relation("SelectedPurchaseSupplierOffer")
   supplier        Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Restrict)
   createdBy       User                      @relation("PurchaseSupplierOfferCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
@@ -723,9 +771,50 @@ model PurchaseSupplierOffer {
   attachments     PurchaseOfferAttachment[]
 
   @@index([requisitionItemId, isActive])
+  @@index([supplierQuoteId])
   @@index([supplierId])
   @@index([createdByUserId])
   @@map("purchase_supplier_offers")
+}
+
+model PurchaseSupplierQuote {
+  id               String              @id @default(uuid()) @db.Uuid
+  requisitionId    String              @map("requisition_id") @db.Uuid
+  supplierId       String              @map("supplier_id") @db.Uuid
+  fileAssetId      String?             @map("file_asset_id") @db.Uuid
+  source           PurchaseOfferSource @default(PURCHASING)
+  reference        String?             @db.VarChar(120)
+  quoteDate        DateTime            @default(now()) @map("quote_date") @db.Date
+  validUntil       DateTime?           @map("valid_until") @db.Date
+  currency         Currency
+  exchangeRate     Decimal?            @map("exchange_rate") @db.Decimal(14, 6)
+  paymentTerms     String?             @map("payment_terms") @db.VarChar(255)
+  deliveryTerms    String?             @map("delivery_terms") @db.VarChar(255)
+  subtotal         Decimal             @default(0) @db.Decimal(14, 4)
+  discount         Decimal             @default(0) @db.Decimal(14, 4)
+  freight          Decimal             @default(0) @db.Decimal(14, 4)
+  otherCharges     Decimal             @default(0) @map("other_charges") @db.Decimal(14, 4)
+  taxIncluded      Boolean             @default(false) @map("tax_included")
+  taxRate          Decimal             @default(0.16) @map("tax_rate") @db.Decimal(8, 6)
+  tax              Decimal             @default(0) @db.Decimal(14, 4)
+  total            Decimal             @default(0) @db.Decimal(14, 4)
+  notes            String?             @db.Text
+  createdByUserId  String              @map("created_by_user_id") @db.Uuid
+  updatedByUserId  String?             @map("updated_by_user_id") @db.Uuid
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
+
+  requisition PurchaseRequisition      @relation(fields: [requisitionId], references: [id], onDelete: Cascade)
+  supplier    Supplier                 @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  fileAsset   FileAsset?               @relation(fields: [fileAssetId], references: [id], onDelete: SetNull)
+  createdBy   User                     @relation("PurchaseSupplierQuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedBy   User?                    @relation("PurchaseSupplierQuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  offers      PurchaseSupplierOffer[]
+
+  @@index([requisitionId, createdAt])
+  @@index([supplierId])
+  @@index([fileAssetId])
+  @@map("purchase_supplier_quotes")
 }
 
 model FileAsset {
@@ -743,6 +832,7 @@ model FileAsset {
   uploadedBy               User                      @relation("FileAssetUploadedBy", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
   quoteAttachments         QuoteAttachment[]
   purchaseOfferAttachments PurchaseOfferAttachment[]
+  purchaseSupplierQuotes   PurchaseSupplierQuote[]
 
   @@index([uploadedByUserId, createdAt])
   @@index([checksumSha256])

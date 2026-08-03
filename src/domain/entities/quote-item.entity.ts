@@ -17,6 +17,9 @@ export interface QuoteItemEntity {
   externalProductCode: string | null;
   ean: string | null;
   customerDescription: string | null;
+  customerDescriptionOriginal: string | null;
+  customerDescriptionEditedAt: Date | null;
+  customerDescriptionEditedByUserId: string | null;
   customerUnit: string | null;
   erpDescription: string | null;
   unit: string;
@@ -28,7 +31,13 @@ export interface QuoteItemEntity {
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
   sellerQuotedCurrency: Currency | null;
+  sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
+  sellerSupplierDescription: string | null;
+  sellerSupplierOrigin: string | null;
+  sellerSupplierQuoteValidUntil: Date | null;
+  sellerSupplierQuoteReference: string | null;
+  sellerSupplierQuoteNotes: string | null;
   sellerOriginRestrictions: string[];
   sellerDeliveryState: string | null;
   sellerSupplierDeliveryTime: string | null;
@@ -36,6 +45,8 @@ export interface QuoteItemEntity {
   purchaseDiameter: string | null;
   purchaseThickness: string | null;
   purchaseBore: string | null;
+  technicalFamily: string | null;
+  technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
   marginPct: number;
@@ -49,4 +60,9 @@ export interface QuoteItemEntity {
   createdAt: Date;
   updatedAt: Date;
   product: QuoteItemProductSummary | null;
+  customerDescriptionEditedByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  } | null;
 }

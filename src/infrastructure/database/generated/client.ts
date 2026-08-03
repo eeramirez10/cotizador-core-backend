@@ -105,6 +105,11 @@ export type PurchaseRequisitionItem = Prisma.PurchaseRequisitionItemModel
  */
 export type PurchaseSupplierOffer = Prisma.PurchaseSupplierOfferModel
 /**
+ * Model PurchaseSupplierQuote
+ * 
+ */
+export type PurchaseSupplierQuote = Prisma.PurchaseSupplierQuoteModel
+/**
  * Model FileAsset
  * 
  */

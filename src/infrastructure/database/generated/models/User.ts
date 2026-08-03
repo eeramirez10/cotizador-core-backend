@@ -214,7 +214,7 @@ export type UserGroupByOutputType = {
   _max: UserMaxAggregateOutputType | null
 }
 
-type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+export type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UserGroupByOutputType, T['by']> &
       {
@@ -275,7 +275,10 @@ export type UserWhereInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferListRelationFilter
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferListRelationFilter
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   uploadedFileAssets?: Prisma.FileAssetListRelationFilter
+  editedQuoteItemDescriptions?: Prisma.QuoteItemListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -321,7 +324,10 @@ export type UserOrderByWithRelationInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemOrderByRelationAggregateInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferOrderByRelationAggregateInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferOrderByRelationAggregateInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
   uploadedFileAssets?: Prisma.FileAssetOrderByRelationAggregateInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -370,7 +376,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferListRelationFilter
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferListRelationFilter
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   uploadedFileAssets?: Prisma.FileAssetListRelationFilter
+  editedQuoteItemDescriptions?: Prisma.QuoteItemListRelationFilter
 }, "id" | "username" | "email" | "erpUserCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -453,7 +462,10 @@ export type UserCreateInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -498,7 +510,10 @@ export type UserUncheckedCreateInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUpdateInput = {
@@ -543,7 +558,10 @@ export type UserUpdateInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -588,7 +606,10 @@ export type UserUncheckedUpdateInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -988,6 +1009,22 @@ export type UserUpdateOneWithoutErpRegisteredQuotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutErpRegisteredQuotesInput, Prisma.UserUpdateWithoutErpRegisteredQuotesInput>, Prisma.UserUncheckedUpdateWithoutErpRegisteredQuotesInput>
 }
 
+export type UserCreateNestedOneWithoutEditedQuoteItemDescriptionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutEditedQuoteItemDescriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput
+  upsert?: Prisma.UserUpsertWithoutEditedQuoteItemDescriptionsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUpdateWithoutEditedQuoteItemDescriptionsInput>, Prisma.UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput>
+}
+
 export type UserCreateNestedOneWithoutCreatedSuppliersInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSuppliersInput, Prisma.UserUncheckedCreateWithoutCreatedSuppliersInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSuppliersInput
@@ -1108,6 +1145,36 @@ export type UserUpdateOneWithoutUpdatedSupplierOffersNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedSupplierOffersInput, Prisma.UserUpdateWithoutUpdatedSupplierOffersInput>, Prisma.UserUncheckedUpdateWithoutUpdatedSupplierOffersInput>
+}
+
+export type UserCreateNestedOneWithoutCreatedSupplierQuotesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutCreatedSupplierQuotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSupplierQuotesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedSupplierQuotesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutUpdatedSupplierQuotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedSupplierQuotesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedSupplierQuotesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutCreatedSupplierQuotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSupplierQuotesInput
+  upsert?: Prisma.UserUpsertWithoutCreatedSupplierQuotesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSupplierQuotesInput, Prisma.UserUpdateWithoutCreatedSupplierQuotesInput>, Prisma.UserUncheckedUpdateWithoutCreatedSupplierQuotesInput>
+}
+
+export type UserUpdateOneWithoutUpdatedSupplierQuotesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutUpdatedSupplierQuotesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedSupplierQuotesInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedSupplierQuotesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedSupplierQuotesInput, Prisma.UserUpdateWithoutUpdatedSupplierQuotesInput>, Prisma.UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput>
 }
 
 export type UserCreateNestedOneWithoutUploadedFileAssetsInput = {
@@ -1243,7 +1310,10 @@ export type UserCreateWithoutBranchInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -1287,7 +1357,10 @@ export type UserUncheckedCreateWithoutBranchInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -1376,7 +1449,10 @@ export type UserCreateWithoutCreatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCustomersInput = {
@@ -1420,7 +1496,10 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCustomersInput = {
@@ -1469,7 +1548,10 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
@@ -1513,7 +1595,10 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCustomersInput = {
@@ -1573,7 +1658,10 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
@@ -1617,7 +1705,10 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCustomersInput = {
@@ -1672,7 +1763,10 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
@@ -1716,7 +1810,10 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutCreatedProductsInput = {
@@ -1760,7 +1857,10 @@ export type UserCreateWithoutCreatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProductsInput = {
@@ -1804,7 +1904,10 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProductsInput = {
@@ -1853,7 +1956,10 @@ export type UserCreateWithoutUpdatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProductsInput = {
@@ -1897,7 +2003,10 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProductsInput = {
@@ -1946,7 +2055,10 @@ export type UserCreateWithoutProcurementProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutProcurementProductsInput = {
@@ -1990,7 +2102,10 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutProcurementProductsInput = {
@@ -2050,7 +2165,10 @@ export type UserUpdateWithoutCreatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProductsInput = {
@@ -2094,7 +2212,10 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProductsInput = {
@@ -2149,7 +2270,10 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
@@ -2193,7 +2317,10 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutProcurementProductsInput = {
@@ -2248,7 +2375,10 @@ export type UserUpdateWithoutProcurementProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProcurementProductsInput = {
@@ -2292,7 +2422,10 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutCreatedProcurementOffersInput = {
@@ -2336,7 +2469,10 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
@@ -2380,7 +2516,10 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProcurementOffersInput = {
@@ -2429,7 +2568,10 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
@@ -2473,7 +2615,10 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProcurementOffersInput = {
@@ -2533,7 +2678,10 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
@@ -2577,7 +2725,10 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProcurementOffersInput = {
@@ -2632,7 +2783,10 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
@@ -2676,7 +2830,10 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutCreatedQuotesInput = {
@@ -2720,7 +2877,10 @@ export type UserCreateWithoutCreatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedQuotesInput = {
@@ -2764,7 +2924,10 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedQuotesInput = {
@@ -2813,7 +2976,10 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
@@ -2857,7 +3023,10 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedQuotesInput = {
@@ -2906,7 +3075,10 @@ export type UserCreateWithoutProvidedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutProvidedQuotesInput = {
@@ -2950,7 +3122,10 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutProvidedQuotesInput = {
@@ -2999,7 +3174,10 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
@@ -3043,7 +3221,10 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutProviderAssignmentsInput = {
@@ -3092,7 +3273,10 @@ export type UserCreateWithoutRejectedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedQuotesInput = {
@@ -3136,7 +3320,10 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedQuotesInput = {
@@ -3185,7 +3372,10 @@ export type UserCreateWithoutCancelledQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCancelledQuotesInput = {
@@ -3229,7 +3419,10 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCancelledQuotesInput = {
@@ -3278,7 +3471,10 @@ export type UserCreateWithoutArchivedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutArchivedQuotesInput = {
@@ -3322,7 +3518,10 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutArchivedQuotesInput = {
@@ -3371,7 +3570,10 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
@@ -3415,7 +3617,10 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutErpRegisteredQuotesInput = {
@@ -3475,7 +3680,10 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
@@ -3519,7 +3727,10 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedQuotesInput = {
@@ -3574,7 +3785,10 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
@@ -3618,7 +3832,10 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutProvidedQuotesInput = {
@@ -3673,7 +3890,10 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
@@ -3717,7 +3937,10 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutProviderAssignmentsInput = {
@@ -3772,7 +3995,10 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
@@ -3816,7 +4042,10 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedQuotesInput = {
@@ -3871,7 +4100,10 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
@@ -3915,7 +4147,10 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutCancelledQuotesInput = {
@@ -3970,7 +4205,10 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
@@ -4014,7 +4252,10 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutArchivedQuotesInput = {
@@ -4069,7 +4310,10 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
@@ -4113,7 +4357,10 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutErpRegisteredQuotesInput = {
@@ -4168,7 +4415,10 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
@@ -4212,6 +4462,213 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+}
+
+export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+}
+
+export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+}
+
+export type UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
+}
+
+export type UserUpsertWithoutEditedQuoteItemDescriptionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEditedQuoteItemDescriptionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput>
+}
+
+export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
 }
 
@@ -4256,7 +4713,10 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
@@ -4300,7 +4760,10 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSuppliersInput = {
@@ -4349,7 +4812,10 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
@@ -4393,7 +4859,10 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSuppliersInput = {
@@ -4453,7 +4922,10 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
@@ -4497,7 +4969,10 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSuppliersInput = {
@@ -4552,7 +5027,10 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
@@ -4596,7 +5074,10 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutRequestedRequisitionsInput = {
@@ -4640,7 +5121,10 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
@@ -4684,7 +5168,10 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutRequestedRequisitionsInput = {
@@ -4733,7 +5220,10 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
@@ -4777,7 +5267,10 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedRequisitionsInput = {
@@ -4826,7 +5319,10 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
@@ -4870,7 +5366,10 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedCostRequisitionsInput = {
@@ -4930,7 +5429,10 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
@@ -4974,7 +5476,10 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutAssignedRequisitionsInput = {
@@ -5029,7 +5534,10 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
@@ -5073,7 +5581,10 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutApprovedCostRequisitionsInput = {
@@ -5128,7 +5639,10 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
@@ -5172,7 +5686,10 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
@@ -5216,7 +5733,10 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
@@ -5260,7 +5780,10 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutErpLinkedRequisitionItemsInput = {
@@ -5320,7 +5843,10 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
@@ -5364,7 +5890,10 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutCreatedSupplierOffersInput = {
@@ -5408,7 +5937,10 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
@@ -5452,7 +5984,10 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSupplierOffersInput = {
@@ -5501,7 +6036,10 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
@@ -5545,7 +6083,10 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSupplierOffersInput = {
@@ -5605,7 +6146,10 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
@@ -5649,7 +6193,10 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSupplierOffersInput = {
@@ -5704,7 +6251,10 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
@@ -5748,7 +6298,418 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+}
+
+export type UserCreateWithoutCreatedSupplierQuotesInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+}
+
+export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+}
+
+export type UserCreateOrConnectWithoutCreatedSupplierQuotesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutCreatedSupplierQuotesInput>
+}
+
+export type UserCreateWithoutUpdatedSupplierQuotesInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedSupplierQuotesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutUpdatedSupplierQuotesInput>
+}
+
+export type UserUpsertWithoutCreatedSupplierQuotesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedUpdateWithoutCreatedSupplierQuotesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutCreatedSupplierQuotesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedSupplierQuotesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedSupplierQuotesInput, Prisma.UserUncheckedUpdateWithoutCreatedSupplierQuotesInput>
+}
+
+export type UserUpdateWithoutCreatedSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+}
+
+export type UserUpsertWithoutUpdatedSupplierQuotesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedCreateWithoutUpdatedSupplierQuotesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedSupplierQuotesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedSupplierQuotesInput, Prisma.UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput>
+}
+
+export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutUploadedFileAssetsInput = {
@@ -5793,6 +6754,9 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
@@ -5837,6 +6801,9 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUploadedFileAssetsInput = {
@@ -5897,6 +6864,9 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
@@ -5941,6 +6911,9 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutQuoteEventsInput = {
@@ -5984,7 +6957,10 @@ export type UserCreateWithoutQuoteEventsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteEventsInput = {
@@ -6028,7 +7004,10 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteEventsInput = {
@@ -6088,7 +7067,10 @@ export type UserUpdateWithoutQuoteEventsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteEventsInput = {
@@ -6132,7 +7114,10 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -6176,7 +7161,10 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -6220,7 +7208,10 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteDeliveryAttemptsInput = {
@@ -6280,7 +7271,10 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
@@ -6324,7 +7318,10 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutQuoteOrderExportsInput = {
@@ -6368,7 +7365,10 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
@@ -6412,7 +7412,10 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteOrderExportsInput = {
@@ -6472,7 +7475,10 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
@@ -6516,7 +7522,10 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -6560,7 +7569,10 @@ export type UserCreateWithoutRefreshTokensInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -6604,7 +7616,10 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -6664,7 +7679,10 @@ export type UserUpdateWithoutRefreshTokensInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -6708,7 +7726,10 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -6752,7 +7773,10 @@ export type UserCreateWithoutAuditLogsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -6796,7 +7820,10 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -6856,7 +7883,10 @@ export type UserUpdateWithoutAuditLogsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -6900,7 +7930,10 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserCreateManyBranchInput = {
@@ -6959,7 +7992,10 @@ export type UserUpdateWithoutBranchInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -7003,7 +8039,10 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
   createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -7055,7 +8094,10 @@ export type UserCountOutputType = {
   erpLinkedRequisitionItems: number
   createdSupplierOffers: number
   updatedSupplierOffers: number
+  createdSupplierQuotes: number
+  updatedSupplierQuotes: number
   uploadedFileAssets: number
+  editedQuoteItemDescriptions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -7087,7 +8129,10 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   erpLinkedRequisitionItems?: boolean | UserCountOutputTypeCountErpLinkedRequisitionItemsArgs
   createdSupplierOffers?: boolean | UserCountOutputTypeCountCreatedSupplierOffersArgs
   updatedSupplierOffers?: boolean | UserCountOutputTypeCountUpdatedSupplierOffersArgs
+  createdSupplierQuotes?: boolean | UserCountOutputTypeCountCreatedSupplierQuotesArgs
+  updatedSupplierQuotes?: boolean | UserCountOutputTypeCountUpdatedSupplierQuotesArgs
   uploadedFileAssets?: boolean | UserCountOutputTypeCountUploadedFileAssetsArgs
+  editedQuoteItemDescriptions?: boolean | UserCountOutputTypeCountEditedQuoteItemDescriptionsArgs
 }
 
 /**
@@ -7299,8 +8344,29 @@ export type UserCountOutputTypeCountUpdatedSupplierOffersArgs<ExtArgs extends ru
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCreatedSupplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedSupplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountUploadedFileAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FileAssetWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEditedQuoteItemDescriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteItemWhereInput
 }
 
 
@@ -7347,7 +8413,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   erpLinkedRequisitionItems?: boolean | Prisma.User$erpLinkedRequisitionItemsArgs<ExtArgs>
   createdSupplierOffers?: boolean | Prisma.User$createdSupplierOffersArgs<ExtArgs>
   updatedSupplierOffers?: boolean | Prisma.User$updatedSupplierOffersArgs<ExtArgs>
+  createdSupplierQuotes?: boolean | Prisma.User$createdSupplierQuotesArgs<ExtArgs>
+  updatedSupplierQuotes?: boolean | Prisma.User$updatedSupplierQuotesArgs<ExtArgs>
   uploadedFileAssets?: boolean | Prisma.User$uploadedFileAssetsArgs<ExtArgs>
+  editedQuoteItemDescriptions?: boolean | Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -7432,7 +8501,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   erpLinkedRequisitionItems?: boolean | Prisma.User$erpLinkedRequisitionItemsArgs<ExtArgs>
   createdSupplierOffers?: boolean | Prisma.User$createdSupplierOffersArgs<ExtArgs>
   updatedSupplierOffers?: boolean | Prisma.User$updatedSupplierOffersArgs<ExtArgs>
+  createdSupplierQuotes?: boolean | Prisma.User$createdSupplierQuotesArgs<ExtArgs>
+  updatedSupplierQuotes?: boolean | Prisma.User$updatedSupplierQuotesArgs<ExtArgs>
   uploadedFileAssets?: boolean | Prisma.User$uploadedFileAssetsArgs<ExtArgs>
+  editedQuoteItemDescriptions?: boolean | Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -7474,7 +8546,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     erpLinkedRequisitionItems: Prisma.$PurchaseRequisitionItemPayload<ExtArgs>[]
     createdSupplierOffers: Prisma.$PurchaseSupplierOfferPayload<ExtArgs>[]
     updatedSupplierOffers: Prisma.$PurchaseSupplierOfferPayload<ExtArgs>[]
+    createdSupplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
+    updatedSupplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
     uploadedFileAssets: Prisma.$FileAssetPayload<ExtArgs>[]
+    editedQuoteItemDescriptions: Prisma.$QuoteItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -7913,7 +8988,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   erpLinkedRequisitionItems<T extends Prisma.User$erpLinkedRequisitionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$erpLinkedRequisitionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdSupplierOffers<T extends Prisma.User$createdSupplierOffersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSupplierOffersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedSupplierOffers<T extends Prisma.User$updatedSupplierOffersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSupplierOffersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdSupplierQuotes<T extends Prisma.User$createdSupplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdSupplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedSupplierQuotes<T extends Prisma.User$updatedSupplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSupplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedFileAssets<T extends Prisma.User$uploadedFileAssetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedFileAssetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FileAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  editedQuoteItemDescriptions<T extends Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8152,6 +9230,11 @@ export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Users.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Users.
+   */
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
@@ -9024,6 +10107,54 @@ export type User$updatedSupplierOffersArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * User.createdSupplierQuotes
+ */
+export type User$createdSupplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseSupplierQuote
+   */
+  select?: Prisma.PurchaseSupplierQuoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseSupplierQuote
+   */
+  omit?: Prisma.PurchaseSupplierQuoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseSupplierQuoteInclude<ExtArgs> | null
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+  orderBy?: Prisma.PurchaseSupplierQuoteOrderByWithRelationInput | Prisma.PurchaseSupplierQuoteOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseSupplierQuoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseSupplierQuoteScalarFieldEnum | Prisma.PurchaseSupplierQuoteScalarFieldEnum[]
+}
+
+/**
+ * User.updatedSupplierQuotes
+ */
+export type User$updatedSupplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseSupplierQuote
+   */
+  select?: Prisma.PurchaseSupplierQuoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseSupplierQuote
+   */
+  omit?: Prisma.PurchaseSupplierQuoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseSupplierQuoteInclude<ExtArgs> | null
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+  orderBy?: Prisma.PurchaseSupplierQuoteOrderByWithRelationInput | Prisma.PurchaseSupplierQuoteOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseSupplierQuoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseSupplierQuoteScalarFieldEnum | Prisma.PurchaseSupplierQuoteScalarFieldEnum[]
+}
+
+/**
  * User.uploadedFileAssets
  */
 export type User$uploadedFileAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -9045,6 +10176,30 @@ export type User$uploadedFileAssetsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.FileAssetScalarFieldEnum | Prisma.FileAssetScalarFieldEnum[]
+}
+
+/**
+ * User.editedQuoteItemDescriptions
+ */
+export type User$editedQuoteItemDescriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteItem
+   */
+  select?: Prisma.QuoteItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteItem
+   */
+  omit?: Prisma.QuoteItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteItemInclude<ExtArgs> | null
+  where?: Prisma.QuoteItemWhereInput
+  orderBy?: Prisma.QuoteItemOrderByWithRelationInput | Prisma.QuoteItemOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteItemScalarFieldEnum | Prisma.QuoteItemScalarFieldEnum[]
 }
 
 /**

@@ -6,6 +6,8 @@ interface CreateQuoteItemRequestDtoProps {
   externalProductCode: string | null;
   ean: string | null;
   customerDescription: string | null;
+  customerDescriptionOriginal: string | null;
+  customerDescriptionEditedAt: string | null;
   customerUnit: string | null;
   erpDescription: string | null;
   unit: string;
@@ -17,7 +19,13 @@ interface CreateQuoteItemRequestDtoProps {
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
   sellerQuotedCurrency: Currency | null;
+  sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
+  sellerSupplierDescription: string | null;
+  sellerSupplierOrigin: string | null;
+  sellerSupplierQuoteValidUntil: Date | null;
+  sellerSupplierQuoteReference: string | null;
+  sellerSupplierQuoteNotes: string | null;
   sellerOriginRestrictions: string[];
   sellerDeliveryState: string | null;
   sellerSupplierDeliveryTime: string | null;
@@ -25,6 +33,8 @@ interface CreateQuoteItemRequestDtoProps {
   purchaseDiameter: string | null;
   purchaseThickness: string | null;
   purchaseBore: string | null;
+  technicalFamily: string | null;
+  technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
   marginPct?: number;
@@ -42,6 +52,8 @@ export class CreateQuoteItemRequestDto {
   public readonly externalProductCode: string | null;
   public readonly ean: string | null;
   public readonly customerDescription: string | null;
+  public readonly customerDescriptionOriginal: string | null;
+  public readonly customerDescriptionEditedAt: string | null;
   public readonly customerUnit: string | null;
   public readonly erpDescription: string | null;
   public readonly unit: string;
@@ -53,7 +65,13 @@ export class CreateQuoteItemRequestDto {
   public readonly sellerSupplierNameSnapshot: string | null;
   public readonly sellerQuotedUnitCost: number | null;
   public readonly sellerQuotedCurrency: Currency | null;
+  public readonly sellerQuotedExchangeRate: number | null;
   public readonly sellerQuotedBrand: string | null;
+  public readonly sellerSupplierDescription: string | null;
+  public readonly sellerSupplierOrigin: string | null;
+  public readonly sellerSupplierQuoteValidUntil: Date | null;
+  public readonly sellerSupplierQuoteReference: string | null;
+  public readonly sellerSupplierQuoteNotes: string | null;
   public readonly sellerOriginRestrictions: string[];
   public readonly sellerDeliveryState: string | null;
   public readonly sellerSupplierDeliveryTime: string | null;
@@ -61,6 +79,8 @@ export class CreateQuoteItemRequestDto {
   public readonly purchaseDiameter: string | null;
   public readonly purchaseThickness: string | null;
   public readonly purchaseBore: string | null;
+  public readonly technicalFamily: string | null;
+  public readonly technicalAttributes: Record<string, string>;
   public readonly cost: number;
   public readonly costCurrency: Currency;
   public readonly marginPct?: number;
@@ -77,6 +97,8 @@ export class CreateQuoteItemRequestDto {
     this.externalProductCode = props.externalProductCode;
     this.ean = props.ean;
     this.customerDescription = props.customerDescription;
+    this.customerDescriptionOriginal = props.customerDescriptionOriginal;
+    this.customerDescriptionEditedAt = props.customerDescriptionEditedAt;
     this.customerUnit = props.customerUnit;
     this.erpDescription = props.erpDescription;
     this.unit = props.unit;
@@ -88,7 +110,13 @@ export class CreateQuoteItemRequestDto {
     this.sellerSupplierNameSnapshot = props.sellerSupplierNameSnapshot;
     this.sellerQuotedUnitCost = props.sellerQuotedUnitCost;
     this.sellerQuotedCurrency = props.sellerQuotedCurrency;
+    this.sellerQuotedExchangeRate = props.sellerQuotedExchangeRate;
     this.sellerQuotedBrand = props.sellerQuotedBrand;
+    this.sellerSupplierDescription = props.sellerSupplierDescription;
+    this.sellerSupplierOrigin = props.sellerSupplierOrigin;
+    this.sellerSupplierQuoteValidUntil = props.sellerSupplierQuoteValidUntil;
+    this.sellerSupplierQuoteReference = props.sellerSupplierQuoteReference;
+    this.sellerSupplierQuoteNotes = props.sellerSupplierQuoteNotes;
     this.sellerOriginRestrictions = props.sellerOriginRestrictions;
     this.sellerDeliveryState = props.sellerDeliveryState;
     this.sellerSupplierDeliveryTime = props.sellerSupplierDeliveryTime;
@@ -96,6 +124,8 @@ export class CreateQuoteItemRequestDto {
     this.purchaseDiameter = props.purchaseDiameter;
     this.purchaseThickness = props.purchaseThickness;
     this.purchaseBore = props.purchaseBore;
+    this.technicalFamily = props.technicalFamily;
+    this.technicalAttributes = props.technicalAttributes;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
     this.marginPct = props.marginPct;
@@ -136,6 +166,7 @@ export class CreateQuoteItemRequestDto {
     const unitPrice = CreateQuoteItemRequestDto.parseOptionalNumber(body.unitPrice);
     const stock = CreateQuoteItemRequestDto.parseOptionalNumber(body.stock);
     const sellerQuotedUnitCost = CreateQuoteItemRequestDto.parseOptionalNumber(body.sellerQuotedUnitCost);
+    const sellerQuotedExchangeRate = CreateQuoteItemRequestDto.parseOptionalNumber(body.sellerQuotedExchangeRate);
 
     if (typeof marginPct !== "undefined" && (!Number.isFinite(marginPct) || marginPct < -100)) {
       return ["marginPct is invalid."];
@@ -155,6 +186,11 @@ export class CreateQuoteItemRequestDto {
     if (typeof sellerQuotedUnitCost !== "undefined" && (!Number.isFinite(sellerQuotedUnitCost) || sellerQuotedUnitCost < 0)) {
       return ["sellerQuotedUnitCost is invalid."];
     }
+    if (typeof sellerQuotedExchangeRate !== "undefined" && (!Number.isFinite(sellerQuotedExchangeRate) || sellerQuotedExchangeRate <= 0)) {
+      return ["sellerQuotedExchangeRate is invalid."];
+    }
+    const sellerSupplierQuoteValidUntil = CreateQuoteItemRequestDto.parseNullableDate(body.sellerSupplierQuoteValidUntil);
+    if (sellerSupplierQuoteValidUntil === "INVALID") return ["sellerSupplierQuoteValidUntil is invalid."];
 
     let sourceCurrency: Currency | null | undefined;
     if (typeof body.sourceCurrency !== "undefined") {
@@ -179,6 +215,14 @@ export class CreateQuoteItemRequestDto {
           .map((value) => value.trim().toUpperCase())
           .filter(Boolean))]
       : [];
+    const technicalAttributes = body.technicalAttributes && typeof body.technicalAttributes === "object" && !Array.isArray(body.technicalAttributes)
+      ? Object.fromEntries(
+          Object.entries(body.technicalAttributes as Record<string, unknown>)
+            .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+            .map(([key, value]) => [key.trim(), value.trim()])
+            .filter(([key, value]) => Boolean(key && value)),
+        )
+      : {};
 
     return [
       ,
@@ -188,6 +232,12 @@ export class CreateQuoteItemRequestDto {
         externalProductCode: CreateQuoteItemRequestDto.normalizeNullableString(body.externalProductCode),
         ean: CreateQuoteItemRequestDto.normalizeNullableString(body.ean),
         customerDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.customerDescription),
+        customerDescriptionOriginal: CreateQuoteItemRequestDto.normalizeNullableString(
+          body.customerDescriptionOriginal
+        ),
+        customerDescriptionEditedAt: CreateQuoteItemRequestDto.normalizeNullableString(
+          body.customerDescriptionEditedAt
+        ),
         customerUnit: CreateQuoteItemRequestDto.normalizeNullableString(body.customerUnit),
         erpDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.erpDescription),
         unit,
@@ -199,7 +249,13 @@ export class CreateQuoteItemRequestDto {
         sellerSupplierNameSnapshot: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierNameSnapshot),
         sellerQuotedUnitCost: typeof sellerQuotedUnitCost === "undefined" ? null : sellerQuotedUnitCost,
         sellerQuotedCurrency,
+        sellerQuotedExchangeRate: typeof sellerQuotedExchangeRate === "undefined" ? null : sellerQuotedExchangeRate,
         sellerQuotedBrand: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerQuotedBrand),
+        sellerSupplierDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierDescription),
+        sellerSupplierOrigin: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierOrigin),
+        sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierQuoteReference),
+        sellerSupplierQuoteNotes: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierQuoteNotes),
         sellerOriginRestrictions,
         sellerDeliveryState: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerDeliveryState),
         sellerSupplierDeliveryTime: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierDeliveryTime),
@@ -207,6 +263,8 @@ export class CreateQuoteItemRequestDto {
         purchaseDiameter: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseDiameter),
         purchaseThickness: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseThickness),
         purchaseBore: CreateQuoteItemRequestDto.normalizeNullableString(body.purchaseBore),
+        technicalFamily: CreateQuoteItemRequestDto.normalizeNullableString(body.technicalFamily),
+        technicalAttributes,
         cost,
         costCurrency: costCurrencyRaw as Currency,
         marginPct,
@@ -236,5 +294,12 @@ export class CreateQuoteItemRequestDto {
   private static parseOptionalNumber(value: unknown): number | undefined {
     if (typeof value === "undefined" || value === null) return undefined;
     return CreateQuoteItemRequestDto.parseNumber(value);
+  }
+
+  private static parseNullableDate(value: unknown): Date | null | "INVALID" {
+    if (value === undefined || value === null || value === "") return null;
+    if (typeof value !== "string" && !(value instanceof Date)) return "INVALID";
+    const parsed = value instanceof Date ? value : new Date(`${value}T00:00:00.000Z`);
+    return Number.isNaN(parsed.getTime()) ? "INVALID" : parsed;
   }
 }

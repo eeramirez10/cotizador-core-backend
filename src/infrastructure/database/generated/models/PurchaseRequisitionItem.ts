@@ -58,6 +58,7 @@ export type PurchaseRequisitionItemMinAggregateOutputType = {
   diameter: string | null
   thickness: string | null
   bore: string | null
+  technicalFamily: string | null
   sellerUnitCost: runtime.Decimal | null
   sellerCurrency: $Enums.Currency | null
   sellerExchangeRate: runtime.Decimal | null
@@ -91,6 +92,7 @@ export type PurchaseRequisitionItemMaxAggregateOutputType = {
   diameter: string | null
   thickness: string | null
   bore: string | null
+  technicalFamily: string | null
   sellerUnitCost: runtime.Decimal | null
   sellerCurrency: $Enums.Currency | null
   sellerExchangeRate: runtime.Decimal | null
@@ -124,6 +126,8 @@ export type PurchaseRequisitionItemCountAggregateOutputType = {
   diameter: number
   thickness: number
   bore: number
+  technicalFamily: number
+  technicalAttributes: number
   sellerUnitCost: number
   sellerCurrency: number
   sellerExchangeRate: number
@@ -174,6 +178,7 @@ export type PurchaseRequisitionItemMinAggregateInputType = {
   diameter?: true
   thickness?: true
   bore?: true
+  technicalFamily?: true
   sellerUnitCost?: true
   sellerCurrency?: true
   sellerExchangeRate?: true
@@ -207,6 +212,7 @@ export type PurchaseRequisitionItemMaxAggregateInputType = {
   diameter?: true
   thickness?: true
   bore?: true
+  technicalFamily?: true
   sellerUnitCost?: true
   sellerCurrency?: true
   sellerExchangeRate?: true
@@ -240,6 +246,8 @@ export type PurchaseRequisitionItemCountAggregateInputType = {
   diameter?: true
   thickness?: true
   bore?: true
+  technicalFamily?: true
+  technicalAttributes?: true
   sellerUnitCost?: true
   sellerCurrency?: true
   sellerExchangeRate?: true
@@ -361,6 +369,8 @@ export type PurchaseRequisitionItemGroupByOutputType = {
   diameter: string | null
   thickness: string | null
   bore: string | null
+  technicalFamily: string | null
+  technicalAttributes: runtime.JsonValue | null
   sellerUnitCost: runtime.Decimal
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal
@@ -382,7 +392,7 @@ export type PurchaseRequisitionItemGroupByOutputType = {
   _max: PurchaseRequisitionItemMaxAggregateOutputType | null
 }
 
-type GetPurchaseRequisitionItemGroupByPayload<T extends PurchaseRequisitionItemGroupByArgs> = Prisma.PrismaPromise<
+export type GetPurchaseRequisitionItemGroupByPayload<T extends PurchaseRequisitionItemGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PurchaseRequisitionItemGroupByOutputType, T['by']> &
       {
@@ -418,6 +428,8 @@ export type PurchaseRequisitionItemWhereInput = {
   diameter?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   thickness?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   bore?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalFamily?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalAttributes?: Prisma.JsonNullableFilter<"PurchaseRequisitionItem">
   sellerUnitCost?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFilter<"PurchaseRequisitionItem"> | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -459,6 +471,8 @@ export type PurchaseRequisitionItemOrderByWithRelationInput = {
   diameter?: Prisma.SortOrderInput | Prisma.SortOrder
   thickness?: Prisma.SortOrderInput | Prisma.SortOrder
   bore?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalFamily?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalAttributes?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerUnitCost?: Prisma.SortOrder
   sellerCurrency?: Prisma.SortOrder
   sellerExchangeRate?: Prisma.SortOrder
@@ -505,6 +519,8 @@ export type PurchaseRequisitionItemWhereUniqueInput = Prisma.AtLeast<{
   diameter?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   thickness?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   bore?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalFamily?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalAttributes?: Prisma.JsonNullableFilter<"PurchaseRequisitionItem">
   sellerUnitCost?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFilter<"PurchaseRequisitionItem"> | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -545,6 +561,8 @@ export type PurchaseRequisitionItemOrderByWithAggregationInput = {
   diameter?: Prisma.SortOrderInput | Prisma.SortOrder
   thickness?: Prisma.SortOrderInput | Prisma.SortOrder
   bore?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalFamily?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalAttributes?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerUnitCost?: Prisma.SortOrder
   sellerCurrency?: Prisma.SortOrder
   sellerExchangeRate?: Prisma.SortOrder
@@ -587,6 +605,8 @@ export type PurchaseRequisitionItemScalarWhereWithAggregatesInput = {
   diameter?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisitionItem"> | string | null
   thickness?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisitionItem"> | string | null
   bore?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisitionItem"> | string | null
+  technicalFamily?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisitionItem"> | string | null
+  technicalAttributes?: Prisma.JsonNullableWithAggregatesFilter<"PurchaseRequisitionItem">
   sellerUnitCost?: Prisma.DecimalWithAggregatesFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyWithAggregatesFilter<"PurchaseRequisitionItem"> | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalWithAggregatesFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -617,6 +637,8 @@ export type PurchaseRequisitionItemCreateInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -656,6 +678,8 @@ export type PurchaseRequisitionItemUncheckedCreateInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -687,6 +711,8 @@ export type PurchaseRequisitionItemUpdateInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -726,6 +752,8 @@ export type PurchaseRequisitionItemUncheckedUpdateInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -761,6 +789,8 @@ export type PurchaseRequisitionItemCreateManyInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -791,6 +821,8 @@ export type PurchaseRequisitionItemUpdateManyMutationInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -823,6 +855,8 @@ export type PurchaseRequisitionItemUncheckedUpdateManyInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -877,6 +911,8 @@ export type PurchaseRequisitionItemCountOrderByAggregateInput = {
   diameter?: Prisma.SortOrder
   thickness?: Prisma.SortOrder
   bore?: Prisma.SortOrder
+  technicalFamily?: Prisma.SortOrder
+  technicalAttributes?: Prisma.SortOrder
   sellerUnitCost?: Prisma.SortOrder
   sellerCurrency?: Prisma.SortOrder
   sellerExchangeRate?: Prisma.SortOrder
@@ -918,6 +954,7 @@ export type PurchaseRequisitionItemMaxOrderByAggregateInput = {
   diameter?: Prisma.SortOrder
   thickness?: Prisma.SortOrder
   bore?: Prisma.SortOrder
+  technicalFamily?: Prisma.SortOrder
   sellerUnitCost?: Prisma.SortOrder
   sellerCurrency?: Prisma.SortOrder
   sellerExchangeRate?: Prisma.SortOrder
@@ -951,6 +988,7 @@ export type PurchaseRequisitionItemMinOrderByAggregateInput = {
   diameter?: Prisma.SortOrder
   thickness?: Prisma.SortOrder
   bore?: Prisma.SortOrder
+  technicalFamily?: Prisma.SortOrder
   sellerUnitCost?: Prisma.SortOrder
   sellerCurrency?: Prisma.SortOrder
   sellerExchangeRate?: Prisma.SortOrder
@@ -1259,6 +1297,8 @@ export type PurchaseRequisitionItemCreateWithoutErpLinkedByInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1296,6 +1336,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutErpLinkedByInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1360,6 +1402,8 @@ export type PurchaseRequisitionItemScalarWhereInput = {
   diameter?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   thickness?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
   bore?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalFamily?: Prisma.StringNullableFilter<"PurchaseRequisitionItem"> | string | null
+  technicalAttributes?: Prisma.JsonNullableFilter<"PurchaseRequisitionItem">
   sellerUnitCost?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFilter<"PurchaseRequisitionItem"> | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFilter<"PurchaseRequisitionItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1390,6 +1434,8 @@ export type PurchaseRequisitionItemCreateWithoutProductInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1427,6 +1473,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutProductInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1484,6 +1532,8 @@ export type PurchaseRequisitionItemCreateWithoutQuoteItemInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1521,6 +1571,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutQuoteItemInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1568,6 +1620,8 @@ export type PurchaseRequisitionItemUpdateWithoutQuoteItemInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1605,6 +1659,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutQuoteItemInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1636,6 +1692,8 @@ export type PurchaseRequisitionItemCreateWithoutSellerSupplierInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1674,6 +1732,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutSellerSupplierInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1730,6 +1790,8 @@ export type PurchaseRequisitionItemCreateWithoutRequisitionInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1767,6 +1829,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutRequisitionInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1824,6 +1888,8 @@ export type PurchaseRequisitionItemCreateWithoutOffersInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1862,6 +1928,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutOffersInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1897,6 +1965,8 @@ export type PurchaseRequisitionItemCreateWithoutSelectedOfferInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1935,6 +2005,8 @@ export type PurchaseRequisitionItemUncheckedCreateWithoutSelectedOfferInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1981,6 +2053,8 @@ export type PurchaseRequisitionItemUpdateWithoutOffersInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2019,6 +2093,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutOffersInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2060,6 +2136,8 @@ export type PurchaseRequisitionItemUpdateWithoutSelectedOfferInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2098,6 +2176,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutSelectedOfferInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2131,6 +2211,8 @@ export type PurchaseRequisitionItemCreateManyErpLinkedByInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2161,6 +2243,8 @@ export type PurchaseRequisitionItemUpdateWithoutErpLinkedByInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2198,6 +2282,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutErpLinkedByInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2232,6 +2318,8 @@ export type PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByInput = 
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2265,6 +2353,8 @@ export type PurchaseRequisitionItemCreateManyProductInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2295,6 +2385,8 @@ export type PurchaseRequisitionItemUpdateWithoutProductInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2332,6 +2424,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutProductInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2366,6 +2460,8 @@ export type PurchaseRequisitionItemUncheckedUpdateManyWithoutProductInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2400,6 +2496,8 @@ export type PurchaseRequisitionItemCreateManySellerSupplierInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2429,6 +2527,8 @@ export type PurchaseRequisitionItemUpdateWithoutSellerSupplierInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2467,6 +2567,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutSellerSupplierInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2501,6 +2603,8 @@ export type PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierInput
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2533,6 +2637,8 @@ export type PurchaseRequisitionItemCreateManyRequisitionInput = {
   diameter?: string | null
   thickness?: string | null
   bore?: string | null
+  technicalFamily?: string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency: $Enums.Currency
   sellerExchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2563,6 +2669,8 @@ export type PurchaseRequisitionItemUpdateWithoutRequisitionInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2600,6 +2708,8 @@ export type PurchaseRequisitionItemUncheckedUpdateWithoutRequisitionInput = {
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2634,6 +2744,8 @@ export type PurchaseRequisitionItemUncheckedUpdateManyWithoutRequisitionInput = 
   diameter?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   bore?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalFamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   sellerUnitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sellerCurrency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   sellerExchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -2699,6 +2811,8 @@ export type PurchaseRequisitionItemSelect<ExtArgs extends runtime.Types.Extensio
   diameter?: boolean
   thickness?: boolean
   bore?: boolean
+  technicalFamily?: boolean
+  technicalAttributes?: boolean
   sellerUnitCost?: boolean
   sellerCurrency?: boolean
   sellerExchangeRate?: boolean
@@ -2741,6 +2855,8 @@ export type PurchaseRequisitionItemSelectCreateManyAndReturn<ExtArgs extends run
   diameter?: boolean
   thickness?: boolean
   bore?: boolean
+  technicalFamily?: boolean
+  technicalAttributes?: boolean
   sellerUnitCost?: boolean
   sellerCurrency?: boolean
   sellerExchangeRate?: boolean
@@ -2781,6 +2897,8 @@ export type PurchaseRequisitionItemSelectUpdateManyAndReturn<ExtArgs extends run
   diameter?: boolean
   thickness?: boolean
   bore?: boolean
+  technicalFamily?: boolean
+  technicalAttributes?: boolean
   sellerUnitCost?: boolean
   sellerCurrency?: boolean
   sellerExchangeRate?: boolean
@@ -2821,6 +2939,8 @@ export type PurchaseRequisitionItemSelectScalar = {
   diameter?: boolean
   thickness?: boolean
   bore?: boolean
+  technicalFamily?: boolean
+  technicalAttributes?: boolean
   sellerUnitCost?: boolean
   sellerCurrency?: boolean
   sellerExchangeRate?: boolean
@@ -2837,7 +2957,7 @@ export type PurchaseRequisitionItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PurchaseRequisitionItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionId" | "quoteItemId" | "position" | "productId" | "source" | "erpCode" | "erpEan" | "erpLinkedAt" | "erpLinkedByUserId" | "qty" | "unit" | "description" | "standard" | "diameter" | "thickness" | "bore" | "sellerUnitCost" | "sellerCurrency" | "sellerExchangeRate" | "sellerCostSource" | "sellerSupplierId" | "sellerSupplierName" | "sellerBrand" | "originRestrictions" | "sellerDeliveryTime" | "deliveryPlace" | "status" | "selectedOfferId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseRequisitionItem"]>
+export type PurchaseRequisitionItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionId" | "quoteItemId" | "position" | "productId" | "source" | "erpCode" | "erpEan" | "erpLinkedAt" | "erpLinkedByUserId" | "qty" | "unit" | "description" | "standard" | "diameter" | "thickness" | "bore" | "technicalFamily" | "technicalAttributes" | "sellerUnitCost" | "sellerCurrency" | "sellerExchangeRate" | "sellerCostSource" | "sellerSupplierId" | "sellerSupplierName" | "sellerBrand" | "originRestrictions" | "sellerDeliveryTime" | "deliveryPlace" | "status" | "selectedOfferId" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseRequisitionItem"]>
 export type PurchaseRequisitionItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requisition?: boolean | Prisma.PurchaseRequisitionDefaultArgs<ExtArgs>
   quoteItem?: boolean | Prisma.QuoteItemDefaultArgs<ExtArgs>
@@ -2894,6 +3014,8 @@ export type $PurchaseRequisitionItemPayload<ExtArgs extends runtime.Types.Extens
     diameter: string | null
     thickness: string | null
     bore: string | null
+    technicalFamily: string | null
+    technicalAttributes: runtime.JsonValue | null
     sellerUnitCost: runtime.Decimal
     sellerCurrency: $Enums.Currency
     sellerExchangeRate: runtime.Decimal
@@ -3355,6 +3477,8 @@ export interface PurchaseRequisitionItemFieldRefs {
   readonly diameter: Prisma.FieldRef<"PurchaseRequisitionItem", 'String'>
   readonly thickness: Prisma.FieldRef<"PurchaseRequisitionItem", 'String'>
   readonly bore: Prisma.FieldRef<"PurchaseRequisitionItem", 'String'>
+  readonly technicalFamily: Prisma.FieldRef<"PurchaseRequisitionItem", 'String'>
+  readonly technicalAttributes: Prisma.FieldRef<"PurchaseRequisitionItem", 'Json'>
   readonly sellerUnitCost: Prisma.FieldRef<"PurchaseRequisitionItem", 'Decimal'>
   readonly sellerCurrency: Prisma.FieldRef<"PurchaseRequisitionItem", 'Currency'>
   readonly sellerExchangeRate: Prisma.FieldRef<"PurchaseRequisitionItem", 'Decimal'>
@@ -3565,6 +3689,11 @@ export type PurchaseRequisitionItemFindManyArgs<ExtArgs extends runtime.Types.Ex
    * Skip the first `n` PurchaseRequisitionItems.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PurchaseRequisitionItems.
+   */
   distinct?: Prisma.PurchaseRequisitionItemScalarFieldEnum | Prisma.PurchaseRequisitionItemScalarFieldEnum[]
 }
 

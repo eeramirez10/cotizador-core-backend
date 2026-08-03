@@ -74,6 +74,11 @@ export class AddQuoteItemUseCase {
       deliveryTime: dto.deliveryTime,
     };
     const requiresReview = !isQuoteItemReady(readinessInput);
+    const customerDescriptionOriginal = dto.customerDescriptionOriginal ?? dto.customerDescription;
+    const customerDescriptionWasEdited = Boolean(
+      dto.customerDescriptionEditedAt
+      && (customerDescriptionOriginal || "").trim() !== (dto.customerDescription || "").trim()
+    );
 
     const updatedQuote = await this.quoteRepository.addItem({
       quoteId,
@@ -87,6 +92,9 @@ export class AddQuoteItemUseCase {
         externalProductCode: dto.externalProductCode,
         ean: dto.ean,
         customerDescription: dto.customerDescription,
+        customerDescriptionOriginal,
+        customerDescriptionEditedAt: customerDescriptionWasEdited ? new Date() : null,
+        customerDescriptionEditedByUserId: customerDescriptionWasEdited ? actor.id : null,
         customerUnit: dto.customerUnit,
         erpDescription: dto.erpDescription,
         unit: dto.unit,
@@ -98,7 +106,13 @@ export class AddQuoteItemUseCase {
         sellerSupplierNameSnapshot: dto.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: dto.sellerQuotedUnitCost,
         sellerQuotedCurrency: dto.sellerQuotedCurrency,
+        sellerQuotedExchangeRate: dto.sellerQuotedExchangeRate,
         sellerQuotedBrand: dto.sellerQuotedBrand,
+        sellerSupplierDescription: dto.sellerSupplierDescription,
+        sellerSupplierOrigin: dto.sellerSupplierOrigin,
+        sellerSupplierQuoteValidUntil: dto.sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: dto.sellerSupplierQuoteReference,
+        sellerSupplierQuoteNotes: dto.sellerSupplierQuoteNotes,
         sellerOriginRestrictions: dto.sellerOriginRestrictions,
         sellerDeliveryState: dto.sellerDeliveryState,
         sellerSupplierDeliveryTime: dto.sellerSupplierDeliveryTime,
@@ -106,6 +120,8 @@ export class AddQuoteItemUseCase {
         purchaseDiameter: dto.purchaseDiameter,
         purchaseThickness: dto.purchaseThickness,
         purchaseBore: dto.purchaseBore,
+        technicalFamily: dto.technicalFamily,
+        technicalAttributes: dto.technicalAttributes,
         cost: round4(dto.cost),
         costCurrency: dto.costCurrency,
         marginPct,

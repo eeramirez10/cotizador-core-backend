@@ -17,6 +17,11 @@ import { PurchaseRequisitionRepository } from "../repositories/purchase-requisit
 import { QuoteRepository } from "../repositories/quote.repository";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../utils/canonical-product-text";
 
+const normalizeTaxId = (value: string | null): string | null =>
+  value ? value.toUpperCase().replace(/[^A-Z0-9]/g, "") || null : null;
+const normalizeEmail = (value: string | null): string | null => value?.trim().toLowerCase() || null;
+const normalizePhone = (value: string | null): string | null => value?.replace(/\D/g, "") || null;
+
 export class PurchaseRequisitionUseCase {
   constructor(
     private readonly repository: PurchaseRequisitionRepository,
@@ -133,7 +138,14 @@ export class PurchaseRequisitionUseCase {
     const updated = await this.repository.createOffer(id, {
       requisitionItemId: itemId,
       supplierId: dto.supplierId,
+      source: "PURCHASING",
+      supplierProductCode: dto.supplierProductCode,
+      alternateCodes: dto.alternateCodes,
+      supplierDescription: dto.supplierDescription,
       qty: dto.qty,
+      unit: dto.unit,
+      listUnitPrice: dto.listUnitPrice,
+      discountPct: dto.discountPct,
       unitCost: dto.unitCost,
       currency: dto.currency,
       exchangeRate: dto.exchangeRate,
@@ -141,9 +153,20 @@ export class PurchaseRequisitionUseCase {
       brand: dto.brand,
       origin: dto.origin,
       deliveryTime: dto.deliveryTime,
+      availableDate: dto.availableDate,
+      minimumQty: dto.minimumQty,
       validUntil: dto.validUntil,
       quoteDate: dto.quoteDate,
       externalReference: dto.externalReference,
+      paymentTerms: dto.paymentTerms,
+      deliveryTerms: dto.deliveryTerms,
+      documentSubtotal: dto.documentSubtotal,
+      documentDiscount: dto.documentDiscount,
+      documentFreight: dto.documentFreight,
+      documentOtherCharges: dto.documentOtherCharges,
+      taxIncluded: dto.taxIncluded,
+      documentTax: dto.documentTax,
+      documentTotal: dto.documentTotal,
       notes: dto.notes,
       actorUserId: actor.id,
     }, actor);
@@ -197,6 +220,9 @@ export class PurchaseRequisitionUseCase {
       phoneExtension: contact?.extension || null,
       mobile: contact?.mobile || null,
       notes: contact?.notes || null,
+      normalizedTaxId: normalizeTaxId(erpSupplier.taxId || null),
+      normalizedEmail: normalizeEmail(contact?.email || null),
+      normalizedPhone: normalizePhone(contact?.phone || contact?.mobile || null),
       actorUserId: actor.id,
     });
     return SupplierResponseDto.toJSON(supplier);
@@ -207,13 +233,18 @@ export class PurchaseRequisitionUseCase {
     const supplier = await this.repository.createSupplier({
       name: normalizeProductDisplayText(dto.name),
       canonicalName: canonicalizeProductText(dto.name),
+      status: "PROSPECT",
       scope: dto.scope,
       taxId: dto.taxId,
+      normalizedTaxId: normalizeTaxId(dto.taxId),
       state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
       email: dto.email,
+      normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
+      normalizedPhone: normalizePhone(dto.phone),
+      allowPotentialDuplicate: dto.allowPotentialDuplicate,
       actorUserId: actor.id,
     });
     return SupplierResponseDto.toJSON(supplier);
@@ -226,11 +257,15 @@ export class PurchaseRequisitionUseCase {
       canonicalName: canonicalizeProductText(dto.name),
       scope: dto.scope,
       taxId: dto.taxId,
+      normalizedTaxId: normalizeTaxId(dto.taxId),
       state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
       email: dto.email,
+      normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
+      normalizedPhone: normalizePhone(dto.phone),
+      allowPotentialDuplicate: dto.allowPotentialDuplicate,
       actorUserId: actor.id,
     });
     if (!supplier) throw new Error("Supplier not found.");

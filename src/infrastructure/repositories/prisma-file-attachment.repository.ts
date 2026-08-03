@@ -87,7 +87,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
         requisitionItem: { requisitionId: input.requisitionId },
         isActive: true,
       },
-      select: { id: true },
+      select: { id: true, supplierQuoteId: true },
     });
     if (offers.length !== input.purchaseOfferIds.length) throw new Error("One or more supplier offers were not found.");
 
@@ -102,6 +102,13 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
         },
         include: assetInclude,
       });
+      const supplierQuoteIds = [...new Set(offers.flatMap((offer) => offer.supplierQuoteId ? [offer.supplierQuoteId] : []))];
+      if (supplierQuoteIds.length > 0) {
+        await tx.purchaseSupplierQuote.updateMany({
+          where: { id: { in: supplierQuoteIds } },
+          data: { fileAssetId: asset.id, updatedByUserId: input.actor.id },
+        });
+      }
       await tx.auditLog.create({
         data: {
           actorUserId: input.actor.id,
