@@ -260,6 +260,7 @@ export class SaveSupplierRequestDto {
     public readonly email: string | null,
     public readonly phone: string | null,
     public readonly contacts: Array<{
+      contactKey: string;
       channel: SupplierContactChannel;
       value: string;
       normalizedValue: string;
@@ -267,6 +268,7 @@ export class SaveSupplierRequestDto {
       extension: string | null;
       isWhatsApp: boolean;
       contactName: string | null;
+      contactPosition: string | null;
       label: string | null;
       isPrimary: boolean;
     }>,
@@ -290,14 +292,14 @@ export class SaveSupplierRequestDto {
     if (body.contacts !== undefined && !Array.isArray(body.contacts)) return ["contacts must be an array."];
     const incomingContacts = [...(Array.isArray(body.contacts) ? body.contacts : [])];
     if (!incomingContacts.some((value) => (value as Record<string, unknown> | null)?.channel === "EMAIL") && email) {
-      incomingContacts.push({ channel: "EMAIL", value: email, contactName: body.contactName, isPrimary: true });
+      incomingContacts.push({ contactKey: "primary", channel: "EMAIL", value: email, contactName: body.contactName, contactPosition: body.contactPosition, isPrimary: true });
     }
     if (!incomingContacts.some((value) => (value as Record<string, unknown> | null)?.channel === "PHONE") && phone) {
-      incomingContacts.push({ channel: "PHONE", value: phone, phoneKind: "UNKNOWN", contactName: body.contactName, isPrimary: true });
+      incomingContacts.push({ contactKey: "primary", channel: "PHONE", value: phone, phoneKind: "UNKNOWN", contactName: body.contactName, contactPosition: body.contactPosition, isPrimary: true });
     }
     const contacts: SaveSupplierRequestDto["contacts"] = [];
     const seenContacts = new Set<string>();
-    for (const value of incomingContacts) {
+    for (const [index, value] of incomingContacts.entries()) {
       if (!value || typeof value !== "object") return ["Each contact must be an object."];
       const contact = value as Record<string, unknown>;
       const channel = contact.channel as SupplierContactChannel;
@@ -319,6 +321,7 @@ export class SaveSupplierRequestDto {
       if (seenContacts.has(key)) continue;
       seenContacts.add(key);
       contacts.push({
+        contactKey: (optionalText(contact.contactKey) ?? `contact-${index + 1}`).slice(0, 60),
         channel,
         value: channel === "EMAIL" ? normalized : contactValue,
         normalizedValue: normalized,
@@ -326,33 +329,31 @@ export class SaveSupplierRequestDto {
         extension: channel === "PHONE" ? normalizedPhone!.extension : null,
         isWhatsApp: channel === "PHONE" && contact.isWhatsApp === true,
         contactName: optionalText(contact.contactName) ?? null,
+        contactPosition: optionalText(contact.contactPosition) ?? null,
         label: optionalText(contact.label) ?? null,
         isPrimary: contact.isPrimary === true,
       });
     }
-    for (const channel of ["EMAIL", "PHONE"] as const) {
-      const channelContacts = contacts.filter((contact) => contact.channel === channel);
-      if (channelContacts.length > 0 && !channelContacts.some((contact) => contact.isPrimary)) channelContacts[0]!.isPrimary = true;
-      let primaryFound = false;
-      channelContacts.forEach((contact) => {
-        if (contact.isPrimary && primaryFound) contact.isPrimary = false;
-        if (contact.isPrimary) primaryFound = true;
-      });
-    }
+    const primaryContactKey = contacts.find((contact) => contact.isPrimary)?.contactKey ?? contacts[0]?.contactKey;
+    contacts.forEach((contact) => {
+      contact.isPrimary = contact.contactKey === primaryContactKey;
+    });
     const primaryEmail = contacts.find((contact) => contact.channel === "EMAIL" && contact.isPrimary)?.normalizedValue
       ?? contacts.find((contact) => contact.channel === "EMAIL")?.normalizedValue
       ?? null;
     const primaryPhone = contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.normalizedValue
       ?? contacts.find((contact) => contact.channel === "PHONE")?.normalizedValue
       ?? null;
+    const primaryContact = contacts.find((contact) => contact.isPrimary && contact.contactName)
+      ?? contacts.find((contact) => contact.contactName);
     return [, new SaveSupplierRequestDto(
       name,
       scope,
       optionalText(body.taxId)?.toUpperCase() ?? null,
       optionalText(body.state)?.toUpperCase() ?? null,
       country,
-      optionalText(body.contactName) ?? null,
-      optionalText(body.contactPosition) ?? null,
+      primaryContact?.contactName ?? optionalText(body.contactName) ?? null,
+      primaryContact?.contactPosition ?? optionalText(body.contactPosition) ?? null,
       optionalText(body.creditTerms) ?? null,
       currency,
       optionalText(body.notes) ?? null,

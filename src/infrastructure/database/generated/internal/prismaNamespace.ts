@@ -2489,6 +2489,7 @@ export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typ
 export const SupplierContactScalarFieldEnum = {
   id: 'id',
   supplierId: 'supplierId',
+  contactKey: 'contactKey',
   channel: 'channel',
   value: 'value',
   normalizedValue: 'normalizedValue',
@@ -2496,6 +2497,7 @@ export const SupplierContactScalarFieldEnum = {
   extension: 'extension',
   isWhatsApp: 'isWhatsApp',
   contactName: 'contactName',
+  contactPosition: 'contactPosition',
   label: 'label',
   isPrimary: 'isPrimary',
   createdAt: 'createdAt',

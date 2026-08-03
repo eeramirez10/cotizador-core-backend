@@ -655,6 +655,7 @@ model Supplier {
 model SupplierContact {
   id              String                 @id @default(uuid()) @db.Uuid
   supplierId      String                 @map("supplier_id") @db.Uuid
+  contactKey      String                 @map("contact_key") @db.VarChar(60)
   channel         SupplierContactChannel
   value           String                 @db.VarChar(180)
   normalizedValue String                 @map("normalized_value") @db.VarChar(180)
@@ -662,6 +663,7 @@ model SupplierContact {
   extension       String?                @db.VarChar(20)
   isWhatsApp      Boolean                @default(false) @map("is_whatsapp")
   contactName     String?                @map("contact_name") @db.VarChar(160)
+  contactPosition String?                @map("contact_position") @db.VarChar(160)
   label           String?                @db.VarChar(100)
   isPrimary       Boolean                @default(false) @map("is_primary")
   createdAt       DateTime               @default(now()) @map("created_at")
@@ -672,6 +674,7 @@ model SupplierContact {
   @@unique([supplierId, channel, normalizedValue])
   @@index([normalizedValue])
   @@index([supplierId, channel])
+  @@index([supplierId, contactKey])
   @@map("supplier_contacts")
 }
 

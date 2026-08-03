@@ -109,6 +109,7 @@ const supplierEntity = (supplier: {
   updatedAt: Date;
   contacts?: Array<{
     id: string;
+    contactKey: string;
     channel: "EMAIL" | "PHONE";
     value: string;
     normalizedValue: string;
@@ -116,6 +117,7 @@ const supplierEntity = (supplier: {
     extension: string | null;
     isWhatsApp: boolean;
     contactName: string | null;
+    contactPosition: string | null;
     label: string | null;
     isPrimary: boolean;
   }>;
@@ -718,7 +720,18 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
                 { contactName: { contains: search, mode: "insensitive" as const } },
                 { email: { contains: search, mode: "insensitive" as const } },
                 { phone: { contains: search, mode: "insensitive" as const } },
-                { contacts: { some: { value: { contains: search, mode: "insensitive" as const } } } },
+                {
+                  contacts: {
+                    some: {
+                      OR: [
+                        { value: { contains: search, mode: "insensitive" as const } },
+                        { contactName: { contains: search, mode: "insensitive" as const } },
+                        { contactPosition: { contains: search, mode: "insensitive" as const } },
+                        { label: { contains: search, mode: "insensitive" as const } },
+                      ],
+                    },
+                  },
+                },
               ],
             }
           : {}),

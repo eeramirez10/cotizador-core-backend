@@ -27,6 +27,7 @@ export type AggregateSupplierContact = {
 export type SupplierContactMinAggregateOutputType = {
   id: string | null
   supplierId: string | null
+  contactKey: string | null
   channel: $Enums.SupplierContactChannel | null
   value: string | null
   normalizedValue: string | null
@@ -34,6 +35,7 @@ export type SupplierContactMinAggregateOutputType = {
   extension: string | null
   isWhatsApp: boolean | null
   contactName: string | null
+  contactPosition: string | null
   label: string | null
   isPrimary: boolean | null
   createdAt: Date | null
@@ -43,6 +45,7 @@ export type SupplierContactMinAggregateOutputType = {
 export type SupplierContactMaxAggregateOutputType = {
   id: string | null
   supplierId: string | null
+  contactKey: string | null
   channel: $Enums.SupplierContactChannel | null
   value: string | null
   normalizedValue: string | null
@@ -50,6 +53,7 @@ export type SupplierContactMaxAggregateOutputType = {
   extension: string | null
   isWhatsApp: boolean | null
   contactName: string | null
+  contactPosition: string | null
   label: string | null
   isPrimary: boolean | null
   createdAt: Date | null
@@ -59,6 +63,7 @@ export type SupplierContactMaxAggregateOutputType = {
 export type SupplierContactCountAggregateOutputType = {
   id: number
   supplierId: number
+  contactKey: number
   channel: number
   value: number
   normalizedValue: number
@@ -66,6 +71,7 @@ export type SupplierContactCountAggregateOutputType = {
   extension: number
   isWhatsApp: number
   contactName: number
+  contactPosition: number
   label: number
   isPrimary: number
   createdAt: number
@@ -77,6 +83,7 @@ export type SupplierContactCountAggregateOutputType = {
 export type SupplierContactMinAggregateInputType = {
   id?: true
   supplierId?: true
+  contactKey?: true
   channel?: true
   value?: true
   normalizedValue?: true
@@ -84,6 +91,7 @@ export type SupplierContactMinAggregateInputType = {
   extension?: true
   isWhatsApp?: true
   contactName?: true
+  contactPosition?: true
   label?: true
   isPrimary?: true
   createdAt?: true
@@ -93,6 +101,7 @@ export type SupplierContactMinAggregateInputType = {
 export type SupplierContactMaxAggregateInputType = {
   id?: true
   supplierId?: true
+  contactKey?: true
   channel?: true
   value?: true
   normalizedValue?: true
@@ -100,6 +109,7 @@ export type SupplierContactMaxAggregateInputType = {
   extension?: true
   isWhatsApp?: true
   contactName?: true
+  contactPosition?: true
   label?: true
   isPrimary?: true
   createdAt?: true
@@ -109,6 +119,7 @@ export type SupplierContactMaxAggregateInputType = {
 export type SupplierContactCountAggregateInputType = {
   id?: true
   supplierId?: true
+  contactKey?: true
   channel?: true
   value?: true
   normalizedValue?: true
@@ -116,6 +127,7 @@ export type SupplierContactCountAggregateInputType = {
   extension?: true
   isWhatsApp?: true
   contactName?: true
+  contactPosition?: true
   label?: true
   isPrimary?: true
   createdAt?: true
@@ -198,6 +210,7 @@ export type SupplierContactGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type SupplierContactGroupByOutputType = {
   id: string
   supplierId: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -205,6 +218,7 @@ export type SupplierContactGroupByOutputType = {
   extension: string | null
   isWhatsApp: boolean
   contactName: string | null
+  contactPosition: string | null
   label: string | null
   isPrimary: boolean
   createdAt: Date
@@ -235,6 +249,7 @@ export type SupplierContactWhereInput = {
   NOT?: Prisma.SupplierContactWhereInput | Prisma.SupplierContactWhereInput[]
   id?: Prisma.UuidFilter<"SupplierContact"> | string
   supplierId?: Prisma.UuidFilter<"SupplierContact"> | string
+  contactKey?: Prisma.StringFilter<"SupplierContact"> | string
   channel?: Prisma.EnumSupplierContactChannelFilter<"SupplierContact"> | $Enums.SupplierContactChannel
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
@@ -242,6 +257,7 @@ export type SupplierContactWhereInput = {
   extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isPrimary?: Prisma.BoolFilter<"SupplierContact"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SupplierContact"> | Date | string
@@ -252,6 +268,7 @@ export type SupplierContactWhereInput = {
 export type SupplierContactOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  contactKey?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
@@ -259,6 +276,7 @@ export type SupplierContactOrderByWithRelationInput = {
   extension?: Prisma.SortOrderInput | Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
   isPrimary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -273,6 +291,7 @@ export type SupplierContactWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SupplierContactWhereInput[]
   NOT?: Prisma.SupplierContactWhereInput | Prisma.SupplierContactWhereInput[]
   supplierId?: Prisma.UuidFilter<"SupplierContact"> | string
+  contactKey?: Prisma.StringFilter<"SupplierContact"> | string
   channel?: Prisma.EnumSupplierContactChannelFilter<"SupplierContact"> | $Enums.SupplierContactChannel
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
@@ -280,6 +299,7 @@ export type SupplierContactWhereUniqueInput = Prisma.AtLeast<{
   extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isPrimary?: Prisma.BoolFilter<"SupplierContact"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SupplierContact"> | Date | string
@@ -290,6 +310,7 @@ export type SupplierContactWhereUniqueInput = Prisma.AtLeast<{
 export type SupplierContactOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  contactKey?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
@@ -297,6 +318,7 @@ export type SupplierContactOrderByWithAggregationInput = {
   extension?: Prisma.SortOrderInput | Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   label?: Prisma.SortOrderInput | Prisma.SortOrder
   isPrimary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -312,6 +334,7 @@ export type SupplierContactScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SupplierContactScalarWhereWithAggregatesInput | Prisma.SupplierContactScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"SupplierContact"> | string
   supplierId?: Prisma.UuidWithAggregatesFilter<"SupplierContact"> | string
+  contactKey?: Prisma.StringWithAggregatesFilter<"SupplierContact"> | string
   channel?: Prisma.EnumSupplierContactChannelWithAggregatesFilter<"SupplierContact"> | $Enums.SupplierContactChannel
   value?: Prisma.StringWithAggregatesFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringWithAggregatesFilter<"SupplierContact"> | string
@@ -319,6 +342,7 @@ export type SupplierContactScalarWhereWithAggregatesInput = {
   extension?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolWithAggregatesFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
+  contactPosition?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableWithAggregatesFilter<"SupplierContact"> | string | null
   isPrimary?: Prisma.BoolWithAggregatesFilter<"SupplierContact"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SupplierContact"> | Date | string
@@ -327,6 +351,7 @@ export type SupplierContactScalarWhereWithAggregatesInput = {
 
 export type SupplierContactCreateInput = {
   id?: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -334,6 +359,7 @@ export type SupplierContactCreateInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -344,6 +370,7 @@ export type SupplierContactCreateInput = {
 export type SupplierContactUncheckedCreateInput = {
   id?: string
   supplierId: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -351,6 +378,7 @@ export type SupplierContactUncheckedCreateInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -359,6 +387,7 @@ export type SupplierContactUncheckedCreateInput = {
 
 export type SupplierContactUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -366,6 +395,7 @@ export type SupplierContactUpdateInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -376,6 +406,7 @@ export type SupplierContactUpdateInput = {
 export type SupplierContactUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -383,6 +414,7 @@ export type SupplierContactUncheckedUpdateInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,6 +424,7 @@ export type SupplierContactUncheckedUpdateInput = {
 export type SupplierContactCreateManyInput = {
   id?: string
   supplierId: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -399,6 +432,7 @@ export type SupplierContactCreateManyInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -407,6 +441,7 @@ export type SupplierContactCreateManyInput = {
 
 export type SupplierContactUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -414,6 +449,7 @@ export type SupplierContactUpdateManyMutationInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -423,6 +459,7 @@ export type SupplierContactUpdateManyMutationInput = {
 export type SupplierContactUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -430,6 +467,7 @@ export type SupplierContactUncheckedUpdateManyInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -455,6 +493,7 @@ export type SupplierContactSupplierIdChannelNormalizedValueCompoundUniqueInput =
 export type SupplierContactCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  contactKey?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
@@ -462,6 +501,7 @@ export type SupplierContactCountOrderByAggregateInput = {
   extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   label?: Prisma.SortOrder
   isPrimary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -471,6 +511,7 @@ export type SupplierContactCountOrderByAggregateInput = {
 export type SupplierContactMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  contactKey?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
@@ -478,6 +519,7 @@ export type SupplierContactMaxOrderByAggregateInput = {
   extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   label?: Prisma.SortOrder
   isPrimary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -487,6 +529,7 @@ export type SupplierContactMaxOrderByAggregateInput = {
 export type SupplierContactMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  contactKey?: Prisma.SortOrder
   channel?: Prisma.SortOrder
   value?: Prisma.SortOrder
   normalizedValue?: Prisma.SortOrder
@@ -494,6 +537,7 @@ export type SupplierContactMinOrderByAggregateInput = {
   extension?: Prisma.SortOrder
   isWhatsApp?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
+  contactPosition?: Prisma.SortOrder
   label?: Prisma.SortOrder
   isPrimary?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -552,6 +596,7 @@ export type NullableEnumSupplierPhoneKindFieldUpdateOperationsInput = {
 
 export type SupplierContactCreateWithoutSupplierInput = {
   id?: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -559,6 +604,7 @@ export type SupplierContactCreateWithoutSupplierInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -567,6 +613,7 @@ export type SupplierContactCreateWithoutSupplierInput = {
 
 export type SupplierContactUncheckedCreateWithoutSupplierInput = {
   id?: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -574,6 +621,7 @@ export type SupplierContactUncheckedCreateWithoutSupplierInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -612,6 +660,7 @@ export type SupplierContactScalarWhereInput = {
   NOT?: Prisma.SupplierContactScalarWhereInput | Prisma.SupplierContactScalarWhereInput[]
   id?: Prisma.UuidFilter<"SupplierContact"> | string
   supplierId?: Prisma.UuidFilter<"SupplierContact"> | string
+  contactKey?: Prisma.StringFilter<"SupplierContact"> | string
   channel?: Prisma.EnumSupplierContactChannelFilter<"SupplierContact"> | $Enums.SupplierContactChannel
   value?: Prisma.StringFilter<"SupplierContact"> | string
   normalizedValue?: Prisma.StringFilter<"SupplierContact"> | string
@@ -619,6 +668,7 @@ export type SupplierContactScalarWhereInput = {
   extension?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isWhatsApp?: Prisma.BoolFilter<"SupplierContact"> | boolean
   contactName?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
+  contactPosition?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   label?: Prisma.StringNullableFilter<"SupplierContact"> | string | null
   isPrimary?: Prisma.BoolFilter<"SupplierContact"> | boolean
   createdAt?: Prisma.DateTimeFilter<"SupplierContact"> | Date | string
@@ -627,6 +677,7 @@ export type SupplierContactScalarWhereInput = {
 
 export type SupplierContactCreateManySupplierInput = {
   id?: string
+  contactKey: string
   channel: $Enums.SupplierContactChannel
   value: string
   normalizedValue: string
@@ -634,6 +685,7 @@ export type SupplierContactCreateManySupplierInput = {
   extension?: string | null
   isWhatsApp?: boolean
   contactName?: string | null
+  contactPosition?: string | null
   label?: string | null
   isPrimary?: boolean
   createdAt?: Date | string
@@ -642,6 +694,7 @@ export type SupplierContactCreateManySupplierInput = {
 
 export type SupplierContactUpdateWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -649,6 +702,7 @@ export type SupplierContactUpdateWithoutSupplierInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -657,6 +711,7 @@ export type SupplierContactUpdateWithoutSupplierInput = {
 
 export type SupplierContactUncheckedUpdateWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -664,6 +719,7 @@ export type SupplierContactUncheckedUpdateWithoutSupplierInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -672,6 +728,7 @@ export type SupplierContactUncheckedUpdateWithoutSupplierInput = {
 
 export type SupplierContactUncheckedUpdateManyWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  contactKey?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.EnumSupplierContactChannelFieldUpdateOperationsInput | $Enums.SupplierContactChannel
   value?: Prisma.StringFieldUpdateOperationsInput | string
   normalizedValue?: Prisma.StringFieldUpdateOperationsInput | string
@@ -679,6 +736,7 @@ export type SupplierContactUncheckedUpdateManyWithoutSupplierInput = {
   extension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isWhatsApp?: Prisma.BoolFieldUpdateOperationsInput | boolean
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isPrimary?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -690,6 +748,7 @@ export type SupplierContactUncheckedUpdateManyWithoutSupplierInput = {
 export type SupplierContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   supplierId?: boolean
+  contactKey?: boolean
   channel?: boolean
   value?: boolean
   normalizedValue?: boolean
@@ -697,6 +756,7 @@ export type SupplierContactSelect<ExtArgs extends runtime.Types.Extensions.Inter
   extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   label?: boolean
   isPrimary?: boolean
   createdAt?: boolean
@@ -707,6 +767,7 @@ export type SupplierContactSelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type SupplierContactSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   supplierId?: boolean
+  contactKey?: boolean
   channel?: boolean
   value?: boolean
   normalizedValue?: boolean
@@ -714,6 +775,7 @@ export type SupplierContactSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   label?: boolean
   isPrimary?: boolean
   createdAt?: boolean
@@ -724,6 +786,7 @@ export type SupplierContactSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
 export type SupplierContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   supplierId?: boolean
+  contactKey?: boolean
   channel?: boolean
   value?: boolean
   normalizedValue?: boolean
@@ -731,6 +794,7 @@ export type SupplierContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   label?: boolean
   isPrimary?: boolean
   createdAt?: boolean
@@ -741,6 +805,7 @@ export type SupplierContactSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
 export type SupplierContactSelectScalar = {
   id?: boolean
   supplierId?: boolean
+  contactKey?: boolean
   channel?: boolean
   value?: boolean
   normalizedValue?: boolean
@@ -748,13 +813,14 @@ export type SupplierContactSelectScalar = {
   extension?: boolean
   isWhatsApp?: boolean
   contactName?: boolean
+  contactPosition?: boolean
   label?: boolean
   isPrimary?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SupplierContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierId" | "channel" | "value" | "normalizedValue" | "phoneKind" | "extension" | "isWhatsApp" | "contactName" | "label" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplierContact"]>
+export type SupplierContactOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierId" | "contactKey" | "channel" | "value" | "normalizedValue" | "phoneKind" | "extension" | "isWhatsApp" | "contactName" | "contactPosition" | "label" | "isPrimary" | "createdAt" | "updatedAt", ExtArgs["result"]["supplierContact"]>
 export type SupplierContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
 }
@@ -773,6 +839,7 @@ export type $SupplierContactPayload<ExtArgs extends runtime.Types.Extensions.Int
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     supplierId: string
+    contactKey: string
     channel: $Enums.SupplierContactChannel
     value: string
     normalizedValue: string
@@ -780,6 +847,7 @@ export type $SupplierContactPayload<ExtArgs extends runtime.Types.Extensions.Int
     extension: string | null
     isWhatsApp: boolean
     contactName: string | null
+    contactPosition: string | null
     label: string | null
     isPrimary: boolean
     createdAt: Date
@@ -1210,6 +1278,7 @@ export interface Prisma__SupplierContactClient<T, Null = never, ExtArgs extends 
 export interface SupplierContactFieldRefs {
   readonly id: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly supplierId: Prisma.FieldRef<"SupplierContact", 'String'>
+  readonly contactKey: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly channel: Prisma.FieldRef<"SupplierContact", 'SupplierContactChannel'>
   readonly value: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly normalizedValue: Prisma.FieldRef<"SupplierContact", 'String'>
@@ -1217,6 +1286,7 @@ export interface SupplierContactFieldRefs {
   readonly extension: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly isWhatsApp: Prisma.FieldRef<"SupplierContact", 'Boolean'>
   readonly contactName: Prisma.FieldRef<"SupplierContact", 'String'>
+  readonly contactPosition: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly label: Prisma.FieldRef<"SupplierContact", 'String'>
   readonly isPrimary: Prisma.FieldRef<"SupplierContact", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"SupplierContact", 'DateTime'>

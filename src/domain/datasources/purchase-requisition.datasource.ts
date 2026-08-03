@@ -77,6 +77,7 @@ export interface SaveSupplierData {
 }
 
 export interface SaveSupplierContactData {
+  contactKey: string;
   channel: SupplierContactChannel;
   value: string;
   normalizedValue: string;
@@ -84,6 +85,7 @@ export interface SaveSupplierContactData {
   extension: string | null;
   isWhatsApp: boolean;
   contactName: string | null;
+  contactPosition: string | null;
   label: string | null;
   isPrimary: boolean;
 }
