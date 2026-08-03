@@ -4,6 +4,8 @@ import type {
   PurchaseRequisitionStatus,
   SupplierScope,
   SupplierStatus,
+  SupplierContactChannel,
+  SupplierPhoneKind,
   PurchaseOfferSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
@@ -65,8 +67,20 @@ export interface SaveSupplierData {
   normalizedEmail: string | null;
   phone: string | null;
   normalizedPhone: string | null;
+  contacts: SaveSupplierContactData[];
   allowPotentialDuplicate: boolean;
   actorUserId: string;
+}
+
+export interface SaveSupplierContactData {
+  channel: SupplierContactChannel;
+  value: string;
+  normalizedValue: string;
+  phoneKind: SupplierPhoneKind | null;
+  isWhatsApp: boolean;
+  contactName: string | null;
+  label: string | null;
+  isPrimary: boolean;
 }
 
 export interface SaveErpSupplierData {

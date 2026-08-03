@@ -650,6 +650,40 @@ export type EnumSupplierScopeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSupplierScopeFilter<$PrismaModel>
 }
 
+export type EnumSupplierContactChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierContactChannel | Prisma.EnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel> | $Enums.SupplierContactChannel
+}
+
+export type EnumSupplierPhoneKindNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierPhoneKind | Prisma.EnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel> | $Enums.SupplierPhoneKind | null
+}
+
+export type EnumSupplierContactChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierContactChannel | Prisma.EnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierContactChannelWithAggregatesFilter<$PrismaModel> | $Enums.SupplierContactChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel>
+}
+
+export type EnumSupplierPhoneKindNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierPhoneKind | Prisma.EnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupplierPhoneKindNullableWithAggregatesFilter<$PrismaModel> | $Enums.SupplierPhoneKind | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel>
+}
+
 export type EnumPurchaseRequisitionStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PurchaseRequisitionStatus | Prisma.EnumPurchaseRequisitionStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PurchaseRequisitionStatus[] | Prisma.ListEnumPurchaseRequisitionStatusFieldRefInput<$PrismaModel>
@@ -1436,6 +1470,40 @@ export type NestedEnumSupplierScopeWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSupplierScopeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSupplierScopeFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplierContactChannelFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierContactChannel | Prisma.EnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel> | $Enums.SupplierContactChannel
+}
+
+export type NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierPhoneKind | Prisma.EnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel> | $Enums.SupplierPhoneKind | null
+}
+
+export type NestedEnumSupplierContactChannelWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierContactChannel | Prisma.EnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  in?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupplierContactChannel[] | Prisma.ListEnumSupplierContactChannelFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupplierContactChannelWithAggregatesFilter<$PrismaModel> | $Enums.SupplierContactChannel
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierContactChannelFilter<$PrismaModel>
+}
+
+export type NestedEnumSupplierPhoneKindNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupplierPhoneKind | Prisma.EnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupplierPhoneKind[] | Prisma.ListEnumSupplierPhoneKindFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupplierPhoneKindNullableWithAggregatesFilter<$PrismaModel> | $Enums.SupplierPhoneKind | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupplierPhoneKindNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumPurchaseRequisitionStatusFilter<$PrismaModel = never> = {

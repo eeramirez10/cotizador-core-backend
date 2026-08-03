@@ -3,6 +3,8 @@ import type {
   PurchaseCostSource,
   PurchaseRequisitionStatus,
   SupplierScope,
+  SupplierContactChannel,
+  SupplierPhoneKind,
 } from "../../../infrastructure/database/generated/enums";
 
 const optionalText = (value: unknown): string | null | undefined => {
@@ -249,6 +251,15 @@ export class SaveSupplierRequestDto {
     public readonly contactName: string | null,
     public readonly email: string | null,
     public readonly phone: string | null,
+    public readonly contacts: Array<{
+      channel: SupplierContactChannel;
+      value: string;
+      phoneKind: SupplierPhoneKind | null;
+      isWhatsApp: boolean;
+      contactName: string | null;
+      label: string | null;
+      isPrimary: boolean;
+    }>,
     public readonly allowPotentialDuplicate: boolean,
   ) {}
 
@@ -258,9 +269,59 @@ export class SaveSupplierRequestDto {
     const name = typeof body.name === "string" ? body.name.trim() : "";
     const scope = body.scope as SupplierScope;
     const email = optionalText(body.email) ?? null;
+    const phone = optionalText(body.phone) ?? null;
     if (!name) return ["name is required."];
     if (scope !== "NATIONAL" && scope !== "INTERNATIONAL") return ["scope is invalid."];
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return ["email is invalid."];
+    if (body.contacts !== undefined && !Array.isArray(body.contacts)) return ["contacts must be an array."];
+    const contacts: SaveSupplierRequestDto["contacts"] = [];
+    const seenContacts = new Set<string>();
+    for (const value of Array.isArray(body.contacts) ? body.contacts : []) {
+      if (!value || typeof value !== "object") return ["Each contact must be an object."];
+      const contact = value as Record<string, unknown>;
+      const channel = contact.channel as SupplierContactChannel;
+      const contactValue = optionalText(contact.value) ?? null;
+      if ((channel !== "EMAIL" && channel !== "PHONE") || !contactValue) return ["Each contact requires a valid channel and value."];
+      if (channel === "EMAIL" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactValue)) return ["A supplier contact email is invalid."];
+      const phoneKind = channel === "PHONE"
+        ? (["LANDLINE", "MOBILE", "UNKNOWN"].includes(String(contact.phoneKind)) ? contact.phoneKind as SupplierPhoneKind : "UNKNOWN")
+        : null;
+      const normalized = channel === "EMAIL" ? contactValue.toLowerCase() : contactValue.replace(/\D/g, "");
+      if (channel === "PHONE" && normalized.length < 7) return ["A supplier contact phone is invalid."];
+      const key = `${channel}:${normalized}`;
+      if (seenContacts.has(key)) continue;
+      seenContacts.add(key);
+      contacts.push({
+        channel,
+        value: contactValue,
+        phoneKind,
+        isWhatsApp: channel === "PHONE" && contact.isWhatsApp === true,
+        contactName: optionalText(contact.contactName) ?? null,
+        label: optionalText(contact.label) ?? null,
+        isPrimary: contact.isPrimary === true,
+      });
+    }
+    if (!contacts.some((contact) => contact.channel === "EMAIL") && email) {
+      contacts.push({ channel: "EMAIL", value: email, phoneKind: null, isWhatsApp: false, contactName: optionalText(body.contactName) ?? null, label: null, isPrimary: true });
+    }
+    if (!contacts.some((contact) => contact.channel === "PHONE") && phone) {
+      contacts.push({ channel: "PHONE", value: phone, phoneKind: "UNKNOWN", isWhatsApp: false, contactName: optionalText(body.contactName) ?? null, label: null, isPrimary: true });
+    }
+    for (const channel of ["EMAIL", "PHONE"] as const) {
+      const channelContacts = contacts.filter((contact) => contact.channel === channel);
+      if (channelContacts.length > 0 && !channelContacts.some((contact) => contact.isPrimary)) channelContacts[0]!.isPrimary = true;
+      let primaryFound = false;
+      channelContacts.forEach((contact) => {
+        if (contact.isPrimary && primaryFound) contact.isPrimary = false;
+        if (contact.isPrimary) primaryFound = true;
+      });
+    }
+    const primaryEmail = contacts.find((contact) => contact.channel === "EMAIL" && contact.isPrimary)?.value
+      ?? contacts.find((contact) => contact.channel === "EMAIL")?.value
+      ?? email;
+    const primaryPhone = contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.value
+      ?? contacts.find((contact) => contact.channel === "PHONE")?.value
+      ?? phone;
     return [, new SaveSupplierRequestDto(
       name,
       scope,
@@ -268,8 +329,9 @@ export class SaveSupplierRequestDto {
       optionalText(body.state)?.toUpperCase() ?? null,
       optionalText(body.country) ?? null,
       optionalText(body.contactName) ?? null,
-      email,
-      optionalText(body.phone) ?? null,
+      primaryEmail,
+      primaryPhone,
+      contacts,
       body.allowPotentialDuplicate === true,
     )];
   }

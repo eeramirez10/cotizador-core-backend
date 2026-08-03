@@ -8,6 +8,8 @@ import type {
   SupplierSource,
   SupplierStatus,
   PurchaseOfferSource,
+  SupplierContactChannel,
+  SupplierPhoneKind,
 } from "../../infrastructure/database/generated/enums";
 
 export interface ProcurementUserSummary {
@@ -37,11 +39,24 @@ export interface SupplierEntity {
   normalizedPhone: string | null;
   phoneExtension: string | null;
   mobile: string | null;
+  contacts: SupplierContactEntity[];
   notes: string | null;
   erpSyncedAt: Date | null;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface SupplierContactEntity {
+  id: string;
+  channel: SupplierContactChannel;
+  value: string;
+  normalizedValue: string;
+  phoneKind: SupplierPhoneKind | null;
+  isWhatsApp: boolean;
+  contactName: string | null;
+  label: string | null;
+  isPrimary: boolean;
 }
 
 export interface PurchaseSupplierOfferEntity {

@@ -90,6 +90,11 @@ export type QuoteItem = Prisma.QuoteItemModel
  */
 export type Supplier = Prisma.SupplierModel
 /**
+ * Model SupplierContact
+ * 
+ */
+export type SupplierContact = Prisma.SupplierContactModel
+/**
  * Model PurchaseRequisition
  * 
  */

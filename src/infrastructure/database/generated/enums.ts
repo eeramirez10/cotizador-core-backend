@@ -80,6 +80,23 @@ export const SupplierStatus = {
 export type SupplierStatus = (typeof SupplierStatus)[keyof typeof SupplierStatus]
 
 
+export const SupplierContactChannel = {
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE'
+} as const
+
+export type SupplierContactChannel = (typeof SupplierContactChannel)[keyof typeof SupplierContactChannel]
+
+
+export const SupplierPhoneKind = {
+  LANDLINE: 'LANDLINE',
+  MOBILE: 'MOBILE',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type SupplierPhoneKind = (typeof SupplierPhoneKind)[keyof typeof SupplierPhoneKind]
+
+
 export const PurchaseOfferSource = {
   SELLER: 'SELLER',
   PURCHASING: 'PURCHASING'

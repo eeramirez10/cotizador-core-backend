@@ -61,6 +61,7 @@ export const ModelName = {
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
   Supplier: 'Supplier',
+  SupplierContact: 'SupplierContact',
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
@@ -408,6 +409,24 @@ export const SupplierScalarFieldEnum = {
 } as const
 
 export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typeof SupplierScalarFieldEnum]
+
+
+export const SupplierContactScalarFieldEnum = {
+  id: 'id',
+  supplierId: 'supplierId',
+  channel: 'channel',
+  value: 'value',
+  normalizedValue: 'normalizedValue',
+  phoneKind: 'phoneKind',
+  isWhatsApp: 'isWhatsApp',
+  contactName: 'contactName',
+  label: 'label',
+  isPrimary: 'isPrimary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupplierContactScalarFieldEnum = (typeof SupplierContactScalarFieldEnum)[keyof typeof SupplierContactScalarFieldEnum]
 
 
 export const PurchaseRequisitionScalarFieldEnum = {

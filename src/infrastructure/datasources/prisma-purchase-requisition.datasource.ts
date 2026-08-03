@@ -107,6 +107,17 @@ const supplierEntity = (supplier: {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  contacts?: Array<{
+    id: string;
+    channel: "EMAIL" | "PHONE";
+    value: string;
+    normalizedValue: string;
+    phoneKind: "LANDLINE" | "MOBILE" | "UNKNOWN" | null;
+    isWhatsApp: boolean;
+    contactName: string | null;
+    label: string | null;
+    isPrimary: boolean;
+  }>;
 }): SupplierEntity => ({
   id: supplier.id,
   erpCode: supplier.erpCode,
@@ -128,6 +139,7 @@ const supplierEntity = (supplier: {
   normalizedPhone: supplier.normalizedPhone,
   phoneExtension: supplier.phoneExtension,
   mobile: supplier.mobile,
+  contacts: (supplier.contacts ?? []).map((contact) => ({ ...contact })),
   notes: supplier.notes,
   erpSyncedAt: supplier.erpSyncedAt,
   isActive: supplier.isActive,
@@ -705,11 +717,13 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
                 { contactName: { contains: search, mode: "insensitive" as const } },
                 { email: { contains: search, mode: "insensitive" as const } },
                 { phone: { contains: search, mode: "insensitive" as const } },
+                { contacts: { some: { value: { contains: search, mode: "insensitive" as const } } } },
               ],
             }
           : {}),
       },
       orderBy: [{ name: "asc" }, { erpCode: "asc" }],
+      include: { contacts: { orderBy: [{ channel: "asc" }, { isPrimary: "desc" }, { createdAt: "asc" }] } },
     });
     return rows.map(supplierEntity);
   }
@@ -723,6 +737,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       select: { id: true, name: true },
     }) : null;
     if (hardDuplicate) throw new Error(`Ya existe un proveedor con ese RFC: ${hardDuplicate.name}.`);
+    const normalizedContacts = data.contacts.map((contact) => contact.normalizedValue);
     const potentialDuplicate = await prisma.supplier.findFirst({
       where: {
         isActive: true,
@@ -730,6 +745,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           { canonicalName: data.canonicalName },
           ...(data.normalizedEmail ? [{ normalizedEmail: data.normalizedEmail }] : []),
           ...(data.normalizedPhone ? [{ normalizedPhone: data.normalizedPhone }] : []),
+          ...(normalizedContacts.length ? [{ contacts: { some: { normalizedValue: { in: normalizedContacts } } } }] : []),
         ],
       },
       select: { id: true, name: true },
@@ -754,8 +770,13 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         normalizedEmail: data.normalizedEmail,
         phone: data.phone,
         normalizedPhone: data.normalizedPhone,
+        mobile: data.contacts.find((contact) => contact.channel === "PHONE" && contact.phoneKind === "MOBILE")?.value ?? null,
+        contacts: {
+          create: data.contacts.map(({ normalizedValue, ...contact }) => ({ ...contact, normalizedValue })),
+        },
         createdByUserId: data.actorUserId,
       },
+      include: { contacts: true },
     });
     return supplierEntity(row);
   }
@@ -822,9 +843,11 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     const existing = await prisma.supplier.findUnique({ where: { id }, select: { id: true, source: true } });
     if (!existing) return null;
     if (existing.source === "ERP") throw new Error("ERP suppliers must be refreshed from ERP.");
-    const row = await prisma.supplier.update({
-      where: { id },
-      data: {
+    const row = await prisma.$transaction(async (tx) => {
+      await tx.supplierContact.deleteMany({ where: { supplierId: id } });
+      return tx.supplier.update({
+        where: { id },
+        data: {
         name: data.name,
         canonicalName: data.canonicalName,
         source: "LOCAL",
@@ -838,8 +861,14 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         normalizedEmail: data.normalizedEmail,
         phone: data.phone,
         normalizedPhone: data.normalizedPhone,
+        mobile: data.contacts.find((contact) => contact.channel === "PHONE" && contact.phoneKind === "MOBILE")?.value ?? null,
+        contacts: {
+          create: data.contacts.map(({ normalizedValue, ...contact }) => ({ ...contact, normalizedValue })),
+        },
         updatedByUserId: data.actorUserId,
-      },
+        },
+        include: { contacts: true },
+      });
     });
     return supplierEntity(row);
   }
