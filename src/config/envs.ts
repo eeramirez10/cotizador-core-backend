@@ -68,7 +68,7 @@ export class Envs {
 
   static get gptLocalProductsUrl(): string {
     return get("GPT_LOCAL_PRODUCTS_URL")
-      .default("http://localhost:5500/api/local-products-semantic")
+      .default("http://localhost:4700/api/local-products-semantic")
       .asString();
   }
 
@@ -78,6 +78,18 @@ export class Envs {
 
   static get gptLocalProductsTimeoutMs(): number {
     return get("GPT_LOCAL_PRODUCTS_TIMEOUT_MS").default("45000").asIntPositive();
+  }
+
+  static get aiPlatformBaseUrl(): string {
+    return get("AI_PLATFORM_BASE_URL").default("http://localhost:4700").asString();
+  }
+
+  static get aiPlatformInternalApiKey(): string | undefined {
+    return get("AI_PLATFORM_INTERNAL_API_KEY").asString() || undefined;
+  }
+
+  static get aiPlatformTimeoutMs(): number {
+    return get("AI_PLATFORM_TIMEOUT_MS").default("75000").asIntPositive();
   }
 
   static get localProductSemanticMinScore(): number {

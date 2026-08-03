@@ -11,6 +11,7 @@ import { QuoteCatalogsRoutes } from "./quote-catalogs/quote-catalogs.routes";
 import { PurchaseRequisitionsRoutes } from "./purchase-requisitions/purchase-requisitions.routes";
 import { SystemRoutes } from "./system/system.routes";
 import { AttachmentsRoutes } from "./attachments/attachments.routes";
+import { AiPlatformRoutes } from "./integrations/ai-platform.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -32,6 +33,7 @@ export class AppRoutes {
     router.use("/purchase-requisitions", PurchaseRequisitionsRoutes.routes());
     router.use("/system", SystemRoutes.routes());
     router.use("/attachments", AttachmentsRoutes.routes());
+    router.use(AiPlatformRoutes.routes());
 
     return router;
   }
