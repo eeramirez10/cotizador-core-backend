@@ -80,7 +80,13 @@ export interface SaveQuoteDraftItemDatasourceData {
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
   sellerQuotedCurrency: Currency | null;
+  sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
+  sellerSupplierDescription: string | null;
+  sellerSupplierOrigin: string | null;
+  sellerSupplierQuoteValidUntil: Date | null;
+  sellerSupplierQuoteReference: string | null;
+  sellerSupplierQuoteNotes: string | null;
   sellerOriginRestrictions: string[];
   sellerDeliveryState: string | null;
   sellerSupplierDeliveryTime: string | null;
@@ -88,6 +94,8 @@ export interface SaveQuoteDraftItemDatasourceData {
   purchaseDiameter: string | null;
   purchaseThickness: string | null;
   purchaseBore: string | null;
+  technicalFamily: string | null;
+  technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
   marginPct: number;
@@ -174,7 +182,13 @@ export interface AddQuoteItemDatasourceParams {
     sellerSupplierNameSnapshot: string | null;
     sellerQuotedUnitCost: number | null;
     sellerQuotedCurrency: Currency | null;
+    sellerQuotedExchangeRate: number | null;
     sellerQuotedBrand: string | null;
+    sellerSupplierDescription: string | null;
+    sellerSupplierOrigin: string | null;
+    sellerSupplierQuoteValidUntil: Date | null;
+    sellerSupplierQuoteReference: string | null;
+    sellerSupplierQuoteNotes: string | null;
     sellerOriginRestrictions: string[];
     sellerDeliveryState: string | null;
     sellerSupplierDeliveryTime: string | null;
@@ -182,6 +196,8 @@ export interface AddQuoteItemDatasourceParams {
     purchaseDiameter: string | null;
     purchaseThickness: string | null;
     purchaseBore: string | null;
+    technicalFamily: string | null;
+    technicalAttributes: Record<string, string>;
     cost: number;
     costCurrency: Currency;
     marginPct: number;
@@ -215,7 +231,13 @@ export interface UpdateQuoteItemDatasourceParams {
     sellerSupplierNameSnapshot?: string | null;
     sellerQuotedUnitCost?: number | null;
     sellerQuotedCurrency?: Currency | null;
+    sellerQuotedExchangeRate?: number | null;
     sellerQuotedBrand?: string | null;
+    sellerSupplierDescription?: string | null;
+    sellerSupplierOrigin?: string | null;
+    sellerSupplierQuoteValidUntil?: Date | null;
+    sellerSupplierQuoteReference?: string | null;
+    sellerSupplierQuoteNotes?: string | null;
     sellerOriginRestrictions?: string[];
     sellerDeliveryState?: string | null;
     sellerSupplierDeliveryTime?: string | null;
@@ -223,6 +245,8 @@ export interface UpdateQuoteItemDatasourceParams {
     purchaseDiameter?: string | null;
     purchaseThickness?: string | null;
     purchaseBore?: string | null;
+    technicalFamily?: string | null;
+    technicalAttributes?: Record<string, string>;
     cost?: number;
     costCurrency?: Currency;
     marginPct?: number;

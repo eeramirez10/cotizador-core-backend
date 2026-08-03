@@ -29,9 +29,11 @@ export type SupplierMinAggregateOutputType = {
   erpCode: string | null
   name: string | null
   canonicalName: string | null
+  status: $Enums.SupplierStatus | null
   source: $Enums.SupplierSource | null
   scope: $Enums.SupplierScope | null
   taxId: string | null
+  normalizedTaxId: string | null
   state: string | null
   creditTerms: string | null
   currency: $Enums.Currency | null
@@ -39,7 +41,9 @@ export type SupplierMinAggregateOutputType = {
   contactName: string | null
   contactPosition: string | null
   email: string | null
+  normalizedEmail: string | null
   phone: string | null
+  normalizedPhone: string | null
   phoneExtension: string | null
   mobile: string | null
   notes: string | null
@@ -56,9 +60,11 @@ export type SupplierMaxAggregateOutputType = {
   erpCode: string | null
   name: string | null
   canonicalName: string | null
+  status: $Enums.SupplierStatus | null
   source: $Enums.SupplierSource | null
   scope: $Enums.SupplierScope | null
   taxId: string | null
+  normalizedTaxId: string | null
   state: string | null
   creditTerms: string | null
   currency: $Enums.Currency | null
@@ -66,7 +72,9 @@ export type SupplierMaxAggregateOutputType = {
   contactName: string | null
   contactPosition: string | null
   email: string | null
+  normalizedEmail: string | null
   phone: string | null
+  normalizedPhone: string | null
   phoneExtension: string | null
   mobile: string | null
   notes: string | null
@@ -83,9 +91,11 @@ export type SupplierCountAggregateOutputType = {
   erpCode: number
   name: number
   canonicalName: number
+  status: number
   source: number
   scope: number
   taxId: number
+  normalizedTaxId: number
   state: number
   creditTerms: number
   currency: number
@@ -93,7 +103,9 @@ export type SupplierCountAggregateOutputType = {
   contactName: number
   contactPosition: number
   email: number
+  normalizedEmail: number
   phone: number
+  normalizedPhone: number
   phoneExtension: number
   mobile: number
   notes: number
@@ -112,9 +124,11 @@ export type SupplierMinAggregateInputType = {
   erpCode?: true
   name?: true
   canonicalName?: true
+  status?: true
   source?: true
   scope?: true
   taxId?: true
+  normalizedTaxId?: true
   state?: true
   creditTerms?: true
   currency?: true
@@ -122,7 +136,9 @@ export type SupplierMinAggregateInputType = {
   contactName?: true
   contactPosition?: true
   email?: true
+  normalizedEmail?: true
   phone?: true
+  normalizedPhone?: true
   phoneExtension?: true
   mobile?: true
   notes?: true
@@ -139,9 +155,11 @@ export type SupplierMaxAggregateInputType = {
   erpCode?: true
   name?: true
   canonicalName?: true
+  status?: true
   source?: true
   scope?: true
   taxId?: true
+  normalizedTaxId?: true
   state?: true
   creditTerms?: true
   currency?: true
@@ -149,7 +167,9 @@ export type SupplierMaxAggregateInputType = {
   contactName?: true
   contactPosition?: true
   email?: true
+  normalizedEmail?: true
   phone?: true
+  normalizedPhone?: true
   phoneExtension?: true
   mobile?: true
   notes?: true
@@ -166,9 +186,11 @@ export type SupplierCountAggregateInputType = {
   erpCode?: true
   name?: true
   canonicalName?: true
+  status?: true
   source?: true
   scope?: true
   taxId?: true
+  normalizedTaxId?: true
   state?: true
   creditTerms?: true
   currency?: true
@@ -176,7 +198,9 @@ export type SupplierCountAggregateInputType = {
   contactName?: true
   contactPosition?: true
   email?: true
+  normalizedEmail?: true
   phone?: true
+  normalizedPhone?: true
   phoneExtension?: true
   mobile?: true
   notes?: true
@@ -266,9 +290,11 @@ export type SupplierGroupByOutputType = {
   erpCode: string | null
   name: string
   canonicalName: string
+  status: $Enums.SupplierStatus
   source: $Enums.SupplierSource
   scope: $Enums.SupplierScope
   taxId: string | null
+  normalizedTaxId: string | null
   state: string | null
   creditTerms: string | null
   currency: $Enums.Currency | null
@@ -276,7 +302,9 @@ export type SupplierGroupByOutputType = {
   contactName: string | null
   contactPosition: string | null
   email: string | null
+  normalizedEmail: string | null
   phone: string | null
+  normalizedPhone: string | null
   phoneExtension: string | null
   mobile: string | null
   notes: string | null
@@ -291,7 +319,7 @@ export type SupplierGroupByOutputType = {
   _max: SupplierMaxAggregateOutputType | null
 }
 
-type GetSupplierGroupByPayload<T extends SupplierGroupByArgs> = Prisma.PrismaPromise<
+export type GetSupplierGroupByPayload<T extends SupplierGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<SupplierGroupByOutputType, T['by']> &
       {
@@ -314,9 +342,11 @@ export type SupplierWhereInput = {
   erpCode?: Prisma.StringNullableFilter<"Supplier"> | string | null
   name?: Prisma.StringFilter<"Supplier"> | string
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
+  status?: Prisma.EnumSupplierStatusFilter<"Supplier"> | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedTaxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
   state?: Prisma.StringNullableFilter<"Supplier"> | string | null
   creditTerms?: Prisma.StringNullableFilter<"Supplier"> | string | null
   currency?: Prisma.EnumCurrencyNullableFilter<"Supplier"> | $Enums.Currency | null
@@ -324,7 +354,9 @@ export type SupplierWhereInput = {
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedEmail?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedPhone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
   mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
@@ -337,6 +369,7 @@ export type SupplierWhereInput = {
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   offers?: Prisma.PurchaseSupplierOfferListRelationFilter
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   sellerQuotedItems?: Prisma.QuoteItemListRelationFilter
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
 }
@@ -346,9 +379,11 @@ export type SupplierOrderByWithRelationInput = {
   erpCode?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   canonicalName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   creditTerms?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -356,7 +391,9 @@ export type SupplierOrderByWithRelationInput = {
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneExtension?: Prisma.SortOrderInput | Prisma.SortOrder
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -369,6 +406,7 @@ export type SupplierOrderByWithRelationInput = {
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   offers?: Prisma.PurchaseSupplierOfferOrderByRelationAggregateInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
   sellerQuotedItems?: Prisma.QuoteItemOrderByRelationAggregateInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemOrderByRelationAggregateInput
 }
@@ -376,11 +414,13 @@ export type SupplierOrderByWithRelationInput = {
 export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   erpCode?: string
+  normalizedTaxId?: string
   AND?: Prisma.SupplierWhereInput | Prisma.SupplierWhereInput[]
   OR?: Prisma.SupplierWhereInput[]
   NOT?: Prisma.SupplierWhereInput | Prisma.SupplierWhereInput[]
   name?: Prisma.StringFilter<"Supplier"> | string
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
+  status?: Prisma.EnumSupplierStatusFilter<"Supplier"> | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
@@ -391,7 +431,9 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedEmail?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedPhone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
   mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
@@ -404,18 +446,21 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   offers?: Prisma.PurchaseSupplierOfferListRelationFilter
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   sellerQuotedItems?: Prisma.QuoteItemListRelationFilter
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemListRelationFilter
-}, "id" | "erpCode">
+}, "id" | "erpCode" | "normalizedTaxId">
 
 export type SupplierOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   erpCode?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   canonicalName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
   taxId?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedTaxId?: Prisma.SortOrderInput | Prisma.SortOrder
   state?: Prisma.SortOrderInput | Prisma.SortOrder
   creditTerms?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -423,7 +468,9 @@ export type SupplierOrderByWithAggregationInput = {
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPosition?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  normalizedPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneExtension?: Prisma.SortOrderInput | Prisma.SortOrder
   mobile?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -446,9 +493,11 @@ export type SupplierScalarWhereWithAggregatesInput = {
   erpCode?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   canonicalName?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  status?: Prisma.EnumSupplierStatusWithAggregatesFilter<"Supplier"> | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceWithAggregatesFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeWithAggregatesFilter<"Supplier"> | $Enums.SupplierScope
   taxId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  normalizedTaxId?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   state?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   creditTerms?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   currency?: Prisma.EnumCurrencyNullableWithAggregatesFilter<"Supplier"> | $Enums.Currency | null
@@ -456,7 +505,9 @@ export type SupplierScalarWhereWithAggregatesInput = {
   contactName?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   contactPosition?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  normalizedEmail?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
+  normalizedPhone?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   phoneExtension?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   mobile?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
@@ -473,9 +524,11 @@ export type SupplierCreateInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -483,7 +536,9 @@ export type SupplierCreateInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -494,6 +549,7 @@ export type SupplierCreateInput = {
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
   offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
 }
@@ -503,9 +559,11 @@ export type SupplierUncheckedCreateInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -513,7 +571,9 @@ export type SupplierUncheckedCreateInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -524,6 +584,7 @@ export type SupplierUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
@@ -533,9 +594,11 @@ export type SupplierUpdateInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -543,7 +606,9 @@ export type SupplierUpdateInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -554,6 +619,7 @@ export type SupplierUpdateInput = {
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
   offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -563,9 +629,11 @@ export type SupplierUncheckedUpdateInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -573,7 +641,9 @@ export type SupplierUncheckedUpdateInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -584,6 +654,7 @@ export type SupplierUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -593,9 +664,11 @@ export type SupplierCreateManyInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -603,7 +676,9 @@ export type SupplierCreateManyInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -620,9 +695,11 @@ export type SupplierUpdateManyMutationInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -630,7 +707,9 @@ export type SupplierUpdateManyMutationInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -645,9 +724,11 @@ export type SupplierUncheckedUpdateManyInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -655,7 +736,9 @@ export type SupplierUncheckedUpdateManyInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -687,9 +770,11 @@ export type SupplierCountOrderByAggregateInput = {
   erpCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   canonicalName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
+  normalizedTaxId?: Prisma.SortOrder
   state?: Prisma.SortOrder
   creditTerms?: Prisma.SortOrder
   currency?: Prisma.SortOrder
@@ -697,7 +782,9 @@ export type SupplierCountOrderByAggregateInput = {
   contactName?: Prisma.SortOrder
   contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  normalizedEmail?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  normalizedPhone?: Prisma.SortOrder
   phoneExtension?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -714,9 +801,11 @@ export type SupplierMaxOrderByAggregateInput = {
   erpCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   canonicalName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
+  normalizedTaxId?: Prisma.SortOrder
   state?: Prisma.SortOrder
   creditTerms?: Prisma.SortOrder
   currency?: Prisma.SortOrder
@@ -724,7 +813,9 @@ export type SupplierMaxOrderByAggregateInput = {
   contactName?: Prisma.SortOrder
   contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  normalizedEmail?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  normalizedPhone?: Prisma.SortOrder
   phoneExtension?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -741,9 +832,11 @@ export type SupplierMinOrderByAggregateInput = {
   erpCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   canonicalName?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   source?: Prisma.SortOrder
   scope?: Prisma.SortOrder
   taxId?: Prisma.SortOrder
+  normalizedTaxId?: Prisma.SortOrder
   state?: Prisma.SortOrder
   creditTerms?: Prisma.SortOrder
   currency?: Prisma.SortOrder
@@ -751,7 +844,9 @@ export type SupplierMinOrderByAggregateInput = {
   contactName?: Prisma.SortOrder
   contactPosition?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  normalizedEmail?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  normalizedPhone?: Prisma.SortOrder
   phoneExtension?: Prisma.SortOrder
   mobile?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -868,6 +963,10 @@ export type SupplierUpdateOneWithoutSellerQuotedItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutSellerQuotedItemsInput, Prisma.SupplierUpdateWithoutSellerQuotedItemsInput>, Prisma.SupplierUncheckedUpdateWithoutSellerQuotedItemsInput>
 }
 
+export type EnumSupplierStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SupplierStatus
+}
+
 export type EnumSupplierSourceFieldUpdateOperationsInput = {
   set?: $Enums.SupplierSource
 }
@@ -906,14 +1005,30 @@ export type SupplierUpdateOneRequiredWithoutOffersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutOffersInput, Prisma.SupplierUpdateWithoutOffersInput>, Prisma.SupplierUncheckedUpdateWithoutOffersInput>
 }
 
+export type SupplierCreateNestedOneWithoutSupplierQuotesInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedCreateWithoutSupplierQuotesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSupplierQuotesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutSupplierQuotesNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedCreateWithoutSupplierQuotesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutSupplierQuotesInput
+  upsert?: Prisma.SupplierUpsertWithoutSupplierQuotesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutSupplierQuotesInput, Prisma.SupplierUpdateWithoutSupplierQuotesInput>, Prisma.SupplierUncheckedUpdateWithoutSupplierQuotesInput>
+}
+
 export type SupplierCreateWithoutCreatedByInput = {
   id?: string
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -921,7 +1036,9 @@ export type SupplierCreateWithoutCreatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -931,6 +1048,7 @@ export type SupplierCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
   offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
 }
@@ -940,9 +1058,11 @@ export type SupplierUncheckedCreateWithoutCreatedByInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -950,7 +1070,9 @@ export type SupplierUncheckedCreateWithoutCreatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -960,6 +1082,7 @@ export type SupplierUncheckedCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
@@ -979,9 +1102,11 @@ export type SupplierCreateWithoutUpdatedByInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -989,7 +1114,9 @@ export type SupplierCreateWithoutUpdatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -999,6 +1126,7 @@ export type SupplierCreateWithoutUpdatedByInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
   offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
 }
@@ -1008,9 +1136,11 @@ export type SupplierUncheckedCreateWithoutUpdatedByInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1018,7 +1148,9 @@ export type SupplierUncheckedCreateWithoutUpdatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1028,6 +1160,7 @@ export type SupplierUncheckedCreateWithoutUpdatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
@@ -1066,9 +1199,11 @@ export type SupplierScalarWhereInput = {
   erpCode?: Prisma.StringNullableFilter<"Supplier"> | string | null
   name?: Prisma.StringFilter<"Supplier"> | string
   canonicalName?: Prisma.StringFilter<"Supplier"> | string
+  status?: Prisma.EnumSupplierStatusFilter<"Supplier"> | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFilter<"Supplier"> | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFilter<"Supplier"> | $Enums.SupplierScope
   taxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedTaxId?: Prisma.StringNullableFilter<"Supplier"> | string | null
   state?: Prisma.StringNullableFilter<"Supplier"> | string | null
   creditTerms?: Prisma.StringNullableFilter<"Supplier"> | string | null
   currency?: Prisma.EnumCurrencyNullableFilter<"Supplier"> | $Enums.Currency | null
@@ -1076,7 +1211,9 @@ export type SupplierScalarWhereInput = {
   contactName?: Prisma.StringNullableFilter<"Supplier"> | string | null
   contactPosition?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedEmail?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phone?: Prisma.StringNullableFilter<"Supplier"> | string | null
+  normalizedPhone?: Prisma.StringNullableFilter<"Supplier"> | string | null
   phoneExtension?: Prisma.StringNullableFilter<"Supplier"> | string | null
   mobile?: Prisma.StringNullableFilter<"Supplier"> | string | null
   notes?: Prisma.StringNullableFilter<"Supplier"> | string | null
@@ -1109,9 +1246,11 @@ export type SupplierCreateWithoutSellerQuotedItemsInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1119,7 +1258,9 @@ export type SupplierCreateWithoutSellerQuotedItemsInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1130,6 +1271,7 @@ export type SupplierCreateWithoutSellerQuotedItemsInput = {
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
   offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
 }
 
@@ -1138,9 +1280,11 @@ export type SupplierUncheckedCreateWithoutSellerQuotedItemsInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1148,7 +1292,9 @@ export type SupplierUncheckedCreateWithoutSellerQuotedItemsInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1159,6 +1305,7 @@ export type SupplierUncheckedCreateWithoutSellerQuotedItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
 
@@ -1183,9 +1330,11 @@ export type SupplierUpdateWithoutSellerQuotedItemsInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1193,7 +1342,9 @@ export type SupplierUpdateWithoutSellerQuotedItemsInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1204,6 +1355,7 @@ export type SupplierUpdateWithoutSellerQuotedItemsInput = {
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
   offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
 }
 
@@ -1212,9 +1364,11 @@ export type SupplierUncheckedUpdateWithoutSellerQuotedItemsInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1222,7 +1376,9 @@ export type SupplierUncheckedUpdateWithoutSellerQuotedItemsInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1233,6 +1389,7 @@ export type SupplierUncheckedUpdateWithoutSellerQuotedItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
 
@@ -1241,9 +1398,11 @@ export type SupplierCreateWithoutSellerRequisitionItemsInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1251,7 +1410,9 @@ export type SupplierCreateWithoutSellerRequisitionItemsInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1262,6 +1423,7 @@ export type SupplierCreateWithoutSellerRequisitionItemsInput = {
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
   offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
 }
 
@@ -1270,9 +1432,11 @@ export type SupplierUncheckedCreateWithoutSellerRequisitionItemsInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1280,7 +1444,9 @@ export type SupplierUncheckedCreateWithoutSellerRequisitionItemsInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1291,6 +1457,7 @@ export type SupplierUncheckedCreateWithoutSellerRequisitionItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
 
@@ -1315,9 +1482,11 @@ export type SupplierUpdateWithoutSellerRequisitionItemsInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1325,7 +1494,9 @@ export type SupplierUpdateWithoutSellerRequisitionItemsInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1336,6 +1507,7 @@ export type SupplierUpdateWithoutSellerRequisitionItemsInput = {
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
   offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
 }
 
@@ -1344,9 +1516,11 @@ export type SupplierUncheckedUpdateWithoutSellerRequisitionItemsInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1354,7 +1528,9 @@ export type SupplierUncheckedUpdateWithoutSellerRequisitionItemsInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1365,6 +1541,7 @@ export type SupplierUncheckedUpdateWithoutSellerRequisitionItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
 
@@ -1373,9 +1550,11 @@ export type SupplierCreateWithoutOffersInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1383,7 +1562,9 @@ export type SupplierCreateWithoutOffersInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1393,6 +1574,7 @@ export type SupplierCreateWithoutOffersInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
 }
@@ -1402,9 +1584,11 @@ export type SupplierUncheckedCreateWithoutOffersInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1412,7 +1596,9 @@ export type SupplierUncheckedCreateWithoutOffersInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1422,6 +1608,7 @@ export type SupplierUncheckedCreateWithoutOffersInput = {
   updatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutSupplierInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
 }
@@ -1447,9 +1634,11 @@ export type SupplierUpdateWithoutOffersInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1457,7 +1646,9 @@ export type SupplierUpdateWithoutOffersInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1467,6 +1658,7 @@ export type SupplierUpdateWithoutOffersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1476,9 +1668,11 @@ export type SupplierUncheckedUpdateWithoutOffersInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1486,7 +1680,9 @@ export type SupplierUncheckedUpdateWithoutOffersInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1496,6 +1692,159 @@ export type SupplierUncheckedUpdateWithoutOffersInput = {
   updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
+  sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
+  sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
+}
+
+export type SupplierCreateWithoutSupplierQuotesInput = {
+  id?: string
+  erpCode?: string | null
+  name: string
+  canonicalName: string
+  status?: $Enums.SupplierStatus
+  source?: $Enums.SupplierSource
+  scope?: $Enums.SupplierScope
+  taxId?: string | null
+  normalizedTaxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
+  country?: string | null
+  contactName?: string | null
+  contactPosition?: string | null
+  email?: string | null
+  normalizedEmail?: string | null
+  phone?: string | null
+  normalizedPhone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedSuppliersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedSuppliersInput
+  offers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutSupplierInput
+  sellerQuotedItems?: Prisma.QuoteItemCreateNestedManyWithoutSellerSupplierInput
+  sellerRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutSellerSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutSupplierQuotesInput = {
+  id?: string
+  erpCode?: string | null
+  name: string
+  canonicalName: string
+  status?: $Enums.SupplierStatus
+  source?: $Enums.SupplierSource
+  scope?: $Enums.SupplierScope
+  taxId?: string | null
+  normalizedTaxId?: string | null
+  state?: string | null
+  creditTerms?: string | null
+  currency?: $Enums.Currency | null
+  country?: string | null
+  contactName?: string | null
+  contactPosition?: string | null
+  email?: string | null
+  normalizedEmail?: string | null
+  phone?: string | null
+  normalizedPhone?: string | null
+  phoneExtension?: string | null
+  mobile?: string | null
+  notes?: string | null
+  erpSyncedAt?: Date | string | null
+  isActive?: boolean
+  createdByUserId: string
+  updatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  offers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutSupplierInput
+  sellerQuotedItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutSellerSupplierInput
+  sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutSellerSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutSupplierQuotesInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedCreateWithoutSupplierQuotesInput>
+}
+
+export type SupplierUpsertWithoutSupplierQuotesInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedUpdateWithoutSupplierQuotesInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedCreateWithoutSupplierQuotesInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutSupplierQuotesInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutSupplierQuotesInput, Prisma.SupplierUncheckedUpdateWithoutSupplierQuotesInput>
+}
+
+export type SupplierUpdateWithoutSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
+  source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
+  scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
+  offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
+  sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutSupplierQuotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
+  source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
+  scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
+  taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpSyncedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1505,9 +1854,11 @@ export type SupplierCreateManyCreatedByInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1515,7 +1866,9 @@ export type SupplierCreateManyCreatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1531,9 +1884,11 @@ export type SupplierCreateManyUpdatedByInput = {
   erpCode?: string | null
   name: string
   canonicalName: string
+  status?: $Enums.SupplierStatus
   source?: $Enums.SupplierSource
   scope?: $Enums.SupplierScope
   taxId?: string | null
+  normalizedTaxId?: string | null
   state?: string | null
   creditTerms?: string | null
   currency?: $Enums.Currency | null
@@ -1541,7 +1896,9 @@ export type SupplierCreateManyUpdatedByInput = {
   contactName?: string | null
   contactPosition?: string | null
   email?: string | null
+  normalizedEmail?: string | null
   phone?: string | null
+  normalizedPhone?: string | null
   phoneExtension?: string | null
   mobile?: string | null
   notes?: string | null
@@ -1557,9 +1914,11 @@ export type SupplierUpdateWithoutCreatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1567,7 +1926,9 @@ export type SupplierUpdateWithoutCreatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1577,6 +1938,7 @@ export type SupplierUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedSuppliersNestedInput
   offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1586,9 +1948,11 @@ export type SupplierUncheckedUpdateWithoutCreatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1596,7 +1960,9 @@ export type SupplierUncheckedUpdateWithoutCreatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1606,6 +1972,7 @@ export type SupplierUncheckedUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1615,9 +1982,11 @@ export type SupplierUncheckedUpdateManyWithoutCreatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1625,7 +1994,9 @@ export type SupplierUncheckedUpdateManyWithoutCreatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1641,9 +2012,11 @@ export type SupplierUpdateWithoutUpdatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1651,7 +2024,9 @@ export type SupplierUpdateWithoutUpdatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1661,6 +2036,7 @@ export type SupplierUpdateWithoutUpdatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedSuppliersNestedInput
   offers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1670,9 +2046,11 @@ export type SupplierUncheckedUpdateWithoutUpdatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1680,7 +2058,9 @@ export type SupplierUncheckedUpdateWithoutUpdatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1690,6 +2070,7 @@ export type SupplierUncheckedUpdateWithoutUpdatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   offers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutSupplierNestedInput
+  supplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutSupplierNestedInput
   sellerQuotedItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
   sellerRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutSellerSupplierNestedInput
 }
@@ -1699,9 +2080,11 @@ export type SupplierUncheckedUpdateManyWithoutUpdatedByInput = {
   erpCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   canonicalName?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumSupplierStatusFieldUpdateOperationsInput | $Enums.SupplierStatus
   source?: Prisma.EnumSupplierSourceFieldUpdateOperationsInput | $Enums.SupplierSource
   scope?: Prisma.EnumSupplierScopeFieldUpdateOperationsInput | $Enums.SupplierScope
   taxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedTaxId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   creditTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
@@ -1709,7 +2092,9 @@ export type SupplierUncheckedUpdateManyWithoutUpdatedByInput = {
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  normalizedPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneExtension?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1727,12 +2112,14 @@ export type SupplierUncheckedUpdateManyWithoutUpdatedByInput = {
 
 export type SupplierCountOutputType = {
   offers: number
+  supplierQuotes: number
   sellerQuotedItems: number
   sellerRequisitionItems: number
 }
 
 export type SupplierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   offers?: boolean | SupplierCountOutputTypeCountOffersArgs
+  supplierQuotes?: boolean | SupplierCountOutputTypeCountSupplierQuotesArgs
   sellerQuotedItems?: boolean | SupplierCountOutputTypeCountSellerQuotedItemsArgs
   sellerRequisitionItems?: boolean | SupplierCountOutputTypeCountSellerRequisitionItemsArgs
 }
@@ -1757,6 +2144,13 @@ export type SupplierCountOutputTypeCountOffersArgs<ExtArgs extends runtime.Types
 /**
  * SupplierCountOutputType without action
  */
+export type SupplierCountOutputTypeCountSupplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
 export type SupplierCountOutputTypeCountSellerQuotedItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteItemWhereInput
 }
@@ -1774,9 +2168,11 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   erpCode?: boolean
   name?: boolean
   canonicalName?: boolean
+  status?: boolean
   source?: boolean
   scope?: boolean
   taxId?: boolean
+  normalizedTaxId?: boolean
   state?: boolean
   creditTerms?: boolean
   currency?: boolean
@@ -1784,7 +2180,9 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   contactName?: boolean
   contactPosition?: boolean
   email?: boolean
+  normalizedEmail?: boolean
   phone?: boolean
+  normalizedPhone?: boolean
   phoneExtension?: boolean
   mobile?: boolean
   notes?: boolean
@@ -1797,6 +2195,7 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Supplier$updatedByArgs<ExtArgs>
   offers?: boolean | Prisma.Supplier$offersArgs<ExtArgs>
+  supplierQuotes?: boolean | Prisma.Supplier$supplierQuotesArgs<ExtArgs>
   sellerQuotedItems?: boolean | Prisma.Supplier$sellerQuotedItemsArgs<ExtArgs>
   sellerRequisitionItems?: boolean | Prisma.Supplier$sellerRequisitionItemsArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
@@ -1807,9 +2206,11 @@ export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   erpCode?: boolean
   name?: boolean
   canonicalName?: boolean
+  status?: boolean
   source?: boolean
   scope?: boolean
   taxId?: boolean
+  normalizedTaxId?: boolean
   state?: boolean
   creditTerms?: boolean
   currency?: boolean
@@ -1817,7 +2218,9 @@ export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   contactName?: boolean
   contactPosition?: boolean
   email?: boolean
+  normalizedEmail?: boolean
   phone?: boolean
+  normalizedPhone?: boolean
   phoneExtension?: boolean
   mobile?: boolean
   notes?: boolean
@@ -1836,9 +2239,11 @@ export type SupplierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   erpCode?: boolean
   name?: boolean
   canonicalName?: boolean
+  status?: boolean
   source?: boolean
   scope?: boolean
   taxId?: boolean
+  normalizedTaxId?: boolean
   state?: boolean
   creditTerms?: boolean
   currency?: boolean
@@ -1846,7 +2251,9 @@ export type SupplierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   contactName?: boolean
   contactPosition?: boolean
   email?: boolean
+  normalizedEmail?: boolean
   phone?: boolean
+  normalizedPhone?: boolean
   phoneExtension?: boolean
   mobile?: boolean
   notes?: boolean
@@ -1865,9 +2272,11 @@ export type SupplierSelectScalar = {
   erpCode?: boolean
   name?: boolean
   canonicalName?: boolean
+  status?: boolean
   source?: boolean
   scope?: boolean
   taxId?: boolean
+  normalizedTaxId?: boolean
   state?: boolean
   creditTerms?: boolean
   currency?: boolean
@@ -1875,7 +2284,9 @@ export type SupplierSelectScalar = {
   contactName?: boolean
   contactPosition?: boolean
   email?: boolean
+  normalizedEmail?: boolean
   phone?: boolean
+  normalizedPhone?: boolean
   phoneExtension?: boolean
   mobile?: boolean
   notes?: boolean
@@ -1887,11 +2298,12 @@ export type SupplierSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "erpCode" | "name" | "canonicalName" | "source" | "scope" | "taxId" | "state" | "creditTerms" | "currency" | "country" | "contactName" | "contactPosition" | "email" | "phone" | "phoneExtension" | "mobile" | "notes" | "erpSyncedAt" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
+export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "erpCode" | "name" | "canonicalName" | "status" | "source" | "scope" | "taxId" | "normalizedTaxId" | "state" | "creditTerms" | "currency" | "country" | "contactName" | "contactPosition" | "email" | "normalizedEmail" | "phone" | "normalizedPhone" | "phoneExtension" | "mobile" | "notes" | "erpSyncedAt" | "isActive" | "createdByUserId" | "updatedByUserId" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
 export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Supplier$updatedByArgs<ExtArgs>
   offers?: boolean | Prisma.Supplier$offersArgs<ExtArgs>
+  supplierQuotes?: boolean | Prisma.Supplier$supplierQuotesArgs<ExtArgs>
   sellerQuotedItems?: boolean | Prisma.Supplier$sellerQuotedItemsArgs<ExtArgs>
   sellerRequisitionItems?: boolean | Prisma.Supplier$sellerRequisitionItemsArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
@@ -1911,6 +2323,7 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     createdBy: Prisma.$UserPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     offers: Prisma.$PurchaseSupplierOfferPayload<ExtArgs>[]
+    supplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
     sellerQuotedItems: Prisma.$QuoteItemPayload<ExtArgs>[]
     sellerRequisitionItems: Prisma.$PurchaseRequisitionItemPayload<ExtArgs>[]
   }
@@ -1919,9 +2332,11 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     erpCode: string | null
     name: string
     canonicalName: string
+    status: $Enums.SupplierStatus
     source: $Enums.SupplierSource
     scope: $Enums.SupplierScope
     taxId: string | null
+    normalizedTaxId: string | null
     state: string | null
     creditTerms: string | null
     currency: $Enums.Currency | null
@@ -1929,7 +2344,9 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     contactName: string | null
     contactPosition: string | null
     email: string | null
+    normalizedEmail: string | null
     phone: string | null
+    normalizedPhone: string | null
     phoneExtension: string | null
     mobile: string | null
     notes: string | null
@@ -2336,6 +2753,7 @@ export interface Prisma__SupplierClient<T, Null = never, ExtArgs extends runtime
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Supplier$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   offers<T extends Prisma.Supplier$offersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$offersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierQuotes<T extends Prisma.Supplier$supplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$supplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sellerQuotedItems<T extends Prisma.Supplier$sellerQuotedItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$sellerQuotedItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sellerRequisitionItems<T extends Prisma.Supplier$sellerRequisitionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$sellerRequisitionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2371,9 +2789,11 @@ export interface SupplierFieldRefs {
   readonly erpCode: Prisma.FieldRef<"Supplier", 'String'>
   readonly name: Prisma.FieldRef<"Supplier", 'String'>
   readonly canonicalName: Prisma.FieldRef<"Supplier", 'String'>
+  readonly status: Prisma.FieldRef<"Supplier", 'SupplierStatus'>
   readonly source: Prisma.FieldRef<"Supplier", 'SupplierSource'>
   readonly scope: Prisma.FieldRef<"Supplier", 'SupplierScope'>
   readonly taxId: Prisma.FieldRef<"Supplier", 'String'>
+  readonly normalizedTaxId: Prisma.FieldRef<"Supplier", 'String'>
   readonly state: Prisma.FieldRef<"Supplier", 'String'>
   readonly creditTerms: Prisma.FieldRef<"Supplier", 'String'>
   readonly currency: Prisma.FieldRef<"Supplier", 'Currency'>
@@ -2381,7 +2801,9 @@ export interface SupplierFieldRefs {
   readonly contactName: Prisma.FieldRef<"Supplier", 'String'>
   readonly contactPosition: Prisma.FieldRef<"Supplier", 'String'>
   readonly email: Prisma.FieldRef<"Supplier", 'String'>
+  readonly normalizedEmail: Prisma.FieldRef<"Supplier", 'String'>
   readonly phone: Prisma.FieldRef<"Supplier", 'String'>
+  readonly normalizedPhone: Prisma.FieldRef<"Supplier", 'String'>
   readonly phoneExtension: Prisma.FieldRef<"Supplier", 'String'>
   readonly mobile: Prisma.FieldRef<"Supplier", 'String'>
   readonly notes: Prisma.FieldRef<"Supplier", 'String'>
@@ -2587,6 +3009,11 @@ export type SupplierFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Skip the first `n` Suppliers.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Suppliers.
+   */
   distinct?: Prisma.SupplierScalarFieldEnum | Prisma.SupplierScalarFieldEnum[]
 }
 
@@ -2827,6 +3254,30 @@ export type Supplier$offersArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.PurchaseSupplierOfferScalarFieldEnum | Prisma.PurchaseSupplierOfferScalarFieldEnum[]
+}
+
+/**
+ * Supplier.supplierQuotes
+ */
+export type Supplier$supplierQuotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseSupplierQuote
+   */
+  select?: Prisma.PurchaseSupplierQuoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseSupplierQuote
+   */
+  omit?: Prisma.PurchaseSupplierQuoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseSupplierQuoteInclude<ExtArgs> | null
+  where?: Prisma.PurchaseSupplierQuoteWhereInput
+  orderBy?: Prisma.PurchaseSupplierQuoteOrderByWithRelationInput | Prisma.PurchaseSupplierQuoteOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseSupplierQuoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseSupplierQuoteScalarFieldEnum | Prisma.PurchaseSupplierQuoteScalarFieldEnum[]
 }
 
 /**

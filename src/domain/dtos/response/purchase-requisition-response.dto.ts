@@ -18,11 +18,17 @@ export class PurchaseRequisitionResponseDto {
         offers: item.offers.map((offer) => ({
           ...offer,
           validUntil: offer.validUntil?.toISOString().split("T")[0] ?? null,
+          availableDate: offer.availableDate?.toISOString().split("T")[0] ?? null,
           quoteDate: offer.quoteDate.toISOString().split("T")[0],
           sentAt: offer.sentAt?.toISOString() ?? null,
           createdAt: offer.createdAt.toISOString(),
           updatedAt: offer.updatedAt.toISOString(),
           supplier: SupplierResponseDto.toJSON(offer.supplier),
+          supplierQuote: offer.supplierQuote ? {
+            ...offer.supplierQuote,
+            quoteDate: offer.supplierQuote.quoteDate.toISOString().split("T")[0],
+            validUntil: offer.supplierQuote.validUntil?.toISOString().split("T")[0] ?? null,
+          } : null,
         })),
       })),
     };

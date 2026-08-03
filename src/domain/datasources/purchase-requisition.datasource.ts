@@ -3,6 +3,8 @@ import type {
   PurchaseCostSource,
   PurchaseRequisitionStatus,
   SupplierScope,
+  SupplierStatus,
+  PurchaseOfferSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
 import type { PurchaseRequisitionEntity, SupplierEntity } from "../entities/purchase-requisition.entity";
@@ -32,6 +34,8 @@ export interface UpdatePurchaseRequisitionItemData {
   diameter?: string | null;
   thickness?: string | null;
   bore?: string | null;
+  technicalFamily?: string | null;
+  technicalAttributes?: Record<string, string>;
   sellerUnitCost?: number;
   sellerCurrency?: Currency;
   sellerCostSource?: PurchaseCostSource;
@@ -50,13 +54,18 @@ export interface LinkPurchaseRequisitionItemToErpData {
 export interface SaveSupplierData {
   name: string;
   canonicalName: string;
+  status?: SupplierStatus;
   scope: SupplierScope;
   taxId: string | null;
+  normalizedTaxId: string | null;
   state: string | null;
   country: string | null;
   contactName: string | null;
   email: string | null;
+  normalizedEmail: string | null;
   phone: string | null;
+  normalizedPhone: string | null;
+  allowPotentialDuplicate: boolean;
   actorUserId: string;
 }
 
@@ -75,13 +84,23 @@ export interface SaveErpSupplierData {
   phoneExtension: string | null;
   mobile: string | null;
   notes: string | null;
+  normalizedTaxId: string | null;
+  normalizedEmail: string | null;
+  normalizedPhone: string | null;
   actorUserId: string;
 }
 
 export interface SavePurchaseSupplierOfferData {
   requisitionItemId: string;
   supplierId: string;
+  source: PurchaseOfferSource;
+  supplierProductCode: string | null;
+  alternateCodes: string[];
+  supplierDescription: string | null;
   qty: number;
+  unit: string | null;
+  listUnitPrice: number | null;
+  discountPct: number | null;
   unitCost: number;
   currency: Currency;
   exchangeRate: number | null;
@@ -89,9 +108,20 @@ export interface SavePurchaseSupplierOfferData {
   brand: string | null;
   origin: string | null;
   deliveryTime: string | null;
+  availableDate: Date | null;
+  minimumQty: number | null;
   validUntil: Date | null;
   quoteDate: Date;
   externalReference: string | null;
+  paymentTerms: string | null;
+  deliveryTerms: string | null;
+  documentSubtotal: number | null;
+  documentDiscount: number;
+  documentFreight: number;
+  documentOtherCharges: number;
+  taxIncluded: boolean;
+  documentTax: number | null;
+  documentTotal: number | null;
   notes: string | null;
   actorUserId: string;
 }

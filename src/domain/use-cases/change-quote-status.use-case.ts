@@ -118,7 +118,8 @@ export class ChangeQuoteStatusUseCase {
           const isLocalProduct = !hasErpCode && Boolean(item.productId);
           const needsPurchase = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
           if (!needsPurchase) return false;
-          return !item.sellerSupplierNameSnapshot?.trim()
+          return !item.sellerSupplierId
+            || !item.sellerSupplierNameSnapshot?.trim()
             || item.sellerQuotedUnitCost === null
             || item.sellerQuotedUnitCost <= 0
             || !item.sellerQuotedCurrency

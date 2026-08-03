@@ -19,6 +19,17 @@ const dateOnly = (value: unknown): Date | null | undefined => {
   return Number.isNaN(parsed.getTime()) ? undefined : parsed;
 };
 
+const stringRecord = (value: unknown): Record<string, string> | undefined => {
+  if (value === undefined) return undefined;
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+      .map(([key, entry]) => [key.trim(), entry.trim()])
+      .filter(([key, entry]) => Boolean(key && entry)),
+  );
+};
+
 export class GetPurchaseRequisitionsQueryDto {
   constructor(
     public readonly page: number,
@@ -46,6 +57,8 @@ export class UpdatePurchaseRequisitionItemRequestDto {
       diameter?: string | null;
       thickness?: string | null;
       bore?: string | null;
+      technicalFamily?: string | null;
+      technicalAttributes?: Record<string, string>;
       sellerUnitCost?: number;
       sellerCurrency?: Currency;
       sellerCostSource?: PurchaseCostSource;
@@ -64,6 +77,8 @@ export class UpdatePurchaseRequisitionItemRequestDto {
       diameter: optionalText(body.diameter),
       thickness: optionalText(body.thickness),
       bore: optionalText(body.bore),
+      technicalFamily: optionalText(body.technicalFamily),
+      technicalAttributes: stringRecord(body.technicalAttributes),
       sellerBrand: optionalText(body.sellerBrand),
       sellerDeliveryTime: optionalText(body.sellerDeliveryTime),
       deliveryPlace: optionalText(body.deliveryPlace),
@@ -123,7 +138,13 @@ export class AssignPurchaseRequisitionRequestDto {
 export class CreatePurchaseSupplierOfferRequestDto {
   constructor(
     public readonly supplierId: string,
+    public readonly supplierProductCode: string | null,
+    public readonly alternateCodes: string[],
+    public readonly supplierDescription: string | null,
     public readonly qty: number,
+    public readonly unit: string | null,
+    public readonly listUnitPrice: number | null,
+    public readonly discountPct: number | null,
     public readonly unitCost: number,
     public readonly currency: Currency,
     public readonly exchangeRate: number | null,
@@ -131,9 +152,20 @@ export class CreatePurchaseSupplierOfferRequestDto {
     public readonly brand: string | null,
     public readonly origin: string | null,
     public readonly deliveryTime: string | null,
+    public readonly availableDate: Date | null,
+    public readonly minimumQty: number | null,
     public readonly validUntil: Date | null,
     public readonly quoteDate: Date,
     public readonly externalReference: string | null,
+    public readonly paymentTerms: string | null,
+    public readonly deliveryTerms: string | null,
+    public readonly documentSubtotal: number | null,
+    public readonly documentDiscount: number,
+    public readonly documentFreight: number,
+    public readonly documentOtherCharges: number,
+    public readonly taxIncluded: boolean,
+    public readonly documentTax: number | null,
+    public readonly documentTotal: number | null,
     public readonly notes: string | null,
   ) {}
 
@@ -146,19 +178,41 @@ export class CreatePurchaseSupplierOfferRequestDto {
     const currency = body.currency as Currency;
     const exchangeRate = body.exchangeRate === undefined || body.exchangeRate === null || body.exchangeRate === "" ? null : Number(body.exchangeRate);
     const taxRate = body.taxRate === undefined ? 0.16 : Number(body.taxRate);
+    const nullableNumber = (key: string): number | null => body[key] === undefined || body[key] === null || body[key] === "" ? null : Number(body[key]);
+    const listUnitPrice = nullableNumber("listUnitPrice");
+    const discountPct = nullableNumber("discountPct");
+    const minimumQty = nullableNumber("minimumQty");
+    const documentSubtotal = nullableNumber("documentSubtotal");
+    const documentTax = nullableNumber("documentTax");
+    const documentTotal = nullableNumber("documentTotal");
+    const documentDiscount = nullableNumber("documentDiscount") ?? 0;
+    const documentFreight = nullableNumber("documentFreight") ?? 0;
+    const documentOtherCharges = nullableNumber("documentOtherCharges") ?? 0;
     if (!supplierId) return ["supplierId is required."];
     if (!Number.isFinite(qty) || qty <= 0) return ["qty must be greater than zero."];
     if (!Number.isFinite(unitCost) || unitCost < 0) return ["unitCost must be zero or greater."];
     if (currency !== "MXN" && currency !== "USD") return ["currency is invalid."];
     if (currency === "USD" && (!exchangeRate || !Number.isFinite(exchangeRate) || exchangeRate <= 0)) return ["exchangeRate is required for USD offers."];
     if (!Number.isFinite(taxRate) || taxRate < 0 || taxRate > 1) return ["taxRate is invalid."];
+    for (const [field, value] of Object.entries({ listUnitPrice, minimumQty, documentSubtotal, documentTax, documentTotal, documentDiscount, documentFreight, documentOtherCharges })) {
+      if (value !== null && (!Number.isFinite(value) || value < 0)) return [`${field} is invalid.`];
+    }
+    if (discountPct !== null && (!Number.isFinite(discountPct) || discountPct < 0 || discountPct > 100)) return ["discountPct is invalid."];
     const validUntil = dateOnly(body.validUntil);
+    const availableDate = dateOnly(body.availableDate);
     const quoteDate = dateOnly(body.quoteDate) ?? new Date();
     if (body.validUntil && validUntil === undefined) return ["validUntil is invalid."];
+    if (body.availableDate && availableDate === undefined) return ["availableDate is invalid."];
     if (body.quoteDate && quoteDate === undefined) return ["quoteDate is invalid."];
     return [, new CreatePurchaseSupplierOfferRequestDto(
       supplierId,
+      optionalText(body.supplierProductCode)?.toUpperCase() ?? null,
+      Array.isArray(body.alternateCodes) ? [...new Set(body.alternateCodes.map((value) => String(value).trim().toUpperCase()).filter(Boolean))] : [],
+      optionalText(body.supplierDescription) ?? null,
       qty,
+      optionalText(body.unit)?.toUpperCase() ?? null,
+      listUnitPrice,
+      discountPct,
       unitCost,
       currency,
       exchangeRate,
@@ -166,9 +220,20 @@ export class CreatePurchaseSupplierOfferRequestDto {
       optionalText(body.brand) ?? null,
       optionalText(body.origin) ?? null,
       optionalText(body.deliveryTime) ?? null,
+      availableDate ?? null,
+      minimumQty,
       validUntil ?? null,
       quoteDate,
       optionalText(body.externalReference) ?? null,
+      optionalText(body.paymentTerms) ?? null,
+      optionalText(body.deliveryTerms) ?? null,
+      documentSubtotal,
+      documentDiscount,
+      documentFreight,
+      documentOtherCharges,
+      body.taxIncluded === true,
+      documentTax,
+      documentTotal,
       optionalText(body.notes) ?? null,
     )];
   }
@@ -184,6 +249,7 @@ export class SaveSupplierRequestDto {
     public readonly contactName: string | null,
     public readonly email: string | null,
     public readonly phone: string | null,
+    public readonly allowPotentialDuplicate: boolean,
   ) {}
 
   static create(input: unknown): [string?, SaveSupplierRequestDto?] {
@@ -204,6 +270,7 @@ export class SaveSupplierRequestDto {
       optionalText(body.contactName) ?? null,
       email,
       optionalText(body.phone) ?? null,
+      body.allowPotentialDuplicate === true,
     )];
   }
 }

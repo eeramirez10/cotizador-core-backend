@@ -202,7 +202,13 @@ export class SaveQuoteDraftUseCase {
         sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: item.sellerQuotedUnitCost === null ? null : round4(item.sellerQuotedUnitCost),
         sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedExchangeRate: item.sellerQuotedExchangeRate === null ? null : round4(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
+        sellerSupplierDescription: item.sellerSupplierDescription,
+        sellerSupplierOrigin: item.sellerSupplierOrigin,
+        sellerSupplierQuoteValidUntil: item.sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: item.sellerSupplierQuoteReference,
+        sellerSupplierQuoteNotes: item.sellerSupplierQuoteNotes,
         sellerOriginRestrictions: item.sellerOriginRestrictions,
         sellerDeliveryState: item.sellerDeliveryState,
         sellerSupplierDeliveryTime: item.sellerSupplierDeliveryTime,
@@ -210,6 +216,8 @@ export class SaveQuoteDraftUseCase {
         purchaseDiameter: item.purchaseDiameter,
         purchaseThickness: item.purchaseThickness,
         purchaseBore: item.purchaseBore,
+        technicalFamily: item.technicalFamily,
+        technicalAttributes: item.technicalAttributes,
         cost: round4(item.cost),
         costCurrency: item.costCurrency,
         marginPct,
@@ -249,7 +257,8 @@ export class SaveQuoteDraftUseCase {
           const isLocalProduct = !hasErpCode && Boolean(item.productId);
           const requiresPurchasing = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
           if (!requiresPurchasing) return false;
-          return !item.sellerSupplierNameSnapshot?.trim()
+          return !item.sellerSupplierId
+            || !item.sellerSupplierNameSnapshot?.trim()
             || !item.sellerQuotedCurrency
             || item.sellerQuotedUnitCost === null
             || item.sellerQuotedUnitCost <= 0

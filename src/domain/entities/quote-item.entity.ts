@@ -31,7 +31,13 @@ export interface QuoteItemEntity {
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
   sellerQuotedCurrency: Currency | null;
+  sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
+  sellerSupplierDescription: string | null;
+  sellerSupplierOrigin: string | null;
+  sellerSupplierQuoteValidUntil: Date | null;
+  sellerSupplierQuoteReference: string | null;
+  sellerSupplierQuoteNotes: string | null;
   sellerOriginRestrictions: string[];
   sellerDeliveryState: string | null;
   sellerSupplierDeliveryTime: string | null;
@@ -39,6 +45,8 @@ export interface QuoteItemEntity {
   purchaseDiameter: string | null;
   purchaseThickness: string | null;
   purchaseBore: string | null;
+  technicalFamily: string | null;
+  technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
   marginPct: number;

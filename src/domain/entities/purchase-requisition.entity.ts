@@ -6,6 +6,8 @@ import type {
   PurchaseRequisitionStatus,
   SupplierScope,
   SupplierSource,
+  SupplierStatus,
+  PurchaseOfferSource,
 } from "../../infrastructure/database/generated/enums";
 
 export interface ProcurementUserSummary {
@@ -19,8 +21,10 @@ export interface SupplierEntity {
   erpCode: string | null;
   name: string;
   source: SupplierSource;
+  status: SupplierStatus;
   scope: SupplierScope;
   taxId: string | null;
+  normalizedTaxId: string | null;
   state: string | null;
   creditTerms: string | null;
   currency: Currency | null;
@@ -28,7 +32,9 @@ export interface SupplierEntity {
   contactName: string | null;
   contactPosition: string | null;
   email: string | null;
+  normalizedEmail: string | null;
   phone: string | null;
+  normalizedPhone: string | null;
   phoneExtension: string | null;
   mobile: string | null;
   notes: string | null;
@@ -41,8 +47,16 @@ export interface SupplierEntity {
 export interface PurchaseSupplierOfferEntity {
   id: string;
   requisitionItemId: string;
+  supplierQuoteId: string | null;
   supplierId: string;
+  source: PurchaseOfferSource;
+  supplierProductCode: string | null;
+  alternateCodes: string[];
+  supplierDescription: string | null;
   qty: number;
+  unit: string | null;
+  listUnitPrice: number | null;
+  discountPct: number | null;
   unitCost: number;
   currency: Currency;
   exchangeRate: number | null;
@@ -53,6 +67,8 @@ export interface PurchaseSupplierOfferEntity {
   brand: string | null;
   origin: string | null;
   deliveryTime: string | null;
+  availableDate: Date | null;
+  minimumQty: number | null;
   validUntil: Date | null;
   quoteDate: Date;
   sentAt: Date | null;
@@ -60,10 +76,32 @@ export interface PurchaseSupplierOfferEntity {
   notes: string | null;
   isSelected: boolean;
   isActive: boolean;
+  supplierQuote: PurchaseSupplierQuoteSummary | null;
   supplier: SupplierEntity;
   createdBy: ProcurementUserSummary;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface PurchaseSupplierQuoteSummary {
+  id: string;
+  reference: string | null;
+  quoteDate: Date;
+  validUntil: Date | null;
+  currency: Currency;
+  exchangeRate: number | null;
+  paymentTerms: string | null;
+  deliveryTerms: string | null;
+  subtotal: number;
+  discount: number;
+  freight: number;
+  otherCharges: number;
+  taxIncluded: boolean;
+  taxRate: number;
+  tax: number;
+  total: number;
+  notes: string | null;
+  fileAssetId: string | null;
 }
 
 export interface PurchaseRequisitionItemEntity {
@@ -84,6 +122,8 @@ export interface PurchaseRequisitionItemEntity {
   diameter: string | null;
   thickness: string | null;
   bore: string | null;
+  technicalFamily: string | null;
+  technicalAttributes: Record<string, string>;
   sellerUnitCost: number;
   sellerCurrency: Currency;
   sellerExchangeRate: number;

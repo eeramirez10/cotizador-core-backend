@@ -172,7 +172,7 @@ export type QuoteAttachmentGroupByOutputType = {
   _max: QuoteAttachmentMaxAggregateOutputType | null
 }
 
-type GetQuoteAttachmentGroupByPayload<T extends QuoteAttachmentGroupByArgs> = Prisma.PrismaPromise<
+export type GetQuoteAttachmentGroupByPayload<T extends QuoteAttachmentGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<QuoteAttachmentGroupByOutputType, T['by']> &
       {
@@ -1336,6 +1336,11 @@ export type QuoteAttachmentFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` QuoteAttachments.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of QuoteAttachments.
+   */
   distinct?: Prisma.QuoteAttachmentScalarFieldEnum | Prisma.QuoteAttachmentScalarFieldEnum[]
 }
 

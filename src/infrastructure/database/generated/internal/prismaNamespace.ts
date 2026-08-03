@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.9.1
+ * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.9.1",
+  engine: "e922089b7d7502aff4249d5da3420f6fa55fc6ad"
 }
 
 /**
@@ -156,6 +156,19 @@ export type Subset<T, U> = {
 };
 
 /**
+ * Resolved type of the argument passed to the `PrismaClient` constructor.
+ *
+ * When called without a narrower options type (the common case), this resolves
+ * to `PrismaClientOptions` directly, which produces a clear TypeScript error
+ * message (`not assignable to parameter of type 'PrismaClientOptions'`) when
+ * the argument is missing or incomplete. When the user supplies a narrower
+ * options type (e.g. via a literal), it falls back to `Subset` to keep
+ * filtering out unknown properties.
+ */
+export type PrismaClientConstructorArgs<Options extends PrismaClientOptions> =
+  [PrismaClientOptions] extends [Options] ? PrismaClientOptions : Subset<Options, PrismaClientOptions>;
+
+/**
  * SelectSubset
  * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
  * Additionally, it validates, if both select and include are present. If the case, it errors.
@@ -187,7 +200,7 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 export type XOR<T, U> =
   T extends object ?
   U extends object ?
-    (Without<T, U> & U) | (Without<U, T> & T)
+    ((Without<T, U> & U) | (Without<U, T> & T)) & object
   : U : T
 
 
@@ -397,6 +410,7 @@ export const ModelName = {
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
+  PurchaseSupplierQuote: 'PurchaseSupplierQuote',
   FileAsset: 'FileAsset',
   QuoteAttachment: 'QuoteAttachment',
   PurchaseOfferAttachment: 'PurchaseOfferAttachment',
@@ -420,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1386,6 +1400,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PurchaseSupplierQuote: {
+      payload: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>
+      fields: Prisma.PurchaseSupplierQuoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseSupplierQuoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseSupplierQuoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseSupplierQuoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseSupplierQuoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseSupplierQuoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseSupplierQuoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseSupplierQuoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseSupplierQuoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseSupplierQuoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        update: {
+          args: Prisma.PurchaseSupplierQuoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseSupplierQuoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseSupplierQuoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseSupplierQuoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseSupplierQuoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierQuotePayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseSupplierQuoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseSupplierQuote>
+        }
+        groupBy: {
+          args: Prisma.PurchaseSupplierQuoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierQuoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseSupplierQuoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierQuoteCountAggregateOutputType> | number
+        }
+      }
+    }
     FileAsset: {
       payload: Prisma.$FileAssetPayload<ExtArgs>
       fields: Prisma.FileAssetFieldRefs
@@ -2269,7 +2357,13 @@ export const QuoteItemScalarFieldEnum = {
   sellerSupplierNameSnapshot: 'sellerSupplierNameSnapshot',
   sellerQuotedUnitCost: 'sellerQuotedUnitCost',
   sellerQuotedCurrency: 'sellerQuotedCurrency',
+  sellerQuotedExchangeRate: 'sellerQuotedExchangeRate',
   sellerQuotedBrand: 'sellerQuotedBrand',
+  sellerSupplierDescription: 'sellerSupplierDescription',
+  sellerSupplierOrigin: 'sellerSupplierOrigin',
+  sellerSupplierQuoteValidUntil: 'sellerSupplierQuoteValidUntil',
+  sellerSupplierQuoteReference: 'sellerSupplierQuoteReference',
+  sellerSupplierQuoteNotes: 'sellerSupplierQuoteNotes',
   sellerOriginRestrictions: 'sellerOriginRestrictions',
   sellerDeliveryState: 'sellerDeliveryState',
   sellerSupplierDeliveryTime: 'sellerSupplierDeliveryTime',
@@ -2277,6 +2371,8 @@ export const QuoteItemScalarFieldEnum = {
   purchaseDiameter: 'purchaseDiameter',
   purchaseThickness: 'purchaseThickness',
   purchaseBore: 'purchaseBore',
+  technicalFamily: 'technicalFamily',
+  technicalAttributes: 'technicalAttributes',
   cost: 'cost',
   costCurrency: 'costCurrency',
   marginPct: 'marginPct',
@@ -2299,9 +2395,11 @@ export const SupplierScalarFieldEnum = {
   erpCode: 'erpCode',
   name: 'name',
   canonicalName: 'canonicalName',
+  status: 'status',
   source: 'source',
   scope: 'scope',
   taxId: 'taxId',
+  normalizedTaxId: 'normalizedTaxId',
   state: 'state',
   creditTerms: 'creditTerms',
   currency: 'currency',
@@ -2309,7 +2407,9 @@ export const SupplierScalarFieldEnum = {
   contactName: 'contactName',
   contactPosition: 'contactPosition',
   email: 'email',
+  normalizedEmail: 'normalizedEmail',
   phone: 'phone',
+  normalizedPhone: 'normalizedPhone',
   phoneExtension: 'phoneExtension',
   mobile: 'mobile',
   notes: 'notes',
@@ -2364,6 +2464,8 @@ export const PurchaseRequisitionItemScalarFieldEnum = {
   diameter: 'diameter',
   thickness: 'thickness',
   bore: 'bore',
+  technicalFamily: 'technicalFamily',
+  technicalAttributes: 'technicalAttributes',
   sellerUnitCost: 'sellerUnitCost',
   sellerCurrency: 'sellerCurrency',
   sellerExchangeRate: 'sellerExchangeRate',
@@ -2386,8 +2488,16 @@ export type PurchaseRequisitionItemScalarFieldEnum = (typeof PurchaseRequisition
 export const PurchaseSupplierOfferScalarFieldEnum = {
   id: 'id',
   requisitionItemId: 'requisitionItemId',
+  supplierQuoteId: 'supplierQuoteId',
   supplierId: 'supplierId',
+  source: 'source',
+  supplierProductCode: 'supplierProductCode',
+  alternateCodes: 'alternateCodes',
+  supplierDescription: 'supplierDescription',
   qty: 'qty',
+  unit: 'unit',
+  listUnitPrice: 'listUnitPrice',
+  discountPct: 'discountPct',
   unitCost: 'unitCost',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
@@ -2398,6 +2508,8 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
   brand: 'brand',
   origin: 'origin',
   deliveryTime: 'deliveryTime',
+  availableDate: 'availableDate',
+  minimumQty: 'minimumQty',
   validUntil: 'validUntil',
   quoteDate: 'quoteDate',
   sentAt: 'sentAt',
@@ -2412,6 +2524,37 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
 } as const
 
 export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
+
+
+export const PurchaseSupplierQuoteScalarFieldEnum = {
+  id: 'id',
+  requisitionId: 'requisitionId',
+  supplierId: 'supplierId',
+  fileAssetId: 'fileAssetId',
+  source: 'source',
+  reference: 'reference',
+  quoteDate: 'quoteDate',
+  validUntil: 'validUntil',
+  currency: 'currency',
+  exchangeRate: 'exchangeRate',
+  paymentTerms: 'paymentTerms',
+  deliveryTerms: 'deliveryTerms',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  freight: 'freight',
+  otherCharges: 'otherCharges',
+  taxIncluded: 'taxIncluded',
+  taxRate: 'taxRate',
+  tax: 'tax',
+  total: 'total',
+  notes: 'notes',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseSupplierQuoteScalarFieldEnum = (typeof PurchaseSupplierQuoteScalarFieldEnum)[keyof typeof PurchaseSupplierQuoteScalarFieldEnum]
 
 
 export const FileAssetScalarFieldEnum = {
@@ -2816,6 +2959,34 @@ export type ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplierStatus'
+ */
+export type EnumSupplierStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplierStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SupplierStatus[]'
+ */
+export type ListEnumSupplierStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplierStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'SupplierSource'
  */
 export type EnumSupplierSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupplierSource'>
@@ -2900,6 +3071,20 @@ export type ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = F
 
 
 /**
+ * Reference to a field of type 'PurchaseOfferSource'
+ */
+export type EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseOfferSource'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseOfferSource[]'
+ */
+export type ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseOfferSource[]'>
+    
+
+
+/**
  * Reference to a field of type 'FileAssetStatus'
  */
 export type EnumFileAssetStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FileAssetStatus'>
@@ -2970,20 +3155,6 @@ export type ListEnumErpTransferStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3006,19 +3177,10 @@ export type BatchPayload = {
 export const defineExtension = runtime.Extensions.defineExtension as unknown as runtime.Types.Extensions.ExtendsHook<"define", TypeMapCb, runtime.Types.Extensions.DefaultArgs>
 export type DefaultPrismaClient = PrismaClient
 export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
-export type PrismaClientOptions = ({
-  /**
-   * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-pg`.
-   */
-  adapter: runtime.SqlDriverAdapterFactory
-  accelerateUrl?: never
-} | {
-  /**
-   * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
-   */
-  accelerateUrl: string
-  adapter?: never
-}) & {
+/**
+ * Options common to all variants of `PrismaClientOptions`, regardless of whether you connect to your database through a driver adapter or through Prisma Accelerate.
+ */
+export interface PrismaClientBaseOptions {
   /**
    * @default "colorless"
    */
@@ -3089,7 +3251,72 @@ export type PrismaClientOptions = ({
    * ```
    */
   comments?: runtime.SqlCommenterPlugin[]
+  /**
+   * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+   * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+   * performance for applications that execute a large number of unique queries, while a smaller
+   * cache size can reduce memory usage.
+   * 
+   * @example
+   * ```
+   * const prisma = new PrismaClient({
+   *   adapter,
+   *   queryPlanCacheMaxSize: 100,
+   * })
+   * ```
+   */
+  queryPlanCacheMaxSize?: number
 }
+
+/**
+ * `PrismaClient` options for connecting to your database through Prisma Accelerate instead of a driver adapter.
+ * 
+ * Learn more: https://pris.ly/d/accelerate
+ */
+export interface PrismaClientOptionsWithAccelerateUrl extends PrismaClientBaseOptions {
+  /**
+   * The Prisma Accelerate connection URL. Use this option to connect to your database through Prisma Accelerate instead of using a driver adapter to connect directly.
+   * 
+   * Learn more: https://pris.ly/d/accelerate
+   */
+  accelerateUrl: string
+  adapter?: never
+}
+
+/**
+ * `PrismaClient` options for connecting to your database through a driver adapter. This is the common case in Prisma 7.
+ * 
+ * Learn more: https://pris.ly/d/driver-adapters
+ */
+export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions {
+  /**
+   * A driver adapter that PrismaClient uses to connect to your database, such as the ones provided by `@prisma/adapter-pg`, `@prisma/adapter-libsql`, `@prisma/adapter-planetscale`, etc.
+   * 
+   * A driver adapter is **required** unless you connect to your database through Prisma Accelerate (in which case use `accelerateUrl` instead).
+   * 
+   * Learn more: https://pris.ly/d/driver-adapters
+   * 
+   * @example
+   * ```ts
+   * import { PrismaPg } from '@prisma/adapter-pg'
+   * import { PrismaClient } from './generated/prisma/client'
+   * 
+   * const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * const prisma = new PrismaClient({ adapter })
+   * ```
+   */
+  adapter: runtime.SqlDriverAdapterFactory
+  accelerateUrl?: never
+}
+
+/**
+ * Options passed to the `PrismaClient` constructor.
+ * 
+ * A driver adapter (or, alternatively, a Prisma Accelerate URL) is **required**. See {@link PrismaClientOptionsWithAdapter} and {@link PrismaClientOptionsWithAccelerateUrl} for the two variants. All other properties live in {@link PrismaClientBaseOptions} and are optional.
+ * 
+ * Learn more about driver adapters: https://pris.ly/d/driver-adapters
+ */
+export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   branch?: Prisma.BranchOmit
   quoteCatalogOption?: Prisma.QuoteCatalogOptionOmit
@@ -3104,6 +3331,7 @@ export type GlobalOmitConfig = {
   purchaseRequisition?: Prisma.PurchaseRequisitionOmit
   purchaseRequisitionItem?: Prisma.PurchaseRequisitionItemOmit
   purchaseSupplierOffer?: Prisma.PurchaseSupplierOfferOmit
+  purchaseSupplierQuote?: Prisma.PurchaseSupplierQuoteOmit
   fileAsset?: Prisma.FileAssetOmit
   quoteAttachment?: Prisma.QuoteAttachmentOmit
   purchaseOfferAttachment?: Prisma.PurchaseOfferAttachmentOmit

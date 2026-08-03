@@ -174,7 +174,13 @@ interface QuoteRow {
     sellerSupplierNameSnapshot: string | null;
     sellerQuotedUnitCost: number | DecimalLike | null;
     sellerQuotedCurrency: QuoteEntity["currency"] | null;
+    sellerQuotedExchangeRate: number | DecimalLike | null;
     sellerQuotedBrand: string | null;
+    sellerSupplierDescription: string | null;
+    sellerSupplierOrigin: string | null;
+    sellerSupplierQuoteValidUntil: Date | null;
+    sellerSupplierQuoteReference: string | null;
+    sellerSupplierQuoteNotes: string | null;
     sellerOriginRestrictions: string[];
     sellerDeliveryState: string | null;
     sellerSupplierDeliveryTime: string | null;
@@ -182,6 +188,8 @@ interface QuoteRow {
     purchaseDiameter: string | null;
     purchaseThickness: string | null;
     purchaseBore: string | null;
+    technicalFamily: string | null;
+    technicalAttributes: unknown;
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
@@ -371,7 +379,13 @@ export class QuoteMapper {
         sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: toNumber(item.sellerQuotedUnitCost),
         sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedExchangeRate: toNumber(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
+        sellerSupplierDescription: item.sellerSupplierDescription,
+        sellerSupplierOrigin: item.sellerSupplierOrigin,
+        sellerSupplierQuoteValidUntil: item.sellerSupplierQuoteValidUntil,
+        sellerSupplierQuoteReference: item.sellerSupplierQuoteReference,
+        sellerSupplierQuoteNotes: item.sellerSupplierQuoteNotes,
         sellerOriginRestrictions: item.sellerOriginRestrictions,
         sellerDeliveryState: item.sellerDeliveryState,
         sellerSupplierDeliveryTime: item.sellerSupplierDeliveryTime,
@@ -379,6 +393,11 @@ export class QuoteMapper {
         purchaseDiameter: item.purchaseDiameter,
         purchaseThickness: item.purchaseThickness,
         purchaseBore: item.purchaseBore,
+        technicalFamily: item.technicalFamily,
+        technicalAttributes:
+          item.technicalAttributes && typeof item.technicalAttributes === "object" && !Array.isArray(item.technicalAttributes)
+            ? Object.fromEntries(Object.entries(item.technicalAttributes).filter((entry): entry is [string, string] => typeof entry[1] === "string"))
+            : {},
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),

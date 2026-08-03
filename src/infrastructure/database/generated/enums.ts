@@ -71,6 +71,23 @@ export const SupplierScope = {
 export type SupplierScope = (typeof SupplierScope)[keyof typeof SupplierScope]
 
 
+export const SupplierStatus = {
+  PROSPECT: 'PROSPECT',
+  PENDING_ERP: 'PENDING_ERP',
+  ERP_SYNCED: 'ERP_SYNCED'
+} as const
+
+export type SupplierStatus = (typeof SupplierStatus)[keyof typeof SupplierStatus]
+
+
+export const PurchaseOfferSource = {
+  SELLER: 'SELLER',
+  PURCHASING: 'PURCHASING'
+} as const
+
+export type PurchaseOfferSource = (typeof PurchaseOfferSource)[keyof typeof PurchaseOfferSource]
+
+
 export const PurchaseRequisitionStatus = {
   DRAFT: 'DRAFT',
   SUBMITTED: 'SUBMITTED',
