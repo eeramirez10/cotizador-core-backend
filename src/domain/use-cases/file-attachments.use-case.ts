@@ -22,6 +22,19 @@ const MIME_EXTENSIONS: Record<string, Set<string>> = {
   "image/webp": new Set([".webp"]),
 };
 
+export const hasValidAttachmentSignature = (mimeType: string, content: Uint8Array): boolean => {
+  const bytes = Buffer.from(content.buffer, content.byteOffset, content.byteLength);
+  if (mimeType === "application/pdf") {
+    return bytes.subarray(0, Math.min(bytes.length, 1024)).includes(Buffer.from("%PDF-", "ascii"));
+  }
+  if (mimeType === "application/vnd.ms-excel") return bytes.subarray(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]));
+  if (mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") return bytes[0] === 0x50 && bytes[1] === 0x4b;
+  if (mimeType === "image/jpeg") return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  if (mimeType === "image/png") return bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  if (mimeType === "image/webp") return bytes.subarray(0, 4).toString("ascii") === "RIFF" && bytes.subarray(8, 12).toString("ascii") === "WEBP";
+  return false;
+};
+
 export interface UploadedFileInput {
   originalName: string;
   mimeType: string;
@@ -145,18 +158,9 @@ export class FileAttachmentsUseCase {
       throw new Error("Unsupported attachment type.");
     }
     if (file.sizeBytes <= 0 || file.content.byteLength !== file.sizeBytes) throw new Error("Attachment is empty or incomplete.");
-    if (!this.hasValidSignature(file.mimeType, file.content)) throw new Error("Attachment content does not match its file type.");
-  }
-
-  private hasValidSignature(mimeType: string, content: Uint8Array): boolean {
-    const bytes = Buffer.from(content.buffer, content.byteOffset, content.byteLength);
-    if (mimeType === "application/pdf") return bytes.subarray(0, 5).toString("ascii") === "%PDF-";
-    if (mimeType === "application/vnd.ms-excel") return bytes.subarray(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]));
-    if (mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") return bytes[0] === 0x50 && bytes[1] === 0x4b;
-    if (mimeType === "image/jpeg") return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
-    if (mimeType === "image/png") return bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
-    if (mimeType === "image/webp") return bytes.subarray(0, 4).toString("ascii") === "RIFF" && bytes.subarray(8, 12).toString("ascii") === "WEBP";
-    return false;
+    if (!hasValidAttachmentSignature(file.mimeType, file.content)) {
+      throw new Error("Attachment content does not match its file type.");
+    }
   }
 
   private normalizeIds(ids: string[]): string[] {
