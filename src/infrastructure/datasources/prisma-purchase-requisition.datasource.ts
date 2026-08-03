@@ -767,10 +767,15 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         state: data.state,
         country: data.country,
         contactName: data.contactName,
+        contactPosition: data.contactPosition,
+        creditTerms: data.creditTerms,
+        currency: data.currency,
+        notes: data.notes,
         email: data.email,
         normalizedEmail: data.normalizedEmail,
         phone: data.phone,
         normalizedPhone: data.normalizedPhone,
+        phoneExtension: data.contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.extension ?? null,
         mobile: data.contacts.find((contact) => contact.channel === "PHONE" && contact.phoneKind === "MOBILE")?.value ?? null,
         contacts: {
           create: data.contacts.map(({ normalizedValue, ...contact }) => ({ ...contact, normalizedValue })),
@@ -849,27 +854,43 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       return tx.supplier.update({
         where: { id },
         data: {
-        name: data.name,
-        canonicalName: data.canonicalName,
-        source: "LOCAL",
-        scope: data.scope,
-        taxId: data.taxId,
-        normalizedTaxId: data.normalizedTaxId,
-        state: data.state,
-        country: data.country,
-        contactName: data.contactName,
-        email: data.email,
-        normalizedEmail: data.normalizedEmail,
-        phone: data.phone,
-        normalizedPhone: data.normalizedPhone,
-        mobile: data.contacts.find((contact) => contact.channel === "PHONE" && contact.phoneKind === "MOBILE")?.value ?? null,
-        contacts: {
-          create: data.contacts.map(({ normalizedValue, ...contact }) => ({ ...contact, normalizedValue })),
-        },
-        updatedByUserId: data.actorUserId,
+          name: data.name,
+          canonicalName: data.canonicalName,
+          source: "LOCAL",
+          scope: data.scope,
+          taxId: data.taxId,
+          normalizedTaxId: data.normalizedTaxId,
+          state: data.state,
+          country: data.country,
+          contactName: data.contactName,
+          contactPosition: data.contactPosition,
+          creditTerms: data.creditTerms,
+          currency: data.currency,
+          notes: data.notes,
+          email: data.email,
+          normalizedEmail: data.normalizedEmail,
+          phone: data.phone,
+          normalizedPhone: data.normalizedPhone,
+          phoneExtension: data.contacts.find((contact) => contact.channel === "PHONE" && contact.isPrimary)?.extension ?? null,
+          mobile: data.contacts.find((contact) => contact.channel === "PHONE" && contact.phoneKind === "MOBILE")?.value ?? null,
+          contacts: {
+            create: data.contacts.map(({ normalizedValue, ...contact }) => ({ ...contact, normalizedValue })),
+          },
+          updatedByUserId: data.actorUserId,
         },
         include: { contacts: true },
       });
+    });
+    return supplierEntity(row);
+  }
+
+  async setSupplierActive(id: string, isActive: boolean, actorUserId: string): Promise<SupplierEntity | null> {
+    const existing = await prisma.supplier.findUnique({ where: { id }, select: { id: true } });
+    if (!existing) return null;
+    const row = await prisma.supplier.update({
+      where: { id },
+      data: { isActive, updatedByUserId: actorUserId },
+      include: { contacts: true },
     });
     return supplierEntity(row);
   }

@@ -29,4 +29,5 @@ export abstract class PurchaseRequisitionRepository {
   abstract createSupplier(data: SaveSupplierData): Promise<SupplierEntity>;
   abstract upsertErpSupplier(data: SaveErpSupplierData): Promise<SupplierEntity>;
   abstract updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null>;
+  abstract setSupplierActive(id: string, isActive: boolean, actorUserId: string): Promise<SupplierEntity | null>;
 }

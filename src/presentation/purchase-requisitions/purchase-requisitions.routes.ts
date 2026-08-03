@@ -47,6 +47,7 @@ export class PurchaseRequisitionsRoutes {
     router.post("/suppliers/erp/sync", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.syncErpSupplier);
     router.post("/suppliers", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.createSupplier);
     router.patch("/suppliers/:supplierId", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.updateSupplier);
+    router.patch("/suppliers/:supplierId/status", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.setSupplierActive);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getById);
     router.patch("/:id/items/:itemId", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateItem);
     router.post("/:id/items/:itemId/link-erp", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.linkItemToErp);

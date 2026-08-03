@@ -7,6 +7,7 @@ import {
   CreatePurchaseSupplierOfferRequestDto,
   GetPurchaseRequisitionsQueryDto,
   SaveSupplierRequestDto,
+  SetSupplierActiveRequestDto,
   SyncErpSupplierRequestDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
@@ -240,6 +241,10 @@ export class PurchaseRequisitionUseCase {
       state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
+      contactPosition: dto.contactPosition,
+      creditTerms: dto.creditTerms,
+      currency: dto.currency,
+      notes: dto.notes,
       email: dto.email,
       normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
@@ -262,6 +267,10 @@ export class PurchaseRequisitionUseCase {
       state: dto.state,
       country: dto.country,
       contactName: dto.contactName,
+      contactPosition: dto.contactPosition,
+      creditTerms: dto.creditTerms,
+      currency: dto.currency,
+      notes: dto.notes,
       email: dto.email,
       normalizedEmail: normalizeEmail(dto.email),
       phone: dto.phone,
@@ -270,6 +279,15 @@ export class PurchaseRequisitionUseCase {
       allowPotentialDuplicate: dto.allowPotentialDuplicate,
       actorUserId: actor.id,
     });
+    if (!supplier) throw new Error("Supplier not found.");
+    return SupplierResponseDto.toJSON(supplier);
+  }
+
+  async setSupplierActive(id: string, dto: SetSupplierActiveRequestDto, actor: PurchaseRequisitionActor) {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) {
+      throw new Error("Only ADMIN or PURCHASING can change supplier status.");
+    }
+    const supplier = await this.repository.setSupplierActive(id, dto.isActive, actor.id);
     if (!supplier) throw new Error("Supplier not found.");
     return SupplierResponseDto.toJSON(supplier);
   }

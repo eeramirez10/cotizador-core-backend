@@ -253,6 +253,10 @@ export class SaveSupplierRequestDto {
     public readonly state: string | null,
     public readonly country: string | null,
     public readonly contactName: string | null,
+    public readonly contactPosition: string | null,
+    public readonly creditTerms: string | null,
+    public readonly currency: Currency | null,
+    public readonly notes: string | null,
     public readonly email: string | null,
     public readonly phone: string | null,
     public readonly contacts: Array<{
@@ -277,8 +281,12 @@ export class SaveSupplierRequestDto {
     const email = optionalText(body.email) ?? null;
     const phone = optionalText(body.phone) ?? null;
     const country = optionalText(body.country) ?? (scope === "NATIONAL" ? "MÉXICO" : null);
+    const currency = body.currency === undefined || body.currency === null || body.currency === ""
+      ? null
+      : body.currency as Currency;
     if (!name) return ["name is required."];
     if (scope !== "NATIONAL" && scope !== "INTERNATIONAL") return ["scope is invalid."];
+    if (currency !== null && currency !== "MXN" && currency !== "USD") return ["currency is invalid."];
     if (body.contacts !== undefined && !Array.isArray(body.contacts)) return ["contacts must be an array."];
     const incomingContacts = [...(Array.isArray(body.contacts) ? body.contacts : [])];
     if (!incomingContacts.some((value) => (value as Record<string, unknown> | null)?.channel === "EMAIL") && email) {
@@ -344,11 +352,25 @@ export class SaveSupplierRequestDto {
       optionalText(body.state)?.toUpperCase() ?? null,
       country,
       optionalText(body.contactName) ?? null,
+      optionalText(body.contactPosition) ?? null,
+      optionalText(body.creditTerms) ?? null,
+      currency,
+      optionalText(body.notes) ?? null,
       primaryEmail,
       primaryPhone,
       contacts,
       body.allowPotentialDuplicate === true,
     )];
+  }
+}
+
+export class SetSupplierActiveRequestDto {
+  private constructor(public readonly isActive: boolean) {}
+
+  static create(input: unknown): [string?, SetSupplierActiveRequestDto?] {
+    const value = (input as Record<string, unknown> | null)?.isActive;
+    if (typeof value !== "boolean") return ["isActive must be boolean."];
+    return [, new SetSupplierActiveRequestDto(value)];
   }
 }
 
