@@ -12,6 +12,7 @@ export class AiPlatformController {
   public suggestTechnicalData = (req: Request, res: Response) => this.forwardJson(req, res, "/api/procurement/technical-data/suggest");
   public suggestTechnicalDataBatch = (req: Request, res: Response) => this.forwardJson(req, res, "/api/procurement/technical-data/suggest-batch");
   public suggestCatalogCode = (req: Request, res: Response) => this.forwardJson(req, res, "/api/quote-catalogs/suggest-code");
+  public extractPartyData = (req: Request, res: Response) => this.forwardJson(req, res, "/api/parties/extract");
   public searchSimilar = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar");
   public searchSimilarV2 = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar-v2");
   public searchSimilarV2Semantic = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar-v2/semantic");
