@@ -4,6 +4,7 @@ import {
   QuoteOrigin,
   QuoteSourceChannel,
 } from "../../../infrastructure/database/generated/enums";
+import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
 
 interface ExtractionItemDto {
   descriptionOriginal: string | null;
@@ -209,9 +210,10 @@ export class CreateQuoteFromExtractionRequestDto {
       const unitOriginal = CreateQuoteFromExtractionRequestDto.normalizeNullableString(
         row.unidad_original ?? row.unit_original ?? row.unitOriginal
       );
-      const unitNormalized = CreateQuoteFromExtractionRequestDto.normalizeNullableString(
+      const unitNormalizedRaw = CreateQuoteFromExtractionRequestDto.normalizeNullableString(
         row.unidad_normalizada ?? row.unit_normalized ?? row.unitNormalized ?? row.unit
       );
+      const unitNormalized = normalizeMeasurementUnit(unitNormalizedRaw ?? unitOriginal);
 
       const quantity = CreateQuoteFromExtractionRequestDto.parseOptionalNumber(
         row.cantidad ?? row.quantity ?? row.qty
@@ -234,7 +236,7 @@ export class CreateQuoteFromExtractionRequestDto {
         quantity: typeof quantity === "undefined" ? null : quantity,
         unitOriginal,
         unitNormalized,
-        requiresReview,
+        requiresReview: requiresReview || unitNormalized === null,
       });
     }
 

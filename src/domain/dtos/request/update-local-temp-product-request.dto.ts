@@ -1,5 +1,5 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
-import { isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
 
 interface UpdateLocalTempProductRequestDtoProps {
   code?: string | null;
@@ -49,13 +49,14 @@ export class UpdateLocalTempProductRequestDto {
     }
 
     const unitRaw = UpdateLocalTempProductRequestDto.normalizeOptionalString(body.unit);
-    const unit = typeof unitRaw === "string" ? unitRaw.toUpperCase() : undefined;
-    if (typeof unit === "string" && unit.length === 0) {
+    const normalizedUnit = typeof unitRaw === "string" ? normalizeMeasurementUnit(unitRaw) : undefined;
+    if (unitRaw === "") {
       return ["unit cannot be empty."];
     }
-    if (typeof unit === "string" && !isAllowedMeasurementUnit(unit)) {
+    if (typeof unitRaw === "string" && normalizedUnit === null) {
       return ["unit is invalid."];
     }
+    const unit = normalizedUnit ?? undefined;
 
     let currency: Currency | undefined;
     if (typeof body.currency !== "undefined") {

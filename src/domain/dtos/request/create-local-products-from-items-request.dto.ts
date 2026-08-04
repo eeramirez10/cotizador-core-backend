@@ -1,5 +1,5 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
-import { isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
 
 interface LocalProductItemInput {
   itemId: string;
@@ -72,17 +72,17 @@ export class CreateLocalProductsFromItemsRequestDto {
           row.description_original
       );
       const rawUnit = CreateLocalProductsFromItemsRequestDto.normalizeNullableString(
-        row.unit ??
-          row.unitNormalized ??
+        row.unitNormalized ??
           row.unit_normalized ??
+          row.unit ??
           row.unitOriginal ??
           row.unit_original
       );
-      const unit = rawUnit ? rawUnit.toUpperCase() : null;
+      const unit = normalizeMeasurementUnit(rawUnit);
 
       if (!itemId) return [`items[${i}].itemId is required.`];
       if (!description) return [`items[${i}].description is required.`];
-      if (unit && !isAllowedMeasurementUnit(unit)) {
+      if (rawUnit && !unit) {
         return [`items[${i}].unit is invalid.`];
       }
 

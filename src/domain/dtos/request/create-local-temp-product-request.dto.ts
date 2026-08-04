@@ -1,5 +1,5 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
-import { isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
 
 interface CreateLocalTempProductRequestDtoProps {
   description: string;
@@ -40,12 +40,11 @@ export class CreateLocalTempProductRequestDto {
 
     const body = input as Record<string, unknown>;
     const description = CreateLocalTempProductRequestDto.normalizeRequiredString(body.description);
-    const unit = CreateLocalTempProductRequestDto.normalizeRequiredString(body.unit).toUpperCase();
+    const rawUnit = CreateLocalTempProductRequestDto.normalizeRequiredString(body.unit);
+    const unit = normalizeMeasurementUnit(rawUnit);
     if (!description) return ["description is required."];
-    if (!unit) return ["unit is required."];
-    if (!isAllowedMeasurementUnit(unit)) {
-      return ["unit is invalid."];
-    }
+    if (!rawUnit) return ["unit is required."];
+    if (!unit) return ["unit is invalid."];
 
     const currencyRaw =
       typeof body.currency === "string" && body.currency.trim().length > 0

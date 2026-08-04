@@ -2,7 +2,7 @@ import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import {
   DEFAULT_MEASUREMENT_UNIT,
-  isAllowedMeasurementUnit,
+  normalizeMeasurementUnit,
 } from "../constants/measurement-unit.constants";
 import { CreateLocalProductsFromItemsRequestDto } from "../dtos/request/create-local-products-from-items-request.dto";
 import { CreateLocalProductsFromItemsResponseDto } from "../dtos/response/create-local-products-from-items-response.dto";
@@ -50,9 +50,7 @@ export class CreateLocalProductsFromItemsUseCase {
       const normalizedDescription = normalizeProductDisplayText(item.description);
       const canonicalDescription = canonicalizeProductText(item.description);
       const candidateUnit = normalizeProductDisplayText(item.unit || "");
-      const normalizedUnit = isAllowedMeasurementUnit(candidateUnit)
-        ? candidateUnit
-        : DEFAULT_MEASUREMENT_UNIT;
+      const normalizedUnit = normalizeMeasurementUnit(candidateUnit) ?? DEFAULT_MEASUREMENT_UNIT;
 
       const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({
         canonicalDescription,

@@ -90,7 +90,8 @@ export class CreateQuoteFromExtractionUseCase {
 
     for (const item of dto.items) {
       const qty = item.quantity ?? 1;
-      const normalizedUnit = item.unitNormalized ?? item.unitOriginal ?? "N/A";
+      const normalizedUnit = item.unitNormalized ?? "N/A";
+      const customerUnit = item.unitOriginal ?? item.unitNormalized;
       const descriptionOriginal =
         (item.descriptionOriginal ?? item.descriptionNormalized ?? "Descripcion pendiente de revision")
           .trim();
@@ -116,7 +117,7 @@ export class CreateQuoteFromExtractionUseCase {
           customerDescriptionOriginal: descriptionOriginal,
           customerDescriptionEditedAt: null,
           customerDescriptionEditedByUserId: null,
-          customerUnit: normalizedUnit !== "N/A" ? normalizedUnit : null,
+          customerUnit,
           erpDescription: null,
           unit: normalizedUnit,
           qty: round4(qty),

@@ -1,4 +1,4 @@
-import { DEFAULT_MEASUREMENT_UNIT, isAllowedMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { DEFAULT_MEASUREMENT_UNIT, normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
 import { canonicalizeProductText } from "../../utils/canonical-product-text";
 
 export class SearchSimilarLocalProductsRequestDto {
@@ -17,8 +17,7 @@ export class SearchSimilarLocalProductsRequestDto {
     if (!description) return ["description is required."];
     if (description.length > 500) return ["description must contain at most 500 characters."];
 
-    const unitCandidate = typeof body.unit === "string" ? body.unit.trim().toUpperCase() : "";
-    const unit = isAllowedMeasurementUnit(unitCandidate) ? unitCandidate : DEFAULT_MEASUREMENT_UNIT;
+    const unit = normalizeMeasurementUnit(body.unit) ?? DEFAULT_MEASUREMENT_UNIT;
     const topKCandidate = Number(body.topK);
     const topK = Number.isInteger(topKCandidate) && topKCandidate >= 1 && topKCandidate <= 20
       ? topKCandidate
