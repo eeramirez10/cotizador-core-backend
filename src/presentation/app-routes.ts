@@ -12,6 +12,7 @@ import { PurchaseRequisitionsRoutes } from "./purchase-requisitions/purchase-req
 import { SystemRoutes } from "./system/system.routes";
 import { AttachmentsRoutes } from "./attachments/attachments.routes";
 import { AiPlatformRoutes } from "./integrations/ai-platform.routes";
+import { ErpWarehousesRoutes } from "./erp-warehouses/erp-warehouses.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -33,6 +34,8 @@ export class AppRoutes {
     router.use("/purchase-requisitions", PurchaseRequisitionsRoutes.routes());
     router.use("/system", SystemRoutes.routes());
     router.use("/attachments", AttachmentsRoutes.routes());
+    router.use("/erp-warehouses", ErpWarehousesRoutes.managementRoutes());
+    router.use("/erp-products", ErpWarehousesRoutes.productRoutes());
     router.use(AiPlatformRoutes.routes());
 
     return router;

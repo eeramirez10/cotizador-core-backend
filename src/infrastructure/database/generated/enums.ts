@@ -19,6 +19,15 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const WarehouseAccessMode = {
+  INHERIT: 'INHERIT',
+  ADDITIVE: 'ADDITIVE',
+  OVERRIDE: 'OVERRIDE'
+} as const
+
+export type WarehouseAccessMode = (typeof WarehouseAccessMode)[keyof typeof WarehouseAccessMode]
+
+
 export const CustomerProfileStatus = {
   PROSPECT: 'PROSPECT',
   FISCAL_COMPLETED: 'FISCAL_COMPLETED'

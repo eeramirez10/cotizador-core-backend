@@ -54,6 +54,9 @@ export const ModelName = {
   Branch: 'Branch',
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
+  ErpWarehouse: 'ErpWarehouse',
+  BranchErpWarehouse: 'BranchErpWarehouse',
+  UserErpWarehouse: 'UserErpWarehouse',
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
   Product: 'Product',
@@ -147,11 +150,47 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   branchId: 'branchId',
   erpUserCode: 'erpUserCode',
+  warehouseAccessMode: 'warehouseAccessMode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  companyCode: 'companyCode',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ErpWarehouseScalarFieldEnum = (typeof ErpWarehouseScalarFieldEnum)[keyof typeof ErpWarehouseScalarFieldEnum]
+
+
+export const BranchErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  warehouseId: 'warehouseId',
+  assignedByUserId: 'assignedByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type BranchErpWarehouseScalarFieldEnum = (typeof BranchErpWarehouseScalarFieldEnum)[keyof typeof BranchErpWarehouseScalarFieldEnum]
+
+
+export const UserErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  warehouseId: 'warehouseId',
+  assignedByUserId: 'assignedByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserErpWarehouseScalarFieldEnum = (typeof UserErpWarehouseScalarFieldEnum)[keyof typeof UserErpWarehouseScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {

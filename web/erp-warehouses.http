@@ -1,0 +1,81 @@
+@baseUrl = http://localhost:4600/api
+@adminJwt = REPLACE_WITH_ADMIN_JWT
+@sellerJwt = REPLACE_WITH_SELLER_JWT
+@branchId = REPLACE_WITH_BRANCH_ID
+@sellerId = REPLACE_WITH_SELLER_ID
+@warehouseId = REPLACE_WITH_WAREHOUSE_ID
+
+### List active ERP warehouses (ADMIN)
+GET {{baseUrl}}/erp-warehouses
+Authorization: Bearer {{adminJwt}}
+
+### List all ERP warehouses, including inactive (ADMIN)
+GET {{baseUrl}}/erp-warehouses?includeInactive=true
+Authorization: Bearer {{adminJwt}}
+
+### Create ERP warehouse (ADMIN)
+POST {{baseUrl}}/erp-warehouses
+Authorization: Bearer {{adminJwt}}
+Content-Type: application/json
+
+{
+  "code": "15",
+  "name": "RESGUARDO QUERETARO",
+  "companyCode": "0"
+}
+
+### Update or deactivate ERP warehouse (ADMIN)
+PATCH {{baseUrl}}/erp-warehouses/{{warehouseId}}
+Authorization: Bearer {{adminJwt}}
+Content-Type: application/json
+
+{
+  "name": "RESGUARDO QUERETARO",
+  "companyCode": "0",
+  "isActive": true
+}
+
+### Get warehouses assigned to branch (ADMIN)
+GET {{baseUrl}}/erp-warehouses/branches/{{branchId}}
+Authorization: Bearer {{adminJwt}}
+
+### Replace branch warehouses (ADMIN)
+PUT {{baseUrl}}/erp-warehouses/branches/{{branchId}}
+Authorization: Bearer {{adminJwt}}
+Content-Type: application/json
+
+{
+  "warehouseCodes": ["15"]
+}
+
+### Get seller effective warehouse access (ADMIN)
+GET {{baseUrl}}/erp-warehouses/users/{{sellerId}}
+Authorization: Bearer {{adminJwt}}
+
+### Add individual warehouses to inherited branch warehouses (ADMIN)
+PUT {{baseUrl}}/erp-warehouses/users/{{sellerId}}
+Authorization: Bearer {{adminJwt}}
+Content-Type: application/json
+
+{
+  "accessMode": "ADDITIVE",
+  "warehouseCodes": ["02", "05"]
+}
+
+### Return seller to branch defaults (ADMIN)
+PUT {{baseUrl}}/erp-warehouses/users/{{sellerId}}
+Authorization: Bearer {{adminJwt}}
+Content-Type: application/json
+
+{
+  "accessMode": "INHERIT",
+  "warehouseCodes": []
+}
+
+### Current authenticated user effective warehouses
+GET {{baseUrl}}/erp-warehouses/me/effective
+Authorization: Bearer {{sellerJwt}}
+
+### Secure product search using current seller warehouse access
+GET {{baseUrl}}/erp-products/search?query=TUBO
+Authorization: Bearer {{sellerJwt}}

@@ -55,6 +55,21 @@ export type QuoteCatalogOption = Prisma.QuoteCatalogOptionModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model ErpWarehouse
+ * 
+ */
+export type ErpWarehouse = Prisma.ErpWarehouseModel
+/**
+ * Model BranchErpWarehouse
+ * 
+ */
+export type BranchErpWarehouse = Prisma.BranchErpWarehouseModel
+/**
+ * Model UserErpWarehouse
+ * 
+ */
+export type UserErpWarehouse = Prisma.UserErpWarehouseModel
+/**
  * Model Customer
  * 
  */

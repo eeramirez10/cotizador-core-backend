@@ -14,6 +14,12 @@ enum UserRole {
   PURCHASING
 }
 
+enum WarehouseAccessMode {
+  INHERIT
+  ADDITIVE
+  OVERRIDE
+}
+
 enum CustomerProfileStatus {
   PROSPECT
   FISCAL_COMPLETED
@@ -211,11 +217,12 @@ model Branch {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  users                User[]
-  quotes               Quote[]
-  products             Product[]
-  quoteCatalogOptions  QuoteCatalogOption[]
-  purchaseRequisitions PurchaseRequisition[]
+  users                   User[]
+  quotes                  Quote[]
+  products                Product[]
+  quoteCatalogOptions     QuoteCatalogOption[]
+  purchaseRequisitions    PurchaseRequisition[]
+  erpWarehouseAssignments BranchErpWarehouse[]
 
   @@map("branches")
 }
@@ -243,19 +250,20 @@ model QuoteCatalogOption {
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  firstName    String   @map("first_name") @db.VarChar(120)
-  lastName     String   @map("last_name") @db.VarChar(120)
-  username     String   @unique @db.VarChar(80)
-  email        String   @unique @db.VarChar(160)
-  passwordHash String   @map("password_hash") @db.VarChar(255)
-  role         UserRole
-  isActive     Boolean  @default(true) @map("is_active")
-  phone        String?  @db.VarChar(40)
-  branchId     String   @map("branch_id") @db.Uuid
-  erpUserCode  String?  @unique @map("erp_user_code") @db.VarChar(80)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  id                  String              @id @default(uuid()) @db.Uuid
+  firstName           String              @map("first_name") @db.VarChar(120)
+  lastName            String              @map("last_name") @db.VarChar(120)
+  username            String              @unique @db.VarChar(80)
+  email               String              @unique @db.VarChar(160)
+  passwordHash        String              @map("password_hash") @db.VarChar(255)
+  role                UserRole
+  isActive            Boolean             @default(true) @map("is_active")
+  phone               String?             @db.VarChar(40)
+  branchId            String              @map("branch_id") @db.Uuid
+  erpUserCode         String?             @unique @map("erp_user_code") @db.VarChar(80)
+  warehouseAccessMode WarehouseAccessMode @default(INHERIT) @map("warehouse_access_mode")
+  createdAt           DateTime            @default(now()) @map("created_at")
+  updatedAt           DateTime            @updatedAt @map("updated_at")
 
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
@@ -291,41 +299,94 @@ model User {
   updatedSupplierQuotes       PurchaseSupplierQuote[]        @relation("PurchaseSupplierQuoteUpdatedBy")
   uploadedFileAssets          FileAsset[]                    @relation("FileAssetUploadedBy")
   editedQuoteItemDescriptions QuoteItem[]                    @relation("QuoteItemCustomerDescriptionEditedBy")
+  erpWarehouseAssignments     UserErpWarehouse[]             @relation("UserWarehouseOwner")
+  assignedBranchWarehouses    BranchErpWarehouse[]           @relation("BranchWarehouseAssignedBy")
+  assignedUserWarehouses      UserErpWarehouse[]             @relation("UserWarehouseAssignedBy")
 
   @@index([branchId])
   @@map("users")
 }
 
+model ErpWarehouse {
+  id          String   @id @default(uuid()) @db.Uuid
+  code        String   @unique @db.VarChar(10)
+  name        String   @db.VarChar(160)
+  companyCode String?  @map("company_code") @db.VarChar(10)
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  branchAssignments BranchErpWarehouse[]
+  userAssignments   UserErpWarehouse[]
+
+  @@index([isActive, code])
+  @@map("erp_warehouses")
+}
+
+model BranchErpWarehouse {
+  id               String   @id @default(uuid()) @db.Uuid
+  branchId         String   @map("branch_id") @db.Uuid
+  warehouseId      String   @map("warehouse_id") @db.Uuid
+  assignedByUserId String?  @map("assigned_by_user_id") @db.Uuid
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  branch     Branch       @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  warehouse  ErpWarehouse @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
+  assignedBy User?        @relation("BranchWarehouseAssignedBy", fields: [assignedByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([branchId, warehouseId])
+  @@index([warehouseId])
+  @@index([assignedByUserId])
+  @@map("branch_erp_warehouses")
+}
+
+model UserErpWarehouse {
+  id               String   @id @default(uuid()) @db.Uuid
+  userId           String   @map("user_id") @db.Uuid
+  warehouseId      String   @map("warehouse_id") @db.Uuid
+  assignedByUserId String?  @map("assigned_by_user_id") @db.Uuid
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  user       User         @relation("UserWarehouseOwner", fields: [userId], references: [id], onDelete: Cascade)
+  warehouse  ErpWarehouse @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
+  assignedBy User?        @relation("UserWarehouseAssignedBy", fields: [assignedByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, warehouseId])
+  @@index([warehouseId])
+  @@index([assignedByUserId])
+  @@map("user_erp_warehouses")
+}
+
 model Customer {
-  id                String                @id @default(uuid()) @db.Uuid
-  source            CustomerSource        @default(LOCAL)
-  externalId        String?               @map("external_id") @db.VarChar(120)
-  externalSystem    String?               @map("external_system") @db.VarChar(80)
-  code              String?               @db.VarChar(80)
-  firstName         String                @map("first_name") @db.VarChar(120)
-  lastName          String                @map("last_name") @db.VarChar(120)
-  displayName       String                @map("display_name") @db.VarChar(260)
-  legalName         String?               @map("legal_name") @db.VarChar(260)
-  email             String?               @db.VarChar(160)
-  phone             String?               @db.VarChar(40)
-  whatsapp          String                @db.VarChar(40)
-  taxId             String?               @map("tax_id") @db.VarChar(60)
-  taxRegime         String?               @map("tax_regime") @db.VarChar(120)
-  billingStreet     String?               @map("billing_street") @db.VarChar(255)
-  billingExteriorNumber String?           @map("billing_exterior_number") @db.VarChar(30)
-  billingInteriorNumber String?           @map("billing_interior_number") @db.VarChar(30)
-  billingNeighborhood String?             @map("billing_neighborhood") @db.VarChar(160)
-  billingCity       String?               @map("billing_city") @db.VarChar(120)
-  billingState      String?               @map("billing_state") @db.VarChar(120)
-  billingPostalCode String?               @map("billing_postal_code") @db.VarChar(20)
-  billingCountry    String?               @map("billing_country") @db.VarChar(80)
-  profileStatus     CustomerProfileStatus @default(PROSPECT) @map("profile_status")
-  isActive          Boolean               @default(true) @map("is_active")
-  notes             String?               @db.Text
-  createdByUserId   String?               @map("created_by_user_id") @db.Uuid
-  updatedByUserId   String?               @map("updated_by_user_id") @db.Uuid
-  createdAt         DateTime              @default(now()) @map("created_at")
-  updatedAt         DateTime              @updatedAt @map("updated_at")
+  id                    String                @id @default(uuid()) @db.Uuid
+  source                CustomerSource        @default(LOCAL)
+  externalId            String?               @map("external_id") @db.VarChar(120)
+  externalSystem        String?               @map("external_system") @db.VarChar(80)
+  code                  String?               @db.VarChar(80)
+  firstName             String                @map("first_name") @db.VarChar(120)
+  lastName              String                @map("last_name") @db.VarChar(120)
+  displayName           String                @map("display_name") @db.VarChar(260)
+  legalName             String?               @map("legal_name") @db.VarChar(260)
+  email                 String?               @db.VarChar(160)
+  phone                 String?               @db.VarChar(40)
+  whatsapp              String                @db.VarChar(40)
+  taxId                 String?               @map("tax_id") @db.VarChar(60)
+  taxRegime             String?               @map("tax_regime") @db.VarChar(120)
+  billingStreet         String?               @map("billing_street") @db.VarChar(255)
+  billingExteriorNumber String?               @map("billing_exterior_number") @db.VarChar(30)
+  billingInteriorNumber String?               @map("billing_interior_number") @db.VarChar(30)
+  billingNeighborhood   String?               @map("billing_neighborhood") @db.VarChar(160)
+  billingCity           String?               @map("billing_city") @db.VarChar(120)
+  billingState          String?               @map("billing_state") @db.VarChar(120)
+  billingPostalCode     String?               @map("billing_postal_code") @db.VarChar(20)
+  billingCountry        String?               @map("billing_country") @db.VarChar(80)
+  profileStatus         CustomerProfileStatus @default(PROSPECT) @map("profile_status")
+  isActive              Boolean               @default(true) @map("is_active")
+  notes                 String?               @db.Text
+  createdByUserId       String?               @map("created_by_user_id") @db.Uuid
+  updatedByUserId       String?               @map("updated_by_user_id") @db.Uuid
+  createdAt             DateTime              @default(now()) @map("created_at")
+  updatedAt             DateTime              @updatedAt @map("updated_at")
 
   createdByUser User? @relation("CustomerCreatedBy", fields: [createdByUserId], references: [id], onDelete: SetNull)
   updatedByUser User? @relation("CustomerUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
@@ -341,18 +402,18 @@ model Customer {
 }
 
 model CustomerContact {
-  id         String   @id @default(uuid()) @db.Uuid
-  customerId String   @map("customer_id") @db.Uuid
-  name       String   @db.VarChar(160)
-  jobTitle   String?  @map("job_title") @db.VarChar(120)
-  label      String?  @db.VarChar(100)
-  email      String?  @db.VarChar(160)
-  phone      String?  @db.VarChar(40)
-  phoneExtension String? @map("phone_extension") @db.VarChar(20)
-  mobile     String?  @db.VarChar(40)
-  isPrimary  Boolean  @default(false) @map("is_primary")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(uuid()) @db.Uuid
+  customerId     String   @map("customer_id") @db.Uuid
+  name           String   @db.VarChar(160)
+  jobTitle       String?  @map("job_title") @db.VarChar(120)
+  label          String?  @db.VarChar(100)
+  email          String?  @db.VarChar(160)
+  phone          String?  @db.VarChar(40)
+  phoneExtension String?  @map("phone_extension") @db.VarChar(20)
+  mobile         String?  @db.VarChar(40)
+  isPrimary      Boolean  @default(false) @map("is_primary")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 

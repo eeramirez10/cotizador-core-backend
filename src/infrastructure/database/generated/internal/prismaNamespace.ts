@@ -387,6 +387,9 @@ export const ModelName = {
   Branch: 'Branch',
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
+  ErpWarehouse: 'ErpWarehouse',
+  BranchErpWarehouse: 'BranchErpWarehouse',
+  UserErpWarehouse: 'UserErpWarehouse',
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
   Product: 'Product',
@@ -422,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -645,6 +648,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    ErpWarehouse: {
+      payload: Prisma.$ErpWarehousePayload<ExtArgs>
+      fields: Prisma.ErpWarehouseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ErpWarehouseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ErpWarehouseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        findFirst: {
+          args: Prisma.ErpWarehouseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ErpWarehouseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        findMany: {
+          args: Prisma.ErpWarehouseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>[]
+        }
+        create: {
+          args: Prisma.ErpWarehouseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        createMany: {
+          args: Prisma.ErpWarehouseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ErpWarehouseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>[]
+        }
+        delete: {
+          args: Prisma.ErpWarehouseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        update: {
+          args: Prisma.ErpWarehouseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        deleteMany: {
+          args: Prisma.ErpWarehouseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ErpWarehouseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ErpWarehouseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>[]
+        }
+        upsert: {
+          args: Prisma.ErpWarehouseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErpWarehousePayload>
+        }
+        aggregate: {
+          args: Prisma.ErpWarehouseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateErpWarehouse>
+        }
+        groupBy: {
+          args: Prisma.ErpWarehouseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ErpWarehouseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ErpWarehouseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ErpWarehouseCountAggregateOutputType> | number
+        }
+      }
+    }
+    BranchErpWarehouse: {
+      payload: Prisma.$BranchErpWarehousePayload<ExtArgs>
+      fields: Prisma.BranchErpWarehouseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BranchErpWarehouseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BranchErpWarehouseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        findFirst: {
+          args: Prisma.BranchErpWarehouseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BranchErpWarehouseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        findMany: {
+          args: Prisma.BranchErpWarehouseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>[]
+        }
+        create: {
+          args: Prisma.BranchErpWarehouseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        createMany: {
+          args: Prisma.BranchErpWarehouseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BranchErpWarehouseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>[]
+        }
+        delete: {
+          args: Prisma.BranchErpWarehouseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        update: {
+          args: Prisma.BranchErpWarehouseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        deleteMany: {
+          args: Prisma.BranchErpWarehouseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BranchErpWarehouseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BranchErpWarehouseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>[]
+        }
+        upsert: {
+          args: Prisma.BranchErpWarehouseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BranchErpWarehousePayload>
+        }
+        aggregate: {
+          args: Prisma.BranchErpWarehouseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBranchErpWarehouse>
+        }
+        groupBy: {
+          args: Prisma.BranchErpWarehouseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BranchErpWarehouseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BranchErpWarehouseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BranchErpWarehouseCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserErpWarehouse: {
+      payload: Prisma.$UserErpWarehousePayload<ExtArgs>
+      fields: Prisma.UserErpWarehouseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserErpWarehouseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserErpWarehouseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        findFirst: {
+          args: Prisma.UserErpWarehouseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserErpWarehouseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        findMany: {
+          args: Prisma.UserErpWarehouseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>[]
+        }
+        create: {
+          args: Prisma.UserErpWarehouseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        createMany: {
+          args: Prisma.UserErpWarehouseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserErpWarehouseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>[]
+        }
+        delete: {
+          args: Prisma.UserErpWarehouseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        update: {
+          args: Prisma.UserErpWarehouseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserErpWarehouseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserErpWarehouseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserErpWarehouseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserErpWarehouseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserErpWarehousePayload>
+        }
+        aggregate: {
+          args: Prisma.UserErpWarehouseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserErpWarehouse>
+        }
+        groupBy: {
+          args: Prisma.UserErpWarehouseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserErpWarehouseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserErpWarehouseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserErpWarehouseCountAggregateOutputType> | number
         }
       }
     }
@@ -2222,11 +2447,47 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   branchId: 'branchId',
   erpUserCode: 'erpUserCode',
+  warehouseAccessMode: 'warehouseAccessMode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  companyCode: 'companyCode',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ErpWarehouseScalarFieldEnum = (typeof ErpWarehouseScalarFieldEnum)[keyof typeof ErpWarehouseScalarFieldEnum]
+
+
+export const BranchErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  warehouseId: 'warehouseId',
+  assignedByUserId: 'assignedByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type BranchErpWarehouseScalarFieldEnum = (typeof BranchErpWarehouseScalarFieldEnum)[keyof typeof BranchErpWarehouseScalarFieldEnum]
+
+
+export const UserErpWarehouseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  warehouseId: 'warehouseId',
+  assignedByUserId: 'assignedByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserErpWarehouseScalarFieldEnum = (typeof UserErpWarehouseScalarFieldEnum)[keyof typeof UserErpWarehouseScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {
@@ -2879,6 +3140,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'WarehouseAccessMode'
+ */
+export type EnumWarehouseAccessModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarehouseAccessMode'>
+    
+
+
+/**
+ * Reference to a field of type 'WarehouseAccessMode[]'
+ */
+export type ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WarehouseAccessMode[]'>
+    
+
+
+/**
  * Reference to a field of type 'CustomerSource'
  */
 export type EnumCustomerSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomerSource'>
@@ -3381,6 +3656,9 @@ export type GlobalOmitConfig = {
   branch?: Prisma.BranchOmit
   quoteCatalogOption?: Prisma.QuoteCatalogOptionOmit
   user?: Prisma.UserOmit
+  erpWarehouse?: Prisma.ErpWarehouseOmit
+  branchErpWarehouse?: Prisma.BranchErpWarehouseOmit
+  userErpWarehouse?: Prisma.UserErpWarehouseOmit
   customer?: Prisma.CustomerOmit
   customerContact?: Prisma.CustomerContactOmit
   product?: Prisma.ProductOmit

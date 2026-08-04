@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { Envs } from "../../config/envs";
 import { AiPlatformHttpGateway } from "../../infrastructure/http/ai-platform-http.gateway";
+import { PrismaErpWarehouseDatasource } from "../../infrastructure/datasources/prisma-erp-warehouse.datasource";
+import { ErpWarehouseRepositoryImpl } from "../../infrastructure/repositories/erp-warehouse.repository-impl";
+import { ErpProductsSearchAdapter } from "../../infrastructure/http/erp-products-search.adapter";
+import { ErpWarehouseAccessUseCase } from "../../domain/use-cases/erp-warehouse-access.use-case";
 import { uploadSingleAiDocument } from "../middlewares/ai-platform-upload.middleware";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { AiPlatformController } from "./ai-platform.controller";
@@ -8,11 +12,24 @@ import { AiPlatformController } from "./ai-platform.controller";
 export class AiPlatformRoutes {
   public static routes(): Router {
     const router = Router();
-    const controller = new AiPlatformController(new AiPlatformHttpGateway(
-      Envs.aiPlatformBaseUrl,
-      Envs.aiPlatformTimeoutMs,
-      Envs.aiPlatformInternalApiKey,
-    ));
+    const warehouseRepository = new ErpWarehouseRepositoryImpl(new PrismaErpWarehouseDatasource());
+    const warehouseAccess = new ErpWarehouseAccessUseCase(
+      warehouseRepository,
+      new ErpProductsSearchAdapter(
+        Envs.erpApiUrl,
+        Envs.erpProductsBasePath,
+        Envs.erpApiTimeoutMs,
+        Envs.erpInternalApiKey,
+      ),
+    );
+    const controller = new AiPlatformController(
+      new AiPlatformHttpGateway(
+        Envs.aiPlatformBaseUrl,
+        Envs.aiPlatformTimeoutMs,
+        Envs.aiPlatformInternalApiKey,
+      ),
+      warehouseAccess,
+    );
 
     router.use(requireAuth);
     router.post("/extract/jobs", uploadSingleAiDocument, controller.createDocumentJob);

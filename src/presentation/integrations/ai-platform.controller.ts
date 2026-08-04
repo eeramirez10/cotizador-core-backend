@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import { AiPlatformGateway, AiPlatformResponse } from "../../domain/contracts/ai-platform.gateway";
+import { ErpWarehouseAccessUseCase } from "../../domain/use-cases/erp-warehouse-access.use-case";
 
 export class AiPlatformController {
-  constructor(private readonly gateway: AiPlatformGateway) {}
+  constructor(
+    private readonly gateway: AiPlatformGateway,
+    private readonly warehouseAccess: ErpWarehouseAccessUseCase,
+  ) {}
 
   public createDocumentJob = (req: Request, res: Response) => this.forwardFile(req, res, "/api/extract/jobs");
   public createQuotedExcelJob = (req: Request, res: Response) => this.forwardFile(req, res, "/api/extract/jobs/quoted-excel");
@@ -13,9 +17,9 @@ export class AiPlatformController {
   public suggestTechnicalDataBatch = (req: Request, res: Response) => this.forwardJson(req, res, "/api/procurement/technical-data/suggest-batch");
   public suggestCatalogCode = (req: Request, res: Response) => this.forwardJson(req, res, "/api/quote-catalogs/suggest-code");
   public extractPartyData = (req: Request, res: Response) => this.forwardJson(req, res, "/api/parties/extract");
-  public searchSimilar = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar");
-  public searchSimilarV2 = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar-v2");
-  public searchSimilarV2Semantic = (req: Request, res: Response) => this.forwardJson(req, res, "/api/ai/products/similar-v2/semantic");
+  public searchSimilar = (req: Request, res: Response) => this.forwardWarehouseAwareSearch(req, res, "/api/ai/products/similar");
+  public searchSimilarV2 = (req: Request, res: Response) => this.forwardWarehouseAwareSearch(req, res, "/api/ai/products/similar-v2");
+  public searchSimilarV2Semantic = (req: Request, res: Response) => this.forwardWarehouseAwareSearch(req, res, "/api/ai/products/similar-v2/semantic");
 
   public jobStatus = async (req: Request, res: Response): Promise<void> => {
     await this.forwardGet(res, `/api/extract/jobs/${encodeURIComponent(String(req.params.id))}/status`);
@@ -33,6 +37,35 @@ export class AiPlatformController {
         req.body,
         req.header("idempotency-key") ?? req.header("x-idempotency-key") ?? undefined,
       );
+      this.respond(res, result);
+    } catch (error) {
+      this.unavailable(res, error);
+    }
+  };
+
+  private forwardWarehouseAwareSearch = async (req: Request, res: Response, path: string): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+
+    try {
+      const access = await this.warehouseAccess.getUserAccess(req.user.id);
+      const authorizedWarehouseCodes = access.effectiveWarehouses.map((warehouse) => warehouse.code);
+      if (authorizedWarehouseCodes.length === 0) {
+        res.status(400).json({ error: "The user has no ERP warehouses assigned." });
+        return;
+      }
+      const warehouseCodes = (await this.warehouseAccess.listWarehouses(false))
+        .map((warehouse) => warehouse.code);
+      const body = req.body && typeof req.body === "object" && !Array.isArray(req.body)
+        ? req.body as Record<string, unknown>
+        : {};
+      const result = await this.gateway.requestJson(path, "POST", {
+        ...body,
+        warehouseCodes,
+        authorizedWarehouseCodes,
+      });
       this.respond(res, result);
     } catch (error) {
       this.unavailable(res, error);

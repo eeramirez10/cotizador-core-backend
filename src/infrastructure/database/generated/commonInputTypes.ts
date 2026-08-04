@@ -255,6 +255,13 @@ export type EnumUserRoleFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
 }
 
+export type EnumWarehouseAccessModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WarehouseAccessMode | Prisma.EnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  in?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel> | $Enums.WarehouseAccessMode
+}
+
 export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.UserRole | Prisma.EnumUserRoleFieldRefInput<$PrismaModel>
   in?: $Enums.UserRole[] | Prisma.ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -263,6 +270,16 @@ export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
+}
+
+export type EnumWarehouseAccessModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WarehouseAccessMode | Prisma.EnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  in?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWarehouseAccessModeWithAggregatesFilter<$PrismaModel> | $Enums.WarehouseAccessMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel>
 }
 
 export type EnumCustomerSourceFilter<$PrismaModel = never> = {
@@ -1104,6 +1121,13 @@ export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
 }
 
+export type NestedEnumWarehouseAccessModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.WarehouseAccessMode | Prisma.EnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  in?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel> | $Enums.WarehouseAccessMode
+}
+
 export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.UserRole | Prisma.EnumUserRoleFieldRefInput<$PrismaModel>
   in?: $Enums.UserRole[] | Prisma.ListEnumUserRoleFieldRefInput<$PrismaModel>
@@ -1112,6 +1136,16 @@ export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
   _max?: Prisma.NestedEnumUserRoleFilter<$PrismaModel>
+}
+
+export type NestedEnumWarehouseAccessModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WarehouseAccessMode | Prisma.EnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  in?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WarehouseAccessMode[] | Prisma.ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWarehouseAccessModeWithAggregatesFilter<$PrismaModel> | $Enums.WarehouseAccessMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWarehouseAccessModeFilter<$PrismaModel>
 }
 
 export type NestedEnumCustomerSourceFilter<$PrismaModel = never> = {
