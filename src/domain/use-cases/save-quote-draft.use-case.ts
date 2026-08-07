@@ -6,6 +6,7 @@ import { QuoteRepository } from "../repositories/quote.repository";
 import { UserRepository } from "../repositories/user.repository";
 import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
 import { convertQuoteAmount } from "./quote-currency.helper";
+import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
 
 interface SaveQuoteDraftActorContext {
   id: string;
@@ -16,15 +17,6 @@ interface SaveQuoteDraftActorContext {
 const round4 = (value: number): number => Number(value.toFixed(4));
 const sameNumber = (left: number, right: number): boolean => Math.abs(left - right) < 0.0001;
 const normalizedText = (value: string | null | undefined): string => (value || "").trim();
-const isErpWithoutEnoughStock = (item: {
-  externalProductCode: string | null;
-  stock: number | null;
-  qty: number;
-}): boolean => {
-  return Boolean(item.externalProductCode?.trim())
-    && Math.max(0, item.stock ?? 0) < item.qty;
-};
-
 const buildQuoteNumber = (): string => {
   const now = new Date();
   const date = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, "0"), String(now.getDate()).padStart(2, "0")].join("");
@@ -120,6 +112,7 @@ export class SaveQuoteDraftUseCase {
       (existingQuote?.items ?? []).map((item) => [item.clientItemId ?? item.id, item])
     );
 
+    const effectiveCostEvaluatedAt = new Date();
     const items = dto.items.map((item) => {
       const existingItem = existingItemsByClientId.get(item.clientItemId);
       const customerDescriptionOriginal = existingItem?.customerDescriptionOriginal
@@ -133,9 +126,17 @@ export class SaveQuoteDraftUseCase {
           );
       let unitPrice: number;
       let marginPct: number;
-      const quoteCurrencyCost = convertQuoteAmount(
-        item.cost,
-        item.costCurrency,
+      const quoteCurrencyCost = getQuoteItemEffectiveUnitCost(
+        {
+          qty: item.qty,
+          stock: item.stock,
+          externalProductCode: item.externalProductCode,
+          cost: item.cost,
+          costCurrency: item.costCurrency,
+          sellerQuotedUnitCost: item.sellerQuotedUnitCost,
+          sellerQuotedCurrency: item.sellerQuotedCurrency,
+          sellerQuotedExchangeRate: item.sellerQuotedExchangeRate,
+        },
         dto.quote.currency,
         dto.quote.exchangeRate
       );
@@ -178,6 +179,18 @@ export class SaveQuoteDraftUseCase {
         unitPrice = round4(quoteCurrencyCost);
         marginPct = 0;
       }
+
+      const effectiveCostAudit = getQuoteItemEffectiveCostAudit({
+        qty: item.qty,
+        stock: item.stock,
+        externalProductCode: item.externalProductCode,
+        cost: item.cost,
+        costCurrency: item.costCurrency,
+        sellerQuotedUnitCost: item.sellerQuotedUnitCost,
+        sellerQuotedCurrency: item.sellerQuotedCurrency,
+        sellerQuotedExchangeRate: item.sellerQuotedExchangeRate,
+        unitPrice,
+      }, dto.quote.currency, dto.quote.exchangeRate);
 
       const readinessInput = {
         productId: item.productId,
@@ -237,6 +250,12 @@ export class SaveQuoteDraftUseCase {
         cost: round4(item.cost),
         costCurrency: item.costCurrency,
         marginPct,
+        effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
+        isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,
+        effectiveCostVariance: round4(effectiveCostAudit.effectiveCostVariance),
+        effectiveCostVariancePct: round4(effectiveCostAudit.effectiveCostVariancePct),
+        effectiveCostEvaluatedAt,
+        effectiveCostEvaluatedByUserId: actor.id,
         sourceCurrency,
         sourceUnitPrice: sourceUnitPrice === null ? null : round4(sourceUnitPrice),
         sourceSubtotal: sourceSubtotal === null ? null : round4(sourceSubtotal),
@@ -263,9 +282,6 @@ export class SaveQuoteDraftUseCase {
       }
       if (items.some((item) => item.unitPrice <= 0)) {
         throw new Error("All quote items must have a seller price before submitting for approval.");
-      }
-      if (items.some((item) => item.marginPct < -0.0001 && !isErpWithoutEnoughStock(item))) {
-        throw new Error("Seller price cannot be lower than ERP cost.");
       }
       if (dto.quote.captureMethod !== "EXCEL_IMPORT") {
         const incompletePurchaseData = items.filter((item) => {

@@ -50,6 +50,12 @@ export interface QuoteItemEntity {
   cost: number;
   costCurrency: Currency;
   marginPct: number;
+  effectiveCostAtQuote: number;
+  isBelowEffectiveCost: boolean;
+  effectiveCostVariance: number;
+  effectiveCostVariancePct: number;
+  effectiveCostEvaluatedAt: Date | null;
+  effectiveCostEvaluatedByUserId: string | null;
   sourceCurrency: Currency | null;
   sourceUnitPrice: number | null;
   sourceSubtotal: number | null;
@@ -61,6 +67,11 @@ export interface QuoteItemEntity {
   updatedAt: Date;
   product: QuoteItemProductSummary | null;
   customerDescriptionEditedByUser: {
+    id: string;
+    firstName: string;
+    lastName: string;
+  } | null;
+  effectiveCostEvaluatedByUser: {
     id: string;
     firstName: string;
     lastName: string;

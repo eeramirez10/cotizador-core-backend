@@ -3,7 +3,7 @@ import { UpdateQuoteItemRequestDto } from "../dtos/request/update-quote-item-req
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isQuoteItemReady } from "./quote-item-review.helper";
-import { convertQuoteAmount } from "./quote-currency.helper";
+import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
 
 interface UpdateQuoteItemActorContext {
   id: string;
@@ -49,7 +49,30 @@ export class UpdateQuoteItemUseCase {
     const qty = typeof dto.qty === "number" ? dto.qty : existingItem.qty;
     const cost = typeof dto.cost === "number" ? dto.cost : existingItem.cost;
     const costCurrency = dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency;
-    const quoteCurrencyCost = convertQuoteAmount(cost, costCurrency, quote.currency, quote.exchangeRate);
+    const nextStock = dto.stock !== undefined ? dto.stock : existingItem.stock;
+    const nextExternalProductCode = dto.externalProductCode !== undefined
+      ? dto.externalProductCode
+      : existingItem.externalProductCode;
+    const nextSellerQuotedUnitCost = dto.sellerQuotedUnitCost !== undefined
+      ? dto.sellerQuotedUnitCost
+      : existingItem.sellerQuotedUnitCost;
+    const nextSellerQuotedCurrency = dto.sellerQuotedCurrency !== undefined
+      ? dto.sellerQuotedCurrency
+      : existingItem.sellerQuotedCurrency;
+    const nextSellerQuotedExchangeRate = dto.sellerQuotedExchangeRate !== undefined
+      ? dto.sellerQuotedExchangeRate
+      : existingItem.sellerQuotedExchangeRate;
+    const effectiveCostInput = {
+      qty,
+      stock: nextStock,
+      externalProductCode: nextExternalProductCode,
+      cost,
+      costCurrency,
+      sellerQuotedUnitCost: nextSellerQuotedUnitCost,
+      sellerQuotedCurrency: nextSellerQuotedCurrency,
+      sellerQuotedExchangeRate: nextSellerQuotedExchangeRate,
+    };
+    const quoteCurrencyCost = getQuoteItemEffectiveUnitCost(effectiveCostInput, quote.currency, quote.exchangeRate);
 
     const hasUnitPrice = typeof dto.unitPrice === "number";
     const hasMarginPct = typeof dto.marginPct === "number";
@@ -74,11 +97,12 @@ export class UpdateQuoteItemUseCase {
     }
 
     const subtotal = round4(qty * unitPrice);
+    const effectiveCostAudit = getQuoteItemEffectiveCostAudit(
+      { ...effectiveCostInput, unitPrice },
+      quote.currency,
+      quote.exchangeRate
+    );
     const nextProductId = dto.productId !== undefined ? dto.productId : existingItem.productId;
-    const nextExternalProductCode =
-      dto.externalProductCode !== undefined
-        ? dto.externalProductCode
-        : existingItem.externalProductCode;
     const nextEan = dto.ean !== undefined ? dto.ean : existingItem.ean;
     const nextErpDescription =
       dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription;
@@ -125,7 +149,7 @@ export class UpdateQuoteItemUseCase {
         erpDescription: nextErpDescription,
         unit: nextUnit,
         qty,
-        stock: dto.stock !== undefined ? dto.stock : existingItem.stock,
+        stock: nextStock,
         deliveryTime: nextDeliveryTime,
         itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         sellerSupplierId: dto.sellerSupplierId,
@@ -149,6 +173,12 @@ export class UpdateQuoteItemUseCase {
         cost: round4(cost),
         costCurrency,
         marginPct,
+        effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
+        isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,
+        effectiveCostVariance: round4(effectiveCostAudit.effectiveCostVariance),
+        effectiveCostVariancePct: round4(effectiveCostAudit.effectiveCostVariancePct),
+        effectiveCostEvaluatedAt: new Date(),
+        effectiveCostEvaluatedByUserId: actor.id,
         unitPrice,
         subtotal,
         sourceRequiresReview:

@@ -3,7 +3,7 @@ import { MatchQuoteItemErpRequestDto } from "../dtos/request/match-quote-item-er
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isQuoteItemReady } from "./quote-item-review.helper";
-import { convertQuoteAmount } from "./quote-currency.helper";
+import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
 
 interface MatchQuoteItemErpActorContext {
   id: string;
@@ -48,7 +48,17 @@ export class MatchQuoteItemErpUseCase {
 
     const qty = typeof dto.qty === "number" ? dto.qty : existingItem.qty;
     const cost = round4(dto.cost);
-    const quoteCurrencyCost = convertQuoteAmount(cost, dto.costCurrency, quote.currency, quote.exchangeRate);
+    const effectiveCostInput = {
+      qty,
+      stock: dto.stock,
+      externalProductCode: dto.externalProductCode,
+      cost,
+      costCurrency: dto.costCurrency,
+      sellerQuotedUnitCost: existingItem.sellerQuotedUnitCost,
+      sellerQuotedCurrency: existingItem.sellerQuotedCurrency,
+      sellerQuotedExchangeRate: existingItem.sellerQuotedExchangeRate,
+    };
+    const quoteCurrencyCost = getQuoteItemEffectiveUnitCost(effectiveCostInput, quote.currency, quote.exchangeRate);
 
     const hasUnitPrice = typeof dto.unitPrice === "number";
     const hasMarginPct = typeof dto.marginPct === "number";
@@ -71,6 +81,11 @@ export class MatchQuoteItemErpUseCase {
     }
 
     const subtotal = round4(qty * unitPrice);
+    const effectiveCostAudit = getQuoteItemEffectiveCostAudit(
+      { ...effectiveCostInput, unitPrice },
+      quote.currency,
+      quote.exchangeRate
+    );
     const requiresReview = !isQuoteItemReady({
       productId: dto.productId ?? existingItem.productId,
       externalProductCode: dto.externalProductCode,
@@ -101,6 +116,12 @@ export class MatchQuoteItemErpUseCase {
         cost,
         costCurrency: dto.costCurrency,
         marginPct,
+        effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
+        isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,
+        effectiveCostVariance: round4(effectiveCostAudit.effectiveCostVariance),
+        effectiveCostVariancePct: round4(effectiveCostAudit.effectiveCostVariancePct),
+        effectiveCostEvaluatedAt: new Date(),
+        effectiveCostEvaluatedByUserId: actor.id,
         unitPrice,
         subtotal,
         sourceRequiresReview: existingItem.sourceRequiresReview,

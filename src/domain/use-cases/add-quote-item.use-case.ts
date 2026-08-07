@@ -3,7 +3,7 @@ import { CreateQuoteItemRequestDto } from "../dtos/request/create-quote-item-req
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { isQuoteItemReady } from "./quote-item-review.helper";
-import { convertQuoteAmount } from "./quote-currency.helper";
+import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
 
 interface AddQuoteItemActorContext {
   id: string;
@@ -45,7 +45,16 @@ export class AddQuoteItemUseCase {
 
     let unitPrice: number;
     let marginPct: number;
-    const quoteCurrencyCost = convertQuoteAmount(dto.cost, dto.costCurrency, quote.currency, quote.exchangeRate);
+    const quoteCurrencyCost = getQuoteItemEffectiveUnitCost({
+      qty: dto.qty,
+      stock: dto.stock,
+      externalProductCode: dto.externalProductCode,
+      cost: dto.cost,
+      costCurrency: dto.costCurrency,
+      sellerQuotedUnitCost: dto.sellerQuotedUnitCost,
+      sellerQuotedCurrency: dto.sellerQuotedCurrency,
+      sellerQuotedExchangeRate: dto.sellerQuotedExchangeRate,
+    }, quote.currency, quote.exchangeRate);
 
     if (typeof dto.unitPrice === "number" && typeof dto.marginPct === "number") {
       unitPrice = round4(dto.unitPrice);
@@ -62,6 +71,17 @@ export class AddQuoteItemUseCase {
     }
 
     const subtotal = round4(dto.qty * unitPrice);
+    const effectiveCostAudit = getQuoteItemEffectiveCostAudit({
+      qty: dto.qty,
+      stock: dto.stock,
+      externalProductCode: dto.externalProductCode,
+      cost: dto.cost,
+      costCurrency: dto.costCurrency,
+      sellerQuotedUnitCost: dto.sellerQuotedUnitCost,
+      sellerQuotedCurrency: dto.sellerQuotedCurrency,
+      sellerQuotedExchangeRate: dto.sellerQuotedExchangeRate,
+      unitPrice,
+    }, quote.currency, quote.exchangeRate);
     const readinessInput = {
       productId: dto.productId,
       externalProductCode: dto.externalProductCode,
@@ -125,6 +145,12 @@ export class AddQuoteItemUseCase {
         cost: round4(dto.cost),
         costCurrency: dto.costCurrency,
         marginPct,
+        effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
+        isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,
+        effectiveCostVariance: round4(effectiveCostAudit.effectiveCostVariance),
+        effectiveCostVariancePct: round4(effectiveCostAudit.effectiveCostVariancePct),
+        effectiveCostEvaluatedAt: new Date(),
+        effectiveCostEvaluatedByUserId: actor.id,
         unitPrice,
         subtotal,
         sourceRequiresReview: dto.sourceRequiresReview,

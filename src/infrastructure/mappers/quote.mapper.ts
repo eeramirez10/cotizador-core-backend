@@ -193,6 +193,12 @@ interface QuoteRow {
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
     marginPct: number | DecimalLike;
+    effectiveCostAtQuote: number | DecimalLike;
+    isBelowEffectiveCost: boolean;
+    effectiveCostVariance: number | DecimalLike;
+    effectiveCostVariancePct: number | DecimalLike;
+    effectiveCostEvaluatedAt: Date | null;
+    effectiveCostEvaluatedByUserId: string | null;
     sourceCurrency: QuoteEntity["currency"] | null;
     sourceUnitPrice: number | DecimalLike | null;
     sourceSubtotal: number | DecimalLike | null;
@@ -211,6 +217,11 @@ interface QuoteRow {
       currency: QuoteEntity["currency"];
     } | null;
     customerDescriptionEditedByUser: {
+      id: string;
+      firstName: string;
+      lastName: string;
+    } | null;
+    effectiveCostEvaluatedByUser: {
       id: string;
       firstName: string;
       lastName: string;
@@ -401,6 +412,12 @@ export class QuoteMapper {
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
         marginPct: Number(toNumber(item.marginPct)),
+        effectiveCostAtQuote: Number(toNumber(item.effectiveCostAtQuote)),
+        isBelowEffectiveCost: item.isBelowEffectiveCost,
+        effectiveCostVariance: Number(toNumber(item.effectiveCostVariance)),
+        effectiveCostVariancePct: Number(toNumber(item.effectiveCostVariancePct)),
+        effectiveCostEvaluatedAt: item.effectiveCostEvaluatedAt,
+        effectiveCostEvaluatedByUserId: item.effectiveCostEvaluatedByUserId,
         sourceCurrency: item.sourceCurrency,
         sourceUnitPrice: toNumber(item.sourceUnitPrice),
         sourceSubtotal: toNumber(item.sourceSubtotal),
@@ -421,6 +438,7 @@ export class QuoteMapper {
             }
           : null,
         customerDescriptionEditedByUser: item.customerDescriptionEditedByUser,
+        effectiveCostEvaluatedByUser: item.effectiveCostEvaluatedByUser,
       })),
       events: row.events.map((event) => ({
         id: event.id,

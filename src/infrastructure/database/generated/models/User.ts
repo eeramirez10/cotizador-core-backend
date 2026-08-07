@@ -287,6 +287,7 @@ export type UserWhereInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   uploadedFileAssets?: Prisma.FileAssetListRelationFilter
   editedQuoteItemDescriptions?: Prisma.QuoteItemListRelationFilter
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemListRelationFilter
   erpWarehouseAssignments?: Prisma.UserErpWarehouseListRelationFilter
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseListRelationFilter
   assignedUserWarehouses?: Prisma.UserErpWarehouseListRelationFilter
@@ -340,6 +341,7 @@ export type UserOrderByWithRelationInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
   uploadedFileAssets?: Prisma.FileAssetOrderByRelationAggregateInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemOrderByRelationAggregateInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemOrderByRelationAggregateInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseOrderByRelationAggregateInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseOrderByRelationAggregateInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseOrderByRelationAggregateInput
@@ -396,6 +398,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
   uploadedFileAssets?: Prisma.FileAssetListRelationFilter
   editedQuoteItemDescriptions?: Prisma.QuoteItemListRelationFilter
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemListRelationFilter
   erpWarehouseAssignments?: Prisma.UserErpWarehouseListRelationFilter
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseListRelationFilter
   assignedUserWarehouses?: Prisma.UserErpWarehouseListRelationFilter
@@ -488,6 +491,7 @@ export type UserCreateInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -540,6 +544,7 @@ export type UserUncheckedCreateInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -592,6 +597,7 @@ export type UserUpdateInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -644,6 +650,7 @@ export type UserUncheckedUpdateInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -1108,6 +1115,12 @@ export type UserCreateNestedOneWithoutEditedQuoteItemDescriptionsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutEvaluatedQuoteItemCostsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEvaluatedQuoteItemCostsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneWithoutEditedQuoteItemDescriptionsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput
@@ -1116,6 +1129,16 @@ export type UserUpdateOneWithoutEditedQuoteItemDescriptionsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUpdateWithoutEditedQuoteItemDescriptionsInput>, Prisma.UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput>
+}
+
+export type UserUpdateOneWithoutEvaluatedQuoteItemCostsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEvaluatedQuoteItemCostsInput
+  upsert?: Prisma.UserUpsertWithoutEvaluatedQuoteItemCostsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUpdateWithoutEvaluatedQuoteItemCostsInput>, Prisma.UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput>
 }
 
 export type UserCreateNestedOneWithoutCreatedSuppliersInput = {
@@ -1408,6 +1431,7 @@ export type UserCreateWithoutBranchInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -1459,6 +1483,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -1557,6 +1582,7 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
 }
@@ -1608,6 +1634,7 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
 }
@@ -1675,6 +1702,7 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
 }
@@ -1726,6 +1754,7 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
 }
@@ -1777,6 +1806,7 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
 }
@@ -1828,6 +1858,7 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
 }
@@ -1884,6 +1915,7 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
 }
@@ -1935,6 +1967,7 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
 }
@@ -2002,6 +2035,7 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
 }
@@ -2053,6 +2087,7 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
 }
@@ -2115,6 +2150,7 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
 }
@@ -2166,6 +2202,7 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
 }
@@ -2216,6 +2253,7 @@ export type UserCreateWithoutCreatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -2267,6 +2305,7 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -2323,6 +2362,7 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -2374,6 +2414,7 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -2441,6 +2482,7 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -2492,6 +2534,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -2554,6 +2597,7 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -2605,6 +2649,7 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -2656,6 +2701,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -2707,6 +2753,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -2763,6 +2810,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -2814,6 +2862,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -2870,6 +2919,7 @@ export type UserCreateWithoutProcurementProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -2921,6 +2971,7 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -2988,6 +3039,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -3039,6 +3091,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -3101,6 +3154,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -3152,6 +3206,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -3214,6 +3269,7 @@ export type UserUpdateWithoutProcurementProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -3265,6 +3321,7 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -3316,6 +3373,7 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -3367,6 +3425,7 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -3423,6 +3482,7 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -3474,6 +3534,7 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -3541,6 +3602,7 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -3592,6 +3654,7 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -3654,6 +3717,7 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -3705,6 +3769,7 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -3756,6 +3821,7 @@ export type UserCreateWithoutCreatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -3807,6 +3873,7 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -3863,6 +3930,7 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -3914,6 +3982,7 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -3970,6 +4039,7 @@ export type UserCreateWithoutProvidedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4021,6 +4091,7 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4077,6 +4148,7 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4128,6 +4200,7 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4184,6 +4257,7 @@ export type UserCreateWithoutRejectedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4235,6 +4309,7 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4291,6 +4366,7 @@ export type UserCreateWithoutCancelledQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4342,6 +4418,7 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4398,6 +4475,7 @@ export type UserCreateWithoutArchivedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4449,6 +4527,7 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4505,6 +4584,7 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -4556,6 +4636,7 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -4623,6 +4704,7 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -4674,6 +4756,7 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -4736,6 +4819,7 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -4787,6 +4871,7 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -4849,6 +4934,7 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -4900,6 +4986,7 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -4962,6 +5049,7 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5013,6 +5101,7 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5075,6 +5164,7 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5126,6 +5216,7 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5188,6 +5279,7 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5239,6 +5331,7 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5301,6 +5394,7 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5352,6 +5446,7 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5414,6 +5509,7 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5465,6 +5561,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5516,6 +5613,7 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -5567,6 +5665,7 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -5575,6 +5674,115 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
 export type UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutEditedQuoteItemDescriptionsInput, Prisma.UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput>
+}
+
+export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+}
+
+export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+}
+
+export type UserCreateOrConnectWithoutEvaluatedQuoteItemCostsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput>
 }
 
 export type UserUpsertWithoutEditedQuoteItemDescriptionsInput = {
@@ -5634,6 +5842,7 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -5685,6 +5894,122 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+}
+
+export type UserUpsertWithoutEvaluatedQuoteItemCostsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEvaluatedQuoteItemCostsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEvaluatedQuoteItemCostsInput, Prisma.UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput>
+}
+
+export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -5736,6 +6061,7 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -5787,6 +6113,7 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -5843,6 +6170,7 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -5894,6 +6222,7 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -5961,6 +6290,7 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -6012,6 +6342,7 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -6074,6 +6405,7 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -6125,6 +6457,7 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -6176,6 +6509,7 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -6227,6 +6561,7 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -6283,6 +6618,7 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -6334,6 +6670,7 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -6390,6 +6727,7 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -6441,6 +6779,7 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -6508,6 +6847,7 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -6559,6 +6899,7 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -6621,6 +6962,7 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -6672,6 +7014,7 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -6734,6 +7077,7 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -6785,6 +7129,7 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -6836,6 +7181,7 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -6887,6 +7233,7 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -6954,6 +7301,7 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -7005,6 +7353,7 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -7056,6 +7405,7 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -7107,6 +7457,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -7163,6 +7514,7 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -7214,6 +7566,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -7281,6 +7634,7 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -7332,6 +7686,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -7394,6 +7749,7 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -7445,6 +7801,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -7496,6 +7853,7 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -7547,6 +7905,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -7603,6 +7962,7 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -7654,6 +8014,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -7721,6 +8082,7 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -7772,6 +8134,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -7834,6 +8197,7 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -7885,6 +8249,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -7936,6 +8301,7 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -7987,6 +8353,7 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -8054,6 +8421,7 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -8105,6 +8473,7 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -8156,6 +8525,7 @@ export type UserCreateWithoutQuoteEventsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -8207,6 +8577,7 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -8274,6 +8645,7 @@ export type UserUpdateWithoutQuoteEventsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -8325,6 +8697,7 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -8376,6 +8749,7 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -8427,6 +8801,7 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -8494,6 +8869,7 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -8545,6 +8921,7 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -8596,6 +8973,7 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -8647,6 +9025,7 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -8714,6 +9093,7 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -8765,6 +9145,7 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -8816,6 +9197,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -8867,6 +9249,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -8934,6 +9317,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -8985,6 +9369,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -9036,6 +9421,7 @@ export type UserCreateWithoutAuditLogsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
@@ -9087,6 +9473,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
@@ -9154,6 +9541,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -9205,6 +9593,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -9272,6 +9661,7 @@ export type UserUpdateWithoutBranchInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
@@ -9323,6 +9713,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
   uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
   editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
   erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
   assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
   assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
@@ -9382,6 +9773,7 @@ export type UserCountOutputType = {
   updatedSupplierQuotes: number
   uploadedFileAssets: number
   editedQuoteItemDescriptions: number
+  evaluatedQuoteItemCosts: number
   erpWarehouseAssignments: number
   assignedBranchWarehouses: number
   assignedUserWarehouses: number
@@ -9420,6 +9812,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   updatedSupplierQuotes?: boolean | UserCountOutputTypeCountUpdatedSupplierQuotesArgs
   uploadedFileAssets?: boolean | UserCountOutputTypeCountUploadedFileAssetsArgs
   editedQuoteItemDescriptions?: boolean | UserCountOutputTypeCountEditedQuoteItemDescriptionsArgs
+  evaluatedQuoteItemCosts?: boolean | UserCountOutputTypeCountEvaluatedQuoteItemCostsArgs
   erpWarehouseAssignments?: boolean | UserCountOutputTypeCountErpWarehouseAssignmentsArgs
   assignedBranchWarehouses?: boolean | UserCountOutputTypeCountAssignedBranchWarehousesArgs
   assignedUserWarehouses?: boolean | UserCountOutputTypeCountAssignedUserWarehousesArgs
@@ -9662,6 +10055,13 @@ export type UserCountOutputTypeCountEditedQuoteItemDescriptionsArgs<ExtArgs exte
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountEvaluatedQuoteItemCostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteItemWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountErpWarehouseAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserErpWarehouseWhereInput
 }
@@ -9729,6 +10129,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedSupplierQuotes?: boolean | Prisma.User$updatedSupplierQuotesArgs<ExtArgs>
   uploadedFileAssets?: boolean | Prisma.User$uploadedFileAssetsArgs<ExtArgs>
   editedQuoteItemDescriptions?: boolean | Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>
+  evaluatedQuoteItemCosts?: boolean | Prisma.User$evaluatedQuoteItemCostsArgs<ExtArgs>
   erpWarehouseAssignments?: boolean | Prisma.User$erpWarehouseAssignmentsArgs<ExtArgs>
   assignedBranchWarehouses?: boolean | Prisma.User$assignedBranchWarehousesArgs<ExtArgs>
   assignedUserWarehouses?: boolean | Prisma.User$assignedUserWarehousesArgs<ExtArgs>
@@ -9823,6 +10224,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedSupplierQuotes?: boolean | Prisma.User$updatedSupplierQuotesArgs<ExtArgs>
   uploadedFileAssets?: boolean | Prisma.User$uploadedFileAssetsArgs<ExtArgs>
   editedQuoteItemDescriptions?: boolean | Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>
+  evaluatedQuoteItemCosts?: boolean | Prisma.User$evaluatedQuoteItemCostsArgs<ExtArgs>
   erpWarehouseAssignments?: boolean | Prisma.User$erpWarehouseAssignmentsArgs<ExtArgs>
   assignedBranchWarehouses?: boolean | Prisma.User$assignedBranchWarehousesArgs<ExtArgs>
   assignedUserWarehouses?: boolean | Prisma.User$assignedUserWarehousesArgs<ExtArgs>
@@ -9871,6 +10273,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedSupplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
     uploadedFileAssets: Prisma.$FileAssetPayload<ExtArgs>[]
     editedQuoteItemDescriptions: Prisma.$QuoteItemPayload<ExtArgs>[]
+    evaluatedQuoteItemCosts: Prisma.$QuoteItemPayload<ExtArgs>[]
     erpWarehouseAssignments: Prisma.$UserErpWarehousePayload<ExtArgs>[]
     assignedBranchWarehouses: Prisma.$BranchErpWarehousePayload<ExtArgs>[]
     assignedUserWarehouses: Prisma.$UserErpWarehousePayload<ExtArgs>[]
@@ -10317,6 +10720,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   updatedSupplierQuotes<T extends Prisma.User$updatedSupplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedSupplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedFileAssets<T extends Prisma.User$uploadedFileAssetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedFileAssetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FileAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   editedQuoteItemDescriptions<T extends Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$editedQuoteItemDescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  evaluatedQuoteItemCosts<T extends Prisma.User$evaluatedQuoteItemCostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$evaluatedQuoteItemCostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   erpWarehouseAssignments<T extends Prisma.User$erpWarehouseAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$erpWarehouseAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserErpWarehousePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedBranchWarehouses<T extends Prisma.User$assignedBranchWarehousesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedBranchWarehousesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchErpWarehousePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedUserWarehouses<T extends Prisma.User$assignedUserWarehousesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedUserWarehousesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserErpWarehousePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -11506,6 +11910,30 @@ export type User$uploadedFileAssetsArgs<ExtArgs extends runtime.Types.Extensions
  * User.editedQuoteItemDescriptions
  */
 export type User$editedQuoteItemDescriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteItem
+   */
+  select?: Prisma.QuoteItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteItem
+   */
+  omit?: Prisma.QuoteItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteItemInclude<ExtArgs> | null
+  where?: Prisma.QuoteItemWhereInput
+  orderBy?: Prisma.QuoteItemOrderByWithRelationInput | Prisma.QuoteItemOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteItemScalarFieldEnum | Prisma.QuoteItemScalarFieldEnum[]
+}
+
+/**
+ * User.evaluatedQuoteItemCosts
+ */
+export type User$evaluatedQuoteItemCostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the QuoteItem
    */

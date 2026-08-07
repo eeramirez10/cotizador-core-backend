@@ -299,6 +299,7 @@ model User {
   updatedSupplierQuotes       PurchaseSupplierQuote[]        @relation("PurchaseSupplierQuoteUpdatedBy")
   uploadedFileAssets          FileAsset[]                    @relation("FileAssetUploadedBy")
   editedQuoteItemDescriptions QuoteItem[]                    @relation("QuoteItemCustomerDescriptionEditedBy")
+  evaluatedQuoteItemCosts     QuoteItem[]                    @relation("QuoteItemEffectiveCostEvaluatedBy")
   erpWarehouseAssignments     UserErpWarehouse[]             @relation("UserWarehouseOwner")
   assignedBranchWarehouses    BranchErpWarehouse[]           @relation("BranchWarehouseAssignedBy")
   assignedUserWarehouses      UserErpWarehouse[]             @relation("UserWarehouseAssignedBy")
@@ -648,6 +649,12 @@ model QuoteItem {
   cost                              Decimal   @db.Decimal(14, 4)
   costCurrency                      Currency  @map("cost_currency")
   marginPct                         Decimal   @map("margin_pct") @db.Decimal(10, 4)
+  effectiveCostAtQuote              Decimal   @default(0) @map("effective_cost_at_quote") @db.Decimal(14, 4)
+  isBelowEffectiveCost              Boolean   @default(false) @map("is_below_effective_cost")
+  effectiveCostVariance             Decimal   @default(0) @map("effective_cost_variance") @db.Decimal(14, 4)
+  effectiveCostVariancePct          Decimal   @default(0) @map("effective_cost_variance_pct") @db.Decimal(10, 4)
+  effectiveCostEvaluatedAt          DateTime? @map("effective_cost_evaluated_at")
+  effectiveCostEvaluatedByUserId    String?   @map("effective_cost_evaluated_by_user_id") @db.Uuid
   sourceCurrency                    Currency? @map("source_currency")
   sourceUnitPrice                   Decimal?  @map("source_unit_price") @db.Decimal(14, 4)
   sourceSubtotal                    Decimal?  @map("source_subtotal") @db.Decimal(14, 4)
@@ -662,6 +669,7 @@ model QuoteItem {
   product                         Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
   sellerSupplier                  Supplier?                @relation("QuoteItemSellerSupplier", fields: [sellerSupplierId], references: [id], onDelete: SetNull)
   customerDescriptionEditedByUser User?                    @relation("QuoteItemCustomerDescriptionEditedBy", fields: [customerDescriptionEditedByUserId], references: [id], onDelete: SetNull)
+  effectiveCostEvaluatedByUser    User?                    @relation("QuoteItemEffectiveCostEvaluatedBy", fields: [effectiveCostEvaluatedByUserId], references: [id], onDelete: SetNull)
   purchaseRequisitionItem         PurchaseRequisitionItem?
 
   @@unique([quoteId, clientItemId])
@@ -669,6 +677,8 @@ model QuoteItem {
   @@index([productId])
   @@index([sellerSupplierId])
   @@index([customerDescriptionEditedByUserId])
+  @@index([isBelowEffectiveCost])
+  @@index([effectiveCostEvaluatedByUserId])
   @@map("quote_items")
 }
 

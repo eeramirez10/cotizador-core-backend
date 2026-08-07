@@ -17,6 +17,7 @@ import type {
   SupplierEntity,
 } from "../../domain/entities/purchase-requisition.entity";
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
+import { getQuoteItemFulfillment } from "../../domain/use-cases/quote-item-fulfillment.helper";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../../domain/utils/canonical-product-text";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
@@ -288,9 +289,12 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     const requiredItems = quote.items.flatMap((item, index) => {
       const erpCode = (item.externalProductCode || item.product?.code || "").trim();
       const localNew = !erpCode;
-      const availableStock = Math.max(0, item.stock ?? 0);
-      const missingQty = Math.max(0, item.qty - availableStock);
-      if (!localNew && missingQty <= 0) return [];
+      const fulfillment = getQuoteItemFulfillment({
+        qty: item.qty,
+        stock: item.stock,
+        externalProductCode: erpCode || null,
+      });
+      if (!fulfillment.requiresPurchase) return [];
 
       const hasSellerQuote = item.sellerQuotedUnitCost !== null && item.sellerQuotedUnitCost > 0;
       return [{
@@ -299,7 +303,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         productId: item.productId,
         source: localNew ? "LOCAL_NEW" as const : "ERP_NO_STOCK" as const,
         erpCode: erpCode || null,
-        qty: localNew ? item.qty : missingQty,
+        qty: fulfillment.purchaseQty,
         unit: item.unit,
         description: item.erpDescription?.trim() || item.product?.description?.trim() || item.customerDescription?.trim() || "SIN DESCRIPCION",
         standard: item.purchaseStandard,

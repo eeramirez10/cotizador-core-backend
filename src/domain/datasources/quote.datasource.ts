@@ -99,6 +99,12 @@ export interface SaveQuoteDraftItemDatasourceData {
   cost: number;
   costCurrency: Currency;
   marginPct: number;
+  effectiveCostAtQuote: number;
+  isBelowEffectiveCost: boolean;
+  effectiveCostVariance: number;
+  effectiveCostVariancePct: number;
+  effectiveCostEvaluatedAt: Date;
+  effectiveCostEvaluatedByUserId: string;
   sourceCurrency: Currency | null;
   sourceUnitPrice: number | null;
   sourceSubtotal: number | null;
@@ -201,6 +207,12 @@ export interface AddQuoteItemDatasourceParams {
     cost: number;
     costCurrency: Currency;
     marginPct: number;
+    effectiveCostAtQuote: number;
+    isBelowEffectiveCost: boolean;
+    effectiveCostVariance: number;
+    effectiveCostVariancePct: number;
+    effectiveCostEvaluatedAt: Date;
+    effectiveCostEvaluatedByUserId: string;
     unitPrice: number;
     subtotal: number;
     sourceRequiresReview: boolean;
@@ -250,6 +262,12 @@ export interface UpdateQuoteItemDatasourceParams {
     cost?: number;
     costCurrency?: Currency;
     marginPct?: number;
+    effectiveCostAtQuote?: number;
+    isBelowEffectiveCost?: boolean;
+    effectiveCostVariance?: number;
+    effectiveCostVariancePct?: number;
+    effectiveCostEvaluatedAt?: Date;
+    effectiveCostEvaluatedByUserId?: string;
     unitPrice?: number;
     subtotal?: number;
     sourceRequiresReview?: boolean;

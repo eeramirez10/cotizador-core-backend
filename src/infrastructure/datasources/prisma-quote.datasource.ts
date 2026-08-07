@@ -143,6 +143,13 @@ const quoteInclude = {
           lastName: true,
         },
       },
+      effectiveCostEvaluatedByUser: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
     },
   },
   events: {
@@ -497,13 +504,17 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       }
 
       if (params.action === "SUBMIT_FOR_APPROVAL" && quote.status !== params.submissionStatus) {
+        const belowEffectiveCostCount = params.items.filter((item) => item.isBelowEffectiveCost).length;
+        const effectiveCostNote = belowEffectiveCostCount > 0
+          ? ` Contains ${belowEffectiveCostCount} item(s) below effective cost.`
+          : "";
         await tx.quoteEvent.create({
           data: {
             quoteId: quote.id,
             status: params.submissionStatus,
             note: params.submissionStatus === "QUOTED"
-              ? "Quote generated. Internal approval bypassed by system configuration."
-              : "Quote submitted for internal approval.",
+              ? `Quote generated. Internal approval bypassed by system configuration.${effectiveCostNote}`
+              : `Quote submitted for internal approval.${effectiveCostNote}`,
             actorUserId: params.data.updatedByUserId,
           },
         });
@@ -644,6 +655,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
               cost: item.cost,
               costCurrency: item.costCurrency,
               marginPct: item.marginPct,
+              effectiveCostAtQuote: item.effectiveCostAtQuote,
+              isBelowEffectiveCost: item.isBelowEffectiveCost,
+              effectiveCostVariance: item.effectiveCostVariance,
+              effectiveCostVariancePct: item.effectiveCostVariancePct,
+              effectiveCostEvaluatedAt: item.effectiveCostEvaluatedAt,
+              effectiveCostEvaluatedByUserId: item.effectiveCostEvaluatedByUserId,
               sourceCurrency: item.sourceCurrency,
               sourceUnitPrice: item.sourceUnitPrice,
               sourceSubtotal: item.sourceSubtotal,
@@ -931,6 +948,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           cost: params.data.cost,
           costCurrency: params.data.costCurrency,
           marginPct: params.data.marginPct,
+          effectiveCostAtQuote: params.data.effectiveCostAtQuote,
+          isBelowEffectiveCost: params.data.isBelowEffectiveCost,
+          effectiveCostVariance: params.data.effectiveCostVariance,
+          effectiveCostVariancePct: params.data.effectiveCostVariancePct,
+          effectiveCostEvaluatedAt: params.data.effectiveCostEvaluatedAt,
+          effectiveCostEvaluatedByUserId: params.data.effectiveCostEvaluatedByUserId,
           unitPrice: params.data.unitPrice,
           subtotal: params.data.subtotal,
           sourceRequiresReview: params.data.sourceRequiresReview,
@@ -1007,6 +1030,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           cost: params.data.cost,
           costCurrency: params.data.costCurrency,
           marginPct: params.data.marginPct,
+          effectiveCostAtQuote: params.data.effectiveCostAtQuote,
+          isBelowEffectiveCost: params.data.isBelowEffectiveCost,
+          effectiveCostVariance: params.data.effectiveCostVariance,
+          effectiveCostVariancePct: params.data.effectiveCostVariancePct,
+          effectiveCostEvaluatedAt: params.data.effectiveCostEvaluatedAt,
+          effectiveCostEvaluatedByUserId: params.data.effectiveCostEvaluatedByUserId,
           unitPrice: params.data.unitPrice,
           subtotal: params.data.subtotal,
           sourceRequiresReview: params.data.sourceRequiresReview,
