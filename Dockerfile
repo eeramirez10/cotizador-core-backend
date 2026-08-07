@@ -43,6 +43,7 @@ FROM base AS migrate
 
 ENV NODE_ENV=production
 
+COPY --from=build /app/src ./src
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY package.json pnpm-lock.yaml tsconfig.json prisma.config.ts ./
 COPY prisma ./prisma

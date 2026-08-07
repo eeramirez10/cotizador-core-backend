@@ -3,14 +3,16 @@ import { hash } from "bcryptjs";
 import { prisma } from "../src/infrastructure/database/prisma-client";
 
 
-const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD as string || null;
+const adminPassword = process.env.SEED_ADMIN_PASSWORD;
 
-if(!ADMIN_PASSWORD) throw new Error('SEED_ADMIN_PASSWORD is required')
+if (!adminPassword) {
+  throw new Error("SEED_ADMIN_PASSWORD is required.");
+}
 
 
 
 const run = async (): Promise<void> => {
-  const passwordHash = await hash(ADMIN_PASSWORD, 10);
+  const passwordHash = await hash(adminPassword, 10);
   const branch = await prisma.branch.upsert({
     where: { code: "01" },
     update: {
