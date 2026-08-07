@@ -23,6 +23,8 @@ RUN pnpm install --frozen-lockfile
 
 FROM dependencies AS build
 
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
+
 COPY tsconfig.json prisma.config.ts ./
 COPY prisma ./prisma
 COPY src ./src
