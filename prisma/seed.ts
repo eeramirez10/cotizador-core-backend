@@ -2,7 +2,12 @@ import "dotenv/config";
 import { hash } from "bcryptjs";
 import { prisma } from "../src/infrastructure/database/prisma-client";
 
-const ADMIN_PASSWORD = "Ag7348Pop**";
+
+const ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD as string || null;
+
+if(!ADMIN_PASSWORD) throw new Error('SEED_ADMIN_PASSWORD is required')
+
+
 
 const run = async (): Promise<void> => {
   const passwordHash = await hash(ADMIN_PASSWORD, 10);
