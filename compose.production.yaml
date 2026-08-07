@@ -1,0 +1,112 @@
+name: cotizador-core-backend
+
+services:
+  volume-init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - >
+        mkdir -p
+        /app/storage/documents/attachments
+        /app/storage/documents/erp-outbox
+        && chown -R node:node /app/storage/documents
+    volumes:
+      - core_documents:/app/storage/documents
+    restart: "no"
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrate
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    command:
+      - pnpm
+      - run
+      - prisma:deploy
+    init: true
+    restart: "no"
+    profiles:
+      - maintenance
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:mode=1777,size=64m
+    networks:
+      - infra-network
+
+  core-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: cotizador-core-backend
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: "4600"
+      FILE_STORAGE_ROOT: /app/storage/documents/attachments
+      ERP_OUTBOX_DIR: /app/storage/documents/erp-outbox
+    ports:
+      - "127.0.0.1:4600:4600"
+    volumes:
+      - core_documents:/app/storage/documents
+    depends_on:
+      volume-init:
+        condition: service_completed_successfully
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:mode=1777,size=64m
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - >-
+          fetch('http://127.0.0.1:4600/api/health')
+          .then(response => {
+            if (!response.ok) process.exit(1);
+          })
+          .catch(() => process.exit(1))
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 30s
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      infra-network:
+        aliases:
+          - cotizador-core-backend
+
+volumes:
+  core_documents:
+    external: true
+    name: core-backend-documents
+
+networks:
+  infra-network:
+    external: true
+    name: infra-network
