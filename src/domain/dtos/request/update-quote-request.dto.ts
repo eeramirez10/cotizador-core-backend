@@ -120,12 +120,14 @@ export class UpdateQuoteRequestDto {
           ? body.deliveryPlace.trim()
           : null;
 
+    if (
+      typeof body.paymentTerms !== "undefined" &&
+      (typeof body.paymentTerms !== "string" || body.paymentTerms.trim().length === 0)
+    ) {
+      return ["paymentTerms must not be empty."];
+    }
     const paymentTerms =
-      typeof body.paymentTerms === "undefined"
-        ? undefined
-        : typeof body.paymentTerms === "string" && body.paymentTerms.trim().length > 0
-          ? body.paymentTerms.trim()
-          : "CONTADO";
+      typeof body.paymentTerms === "string" ? body.paymentTerms.trim() : undefined;
 
     const commercialConditions =
       typeof body.commercialConditions === "undefined"

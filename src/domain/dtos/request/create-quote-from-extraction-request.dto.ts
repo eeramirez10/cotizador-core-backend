@@ -118,10 +118,10 @@ export class CreateQuoteFromExtractionRequestDto {
         ? body.deliveryPlace.trim()
         : null;
 
-    const paymentTerms =
-      typeof body.paymentTerms === "string" && body.paymentTerms.trim().length > 0
-        ? body.paymentTerms.trim()
-        : "CONTADO";
+    if (typeof body.paymentTerms !== "string" || body.paymentTerms.trim().length === 0) {
+      return ["paymentTerms is required."];
+    }
+    const paymentTerms = body.paymentTerms.trim();
 
     const commercialConditions =
       typeof body.commercialConditions === "string" && body.commercialConditions.trim().length > 0
@@ -131,7 +131,10 @@ export class CreateQuoteFromExtractionRequestDto {
       return ["commercialConditions must not exceed 5000 characters."];
     }
 
-    const validityDaysInput = body.validityDays ?? 10;
+    if (typeof body.validityDays === "undefined" || body.validityDays === null) {
+      return ["validityDays is required."];
+    }
+    const validityDaysInput = body.validityDays;
     const validityDays = Math.trunc(CreateQuoteFromExtractionRequestDto.parseNumber(validityDaysInput));
     if (!Number.isFinite(validityDays) || validityDays < 1 || validityDays > 180) {
       return ["validityDays must be an integer between 1 and 180."];
