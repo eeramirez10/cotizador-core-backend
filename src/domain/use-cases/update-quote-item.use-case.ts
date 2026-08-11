@@ -48,11 +48,15 @@ export class UpdateQuoteItemUseCase {
 
     const qty = typeof dto.qty === "number" ? dto.qty : existingItem.qty;
     const cost = typeof dto.cost === "number" ? dto.cost : existingItem.cost;
-    const costCurrency = dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency;
+    const requestedCostCurrency = dto.costCurrency !== undefined ? dto.costCurrency : existingItem.costCurrency;
     const nextStock = dto.stock !== undefined ? dto.stock : existingItem.stock;
     const nextExternalProductCode = dto.externalProductCode !== undefined
       ? dto.externalProductCode
       : existingItem.externalProductCode;
+    const costCurrency = nextExternalProductCode ? "MXN" : requestedCostCurrency;
+    const erpSaleCurrency = nextExternalProductCode
+      ? dto.erpSaleCurrency ?? existingItem.erpSaleCurrency ?? requestedCostCurrency
+      : null;
     const nextSellerQuotedUnitCost = dto.sellerQuotedUnitCost !== undefined
       ? dto.sellerQuotedUnitCost
       : existingItem.sellerQuotedUnitCost;
@@ -172,6 +176,7 @@ export class UpdateQuoteItemUseCase {
         purchaseBore: dto.purchaseBore,
         cost: round4(cost),
         costCurrency,
+        erpSaleCurrency,
         marginPct,
         effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
         isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,

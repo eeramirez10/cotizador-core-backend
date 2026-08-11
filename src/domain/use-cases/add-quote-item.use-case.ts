@@ -144,6 +144,7 @@ export class AddQuoteItemUseCase {
         technicalAttributes: dto.technicalAttributes,
         cost: round4(dto.cost),
         costCurrency: dto.costCurrency,
+        erpSaleCurrency: dto.erpSaleCurrency,
         marginPct,
         effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
         isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,

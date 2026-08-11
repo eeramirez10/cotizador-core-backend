@@ -45,6 +45,7 @@ export class QuoteItemResponseDto {
       technicalAttributes: this.item.technicalAttributes,
       cost: this.item.cost,
       costCurrency: this.item.costCurrency,
+      erpSaleCurrency: this.item.erpSaleCurrency,
       marginPct: this.item.marginPct,
       effectiveCostAtQuote: this.item.effectiveCostAtQuote,
       isBelowEffectiveCost: this.item.isBelowEffectiveCost,

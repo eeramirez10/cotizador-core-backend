@@ -115,6 +115,7 @@ export class MatchQuoteItemErpUseCase {
         itemComment: dto.itemComment !== undefined ? dto.itemComment : existingItem.itemComment,
         cost,
         costCurrency: dto.costCurrency,
+        erpSaleCurrency: dto.erpSaleCurrency,
         marginPct,
         effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
         isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,

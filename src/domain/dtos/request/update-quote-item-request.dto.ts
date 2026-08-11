@@ -32,6 +32,7 @@ interface UpdateQuoteItemRequestDtoProps {
   purchaseBore?: string | null;
   cost?: number;
   costCurrency?: Currency;
+  erpSaleCurrency?: Currency | null;
   marginPct?: number;
   unitPrice?: number;
   sourceRequiresReview?: boolean;
@@ -70,6 +71,7 @@ export class UpdateQuoteItemRequestDto {
   public readonly purchaseBore?: string | null;
   public readonly cost?: number;
   public readonly costCurrency?: Currency;
+  public readonly erpSaleCurrency?: Currency | null;
   public readonly marginPct?: number;
   public readonly unitPrice?: number;
   public readonly sourceRequiresReview?: boolean;
@@ -107,6 +109,7 @@ export class UpdateQuoteItemRequestDto {
     this.purchaseBore = props.purchaseBore;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
+    this.erpSaleCurrency = props.erpSaleCurrency;
     this.marginPct = props.marginPct;
     this.unitPrice = props.unitPrice;
     this.sourceRequiresReview = props.sourceRequiresReview;
@@ -146,6 +149,19 @@ export class UpdateQuoteItemRequestDto {
         return ["costCurrency is invalid."];
       }
       costCurrency = raw as Currency;
+    }
+
+    let erpSaleCurrency: Currency | null | undefined;
+    if (typeof body.erpSaleCurrency !== "undefined") {
+      if (body.erpSaleCurrency === null || body.erpSaleCurrency === "") {
+        erpSaleCurrency = null;
+      } else {
+        const raw = typeof body.erpSaleCurrency === "string" ? body.erpSaleCurrency.trim().toUpperCase() : "";
+        if (!Object.values(Currency).includes(raw as Currency)) {
+          return ["erpSaleCurrency is invalid."];
+        }
+        erpSaleCurrency = raw as Currency;
+      }
     }
 
     const marginPct = UpdateQuoteItemRequestDto.parseOptionalNumber(body.marginPct);
@@ -228,8 +244,9 @@ export class UpdateQuoteItemRequestDto {
         purchaseDiameter: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseDiameter),
         purchaseThickness: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseThickness),
         purchaseBore: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.purchaseBore),
-        cost,
-        costCurrency,
+      cost,
+      costCurrency,
+      erpSaleCurrency,
         marginPct,
         unitPrice,
         sourceRequiresReview:

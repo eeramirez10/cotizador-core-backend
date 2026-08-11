@@ -49,6 +49,7 @@ export interface QuoteItemEntity {
   technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
+  erpSaleCurrency: Currency | null;
   marginPct: number;
   effectiveCostAtQuote: number;
   isBelowEffectiveCost: boolean;

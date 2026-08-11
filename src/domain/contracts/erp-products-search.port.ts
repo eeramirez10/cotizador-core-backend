@@ -5,9 +5,14 @@ export interface ErpWarehouseProduct {
   description: string;
   stock: number;
   unit: string;
+  /** Legacy alias for saleCurrency. */
   currency: "MXN" | "USD";
+  saleCurrency: "MXN" | "USD";
+  costCurrency: "MXN";
   averageCost: number;
   lastCost: number;
+  averageCostMxn: number;
+  lastCostMxn: number;
   warehouseId: string;
   warehouseName: string;
 }

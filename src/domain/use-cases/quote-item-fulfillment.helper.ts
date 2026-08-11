@@ -50,9 +50,10 @@ export const getQuoteItemEffectiveUnitCost = (
   exchangeRate: number,
 ): number => {
   const fulfillment = getQuoteItemFulfillment(item);
+  const erpCostCurrency: Currency = item.externalProductCode?.trim() ? "MXN" : item.costCurrency;
   const erpUnitCost = positive(convertQuoteAmount(
     positive(item.cost),
-    item.costCurrency,
+    erpCostCurrency,
     quoteCurrency,
     exchangeRate,
   ));

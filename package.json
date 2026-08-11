@@ -10,10 +10,11 @@
   "packageManager": "pnpm@8.14.1",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch src/presentation/server.ts",
+    "test": "node --import tsx --test test/*.test.ts",
     "build": "pnpm run prisma:generate && rimraf dist && tsc -p tsconfig.json",
     "start": "NODE_ENV=production node dist/presentation/server.js",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "NODE_ENV=development prisma migrate dev --name init",
+    "prisma:migrate": "NODE_ENV=development prisma migrate dev",
     "prisma:seed": "NODE_ENV=development prisma db seed",
     "prisma:demo": "NODE_ENV=development tsx prisma/demo-seed.ts",
     "prisma:deploy": "NODE_ENV=production prisma migrate deploy",

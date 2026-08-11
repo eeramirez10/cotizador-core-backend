@@ -37,6 +37,7 @@ interface CreateQuoteItemRequestDtoProps {
   technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
+  erpSaleCurrency: Currency | null;
   marginPct?: number;
   sourceCurrency?: Currency | null;
   sourceUnitPrice?: number | null;
@@ -83,6 +84,7 @@ export class CreateQuoteItemRequestDto {
   public readonly technicalAttributes: Record<string, string>;
   public readonly cost: number;
   public readonly costCurrency: Currency;
+  public readonly erpSaleCurrency: Currency | null;
   public readonly marginPct?: number;
   public readonly sourceCurrency?: Currency | null;
   public readonly sourceUnitPrice?: number | null;
@@ -128,6 +130,7 @@ export class CreateQuoteItemRequestDto {
     this.technicalAttributes = props.technicalAttributes;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
+    this.erpSaleCurrency = props.erpSaleCurrency;
     this.marginPct = props.marginPct;
     this.sourceCurrency = props.sourceCurrency;
     this.sourceUnitPrice = props.sourceUnitPrice;
@@ -158,6 +161,17 @@ export class CreateQuoteItemRequestDto {
       typeof body.costCurrency === "string" ? body.costCurrency.trim().toUpperCase() : "";
     if (!Object.values(Currency).includes(costCurrencyRaw as Currency)) {
       return ["costCurrency is invalid."];
+    }
+    const externalProductCode = CreateQuoteItemRequestDto.normalizeNullableString(body.externalProductCode);
+    let erpSaleCurrency: Currency | null = null;
+    if (externalProductCode) {
+      const saleCurrencyRaw = typeof body.erpSaleCurrency === "string"
+        ? body.erpSaleCurrency.trim().toUpperCase()
+        : costCurrencyRaw;
+      if (!Object.values(Currency).includes(saleCurrencyRaw as Currency)) {
+        return ["erpSaleCurrency is invalid."];
+      }
+      erpSaleCurrency = saleCurrencyRaw as Currency;
     }
 
     const marginPct = CreateQuoteItemRequestDto.parseOptionalNumber(body.marginPct);
@@ -229,7 +243,7 @@ export class CreateQuoteItemRequestDto {
       new CreateQuoteItemRequestDto({
         clientItemId,
         productId: CreateQuoteItemRequestDto.normalizeNullableString(body.productId),
-        externalProductCode: CreateQuoteItemRequestDto.normalizeNullableString(body.externalProductCode),
+        externalProductCode,
         ean: CreateQuoteItemRequestDto.normalizeNullableString(body.ean),
         customerDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.customerDescription),
         customerDescriptionOriginal: CreateQuoteItemRequestDto.normalizeNullableString(
@@ -266,7 +280,8 @@ export class CreateQuoteItemRequestDto {
         technicalFamily: CreateQuoteItemRequestDto.normalizeNullableString(body.technicalFamily),
         technicalAttributes,
         cost,
-        costCurrency: costCurrencyRaw as Currency,
+        costCurrency: externalProductCode ? "MXN" as Currency : costCurrencyRaw as Currency,
+        erpSaleCurrency,
         marginPct,
         sourceCurrency,
         sourceUnitPrice: typeof sourceUnitPrice === "undefined" ? undefined : sourceUnitPrice,

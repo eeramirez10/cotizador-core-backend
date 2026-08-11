@@ -648,6 +648,7 @@ model QuoteItem {
   technicalAttributes               Json?     @map("technical_attributes")
   cost                              Decimal   @db.Decimal(14, 4)
   costCurrency                      Currency  @map("cost_currency")
+  erpSaleCurrency                   Currency? @map("erp_sale_currency")
   marginPct                         Decimal   @map("margin_pct") @db.Decimal(10, 4)
   effectiveCostAtQuote              Decimal   @default(0) @map("effective_cost_at_quote") @db.Decimal(14, 4)
   isBelowEffectiveCost              Boolean   @default(false) @map("is_below_effective_cost")

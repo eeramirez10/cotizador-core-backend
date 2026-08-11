@@ -249,6 +249,7 @@ export class SaveQuoteDraftUseCase {
         technicalAttributes: item.technicalAttributes,
         cost: round4(item.cost),
         costCurrency: item.costCurrency,
+        erpSaleCurrency: item.erpSaleCurrency,
         marginPct,
         effectiveCostAtQuote: round4(effectiveCostAudit.effectiveCostAtQuote),
         isBelowEffectiveCost: effectiveCostAudit.isBelowEffectiveCost,

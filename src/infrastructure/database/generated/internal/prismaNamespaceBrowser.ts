@@ -406,6 +406,7 @@ export const QuoteItemScalarFieldEnum = {
   technicalAttributes: 'technicalAttributes',
   cost: 'cost',
   costCurrency: 'costCurrency',
+  erpSaleCurrency: 'erpSaleCurrency',
   marginPct: 'marginPct',
   effectiveCostAtQuote: 'effectiveCostAtQuote',
   isBelowEffectiveCost: 'isBelowEffectiveCost',

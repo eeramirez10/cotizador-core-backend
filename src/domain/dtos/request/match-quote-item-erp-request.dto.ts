@@ -9,6 +9,7 @@ interface MatchQuoteItemErpRequestDtoProps {
   stock: number | null;
   cost: number;
   costCurrency: Currency;
+  erpSaleCurrency: Currency;
   deliveryTime: string | null;
   itemComment?: string | null;
   qty?: number;
@@ -25,6 +26,7 @@ export class MatchQuoteItemErpRequestDto {
   public readonly stock: number | null;
   public readonly cost: number;
   public readonly costCurrency: Currency;
+  public readonly erpSaleCurrency: Currency;
   public readonly deliveryTime: string | null;
   public readonly itemComment?: string | null;
   public readonly qty?: number;
@@ -40,6 +42,7 @@ export class MatchQuoteItemErpRequestDto {
     this.stock = props.stock;
     this.cost = props.cost;
     this.costCurrency = props.costCurrency;
+    this.erpSaleCurrency = props.erpSaleCurrency;
     this.deliveryTime = props.deliveryTime;
     this.itemComment = props.itemComment;
     this.qty = props.qty;
@@ -75,6 +78,12 @@ export class MatchQuoteItemErpRequestDto {
     if (!Object.values(Currency).includes(costCurrencyRaw as Currency)) {
       return ["costCurrency is invalid."];
     }
+    const erpSaleCurrencyRaw = typeof body.erpSaleCurrency === "string"
+      ? body.erpSaleCurrency.trim().toUpperCase()
+      : costCurrencyRaw;
+    if (!Object.values(Currency).includes(erpSaleCurrencyRaw as Currency)) {
+      return ["erpSaleCurrency is invalid."];
+    }
 
     const stock = MatchQuoteItemErpRequestDto.parseOptionalNumber(body.stock);
     if (typeof stock !== "undefined" && !Number.isFinite(stock)) {
@@ -106,7 +115,8 @@ export class MatchQuoteItemErpRequestDto {
         unit,
         stock: typeof stock === "undefined" ? null : stock,
         cost,
-        costCurrency: costCurrencyRaw as Currency,
+        costCurrency: "MXN" as Currency,
+        erpSaleCurrency: erpSaleCurrencyRaw as Currency,
         deliveryTime: MatchQuoteItemErpRequestDto.normalizeNullableString(body.deliveryTime),
         itemComment: MatchQuoteItemErpRequestDto.normalizeNullableString(body.itemComment),
         qty,

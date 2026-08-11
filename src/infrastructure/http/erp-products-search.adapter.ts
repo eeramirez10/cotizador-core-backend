@@ -65,6 +65,9 @@ export class ErpProductsSearchAdapter extends ErpProductsSearchPort {
     const description = text(row.description);
     const warehouseId = text(row.warehouseId);
     if (!code || !ean || !description || !warehouseId) return null;
+    const saleCurrency = text(row.saleCurrency ?? row.currency).toUpperCase() === "MXN" ? "MXN" : "USD";
+    const averageCostMxn = number(row.averageCostMxn ?? row.averageCost);
+    const lastCostMxn = number(row.lastCostMxn ?? row.lastCost);
 
     return {
       id: text(row.id),
@@ -73,9 +76,13 @@ export class ErpProductsSearchAdapter extends ErpProductsSearchPort {
       description,
       stock: number(row.stock),
       unit: text(row.unit),
-      currency: row.currency === "MXN" ? "MXN" : "USD",
-      averageCost: number(row.averageCost),
-      lastCost: number(row.lastCost),
+      currency: saleCurrency,
+      saleCurrency,
+      costCurrency: "MXN",
+      averageCost: averageCostMxn,
+      lastCost: lastCostMxn,
+      averageCostMxn,
+      lastCostMxn,
       warehouseId,
       warehouseName: text(row.warehouseName) || `ALMACEN ${warehouseId}`,
     };

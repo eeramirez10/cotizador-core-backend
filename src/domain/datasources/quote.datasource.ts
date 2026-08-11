@@ -98,6 +98,7 @@ export interface SaveQuoteDraftItemDatasourceData {
   technicalAttributes: Record<string, string>;
   cost: number;
   costCurrency: Currency;
+  erpSaleCurrency: Currency | null;
   marginPct: number;
   effectiveCostAtQuote: number;
   isBelowEffectiveCost: boolean;
@@ -206,6 +207,7 @@ export interface AddQuoteItemDatasourceParams {
     technicalAttributes: Record<string, string>;
     cost: number;
     costCurrency: Currency;
+    erpSaleCurrency: Currency | null;
     marginPct: number;
     effectiveCostAtQuote: number;
     isBelowEffectiveCost: boolean;
@@ -261,6 +263,7 @@ export interface UpdateQuoteItemDatasourceParams {
     technicalAttributes?: Record<string, string>;
     cost?: number;
     costCurrency?: Currency;
+    erpSaleCurrency?: Currency | null;
     marginPct?: number;
     effectiveCostAtQuote?: number;
     isBelowEffectiveCost?: boolean;

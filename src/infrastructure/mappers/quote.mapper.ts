@@ -192,6 +192,7 @@ interface QuoteRow {
     technicalAttributes: unknown;
     cost: number | DecimalLike;
     costCurrency: QuoteEntity["currency"];
+    erpSaleCurrency: QuoteEntity["currency"] | null;
     marginPct: number | DecimalLike;
     effectiveCostAtQuote: number | DecimalLike;
     isBelowEffectiveCost: boolean;
@@ -411,6 +412,7 @@ export class QuoteMapper {
             : {},
         cost: Number(toNumber(item.cost)),
         costCurrency: item.costCurrency,
+        erpSaleCurrency: item.erpSaleCurrency,
         marginPct: Number(toNumber(item.marginPct)),
         effectiveCostAtQuote: Number(toNumber(item.effectiveCostAtQuote)),
         isBelowEffectiveCost: item.isBelowEffectiveCost,

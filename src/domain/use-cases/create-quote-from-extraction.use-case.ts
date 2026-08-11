@@ -146,6 +146,7 @@ export class CreateQuoteFromExtractionUseCase {
           technicalAttributes: {},
           cost: 0,
           costCurrency: dto.currency,
+          erpSaleCurrency: null,
           marginPct: 0,
           effectiveCostAtQuote: 0,
           isBelowEffectiveCost: false,
