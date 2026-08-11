@@ -17,16 +17,14 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(dto: CreateUserRequestDto, actor: CreateUserActorContext): Promise<UserResponseDto> {
-    if (actor.role === "MANAGER" && (dto.role === "ADMIN" || dto.role === "PURCHASING")) {
-      throw new Error("MANAGER cannot assign ADMIN or PURCHASING role.");
+    if (actor.role === "MANAGER" && !["SELLER", "PURCHASING"].includes(dto.role)) {
+      throw new Error("MANAGER can only assign SELLER or PURCHASING role.");
     }
 
-    const branch = await this.branchRepository.findActiveByCode(dto.branchCode);
-    if (!branch) throw new Error("Branch not found.");
-
-    if (actor.role === "MANAGER" && branch.id !== actor.branchId) {
-      throw new Error("MANAGER can only assign users from own branch.");
-    }
+    const branch = actor.role === "MANAGER"
+      ? await this.branchRepository.findById(actor.branchId)
+      : await this.branchRepository.findActiveByCode(dto.branchCode);
+    if (!branch || !branch.isActive) throw new Error("Branch not found.");
 
     const [emailExists, usernameExists, phoneExists] = await Promise.all([
       this.userRepository.existsByEmail(dto.email),

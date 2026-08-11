@@ -64,7 +64,6 @@ export class UpdateUserRequestDto {
     if (!username) return ["username is required."];
     if (!email) return ["email is required."];
     if (!UpdateUserRequestDto.isValidEmail(email)) return ["email is invalid."];
-    if (!branchCode) return ["branchCode is required."];
     if (password && password.length < 8) return ["password must contain at least 8 characters."];
     if (!Object.values(UserRole).includes(roleRaw as UserRole)) return ["role is invalid."];
     if (phone && !UpdateUserRequestDto.isValidPhone(phone)) return ["phone is invalid."];

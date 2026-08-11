@@ -180,8 +180,8 @@ export class UsersController {
     }
 
     if (
-      message === "MANAGER cannot assign ADMIN role." ||
-      message === "MANAGER cannot update ADMIN users." ||
+      message === "MANAGER can only assign SELLER or PURCHASING role." ||
+      message === "MANAGER can only update SELLER or PURCHASING users." ||
       message === "MANAGER can only assign users from own branch."
     ) {
       res.status(403).json({ error: message });

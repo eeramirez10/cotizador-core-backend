@@ -32,20 +32,18 @@ export class UpdateUserUseCase {
 
     if (!target) throw new Error("User not found.");
 
-    if (actor.role === "MANAGER" && (target.role === "ADMIN" || target.role === "PURCHASING")) {
-      throw new Error("MANAGER cannot update ADMIN or PURCHASING users.");
+    if (actor.role === "MANAGER" && !["SELLER", "PURCHASING"].includes(target.role)) {
+      throw new Error("MANAGER can only update SELLER or PURCHASING users.");
     }
 
-    if (actor.role === "MANAGER" && (dto.role === "ADMIN" || dto.role === "PURCHASING")) {
-      throw new Error("MANAGER cannot assign ADMIN or PURCHASING role.");
+    if (actor.role === "MANAGER" && !["SELLER", "PURCHASING"].includes(dto.role)) {
+      throw new Error("MANAGER can only assign SELLER or PURCHASING role.");
     }
 
-    const branch = await this.branchRepository.findActiveByCode(dto.branchCode);
-    if (!branch) throw new Error("Branch not found.");
-
-    if (actor.role === "MANAGER" && branch.id !== actor.branchId) {
-      throw new Error("MANAGER can only assign users from own branch.");
-    }
+    const branch = actor.role === "MANAGER"
+      ? await this.branchRepository.findById(actor.branchId)
+      : await this.branchRepository.findActiveByCode(dto.branchCode);
+    if (!branch || !branch.isActive) throw new Error("Branch not found.");
 
     if (dto.email !== target.email) {
       const emailExists = await this.userRepository.existsByEmail(dto.email);

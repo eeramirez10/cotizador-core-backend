@@ -63,7 +63,6 @@ export class CreateUserRequestDto {
     if (!CreateUserRequestDto.isValidEmail(email)) return ["email is invalid."];
     if (!password) return ["password is required."];
     if (password.length < 8) return ["password must contain at least 8 characters."];
-    if (!branchCode) return ["branchCode is required."];
     if (!Object.values(UserRole).includes(roleRaw as UserRole)) return ["role is invalid."];
     if (phone && !CreateUserRequestDto.isValidPhone(phone)) return ["phone is invalid."];
 

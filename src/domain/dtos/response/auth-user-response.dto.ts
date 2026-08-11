@@ -20,6 +20,7 @@ export class AuthUserResponseDto {
       email: this.user.email,
       role: this.user.role,
       branchId: this.user.branchId,
+      branchCode: this.user.branchCode,
       branchName: this.user.branchName,
       erpUserCode: this.user.erpUserCode,
       isActive: this.user.isActive,

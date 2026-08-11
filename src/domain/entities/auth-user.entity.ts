@@ -8,6 +8,7 @@ export interface AuthUserEntity {
   role: UserRole;
   isActive: boolean;
   branchId: string;
+  branchCode: string;
   branchName: string;
   erpUserCode: string | null;
   passwordHash: string;
