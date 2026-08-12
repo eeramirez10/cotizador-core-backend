@@ -127,6 +127,7 @@ export class CreateQuoteFromExtractionUseCase {
           sellerSupplierId: null,
           sellerSupplierNameSnapshot: null,
           sellerQuotedUnitCost: null,
+          sellerCostSource: null,
           sellerQuotedCurrency: null,
           sellerQuotedExchangeRate: null,
           sellerQuotedBrand: null,

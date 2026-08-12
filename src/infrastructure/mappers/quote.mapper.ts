@@ -1,4 +1,5 @@
 import { QuoteEntity } from "../../domain/entities/quote.entity";
+import type { QuoteItemEntity } from "../../domain/entities/quote-item.entity";
 
 interface DecimalLike {
   toString(): string;
@@ -173,6 +174,7 @@ interface QuoteRow {
     sellerSupplierId: string | null;
     sellerSupplierNameSnapshot: string | null;
     sellerQuotedUnitCost: number | DecimalLike | null;
+    sellerCostSource: QuoteItemEntity["sellerCostSource"];
     sellerQuotedCurrency: QuoteEntity["currency"] | null;
     sellerQuotedExchangeRate: number | DecimalLike | null;
     sellerQuotedBrand: string | null;
@@ -390,6 +392,7 @@ export class QuoteMapper {
         sellerSupplierId: item.sellerSupplierId,
         sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: toNumber(item.sellerQuotedUnitCost),
+        sellerCostSource: item.sellerCostSource,
         sellerQuotedCurrency: item.sellerQuotedCurrency,
         sellerQuotedExchangeRate: toNumber(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,

@@ -17,6 +17,7 @@ import {
   SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
+  UpdateQuoteProcurementReferenceDatasourceParams,
 } from "../datasources/quote.datasource";
 import { QuoteEntity } from "../entities/quote.entity";
 
@@ -28,6 +29,7 @@ export abstract class QuoteRepository {
   abstract updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract addItem(params: AddQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
+  abstract updateProcurementReference(params: UpdateQuoteProcurementReferenceDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
   abstract createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity>;

@@ -112,24 +112,6 @@ export class ChangeQuoteStatusUseCase {
         throw new Error("All quote items must have a seller price before moving to QUOTED.");
       }
 
-      if (quote.captureMethod !== "EXCEL_IMPORT") {
-        const incompleteProcurementItems = quote.items.filter((item) => {
-          const hasErpCode = Boolean(item.externalProductCode?.trim());
-          const isLocalProduct = !hasErpCode && Boolean(item.productId);
-          const needsPurchase = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
-          if (!needsPurchase) return false;
-          return !item.sellerSupplierId
-            || !item.sellerSupplierNameSnapshot?.trim()
-            || item.sellerQuotedUnitCost === null
-            || item.sellerQuotedUnitCost <= 0
-            || !item.sellerQuotedCurrency
-            || !item.sellerDeliveryState?.trim()
-            || !item.sellerSupplierDeliveryTime?.trim();
-        });
-        if (incompleteProcurementItems.length > 0) {
-          throw new Error("Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item.");
-        }
-      }
     }
 
     const updatedQuote = await this.quoteRepository.changeStatus({

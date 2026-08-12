@@ -1,5 +1,6 @@
 import type {
   Currency,
+  PurchaseCostSource,
   QuoteDeliveryAttemptStatus,
   QuoteDeliveryChannel,
   QuoteOrigin,
@@ -79,6 +80,7 @@ export interface SaveQuoteDraftItemDatasourceData {
   sellerSupplierId: string | null;
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
+  sellerCostSource: PurchaseCostSource | null;
   sellerQuotedCurrency: Currency | null;
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
@@ -188,6 +190,7 @@ export interface AddQuoteItemDatasourceParams {
     sellerSupplierId: string | null;
     sellerSupplierNameSnapshot: string | null;
     sellerQuotedUnitCost: number | null;
+    sellerCostSource: PurchaseCostSource | null;
     sellerQuotedCurrency: Currency | null;
     sellerQuotedExchangeRate: number | null;
     sellerQuotedBrand: string | null;
@@ -244,6 +247,7 @@ export interface UpdateQuoteItemDatasourceParams {
     sellerSupplierId?: string | null;
     sellerSupplierNameSnapshot?: string | null;
     sellerQuotedUnitCost?: number | null;
+    sellerCostSource?: PurchaseCostSource | null;
     sellerQuotedCurrency?: Currency | null;
     sellerQuotedExchangeRate?: number | null;
     sellerQuotedBrand?: string | null;
@@ -277,6 +281,21 @@ export interface UpdateQuoteItemDatasourceParams {
     requiresReview?: boolean;
     updatedByUserId: string;
   };
+  scope: QuoteAccessScope;
+}
+
+export interface UpdateQuoteProcurementReferenceDatasourceParams {
+  quoteId: string;
+  itemId: string;
+  data: Pick<UpdateQuoteItemDatasourceParams["data"],
+    | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerCostSource"
+    | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand"
+    | "sellerSupplierDescription" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil"
+    | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions"
+    | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard"
+    | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily"
+    | "technicalAttributes" | "updatedByUserId"
+  >;
   scope: QuoteAccessScope;
 }
 
@@ -369,6 +388,7 @@ export abstract class QuoteDatasource {
   abstract updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract addItem(params: AddQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
+  abstract updateProcurementReference(params: UpdateQuoteProcurementReferenceDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
   abstract createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity>;

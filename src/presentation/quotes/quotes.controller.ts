@@ -12,6 +12,7 @@ import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/reques
 import { RegisterErpQuoteRequestDto } from "../../domain/dtos/request/register-erp-quote-request.dto";
 import { SaveQuoteDraftRequestDto } from "../../domain/dtos/request/save-quote-draft-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
+import { UpdateQuoteProcurementReferenceRequestDto } from "../../domain/dtos/request/update-quote-procurement-reference-request.dto";
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
 import { AddQuoteItemUseCase } from "../../domain/use-cases/add-quote-item.use-case";
 import { ChangeQuoteStatusUseCase } from "../../domain/use-cases/change-quote-status.use-case";
@@ -31,6 +32,7 @@ import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/regi
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
+import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 
 export class QuotesController {
@@ -48,6 +50,7 @@ export class QuotesController {
     private readonly addQuoteItemUseCase: AddQuoteItemUseCase,
     private readonly matchQuoteItemErpUseCase: MatchQuoteItemErpUseCase,
     private readonly updateQuoteItemUseCase: UpdateQuoteItemUseCase,
+    private readonly updateQuoteProcurementReferenceUseCase: UpdateQuoteProcurementReferenceUseCase,
     private readonly deleteQuoteItemUseCase: DeleteQuoteItemUseCase,
     private readonly changeQuoteStatusUseCase: ChangeQuoteStatusUseCase,
     private readonly registerQuoteDeliveryAttemptUseCase: RegisterQuoteDeliveryAttemptUseCase,
@@ -333,6 +336,29 @@ export class QuotesController {
     }
   };
 
+  updateProcurementReference = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    const itemId = this.getSingleParam(req.params.itemId);
+    if (!quoteId || !itemId) {
+      return void res.status(400).json({ error: "Quote id and item id are required." });
+    }
+
+    const [bodyError, bodyDto] = UpdateQuoteProcurementReferenceRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+
+    try {
+      const result = await this.updateQuoteProcurementReferenceUseCase.execute(quoteId, itemId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "Unexpected error while updating purchasing reference.");
+    }
+  };
+
   matchItemErp = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
       res.status(401).json({ error: "Unauthorized." });
@@ -568,7 +594,6 @@ export class QuotesController {
       message === "All quote items must be linked to an ERP or local product before moving to QUOTED." ||
       message === "All quote items must be reviewed before moving to QUOTED." ||
       message === "All quote items must have a seller price before moving to QUOTED." ||
-      message === "Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item." ||
       message === "Rejection reason is required before moving to REJECTED." ||
       message === "Rejection comment is required when rejection reason is OTHER." ||
       message === "Quote must be APPROVED to generate order." ||
@@ -591,6 +616,12 @@ export class QuotesController {
       message === "Purchase requisitions cannot be generated for Excel-imported quotes." ||
       message === "Excel-imported quote items cannot be linked to ERP or local products." ||
       message === "Quote capture method and imported currency cannot be changed after Excel import."
+      || message === "Only SELLER can update purchasing references."
+      || message === "Excel-imported quotes do not generate purchasing references."
+      || message === "Purchasing references can only be updated on QUOTED or APPROVED quotes."
+      || message === "Purchasing references cannot change while a quote revision is in progress."
+      || message === "This quote item does not require purchasing."
+      || message === "Purchasing references are locked after the requisition is sent to Purchasing."
     ) {
       res.status(400).json({ error: message });
       return;

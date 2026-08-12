@@ -19,6 +19,7 @@ import {
   SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
+  UpdateQuoteProcurementReferenceDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
 import { QuoteEntity } from "../../domain/entities/quote.entity";
 import { Prisma } from "../database/generated/client";
@@ -635,6 +636,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
               sellerSupplierId: item.sellerSupplierId,
               sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
               sellerQuotedUnitCost: item.sellerQuotedUnitCost,
+              sellerCostSource: item.sellerCostSource,
               sellerQuotedCurrency: item.sellerQuotedCurrency,
               sellerQuotedExchangeRate: item.sellerQuotedExchangeRate,
               sellerQuotedBrand: item.sellerQuotedBrand,
@@ -929,6 +931,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           sellerSupplierId: params.data.sellerSupplierId,
           sellerSupplierNameSnapshot: params.data.sellerSupplierNameSnapshot,
           sellerQuotedUnitCost: params.data.sellerQuotedUnitCost,
+          sellerCostSource: params.data.sellerCostSource,
           sellerQuotedCurrency: params.data.sellerQuotedCurrency,
           sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate,
           sellerQuotedBrand: params.data.sellerQuotedBrand,
@@ -1012,6 +1015,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           sellerSupplierId: params.data.sellerSupplierId,
           sellerSupplierNameSnapshot: params.data.sellerSupplierNameSnapshot,
           sellerQuotedUnitCost: params.data.sellerQuotedUnitCost,
+          sellerCostSource: params.data.sellerCostSource,
           sellerQuotedCurrency: params.data.sellerQuotedCurrency,
           sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate,
           sellerQuotedBrand: params.data.sellerQuotedBrand,
@@ -1056,6 +1060,60 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       );
       await this.moveToQuotedAfterEditionIfNeeded(tx, quote.id, quote.status, params.data.updatedByUserId);
 
+      return this.findByIdWithClient(quote.id, params.scope, tx);
+    });
+  }
+
+  async updateProcurementReference(
+    params: UpdateQuoteProcurementReferenceDatasourceParams,
+  ): Promise<QuoteEntity | null> {
+    return prisma.$transaction(async (tx) => {
+      const quote = await tx.quote.findFirst({
+        where: { id: params.quoteId, ...this.buildScopeWhere(params.scope) },
+        select: { id: true, status: true },
+      });
+      if (!quote) return null;
+
+      const updated = await tx.quoteItem.updateMany({
+        where: { id: params.itemId, quoteId: quote.id },
+        data: {
+          sellerSupplierId: params.data.sellerSupplierId,
+          sellerSupplierNameSnapshot: params.data.sellerSupplierNameSnapshot,
+          sellerQuotedUnitCost: params.data.sellerQuotedUnitCost,
+          sellerCostSource: params.data.sellerCostSource,
+          sellerQuotedCurrency: params.data.sellerQuotedCurrency,
+          sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate,
+          sellerQuotedBrand: params.data.sellerQuotedBrand,
+          sellerSupplierDescription: params.data.sellerSupplierDescription,
+          sellerSupplierOrigin: params.data.sellerSupplierOrigin,
+          sellerSupplierQuoteValidUntil: params.data.sellerSupplierQuoteValidUntil,
+          sellerSupplierQuoteReference: params.data.sellerSupplierQuoteReference,
+          sellerSupplierQuoteNotes: params.data.sellerSupplierQuoteNotes,
+          sellerOriginRestrictions: params.data.sellerOriginRestrictions,
+          sellerDeliveryState: params.data.sellerDeliveryState,
+          sellerSupplierDeliveryTime: params.data.sellerSupplierDeliveryTime,
+          purchaseStandard: params.data.purchaseStandard,
+          purchaseDiameter: params.data.purchaseDiameter,
+          purchaseThickness: params.data.purchaseThickness,
+          purchaseBore: params.data.purchaseBore,
+          technicalFamily: params.data.technicalFamily,
+          technicalAttributes: params.data.technicalAttributes,
+        },
+      });
+      if (updated.count === 0) return null;
+
+      await tx.quote.update({
+        where: { id: quote.id },
+        data: { updatedByUserId: params.data.updatedByUserId },
+      });
+      await tx.quoteEvent.create({
+        data: {
+          quoteId: quote.id,
+          status: quote.status,
+          note: "Seller purchasing reference updated without changing commercial quote data.",
+          actorUserId: params.data.updatedByUserId,
+        },
+      });
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
   }

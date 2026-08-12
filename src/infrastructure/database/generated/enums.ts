@@ -151,6 +151,7 @@ export type PurchaseItemSource = (typeof PurchaseItemSource)[keyof typeof Purcha
 export const PurchaseCostSource = {
   ERP_COST: 'ERP_COST',
   SELLER_SUPPLIER_QUOTE: 'SELLER_SUPPLIER_QUOTE',
+  PRICE_LIST: 'PRICE_LIST',
   ESTIMATED: 'ESTIMATED'
 } as const
 

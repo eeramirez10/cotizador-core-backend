@@ -18,6 +18,7 @@ import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/regi
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
+import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { PrismaBranchDatasource } from "../../infrastructure/datasources/prisma-branch.datasource";
 import { PrismaCustomerDatasource } from "../../infrastructure/datasources/prisma-customer.datasource";
@@ -88,6 +89,10 @@ export class QuotesRoutes {
     const addQuoteItemUseCase = new AddQuoteItemUseCase(quoteRepository);
     const matchQuoteItemErpUseCase = new MatchQuoteItemErpUseCase(quoteRepository);
     const updateQuoteItemUseCase = new UpdateQuoteItemUseCase(quoteRepository);
+    const updateQuoteProcurementReferenceUseCase = new UpdateQuoteProcurementReferenceUseCase(
+      quoteRepository,
+      purchaseRequisitionRepository,
+    );
     const deleteQuoteItemUseCase = new DeleteQuoteItemUseCase(quoteRepository);
     const changeQuoteStatusUseCase = new ChangeQuoteStatusUseCase(
       quoteRepository,
@@ -121,6 +126,7 @@ export class QuotesRoutes {
       addQuoteItemUseCase,
       matchQuoteItemErpUseCase,
       updateQuoteItemUseCase,
+      updateQuoteProcurementReferenceUseCase,
       deleteQuoteItemUseCase,
       changeQuoteStatusUseCase,
       registerQuoteDeliveryAttemptUseCase,
@@ -156,6 +162,12 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.matchItemErp
+    );
+    router.patch(
+      "/:id/items/:itemId/procurement-reference",
+      requireAuth,
+      requireRoles("SELLER"),
+      controller.updateProcurementReference
     );
     router.patch(
       "/:id/items/:itemId",

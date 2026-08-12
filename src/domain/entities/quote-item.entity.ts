@@ -1,4 +1,4 @@
-import type { Currency } from "../../infrastructure/database/generated/enums";
+import type { Currency, PurchaseCostSource } from "../../infrastructure/database/generated/enums";
 
 export interface QuoteItemProductSummary {
   id: string;
@@ -30,6 +30,7 @@ export interface QuoteItemEntity {
   sellerSupplierId: string | null;
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
+  sellerCostSource: PurchaseCostSource | null;
   sellerQuotedCurrency: Currency | null;
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;

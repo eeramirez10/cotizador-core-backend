@@ -548,6 +548,13 @@ export type EnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
 }
 
+export type EnumPurchaseCostSourceNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseCostSource | Prisma.EnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel> | $Enums.PurchaseCostSource | null
+}
+
 export type EnumCurrencyNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.Currency | Prisma.EnumCurrencyFieldRefInput<$PrismaModel> | null
   in?: $Enums.Currency[] | Prisma.ListEnumCurrencyFieldRefInput<$PrismaModel> | null
@@ -577,6 +584,16 @@ export type JsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type EnumPurchaseCostSourceNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseCostSource | Prisma.EnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseCostSourceNullableWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseCostSource | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel>
 }
 
 export type EnumCurrencyNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -1414,11 +1431,28 @@ export type NestedEnumQuoteSourceChannelWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumQuoteSourceChannelFilter<$PrismaModel>
 }
 
+export type NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseCostSource | Prisma.EnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel> | $Enums.PurchaseCostSource | null
+}
+
 export type NestedEnumCurrencyNullableFilter<$PrismaModel = never> = {
   equals?: $Enums.Currency | Prisma.EnumCurrencyFieldRefInput<$PrismaModel> | null
   in?: $Enums.Currency[] | Prisma.ListEnumCurrencyFieldRefInput<$PrismaModel> | null
   notIn?: $Enums.Currency[] | Prisma.ListEnumCurrencyFieldRefInput<$PrismaModel> | null
   not?: Prisma.NestedEnumCurrencyNullableFilter<$PrismaModel> | $Enums.Currency | null
+}
+
+export type NestedEnumPurchaseCostSourceNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseCostSource | Prisma.EnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseCostSource[] | Prisma.ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseCostSourceNullableWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseCostSource | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseCostSourceNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumCurrencyNullableWithAggregatesFilter<$PrismaModel = never> = {

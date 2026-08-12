@@ -26,9 +26,15 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (input.actor.role !== "SELLER") throw new Error("Only sellers can attach quote documents.");
     const quote = await prisma.quote.findFirst({
       where: { clientDraftId: input.clientDraftId, createdByUserId: input.actor.id },
-      select: { id: true, status: true },
+      select: { id: true, status: true, purchaseRequisition: { select: { status: true } } },
     });
-    if (quote && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status)) {
+    const canAttachPurchasingReference = input.category === "SELLER_SUPPLIER_QUOTE" && Boolean(
+      quote && (
+        quote.status === "QUOTED"
+        || (quote.status === "APPROVED" && quote.purchaseRequisition?.status === "DRAFT")
+      )
+    );
+    if (quote && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status) && !canAttachPurchasingReference) {
       throw new Error("Quote attachments cannot be changed in the current status.");
     }
     if (quote && input.clientItemIds.length > 0) {
@@ -200,8 +206,15 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     const row = await this.findAccessibleFile(fileId, actor);
     if (!row || (actor.role !== "ADMIN" && row.uploadedByUserId !== actor.id)) return null;
     if (actor.role !== "ADMIN") {
-      const quoteStatuses = row.quoteAttachments.flatMap((link) => link.quote ? [link.quote.status] : []);
-      if (quoteStatuses.some((status) => !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(status))) return null;
+      const hasLockedQuoteAttachment = row.quoteAttachments.some((link) => {
+        if (!link.quote) return false;
+        if (["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(link.quote.status)) return false;
+        return !(link.category === "SELLER_SUPPLIER_QUOTE" && (
+          link.quote.status === "QUOTED"
+          || (link.quote.status === "APPROVED" && link.quote.purchaseRequisition?.status === "DRAFT")
+        ));
+      });
+      if (hasLockedQuoteAttachment) return null;
       const requisitionStatuses = row.purchaseOfferAttachments.map(
         (link) => link.purchaseSupplierOffer.requisitionItem.requisition.status,
       );
@@ -227,7 +240,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
       where: { id: fileId, status: "READY" },
       include: {
         quoteAttachments: {
-          include: { quote: { select: { branchId: true, createdByUserId: true, status: true, purchaseRequisition: { select: { id: true } } } } },
+          include: { quote: { select: { branchId: true, createdByUserId: true, status: true, purchaseRequisition: { select: { id: true, status: true } } } } },
         },
         purchaseOfferAttachments: {
           include: {
@@ -244,20 +257,28 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     const requisitions = row.purchaseOfferAttachments.map((link) => link.purchaseSupplierOffer.requisitionItem.requisition);
     if (actor.role === "SELLER" && (quotes.some((quote) => quote.createdByUserId === actor.id) || requisitions.some((req) => req.requestedByUserId === actor.id))) return row;
     if (actor.role === "MANAGER" && (quotes.some((quote) => quote.branchId === actor.branchId) || requisitions.some((req) => req.branchId === actor.branchId))) return row;
-    if (actor.role === "PURCHASING" && (requisitions.length > 0 || quotes.some((quote) => Boolean(quote.purchaseRequisition)))) return row;
+    if (actor.role === "PURCHASING" && (
+      requisitions.some((req) => req.status !== "DRAFT")
+      || quotes.some((quote) => Boolean(
+        quote.purchaseRequisition && quote.purchaseRequisition.status !== "DRAFT"
+      ))
+    )) return row;
     return null;
   }
 
   private quoteScope(actor: FileAttachmentActor): Prisma.QuoteWhereInput {
     if (actor.role === "SELLER") return { createdByUserId: actor.id };
     if (actor.role === "MANAGER") return { branchId: actor.branchId };
-    if (actor.role === "PURCHASING") return { purchaseRequisition: { isNot: null } };
+    if (actor.role === "PURCHASING") {
+      return { purchaseRequisition: { is: { status: { not: "DRAFT" } } } };
+    }
     return {};
   }
 
   private requisitionScope(actor: FileAttachmentActor): Prisma.PurchaseRequisitionWhereInput {
     if (actor.role === "SELLER") return { requestedByUserId: actor.id };
     if (actor.role === "MANAGER") return { branchId: actor.branchId };
+    if (actor.role === "PURCHASING") return { status: { not: "DRAFT" } };
     return {};
   }
 

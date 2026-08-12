@@ -99,7 +99,7 @@ export class UpdatePurchaseRequisitionItemRequestDto {
       data.sellerCurrency = body.sellerCurrency;
     }
     if (body.sellerCostSource !== undefined) {
-      const allowed: PurchaseCostSource[] = ["ERP_COST", "SELLER_SUPPLIER_QUOTE", "ESTIMATED"];
+      const allowed: PurchaseCostSource[] = ["ERP_COST", "SELLER_SUPPLIER_QUOTE", "PRICE_LIST", "ESTIMATED"];
       if (!allowed.includes(body.sellerCostSource as PurchaseCostSource)) return ["sellerCostSource is invalid."];
       data.sellerCostSource = body.sellerCostSource as PurchaseCostSource;
     }

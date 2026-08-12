@@ -18,6 +18,7 @@ import {
   SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
+  UpdateQuoteProcurementReferenceDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
 import { QuoteEntity } from "../../domain/entities/quote.entity";
 import { QuoteRepository } from "../../domain/repositories/quote.repository";
@@ -51,6 +52,10 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.updateItem(params);
+  }
+
+  updateProcurementReference(params: UpdateQuoteProcurementReferenceDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.updateProcurementReference(params);
   }
 
   removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null> {

@@ -125,6 +125,7 @@ export class AddQuoteItemUseCase {
         sellerSupplierId: dto.sellerSupplierId,
         sellerSupplierNameSnapshot: dto.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: dto.sellerQuotedUnitCost,
+        sellerCostSource: dto.sellerCostSource,
         sellerQuotedCurrency: dto.sellerQuotedCurrency,
         sellerQuotedExchangeRate: dto.sellerQuotedExchangeRate,
         sellerQuotedBrand: dto.sellerQuotedBrand,

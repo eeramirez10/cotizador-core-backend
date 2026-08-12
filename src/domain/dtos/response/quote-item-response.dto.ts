@@ -26,6 +26,7 @@ export class QuoteItemResponseDto {
       sellerSupplierId: this.item.sellerSupplierId,
       sellerSupplierNameSnapshot: this.item.sellerSupplierNameSnapshot,
       sellerQuotedUnitCost: this.item.sellerQuotedUnitCost,
+      sellerCostSource: this.item.sellerCostSource,
       sellerQuotedCurrency: this.item.sellerQuotedCurrency,
       sellerQuotedExchangeRate: this.item.sellerQuotedExchangeRate,
       sellerQuotedBrand: this.item.sellerQuotedBrand,

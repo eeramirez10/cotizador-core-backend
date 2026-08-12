@@ -104,6 +104,7 @@ enum PurchaseItemSource {
 enum PurchaseCostSource {
   ERP_COST
   SELLER_SUPPLIER_QUOTE
+  PRICE_LIST
   ESTIMATED
 }
 
@@ -629,6 +630,7 @@ model QuoteItem {
   sellerSupplierId                  String?   @map("seller_supplier_id") @db.Uuid
   sellerSupplierNameSnapshot        String?   @map("seller_supplier_name_snapshot") @db.VarChar(220)
   sellerQuotedUnitCost              Decimal?  @map("seller_quoted_unit_cost") @db.Decimal(14, 4)
+  sellerCostSource                  PurchaseCostSource? @map("seller_cost_source")
   sellerQuotedCurrency              Currency? @map("seller_quoted_currency")
   sellerQuotedExchangeRate          Decimal?  @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
   sellerQuotedBrand                 String?   @map("seller_quoted_brand") @db.VarChar(160)

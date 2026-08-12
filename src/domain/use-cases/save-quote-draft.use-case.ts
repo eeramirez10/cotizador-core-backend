@@ -230,6 +230,7 @@ export class SaveQuoteDraftUseCase {
         sellerSupplierId: item.sellerSupplierId,
         sellerSupplierNameSnapshot: item.sellerSupplierNameSnapshot,
         sellerQuotedUnitCost: item.sellerQuotedUnitCost === null ? null : round4(item.sellerQuotedUnitCost),
+        sellerCostSource: item.sellerCostSource,
         sellerQuotedCurrency: item.sellerQuotedCurrency,
         sellerQuotedExchangeRate: item.sellerQuotedExchangeRate === null ? null : round4(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
@@ -283,24 +284,6 @@ export class SaveQuoteDraftUseCase {
       }
       if (items.some((item) => item.unitPrice <= 0)) {
         throw new Error("All quote items must have a seller price before submitting for approval.");
-      }
-      if (dto.quote.captureMethod !== "EXCEL_IMPORT") {
-        const incompletePurchaseData = items.filter((item) => {
-          const hasErpCode = Boolean(item.externalProductCode?.trim());
-          const isLocalProduct = !hasErpCode && Boolean(item.productId);
-          const requiresPurchasing = isLocalProduct || (hasErpCode && Math.max(0, item.stock ?? 0) < item.qty);
-          if (!requiresPurchasing) return false;
-          return !item.sellerSupplierId
-            || !item.sellerSupplierNameSnapshot?.trim()
-            || !item.sellerQuotedCurrency
-            || item.sellerQuotedUnitCost === null
-            || item.sellerQuotedUnitCost <= 0
-            || !item.sellerDeliveryState?.trim()
-            || !item.sellerSupplierDeliveryTime?.trim();
-        });
-        if (incompletePurchaseData.length > 0) {
-          throw new Error("Complete supplier, quoted cost, delivery state and supplier delivery time for every local or out-of-stock item.");
-        }
       }
     }
 

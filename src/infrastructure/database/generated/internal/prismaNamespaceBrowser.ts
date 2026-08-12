@@ -387,6 +387,7 @@ export const QuoteItemScalarFieldEnum = {
   sellerSupplierId: 'sellerSupplierId',
   sellerSupplierNameSnapshot: 'sellerSupplierNameSnapshot',
   sellerQuotedUnitCost: 'sellerQuotedUnitCost',
+  sellerCostSource: 'sellerCostSource',
   sellerQuotedCurrency: 'sellerQuotedCurrency',
   sellerQuotedExchangeRate: 'sellerQuotedExchangeRate',
   sellerQuotedBrand: 'sellerQuotedBrand',

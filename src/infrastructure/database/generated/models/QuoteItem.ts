@@ -79,6 +79,7 @@ export type QuoteItemMinAggregateOutputType = {
   sellerSupplierId: string | null
   sellerSupplierNameSnapshot: string | null
   sellerQuotedUnitCost: runtime.Decimal | null
+  sellerCostSource: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency: $Enums.Currency | null
   sellerQuotedExchangeRate: runtime.Decimal | null
   sellerQuotedBrand: string | null
@@ -136,6 +137,7 @@ export type QuoteItemMaxAggregateOutputType = {
   sellerSupplierId: string | null
   sellerSupplierNameSnapshot: string | null
   sellerQuotedUnitCost: runtime.Decimal | null
+  sellerCostSource: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency: $Enums.Currency | null
   sellerQuotedExchangeRate: runtime.Decimal | null
   sellerQuotedBrand: string | null
@@ -193,6 +195,7 @@ export type QuoteItemCountAggregateOutputType = {
   sellerSupplierId: number
   sellerSupplierNameSnapshot: number
   sellerQuotedUnitCost: number
+  sellerCostSource: number
   sellerQuotedCurrency: number
   sellerQuotedExchangeRate: number
   sellerQuotedBrand: number
@@ -286,6 +289,7 @@ export type QuoteItemMinAggregateInputType = {
   sellerSupplierId?: true
   sellerSupplierNameSnapshot?: true
   sellerQuotedUnitCost?: true
+  sellerCostSource?: true
   sellerQuotedCurrency?: true
   sellerQuotedExchangeRate?: true
   sellerQuotedBrand?: true
@@ -343,6 +347,7 @@ export type QuoteItemMaxAggregateInputType = {
   sellerSupplierId?: true
   sellerSupplierNameSnapshot?: true
   sellerQuotedUnitCost?: true
+  sellerCostSource?: true
   sellerQuotedCurrency?: true
   sellerQuotedExchangeRate?: true
   sellerQuotedBrand?: true
@@ -400,6 +405,7 @@ export type QuoteItemCountAggregateInputType = {
   sellerSupplierId?: true
   sellerSupplierNameSnapshot?: true
   sellerQuotedUnitCost?: true
+  sellerCostSource?: true
   sellerQuotedCurrency?: true
   sellerQuotedExchangeRate?: true
   sellerQuotedBrand?: true
@@ -546,6 +552,7 @@ export type QuoteItemGroupByOutputType = {
   sellerSupplierId: string | null
   sellerSupplierNameSnapshot: string | null
   sellerQuotedUnitCost: runtime.Decimal | null
+  sellerCostSource: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency: $Enums.Currency | null
   sellerQuotedExchangeRate: runtime.Decimal | null
   sellerQuotedBrand: string | null
@@ -628,6 +635,7 @@ export type QuoteItemWhereInput = {
   sellerSupplierId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   sellerSupplierNameSnapshot?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   sellerQuotedUnitCost?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.EnumPurchaseCostSourceNullableFilter<"QuoteItem"> | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -693,6 +701,7 @@ export type QuoteItemOrderByWithRelationInput = {
   sellerSupplierId?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerSupplierNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedUnitCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerCostSource?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedExchangeRate?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedBrand?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -762,6 +771,7 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   sellerSupplierId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   sellerSupplierNameSnapshot?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   sellerQuotedUnitCost?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.EnumPurchaseCostSourceNullableFilter<"QuoteItem"> | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -827,6 +837,7 @@ export type QuoteItemOrderByWithAggregationInput = {
   sellerSupplierId?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerSupplierNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedUnitCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  sellerCostSource?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedCurrency?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedExchangeRate?: Prisma.SortOrderInput | Prisma.SortOrder
   sellerQuotedBrand?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -894,6 +905,7 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
   sellerSupplierId?: Prisma.UuidNullableWithAggregatesFilter<"QuoteItem"> | string | null
   sellerSupplierNameSnapshot?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
   sellerQuotedUnitCost?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.EnumPurchaseCostSourceNullableWithAggregatesFilter<"QuoteItem"> | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.EnumCurrencyNullableWithAggregatesFilter<"QuoteItem"> | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.StringNullableWithAggregatesFilter<"QuoteItem"> | string | null
@@ -949,6 +961,7 @@ export type QuoteItemCreateInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -1013,6 +1026,7 @@ export type QuoteItemUncheckedCreateInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -1069,6 +1083,7 @@ export type QuoteItemUpdateInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1133,6 +1148,7 @@ export type QuoteItemUncheckedUpdateInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1193,6 +1209,7 @@ export type QuoteItemCreateManyInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -1248,6 +1265,7 @@ export type QuoteItemUpdateManyMutationInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1306,6 +1324,7 @@ export type QuoteItemUncheckedUpdateManyInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1388,6 +1407,7 @@ export type QuoteItemCountOrderByAggregateInput = {
   sellerSupplierId?: Prisma.SortOrder
   sellerSupplierNameSnapshot?: Prisma.SortOrder
   sellerQuotedUnitCost?: Prisma.SortOrder
+  sellerCostSource?: Prisma.SortOrder
   sellerQuotedCurrency?: Prisma.SortOrder
   sellerQuotedExchangeRate?: Prisma.SortOrder
   sellerQuotedBrand?: Prisma.SortOrder
@@ -1463,6 +1483,7 @@ export type QuoteItemMaxOrderByAggregateInput = {
   sellerSupplierId?: Prisma.SortOrder
   sellerSupplierNameSnapshot?: Prisma.SortOrder
   sellerQuotedUnitCost?: Prisma.SortOrder
+  sellerCostSource?: Prisma.SortOrder
   sellerQuotedCurrency?: Prisma.SortOrder
   sellerQuotedExchangeRate?: Prisma.SortOrder
   sellerQuotedBrand?: Prisma.SortOrder
@@ -1520,6 +1541,7 @@ export type QuoteItemMinOrderByAggregateInput = {
   sellerSupplierId?: Prisma.SortOrder
   sellerSupplierNameSnapshot?: Prisma.SortOrder
   sellerQuotedUnitCost?: Prisma.SortOrder
+  sellerCostSource?: Prisma.SortOrder
   sellerQuotedCurrency?: Prisma.SortOrder
   sellerQuotedExchangeRate?: Prisma.SortOrder
   sellerQuotedBrand?: Prisma.SortOrder
@@ -1749,6 +1771,10 @@ export type QuoteItemCreatesellerOriginRestrictionsInput = {
   set: string[]
 }
 
+export type NullableEnumPurchaseCostSourceFieldUpdateOperationsInput = {
+  set?: $Enums.PurchaseCostSource | null
+}
+
 export type NullableEnumCurrencyFieldUpdateOperationsInput = {
   set?: $Enums.Currency | null
 }
@@ -1831,6 +1857,7 @@ export type QuoteItemCreateWithoutCustomerDescriptionEditedByUserInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -1893,6 +1920,7 @@ export type QuoteItemUncheckedCreateWithoutCustomerDescriptionEditedByUserInput 
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -1959,6 +1987,7 @@ export type QuoteItemCreateWithoutEffectiveCostEvaluatedByUserInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2022,6 +2051,7 @@ export type QuoteItemUncheckedCreateWithoutEffectiveCostEvaluatedByUserInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2110,6 +2140,7 @@ export type QuoteItemScalarWhereInput = {
   sellerSupplierId?: Prisma.UuidNullableFilter<"QuoteItem"> | string | null
   sellerSupplierNameSnapshot?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
   sellerQuotedUnitCost?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.EnumPurchaseCostSourceNullableFilter<"QuoteItem"> | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.EnumCurrencyNullableFilter<"QuoteItem"> | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.StringNullableFilter<"QuoteItem"> | string | null
@@ -2181,6 +2212,7 @@ export type QuoteItemCreateWithoutProductInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2243,6 +2275,7 @@ export type QuoteItemUncheckedCreateWithoutProductInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2325,6 +2358,7 @@ export type QuoteItemCreateWithoutQuoteInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2387,6 +2421,7 @@ export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2469,6 +2504,7 @@ export type QuoteItemCreateWithoutSellerSupplierInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2531,6 +2567,7 @@ export type QuoteItemUncheckedCreateWithoutSellerSupplierInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2613,6 +2650,7 @@ export type QuoteItemCreateWithoutPurchaseRequisitionItemInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2676,6 +2714,7 @@ export type QuoteItemUncheckedCreateWithoutPurchaseRequisitionItemInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2747,6 +2786,7 @@ export type QuoteItemUpdateWithoutPurchaseRequisitionItemInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2810,6 +2850,7 @@ export type QuoteItemUncheckedUpdateWithoutPurchaseRequisitionItemInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2868,6 +2909,7 @@ export type QuoteItemCreateManyCustomerDescriptionEditedByUserInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2927,6 +2969,7 @@ export type QuoteItemCreateManyEffectiveCostEvaluatedByUserInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -2981,6 +3024,7 @@ export type QuoteItemUpdateWithoutCustomerDescriptionEditedByUserInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3043,6 +3087,7 @@ export type QuoteItemUncheckedUpdateWithoutCustomerDescriptionEditedByUserInput 
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3102,6 +3147,7 @@ export type QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserIn
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3157,6 +3203,7 @@ export type QuoteItemUpdateWithoutEffectiveCostEvaluatedByUserInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3220,6 +3267,7 @@ export type QuoteItemUncheckedUpdateWithoutEffectiveCostEvaluatedByUserInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3279,6 +3327,7 @@ export type QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserInput
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3336,6 +3385,7 @@ export type QuoteItemCreateManyProductInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -3391,6 +3441,7 @@ export type QuoteItemUpdateWithoutProductInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3453,6 +3504,7 @@ export type QuoteItemUncheckedUpdateWithoutProductInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3512,6 +3564,7 @@ export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3570,6 +3623,7 @@ export type QuoteItemCreateManyQuoteInput = {
   sellerSupplierId?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -3625,6 +3679,7 @@ export type QuoteItemUpdateWithoutQuoteInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3687,6 +3742,7 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3746,6 +3802,7 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
   sellerSupplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3804,6 +3861,7 @@ export type QuoteItemCreateManySellerSupplierInput = {
   itemComment?: string | null
   sellerSupplierNameSnapshot?: string | null
   sellerQuotedUnitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: $Enums.Currency | null
   sellerQuotedExchangeRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: string | null
@@ -3859,6 +3917,7 @@ export type QuoteItemUpdateWithoutSellerSupplierInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3921,6 +3980,7 @@ export type QuoteItemUncheckedUpdateWithoutSellerSupplierInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3980,6 +4040,7 @@ export type QuoteItemUncheckedUpdateManyWithoutSellerSupplierInput = {
   itemComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerSupplierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sellerQuotedUnitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  sellerCostSource?: Prisma.NullableEnumPurchaseCostSourceFieldUpdateOperationsInput | $Enums.PurchaseCostSource | null
   sellerQuotedCurrency?: Prisma.NullableEnumCurrencyFieldUpdateOperationsInput | $Enums.Currency | null
   sellerQuotedExchangeRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sellerQuotedBrand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -4041,6 +4102,7 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sellerSupplierId?: boolean
   sellerSupplierNameSnapshot?: boolean
   sellerQuotedUnitCost?: boolean
+  sellerCostSource?: boolean
   sellerQuotedCurrency?: boolean
   sellerQuotedExchangeRate?: boolean
   sellerQuotedBrand?: boolean
@@ -4106,6 +4168,7 @@ export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sellerSupplierId?: boolean
   sellerSupplierNameSnapshot?: boolean
   sellerQuotedUnitCost?: boolean
+  sellerCostSource?: boolean
   sellerQuotedCurrency?: boolean
   sellerQuotedExchangeRate?: boolean
   sellerQuotedBrand?: boolean
@@ -4170,6 +4233,7 @@ export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sellerSupplierId?: boolean
   sellerSupplierNameSnapshot?: boolean
   sellerQuotedUnitCost?: boolean
+  sellerCostSource?: boolean
   sellerQuotedCurrency?: boolean
   sellerQuotedExchangeRate?: boolean
   sellerQuotedBrand?: boolean
@@ -4234,6 +4298,7 @@ export type QuoteItemSelectScalar = {
   sellerSupplierId?: boolean
   sellerSupplierNameSnapshot?: boolean
   sellerQuotedUnitCost?: boolean
+  sellerCostSource?: boolean
   sellerQuotedCurrency?: boolean
   sellerQuotedExchangeRate?: boolean
   sellerQuotedBrand?: boolean
@@ -4272,7 +4337,7 @@ export type QuoteItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "clientItemId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerDescriptionOriginal" | "customerDescriptionEditedAt" | "customerDescriptionEditedByUserId" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand" | "sellerSupplierDescription" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil" | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily" | "technicalAttributes" | "cost" | "costCurrency" | "erpSaleCurrency" | "marginPct" | "effectiveCostAtQuote" | "isBelowEffectiveCost" | "effectiveCostVariance" | "effectiveCostVariancePct" | "effectiveCostEvaluatedAt" | "effectiveCostEvaluatedByUserId" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
+export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "clientItemId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerDescriptionOriginal" | "customerDescriptionEditedAt" | "customerDescriptionEditedByUserId" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerCostSource" | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand" | "sellerSupplierDescription" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil" | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily" | "technicalAttributes" | "cost" | "costCurrency" | "erpSaleCurrency" | "marginPct" | "effectiveCostAtQuote" | "isBelowEffectiveCost" | "effectiveCostVariance" | "effectiveCostVariancePct" | "effectiveCostEvaluatedAt" | "effectiveCostEvaluatedByUserId" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   product?: boolean | Prisma.QuoteItem$productArgs<ExtArgs>
@@ -4327,6 +4392,7 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sellerSupplierId: string | null
     sellerSupplierNameSnapshot: string | null
     sellerQuotedUnitCost: runtime.Decimal | null
+    sellerCostSource: $Enums.PurchaseCostSource | null
     sellerQuotedCurrency: $Enums.Currency | null
     sellerQuotedExchangeRate: runtime.Decimal | null
     sellerQuotedBrand: string | null
@@ -4812,6 +4878,7 @@ export interface QuoteItemFieldRefs {
   readonly sellerSupplierId: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly sellerSupplierNameSnapshot: Prisma.FieldRef<"QuoteItem", 'String'>
   readonly sellerQuotedUnitCost: Prisma.FieldRef<"QuoteItem", 'Decimal'>
+  readonly sellerCostSource: Prisma.FieldRef<"QuoteItem", 'PurchaseCostSource'>
   readonly sellerQuotedCurrency: Prisma.FieldRef<"QuoteItem", 'Currency'>
   readonly sellerQuotedExchangeRate: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly sellerQuotedBrand: Prisma.FieldRef<"QuoteItem", 'String'>

@@ -2684,6 +2684,7 @@ export const QuoteItemScalarFieldEnum = {
   sellerSupplierId: 'sellerSupplierId',
   sellerSupplierNameSnapshot: 'sellerSupplierNameSnapshot',
   sellerQuotedUnitCost: 'sellerQuotedUnitCost',
+  sellerCostSource: 'sellerCostSource',
   sellerQuotedCurrency: 'sellerQuotedCurrency',
   sellerQuotedExchangeRate: 'sellerQuotedExchangeRate',
   sellerQuotedBrand: 'sellerQuotedBrand',
@@ -3329,6 +3330,20 @@ export type ListEnumQuoteSourceChannelFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'PurchaseCostSource'
+ */
+export type EnumPurchaseCostSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseCostSource'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseCostSource[]'
+ */
+export type ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseCostSource[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -3437,20 +3452,6 @@ export type EnumPurchaseItemSourceFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'PurchaseItemSource[]'
  */
 export type ListEnumPurchaseItemSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseItemSource[]'>
-    
-
-
-/**
- * Reference to a field of type 'PurchaseCostSource'
- */
-export type EnumPurchaseCostSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseCostSource'>
-    
-
-
-/**
- * Reference to a field of type 'PurchaseCostSource[]'
- */
-export type ListEnumPurchaseCostSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseCostSource[]'>
     
 
 

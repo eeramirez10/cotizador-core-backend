@@ -1,4 +1,4 @@
-import { Currency } from "../../../infrastructure/database/generated/enums";
+import { Currency, PurchaseCostSource } from "../../../infrastructure/database/generated/enums";
 
 interface CreateQuoteItemRequestDtoProps {
   clientItemId: string;
@@ -18,6 +18,7 @@ interface CreateQuoteItemRequestDtoProps {
   sellerSupplierId: string | null;
   sellerSupplierNameSnapshot: string | null;
   sellerQuotedUnitCost: number | null;
+  sellerCostSource?: PurchaseCostSource | null;
   sellerQuotedCurrency: Currency | null;
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
@@ -65,6 +66,7 @@ export class CreateQuoteItemRequestDto {
   public readonly sellerSupplierId: string | null;
   public readonly sellerSupplierNameSnapshot: string | null;
   public readonly sellerQuotedUnitCost: number | null;
+  public readonly sellerCostSource: PurchaseCostSource | null;
   public readonly sellerQuotedCurrency: Currency | null;
   public readonly sellerQuotedExchangeRate: number | null;
   public readonly sellerQuotedBrand: string | null;
@@ -111,6 +113,11 @@ export class CreateQuoteItemRequestDto {
     this.sellerSupplierId = props.sellerSupplierId;
     this.sellerSupplierNameSnapshot = props.sellerSupplierNameSnapshot;
     this.sellerQuotedUnitCost = props.sellerQuotedUnitCost;
+    this.sellerCostSource = (props.sellerQuotedUnitCost ?? 0) > 0
+      ? props.sellerCostSource ?? PurchaseCostSource.ESTIMATED
+      : props.externalProductCode
+        ? PurchaseCostSource.ERP_COST
+        : null;
     this.sellerQuotedCurrency = props.sellerQuotedCurrency;
     this.sellerQuotedExchangeRate = props.sellerQuotedExchangeRate;
     this.sellerQuotedBrand = props.sellerQuotedBrand;
@@ -223,6 +230,19 @@ export class CreateQuoteItemRequestDto {
       if (!Object.values(Currency).includes(raw as Currency)) return ["sellerQuotedCurrency is invalid."];
       sellerQuotedCurrency = raw as Currency;
     }
+    let sellerCostSource: PurchaseCostSource | null = null;
+    if (body.sellerCostSource !== undefined && body.sellerCostSource !== null && body.sellerCostSource !== "") {
+      const raw = typeof body.sellerCostSource === "string" ? body.sellerCostSource.trim().toUpperCase() : "";
+      if (!Object.values(PurchaseCostSource).includes(raw as PurchaseCostSource)) {
+        return ["sellerCostSource is invalid."];
+      }
+      sellerCostSource = raw as PurchaseCostSource;
+    }
+    const normalizedSellerCostSource: PurchaseCostSource | null = (sellerQuotedUnitCost ?? 0) > 0
+      ? sellerCostSource ?? PurchaseCostSource.ESTIMATED
+      : externalProductCode
+        ? PurchaseCostSource.ERP_COST
+        : null;
     const sellerOriginRestrictions = Array.isArray(body.sellerOriginRestrictions)
       ? [...new Set(body.sellerOriginRestrictions
           .filter((value): value is string => typeof value === "string")
@@ -262,6 +282,7 @@ export class CreateQuoteItemRequestDto {
         sellerSupplierId: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierId),
         sellerSupplierNameSnapshot: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierNameSnapshot),
         sellerQuotedUnitCost: typeof sellerQuotedUnitCost === "undefined" ? null : sellerQuotedUnitCost,
+        sellerCostSource: normalizedSellerCostSource,
         sellerQuotedCurrency,
         sellerQuotedExchangeRate: typeof sellerQuotedExchangeRate === "undefined" ? null : sellerQuotedExchangeRate,
         sellerQuotedBrand: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerQuotedBrand),

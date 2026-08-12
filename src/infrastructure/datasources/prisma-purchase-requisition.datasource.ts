@@ -281,7 +281,9 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       include: requisitionInclude,
     });
     if (existing) {
-      await this.materializeSellerOffers(existing.id, quote);
+      if (existing.status === "DRAFT") {
+        await this.materializeSellerOffers(existing.id, quote);
+      }
       const refreshed = await prisma.purchaseRequisition.findUnique({ where: { id: existing.id }, include: requisitionInclude });
       return refreshed ? requisitionEntity(refreshed) : requisitionEntity(existing);
     }
@@ -315,7 +317,9 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         sellerUnitCost: hasSellerQuote ? item.sellerQuotedUnitCost! : Math.max(0, item.cost),
         sellerCurrency: item.sellerQuotedCurrency || item.costCurrency,
         sellerExchangeRate: quote.exchangeRate,
-        sellerCostSource: hasSellerQuote ? "SELLER_SUPPLIER_QUOTE" as const : localNew ? "ESTIMATED" as const : "ERP_COST" as const,
+        sellerCostSource: hasSellerQuote
+          ? item.sellerCostSource || "ESTIMATED"
+          : localNew ? "ESTIMATED" as const : "ERP_COST" as const,
         sellerSupplierId: item.sellerSupplierId,
         sellerSupplierName: item.sellerSupplierNameSnapshot,
         sellerBrand: item.sellerQuotedBrand,
@@ -335,10 +339,10 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           quoteId: quote.id,
           branchId: quote.branchId,
           requestedByUserId: quote.createdByUserId,
-          status: "SUBMITTED",
+          status: "DRAFT",
           deliveryState: deliveryStates.length === 1 ? deliveryStates[0] : null,
           deliveryPlace: null,
-          submittedAt: new Date(),
+          submittedAt: null,
           items: { create: requiredItems },
         },
         include: requisitionInclude,
@@ -919,7 +923,14 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         where: { requisitionId },
         include: {
           quoteItem: { select: { clientItemId: true } },
-          offers: { where: { source: "SELLER", isActive: true }, select: { id: true } },
+          offers: {
+            where: { source: "SELLER", isActive: true },
+            select: {
+              id: true,
+              supplierQuoteId: true,
+              supplierQuote: { select: { supplierId: true, currency: true, fileAssetId: true } },
+            },
+          },
         },
       });
       const quoteAttachments = await tx.quoteAttachment.findMany({
@@ -940,7 +951,33 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
 
       for (const requisitionItem of requisitionItems) {
         const quoteItem = quoteItems.get(requisitionItem.quoteItemId);
-        if (!quoteItem || requisitionItem.offers.length > 0) continue;
+        if (!quoteItem) continue;
+
+        const hasSellerQuote = Boolean(quoteItem.sellerQuotedUnitCost && quoteItem.sellerQuotedUnitCost > 0);
+        await tx.purchaseRequisitionItem.update({
+          where: { id: requisitionItem.id },
+          data: {
+            standard: quoteItem.purchaseStandard,
+            diameter: quoteItem.purchaseDiameter,
+            thickness: quoteItem.purchaseThickness,
+            bore: quoteItem.purchaseBore,
+            technicalFamily: quoteItem.technicalFamily,
+            technicalAttributes: quoteItem.technicalAttributes,
+            sellerUnitCost: hasSellerQuote ? quoteItem.sellerQuotedUnitCost! : Math.max(0, quoteItem.cost),
+            sellerCurrency: quoteItem.sellerQuotedCurrency || quoteItem.costCurrency,
+            sellerExchangeRate: quoteItem.sellerQuotedExchangeRate || quote.exchangeRate,
+            sellerCostSource: hasSellerQuote
+              ? quoteItem.sellerCostSource || "ESTIMATED"
+              : requisitionItem.source === "LOCAL_NEW" ? "ESTIMATED" : "ERP_COST",
+            sellerSupplierId: quoteItem.sellerSupplierId,
+            sellerSupplierName: quoteItem.sellerSupplierNameSnapshot,
+            sellerBrand: quoteItem.sellerQuotedBrand,
+            originRestrictions: quoteItem.sellerOriginRestrictions,
+            sellerDeliveryTime: quoteItem.sellerSupplierDeliveryTime,
+            deliveryPlace: quoteItem.sellerDeliveryState,
+          },
+        });
+
         if (!quoteItem.sellerSupplierId || !quoteItem.sellerQuotedUnitCost || quoteItem.sellerQuotedUnitCost <= 0) continue;
         const subtotal = this.round4(requisitionItem.qty.toNumber() * quoteItem.sellerQuotedUnitCost);
         const tax = this.round4(subtotal * quote.taxRate);
@@ -952,6 +989,80 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         const supplierQuoteGroup = fileAssetId
           ? `FILE:${fileAssetId}:${quoteItem.sellerSupplierId}:${currency}`
           : `ITEM:${requisitionItem.id}`;
+        const existingOffer = requisitionItem.offers[0];
+        if (existingOffer) {
+          let supplierQuoteId = existingOffer.supplierQuoteId;
+          const supplierQuoteChanged = Boolean(existingOffer.supplierQuote && (
+            existingOffer.supplierQuote.supplierId !== quoteItem.sellerSupplierId
+            || existingOffer.supplierQuote.currency !== currency
+            || existingOffer.supplierQuote.fileAssetId !== fileAssetId
+          ));
+          if (supplierQuoteId && supplierQuoteChanged) {
+            const sharedOffers = await tx.purchaseSupplierOffer.count({ where: { supplierQuoteId } });
+            if (sharedOffers > 1) supplierQuoteId = null;
+          }
+          if (!supplierQuoteId) {
+            const created = await tx.purchaseSupplierQuote.create({
+              data: {
+                requisitionId,
+                supplierId: quoteItem.sellerSupplierId,
+                fileAssetId,
+                source: "SELLER",
+                reference: quoteItem.sellerSupplierQuoteReference,
+                quoteDate: new Date(),
+                validUntil: quoteItem.sellerSupplierQuoteValidUntil,
+                currency,
+                exchangeRate: quoteItem.sellerQuotedExchangeRate || quote.exchangeRate,
+                subtotal,
+                taxRate: quote.taxRate,
+                tax,
+                total,
+                notes: quoteItem.sellerSupplierQuoteNotes,
+                createdByUserId: quote.createdByUserId,
+              },
+              select: { id: true },
+            });
+            supplierQuoteId = created.id;
+          } else {
+            await tx.purchaseSupplierQuote.update({
+              where: { id: supplierQuoteId },
+              data: {
+                supplierId: quoteItem.sellerSupplierId,
+                fileAssetId,
+                reference: quoteItem.sellerSupplierQuoteReference,
+                validUntil: quoteItem.sellerSupplierQuoteValidUntil,
+                currency,
+                exchangeRate: quoteItem.sellerQuotedExchangeRate || quote.exchangeRate,
+                notes: quoteItem.sellerSupplierQuoteNotes,
+              },
+            });
+          }
+          await tx.purchaseSupplierOffer.update({
+            where: { id: existingOffer.id },
+            data: {
+              supplierQuoteId,
+              supplierId: quoteItem.sellerSupplierId,
+              supplierDescription: quoteItem.sellerSupplierDescription,
+              qty: requisitionItem.qty,
+              unit: requisitionItem.unit,
+              unitCost: quoteItem.sellerQuotedUnitCost,
+              currency,
+              exchangeRate: quoteItem.sellerQuotedExchangeRate || quote.exchangeRate,
+              subtotal,
+              taxRate: quote.taxRate,
+              tax,
+              total,
+              brand: quoteItem.sellerQuotedBrand,
+              origin: quoteItem.sellerSupplierOrigin,
+              deliveryTime: quoteItem.sellerSupplierDeliveryTime,
+              validUntil: quoteItem.sellerSupplierQuoteValidUntil,
+              externalReference: quoteItem.sellerSupplierQuoteReference,
+              notes: quoteItem.sellerSupplierQuoteNotes,
+              updatedByUserId: quote.updatedByUserId || quote.createdByUserId,
+            },
+          });
+          continue;
+        }
         let supplierQuote = supplierQuotesByGroup.get(supplierQuoteGroup);
         if (!supplierQuote) {
           const created = await tx.purchaseSupplierQuote.create({
@@ -1019,6 +1130,27 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         });
       }
 
+      const sellerSupplierQuotes = await tx.purchaseSupplierQuote.findMany({
+        where: { requisitionId, source: "SELLER" },
+        select: {
+          id: true,
+          offers: {
+            where: { source: "SELLER", isActive: true },
+            select: { subtotal: true, tax: true, total: true },
+          },
+        },
+      });
+      for (const supplierQuote of sellerSupplierQuotes) {
+        await tx.purchaseSupplierQuote.update({
+          where: { id: supplierQuote.id },
+          data: {
+            subtotal: this.round4(supplierQuote.offers.reduce((sum, offer) => sum + offer.subtotal.toNumber(), 0)),
+            tax: this.round4(supplierQuote.offers.reduce((sum, offer) => sum + offer.tax.toNumber(), 0)),
+            total: this.round4(supplierQuote.offers.reduce((sum, offer) => sum + offer.total.toNumber(), 0)),
+          },
+        });
+      }
+
       const sellerOffers = await tx.purchaseSupplierOffer.findMany({
         where: { requisitionItem: { requisitionId }, source: "SELLER", isActive: true },
         select: { id: true, supplierQuoteId: true, requisitionItem: { select: { quoteItem: { select: { clientItemId: true } } } } },
@@ -1047,6 +1179,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
   private scopeWhere(actor: PurchaseRequisitionActor): Prisma.PurchaseRequisitionWhereInput {
     if (actor.role === "SELLER") return { requestedByUserId: actor.id };
     if (actor.role === "MANAGER") return { branchId: actor.branchId };
+    if (actor.role === "PURCHASING") return { status: { not: "DRAFT" } };
     return {};
   }
 
@@ -1073,6 +1206,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       },
     });
     if (!requisition) return;
+    if (requisition.status === "DRAFT") return;
     const hasHigherCost = requisition.items.some((item) => {
       if (!item.selectedOffer) return false;
       const sellerMxn = item.sellerCurrency === "MXN"
