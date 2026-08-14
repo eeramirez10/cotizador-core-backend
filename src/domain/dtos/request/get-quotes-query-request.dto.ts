@@ -7,6 +7,7 @@ interface GetQuotesQueryRequestDtoProps {
   status?: QuoteStatus;
   branchCode?: string;
   archived: boolean;
+  view: "FULL" | "SUMMARY";
 }
 
 export class GetQuotesQueryRequestDto {
@@ -16,6 +17,7 @@ export class GetQuotesQueryRequestDto {
   public readonly status?: QuoteStatus;
   public readonly branchCode?: string;
   public readonly archived: boolean;
+  public readonly view: "FULL" | "SUMMARY";
 
   constructor(props: GetQuotesQueryRequestDtoProps) {
     this.page = props.page;
@@ -24,6 +26,7 @@ export class GetQuotesQueryRequestDto {
     this.status = props.status;
     this.branchCode = props.branchCode;
     this.archived = props.archived;
+    this.view = props.view;
   }
 
   static create(input: unknown): [string?, GetQuotesQueryRequestDto?] {
@@ -61,6 +64,9 @@ export class GetQuotesQueryRequestDto {
     const archivedRaw = typeof query.archived === "string" ? query.archived.trim().toLowerCase() : "false";
     if (!["true", "false"].includes(archivedRaw)) return ["archived must be true or false."];
 
+    const viewRaw = typeof query.view === "string" ? query.view.trim().toUpperCase() : "FULL";
+    if (!["FULL", "SUMMARY"].includes(viewRaw)) return ["view must be FULL or SUMMARY."];
+
     return [
       ,
       new GetQuotesQueryRequestDto({
@@ -70,6 +76,7 @@ export class GetQuotesQueryRequestDto {
         status: statusRaw as QuoteStatus | undefined,
         branchCode,
         archived: archivedRaw === "true",
+        view: viewRaw as "FULL" | "SUMMARY",
       }),
     ];
   }

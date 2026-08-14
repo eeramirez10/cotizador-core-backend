@@ -9,7 +9,7 @@ import type {
   QuoteStatus,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
-import { QuoteEntity } from "../entities/quote.entity";
+import { QuoteEntity, QuoteListSummaryEntity } from "../entities/quote.entity";
 
 export interface QuoteAccessScope {
   role: UserRole;
@@ -31,6 +31,14 @@ export interface FindQuotesDatasourceResult {
   items: Array<{
     current: QuoteEntity;
     relatedVersions: QuoteEntity[];
+  }>;
+  total: number;
+}
+
+export interface FindQuoteSummariesDatasourceResult {
+  items: Array<{
+    current: QuoteListSummaryEntity;
+    relatedVersions: QuoteListSummaryEntity[];
   }>;
   total: number;
 }
@@ -382,6 +390,7 @@ export interface RegisterErpQuoteDatasourceParams {
 
 export abstract class QuoteDatasource {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
+  abstract findPaginatedSummaries(params: FindQuotesDatasourceParams): Promise<FindQuoteSummariesDatasourceResult>;
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity>;
   abstract saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult>;

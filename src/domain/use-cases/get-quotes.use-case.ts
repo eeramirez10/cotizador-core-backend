@@ -1,6 +1,8 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { GetQuotesQueryRequestDto } from "../dtos/request/get-quotes-query-request.dto";
 import { PaginatedQuotesResponseDto } from "../dtos/response/paginated-quotes-response.dto";
+import { PaginatedQuoteSummariesResponseDto } from "../dtos/response/paginated-quote-summaries-response.dto";
+import { QuoteListSummaryResponseDto } from "../dtos/response/quote-list-summary-response.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
@@ -17,7 +19,10 @@ export class GetQuotesUseCase {
     private readonly branchRepository: BranchRepository
   ) {}
 
-  async execute(dto: GetQuotesQueryRequestDto, actor: GetQuotesActorContext): Promise<PaginatedQuotesResponseDto> {
+  async execute(
+    dto: GetQuotesQueryRequestDto,
+    actor: GetQuotesActorContext
+  ): Promise<PaginatedQuotesResponseDto | PaginatedQuoteSummariesResponseDto> {
     if (dto.archived && actor.role !== "ADMIN") {
       throw new Error("Only ADMIN can list archived quotes.");
     }
@@ -31,7 +36,7 @@ export class GetQuotesUseCase {
       branchIdFilter = branch.id;
     }
 
-    const result = await this.quoteRepository.findPaginated({
+    const params = {
       page: dto.page,
       pageSize: dto.pageSize,
       search: dto.search,
@@ -43,7 +48,23 @@ export class GetQuotesUseCase {
         userId: actor.id,
         branchId: actor.branchId,
       },
-    });
+    };
+
+    if (dto.view === "SUMMARY") {
+      const result = await this.quoteRepository.findPaginatedSummaries(params);
+
+      return new PaginatedQuoteSummariesResponseDto({
+        items: result.items.map((item) => ({
+          current: new QuoteListSummaryResponseDto(item.current),
+          relatedVersions: item.relatedVersions.map((version) => new QuoteListSummaryResponseDto(version)),
+        })),
+        total: result.total,
+        page: dto.page,
+        pageSize: dto.pageSize,
+      });
+    }
+
+    const result = await this.quoteRepository.findPaginated(params);
 
     return new PaginatedQuotesResponseDto({
       items: result.items.map((item) => ({

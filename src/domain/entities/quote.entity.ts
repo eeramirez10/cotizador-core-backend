@@ -55,6 +55,30 @@ export interface QuoteRevisionSummary {
   revisionNumber: number;
 }
 
+export interface QuoteListSummaryEntity {
+  id: string;
+  quoteNumber: string;
+  erpQuoteNumber: string | null;
+  status: QuoteStatus;
+  captureMethod: QuoteCaptureMethod;
+  originalQuoteDate: Date | null;
+  currency: Currency;
+  taxRate: number;
+  revisionNumber: number;
+  providedByNameSnapshot: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  branch: {
+    id: string;
+    name: string;
+  };
+  customer: QuoteCustomerSummary;
+  createdByUser: {
+    firstName: string;
+    lastName: string;
+  };
+}
+
 export interface QuoteEntity {
   id: string;
   quoteNumber: string;

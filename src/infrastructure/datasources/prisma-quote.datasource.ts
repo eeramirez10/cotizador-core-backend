@@ -7,6 +7,7 @@ import {
   RestoreQuoteDatasourceParams,
   DeleteQuoteDatasourceParams,
   FindQuoteByIdDatasourceParams,
+  FindQuoteSummariesDatasourceResult,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
   MarkQuoteOrderGeneratedDatasourceParams,
@@ -21,7 +22,7 @@ import {
   UpdateQuoteItemDatasourceParams,
   UpdateQuoteProcurementReferenceDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
-import { QuoteEntity } from "../../domain/entities/quote.entity";
+import { QuoteEntity, QuoteListSummaryEntity } from "../../domain/entities/quote.entity";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
 import { QuoteMapper } from "../mappers/quote.mapper";
@@ -179,6 +180,64 @@ const quoteInclude = {
   },
 } satisfies Prisma.QuoteInclude;
 
+const quoteListSummarySelect = {
+  id: true,
+  quoteNumber: true,
+  erpQuoteNumber: true,
+  status: true,
+  captureMethod: true,
+  originalQuoteDate: true,
+  currency: true,
+  taxRate: true,
+  revisionNumber: true,
+  providedByNameSnapshot: true,
+  rootQuoteId: true,
+  createdAt: true,
+  updatedAt: true,
+  branch: {
+    select: {
+      id: true,
+      name: true,
+    },
+  },
+  customer: {
+    select: {
+      id: true,
+      displayName: true,
+      legalName: true,
+      email: true,
+      phone: true,
+      whatsapp: true,
+    },
+  },
+  createdByUser: {
+    select: {
+      firstName: true,
+      lastName: true,
+    },
+  },
+} satisfies Prisma.QuoteSelect;
+
+type QuoteListSummaryRow = Prisma.QuoteGetPayload<{ select: typeof quoteListSummarySelect }>;
+
+const toQuoteListSummary = (row: QuoteListSummaryRow): QuoteListSummaryEntity => ({
+  id: row.id,
+  quoteNumber: row.quoteNumber,
+  erpQuoteNumber: row.erpQuoteNumber,
+  status: row.status,
+  captureMethod: row.captureMethod,
+  originalQuoteDate: row.originalQuoteDate,
+  currency: row.currency,
+  taxRate: Number(row.taxRate),
+  revisionNumber: row.revisionNumber,
+  providedByNameSnapshot: row.providedByNameSnapshot,
+  createdAt: row.createdAt,
+  updatedAt: row.updatedAt,
+  branch: row.branch,
+  customer: row.customer,
+  createdByUser: row.createdByUser,
+});
+
 const round4 = (value: number): number => Number(value.toFixed(4));
 const shouldMoveBackToQuoted = (status: string): boolean => status === "APPROVED" || status === "REJECTED";
 const addDaysToDateOnly = (baseDate: Date, days: number): Date => {
@@ -199,7 +258,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       ],
     };
 
-    const [total, rows] = await prisma.$transaction([
+    const [total, rows] = await Promise.all([
       prisma.quote.count({ where }),
       prisma.quote.findMany({
         where,
@@ -242,6 +301,66 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     return {
       items: rows.map((row) => ({
         current: QuoteMapper.toEntity(row),
+        relatedVersions: relatedByRootId.get(row.rootQuoteId ?? row.id) ?? [],
+      })),
+      total,
+    };
+  }
+
+  async findPaginatedSummaries(
+    params: FindQuotesDatasourceParams
+  ): Promise<FindQuoteSummariesDatasourceResult> {
+    const skip = (params.page - 1) * params.pageSize;
+    const where: Prisma.QuoteWhereInput = {
+      AND: [
+        this.buildFindWhere(params),
+        { nextVersions: { none: {} } },
+      ],
+    };
+
+    const [total, rows] = await Promise.all([
+      prisma.quote.count({ where }),
+      prisma.quote.findMany({
+        where,
+        select: quoteListSummarySelect,
+        orderBy: [{ updatedAt: "desc" }, { id: "asc" }],
+        skip,
+        take: params.pageSize,
+      }),
+    ]);
+
+    const currentIds = rows.map((row) => row.id);
+    const rootIds = rows.map((row) => row.rootQuoteId ?? row.id);
+    const relatedRows = rootIds.length > 0
+      ? await prisma.quote.findMany({
+          where: {
+            AND: [
+              this.buildScopeWhere(params.scope),
+              {
+                OR: [
+                  { id: { in: rootIds } },
+                  { rootQuoteId: { in: rootIds } },
+                ],
+              },
+              { id: { notIn: currentIds } },
+            ],
+          },
+          select: quoteListSummarySelect,
+          orderBy: [{ revisionNumber: "desc" }, { createdAt: "desc" }],
+        })
+      : [];
+
+    const relatedByRootId = new Map<string, QuoteListSummaryEntity[]>();
+    for (const row of relatedRows) {
+      const rootId = row.rootQuoteId ?? row.id;
+      const versions = relatedByRootId.get(rootId) ?? [];
+      versions.push(toQuoteListSummary(row));
+      relatedByRootId.set(rootId, versions);
+    }
+
+    return {
+      items: rows.map((row) => ({
+        current: toQuoteListSummary(row),
         relatedVersions: relatedByRootId.get(row.rootQuoteId ?? row.id) ?? [],
       })),
       total,

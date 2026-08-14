@@ -9,6 +9,7 @@ import {
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
+  FindQuoteSummariesDatasourceResult,
   MarkQuoteOrderGeneratedDatasourceParams,
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
@@ -28,6 +29,10 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult> {
     return this.datasource.findPaginated(params);
+  }
+
+  findPaginatedSummaries(params: FindQuotesDatasourceParams): Promise<FindQuoteSummariesDatasourceResult> {
+    return this.datasource.findPaginatedSummaries(params);
   }
 
   findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null> {

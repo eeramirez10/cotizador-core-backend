@@ -9,6 +9,7 @@ import {
   FindQuoteByIdDatasourceParams,
   FindQuotesDatasourceParams,
   FindQuotesDatasourceResult,
+  FindQuoteSummariesDatasourceResult,
   MarkQuoteOrderGeneratedDatasourceParams,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RegisterErpQuoteDatasourceParams,
@@ -23,6 +24,7 @@ import { QuoteEntity } from "../entities/quote.entity";
 
 export abstract class QuoteRepository {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
+  abstract findPaginatedSummaries(params: FindQuotesDatasourceParams): Promise<FindQuoteSummariesDatasourceResult>;
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity>;
   abstract saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult>;
