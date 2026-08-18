@@ -32,9 +32,13 @@ export const getQuoteItemReviewIssues = (
     return issues;
   }
 
-  const hasIdentifier = hasText(input.productId) || hasText(input.externalProductCode) || hasText(input.ean);
-  if (!hasIdentifier) issues.push("missing ERP or local product link");
-  if (!hasText(input.erpDescription)) issues.push("missing product description");
+  const hasLocalProduct = hasText(input.productId);
+  const hasErpProduct = !hasLocalProduct && (hasText(input.externalProductCode) || hasText(input.ean));
+  if (!hasLocalProduct && !hasErpProduct) issues.push("missing ERP or local product link");
+  if (hasErpProduct && !hasText(input.erpDescription)) issues.push("missing ERP product description");
+  if (hasLocalProduct && !hasText(input.customerDescription) && !hasText(input.erpDescription)) {
+    issues.push("missing local product description");
+  }
   if (!Number.isFinite(input.qty) || input.qty <= 0) issues.push("quantity must be greater than zero");
   if (!hasText(input.unit)) issues.push("missing measurement unit");
 
