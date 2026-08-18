@@ -4,7 +4,11 @@ import { SaveQuoteDraftResponseDto } from "../dtos/response/save-quote-draft-res
 import { CustomerRepository } from "../repositories/customer.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { UserRepository } from "../repositories/user.repository";
-import { isImportedExcelItemReady, isQuoteItemReady } from "./quote-item-review.helper";
+import {
+  formatQuoteItemReviewError,
+  isImportedExcelItemReady,
+  isQuoteItemReady,
+} from "./quote-item-review.helper";
 import { convertQuoteAmount } from "./quote-currency.helper";
 import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
 
@@ -280,7 +284,22 @@ export class SaveQuoteDraftUseCase {
         throw new Error("All quote items must be linked to an ERP or local product before submitting for approval.");
       }
       if (items.some((item) => item.requiresReview)) {
-        throw new Error("All quote items must be reviewed before submitting for approval.");
+        throw new Error(formatQuoteItemReviewError(
+          items.map((item) => ({
+            productId: item.productId,
+            externalProductCode: item.externalProductCode,
+            ean: item.ean,
+            erpDescription: item.erpDescription,
+            customerDescription: item.customerDescription,
+            qty: item.qty,
+            unit: item.unit,
+            unitPrice: item.unitPrice,
+            deliveryTime: item.deliveryTime,
+            sourceRequiresReview: item.sourceRequiresReview,
+          })),
+          dto.quote.captureMethod === "EXCEL_IMPORT",
+          "Quote items require review"
+        ));
       }
       if (items.some((item) => item.unitPrice <= 0)) {
         throw new Error("All quote items must have a seller price before submitting for approval.");

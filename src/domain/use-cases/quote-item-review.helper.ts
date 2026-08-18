@@ -8,26 +8,57 @@ interface QuoteItemReviewInput {
   customerDescription?: string | null;
   unitPrice?: number;
   deliveryTime?: string | null;
+  sourceRequiresReview?: boolean;
 }
 
 const hasText = (value: string | null | undefined): boolean =>
   typeof value === "string" && value.trim().length > 0;
 
-export const isQuoteItemReady = (input: QuoteItemReviewInput): boolean => {
-  const hasIdentifier = hasText(input.productId) || hasText(input.externalProductCode) || hasText(input.ean);
-  const hasErpDescription = hasText(input.erpDescription);
-  const hasValidQty = Number.isFinite(input.qty) && input.qty > 0;
-  const hasValidUnit = hasText(input.unit);
+export const getQuoteItemReviewIssues = (
+  input: QuoteItemReviewInput,
+  importedFromExcel = false
+): string[] => {
+  const issues: string[] = [];
 
-  return hasIdentifier && hasErpDescription && hasValidQty && hasValidUnit;
+  if (importedFromExcel) {
+    if (input.sourceRequiresReview) issues.push("extracted data pending confirmation");
+    if (!hasText(input.customerDescription) && !hasText(input.erpDescription)) {
+      issues.push("missing description");
+    }
+    if (!Number.isFinite(input.qty) || input.qty <= 0) issues.push("quantity must be greater than zero");
+    if (!hasText(input.unit)) issues.push("missing measurement unit");
+    if (!Number.isFinite(input.unitPrice) || Number(input.unitPrice) <= 0) issues.push("missing seller price");
+    if (!hasText(input.deliveryTime)) issues.push("missing delivery time");
+    return issues;
+  }
+
+  const hasIdentifier = hasText(input.productId) || hasText(input.externalProductCode) || hasText(input.ean);
+  if (!hasIdentifier) issues.push("missing ERP or local product link");
+  if (!hasText(input.erpDescription)) issues.push("missing product description");
+  if (!Number.isFinite(input.qty) || input.qty <= 0) issues.push("quantity must be greater than zero");
+  if (!hasText(input.unit)) issues.push("missing measurement unit");
+
+  return issues;
 };
 
-export const isImportedExcelItemReady = (input: QuoteItemReviewInput): boolean => {
-  const hasDescription = hasText(input.customerDescription) || hasText(input.erpDescription);
-  const hasValidQty = Number.isFinite(input.qty) && input.qty > 0;
-  const hasValidUnit = hasText(input.unit);
-  const hasValidPrice = Number.isFinite(input.unitPrice) && Number(input.unitPrice) > 0;
-  const hasDeliveryTime = hasText(input.deliveryTime);
+export const isQuoteItemReady = (input: QuoteItemReviewInput): boolean =>
+  getQuoteItemReviewIssues(input).length === 0;
 
-  return hasDescription && hasValidQty && hasValidUnit && hasValidPrice && hasDeliveryTime;
+export const isImportedExcelItemReady = (input: QuoteItemReviewInput): boolean => {
+  return getQuoteItemReviewIssues(input, true).length === 0;
+};
+
+export const formatQuoteItemReviewError = (
+  items: QuoteItemReviewInput[],
+  importedFromExcel: boolean,
+  prefix: string
+): string => {
+  const details = items
+    .map((item, index) => {
+      const issues = getQuoteItemReviewIssues(item, importedFromExcel);
+      return issues.length > 0 ? `item ${index + 1}: ${issues.join(", ")}` : null;
+    })
+    .filter((detail): detail is string => detail !== null);
+
+  return `${prefix}: ${details.join("; ")}.`;
 };
