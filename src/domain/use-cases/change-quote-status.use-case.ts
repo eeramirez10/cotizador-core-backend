@@ -5,6 +5,7 @@ import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository
 import { QuoteRepository } from "../repositories/quote.repository";
 import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
 import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
+import { formatQuoteItemReviewError } from "./quote-item-review.helper";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -104,7 +105,22 @@ export class ChangeQuoteStatusUseCase {
 
       const reviewItems = quote.items.filter((item) => item.requiresReview);
       if (reviewItems.length > 0) {
-        throw new Error("All quote items must be reviewed before moving to QUOTED.");
+        throw new Error(formatQuoteItemReviewError(
+          quote.items.map((item) => ({
+            productId: item.productId,
+            externalProductCode: item.externalProductCode,
+            ean: item.ean,
+            erpDescription: item.erpDescription,
+            customerDescription: item.customerDescription,
+            qty: item.qty,
+            unit: item.unit,
+            unitPrice: item.unitPrice,
+            deliveryTime: item.deliveryTime,
+            sourceRequiresReview: item.sourceRequiresReview,
+          })),
+          quote.captureMethod === "EXCEL_IMPORT",
+          "Quote items require review"
+        ));
       }
 
       const itemsWithoutSellerPrice = quote.items.filter((item) => item.unitPrice <= 0);

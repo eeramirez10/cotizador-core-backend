@@ -593,6 +593,7 @@ export class QuotesController {
       message === "Commercial conditions are required before moving to QUOTED." ||
       message === "All quote items must be linked to an ERP or local product before moving to QUOTED." ||
       message === "All quote items must be reviewed before moving to QUOTED." ||
+      message.startsWith("Quote items require review:") ||
       message === "All quote items must have a seller price before moving to QUOTED." ||
       message === "Rejection reason is required before moving to REJECTED." ||
       message === "Rejection comment is required when rejection reason is OTHER." ||
