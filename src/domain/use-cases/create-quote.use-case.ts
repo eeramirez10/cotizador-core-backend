@@ -55,6 +55,9 @@ export class CreateQuoteUseCase {
     });
 
     if (!customer) throw new Error("Customer not found.");
+    if (dto.customerContactId && !customer.contacts.some((contact) => contact.id === dto.customerContactId)) {
+      throw new Error("Customer contact not found for selected customer.");
+    }
 
     const providedByUser = dto.providedByUserId ? await this.userRepository.findActiveById(dto.providedByUserId) : null;
     if (dto.providedByUserId && !providedByUser) throw new Error("Provided by user not found or inactive.");
@@ -75,6 +78,7 @@ export class CreateQuoteUseCase {
       validityDays: dto.validityDays,
       branchId,
       customerId: dto.customerId,
+      customerContactId: dto.customerContactId,
       createdByUserId: actor.id,
       updatedByUserId: actor.id,
       providedByUserId: providedByUser?.id ?? null,

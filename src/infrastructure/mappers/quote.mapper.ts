@@ -42,6 +42,7 @@ interface QuoteRow {
   validUntil: Date;
   branchId: string;
   customerId: string;
+  customerContactId: string | null;
   createdByUserId: string;
   updatedByUserId: string | null;
   rejectionReason: QuoteEntity["rejectionReason"];
@@ -103,6 +104,13 @@ interface QuoteRow {
     phone: string | null;
     whatsapp: string;
   };
+  customerContact: {
+    id: string;
+    name: string;
+    email: string | null;
+    phone: string | null;
+    mobile: string | null;
+  } | null;
   createdByUser: {
     id: string;
     firstName: string;
@@ -278,6 +286,7 @@ export class QuoteMapper {
       validUntil: row.validUntil,
       branchId: row.branchId,
       customerId: row.customerId,
+      customerContactId: row.customerContactId,
       createdByUserId: row.createdByUserId,
       updatedByUserId: row.updatedByUserId,
       rejectionReason: row.rejectionReason,
@@ -311,6 +320,7 @@ export class QuoteMapper {
       updatedAt: row.updatedAt,
       branch: row.branch,
       customer: row.customer,
+      customerContact: row.customerContact,
       createdByUser: {
         id: row.createdByUser.id,
         firstName: row.createdByUser.firstName,

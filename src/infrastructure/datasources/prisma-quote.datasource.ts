@@ -57,6 +57,15 @@ const quoteInclude = {
       whatsapp: true,
     },
   },
+  customerContact: {
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      phone: true,
+      mobile: true,
+    },
+  },
   createdByUser: {
     select: {
       id: true,
@@ -395,6 +404,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           validUntil: addDaysToDateOnly(params.exchangeRateDate, params.validityDays),
           branchId: params.branchId,
           customerId: params.customerId,
+          customerContactId: params.customerContactId,
           createdByUserId: params.createdByUserId,
           updatedByUserId: params.updatedByUserId,
           providedByUserId: params.providedByUserId,
@@ -512,6 +522,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           validUntil,
           branchId: params.data.branchId,
           customerId: params.data.customerId,
+          customerContactId: params.data.customerContactId,
           createdByUserId: params.data.createdByUserId,
           updatedByUserId: params.data.updatedByUserId,
           providedByUserId: params.data.providedByUserId,
@@ -574,6 +585,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           validityDays: params.data.validityDays,
           validUntil,
           customerId: params.data.customerId,
+          customerContactId: params.data.customerContactId,
           updatedByUserId: params.data.updatedByUserId,
           providedByUserId: params.data.providedByUserId,
           providedByNameSnapshot: params.data.providedByNameSnapshot,
@@ -722,6 +734,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           validUntil: addDaysToDateOnly(today, source.validityDays),
           branchId: source.branchId,
           customerId: source.customerId,
+          customerContactId: source.customerContactId,
           createdByUserId: params.actorUserId,
           updatedByUserId: params.actorUserId,
           providedByUserId: source.providedByUserId,
@@ -963,6 +976,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         data: {
           status: shouldMoveBackToQuoted(existing.status) ? "QUOTED" : undefined,
           customerId: params.data.customerId,
+          customerContactId: params.data.customerContactId,
           origin: params.data.origin,
           captureMethod: params.data.captureMethod,
           originalQuoteDate: params.data.originalQuoteDate,

@@ -104,6 +104,9 @@ export class SaveQuoteDraftUseCase {
       scope: { role: actor.role, branchId: actor.branchId },
     });
     if (!customer) throw new Error("Customer not found.");
+    if (dto.quote.customerContactId && !customer.contacts.some((contact) => contact.id === dto.quote.customerContactId)) {
+      throw new Error("Customer contact not found for selected customer.");
+    }
 
     const providedByUser = dto.quote.providedByUserId
       ? await this.userRepository.findActiveById(dto.quote.providedByUserId)
@@ -327,6 +330,7 @@ export class SaveQuoteDraftUseCase {
         validityDays: dto.quote.validityDays,
         branchId: actor.branchId,
         customerId: dto.quote.customerId,
+        customerContactId: dto.quote.customerContactId,
         createdByUserId: actor.id,
         updatedByUserId: actor.id,
         providedByUserId: providedByUser?.id ?? null,

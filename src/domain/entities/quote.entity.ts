@@ -37,6 +37,14 @@ export interface QuoteCustomerSummary {
   whatsapp: string;
 }
 
+export interface QuoteCustomerContactSummary {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  mobile: string | null;
+}
+
 export interface QuoteUserSummary {
   id: string;
   firstName: string;
@@ -110,6 +118,7 @@ export interface QuoteEntity {
   validUntil: Date;
   branchId: string;
   customerId: string;
+  customerContactId: string | null;
   createdByUserId: string;
   updatedByUserId: string | null;
   providedByUserId: string | null;
@@ -143,6 +152,7 @@ export interface QuoteEntity {
   updatedAt: Date;
   branch: QuoteBranchSummary;
   customer: QuoteCustomerSummary;
+  customerContact: QuoteCustomerContactSummary | null;
   createdByUser: QuoteUserSummary;
   updatedByUser: QuoteUserSummary | null;
   rejectedByUser: QuoteUserSummary | null;

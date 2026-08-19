@@ -7,6 +7,7 @@ import {
 
 interface CreateQuoteRequestDtoProps {
   customerId: string;
+  customerContactId: string | null;
   branchCode?: string;
   currency: Currency;
   exchangeRate: number;
@@ -26,6 +27,7 @@ interface CreateQuoteRequestDtoProps {
 
 export class CreateQuoteRequestDto {
   public readonly customerId: string;
+  public readonly customerContactId: string | null;
   public readonly branchCode?: string;
   public readonly currency: Currency;
   public readonly exchangeRate: number;
@@ -44,6 +46,7 @@ export class CreateQuoteRequestDto {
 
   constructor(props: CreateQuoteRequestDtoProps) {
     this.customerId = props.customerId;
+    this.customerContactId = props.customerContactId;
     this.branchCode = props.branchCode;
     this.currency = props.currency;
     this.exchangeRate = props.exchangeRate;
@@ -70,6 +73,9 @@ export class CreateQuoteRequestDto {
 
     const customerId = typeof body.customerId === "string" ? body.customerId.trim() : "";
     if (!customerId) return ["customerId is required."];
+    const customerContactId = typeof body.customerContactId === "string" && body.customerContactId.trim()
+      ? body.customerContactId.trim()
+      : null;
 
     const branchCode =
       typeof body.branchCode === "string" && body.branchCode.trim().length > 0
@@ -180,6 +186,7 @@ export class CreateQuoteRequestDto {
       ,
       new CreateQuoteRequestDto({
         customerId,
+        customerContactId,
         branchCode,
         currency,
         exchangeRate,

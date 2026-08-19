@@ -59,6 +59,7 @@ export interface CreateQuoteDatasourceParams {
   validityDays: number;
   branchId: string;
   customerId: string;
+  customerContactId: string | null;
   createdByUserId: string;
   updatedByUserId: string;
   providedByUserId: string | null;
@@ -145,6 +146,7 @@ export interface SaveQuoteDraftDatasourceResult {
 
 export interface UpdateQuoteDatasourceData {
   customerId?: string;
+  customerContactId?: string | null;
   origin?: QuoteOrigin;
   captureMethod?: QuoteCaptureMethod;
   originalQuoteDate?: Date | null;

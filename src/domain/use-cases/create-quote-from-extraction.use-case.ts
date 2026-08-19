@@ -78,6 +78,7 @@ export class CreateQuoteFromExtractionUseCase {
       validityDays: dto.validityDays,
       branchId,
       customerId: dto.customerId,
+      customerContactId: null,
       createdByUserId: actor.id,
       updatedByUserId: actor.id,
       providedByUserId: providedByUser?.id ?? null,

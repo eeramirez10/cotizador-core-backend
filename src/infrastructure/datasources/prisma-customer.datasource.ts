@@ -156,7 +156,13 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
                 externalSystem: normalizedExternalSystem,
               }, existing),
             });
-        if (params.contacts.length > 0) await this.replaceContacts(tx, saved.id, params.contacts);
+        if (params.contacts.length > 0) {
+          if (existing) {
+            await this.refreshErpContact(tx, saved.id, params.contacts[0], existing.contacts);
+          } else {
+            await this.replaceContacts(tx, saved.id, params.contacts);
+          }
+        }
         return tx.customer.findUniqueOrThrow({ where: { id: saved.id }, include: customerInclude });
       });
 
@@ -608,6 +614,54 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
         isPrimary: contact.isPrimary || (index === 0 && !contacts.some((entry) => entry.isPrimary)),
       })),
     });
+  }
+
+  private async refreshErpContact(
+    tx: Prisma.TransactionClient,
+    customerId: string,
+    incoming: CustomerContactWriteData,
+    existingContacts: Array<{
+      id: string;
+      isPrimary: boolean;
+      createdAt: Date;
+    }>
+  ): Promise<void> {
+    const originalErpContact = [...existingContacts].sort(
+      (left, right) => left.createdAt.getTime() - right.createdAt.getTime()
+    )[0];
+
+    if (originalErpContact) {
+      await tx.customerContact.update({
+        where: { id: originalErpContact.id },
+        data: {
+          name: incoming.name,
+          jobTitle: incoming.jobTitle,
+          label: incoming.label,
+          email: incoming.email,
+          phone: incoming.phone,
+          phoneExtension: incoming.phoneExtension,
+          mobile: incoming.mobile,
+          isPrimary: originalErpContact.isPrimary,
+        },
+      });
+    } else {
+      await tx.customerContact.create({
+        data: {
+          customerId,
+          name: incoming.name,
+          jobTitle: incoming.jobTitle,
+          label: incoming.label,
+          email: incoming.email,
+          phone: incoming.phone,
+          phoneExtension: incoming.phoneExtension,
+          mobile: incoming.mobile,
+          isPrimary: true,
+        },
+      });
+    }
+
+    await this.ensurePrimaryContact(tx, customerId);
+    await this.syncCustomerFromPrimaryContact(tx, customerId);
   }
 
   private async ensurePrimaryContact(tx: Prisma.TransactionClient, customerId: string): Promise<void> {

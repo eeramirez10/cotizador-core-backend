@@ -41,6 +41,7 @@ export class QuoteResponseDto {
       validUntil: this.quote.validUntil.toISOString().split("T")[0],
       branchId: this.quote.branchId,
       customerId: this.quote.customerId,
+      customerContactId: this.quote.customerContactId,
       createdByUserId: this.quote.createdByUserId,
       updatedByUserId: this.quote.updatedByUserId,
       providedByUserId: this.quote.providedByUserId,
@@ -76,7 +77,16 @@ export class QuoteResponseDto {
       createdAt: this.quote.createdAt.toISOString(),
       updatedAt: this.quote.updatedAt.toISOString(),
       branch: this.quote.branch,
-      customer: this.quote.customer,
+      customer: this.quote.customerContact
+        ? {
+            ...this.quote.customer,
+            displayName: this.quote.customerContact.name,
+            email: this.quote.customerContact.email,
+            phone: this.quote.customerContact.phone,
+            whatsapp: this.quote.customerContact.mobile || "",
+          }
+        : this.quote.customer,
+      customerContact: this.quote.customerContact,
       createdByUser: this.quote.createdByUser,
       updatedByUser: this.quote.updatedByUser,
       items: this.quote.items.map((item) => new QuoteItemResponseDto(item).toJSON()),

@@ -331,6 +331,7 @@ export const QuoteScalarFieldEnum = {
   validUntil: 'validUntil',
   branchId: 'branchId',
   customerId: 'customerId',
+  customerContactId: 'customerContactId',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
   providedByUserId: 'providedByUserId',
