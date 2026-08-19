@@ -1277,6 +1277,28 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       });
       if (!quote) return null;
 
+      if (params.itemReviewUpdates?.length) {
+        const readyItemIds = params.itemReviewUpdates
+          .filter((item) => !item.requiresReview)
+          .map((item) => item.itemId);
+        const reviewItemIds = params.itemReviewUpdates
+          .filter((item) => item.requiresReview)
+          .map((item) => item.itemId);
+
+        if (readyItemIds.length > 0) {
+          await tx.quoteItem.updateMany({
+            where: { quoteId: quote.id, id: { in: readyItemIds } },
+            data: { requiresReview: false },
+          });
+        }
+        if (reviewItemIds.length > 0) {
+          await tx.quoteItem.updateMany({
+            where: { quoteId: quote.id, id: { in: reviewItemIds } },
+            data: { requiresReview: true },
+          });
+        }
+      }
+
       await tx.quote.update({
         where: { id: quote.id },
         data: {

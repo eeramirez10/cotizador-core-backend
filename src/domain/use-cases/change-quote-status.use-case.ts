@@ -5,7 +5,10 @@ import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository
 import { QuoteRepository } from "../repositories/quote.repository";
 import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
 import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
-import { formatQuoteItemReviewError } from "./quote-item-review.helper";
+import {
+  formatQuoteItemReviewError,
+  getQuoteItemReviewIssues,
+} from "./quote-item-review.helper";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -95,6 +98,7 @@ export class ChangeQuoteStatusUseCase {
     await this.validateCatalogReason(dto.status === "CHANGES_REQUESTED" ? "APPROVAL_RETURN_REASON" : null, dto.approvalReturnReason, dto.approvalReturnComment, actor.branchId, "Approval return reason is required before requesting changes.");
     await this.validateCatalogReason(dto.status === "REJECTED" ? "REJECTION_REASON" : null, dto.rejectionReason, dto.rejectionComment, actor.branchId, "Rejection reason is required before moving to REJECTED.");
     await this.validateCatalogReason(dto.status === "CANCELLED" ? "CANCELLATION_REASON" : null, dto.cancellationReason, dto.cancellationComment, actor.branchId, "Cancellation reason is required before moving to CANCELLED.");
+    let itemReviewUpdates: Array<{ itemId: string; requiresReview: boolean }> | undefined;
     if (dto.status === "PENDING_APPROVAL") {
       const unlinkedItems = quote.items.filter(
         (item) => !item.productId && !item.externalProductCode
@@ -103,22 +107,28 @@ export class ChangeQuoteStatusUseCase {
         throw new Error("All quote items must be linked to an ERP or local product before moving to QUOTED.");
       }
 
-      const reviewItems = quote.items.filter((item) => item.requiresReview);
-      if (reviewItems.length > 0) {
+      const reviewInputs = quote.items.map((item) => ({
+        productId: item.productId,
+        externalProductCode: item.externalProductCode,
+        ean: item.ean,
+        erpDescription: item.erpDescription,
+        customerDescription: item.customerDescription,
+        qty: item.qty,
+        unit: item.unit,
+        unitPrice: item.unitPrice,
+        deliveryTime: item.deliveryTime,
+        sourceRequiresReview: item.sourceRequiresReview,
+      }));
+      const importedFromExcel = quote.captureMethod === "EXCEL_IMPORT";
+      itemReviewUpdates = reviewInputs.map((item, index) => ({
+        itemId: quote.items[index].id,
+        requiresReview: getQuoteItemReviewIssues(item, importedFromExcel).length > 0,
+      }));
+
+      if (itemReviewUpdates.some((item) => item.requiresReview)) {
         throw new Error(formatQuoteItemReviewError(
-          quote.items.map((item) => ({
-            productId: item.productId,
-            externalProductCode: item.externalProductCode,
-            ean: item.ean,
-            erpDescription: item.erpDescription,
-            customerDescription: item.customerDescription,
-            qty: item.qty,
-            unit: item.unit,
-            unitPrice: item.unitPrice,
-            deliveryTime: item.deliveryTime,
-            sourceRequiresReview: item.sourceRequiresReview,
-          })),
-          quote.captureMethod === "EXCEL_IMPORT",
+          reviewInputs,
+          importedFromExcel,
           "Quote items require review"
         ));
       }
@@ -133,6 +143,7 @@ export class ChangeQuoteStatusUseCase {
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,
       status: targetStatus,
+      itemReviewUpdates,
       note:
         bypassInternalApproval
           ? "Quote generated. Internal approval bypassed by system configuration."

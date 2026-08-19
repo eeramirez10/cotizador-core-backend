@@ -317,6 +317,10 @@ export interface RemoveQuoteItemDatasourceParams {
 export interface ChangeQuoteStatusDatasourceParams {
   id: string;
   status: QuoteStatus;
+  itemReviewUpdates?: Array<{
+    itemId: string;
+    requiresReview: boolean;
+  }>;
   note: string | null;
   rejectionReason: string | null;
   rejectionComment: string | null;
