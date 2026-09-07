@@ -41,11 +41,7 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
             [this.config.mediaVariable]: message.documentToken,
           }),
         })
-      : await client.messages.create({
-          ...common,
-          body: this.freeFormBody(message),
-          mediaUrl: [this.publicDocumentUrl(message.documentToken)],
-        });
+      : await this.sendFreeForm(client, common, message);
 
     return {
       providerMessageId: result.sid,
@@ -77,6 +73,22 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
       "",
       "Puedes consultar el documento adjunto. Si tienes alguna duda o necesitas algún cambio, responde a este mensaje.",
     ].join("\n");
+  }
+
+  private async sendFreeForm(
+    client: ReturnType<typeof twilio>,
+    addresses: { to: string; from: string; statusCallback: string },
+    message: SendQuoteWhatsAppMessage,
+  ) {
+    await client.messages.create({
+      to: addresses.to,
+      from: addresses.from,
+      body: this.freeFormBody(message),
+    });
+    return client.messages.create({
+      ...addresses,
+      mediaUrl: [this.publicDocumentUrl(message.documentToken)],
+    });
   }
 
   private publicDocumentUrl(token: string): string {
