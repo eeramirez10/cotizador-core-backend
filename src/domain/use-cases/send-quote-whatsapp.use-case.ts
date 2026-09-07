@@ -14,6 +14,7 @@ interface SendQuoteWhatsAppActor {
 interface SendQuoteWhatsAppInput {
   quoteId: string;
   contactId?: string;
+  message: string;
   file: UploadedFileInput;
   actor: SendQuoteWhatsAppActor;
 }
@@ -75,6 +76,7 @@ export class SendQuoteWhatsAppUseCase {
         sellerName,
         quoteNumber: quote.quoteNumber,
         documentToken,
+        messageBody: input.message,
       });
       await this.quoteRepository.recordDeliveryAttempt({
         id: quote.id,
@@ -89,7 +91,7 @@ export class SendQuoteWhatsAppUseCase {
           customerContactId: selectedContact?.id ?? null,
           templateSid: message.templateSid,
           errorMessage: null,
-          note: `Cotización ${quote.quoteNumber} enviada por WhatsApp por ${sellerName}.`,
+          note: input.message,
           sentAt: new Date(),
         },
       });

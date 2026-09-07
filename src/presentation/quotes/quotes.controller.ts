@@ -35,6 +35,7 @@ import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
+import { SendQuoteWhatsAppRequestDto } from "../../domain/dtos/request/send-quote-whatsapp-request.dto";
 
 export class QuotesController {
   constructor(
@@ -532,14 +533,14 @@ export class QuotesController {
     const quoteId = this.getSingleParam(req.params.id);
     if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
     if (!req.file) return void res.status(400).json({ error: "Quote PDF is required." });
-    const contactId = typeof req.body.contactId === "string" && req.body.contactId.trim()
-      ? req.body.contactId.trim()
-      : undefined;
+    const [bodyError, bodyDto] = SendQuoteWhatsAppRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
 
     try {
       const result = await this.sendQuoteWhatsAppUseCase.execute({
         quoteId,
-        contactId,
+        contactId: bodyDto!.contactId,
+        message: bodyDto!.message,
         file: {
           originalName: req.file.originalname,
           mimeType: req.file.mimetype,

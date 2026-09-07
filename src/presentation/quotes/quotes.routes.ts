@@ -125,6 +125,7 @@ export class QuotesRoutes {
         authToken: Envs.twilioAuthToken,
         from: Envs.twilioWhatsAppFrom,
         contentSid: Envs.twilioQuoteContentSid,
+        messageVariable: Envs.twilioQuoteMessageVariable,
         mediaVariable: Envs.twilioQuoteMediaVariable,
         publicApiUrl: Envs.publicApiUrl,
         statusCallbackUrl: Envs.twilioStatusCallbackUrl,
