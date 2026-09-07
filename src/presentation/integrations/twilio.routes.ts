@@ -12,7 +12,9 @@ export class TwilioRoutes {
       new UpdateWhatsAppDeliveryStatusUseCase(new QuoteRepositoryImpl(new PrismaQuoteDatasource())),
       Envs.twilioAuthToken,
       Envs.twilioStatusCallbackUrl,
+      Envs.twilioIncomingWebhookUrl,
     );
+    router.post("/whatsapp/incoming", controller.whatsappIncoming);
     router.post("/whatsapp/status", controller.whatsappStatus);
     return router;
   }

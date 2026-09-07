@@ -158,4 +158,9 @@ export class Envs {
     const configured = get("TWILIO_STATUS_CALLBACK_URL").default("").asString().trim();
     return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/status`;
   }
+
+  static get twilioIncomingWebhookUrl(): string {
+    const configured = get("TWILIO_INCOMING_WEBHOOK_URL").default("").asString().trim();
+    return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/incoming`;
+  }
 }
