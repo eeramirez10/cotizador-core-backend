@@ -4,6 +4,11 @@ import type { QuoteDocumentLinkPort } from "../contracts/quote-document-link.por
 import type { UploadedFileInput, FileAttachmentsUseCase } from "./file-attachments.use-case";
 import type { CustomerRepository } from "../repositories/customer.repository";
 import type { QuoteRepository } from "../repositories/quote.repository";
+import { WhatsAppPhone } from "../utils/whatsapp-phone";
+import type {
+  GetWhatsAppConversationWindowUseCase,
+  WhatsAppDeliveryMode,
+} from "./get-whatsapp-conversation-window.use-case";
 
 interface SendQuoteWhatsAppActor {
   id: string;
@@ -26,6 +31,7 @@ export interface SendQuoteWhatsAppResult {
   contactName: string;
   sellerName: string;
   attachmentId: string;
+  deliveryMode: WhatsAppDeliveryMode;
 }
 
 export class SendQuoteWhatsAppUseCase {
@@ -35,6 +41,7 @@ export class SendQuoteWhatsAppUseCase {
     private readonly attachments: FileAttachmentsUseCase,
     private readonly messaging: QuoteMessagingPort,
     private readonly documentLinks: QuoteDocumentLinkPort,
+    private readonly conversationWindow: GetWhatsAppConversationWindowUseCase,
   ) {}
 
   async execute(input: SendQuoteWhatsAppInput): Promise<SendQuoteWhatsAppResult> {
@@ -61,11 +68,12 @@ export class SendQuoteWhatsAppUseCase {
     if (input.contactId && !selectedContact) throw new Error("Customer contact not found.");
 
     const rawRecipient = selectedContact?.mobile || selectedContact?.phone || quote.customer.whatsapp;
-    const recipient = this.normalizePhone(rawRecipient);
+    const recipient = WhatsAppPhone.create(rawRecipient)?.value;
     if (!recipient) throw new Error("The selected customer contact does not have a valid WhatsApp number.");
 
     const contactName = selectedContact?.name.trim() || quote.customer.displayName.trim() || "Cliente";
     const sellerName = `${quote.createdByUser.firstName} ${quote.createdByUser.lastName}`.trim();
+    const window = await this.conversationWindow.execute(recipient);
     const attachment = await this.attachments.uploadCustomerQuotePdf(input.quoteId, input.file, input.actor);
     const documentToken = this.documentLinks.createToken(attachment.id);
 
@@ -77,6 +85,7 @@ export class SendQuoteWhatsAppUseCase {
         quoteNumber: quote.quoteNumber,
         documentToken,
         messageBody: input.message,
+        deliveryMode: window.deliveryMode,
       });
       await this.quoteRepository.recordDeliveryAttempt({
         id: quote.id,
@@ -102,6 +111,7 @@ export class SendQuoteWhatsAppUseCase {
         contactName,
         sellerName,
         attachmentId: attachment.id,
+        deliveryMode: message.deliveryMode,
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message.slice(0, 1000) : "Unknown Twilio error.";
@@ -126,11 +136,4 @@ export class SendQuoteWhatsAppUseCase {
     }
   }
 
-  private normalizePhone(value: string | null | undefined): string | null {
-    let digits = `${value ?? ""}`.replace(/\D/g, "");
-    if (digits.length === 13 && digits.startsWith("521")) digits = `52${digits.slice(3)}`;
-    if (digits.length === 10) digits = `52${digits}`;
-    if (digits.length < 11 || digits.length > 15) return null;
-    return `+${digits}`;
-  }
 }

@@ -43,6 +43,8 @@ import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file
 import { HmacQuoteDocumentLinkAdapter } from "../../infrastructure/security/hmac-quote-document-link.adapter";
 import { TwilioQuoteMessagingAdapter } from "../../infrastructure/messaging/twilio-quote-messaging.adapter";
 import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
+import { GetWhatsAppConversationWindowUseCase } from "../../domain/use-cases/get-whatsapp-conversation-window.use-case";
+import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 
 export class QuotesRoutes {
@@ -114,13 +116,16 @@ export class QuotesRoutes {
       fileAttachmentRepository,
       new LocalFileStorageAdapter(Envs.fileStorageRoot),
     );
+    const whatsAppConversationWindow = new GetWhatsAppConversationWindowUseCase(
+      new PrismaWhatsAppConversationRepository(),
+      Envs.twilioWhatsAppFrom,
+    );
     const sendQuoteWhatsAppUseCase = new SendQuoteWhatsAppUseCase(
       quoteRepository,
       customerRepository,
       fileAttachmentsUseCase,
       new TwilioQuoteMessagingAdapter({
         enabled: Envs.twilioWhatsAppEnabled,
-        useTemplate: Envs.twilioWhatsAppUseTemplate,
         accountSid: Envs.twilioAccountSid,
         authToken: Envs.twilioAuthToken,
         from: Envs.twilioWhatsAppFrom,
@@ -133,6 +138,7 @@ export class QuotesRoutes {
         Envs.quoteDocumentSigningSecret,
         Envs.quoteDocumentUrlTtlSeconds,
       ),
+      whatsAppConversationWindow,
     );
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,

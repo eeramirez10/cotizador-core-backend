@@ -7,7 +7,6 @@ import {
 
 interface TwilioQuoteMessagingConfig {
   enabled: boolean;
-  useTemplate: boolean;
   accountSid: string;
   authToken: string;
   from: string;
@@ -24,13 +23,15 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
 
   async sendWhatsAppQuote(message: SendQuoteWhatsAppMessage): Promise<QuoteMessageResult> {
     this.assertConfigured();
+    const useTemplate = message.deliveryMode === "TEMPLATE";
+    if (useTemplate) this.assertTemplateConfigured();
     const client = twilio(this.config.accountSid, this.config.authToken);
     const common = {
       to: this.whatsappAddress(message.recipient),
       from: this.whatsappAddress(this.config.from),
       statusCallback: this.config.statusCallbackUrl,
     };
-    const result = this.config.useTemplate
+    const result = useTemplate
       ? await client.messages.create({
           ...common,
           contentSid: this.config.contentSid,
@@ -46,7 +47,8 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
     return {
       providerMessageId: result.sid,
       status: result.status === "sent" ? "SENT" : "QUEUED",
-      templateSid: this.config.useTemplate ? this.config.contentSid : null,
+      templateSid: useTemplate ? this.config.contentSid : null,
+      deliveryMode: message.deliveryMode,
     };
   }
 
@@ -55,8 +57,12 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
     if (!this.config.accountSid || !this.config.authToken || !this.config.from || !this.config.publicApiUrl) {
       throw new Error("Twilio WhatsApp delivery is not configured.");
     }
-    if (!this.config.useTemplate) return;
-    if (!this.config.contentSid) throw new Error("Twilio WhatsApp template is not configured.");
+  }
+
+  private assertTemplateConfigured(): void {
+    if (!this.config.contentSid) {
+      throw new Error("Twilio WhatsApp template is required outside the 24-hour conversation window.");
+    }
     if (!/^HX[a-fA-F0-9]{32}$/.test(this.config.contentSid)) {
       throw new Error("Twilio WhatsApp template SID is invalid.");
     }

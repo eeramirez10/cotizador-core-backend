@@ -133,6 +133,16 @@ export type QuoteEvent = Prisma.QuoteEventModel
  */
 export type QuoteDeliveryAttempt = Prisma.QuoteDeliveryAttemptModel
 /**
+ * Model WhatsAppConversation
+ * 
+ */
+export type WhatsAppConversation = Prisma.WhatsAppConversationModel
+/**
+ * Model WhatsAppInboundMessage
+ * 
+ */
+export type WhatsAppInboundMessage = Prisma.WhatsAppInboundMessageModel
+/**
  * Model QuoteOrderExport
  * 
  */
