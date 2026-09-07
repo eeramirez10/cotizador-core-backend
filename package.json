@@ -34,7 +34,8 @@
     "jsonwebtoken": "^9.0.3",
     "libphonenumber-js": "^1.13.10",
     "multer": "^2.2.0",
-    "pg": "^8.19.0"
+    "pg": "^8.19.0",
+    "twilio": "^6.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

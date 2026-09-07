@@ -676,10 +676,17 @@ export const QuoteDeliveryAttemptScalarFieldEnum = {
   recipient: 'recipient',
   status: 'status',
   providerMessageId: 'providerMessageId',
+  fileAssetId: 'fileAssetId',
+  customerContactId: 'customerContactId',
+  templateSid: 'templateSid',
   errorMessage: 'errorMessage',
   sentByUserId: 'sentByUserId',
   sentAt: 'sentAt',
-  createdAt: 'createdAt'
+  deliveredAt: 'deliveredAt',
+  readAt: 'readAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type QuoteDeliveryAttemptScalarFieldEnum = (typeof QuoteDeliveryAttemptScalarFieldEnum)[keyof typeof QuoteDeliveryAttemptScalarFieldEnum]

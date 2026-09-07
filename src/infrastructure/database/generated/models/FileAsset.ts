@@ -258,6 +258,7 @@ export type FileAssetWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"FileAsset"> | Date | string
   uploadedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   quoteAttachments?: Prisma.QuoteAttachmentListRelationFilter
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
 }
@@ -275,6 +276,7 @@ export type FileAssetOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   uploadedBy?: Prisma.UserOrderByWithRelationInput
   quoteAttachments?: Prisma.QuoteAttachmentOrderByRelationAggregateInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptOrderByRelationAggregateInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentOrderByRelationAggregateInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
 }
@@ -295,6 +297,7 @@ export type FileAssetWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"FileAsset"> | Date | string
   uploadedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   quoteAttachments?: Prisma.QuoteAttachmentListRelationFilter
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
 }, "id" | "storageKey">
@@ -345,6 +348,7 @@ export type FileAssetCreateInput = {
   createdAt?: Date | string
   uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
 }
@@ -361,6 +365,7 @@ export type FileAssetUncheckedCreateInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
 }
@@ -377,6 +382,7 @@ export type FileAssetUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
 }
@@ -393,6 +399,7 @@ export type FileAssetUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
 }
@@ -592,6 +599,22 @@ export type FileAssetUpdateOneRequiredWithoutPurchaseOfferAttachmentsNestedInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.FileAssetUpdateToOneWithWhereWithoutPurchaseOfferAttachmentsInput, Prisma.FileAssetUpdateWithoutPurchaseOfferAttachmentsInput>, Prisma.FileAssetUncheckedUpdateWithoutPurchaseOfferAttachmentsInput>
 }
 
+export type FileAssetCreateNestedOneWithoutQuoteDeliveryAttemptsInput = {
+  create?: Prisma.XOR<Prisma.FileAssetCreateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  connectOrCreate?: Prisma.FileAssetCreateOrConnectWithoutQuoteDeliveryAttemptsInput
+  connect?: Prisma.FileAssetWhereUniqueInput
+}
+
+export type FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.FileAssetCreateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  connectOrCreate?: Prisma.FileAssetCreateOrConnectWithoutQuoteDeliveryAttemptsInput
+  upsert?: Prisma.FileAssetUpsertWithoutQuoteDeliveryAttemptsInput
+  disconnect?: Prisma.FileAssetWhereInput | boolean
+  delete?: Prisma.FileAssetWhereInput | boolean
+  connect?: Prisma.FileAssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileAssetUpdateToOneWithWhereWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUpdateWithoutQuoteDeliveryAttemptsInput>, Prisma.FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+}
+
 export type FileAssetCreateWithoutUploadedByInput = {
   id?: string
   originalName: string
@@ -603,6 +626,7 @@ export type FileAssetCreateWithoutUploadedByInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
 }
@@ -618,6 +642,7 @@ export type FileAssetUncheckedCreateWithoutUploadedByInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
 }
@@ -676,6 +701,7 @@ export type FileAssetCreateWithoutPurchaseSupplierQuotesInput = {
   createdAt?: Date | string
   uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
 }
 
@@ -691,6 +717,7 @@ export type FileAssetUncheckedCreateWithoutPurchaseSupplierQuotesInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
@@ -722,6 +749,7 @@ export type FileAssetUpdateWithoutPurchaseSupplierQuotesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
 }
 
@@ -737,6 +765,7 @@ export type FileAssetUncheckedUpdateWithoutPurchaseSupplierQuotesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
@@ -751,6 +780,7 @@ export type FileAssetCreateWithoutQuoteAttachmentsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
 }
@@ -766,6 +796,7 @@ export type FileAssetUncheckedCreateWithoutQuoteAttachmentsInput = {
   uploadedByUserId: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
 }
@@ -797,6 +828,7 @@ export type FileAssetUpdateWithoutQuoteAttachmentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
 }
@@ -812,6 +844,7 @@ export type FileAssetUncheckedUpdateWithoutQuoteAttachmentsInput = {
   uploadedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
 }
@@ -828,6 +861,7 @@ export type FileAssetCreateWithoutPurchaseOfferAttachmentsInput = {
   createdAt?: Date | string
   uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
 }
 
@@ -843,6 +877,7 @@ export type FileAssetUncheckedCreateWithoutPurchaseOfferAttachmentsInput = {
   deletedAt?: Date | string | null
   createdAt?: Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
@@ -874,6 +909,7 @@ export type FileAssetUpdateWithoutPurchaseOfferAttachmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
 }
 
@@ -889,6 +925,87 @@ export type FileAssetUncheckedUpdateWithoutPurchaseOfferAttachmentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+}
+
+export type FileAssetCreateWithoutQuoteDeliveryAttemptsInput = {
+  id?: string
+  originalName: string
+  storageKey: string
+  mimeType: string
+  sizeBytes: number
+  checksumSha256: string
+  status?: $Enums.FileAssetStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
+  quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+}
+
+export type FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
+  id?: string
+  originalName: string
+  storageKey: string
+  mimeType: string
+  sizeBytes: number
+  checksumSha256: string
+  status?: $Enums.FileAssetStatus
+  uploadedByUserId: string
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+}
+
+export type FileAssetCreateOrConnectWithoutQuoteDeliveryAttemptsInput = {
+  where: Prisma.FileAssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileAssetCreateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+}
+
+export type FileAssetUpsertWithoutQuoteDeliveryAttemptsInput = {
+  update: Prisma.XOR<Prisma.FileAssetUpdateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+  create: Prisma.XOR<Prisma.FileAssetCreateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput>
+  where?: Prisma.FileAssetWhereInput
+}
+
+export type FileAssetUpdateToOneWithWhereWithoutQuoteDeliveryAttemptsInput = {
+  where?: Prisma.FileAssetWhereInput
+  data: Prisma.XOR<Prisma.FileAssetUpdateWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
+}
+
+export type FileAssetUpdateWithoutQuoteDeliveryAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
+  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumFileAssetStatusFieldUpdateOperationsInput | $Enums.FileAssetStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
+  quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+}
+
+export type FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
+  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumFileAssetStatusFieldUpdateOperationsInput | $Enums.FileAssetStatus
+  uploadedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
@@ -915,6 +1032,7 @@ export type FileAssetUpdateWithoutUploadedByInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
 }
@@ -930,6 +1048,7 @@ export type FileAssetUncheckedUpdateWithoutUploadedByInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
 }
@@ -953,12 +1072,14 @@ export type FileAssetUncheckedUpdateManyWithoutUploadedByInput = {
 
 export type FileAssetCountOutputType = {
   quoteAttachments: number
+  quoteDeliveryAttempts: number
   purchaseOfferAttachments: number
   purchaseSupplierQuotes: number
 }
 
 export type FileAssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quoteAttachments?: boolean | FileAssetCountOutputTypeCountQuoteAttachmentsArgs
+  quoteDeliveryAttempts?: boolean | FileAssetCountOutputTypeCountQuoteDeliveryAttemptsArgs
   purchaseOfferAttachments?: boolean | FileAssetCountOutputTypeCountPurchaseOfferAttachmentsArgs
   purchaseSupplierQuotes?: boolean | FileAssetCountOutputTypeCountPurchaseSupplierQuotesArgs
 }
@@ -978,6 +1099,13 @@ export type FileAssetCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
  */
 export type FileAssetCountOutputTypeCountQuoteAttachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteAttachmentWhereInput
+}
+
+/**
+ * FileAssetCountOutputType without action
+ */
+export type FileAssetCountOutputTypeCountQuoteDeliveryAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuoteDeliveryAttemptWhereInput
 }
 
 /**
@@ -1008,6 +1136,7 @@ export type FileAssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   quoteAttachments?: boolean | Prisma.FileAsset$quoteAttachmentsArgs<ExtArgs>
+  quoteDeliveryAttempts?: boolean | Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>
   purchaseOfferAttachments?: boolean | Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>
   purchaseSupplierQuotes?: boolean | Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>
   _count?: boolean | Prisma.FileAssetCountOutputTypeDefaultArgs<ExtArgs>
@@ -1058,6 +1187,7 @@ export type FileAssetOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type FileAssetInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   uploadedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   quoteAttachments?: boolean | Prisma.FileAsset$quoteAttachmentsArgs<ExtArgs>
+  quoteDeliveryAttempts?: boolean | Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>
   purchaseOfferAttachments?: boolean | Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>
   purchaseSupplierQuotes?: boolean | Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>
   _count?: boolean | Prisma.FileAssetCountOutputTypeDefaultArgs<ExtArgs>
@@ -1074,6 +1204,7 @@ export type $FileAssetPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     uploadedBy: Prisma.$UserPayload<ExtArgs>
     quoteAttachments: Prisma.$QuoteAttachmentPayload<ExtArgs>[]
+    quoteDeliveryAttempts: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>[]
     purchaseOfferAttachments: Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>[]
     purchaseSupplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
   }
@@ -1484,6 +1615,7 @@ export interface Prisma__FileAssetClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   uploadedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   quoteAttachments<T extends Prisma.FileAsset$quoteAttachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$quoteAttachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  quoteDeliveryAttempts<T extends Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOfferAttachments<T extends Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseSupplierQuotes<T extends Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1942,6 +2074,30 @@ export type FileAsset$quoteAttachmentsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.QuoteAttachmentScalarFieldEnum | Prisma.QuoteAttachmentScalarFieldEnum[]
+}
+
+/**
+ * FileAsset.quoteDeliveryAttempts
+ */
+export type FileAsset$quoteDeliveryAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the QuoteDeliveryAttempt
+   */
+  select?: Prisma.QuoteDeliveryAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the QuoteDeliveryAttempt
+   */
+  omit?: Prisma.QuoteDeliveryAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.QuoteDeliveryAttemptInclude<ExtArgs> | null
+  where?: Prisma.QuoteDeliveryAttemptWhereInput
+  orderBy?: Prisma.QuoteDeliveryAttemptOrderByWithRelationInput | Prisma.QuoteDeliveryAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.QuoteDeliveryAttemptScalarFieldEnum | Prisma.QuoteDeliveryAttemptScalarFieldEnum[]
 }
 
 /**

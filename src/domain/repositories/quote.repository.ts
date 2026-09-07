@@ -19,6 +19,7 @@ import {
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
   UpdateQuoteProcurementReferenceDatasourceParams,
+  UpdateQuoteDeliveryAttemptStatusDatasourceParams,
 } from "../datasources/quote.datasource";
 import { QuoteEntity } from "../entities/quote.entity";
 
@@ -39,6 +40,7 @@ export abstract class QuoteRepository {
   abstract restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null>;
   abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
+  abstract updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
   abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
 }

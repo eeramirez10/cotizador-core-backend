@@ -113,4 +113,46 @@ export class Envs {
   static get sellerExcelImportEnabled(): boolean {
     return get("SELLER_EXCEL_IMPORT_ENABLED").default("true").asBool();
   }
+
+  static get publicApiUrl(): string {
+    return get("PUBLIC_API_URL").default(`http://localhost:${Envs.port}`).asString();
+  }
+
+  static get quoteDocumentSigningSecret(): string {
+    return get("QUOTE_DOCUMENT_SIGNING_SECRET").default(Envs.jwtSeed).asString();
+  }
+
+  static get quoteDocumentUrlTtlSeconds(): number {
+    return get("QUOTE_DOCUMENT_URL_TTL_SECONDS").default("3600").asIntPositive();
+  }
+
+  static get twilioWhatsAppEnabled(): boolean {
+    return get("TWILIO_WHATSAPP_ENABLED").default("false").asBool();
+  }
+
+  static get twilioAccountSid(): string {
+    return get("TWILIO_ACCOUNT_SID").default("").asString();
+  }
+
+  static get twilioAuthToken(): string {
+    return get("TWILIO_AUTH_TOKEN").default("").asString();
+  }
+
+  static get twilioWhatsAppFrom(): string {
+    return get("TWILIO_WHATSAPP_FROM").default("").asString();
+  }
+
+  static get twilioQuoteContentSid(): string {
+    return get("TWILIO_WHATSAPP_QUOTE_CONTENT_SID").default("").asString();
+  }
+
+  static get twilioQuoteMediaVariable(): string {
+    return get("TWILIO_WHATSAPP_QUOTE_MEDIA_VARIABLE").default("4").asString();
+  }
+
+  static get twilioStatusCallbackUrl(): string {
+    return get("TWILIO_STATUS_CALLBACK_URL")
+      .default(`${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/status`)
+      .asString();
+  }
 }

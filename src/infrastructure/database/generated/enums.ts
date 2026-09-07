@@ -168,7 +168,8 @@ export type FileAssetStatus = (typeof FileAssetStatus)[keyof typeof FileAssetSta
 
 export const QuoteAttachmentCategory = {
   SOURCE_DOCUMENT: 'SOURCE_DOCUMENT',
-  SELLER_SUPPLIER_QUOTE: 'SELLER_SUPPLIER_QUOTE'
+  SELLER_SUPPLIER_QUOTE: 'SELLER_SUPPLIER_QUOTE',
+  CUSTOMER_QUOTE_PDF: 'CUSTOMER_QUOTE_PDF'
 } as const
 
 export type QuoteAttachmentCategory = (typeof QuoteAttachmentCategory)[keyof typeof QuoteAttachmentCategory]
@@ -261,7 +262,10 @@ export type QuoteDeliveryChannel = (typeof QuoteDeliveryChannel)[keyof typeof Qu
 
 
 export const QuoteDeliveryAttemptStatus = {
+  QUEUED: 'QUEUED',
   SENT: 'SENT',
+  DELIVERED: 'DELIVERED',
+  READ: 'READ',
   FAILED: 'FAILED'
 } as const
 

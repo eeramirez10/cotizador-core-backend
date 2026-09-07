@@ -37,6 +37,13 @@ import { PurchaseRequisitionRepositoryImpl } from "../../infrastructure/reposito
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { QuotesController } from "./quotes.controller";
+import { FileAttachmentsUseCase } from "../../domain/use-cases/file-attachments.use-case";
+import { PrismaFileAttachmentRepository } from "../../infrastructure/repositories/prisma-file-attachment.repository";
+import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file-storage.adapter";
+import { HmacQuoteDocumentLinkAdapter } from "../../infrastructure/security/hmac-quote-document-link.adapter";
+import { TwilioQuoteMessagingAdapter } from "../../infrastructure/messaging/twilio-quote-messaging.adapter";
+import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
+import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 
 export class QuotesRoutes {
   static routes(): Router {
@@ -102,6 +109,30 @@ export class QuotesRoutes {
     );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
     const registerErpQuoteUseCase = new RegisterErpQuoteUseCase(quoteRepository);
+    const fileAttachmentRepository = new PrismaFileAttachmentRepository();
+    const fileAttachmentsUseCase = new FileAttachmentsUseCase(
+      fileAttachmentRepository,
+      new LocalFileStorageAdapter(Envs.fileStorageRoot),
+    );
+    const sendQuoteWhatsAppUseCase = new SendQuoteWhatsAppUseCase(
+      quoteRepository,
+      customerRepository,
+      fileAttachmentsUseCase,
+      new TwilioQuoteMessagingAdapter({
+        enabled: Envs.twilioWhatsAppEnabled,
+        accountSid: Envs.twilioAccountSid,
+        authToken: Envs.twilioAuthToken,
+        from: Envs.twilioWhatsAppFrom,
+        contentSid: Envs.twilioQuoteContentSid,
+        mediaVariable: Envs.twilioQuoteMediaVariable,
+        statusCallbackUrl: Envs.twilioStatusCallbackUrl,
+      }),
+      new HmacQuoteDocumentLinkAdapter(
+        Envs.publicApiUrl,
+        Envs.quoteDocumentSigningSecret,
+        Envs.quoteDocumentUrlTtlSeconds,
+      ),
+    );
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,
       orderGenerationRepository
@@ -132,7 +163,8 @@ export class QuotesRoutes {
       registerQuoteDeliveryAttemptUseCase,
       downloadQuoteOrderFileUseCase,
       generateQuoteOrderUseCase,
-      registerErpQuoteUseCase
+      registerErpQuoteUseCase,
+      sendQuoteWhatsAppUseCase
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
@@ -199,6 +231,13 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.registerDeliveryAttempt
+    );
+    router.post(
+      "/:id/deliveries/whatsapp",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      uploadSingleAttachment,
+      controller.sendWhatsApp
     );
     router.post(
       "/:id/generate-order",

@@ -19,6 +19,7 @@ import {
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
   UpdateQuoteByIdDatasourceParams,
+  UpdateQuoteDeliveryAttemptStatusDatasourceParams,
   UpdateQuoteItemDatasourceParams,
   UpdateQuoteProcurementReferenceDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
@@ -1386,13 +1387,16 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           recipient: params.data.recipient,
           status: params.data.status,
           providerMessageId: params.data.providerMessageId,
+          fileAssetId: params.data.fileAssetId,
+          customerContactId: params.data.customerContactId,
+          templateSid: params.data.templateSid,
           errorMessage: params.data.errorMessage,
           sentByUserId: params.actorUserId,
           sentAt: params.data.sentAt,
         },
       });
 
-      if (params.data.status === "SENT") {
+      if (params.data.status !== "FAILED") {
         await tx.quote.update({
           where: { id: quote.id },
           data: {
@@ -1421,6 +1425,39 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
+  }
+
+  async updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean> {
+    const attempt = await prisma.quoteDeliveryAttempt.findFirst({
+      where: { providerMessageId: params.providerMessageId },
+      select: { id: true, quoteId: true },
+      orderBy: { createdAt: "desc" },
+    });
+    if (!attempt) return false;
+
+    await prisma.$transaction(async (tx) => {
+      await tx.quoteDeliveryAttempt.update({
+        where: { id: attempt.id },
+        data: {
+          status: params.status,
+          errorMessage: params.errorMessage,
+          deliveredAt: params.status === "DELIVERED" ? params.occurredAt : undefined,
+          readAt: params.status === "READ" ? params.occurredAt : undefined,
+          failedAt: params.status === "FAILED" ? params.occurredAt : undefined,
+        },
+      });
+      await tx.quoteEvent.create({
+        data: {
+          quoteId: attempt.quoteId,
+          status: (await tx.quote.findUniqueOrThrow({ where: { id: attempt.quoteId }, select: { status: true } })).status,
+          note: params.status === "FAILED"
+            ? `WhatsApp delivery failed: ${params.errorMessage || "Twilio did not provide details."}`
+            : `WhatsApp delivery status updated to ${params.status}.`,
+          actorUserId: null,
+        },
+      });
+    });
+    return true;
   }
 
   async markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null> {

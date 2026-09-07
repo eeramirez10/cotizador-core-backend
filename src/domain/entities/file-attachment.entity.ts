@@ -1,6 +1,7 @@
 export type AttachmentCategory =
   | "SOURCE_DOCUMENT"
   | "SELLER_SUPPLIER_QUOTE"
+  | "CUSTOMER_QUOTE_PDF"
   | "PURCHASE_SUPPLIER_PROPOSAL";
 
 export interface FileAttachmentEntity {

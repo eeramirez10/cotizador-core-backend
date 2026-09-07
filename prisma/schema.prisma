@@ -116,6 +116,7 @@ enum FileAssetStatus {
 enum QuoteAttachmentCategory {
   SOURCE_DOCUMENT
   SELLER_SUPPLIER_QUOTE
+  CUSTOMER_QUOTE_PDF
 }
 
 enum Currency {
@@ -181,7 +182,10 @@ enum QuoteDeliveryChannel {
 }
 
 enum QuoteDeliveryAttemptStatus {
+  QUEUED
   SENT
+  DELIVERED
+  READ
   FAILED
 }
 
@@ -417,8 +421,9 @@ model CustomerContact {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  quotes   Quote[]
+  customer         Customer               @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  quotes           Quote[]
+  deliveryAttempts QuoteDeliveryAttempt[]
 
   @@index([customerId])
   @@map("customer_contacts")
@@ -564,23 +569,23 @@ model Quote {
   createdAt                    DateTime              @default(now()) @map("created_at")
   updatedAt                    DateTime              @updatedAt @map("updated_at")
 
-  branch                   Branch   @relation(fields: [branchId], references: [id], onDelete: Restrict)
-  customer                 Customer @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  branch                   Branch           @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  customer                 Customer         @relation(fields: [customerId], references: [id], onDelete: Restrict)
   customerContact          CustomerContact? @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
-  createdByUser            User     @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
-  updatedByUser            User?    @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
-  providedByUser           User?    @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
-  providedByAssignedByUser User?    @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
-  rejectedByUser           User?    @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
-  cancelledByUser          User?    @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
-  archivedByUser           User?    @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
-  erpQuoteRegisteredByUser User?    @relation("QuoteErpRegisteredBy", fields: [erpQuoteRegisteredByUserId], references: [id], onDelete: SetNull)
-  rootQuote                Quote?   @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
-  revisions                Quote[]  @relation("QuoteRevisionRoot")
-  previousVersion          Quote?   @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
-  nextVersions             Quote[]  @relation("QuotePreviousVersion")
-  supersededByQuote        Quote?   @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
-  supersedesQuote          Quote?   @relation("QuoteSupersededBy")
+  createdByUser            User             @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedByUser            User?            @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  providedByUser           User?            @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
+  providedByAssignedByUser User?            @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
+  rejectedByUser           User?            @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
+  cancelledByUser          User?            @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
+  archivedByUser           User?            @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
+  erpQuoteRegisteredByUser User?            @relation("QuoteErpRegisteredBy", fields: [erpQuoteRegisteredByUserId], references: [id], onDelete: SetNull)
+  rootQuote                Quote?           @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
+  revisions                Quote[]          @relation("QuoteRevisionRoot")
+  previousVersion          Quote?           @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
+  nextVersions             Quote[]          @relation("QuotePreviousVersion")
+  supersededByQuote        Quote?           @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
+  supersedesQuote          Quote?           @relation("QuoteSupersededBy")
 
   items               QuoteItem[]
   deliveryAttempts    QuoteDeliveryAttempt[]
@@ -614,63 +619,63 @@ model Quote {
 }
 
 model QuoteItem {
-  id                                String    @id @default(uuid()) @db.Uuid
-  quoteId                           String    @map("quote_id") @db.Uuid
-  clientItemId                      String?   @map("client_item_id") @db.VarChar(80)
-  productId                         String?   @map("product_id") @db.Uuid
-  externalProductCode               String?   @map("external_product_code") @db.VarChar(80)
-  ean                               String?   @db.VarChar(120)
-  customerDescription               String?   @map("customer_description") @db.VarChar(500)
-  customerDescriptionOriginal       String?   @map("customer_description_original") @db.VarChar(500)
-  customerDescriptionEditedAt       DateTime? @map("customer_description_edited_at")
-  customerDescriptionEditedByUserId String?   @map("customer_description_edited_by_user_id") @db.Uuid
-  customerUnit                      String?   @map("customer_unit") @db.VarChar(30)
-  erpDescription                    String?   @map("erp_description") @db.VarChar(500)
-  unit                              String    @db.VarChar(30)
-  qty                               Decimal   @db.Decimal(14, 4)
-  stock                             Decimal?  @db.Decimal(14, 4)
-  deliveryTime                      String?   @map("delivery_time") @db.VarChar(80)
-  itemComment                       String?   @map("item_comment") @db.VarChar(500)
-  sellerSupplierId                  String?   @map("seller_supplier_id") @db.Uuid
-  sellerSupplierNameSnapshot        String?   @map("seller_supplier_name_snapshot") @db.VarChar(220)
-  sellerQuotedUnitCost              Decimal?  @map("seller_quoted_unit_cost") @db.Decimal(14, 4)
+  id                                String              @id @default(uuid()) @db.Uuid
+  quoteId                           String              @map("quote_id") @db.Uuid
+  clientItemId                      String?             @map("client_item_id") @db.VarChar(80)
+  productId                         String?             @map("product_id") @db.Uuid
+  externalProductCode               String?             @map("external_product_code") @db.VarChar(80)
+  ean                               String?             @db.VarChar(120)
+  customerDescription               String?             @map("customer_description") @db.VarChar(500)
+  customerDescriptionOriginal       String?             @map("customer_description_original") @db.VarChar(500)
+  customerDescriptionEditedAt       DateTime?           @map("customer_description_edited_at")
+  customerDescriptionEditedByUserId String?             @map("customer_description_edited_by_user_id") @db.Uuid
+  customerUnit                      String?             @map("customer_unit") @db.VarChar(30)
+  erpDescription                    String?             @map("erp_description") @db.VarChar(500)
+  unit                              String              @db.VarChar(30)
+  qty                               Decimal             @db.Decimal(14, 4)
+  stock                             Decimal?            @db.Decimal(14, 4)
+  deliveryTime                      String?             @map("delivery_time") @db.VarChar(80)
+  itemComment                       String?             @map("item_comment") @db.VarChar(500)
+  sellerSupplierId                  String?             @map("seller_supplier_id") @db.Uuid
+  sellerSupplierNameSnapshot        String?             @map("seller_supplier_name_snapshot") @db.VarChar(220)
+  sellerQuotedUnitCost              Decimal?            @map("seller_quoted_unit_cost") @db.Decimal(14, 4)
   sellerCostSource                  PurchaseCostSource? @map("seller_cost_source")
-  sellerQuotedCurrency              Currency? @map("seller_quoted_currency")
-  sellerQuotedExchangeRate          Decimal?  @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
-  sellerQuotedBrand                 String?   @map("seller_quoted_brand") @db.VarChar(160)
-  sellerSupplierDescription         String?   @map("seller_supplier_description") @db.VarChar(500)
-  sellerSupplierOrigin              String?   @map("seller_supplier_origin") @db.VarChar(120)
-  sellerSupplierQuoteValidUntil     DateTime? @map("seller_supplier_quote_valid_until") @db.Date
-  sellerSupplierQuoteReference      String?   @map("seller_supplier_quote_reference") @db.VarChar(160)
-  sellerSupplierQuoteNotes          String?   @map("seller_supplier_quote_notes") @db.Text
-  sellerOriginRestrictions          String[]  @default([]) @map("seller_origin_restrictions")
-  sellerDeliveryState               String?   @map("seller_delivery_state") @db.VarChar(120)
-  sellerSupplierDeliveryTime        String?   @map("seller_supplier_delivery_time") @db.VarChar(120)
-  purchaseStandard                  String?   @map("purchase_standard") @db.VarChar(120)
-  purchaseDiameter                  String?   @map("purchase_diameter") @db.VarChar(120)
-  purchaseThickness                 String?   @map("purchase_thickness") @db.VarChar(120)
-  purchaseBore                      String?   @map("purchase_bore") @db.VarChar(120)
-  technicalFamily                   String?   @map("technical_family") @db.VarChar(60)
-  technicalAttributes               Json?     @map("technical_attributes")
-  cost                              Decimal   @db.Decimal(14, 4)
-  costCurrency                      Currency  @map("cost_currency")
-  erpSaleCurrency                   Currency? @map("erp_sale_currency")
-  marginPct                         Decimal   @map("margin_pct") @db.Decimal(10, 4)
-  effectiveCostAtQuote              Decimal   @default(0) @map("effective_cost_at_quote") @db.Decimal(14, 4)
-  isBelowEffectiveCost              Boolean   @default(false) @map("is_below_effective_cost")
-  effectiveCostVariance             Decimal   @default(0) @map("effective_cost_variance") @db.Decimal(14, 4)
-  effectiveCostVariancePct          Decimal   @default(0) @map("effective_cost_variance_pct") @db.Decimal(10, 4)
-  effectiveCostEvaluatedAt          DateTime? @map("effective_cost_evaluated_at")
-  effectiveCostEvaluatedByUserId    String?   @map("effective_cost_evaluated_by_user_id") @db.Uuid
-  sourceCurrency                    Currency? @map("source_currency")
-  sourceUnitPrice                   Decimal?  @map("source_unit_price") @db.Decimal(14, 4)
-  sourceSubtotal                    Decimal?  @map("source_subtotal") @db.Decimal(14, 4)
-  unitPrice                         Decimal   @map("unit_price") @db.Decimal(14, 4)
-  subtotal                          Decimal   @db.Decimal(14, 4)
-  sourceRequiresReview              Boolean   @default(false) @map("source_requires_review")
-  requiresReview                    Boolean   @default(false) @map("requires_review")
-  createdAt                         DateTime  @default(now()) @map("created_at")
-  updatedAt                         DateTime  @updatedAt @map("updated_at")
+  sellerQuotedCurrency              Currency?           @map("seller_quoted_currency")
+  sellerQuotedExchangeRate          Decimal?            @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
+  sellerQuotedBrand                 String?             @map("seller_quoted_brand") @db.VarChar(160)
+  sellerSupplierDescription         String?             @map("seller_supplier_description") @db.VarChar(500)
+  sellerSupplierOrigin              String?             @map("seller_supplier_origin") @db.VarChar(120)
+  sellerSupplierQuoteValidUntil     DateTime?           @map("seller_supplier_quote_valid_until") @db.Date
+  sellerSupplierQuoteReference      String?             @map("seller_supplier_quote_reference") @db.VarChar(160)
+  sellerSupplierQuoteNotes          String?             @map("seller_supplier_quote_notes") @db.Text
+  sellerOriginRestrictions          String[]            @default([]) @map("seller_origin_restrictions")
+  sellerDeliveryState               String?             @map("seller_delivery_state") @db.VarChar(120)
+  sellerSupplierDeliveryTime        String?             @map("seller_supplier_delivery_time") @db.VarChar(120)
+  purchaseStandard                  String?             @map("purchase_standard") @db.VarChar(120)
+  purchaseDiameter                  String?             @map("purchase_diameter") @db.VarChar(120)
+  purchaseThickness                 String?             @map("purchase_thickness") @db.VarChar(120)
+  purchaseBore                      String?             @map("purchase_bore") @db.VarChar(120)
+  technicalFamily                   String?             @map("technical_family") @db.VarChar(60)
+  technicalAttributes               Json?               @map("technical_attributes")
+  cost                              Decimal             @db.Decimal(14, 4)
+  costCurrency                      Currency            @map("cost_currency")
+  erpSaleCurrency                   Currency?           @map("erp_sale_currency")
+  marginPct                         Decimal             @map("margin_pct") @db.Decimal(10, 4)
+  effectiveCostAtQuote              Decimal             @default(0) @map("effective_cost_at_quote") @db.Decimal(14, 4)
+  isBelowEffectiveCost              Boolean             @default(false) @map("is_below_effective_cost")
+  effectiveCostVariance             Decimal             @default(0) @map("effective_cost_variance") @db.Decimal(14, 4)
+  effectiveCostVariancePct          Decimal             @default(0) @map("effective_cost_variance_pct") @db.Decimal(10, 4)
+  effectiveCostEvaluatedAt          DateTime?           @map("effective_cost_evaluated_at")
+  effectiveCostEvaluatedByUserId    String?             @map("effective_cost_evaluated_by_user_id") @db.Uuid
+  sourceCurrency                    Currency?           @map("source_currency")
+  sourceUnitPrice                   Decimal?            @map("source_unit_price") @db.Decimal(14, 4)
+  sourceSubtotal                    Decimal?            @map("source_subtotal") @db.Decimal(14, 4)
+  unitPrice                         Decimal             @map("unit_price") @db.Decimal(14, 4)
+  subtotal                          Decimal             @db.Decimal(14, 4)
+  sourceRequiresReview              Boolean             @default(false) @map("source_requires_review")
+  requiresReview                    Boolean             @default(false) @map("requires_review")
+  createdAt                         DateTime            @default(now()) @map("created_at")
+  updatedAt                         DateTime            @updatedAt @map("updated_at")
 
   quote                           Quote                    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
   product                         Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
@@ -952,6 +957,7 @@ model FileAsset {
 
   uploadedBy               User                      @relation("FileAssetUploadedBy", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
   quoteAttachments         QuoteAttachment[]
+  quoteDeliveryAttempts    QuoteDeliveryAttempt[]    @relation("QuoteDeliveryFile")
   purchaseOfferAttachments PurchaseOfferAttachment[]
   purchaseSupplierQuotes   PurchaseSupplierQuote[]
 
@@ -1016,15 +1022,27 @@ model QuoteDeliveryAttempt {
   recipient         String                     @db.VarChar(180)
   status            QuoteDeliveryAttemptStatus
   providerMessageId String?                    @map("provider_message_id") @db.VarChar(160)
+  fileAssetId       String?                    @map("file_asset_id") @db.Uuid
+  customerContactId String?                    @map("customer_contact_id") @db.Uuid
+  templateSid       String?                    @map("template_sid") @db.VarChar(160)
   errorMessage      String?                    @map("error_message") @db.Text
   sentByUserId      String?                    @map("sent_by_user_id") @db.Uuid
   sentAt            DateTime                   @map("sent_at")
+  deliveredAt       DateTime?                  @map("delivered_at")
+  readAt            DateTime?                  @map("read_at")
+  failedAt          DateTime?                  @map("failed_at")
   createdAt         DateTime                   @default(now()) @map("created_at")
+  updatedAt         DateTime                   @updatedAt @map("updated_at")
 
-  quote      Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
-  sentByUser User? @relation("QuoteDeliveryAttemptSentBy", fields: [sentByUserId], references: [id], onDelete: SetNull)
+  quote           Quote            @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  sentByUser      User?            @relation("QuoteDeliveryAttemptSentBy", fields: [sentByUserId], references: [id], onDelete: SetNull)
+  fileAsset       FileAsset?       @relation("QuoteDeliveryFile", fields: [fileAssetId], references: [id], onDelete: SetNull)
+  customerContact CustomerContact? @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
 
   @@index([quoteId])
+  @@index([providerMessageId])
+  @@index([fileAssetId])
+  @@index([customerContactId])
   @@index([sentAt])
   @@map("quote_delivery_attempts")
 }

@@ -34,6 +34,7 @@ import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.u
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
+import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
 
 export class QuotesController {
   constructor(
@@ -56,7 +57,8 @@ export class QuotesController {
     private readonly registerQuoteDeliveryAttemptUseCase: RegisterQuoteDeliveryAttemptUseCase,
     private readonly downloadQuoteOrderFileUseCase: DownloadQuoteOrderFileUseCase,
     private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase,
-    private readonly registerErpQuoteUseCase: RegisterErpQuoteUseCase
+    private readonly registerErpQuoteUseCase: RegisterErpQuoteUseCase,
+    private readonly sendQuoteWhatsAppUseCase: SendQuoteWhatsAppUseCase
   ) {}
 
   saveDraft = async (req: Request, res: Response): Promise<void> => {
@@ -525,6 +527,37 @@ export class QuotesController {
     }
   };
 
+  sendWhatsApp = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    if (!req.file) return void res.status(400).json({ error: "Quote PDF is required." });
+    const contactId = typeof req.body.contactId === "string" && req.body.contactId.trim()
+      ? req.body.contactId.trim()
+      : undefined;
+
+    try {
+      const result = await this.sendQuoteWhatsAppUseCase.execute({
+        quoteId,
+        contactId,
+        file: {
+          originalName: req.file.originalname,
+          mimeType: req.file.mimetype,
+          content: req.file.buffer,
+          sizeBytes: req.file.size,
+        },
+        actor: { id: req.user.id, role: req.user.role, branchId: req.user.branchId },
+      });
+      res.status(202).json(result);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unexpected WhatsApp delivery error.";
+      if (message === "WhatsApp delivery is disabled." || message === "Twilio WhatsApp delivery is not configured.") {
+        return void res.status(503).json({ error: message });
+      }
+      this.handleError(res, error, "Unexpected WhatsApp delivery error.");
+    }
+  };
+
   registerErpQuote = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
 
@@ -617,6 +650,11 @@ export class QuotesController {
       message === "Purchase requisitions cannot be generated for Excel-imported quotes." ||
       message === "Excel-imported quote items cannot be linked to ERP or local products." ||
       message === "Quote capture method and imported currency cannot be changed after Excel import."
+      || message === "Quote must be QUOTED or APPROVED to send it by WhatsApp."
+      || message === "Customer contact not found."
+      || message === "The selected customer contact does not have a valid WhatsApp number."
+      || message === "The customer quote document must be a PDF."
+      || message === "Twilio WhatsApp template SID is invalid."
       || message === "Only SELLER can update purchasing references."
       || message === "Excel-imported quotes do not generate purchasing references."
       || message === "Purchasing references can only be updated on QUOTED or APPROVED quotes."

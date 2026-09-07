@@ -31,10 +31,17 @@ export type QuoteDeliveryAttemptMinAggregateOutputType = {
   recipient: string | null
   status: $Enums.QuoteDeliveryAttemptStatus | null
   providerMessageId: string | null
+  fileAssetId: string | null
+  customerContactId: string | null
+  templateSid: string | null
   errorMessage: string | null
   sentByUserId: string | null
   sentAt: Date | null
+  deliveredAt: Date | null
+  readAt: Date | null
+  failedAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type QuoteDeliveryAttemptMaxAggregateOutputType = {
@@ -44,10 +51,17 @@ export type QuoteDeliveryAttemptMaxAggregateOutputType = {
   recipient: string | null
   status: $Enums.QuoteDeliveryAttemptStatus | null
   providerMessageId: string | null
+  fileAssetId: string | null
+  customerContactId: string | null
+  templateSid: string | null
   errorMessage: string | null
   sentByUserId: string | null
   sentAt: Date | null
+  deliveredAt: Date | null
+  readAt: Date | null
+  failedAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type QuoteDeliveryAttemptCountAggregateOutputType = {
@@ -57,10 +71,17 @@ export type QuoteDeliveryAttemptCountAggregateOutputType = {
   recipient: number
   status: number
   providerMessageId: number
+  fileAssetId: number
+  customerContactId: number
+  templateSid: number
   errorMessage: number
   sentByUserId: number
   sentAt: number
+  deliveredAt: number
+  readAt: number
+  failedAt: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -72,10 +93,17 @@ export type QuoteDeliveryAttemptMinAggregateInputType = {
   recipient?: true
   status?: true
   providerMessageId?: true
+  fileAssetId?: true
+  customerContactId?: true
+  templateSid?: true
   errorMessage?: true
   sentByUserId?: true
   sentAt?: true
+  deliveredAt?: true
+  readAt?: true
+  failedAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type QuoteDeliveryAttemptMaxAggregateInputType = {
@@ -85,10 +113,17 @@ export type QuoteDeliveryAttemptMaxAggregateInputType = {
   recipient?: true
   status?: true
   providerMessageId?: true
+  fileAssetId?: true
+  customerContactId?: true
+  templateSid?: true
   errorMessage?: true
   sentByUserId?: true
   sentAt?: true
+  deliveredAt?: true
+  readAt?: true
+  failedAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type QuoteDeliveryAttemptCountAggregateInputType = {
@@ -98,10 +133,17 @@ export type QuoteDeliveryAttemptCountAggregateInputType = {
   recipient?: true
   status?: true
   providerMessageId?: true
+  fileAssetId?: true
+  customerContactId?: true
+  templateSid?: true
   errorMessage?: true
   sentByUserId?: true
   sentAt?: true
+  deliveredAt?: true
+  readAt?: true
+  failedAt?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -184,10 +226,17 @@ export type QuoteDeliveryAttemptGroupByOutputType = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId: string | null
+  fileAssetId: string | null
+  customerContactId: string | null
+  templateSid: string | null
   errorMessage: string | null
   sentByUserId: string | null
   sentAt: Date
+  deliveredAt: Date | null
+  readAt: Date | null
+  failedAt: Date | null
   createdAt: Date
+  updatedAt: Date
   _count: QuoteDeliveryAttemptCountAggregateOutputType | null
   _min: QuoteDeliveryAttemptMinAggregateOutputType | null
   _max: QuoteDeliveryAttemptMaxAggregateOutputType | null
@@ -218,12 +267,21 @@ export type QuoteDeliveryAttemptWhereInput = {
   recipient?: Prisma.StringFilter<"QuoteDeliveryAttempt"> | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFilter<"QuoteDeliveryAttempt"> | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  fileAssetId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  customerContactId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  templateSid?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentByUserId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  deliveredAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  readAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
   sentByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  fileAsset?: Prisma.XOR<Prisma.FileAssetNullableScalarRelationFilter, Prisma.FileAssetWhereInput> | null
+  customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
 }
 
 export type QuoteDeliveryAttemptOrderByWithRelationInput = {
@@ -233,12 +291,21 @@ export type QuoteDeliveryAttemptOrderByWithRelationInput = {
   recipient?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileAssetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerContactId?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateSid?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   sentByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  readAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   quote?: Prisma.QuoteOrderByWithRelationInput
   sentByUser?: Prisma.UserOrderByWithRelationInput
+  fileAsset?: Prisma.FileAssetOrderByWithRelationInput
+  customerContact?: Prisma.CustomerContactOrderByWithRelationInput
 }
 
 export type QuoteDeliveryAttemptWhereUniqueInput = Prisma.AtLeast<{
@@ -251,12 +318,21 @@ export type QuoteDeliveryAttemptWhereUniqueInput = Prisma.AtLeast<{
   recipient?: Prisma.StringFilter<"QuoteDeliveryAttempt"> | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFilter<"QuoteDeliveryAttempt"> | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  fileAssetId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  customerContactId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  templateSid?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentByUserId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  deliveredAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  readAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
   sentByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  fileAsset?: Prisma.XOR<Prisma.FileAssetNullableScalarRelationFilter, Prisma.FileAssetWhereInput> | null
+  customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
 }, "id">
 
 export type QuoteDeliveryAttemptOrderByWithAggregationInput = {
@@ -266,10 +342,17 @@ export type QuoteDeliveryAttemptOrderByWithAggregationInput = {
   recipient?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerMessageId?: Prisma.SortOrderInput | Prisma.SortOrder
+  fileAssetId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerContactId?: Prisma.SortOrderInput | Prisma.SortOrder
+  templateSid?: Prisma.SortOrderInput | Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   sentByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  readAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  failedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.QuoteDeliveryAttemptCountOrderByAggregateInput
   _max?: Prisma.QuoteDeliveryAttemptMaxOrderByAggregateInput
   _min?: Prisma.QuoteDeliveryAttemptMinOrderByAggregateInput
@@ -285,10 +368,17 @@ export type QuoteDeliveryAttemptScalarWhereWithAggregatesInput = {
   recipient?: Prisma.StringWithAggregatesFilter<"QuoteDeliveryAttempt"> | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusWithAggregatesFilter<"QuoteDeliveryAttempt"> | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.StringNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
+  fileAssetId?: Prisma.UuidNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
+  customerContactId?: Prisma.UuidNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
+  templateSid?: Prisma.StringNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
   errorMessage?: Prisma.StringNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
   sentByUserId?: Prisma.UuidNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | string | null
   sentAt?: Prisma.DateTimeWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string
+  deliveredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  readAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"QuoteDeliveryAttempt"> | Date | string
 }
 
 export type QuoteDeliveryAttemptCreateInput = {
@@ -297,11 +387,18 @@ export type QuoteDeliveryAttemptCreateInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   quote: Prisma.QuoteCreateNestedOneWithoutDeliveryAttemptsInput
   sentByUser?: Prisma.UserCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  fileAsset?: Prisma.FileAssetCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutDeliveryAttemptsInput
 }
 
 export type QuoteDeliveryAttemptUncheckedCreateInput = {
@@ -311,10 +408,17 @@ export type QuoteDeliveryAttemptUncheckedCreateInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentByUserId?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptUpdateInput = {
@@ -323,11 +427,18 @@ export type QuoteDeliveryAttemptUpdateInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quote?: Prisma.QuoteUpdateOneRequiredWithoutDeliveryAttemptsNestedInput
   sentByUser?: Prisma.UserUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  fileAsset?: Prisma.FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutDeliveryAttemptsNestedInput
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateInput = {
@@ -337,10 +448,17 @@ export type QuoteDeliveryAttemptUncheckedUpdateInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptCreateManyInput = {
@@ -350,10 +468,17 @@ export type QuoteDeliveryAttemptCreateManyInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentByUserId?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptUpdateManyMutationInput = {
@@ -362,9 +487,14 @@ export type QuoteDeliveryAttemptUpdateManyMutationInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateManyInput = {
@@ -374,10 +504,17 @@ export type QuoteDeliveryAttemptUncheckedUpdateManyInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptListRelationFilter = {
@@ -397,10 +534,17 @@ export type QuoteDeliveryAttemptCountOrderByAggregateInput = {
   recipient?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerMessageId?: Prisma.SortOrder
+  fileAssetId?: Prisma.SortOrder
+  customerContactId?: Prisma.SortOrder
+  templateSid?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   sentByUserId?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  readAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type QuoteDeliveryAttemptMaxOrderByAggregateInput = {
@@ -410,10 +554,17 @@ export type QuoteDeliveryAttemptMaxOrderByAggregateInput = {
   recipient?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerMessageId?: Prisma.SortOrder
+  fileAssetId?: Prisma.SortOrder
+  customerContactId?: Prisma.SortOrder
+  templateSid?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   sentByUserId?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  readAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type QuoteDeliveryAttemptMinOrderByAggregateInput = {
@@ -423,10 +574,17 @@ export type QuoteDeliveryAttemptMinOrderByAggregateInput = {
   recipient?: Prisma.SortOrder
   status?: Prisma.SortOrder
   providerMessageId?: Prisma.SortOrder
+  fileAssetId?: Prisma.SortOrder
+  customerContactId?: Prisma.SortOrder
+  templateSid?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrder
   sentByUserId?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
+  deliveredAt?: Prisma.SortOrder
+  readAt?: Prisma.SortOrder
+  failedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput = {
@@ -468,6 +626,48 @@ export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput 
   connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
   update?: Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutSentByUserInput | Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutSentByUserInput[]
   updateMany?: Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutSentByUserInput | Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutSentByUserInput[]
+  deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
+}
+
+export type QuoteDeliveryAttemptCreateNestedManyWithoutCustomerContactInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput> | Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInputEnvelope
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+}
+
+export type QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutCustomerContactInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput> | Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInputEnvelope
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+}
+
+export type QuoteDeliveryAttemptUpdateManyWithoutCustomerContactNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput> | Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput[]
+  upsert?: Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutCustomerContactInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInputEnvelope
+  set?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  disconnect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  delete?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  update?: Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutCustomerContactInput[]
+  updateMany?: Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutCustomerContactInput[]
+  deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutCustomerContactNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput> | Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput[]
+  upsert?: Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutCustomerContactInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInputEnvelope
+  set?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  disconnect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  delete?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  update?: Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutCustomerContactInput[]
+  updateMany?: Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutCustomerContactInput | Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutCustomerContactInput[]
   deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
 }
 
@@ -513,6 +713,48 @@ export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput = {
   deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
 }
 
+export type QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput> | Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyFileAssetInputEnvelope
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+}
+
+export type QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput> | Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyFileAssetInputEnvelope
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+}
+
+export type QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput> | Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput[]
+  upsert?: Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutFileAssetInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyFileAssetInputEnvelope
+  set?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  disconnect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  delete?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  update?: Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutFileAssetInput[]
+  updateMany?: Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutFileAssetInput[]
+  deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput> | Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput[] | Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput[]
+  connectOrCreate?: Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput[]
+  upsert?: Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutFileAssetInput[]
+  createMany?: Prisma.QuoteDeliveryAttemptCreateManyFileAssetInputEnvelope
+  set?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  disconnect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  delete?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  connect?: Prisma.QuoteDeliveryAttemptWhereUniqueInput | Prisma.QuoteDeliveryAttemptWhereUniqueInput[]
+  update?: Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutFileAssetInput[]
+  updateMany?: Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutFileAssetInput | Prisma.QuoteDeliveryAttemptUpdateManyWithWhereWithoutFileAssetInput[]
+  deleteMany?: Prisma.QuoteDeliveryAttemptScalarWhereInput | Prisma.QuoteDeliveryAttemptScalarWhereInput[]
+}
+
 export type EnumQuoteDeliveryChannelFieldUpdateOperationsInput = {
   set?: $Enums.QuoteDeliveryChannel
 }
@@ -527,10 +769,17 @@ export type QuoteDeliveryAttemptCreateWithoutSentByUserInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   quote: Prisma.QuoteCreateNestedOneWithoutDeliveryAttemptsInput
+  fileAsset?: Prisma.FileAssetCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutDeliveryAttemptsInput
 }
 
 export type QuoteDeliveryAttemptUncheckedCreateWithoutSentByUserInput = {
@@ -540,9 +789,16 @@ export type QuoteDeliveryAttemptUncheckedCreateWithoutSentByUserInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptCreateOrConnectWithoutSentByUserInput = {
@@ -581,10 +837,81 @@ export type QuoteDeliveryAttemptScalarWhereInput = {
   recipient?: Prisma.StringFilter<"QuoteDeliveryAttempt"> | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFilter<"QuoteDeliveryAttempt"> | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  fileAssetId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  customerContactId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
+  templateSid?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   errorMessage?: Prisma.StringNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentByUserId?: Prisma.UuidNullableFilter<"QuoteDeliveryAttempt"> | string | null
   sentAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  deliveredAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  readAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
+  failedAt?: Prisma.DateTimeNullableFilter<"QuoteDeliveryAttempt"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"QuoteDeliveryAttempt"> | Date | string
+}
+
+export type QuoteDeliveryAttemptCreateWithoutCustomerContactInput = {
+  id?: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  quote: Prisma.QuoteCreateNestedOneWithoutDeliveryAttemptsInput
+  sentByUser?: Prisma.UserCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  fileAsset?: Prisma.FileAssetCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+}
+
+export type QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput = {
+  id?: string
+  quoteId: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  fileAssetId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentByUserId?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteDeliveryAttemptCreateOrConnectWithoutCustomerContactInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput>
+}
+
+export type QuoteDeliveryAttemptCreateManyCustomerContactInputEnvelope = {
+  data: Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInput | Prisma.QuoteDeliveryAttemptCreateManyCustomerContactInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutCustomerContactInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateWithoutCustomerContactInput>
+  create: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutCustomerContactInput>
+}
+
+export type QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutCustomerContactInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateWithoutCustomerContactInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateWithoutCustomerContactInput>
+}
+
+export type QuoteDeliveryAttemptUpdateManyWithWhereWithoutCustomerContactInput = {
+  where: Prisma.QuoteDeliveryAttemptScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateManyMutationInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutCustomerContactInput>
 }
 
 export type QuoteDeliveryAttemptCreateWithoutQuoteInput = {
@@ -593,10 +920,17 @@ export type QuoteDeliveryAttemptCreateWithoutQuoteInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   sentByUser?: Prisma.UserCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  fileAsset?: Prisma.FileAssetCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutDeliveryAttemptsInput
 }
 
 export type QuoteDeliveryAttemptUncheckedCreateWithoutQuoteInput = {
@@ -605,10 +939,17 @@ export type QuoteDeliveryAttemptUncheckedCreateWithoutQuoteInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentByUserId?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptCreateOrConnectWithoutQuoteInput = {
@@ -637,6 +978,70 @@ export type QuoteDeliveryAttemptUpdateManyWithWhereWithoutQuoteInput = {
   data: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateManyMutationInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteInput>
 }
 
+export type QuoteDeliveryAttemptCreateWithoutFileAssetInput = {
+  id?: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  quote: Prisma.QuoteCreateNestedOneWithoutDeliveryAttemptsInput
+  sentByUser?: Prisma.UserCreateNestedOneWithoutQuoteDeliveryAttemptsInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutDeliveryAttemptsInput
+}
+
+export type QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput = {
+  id?: string
+  quoteId: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentByUserId?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteDeliveryAttemptCreateOrConnectWithoutFileAssetInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput>
+}
+
+export type QuoteDeliveryAttemptCreateManyFileAssetInputEnvelope = {
+  data: Prisma.QuoteDeliveryAttemptCreateManyFileAssetInput | Prisma.QuoteDeliveryAttemptCreateManyFileAssetInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteDeliveryAttemptUpsertWithWhereUniqueWithoutFileAssetInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateWithoutFileAssetInput>
+  create: Prisma.XOR<Prisma.QuoteDeliveryAttemptCreateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedCreateWithoutFileAssetInput>
+}
+
+export type QuoteDeliveryAttemptUpdateWithWhereUniqueWithoutFileAssetInput = {
+  where: Prisma.QuoteDeliveryAttemptWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateWithoutFileAssetInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateWithoutFileAssetInput>
+}
+
+export type QuoteDeliveryAttemptUpdateManyWithWhereWithoutFileAssetInput = {
+  where: Prisma.QuoteDeliveryAttemptScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteDeliveryAttemptUpdateManyMutationInput, Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetInput>
+}
+
 export type QuoteDeliveryAttemptCreateManySentByUserInput = {
   id?: string
   quoteId: string
@@ -644,9 +1049,16 @@ export type QuoteDeliveryAttemptCreateManySentByUserInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptUpdateWithoutSentByUserInput = {
@@ -655,10 +1067,17 @@ export type QuoteDeliveryAttemptUpdateWithoutSentByUserInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quote?: Prisma.QuoteUpdateOneRequiredWithoutDeliveryAttemptsNestedInput
+  fileAsset?: Prisma.FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutDeliveryAttemptsNestedInput
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateWithoutSentByUserInput = {
@@ -668,9 +1087,16 @@ export type QuoteDeliveryAttemptUncheckedUpdateWithoutSentByUserInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserInput = {
@@ -680,9 +1106,92 @@ export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteDeliveryAttemptCreateManyCustomerContactInput = {
+  id?: string
+  quoteId: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  fileAssetId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentByUserId?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteDeliveryAttemptUpdateWithoutCustomerContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quote?: Prisma.QuoteUpdateOneRequiredWithoutDeliveryAttemptsNestedInput
+  sentByUser?: Prisma.UserUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  fileAsset?: Prisma.FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateWithoutCustomerContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutCustomerContactInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptCreateManyQuoteInput = {
@@ -691,10 +1200,17 @@ export type QuoteDeliveryAttemptCreateManyQuoteInput = {
   recipient: string
   status: $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: string | null
+  fileAssetId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
   errorMessage?: string | null
   sentByUserId?: string | null
   sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type QuoteDeliveryAttemptUpdateWithoutQuoteInput = {
@@ -703,10 +1219,17 @@ export type QuoteDeliveryAttemptUpdateWithoutQuoteInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentByUser?: Prisma.UserUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  fileAsset?: Prisma.FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutDeliveryAttemptsNestedInput
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateWithoutQuoteInput = {
@@ -715,10 +1238,17 @@ export type QuoteDeliveryAttemptUncheckedUpdateWithoutQuoteInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteInput = {
@@ -727,10 +1257,93 @@ export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteInput = {
   recipient?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
   providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileAssetId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteDeliveryAttemptCreateManyFileAssetInput = {
+  id?: string
+  quoteId: string
+  channel: $Enums.QuoteDeliveryChannel
+  recipient: string
+  status: $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: string | null
+  customerContactId?: string | null
+  templateSid?: string | null
+  errorMessage?: string | null
+  sentByUserId?: string | null
+  sentAt: Date | string
+  deliveredAt?: Date | string | null
+  readAt?: Date | string | null
+  failedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteDeliveryAttemptUpdateWithoutFileAssetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quote?: Prisma.QuoteUpdateOneRequiredWithoutDeliveryAttemptsNestedInput
+  sentByUser?: Prisma.UserUpdateOneWithoutQuoteDeliveryAttemptsNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutDeliveryAttemptsNestedInput
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateWithoutFileAssetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  channel?: Prisma.EnumQuoteDeliveryChannelFieldUpdateOperationsInput | $Enums.QuoteDeliveryChannel
+  recipient?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQuoteDeliveryAttemptStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryAttemptStatus
+  providerMessageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  templateSid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deliveredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  readAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  failedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -742,12 +1355,21 @@ export type QuoteDeliveryAttemptSelect<ExtArgs extends runtime.Types.Extensions.
   recipient?: boolean
   status?: boolean
   providerMessageId?: boolean
+  fileAssetId?: boolean
+  customerContactId?: boolean
+  templateSid?: boolean
   errorMessage?: boolean
   sentByUserId?: boolean
   sentAt?: boolean
+  deliveredAt?: boolean
+  readAt?: boolean
+  failedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }, ExtArgs["result"]["quoteDeliveryAttempt"]>
 
 export type QuoteDeliveryAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -757,12 +1379,21 @@ export type QuoteDeliveryAttemptSelectCreateManyAndReturn<ExtArgs extends runtim
   recipient?: boolean
   status?: boolean
   providerMessageId?: boolean
+  fileAssetId?: boolean
+  customerContactId?: boolean
+  templateSid?: boolean
   errorMessage?: boolean
   sentByUserId?: boolean
   sentAt?: boolean
+  deliveredAt?: boolean
+  readAt?: boolean
+  failedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }, ExtArgs["result"]["quoteDeliveryAttempt"]>
 
 export type QuoteDeliveryAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -772,12 +1403,21 @@ export type QuoteDeliveryAttemptSelectUpdateManyAndReturn<ExtArgs extends runtim
   recipient?: boolean
   status?: boolean
   providerMessageId?: boolean
+  fileAssetId?: boolean
+  customerContactId?: boolean
+  templateSid?: boolean
   errorMessage?: boolean
   sentByUserId?: boolean
   sentAt?: boolean
+  deliveredAt?: boolean
+  readAt?: boolean
+  failedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }, ExtArgs["result"]["quoteDeliveryAttempt"]>
 
 export type QuoteDeliveryAttemptSelectScalar = {
@@ -787,24 +1427,37 @@ export type QuoteDeliveryAttemptSelectScalar = {
   recipient?: boolean
   status?: boolean
   providerMessageId?: boolean
+  fileAssetId?: boolean
+  customerContactId?: boolean
+  templateSid?: boolean
   errorMessage?: boolean
   sentByUserId?: boolean
   sentAt?: boolean
+  deliveredAt?: boolean
+  readAt?: boolean
+  failedAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type QuoteDeliveryAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "channel" | "recipient" | "status" | "providerMessageId" | "errorMessage" | "sentByUserId" | "sentAt" | "createdAt", ExtArgs["result"]["quoteDeliveryAttempt"]>
+export type QuoteDeliveryAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "channel" | "recipient" | "status" | "providerMessageId" | "fileAssetId" | "customerContactId" | "templateSid" | "errorMessage" | "sentByUserId" | "sentAt" | "deliveredAt" | "readAt" | "failedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteDeliveryAttempt"]>
 export type QuoteDeliveryAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }
 export type QuoteDeliveryAttemptIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }
 export type QuoteDeliveryAttemptIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   sentByUser?: boolean | Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>
+  fileAsset?: boolean | Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>
+  customerContact?: boolean | Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>
 }
 
 export type $QuoteDeliveryAttemptPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -812,6 +1465,8 @@ export type $QuoteDeliveryAttemptPayload<ExtArgs extends runtime.Types.Extension
   objects: {
     quote: Prisma.$QuotePayload<ExtArgs>
     sentByUser: Prisma.$UserPayload<ExtArgs> | null
+    fileAsset: Prisma.$FileAssetPayload<ExtArgs> | null
+    customerContact: Prisma.$CustomerContactPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -820,10 +1475,17 @@ export type $QuoteDeliveryAttemptPayload<ExtArgs extends runtime.Types.Extension
     recipient: string
     status: $Enums.QuoteDeliveryAttemptStatus
     providerMessageId: string | null
+    fileAssetId: string | null
+    customerContactId: string | null
+    templateSid: string | null
     errorMessage: string | null
     sentByUserId: string | null
     sentAt: Date
+    deliveredAt: Date | null
+    readAt: Date | null
+    failedAt: Date | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["quoteDeliveryAttempt"]>
   composites: {}
 }
@@ -1220,6 +1882,8 @@ export interface Prisma__QuoteDeliveryAttemptClient<T, Null = never, ExtArgs ext
   readonly [Symbol.toStringTag]: "PrismaPromise"
   quote<T extends Prisma.QuoteDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteDefaultArgs<ExtArgs>>): Prisma.Prisma__QuoteClient<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sentByUser<T extends Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteDeliveryAttempt$sentByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  fileAsset<T extends Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteDeliveryAttempt$fileAssetArgs<ExtArgs>>): Prisma.Prisma__FileAssetClient<runtime.Types.Result.GetResult<Prisma.$FileAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  customerContact<T extends Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuoteDeliveryAttempt$customerContactArgs<ExtArgs>>): Prisma.Prisma__CustomerContactClient<runtime.Types.Result.GetResult<Prisma.$CustomerContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1255,10 +1919,17 @@ export interface QuoteDeliveryAttemptFieldRefs {
   readonly recipient: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
   readonly status: Prisma.FieldRef<"QuoteDeliveryAttempt", 'QuoteDeliveryAttemptStatus'>
   readonly providerMessageId: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
+  readonly fileAssetId: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
+  readonly customerContactId: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
+  readonly templateSid: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
   readonly errorMessage: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
   readonly sentByUserId: Prisma.FieldRef<"QuoteDeliveryAttempt", 'String'>
   readonly sentAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
+  readonly deliveredAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
+  readonly readAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
+  readonly failedAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"QuoteDeliveryAttempt", 'DateTime'>
 }
     
 
@@ -1671,6 +2342,44 @@ export type QuoteDeliveryAttempt$sentByUserArgs<ExtArgs extends runtime.Types.Ex
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * QuoteDeliveryAttempt.fileAsset
+ */
+export type QuoteDeliveryAttempt$fileAssetArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FileAsset
+   */
+  select?: Prisma.FileAssetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FileAsset
+   */
+  omit?: Prisma.FileAssetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileAssetInclude<ExtArgs> | null
+  where?: Prisma.FileAssetWhereInput
+}
+
+/**
+ * QuoteDeliveryAttempt.customerContact
+ */
+export type QuoteDeliveryAttempt$customerContactArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CustomerContact
+   */
+  select?: Prisma.CustomerContactSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CustomerContact
+   */
+  omit?: Prisma.CustomerContactOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerContactInclude<ExtArgs> | null
+  where?: Prisma.CustomerContactWhereInput
 }
 
 /**
