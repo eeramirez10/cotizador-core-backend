@@ -3,7 +3,7 @@ export interface SendQuoteWhatsAppMessage {
   contactName: string;
   sellerName: string;
   quoteNumber: string;
-  documentUrl: string;
+  documentToken: string;
 }
 
 export interface QuoteMessageResult {

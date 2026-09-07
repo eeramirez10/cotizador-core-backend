@@ -27,7 +27,7 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
       "1": message.contactName,
       "2": message.sellerName,
       "3": message.quoteNumber,
-      [this.config.mediaVariable]: message.documentUrl,
+      [this.config.mediaVariable]: message.documentToken,
     };
     const result = await client.messages.create({
       to: this.whatsappAddress(message.recipient),

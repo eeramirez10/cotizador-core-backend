@@ -12,12 +12,12 @@ export class QuoteDocumentsRoutes {
     const repository = new PrismaFileAttachmentRepository();
     const controller = new QuoteDocumentsController(
       new HmacQuoteDocumentLinkAdapter(
-        Envs.publicApiUrl,
         Envs.quoteDocumentSigningSecret,
         Envs.quoteDocumentUrlTtlSeconds,
       ),
       new FileAttachmentsUseCase(repository, new LocalFileStorageAdapter(Envs.fileStorageRoot)),
     );
+    router.get("/sample.pdf", controller.sample);
     router.get("/:token", controller.download);
     return router;
   }

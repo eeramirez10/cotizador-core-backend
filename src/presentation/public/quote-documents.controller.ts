@@ -1,12 +1,22 @@
 import type { Request, Response } from "express";
 import type { QuoteDocumentLinkPort } from "../../domain/contracts/quote-document-link.port";
 import type { FileAttachmentsUseCase } from "../../domain/use-cases/file-attachments.use-case";
+import { createQuoteTemplateSamplePdf } from "./quote-template-sample-pdf";
 
 export class QuoteDocumentsController {
   constructor(
     private readonly links: QuoteDocumentLinkPort,
     private readonly attachments: FileAttachmentsUseCase,
   ) {}
+
+  sample = (_req: Request, res: Response): void => {
+    const content = createQuoteTemplateSamplePdf();
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Length", String(content.byteLength));
+    res.setHeader("Content-Disposition", 'inline; filename="tuvansa-cotizacion-muestra.pdf"');
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.status(200).send(content);
+  };
 
   download = async (req: Request, res: Response): Promise<void> => {
     const raw = req.params.token;

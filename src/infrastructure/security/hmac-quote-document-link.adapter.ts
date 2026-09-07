@@ -8,23 +8,23 @@ interface TokenPayload {
 
 export class HmacQuoteDocumentLinkAdapter extends QuoteDocumentLinkPort {
   constructor(
-    private readonly publicApiUrl: string,
     private readonly signingSecret: string,
     private readonly ttlSeconds: number,
   ) {
     super();
   }
 
-  create(fileAssetId: string): string {
+  createToken(fileAssetId: string): string {
     const payload = Buffer.from(JSON.stringify({
       fileAssetId,
       expiresAt: Math.floor(Date.now() / 1000) + this.ttlSeconds,
     } satisfies TokenPayload)).toString("base64url");
     const signature = this.sign(payload);
-    return `${this.publicApiUrl.replace(/\/$/, "")}/api/public/quote-documents/${payload}.${signature}`;
+    return `${payload}.${signature}.pdf`;
   }
 
-  verify(token: string): string | null {
+  verify(rawToken: string): string | null {
+    const token = rawToken.endsWith(".pdf") ? rawToken.slice(0, -4) : rawToken;
     const [payload, signature, extra] = token.split(".");
     if (!payload || !signature || extra) return null;
     const expected = this.sign(payload);

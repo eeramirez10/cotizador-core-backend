@@ -66,7 +66,7 @@ export class SendQuoteWhatsAppUseCase {
     const contactName = selectedContact?.name.trim() || quote.customer.displayName.trim() || "Cliente";
     const sellerName = `${quote.createdByUser.firstName} ${quote.createdByUser.lastName}`.trim();
     const attachment = await this.attachments.uploadCustomerQuotePdf(input.quoteId, input.file, input.actor);
-    const documentUrl = this.documentLinks.create(attachment.id);
+    const documentToken = this.documentLinks.createToken(attachment.id);
 
     try {
       const message = await this.messaging.sendWhatsAppQuote({
@@ -74,7 +74,7 @@ export class SendQuoteWhatsAppUseCase {
         contactName,
         sellerName,
         quoteNumber: quote.quoteNumber,
-        documentUrl,
+        documentToken,
       });
       await this.quoteRepository.recordDeliveryAttempt({
         id: quote.id,

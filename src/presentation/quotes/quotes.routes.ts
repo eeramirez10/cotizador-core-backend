@@ -128,7 +128,6 @@ export class QuotesRoutes {
         statusCallbackUrl: Envs.twilioStatusCallbackUrl,
       }),
       new HmacQuoteDocumentLinkAdapter(
-        Envs.publicApiUrl,
         Envs.quoteDocumentSigningSecret,
         Envs.quoteDocumentUrlTtlSeconds,
       ),
