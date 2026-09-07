@@ -9,7 +9,7 @@ export interface SendQuoteWhatsAppMessage {
 export interface QuoteMessageResult {
   providerMessageId: string;
   status: "QUEUED" | "SENT";
-  templateSid: string;
+  templateSid: string | null;
 }
 
 export abstract class QuoteMessagingPort {

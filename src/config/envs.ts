@@ -130,6 +130,10 @@ export class Envs {
     return get("TWILIO_WHATSAPP_ENABLED").default("false").asBool();
   }
 
+  static get twilioWhatsAppUseTemplate(): boolean {
+    return get("TWILIO_WHATSAPP_USE_TEMPLATE").default(isDevelopment ? "false" : "true").asBool();
+  }
+
   static get twilioAccountSid(): string {
     return get("TWILIO_ACCOUNT_SID").default("").asString();
   }

@@ -120,11 +120,13 @@ export class QuotesRoutes {
       fileAttachmentsUseCase,
       new TwilioQuoteMessagingAdapter({
         enabled: Envs.twilioWhatsAppEnabled,
+        useTemplate: Envs.twilioWhatsAppUseTemplate,
         accountSid: Envs.twilioAccountSid,
         authToken: Envs.twilioAuthToken,
         from: Envs.twilioWhatsAppFrom,
         contentSid: Envs.twilioQuoteContentSid,
         mediaVariable: Envs.twilioQuoteMediaVariable,
+        publicApiUrl: Envs.publicApiUrl,
         statusCallbackUrl: Envs.twilioStatusCallbackUrl,
       }),
       new HmacQuoteDocumentLinkAdapter(
