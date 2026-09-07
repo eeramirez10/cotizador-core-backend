@@ -12,7 +12,6 @@ interface TwilioQuoteMessagingConfig {
   authToken: string;
   from: string;
   contentSid: string;
-  messageVariable: string;
   mediaVariable: string;
   publicApiUrl: string;
   statusCallbackUrl: string;
@@ -39,7 +38,6 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
             "1": message.contactName,
             "2": message.sellerName,
             "3": message.quoteNumber,
-            [this.config.messageVariable]: this.templateMessage(message.messageBody),
             [this.config.mediaVariable]: message.documentToken,
           }),
         })
@@ -62,25 +60,13 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
     if (!/^HX[a-fA-F0-9]{32}$/.test(this.config.contentSid)) {
       throw new Error("Twilio WhatsApp template SID is invalid.");
     }
-    const reservedVariables = ["1", "2", "3"];
-    if (!/^\d+$/.test(this.config.messageVariable) || reservedVariables.includes(this.config.messageVariable)) {
-      throw new Error("Twilio WhatsApp message variable must be a numeric template variable other than 1, 2, or 3.");
-    }
-    if (
-      !/^\d+$/.test(this.config.mediaVariable)
-      || reservedVariables.includes(this.config.mediaVariable)
-      || this.config.mediaVariable === this.config.messageVariable
-    ) {
-      throw new Error("Twilio WhatsApp media variable must be different from the text template variables.");
+    if (!/^\d+$/.test(this.config.mediaVariable) || ["1", "2", "3"].includes(this.config.mediaVariable)) {
+      throw new Error("Twilio WhatsApp media variable must be a numeric template variable other than 1, 2, or 3.");
     }
   }
 
   private freeFormBody(message: SendQuoteWhatsAppMessage): string {
     return message.messageBody;
-  }
-
-  private templateMessage(value: string): string {
-    return value.replace(/\s+/g, " ").trim();
   }
 
   private async sendFreeForm(

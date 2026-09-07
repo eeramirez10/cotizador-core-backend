@@ -151,11 +151,7 @@ export class Envs {
   }
 
   static get twilioQuoteMediaVariable(): string {
-    return get("TWILIO_WHATSAPP_QUOTE_MEDIA_VARIABLE").default("5").asString();
-  }
-
-  static get twilioQuoteMessageVariable(): string {
-    return get("TWILIO_WHATSAPP_QUOTE_MESSAGE_VARIABLE").default("4").asString();
+    return get("TWILIO_WHATSAPP_QUOTE_MEDIA_VARIABLE").default("4").asString();
   }
 
   static get twilioStatusCallbackUrl(): string {

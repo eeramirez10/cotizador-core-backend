@@ -197,6 +197,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
         uploadedByUserId: actor.id,
         quoteAttachments: {
           some: {
+            category: { not: "CUSTOMER_QUOTE_PDF" },
             OR: [
               { clientDraftId },
               ...(quoteIds.length > 0 ? [{ quoteId: { in: quoteIds } }] : []),
@@ -218,7 +219,12 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (!quote) throw new Error("Quote not found.");
     const quoteIds = await this.quoteChainIds(quote.id, quote.rootQuoteId);
     const rows = await prisma.fileAsset.findMany({
-      where: { status: "READY", quoteAttachments: { some: { quoteId: { in: quoteIds } } } },
+      where: {
+        status: "READY",
+        quoteAttachments: {
+          some: { quoteId: { in: quoteIds }, category: { not: "CUSTOMER_QUOTE_PDF" } },
+        },
+      },
       include: assetInclude,
       orderBy: { createdAt: "desc" },
     });
@@ -234,7 +240,12 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     const quoteIds = await this.quoteChainIds(requisition.quoteId, requisition.quote.rootQuoteId);
     const [quoteFiles, offerFiles] = await Promise.all([
       prisma.fileAsset.findMany({
-        where: { status: "READY", quoteAttachments: { some: { quoteId: { in: quoteIds } } } },
+        where: {
+          status: "READY",
+          quoteAttachments: {
+            some: { quoteId: { in: quoteIds }, category: { not: "CUSTOMER_QUOTE_PDF" } },
+          },
+        },
         include: assetInclude,
         orderBy: { createdAt: "desc" },
       }),
