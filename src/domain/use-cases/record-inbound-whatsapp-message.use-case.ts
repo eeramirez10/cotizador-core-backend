@@ -1,3 +1,4 @@
+import type { RecordedWhatsAppInboundMessage } from "../entities/whatsapp-conversation.entity";
 import type { WhatsAppConversationRepository } from "../repositories/whatsapp-conversation.repository";
 import { WhatsAppPhone } from "../utils/whatsapp-phone";
 
@@ -13,9 +14,10 @@ export class RecordInboundWhatsAppMessageUseCase {
   constructor(
     private readonly repository: WhatsAppConversationRepository,
     private readonly now: () => Date = () => new Date(),
+    private readonly assistantEnabled = false,
   ) {}
 
-  async execute(input: RecordInboundWhatsAppMessageInput): Promise<void> {
+  async execute(input: RecordInboundWhatsAppMessageInput): Promise<RecordedWhatsAppInboundMessage> {
     const participant = WhatsAppPhone.create(input.from);
     if (!participant) throw new Error("Inbound WhatsApp sender is invalid.");
     const business = WhatsAppPhone.create(input.to);
@@ -25,13 +27,14 @@ export class RecordInboundWhatsAppMessageUseCase {
       throw new Error("Inbound WhatsApp message id is invalid.");
     }
 
-    await this.repository.recordInboundMessage({
+    return this.repository.recordInboundMessage({
       businessPhoneE164: business.value,
       participantPhoneE164: participant.value,
       providerMessageId,
       body: input.body?.trim() || null,
       mediaCount: Math.max(0, Math.trunc(input.mediaCount || 0)),
       receivedAt: this.now(),
+      enqueueAssistant: this.assistantEnabled,
     });
   }
 }

@@ -11,4 +11,11 @@ export interface RecordWhatsAppInboundMessageInput {
   body: string | null;
   mediaCount: number;
   receivedAt: Date;
+  enqueueAssistant?: boolean;
+}
+
+export interface RecordedWhatsAppInboundMessage {
+  conversationId: string;
+  inboundMessageId: string;
+  created: boolean;
 }

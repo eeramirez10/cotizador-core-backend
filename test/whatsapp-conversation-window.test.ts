@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import type {
   RecordWhatsAppInboundMessageInput,
+  RecordedWhatsAppInboundMessage,
   WhatsAppConversationEntity,
 } from "../src/domain/entities/whatsapp-conversation.entity";
 import { WhatsAppConversationRepository } from "../src/domain/repositories/whatsapp-conversation.repository";
@@ -16,8 +17,9 @@ class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository 
     return this.conversation;
   }
 
-  async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<void> {
+  async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage> {
     this.recorded = input;
+    return { conversationId: "conversation-1", inboundMessageId: "message-1", created: true };
   }
 }
 
@@ -83,5 +85,6 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     body: "Hola",
     mediaCount: 1,
     receivedAt: now,
+    enqueueAssistant: false,
   });
 });

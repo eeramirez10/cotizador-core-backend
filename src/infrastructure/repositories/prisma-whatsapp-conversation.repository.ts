@@ -1,4 +1,7 @@
-import type { RecordWhatsAppInboundMessageInput } from "../../domain/entities/whatsapp-conversation.entity";
+import type {
+  RecordWhatsAppInboundMessageInput,
+  RecordedWhatsAppInboundMessage,
+} from "../../domain/entities/whatsapp-conversation.entity";
 import { WhatsAppConversationRepository } from "../../domain/repositories/whatsapp-conversation.repository";
 import { prisma } from "../database/prisma-client";
 
@@ -12,8 +15,8 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
     });
   }
 
-  async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<void> {
-    await prisma.$transaction(async (tx) => {
+  async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage> {
+    return prisma.$transaction(async (tx) => {
       const conversation = await tx.whatsAppConversation.upsert({
         where: {
           businessPhoneE164_participantPhoneE164: {
@@ -40,7 +43,19 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
         }],
         skipDuplicates: true,
       });
-      if (inserted.count === 0) return;
+      const inbound = await tx.whatsAppInboundMessage.findUniqueOrThrow({
+        where: { providerMessageId: input.providerMessageId },
+        select: { id: true },
+      });
+      if (inserted.count === 0) {
+        return { conversationId: conversation.id, inboundMessageId: inbound.id, created: false };
+      }
+
+      if (input.enqueueAssistant) {
+        await tx.whatsAppAssistantJob.create({
+          data: { conversationId: conversation.id, inboundMessageId: inbound.id },
+        });
+      }
 
       await tx.whatsAppConversation.updateMany({
         where: {
@@ -49,6 +64,7 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
         },
         data: { lastInboundAt: input.receivedAt },
       });
+      return { conversationId: conversation.id, inboundMessageId: inbound.id, created: true };
     });
   }
 }

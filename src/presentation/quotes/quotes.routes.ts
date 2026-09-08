@@ -12,6 +12,7 @@ import { DeleteQuoteItemUseCase } from "../../domain/use-cases/delete-quote-item
 import { DownloadQuoteOrderFileUseCase } from "../../domain/use-cases/download-quote-order-file.use-case";
 import { GenerateQuoteOrderUseCase } from "../../domain/use-cases/generate-quote-order.use-case";
 import { GetQuoteByIdUseCase } from "../../domain/use-cases/get-quote-by-id.use-case";
+import { GetQuoteCustomerChangeRequestsUseCase } from "../../domain/use-cases/get-quote-customer-change-requests.use-case";
 import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
@@ -45,7 +46,9 @@ import { TwilioQuoteMessagingAdapter } from "../../infrastructure/messaging/twil
 import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
 import { GetWhatsAppConversationWindowUseCase } from "../../domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
+import { PrismaWhatsAppAssistantRepository } from "../../infrastructure/repositories/prisma-whatsapp-assistant.repository";
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
+import { QuoteCustomerChangeRequestsController } from "./quote-customer-change-requests.controller";
 
 export class QuotesRoutes {
   static routes(): Router {
@@ -173,6 +176,9 @@ export class QuotesRoutes {
       registerErpQuoteUseCase,
       sendQuoteWhatsAppUseCase
     );
+    const changeRequestsController = new QuoteCustomerChangeRequestsController(
+      new GetQuoteCustomerChangeRequestsUseCase(quoteRepository, new PrismaWhatsAppAssistantRepository()),
+    );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
     router.put(
@@ -180,6 +186,12 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("SELLER"),
       controller.saveDraft
+    );
+    router.get(
+      "/:id/customer-change-requests",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      changeRequestsController.list,
     );
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.getById);
     router.post("/", requireAuth, requireRoles("SELLER"), controller.create);

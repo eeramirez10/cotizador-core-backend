@@ -15,7 +15,11 @@ export class TwilioRoutes {
     const conversationRepository = new PrismaWhatsAppConversationRepository();
     const controller = new TwilioController(
       new UpdateWhatsAppDeliveryStatusUseCase(new QuoteRepositoryImpl(new PrismaQuoteDatasource())),
-      new RecordInboundWhatsAppMessageUseCase(conversationRepository),
+      new RecordInboundWhatsAppMessageUseCase(
+        conversationRepository,
+        () => new Date(),
+        Envs.whatsAppAssistantEnabled,
+      ),
       new GetWhatsAppConversationWindowUseCase(conversationRepository, Envs.twilioWhatsAppFrom),
       Envs.twilioAuthToken,
       Envs.twilioStatusCallbackUrl,

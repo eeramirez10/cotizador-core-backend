@@ -330,7 +330,7 @@ export interface ChangeQuoteStatusDatasourceParams {
   cancellationComment: string | null;
   approvalReturnReason: string | null;
   approvalReturnComment: string | null;
-  actorUserId: string;
+  actorUserId: string | null;
   scope: QuoteAccessScope;
 }
 

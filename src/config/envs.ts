@@ -159,4 +159,22 @@ export class Envs {
     const configured = get("TWILIO_INCOMING_WEBHOOK_URL").default("").asString().trim();
     return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/incoming`;
   }
+
+  static get whatsAppAssistantEnabled(): boolean {
+    return get("WHATSAPP_ASSISTANT_ENABLED").default("false").asBool();
+  }
+
+  static get whatsAppAssistantInternalApiKey(): string {
+    return get("WHATSAPP_ASSISTANT_INTERNAL_API_KEY")
+      .default(Envs.aiPlatformInternalApiKey)
+      .asString();
+  }
+
+  static get whatsAppAssistantPollIntervalMs(): number {
+    return get("WHATSAPP_ASSISTANT_POLL_INTERVAL_MS").default("1000").asIntPositive();
+  }
+
+  static get whatsAppAssistantMaxAttempts(): number {
+    return get("WHATSAPP_ASSISTANT_MAX_ATTEMPTS").default("3").asIntPositive();
+  }
 }

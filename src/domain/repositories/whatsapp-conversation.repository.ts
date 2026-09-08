@@ -1,5 +1,6 @@
 import type {
   RecordWhatsAppInboundMessageInput,
+  RecordedWhatsAppInboundMessage,
   WhatsAppConversationEntity,
 } from "../entities/whatsapp-conversation.entity";
 
@@ -9,5 +10,5 @@ export abstract class WhatsAppConversationRepository {
     participantPhoneE164: string,
   ): Promise<WhatsAppConversationEntity | null>;
 
-  abstract recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<void>;
+  abstract recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage>;
 }

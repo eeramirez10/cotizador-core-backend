@@ -189,6 +189,32 @@ enum QuoteDeliveryAttemptStatus {
   FAILED
 }
 
+enum WhatsAppAssistantJobStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum WhatsAppPendingActionType {
+  ACCEPT_QUOTE
+  REJECT_QUOTE
+}
+
+enum WhatsAppPendingActionStatus {
+  PENDING
+  EXECUTED
+  EXPIRED
+  CANCELLED
+}
+
+enum QuoteCustomerChangeRequestStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CANCELLED
+}
+
 enum OrderGenerationStatus {
   NOT_GENERATED
   GENERATED
@@ -421,9 +447,10 @@ model CustomerContact {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  customer         Customer               @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  quotes           Quote[]
-  deliveryAttempts QuoteDeliveryAttempt[]
+  customer               Customer                        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  quotes                 Quote[]
+  deliveryAttempts       QuoteDeliveryAttempt[]
+  whatsappChangeRequests WhatsAppCustomerChangeRequest[]
 
   @@index([customerId])
   @@map("customer_contacts")
@@ -587,12 +614,14 @@ model Quote {
   supersededByQuote        Quote?           @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
   supersedesQuote          Quote?           @relation("QuoteSupersededBy")
 
-  items               QuoteItem[]
-  deliveryAttempts    QuoteDeliveryAttempt[]
-  orderExports        QuoteOrderExport[]
-  events              QuoteEvent[]
-  purchaseRequisition PurchaseRequisition?
-  attachments         QuoteAttachment[]
+  items                  QuoteItem[]
+  deliveryAttempts       QuoteDeliveryAttempt[]
+  orderExports           QuoteOrderExport[]
+  events                 QuoteEvent[]
+  purchaseRequisition    PurchaseRequisition?
+  attachments            QuoteAttachment[]
+  whatsappPendingActions WhatsAppPendingAction[]
+  whatsappChangeRequests WhatsAppCustomerChangeRequest[]
 
   @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
@@ -1048,14 +1077,20 @@ model QuoteDeliveryAttempt {
 }
 
 model WhatsAppConversation {
-  id                   String   @id @default(uuid()) @db.Uuid
-  businessPhoneE164    String   @map("business_phone_e164") @db.VarChar(20)
-  participantPhoneE164 String   @map("participant_phone_e164") @db.VarChar(20)
-  lastInboundAt        DateTime @map("last_inbound_at")
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
+  id                   String    @id @default(uuid()) @db.Uuid
+  businessPhoneE164    String    @map("business_phone_e164") @db.VarChar(20)
+  participantPhoneE164 String    @map("participant_phone_e164") @db.VarChar(20)
+  lastInboundAt        DateTime  @map("last_inbound_at")
+  previousResponseId   String?   @map("previous_response_id") @db.VarChar(180)
+  lastAssistantAt      DateTime? @map("last_assistant_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
 
-  inboundMessages WhatsAppInboundMessage[]
+  inboundMessages  WhatsAppInboundMessage[]
+  outboundMessages WhatsAppOutboundMessage[]
+  assistantJobs    WhatsAppAssistantJob[]
+  pendingActions   WhatsAppPendingAction[]
+  changeRequests   WhatsAppCustomerChangeRequest[]
 
   @@unique([businessPhoneE164, participantPhoneE164], map: "whatsapp_conversations_business_participant_key")
   @@index([lastInboundAt])
@@ -1071,10 +1106,87 @@ model WhatsAppInboundMessage {
   receivedAt        DateTime @map("received_at")
   createdAt         DateTime @default(now()) @map("created_at")
 
-  conversation WhatsAppConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation WhatsAppConversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  assistantJob WhatsAppAssistantJob?
 
   @@index([conversationId, receivedAt])
   @@map("whatsapp_inbound_messages")
+}
+
+model WhatsAppOutboundMessage {
+  id                String   @id @default(uuid()) @db.Uuid
+  conversationId    String   @map("conversation_id") @db.Uuid
+  providerMessageId String?  @unique @map("provider_message_id") @db.VarChar(160)
+  body              String   @db.Text
+  sentAt            DateTime @map("sent_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  conversation WhatsAppConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, sentAt])
+  @@map("whatsapp_outbound_messages")
+}
+
+model WhatsAppAssistantJob {
+  id               String                     @id @default(uuid()) @db.Uuid
+  conversationId   String                     @map("conversation_id") @db.Uuid
+  inboundMessageId String                     @unique @map("inbound_message_id") @db.Uuid
+  status           WhatsAppAssistantJobStatus @default(PENDING)
+  attempts         Int                        @default(0)
+  nextAttemptAt    DateTime                   @default(now()) @map("next_attempt_at")
+  lockedAt         DateTime?                  @map("locked_at")
+  completedAt      DateTime?                  @map("completed_at")
+  errorMessage     String?                    @map("error_message") @db.Text
+  createdAt        DateTime                   @default(now()) @map("created_at")
+  updatedAt        DateTime                   @updatedAt @map("updated_at")
+
+  conversation   WhatsAppConversation   @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  inboundMessage WhatsAppInboundMessage @relation(fields: [inboundMessageId], references: [id], onDelete: Cascade)
+
+  @@index([status, nextAttemptAt])
+  @@index([conversationId, createdAt])
+  @@map("whatsapp_assistant_jobs")
+}
+
+model WhatsAppPendingAction {
+  id             String                      @id @default(uuid()) @db.Uuid
+  conversationId String                      @map("conversation_id") @db.Uuid
+  quoteId        String                      @map("quote_id") @db.Uuid
+  actionType     WhatsAppPendingActionType   @map("action_type")
+  preparedTurnId String                      @map("prepared_turn_id") @db.VarChar(80)
+  status         WhatsAppPendingActionStatus @default(PENDING)
+  payload        Json
+  expiresAt      DateTime                    @map("expires_at")
+  executedAt     DateTime?                   @map("executed_at")
+  createdAt      DateTime                    @default(now()) @map("created_at")
+  updatedAt      DateTime                    @updatedAt @map("updated_at")
+
+  conversation WhatsAppConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  quote        Quote                @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, status, expiresAt])
+  @@index([quoteId, status])
+  @@map("whatsapp_pending_actions")
+}
+
+model WhatsAppCustomerChangeRequest {
+  id                String                           @id @default(uuid()) @db.Uuid
+  conversationId    String                           @map("conversation_id") @db.Uuid
+  quoteId           String                           @map("quote_id") @db.Uuid
+  customerContactId String?                          @map("customer_contact_id") @db.Uuid
+  requestedByPhone  String                           @map("requested_by_phone") @db.VarChar(20)
+  requestedChanges  String                           @map("requested_changes") @db.Text
+  status            QuoteCustomerChangeRequestStatus @default(OPEN)
+  createdAt         DateTime                         @default(now()) @map("created_at")
+  updatedAt         DateTime                         @updatedAt @map("updated_at")
+
+  conversation    WhatsAppConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  quote           Quote                @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  customerContact CustomerContact?     @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
+
+  @@index([quoteId, status, createdAt], map: "whatsapp_customer_change_requests_quote_id_status_created_at_id")
+  @@index([conversationId, createdAt], map: "whatsapp_customer_change_requests_conversation_id_created_at_id")
+  @@map("whatsapp_customer_change_requests")
 }
 
 model QuoteOrderExport {
