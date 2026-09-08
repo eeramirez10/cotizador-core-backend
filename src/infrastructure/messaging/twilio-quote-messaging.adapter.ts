@@ -39,7 +39,7 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
             "1": message.contactName,
             "2": message.sellerName,
             "3": message.quoteNumber,
-            [this.config.mediaVariable]: message.documentToken,
+            [this.config.mediaVariable]: this.publicDocumentPath(message),
           }),
         })
       : await this.sendFreeForm(client, common, message);
@@ -87,13 +87,19 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
     });
     return client.messages.create({
       ...addresses,
-      mediaUrl: [this.publicDocumentUrl(message.documentToken)],
+      mediaUrl: [this.publicDocumentUrl(message)],
     });
   }
 
-  private publicDocumentUrl(token: string): string {
+  private publicDocumentUrl(message: SendQuoteWhatsAppMessage): string {
     const baseUrl = this.config.publicApiUrl.replace(/\/+$/, "");
-    return `${baseUrl}/api/public/quote-documents/${encodeURIComponent(token)}`;
+    return `${baseUrl}/api/public/quote-documents/${this.publicDocumentPath(message)}`;
+  }
+
+  private publicDocumentPath(message: SendQuoteWhatsAppMessage): string {
+    const quoteNumber = message.quoteNumber.replace(/[^a-zA-Z0-9_-]/g, "_") || "cotizacion";
+    const fileName = `Cotizacion-${quoteNumber}.pdf`;
+    return `${encodeURIComponent(message.documentToken)}/${encodeURIComponent(fileName)}`;
   }
 
   private whatsappAddress(value: string): string {

@@ -18,6 +18,7 @@ export class QuoteDocumentsRoutes {
       new FileAttachmentsUseCase(repository, new LocalFileStorageAdapter(Envs.fileStorageRoot)),
     );
     router.get("/sample.pdf", controller.sample);
+    router.get("/:token/:fileName", controller.download);
     router.get("/:token", controller.download);
     return router;
   }
