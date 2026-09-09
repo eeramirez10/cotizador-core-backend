@@ -23,6 +23,11 @@ export abstract class FileAttachmentRepository {
     file: StoredFileMetadata;
     actor: FileAttachmentActor;
   }): Promise<FileAttachmentEntity>;
+  abstract createCustomerQuotePdf(input: {
+    quoteId: string;
+    file: StoredFileMetadata;
+    actor: FileAttachmentActor;
+  }): Promise<FileAttachmentEntity>;
   abstract createPurchaseOfferAttachment(input: {
     requisitionId: string;
     purchaseOfferIds: string[];
@@ -33,5 +38,6 @@ export abstract class FileAttachmentRepository {
   abstract listQuote(quoteId: string, actor: FileAttachmentActor): Promise<FileAttachmentEntity[]>;
   abstract listPurchaseRequisition(requisitionId: string, actor: FileAttachmentActor): Promise<FileAttachmentEntity[]>;
   abstract findDownload(fileId: string, actor: FileAttachmentActor): Promise<DownloadableFileEntity | null>;
+  abstract findPublicQuotePdf(fileId: string): Promise<DownloadableFileEntity | null>;
   abstract softDelete(fileId: string, actor: FileAttachmentActor): Promise<DownloadableFileEntity | null>;
 }

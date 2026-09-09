@@ -20,6 +20,7 @@ import {
   UpdateQuoteByIdDatasourceParams,
   UpdateQuoteItemDatasourceParams,
   UpdateQuoteProcurementReferenceDatasourceParams,
+  UpdateQuoteDeliveryAttemptStatusDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
 import { QuoteEntity } from "../../domain/entities/quote.entity";
 import { QuoteRepository } from "../../domain/repositories/quote.repository";
@@ -89,6 +90,10 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.recordDeliveryAttempt(params);
+  }
+
+  updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean> {
+    return this.datasource.updateDeliveryAttemptStatus(params);
   }
 
   markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null> {

@@ -14,6 +14,7 @@ interface ChangeQuoteStatusActorContext {
   id: string;
   role: UserRole;
   branchId: string;
+  auditActorUserId?: string | null;
 }
 
 const allowedTransitions: Record<QuoteStatus, QuoteStatus[]> = {
@@ -140,6 +141,9 @@ export class ChangeQuoteStatusUseCase {
 
     }
 
+    const auditActorUserId = Object.prototype.hasOwnProperty.call(actor, "auditActorUserId")
+      ? actor.auditActorUserId ?? null
+      : actor.id;
     const updatedQuote = await this.quoteRepository.changeStatus({
       id: quoteId,
       status: targetStatus,
@@ -160,7 +164,7 @@ export class ChangeQuoteStatusUseCase {
       cancellationComment: dto.status === "CANCELLED" ? dto.cancellationComment : null,
       approvalReturnReason: dto.status === "CHANGES_REQUESTED" ? dto.approvalReturnReason : null,
       approvalReturnComment: dto.status === "CHANGES_REQUESTED" ? dto.approvalReturnComment : null,
-      actorUserId: actor.id,
+      actorUserId: auditActorUserId,
       scope: {
         role: actor.role,
         userId: actor.id,

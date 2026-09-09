@@ -63,6 +63,30 @@ export class FileAttachmentsUseCase {
     return this.uploadQuote(clientDraftId, "SELLER_SUPPLIER_QUOTE", itemIds, file, actor);
   }
 
+  async uploadCustomerQuotePdf(
+    quoteId: string,
+    file: UploadedFileInput,
+    actor: FileAttachmentActor,
+  ) {
+    const normalizedQuoteId = quoteId.trim();
+    if (!normalizedQuoteId) throw new Error("Quote id is required.");
+    if (file.mimeType !== "application/pdf" || path.extname(file.originalName).toLowerCase() !== ".pdf") {
+      throw new Error("The customer quote document must be a PDF.");
+    }
+    this.validateFile(file);
+    const saved = await this.storage.save({ content: file.content, originalName: file.originalName, mimeType: file.mimeType });
+    try {
+      return await this.repository.createCustomerQuotePdf({
+        quoteId: normalizedQuoteId,
+        file: { originalName: file.originalName, mimeType: file.mimeType, ...saved },
+        actor,
+      });
+    } catch (error) {
+      await this.storage.delete(saved.storageKey).catch(() => undefined);
+      throw error;
+    }
+  }
+
   async uploadPurchaseOffer(
     requisitionId: string,
     purchaseOfferIds: string[],
@@ -107,6 +131,14 @@ export class FileAttachmentsUseCase {
     if (!metadata) throw new Error("Attachment not found.");
     const stored = await this.storage.read(metadata.storageKey);
     if (!stored) throw new Error("Attachment content not found.");
+    return { ...metadata, content: stored.content };
+  }
+
+  async downloadPublicQuotePdf(fileId: string) {
+    const metadata = await this.repository.findPublicQuotePdf(fileId);
+    if (!metadata) throw new Error("Quote document not found.");
+    const stored = await this.storage.read(metadata.storageKey);
+    if (!stored) throw new Error("Quote document content not found.");
     return { ...metadata, content: stored.content };
   }
 

@@ -330,7 +330,7 @@ export interface ChangeQuoteStatusDatasourceParams {
   cancellationComment: string | null;
   approvalReturnReason: string | null;
   approvalReturnComment: string | null;
-  actorUserId: string;
+  actorUserId: string | null;
   scope: QuoteAccessScope;
 }
 
@@ -369,10 +369,20 @@ export interface RecordQuoteDeliveryAttemptDatasourceParams {
     recipient: string;
     status: QuoteDeliveryAttemptStatus;
     providerMessageId: string | null;
+    fileAssetId: string | null;
+    customerContactId: string | null;
+    templateSid: string | null;
     errorMessage: string | null;
     note: string | null;
     sentAt: Date;
   };
+}
+
+export interface UpdateQuoteDeliveryAttemptStatusDatasourceParams {
+  providerMessageId: string;
+  status: QuoteDeliveryAttemptStatus;
+  errorMessage: string | null;
+  occurredAt: Date;
 }
 
 export interface MarkQuoteOrderGeneratedDatasourceParams {
@@ -411,6 +421,7 @@ export abstract class QuoteDatasource {
   abstract restore(params: RestoreQuoteDatasourceParams): Promise<QuoteEntity | null>;
   abstract deletePermanently(params: DeleteQuoteDatasourceParams): Promise<boolean>;
   abstract recordDeliveryAttempt(params: RecordQuoteDeliveryAttemptDatasourceParams): Promise<QuoteEntity | null>;
+  abstract updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
   abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
 }

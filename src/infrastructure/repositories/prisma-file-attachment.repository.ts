@@ -78,6 +78,62 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     return this.toEntity(row);
   }
 
+  async createCustomerQuotePdf(input: {
+    quoteId: string;
+    file: StoredFileMetadata;
+    actor: FileAttachmentActor;
+  }): Promise<FileAttachmentEntity> {
+    const quote = await prisma.quote.findFirst({
+      where: { id: input.quoteId, ...this.quoteScope(input.actor) },
+      select: {
+        id: true,
+        clientDraftId: true,
+        status: true,
+        archivedAt: true,
+        nextVersions: {
+          where: { status: { in: ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"] } },
+          select: { id: true },
+          take: 1,
+        },
+      },
+    });
+    if (!quote) throw new Error("Quote not found.");
+    if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+    if (!["QUOTED", "APPROVED"].includes(quote.status)) {
+      throw new Error("Quote must be QUOTED or APPROVED to send it by WhatsApp.");
+    }
+    if (quote.nextVersions.length > 0) throw new Error("Quote cannot be sent while a revision is in progress.");
+
+    const row = await prisma.$transaction(async (tx) => {
+      const asset = await tx.fileAsset.create({
+        data: {
+          ...input.file,
+          uploadedByUserId: input.actor.id,
+          quoteAttachments: {
+            create: [{
+              quoteId: quote.id,
+              clientDraftId: quote.clientDraftId ?? quote.id,
+              clientItemId: null,
+              category: "CUSTOMER_QUOTE_PDF",
+            }],
+          },
+        },
+        include: assetInclude,
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: input.actor.id,
+          entityType: "QUOTE",
+          entityId: quote.id,
+          action: "CREATE_CUSTOMER_QUOTE_PDF",
+          payload: { fileAssetId: asset.id, originalName: asset.originalName },
+        },
+      });
+      return asset;
+    });
+    return this.toEntity(row);
+  }
+
   async createPurchaseOfferAttachment(input: {
     requisitionId: string;
     purchaseOfferIds: string[];
@@ -141,6 +197,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
         uploadedByUserId: actor.id,
         quoteAttachments: {
           some: {
+            category: { not: "CUSTOMER_QUOTE_PDF" },
             OR: [
               { clientDraftId },
               ...(quoteIds.length > 0 ? [{ quoteId: { in: quoteIds } }] : []),
@@ -162,7 +219,12 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (!quote) throw new Error("Quote not found.");
     const quoteIds = await this.quoteChainIds(quote.id, quote.rootQuoteId);
     const rows = await prisma.fileAsset.findMany({
-      where: { status: "READY", quoteAttachments: { some: { quoteId: { in: quoteIds } } } },
+      where: {
+        status: "READY",
+        quoteAttachments: {
+          some: { quoteId: { in: quoteIds }, category: { not: "CUSTOMER_QUOTE_PDF" } },
+        },
+      },
       include: assetInclude,
       orderBy: { createdAt: "desc" },
     });
@@ -178,7 +240,12 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     const quoteIds = await this.quoteChainIds(requisition.quoteId, requisition.quote.rootQuoteId);
     const [quoteFiles, offerFiles] = await Promise.all([
       prisma.fileAsset.findMany({
-        where: { status: "READY", quoteAttachments: { some: { quoteId: { in: quoteIds } } } },
+        where: {
+          status: "READY",
+          quoteAttachments: {
+            some: { quoteId: { in: quoteIds }, category: { not: "CUSTOMER_QUOTE_PDF" } },
+          },
+        },
         include: assetInclude,
         orderBy: { createdAt: "desc" },
       }),
@@ -199,6 +266,19 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
 
   async findDownload(fileId: string, actor: FileAttachmentActor): Promise<DownloadableFileEntity | null> {
     const row = await this.findAccessibleFile(fileId, actor);
+    return row ? this.toDownload(row) : null;
+  }
+
+  async findPublicQuotePdf(fileId: string): Promise<DownloadableFileEntity | null> {
+    const row = await prisma.fileAsset.findFirst({
+      where: {
+        id: fileId,
+        status: "READY",
+        mimeType: "application/pdf",
+        quoteAttachments: { some: { category: "CUSTOMER_QUOTE_PDF" } },
+      },
+      select: { id: true, originalName: true, storageKey: true, mimeType: true },
+    });
     return row ? this.toDownload(row) : null;
   }
 

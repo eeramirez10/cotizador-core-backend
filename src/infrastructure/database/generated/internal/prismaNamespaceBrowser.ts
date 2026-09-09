@@ -74,6 +74,8 @@ export const ModelName = {
   PurchaseOfferAttachment: 'PurchaseOfferAttachment',
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
+  WhatsAppConversation: 'WhatsAppConversation',
+  WhatsAppInboundMessage: 'WhatsAppInboundMessage',
   QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
@@ -676,13 +678,45 @@ export const QuoteDeliveryAttemptScalarFieldEnum = {
   recipient: 'recipient',
   status: 'status',
   providerMessageId: 'providerMessageId',
+  fileAssetId: 'fileAssetId',
+  customerContactId: 'customerContactId',
+  templateSid: 'templateSid',
   errorMessage: 'errorMessage',
   sentByUserId: 'sentByUserId',
   sentAt: 'sentAt',
-  createdAt: 'createdAt'
+  deliveredAt: 'deliveredAt',
+  readAt: 'readAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type QuoteDeliveryAttemptScalarFieldEnum = (typeof QuoteDeliveryAttemptScalarFieldEnum)[keyof typeof QuoteDeliveryAttemptScalarFieldEnum]
+
+
+export const WhatsAppConversationScalarFieldEnum = {
+  id: 'id',
+  businessPhoneE164: 'businessPhoneE164',
+  participantPhoneE164: 'participantPhoneE164',
+  lastInboundAt: 'lastInboundAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppConversationScalarFieldEnum = (typeof WhatsAppConversationScalarFieldEnum)[keyof typeof WhatsAppConversationScalarFieldEnum]
+
+
+export const WhatsAppInboundMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  providerMessageId: 'providerMessageId',
+  body: 'body',
+  mediaCount: 'mediaCount',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
 
 
 export const QuoteOrderExportScalarFieldEnum = {

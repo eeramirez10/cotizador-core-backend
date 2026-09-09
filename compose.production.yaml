@@ -101,6 +101,37 @@ services:
         aliases:
           - cotizador-core-backend
 
+  whatsapp-assistant-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: cotizador-whatsapp-assistant-worker
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    command:
+      - node
+      - dist/presentation/whatsapp-assistant-worker.js
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:mode=1777,size=64m
+    stop_grace_period: 30s
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - infra-network
+
 volumes:
   core_documents:
     external: true

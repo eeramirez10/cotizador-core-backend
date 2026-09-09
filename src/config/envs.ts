@@ -113,4 +113,68 @@ export class Envs {
   static get sellerExcelImportEnabled(): boolean {
     return get("SELLER_EXCEL_IMPORT_ENABLED").default("true").asBool();
   }
+
+  static get publicApiUrl(): string {
+    return get("PUBLIC_API_URL").default(`http://localhost:${Envs.port}`).asString();
+  }
+
+  static get quoteDocumentSigningSecret(): string {
+    return get("QUOTE_DOCUMENT_SIGNING_SECRET").default(Envs.jwtSeed).asString();
+  }
+
+  static get quoteDocumentUrlTtlSeconds(): number {
+    return get("QUOTE_DOCUMENT_URL_TTL_SECONDS").default("3600").asIntPositive();
+  }
+
+  static get twilioWhatsAppEnabled(): boolean {
+    return get("TWILIO_WHATSAPP_ENABLED").default("false").asBool();
+  }
+
+  static get twilioAccountSid(): string {
+    return get("TWILIO_ACCOUNT_SID").default("").asString();
+  }
+
+  static get twilioAuthToken(): string {
+    return get("TWILIO_AUTH_TOKEN").default("").asString();
+  }
+
+  static get twilioWhatsAppFrom(): string {
+    return get("TWILIO_WHATSAPP_FROM").default("").asString();
+  }
+
+  static get twilioQuoteContentSid(): string {
+    return get("TWILIO_WHATSAPP_QUOTE_CONTENT_SID").default("").asString();
+  }
+
+  static get twilioQuoteMediaVariable(): string {
+    return get("TWILIO_WHATSAPP_QUOTE_MEDIA_VARIABLE").default("4").asString();
+  }
+
+  static get twilioStatusCallbackUrl(): string {
+    const configured = get("TWILIO_STATUS_CALLBACK_URL").default("").asString().trim();
+    return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/status`;
+  }
+
+  static get twilioIncomingWebhookUrl(): string {
+    const configured = get("TWILIO_INCOMING_WEBHOOK_URL").default("").asString().trim();
+    return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/incoming`;
+  }
+
+  static get whatsAppAssistantEnabled(): boolean {
+    return get("WHATSAPP_ASSISTANT_ENABLED").default("false").asBool();
+  }
+
+  static get whatsAppAssistantInternalApiKey(): string {
+    return get("WHATSAPP_ASSISTANT_INTERNAL_API_KEY")
+      .default(Envs.aiPlatformInternalApiKey)
+      .asString();
+  }
+
+  static get whatsAppAssistantPollIntervalMs(): number {
+    return get("WHATSAPP_ASSISTANT_POLL_INTERVAL_MS").default("1000").asIntPositive();
+  }
+
+  static get whatsAppAssistantMaxAttempts(): number {
+    return get("WHATSAPP_ASSISTANT_MAX_ATTEMPTS").default("3").asIntPositive();
+  }
 }
