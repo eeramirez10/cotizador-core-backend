@@ -22,6 +22,14 @@ export class ProcessWhatsAppAssistantJobUseCase {
         mediaCount: job.mediaCount,
         previousResponseId: job.previousResponseId,
       });
+      if (!await this.repository.isConversationAiControlled(job.conversationId)) {
+        await this.repository.cancelJob(
+          job.id,
+          "Cancelled because a user took control of the conversation.",
+          new Date(),
+        );
+        return true;
+      }
       const delivery = await this.messaging.sendReply(job.participantPhone, response.text);
       await this.repository.completeJob({
         jobId: job.id,

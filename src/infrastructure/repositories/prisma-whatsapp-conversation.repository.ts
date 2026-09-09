@@ -28,9 +28,10 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
           businessPhoneE164: input.businessPhoneE164,
           participantPhoneE164: input.participantPhoneE164,
           lastInboundAt: input.receivedAt,
+          lastMessageAt: input.receivedAt,
         },
         update: {},
-        select: { id: true },
+        select: { id: true, mode: true },
       });
 
       const inserted = await tx.whatsAppInboundMessage.createMany({
@@ -51,7 +52,7 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
         return { conversationId: conversation.id, inboundMessageId: inbound.id, created: false };
       }
 
-      if (input.enqueueAssistant) {
+      if (input.enqueueAssistant && conversation.mode === "AI") {
         await tx.whatsAppAssistantJob.create({
           data: { conversationId: conversation.id, inboundMessageId: inbound.id },
         });
@@ -60,9 +61,12 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
       await tx.whatsAppConversation.updateMany({
         where: {
           id: conversation.id,
-          lastInboundAt: { lt: input.receivedAt },
+          OR: [
+            { lastInboundAt: null },
+            { lastInboundAt: { lt: input.receivedAt } },
+          ],
         },
-        data: { lastInboundAt: input.receivedAt },
+        data: { lastInboundAt: input.receivedAt, lastMessageAt: input.receivedAt },
       });
       return { conversationId: conversation.id, inboundMessageId: inbound.id, created: true };
     });

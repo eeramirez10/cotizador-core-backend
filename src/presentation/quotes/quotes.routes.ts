@@ -47,6 +47,7 @@ import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-what
 import { GetWhatsAppConversationWindowUseCase } from "../../domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
 import { PrismaWhatsAppAssistantRepository } from "../../infrastructure/repositories/prisma-whatsapp-assistant.repository";
+import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 import { QuoteCustomerChangeRequestsController } from "./quote-customer-change-requests.controller";
 
@@ -119,6 +120,7 @@ export class QuotesRoutes {
       fileAttachmentRepository,
       new LocalFileStorageAdapter(Envs.fileStorageRoot),
     );
+    const whatsAppInboxRepository = new PrismaWhatsAppInboxRepository();
     const whatsAppConversationWindow = new GetWhatsAppConversationWindowUseCase(
       new PrismaWhatsAppConversationRepository(),
       Envs.twilioWhatsAppFrom,
@@ -142,6 +144,8 @@ export class QuotesRoutes {
         Envs.quoteDocumentUrlTtlSeconds,
       ),
       whatsAppConversationWindow,
+      whatsAppInboxRepository,
+      Envs.twilioWhatsAppFrom,
     );
     const downloadQuoteOrderFileUseCase = new DownloadQuoteOrderFileUseCase(
       quoteRepository,

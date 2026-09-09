@@ -22,6 +22,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       const candidate = await tx.whatsAppAssistantJob.findFirst({
         where: {
           nextAttemptAt: { lte: new Date() },
+          conversation: { mode: "AI" },
           OR: [
             { status: "PENDING" },
             { status: "PROCESSING", lockedAt: { lt: staleBefore } },
@@ -69,6 +70,26 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     });
   }
 
+  async isConversationAiControlled(conversationId: string): Promise<boolean> {
+    const row = await prisma.whatsAppConversation.findUnique({
+      where: { id: conversationId },
+      select: { mode: true },
+    });
+    return row?.mode === "AI";
+  }
+
+  async cancelJob(jobId: string, reason: string, cancelledAt: Date): Promise<void> {
+    await prisma.whatsAppAssistantJob.updateMany({
+      where: { id: jobId, status: { in: ["PENDING", "PROCESSING"] } },
+      data: {
+        status: "CANCELLED",
+        lockedAt: null,
+        completedAt: cancelledAt,
+        errorMessage: reason.slice(0, 2000),
+      },
+    });
+  }
+
   async completeJob(input: {
     jobId: string;
     conversationId: string;
@@ -84,12 +105,19 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       }),
       prisma.whatsAppConversation.update({
         where: { id: input.conversationId },
-        data: { previousResponseId: input.responseId, lastAssistantAt: input.sentAt },
+        data: {
+          previousResponseId: input.responseId,
+          lastAssistantAt: input.sentAt,
+          lastMessageAt: input.sentAt,
+        },
       }),
       prisma.whatsAppOutboundMessage.create({
         data: {
           conversationId: input.conversationId,
           providerMessageId: input.providerMessageId,
+          authorType: "AI",
+          messageType: "TEXT",
+          status: "QUEUED",
           body: input.body,
           sentAt: input.sentAt,
         },

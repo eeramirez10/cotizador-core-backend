@@ -26,7 +26,7 @@ export class GetWhatsAppConversationWindowUseCase {
     if (!participant) throw new Error("A valid WhatsApp recipient is required.");
 
     const conversation = await this.repository.findByParticipants(business.value, participant.value);
-    if (!conversation) {
+    if (!conversation?.lastInboundAt) {
       return { active: false, deliveryMode: "TEMPLATE", lastInboundAt: null, expiresAt: null };
     }
 

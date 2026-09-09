@@ -10,6 +10,8 @@ import type {
 export abstract class WhatsAppAssistantRepository {
   abstract getParticipantPhone(conversationId: string): Promise<string | null>;
   abstract claimNextJob(staleBefore: Date): Promise<WhatsAppAssistantJobEntity | null>;
+  abstract isConversationAiControlled(conversationId: string): Promise<boolean>;
+  abstract cancelJob(jobId: string, reason: string, cancelledAt: Date): Promise<void>;
   abstract completeJob(input: {
     jobId: string;
     conversationId: string;

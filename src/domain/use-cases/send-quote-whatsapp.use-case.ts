@@ -5,6 +5,7 @@ import type { UploadedFileInput, FileAttachmentsUseCase } from "./file-attachmen
 import type { CustomerRepository } from "../repositories/customer.repository";
 import type { QuoteRepository } from "../repositories/quote.repository";
 import { WhatsAppPhone } from "../utils/whatsapp-phone";
+import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
 import type {
   GetWhatsAppConversationWindowUseCase,
   WhatsAppDeliveryMode,
@@ -42,6 +43,8 @@ export class SendQuoteWhatsAppUseCase {
     private readonly messaging: QuoteMessagingPort,
     private readonly documentLinks: QuoteDocumentLinkPort,
     private readonly conversationWindow: GetWhatsAppConversationWindowUseCase,
+    private readonly inboxRepository: WhatsAppInboxRepository,
+    private readonly businessPhone: string,
   ) {}
 
   async execute(input: SendQuoteWhatsAppInput): Promise<SendQuoteWhatsAppResult> {
@@ -87,6 +90,7 @@ export class SendQuoteWhatsAppUseCase {
         messageBody: input.message,
         deliveryMode: window.deliveryMode,
       });
+      const sentAt = new Date();
       await this.quoteRepository.recordDeliveryAttempt({
         id: quote.id,
         actorUserId: input.actor.id,
@@ -101,9 +105,27 @@ export class SendQuoteWhatsAppUseCase {
           templateSid: message.templateSid,
           errorMessage: null,
           note: input.message,
-          sentAt: new Date(),
+          sentAt,
         },
       });
+      const normalizedBusinessPhone = WhatsAppPhone.create(this.businessPhone)?.value;
+      if (normalizedBusinessPhone) {
+        await this.inboxRepository.registerQuoteDelivery({
+          businessPhoneE164: normalizedBusinessPhone,
+          participantPhoneE164: recipient,
+          providerMessageId: message.providerMessageId,
+          status: message.status,
+          body: input.message,
+          sentAt,
+          sentByUserId: input.actor.id,
+          ownerUserId: quote.createdByUserId,
+          branchId: quote.branchId,
+          customerId: quote.customerId,
+          customerContactId: selectedContact?.id ?? null,
+          quoteId: quote.id,
+          fileAssetId: attachment.id,
+        }).catch((error) => console.error("whatsapp_inbox_quote_delivery_sync_failed", error));
+      }
       return {
         providerMessageId: message.providerMessageId,
         status: message.status,

@@ -1,5 +1,6 @@
 import type { QuoteDeliveryAttemptStatus } from "../../infrastructure/database/generated/enums";
 import type { QuoteRepository } from "../repositories/quote.repository";
+import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
 
 const STATUS_MAP: Record<string, QuoteDeliveryAttemptStatus> = {
   queued: "QUEUED",
@@ -13,9 +14,12 @@ const STATUS_MAP: Record<string, QuoteDeliveryAttemptStatus> = {
 };
 
 export class UpdateWhatsAppDeliveryStatusUseCase {
-  constructor(private readonly quoteRepository: QuoteRepository) {}
+  constructor(
+    private readonly quoteRepository: QuoteRepository,
+    private readonly inboxRepository: WhatsAppInboxRepository,
+  ) {}
 
-  execute(input: {
+  async execute(input: {
     providerMessageId: string;
     providerStatus: string;
     errorCode?: string;
@@ -25,11 +29,21 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
     const status = STATUS_MAP[input.providerStatus.trim().toLowerCase()];
     if (!providerMessageId || !status) return Promise.resolve(false);
     const details = [input.errorCode?.trim(), input.errorMessage?.trim()].filter(Boolean).join(": ") || null;
-    return this.quoteRepository.updateDeliveryAttemptStatus({
-      providerMessageId,
-      status,
-      errorMessage: status === "FAILED" ? details : null,
-      occurredAt: new Date(),
-    });
+    const occurredAt = new Date();
+    const [quoteUpdated, inboxUpdated] = await Promise.all([
+      this.quoteRepository.updateDeliveryAttemptStatus({
+        providerMessageId,
+        status,
+        errorMessage: status === "FAILED" ? details : null,
+        occurredAt,
+      }),
+      this.inboxRepository.updateOutboundStatus({
+        providerMessageId,
+        status,
+        errorMessage: status === "FAILED" ? details : null,
+        occurredAt,
+      }),
+    ]);
+    return quoteUpdated || inboxUpdated;
   }
 }

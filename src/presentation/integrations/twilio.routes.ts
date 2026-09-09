@@ -6,6 +6,7 @@ import { RecordInboundWhatsAppMessageUseCase } from "../../domain/use-cases/reco
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
+import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { TwilioController } from "./twilio.controller";
 
@@ -13,8 +14,12 @@ export class TwilioRoutes {
   static routes(): Router {
     const router = Router();
     const conversationRepository = new PrismaWhatsAppConversationRepository();
+    const inboxRepository = new PrismaWhatsAppInboxRepository();
     const controller = new TwilioController(
-      new UpdateWhatsAppDeliveryStatusUseCase(new QuoteRepositoryImpl(new PrismaQuoteDatasource())),
+      new UpdateWhatsAppDeliveryStatusUseCase(
+        new QuoteRepositoryImpl(new PrismaQuoteDatasource()),
+        inboxRepository,
+      ),
       new RecordInboundWhatsAppMessageUseCase(
         conversationRepository,
         () => new Date(),

@@ -1,7 +1,7 @@
 export interface WhatsAppConversationEntity {
   businessPhoneE164: string;
   participantPhoneE164: string;
-  lastInboundAt: Date;
+  lastInboundAt: Date | null;
 }
 
 export interface RecordWhatsAppInboundMessageInput {
