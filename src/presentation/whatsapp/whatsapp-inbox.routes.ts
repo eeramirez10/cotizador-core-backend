@@ -6,12 +6,14 @@ import { TwilioWhatsAppAssistantAdapter } from "../../infrastructure/messaging/t
 import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { requireAuth } from "../middlewares/auth.middleware";
+import { requireWhatsAppInboxEnabled } from "../middlewares/feature-flags.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { WhatsAppInboxController } from "./whatsapp-inbox.controller";
 
 export class WhatsAppInboxRoutes {
   static routes(): Router {
     const router = Router();
+    router.use(requireWhatsAppInboxEnabled);
     const repository = new PrismaWhatsAppInboxRepository();
     const controller = new WhatsAppInboxController(
       new WhatsAppInboxUseCase(repository, () => new Date(), whatsAppRealtimeBus),

@@ -114,6 +114,10 @@ export class Envs {
     return get("SELLER_EXCEL_IMPORT_ENABLED").default("true").asBool();
   }
 
+  static get whatsAppInboxEnabled(): boolean {
+    return get("WHATSAPP_INBOX_ENABLED").default(isDevelopment ? "true" : "false").asBool();
+  }
+
   static get publicApiUrl(): string {
     return get("PUBLIC_API_URL").default(`http://localhost:${Envs.port}`).asString();
   }
