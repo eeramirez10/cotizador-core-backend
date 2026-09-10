@@ -10,7 +10,9 @@ import { WhatsAppWebSocketGateway } from "../infrastructure/realtime/whatsapp-we
 
 const app = express();
 const server = createServer(app);
-const realtimeGateway = new WhatsAppWebSocketGateway(server, whatsAppRealtimeBus);
+const realtimeGateway = Envs.whatsAppInboxEnabled
+  ? new WhatsAppWebSocketGateway(server, whatsAppRealtimeBus)
+  : null;
 
 app.use(
   cors({
@@ -22,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", AppRoutes.routes());
 
-void realtimeGateway.start().catch((error) => {
+void realtimeGateway?.start().catch((error) => {
   console.error("whatsapp_realtime_start_failed", error);
 });
 
@@ -36,7 +38,7 @@ const shutdown = async (signal: string): Promise<void> => {
   if (stopping) return;
   stopping = true;
   console.log(JSON.stringify({ level: "info", event: "server.stopping", signal }));
-  await realtimeGateway.close();
+  await realtimeGateway?.close();
   await whatsAppRealtimeBus.close();
   await prisma.$disconnect();
   server.close(() => process.exit(0));

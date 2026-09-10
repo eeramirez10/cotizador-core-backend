@@ -7,6 +7,7 @@ export class SystemController {
       quoteInternalApprovalEnabled: Envs.quoteInternalApprovalEnabled,
       requisitionInternalApprovalEnabled: Envs.requisitionInternalApprovalEnabled,
       sellerExcelImportEnabled: Envs.sellerExcelImportEnabled,
+      whatsAppInboxEnabled: Envs.whatsAppInboxEnabled,
     });
   };
 }
