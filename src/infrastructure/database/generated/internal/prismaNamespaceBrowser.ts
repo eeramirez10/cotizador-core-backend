@@ -75,7 +75,13 @@ export const ModelName = {
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   WhatsAppConversation: 'WhatsAppConversation',
+  WhatsAppConversationAccess: 'WhatsAppConversationAccess',
+  WhatsAppConversationReadState: 'WhatsAppConversationReadState',
   WhatsAppInboundMessage: 'WhatsAppInboundMessage',
+  WhatsAppOutboundMessage: 'WhatsAppOutboundMessage',
+  WhatsAppAssistantJob: 'WhatsAppAssistantJob',
+  WhatsAppPendingAction: 'WhatsAppPendingAction',
+  WhatsAppCustomerChangeRequest: 'WhatsAppCustomerChangeRequest',
   QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
@@ -698,12 +704,45 @@ export const WhatsAppConversationScalarFieldEnum = {
   id: 'id',
   businessPhoneE164: 'businessPhoneE164',
   participantPhoneE164: 'participantPhoneE164',
+  mode: 'mode',
+  handledByUserId: 'handledByUserId',
+  handledAt: 'handledAt',
   lastInboundAt: 'lastInboundAt',
+  lastMessageAt: 'lastMessageAt',
+  previousResponseId: 'previousResponseId',
+  lastAssistantAt: 'lastAssistantAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type WhatsAppConversationScalarFieldEnum = (typeof WhatsAppConversationScalarFieldEnum)[keyof typeof WhatsAppConversationScalarFieldEnum]
+
+
+export const WhatsAppConversationAccessScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  branchId: 'branchId',
+  customerId: 'customerId',
+  customerContactId: 'customerContactId',
+  quoteId: 'quoteId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppConversationAccessScalarFieldEnum = (typeof WhatsAppConversationAccessScalarFieldEnum)[keyof typeof WhatsAppConversationAccessScalarFieldEnum]
+
+
+export const WhatsAppConversationReadStateScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  lastReadAt: 'lastReadAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppConversationReadStateScalarFieldEnum = (typeof WhatsAppConversationReadStateScalarFieldEnum)[keyof typeof WhatsAppConversationReadStateScalarFieldEnum]
 
 
 export const WhatsAppInboundMessageScalarFieldEnum = {
@@ -717,6 +756,77 @@ export const WhatsAppInboundMessageScalarFieldEnum = {
 } as const
 
 export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
+
+
+export const WhatsAppOutboundMessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  providerMessageId: 'providerMessageId',
+  authorType: 'authorType',
+  messageType: 'messageType',
+  status: 'status',
+  body: 'body',
+  sentByUserId: 'sentByUserId',
+  quoteId: 'quoteId',
+  fileAssetId: 'fileAssetId',
+  errorMessage: 'errorMessage',
+  sentAt: 'sentAt',
+  deliveredAt: 'deliveredAt',
+  readAt: 'readAt',
+  failedAt: 'failedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type WhatsAppOutboundMessageScalarFieldEnum = (typeof WhatsAppOutboundMessageScalarFieldEnum)[keyof typeof WhatsAppOutboundMessageScalarFieldEnum]
+
+
+export const WhatsAppAssistantJobScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  inboundMessageId: 'inboundMessageId',
+  status: 'status',
+  attempts: 'attempts',
+  nextAttemptAt: 'nextAttemptAt',
+  lockedAt: 'lockedAt',
+  completedAt: 'completedAt',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppAssistantJobScalarFieldEnum = (typeof WhatsAppAssistantJobScalarFieldEnum)[keyof typeof WhatsAppAssistantJobScalarFieldEnum]
+
+
+export const WhatsAppPendingActionScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  quoteId: 'quoteId',
+  actionType: 'actionType',
+  preparedTurnId: 'preparedTurnId',
+  status: 'status',
+  payload: 'payload',
+  expiresAt: 'expiresAt',
+  executedAt: 'executedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppPendingActionScalarFieldEnum = (typeof WhatsAppPendingActionScalarFieldEnum)[keyof typeof WhatsAppPendingActionScalarFieldEnum]
+
+
+export const WhatsAppCustomerChangeRequestScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  quoteId: 'quoteId',
+  customerContactId: 'customerContactId',
+  requestedByPhone: 'requestedByPhone',
+  requestedChanges: 'requestedChanges',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppCustomerChangeRequestScalarFieldEnum = (typeof WhatsAppCustomerChangeRequestScalarFieldEnum)[keyof typeof WhatsAppCustomerChangeRequestScalarFieldEnum]
 
 
 export const QuoteOrderExportScalarFieldEnum = {
@@ -775,6 +885,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

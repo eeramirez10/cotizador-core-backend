@@ -47,6 +47,7 @@ export class WhatsAppInboxController {
         conversationId: id,
         actor: req.user,
         cursor: query!.cursor,
+        after: query!.after,
         pageSize: query!.pageSize,
       });
       res.status(200).json(result);

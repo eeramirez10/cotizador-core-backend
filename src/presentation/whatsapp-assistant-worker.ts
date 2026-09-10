@@ -4,8 +4,10 @@ import { prisma } from "../infrastructure/database/prisma-client";
 import { AiPlatformWhatsAppAssistantGateway } from "../infrastructure/http/ai-platform-whatsapp-assistant.gateway";
 import { TwilioWhatsAppAssistantAdapter } from "../infrastructure/messaging/twilio-whatsapp-assistant.adapter";
 import { PrismaWhatsAppAssistantRepository } from "../infrastructure/repositories/prisma-whatsapp-assistant.repository";
+import { whatsAppRealtimeBus } from "../infrastructure/realtime/whatsapp-realtime.container";
 
 const wait = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+const MAX_RETRY_DELAY_MS = 30_000;
 let stopping = false;
 
 const processor = new ProcessWhatsAppAssistantJobUseCase(
@@ -23,12 +25,14 @@ const processor = new ProcessWhatsAppAssistantJobUseCase(
     statusCallbackUrl: Envs.twilioStatusCallbackUrl,
   }),
   Envs.whatsAppAssistantMaxAttempts,
+  whatsAppRealtimeBus,
 );
 
 const shutdown = async (signal: string) => {
   if (stopping) return;
   stopping = true;
   console.log(JSON.stringify({ level: "info", event: "whatsapp_assistant.worker_stopping", signal }));
+  await whatsAppRealtimeBus.close();
   await prisma.$disconnect();
 };
 
@@ -41,9 +45,26 @@ const run = async (): Promise<void> => {
     event: "whatsapp_assistant.worker_started",
     enabled: Envs.whatsAppAssistantEnabled,
   }));
+  let consecutiveFailures = 0;
   while (!stopping) {
-    if (!Envs.whatsAppAssistantEnabled || !await processor.execute()) {
-      await wait(Envs.whatsAppAssistantPollIntervalMs);
+    try {
+      if (!Envs.whatsAppAssistantEnabled || !await processor.execute()) {
+        await wait(Envs.whatsAppAssistantPollIntervalMs);
+      }
+      consecutiveFailures = 0;
+    } catch (error) {
+      consecutiveFailures += 1;
+      const retryDelayMs = Math.min(
+        Envs.whatsAppAssistantPollIntervalMs * (2 ** Math.min(consecutiveFailures, 5)),
+        MAX_RETRY_DELAY_MS,
+      );
+      console.error(JSON.stringify({
+        level: "error",
+        event: "whatsapp_assistant.iteration_failed",
+        message: error instanceof Error ? error.message : "Unknown worker iteration error.",
+        retryDelayMs,
+      }));
+      if (!stopping) await wait(retryDelayMs);
     }
   }
 };

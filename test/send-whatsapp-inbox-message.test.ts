@@ -7,8 +7,13 @@ import type {
   WhatsAppInboxActor,
   WhatsAppInboxConversation,
   WhatsAppInboxConversationPage,
+  WhatsAppInboxMessage,
   WhatsAppInboxMessagePage,
 } from "../src/domain/entities/whatsapp-inbox.entity";
+import {
+  WhatsAppRealtimePublisher,
+  type WhatsAppRealtimeEvent,
+} from "../src/domain/events/whatsapp-realtime.event";
 import { WhatsAppInboxRepository } from "../src/domain/repositories/whatsapp-inbox.repository";
 import { SendWhatsAppInboxMessageUseCase } from "../src/domain/use-cases/send-whatsapp-inbox-message.use-case";
 
@@ -43,14 +48,45 @@ class WhatsAppInboxRepositoryStub extends WhatsAppInboxRepository {
     return this.conversation;
   }
 
-  async recordManualMessage(input: Parameters<WhatsAppInboxRepository["recordManualMessage"]>[0]): Promise<void> {
+  async recordManualMessage(
+    input: Parameters<WhatsAppInboxRepository["recordManualMessage"]>[0],
+  ): Promise<WhatsAppInboxMessage> {
     this.manualMessage = input;
+    return {
+      id: input.messageId,
+      conversationId: input.conversationId,
+      direction: "OUTBOUND",
+      authorType: "USER",
+      authorName: "Alma Martinez",
+      body: input.body,
+      messageType: "TEXT",
+      status: "QUEUED",
+      occurredAt: input.sentAt,
+      quote: null,
+      fileAssetId: null,
+    };
   }
 
-  async registerQuoteDelivery(_input: RegisterWhatsAppQuoteDeliveryInput): Promise<void> {}
+  async registerQuoteDelivery(_input: RegisterWhatsAppQuoteDeliveryInput) {
+    return {
+      conversationId: "33333333-3333-4333-8333-333333333333",
+      messageId: "44444444-4444-4444-8444-444444444444",
+    };
+  }
 
-  async updateOutboundStatus(): Promise<boolean> {
-    return true;
+  async updateOutboundStatus() {
+    return {
+      conversationId: "33333333-3333-4333-8333-333333333333",
+      messageId: "44444444-4444-4444-8444-444444444444",
+    };
+  }
+}
+
+class WhatsAppRealtimePublisherStub extends WhatsAppRealtimePublisher {
+  events: WhatsAppRealtimeEvent[] = [];
+
+  async publish(event: WhatsAppRealtimeEvent): Promise<void> {
+    this.events.push(event);
   }
 }
 
@@ -127,7 +163,8 @@ test("sends and records a manual reply during an active window", async () => {
   const repository = new WhatsAppInboxRepositoryStub();
   repository.conversation = createConversation();
   const messaging = new WhatsAppMessagingStub();
-  const useCase = new SendWhatsAppInboxMessageUseCase(repository, messaging, () => now);
+  const realtime = new WhatsAppRealtimePublisherStub();
+  const useCase = new SendWhatsAppInboxMessageUseCase(repository, messaging, () => now, realtime);
 
   const result = await useCase.execute({
     conversationId: repository.conversation.id,
@@ -147,4 +184,28 @@ test("sends and records a manual reply during an active window", async () => {
     sentByUserId: actor.id,
     sentAt: now,
   });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(realtime.events, [{
+    type: "WHATSAPP_CONVERSATION_CHANGED",
+    conversationId: repository.conversation.id,
+    reason: "MESSAGE_SENT",
+    occurredAt: now.toISOString(),
+    message: {
+      id: "44444444-4444-4444-8444-444444444444",
+      conversationId: repository.conversation.id,
+      direction: "OUTBOUND",
+      authorType: "USER",
+      authorName: "Alma Martinez",
+      body: "Te comparto la información.",
+      messageType: "TEXT",
+      status: "QUEUED",
+      occurredAt: now.toISOString(),
+      quote: null,
+      fileAssetId: null,
+    },
+    conversation: {
+      lastMessage: "Te comparto la información.",
+      lastMessageAt: now.toISOString(),
+    },
+  }]);
 });

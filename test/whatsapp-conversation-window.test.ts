@@ -6,6 +6,10 @@ import type {
   WhatsAppConversationEntity,
 } from "../src/domain/entities/whatsapp-conversation.entity";
 import { WhatsAppConversationRepository } from "../src/domain/repositories/whatsapp-conversation.repository";
+import {
+  WhatsAppRealtimePublisher,
+  type WhatsAppRealtimeEvent,
+} from "../src/domain/events/whatsapp-realtime.event";
 import { GetWhatsAppConversationWindowUseCase } from "../src/domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { RecordInboundWhatsAppMessageUseCase } from "../src/domain/use-cases/record-inbound-whatsapp-message.use-case";
 
@@ -20,6 +24,14 @@ class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository 
   async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage> {
     this.recorded = input;
     return { conversationId: "conversation-1", inboundMessageId: "message-1", created: true };
+  }
+}
+
+class WhatsAppRealtimePublisherStub extends WhatsAppRealtimePublisher {
+  events: WhatsAppRealtimeEvent[] = [];
+
+  async publish(event: WhatsAppRealtimeEvent): Promise<void> {
+    this.events.push(event);
   }
 }
 
@@ -68,7 +80,8 @@ test("requires a template when the customer has not sent an inbound message", as
 
 test("normalizes and records a signed inbound WhatsApp message", async () => {
   const repository = new WhatsAppConversationRepositoryStub();
-  const useCase = new RecordInboundWhatsAppMessageUseCase(repository, () => now);
+  const realtime = new WhatsAppRealtimePublisherStub();
+  const useCase = new RecordInboundWhatsAppMessageUseCase(repository, () => now, false, realtime);
 
   await useCase.execute({
     from: "whatsapp:+5215511223344",
@@ -87,4 +100,29 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     receivedAt: now,
     enqueueAssistant: false,
   });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(realtime.events, [{
+    type: "WHATSAPP_CONVERSATION_CHANGED",
+    conversationId: "conversation-1",
+    reason: "MESSAGE_RECEIVED",
+    occurredAt: now.toISOString(),
+    message: {
+      id: "message-1",
+      conversationId: "conversation-1",
+      direction: "INBOUND",
+      authorType: "CUSTOMER",
+      authorName: "Cliente",
+      body: "Hola",
+      messageType: "TEXT",
+      status: "RECEIVED",
+      occurredAt: now.toISOString(),
+      quote: null,
+      fileAssetId: null,
+    },
+    conversation: {
+      lastMessage: "Hola",
+      lastMessageAt: now.toISOString(),
+      lastInboundAt: now.toISOString(),
+    },
+  }]);
 });

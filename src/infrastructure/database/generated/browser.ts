@@ -138,10 +138,40 @@ export type QuoteDeliveryAttempt = Prisma.QuoteDeliveryAttemptModel
  */
 export type WhatsAppConversation = Prisma.WhatsAppConversationModel
 /**
+ * Model WhatsAppConversationAccess
+ * 
+ */
+export type WhatsAppConversationAccess = Prisma.WhatsAppConversationAccessModel
+/**
+ * Model WhatsAppConversationReadState
+ * 
+ */
+export type WhatsAppConversationReadState = Prisma.WhatsAppConversationReadStateModel
+/**
  * Model WhatsAppInboundMessage
  * 
  */
 export type WhatsAppInboundMessage = Prisma.WhatsAppInboundMessageModel
+/**
+ * Model WhatsAppOutboundMessage
+ * 
+ */
+export type WhatsAppOutboundMessage = Prisma.WhatsAppOutboundMessageModel
+/**
+ * Model WhatsAppAssistantJob
+ * 
+ */
+export type WhatsAppAssistantJob = Prisma.WhatsAppAssistantJobModel
+/**
+ * Model WhatsAppPendingAction
+ * 
+ */
+export type WhatsAppPendingAction = Prisma.WhatsAppPendingActionModel
+/**
+ * Model WhatsAppCustomerChangeRequest
+ * 
+ */
+export type WhatsAppCustomerChangeRequest = Prisma.WhatsAppCustomerChangeRequestModel
 /**
  * Model QuoteOrderExport
  * 

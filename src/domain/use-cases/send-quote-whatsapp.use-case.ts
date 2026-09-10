@@ -10,6 +10,7 @@ import type {
   GetWhatsAppConversationWindowUseCase,
   WhatsAppDeliveryMode,
 } from "./get-whatsapp-conversation-window.use-case";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 interface SendQuoteWhatsAppActor {
   id: string;
@@ -45,6 +46,7 @@ export class SendQuoteWhatsAppUseCase {
     private readonly conversationWindow: GetWhatsAppConversationWindowUseCase,
     private readonly inboxRepository: WhatsAppInboxRepository,
     private readonly businessPhone: string,
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   async execute(input: SendQuoteWhatsAppInput): Promise<SendQuoteWhatsAppResult> {
@@ -110,7 +112,7 @@ export class SendQuoteWhatsAppUseCase {
       });
       const normalizedBusinessPhone = WhatsAppPhone.create(this.businessPhone)?.value;
       if (normalizedBusinessPhone) {
-        await this.inboxRepository.registerQuoteDelivery({
+        const registered = await this.inboxRepository.registerQuoteDelivery({
           businessPhoneE164: normalizedBusinessPhone,
           participantPhoneE164: recipient,
           providerMessageId: message.providerMessageId,
@@ -124,7 +126,35 @@ export class SendQuoteWhatsAppUseCase {
           customerContactId: selectedContact?.id ?? null,
           quoteId: quote.id,
           fileAssetId: attachment.id,
-        }).catch((error) => console.error("whatsapp_inbox_quote_delivery_sync_failed", error));
+        }).catch((error) => {
+          console.error("whatsapp_inbox_quote_delivery_sync_failed", error);
+          return null;
+        });
+        if (registered) {
+          void this.realtime?.publish({
+            type: "WHATSAPP_CONVERSATION_CHANGED",
+            conversationId: registered.conversationId,
+            reason: "QUOTE_SENT",
+            occurredAt: sentAt.toISOString(),
+            message: {
+              id: registered.messageId,
+              conversationId: registered.conversationId,
+              direction: "OUTBOUND",
+              authorType: "USER",
+              authorName: sellerName,
+              body: input.message,
+              messageType: "QUOTE_DOCUMENT",
+              status: message.status,
+              occurredAt: sentAt.toISOString(),
+              quote: { id: quote.id, quoteNumber: quote.quoteNumber, status: quote.status },
+              fileAssetId: attachment.id,
+            },
+            conversation: {
+              lastMessage: input.message,
+              lastMessageAt: sentAt.toISOString(),
+            },
+          });
+        }
       }
       return {
         providerMessageId: message.providerMessageId,

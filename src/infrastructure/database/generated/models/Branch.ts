@@ -300,6 +300,7 @@ export type BranchWhereInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionListRelationFilter
   purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseListRelationFilter
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
 }
 
 export type BranchOrderByWithRelationInput = {
@@ -328,6 +329,7 @@ export type BranchOrderByWithRelationInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionOrderByRelationAggregateInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionOrderByRelationAggregateInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseOrderByRelationAggregateInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessOrderByRelationAggregateInput
 }
 
 export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -359,6 +361,7 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionListRelationFilter
   purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseListRelationFilter
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
 }, "id" | "code">
 
 export type BranchOrderByWithAggregationInput = {
@@ -437,6 +440,7 @@ export type BranchCreateInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateInput = {
@@ -465,6 +469,7 @@ export type BranchUncheckedCreateInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUpdateInput = {
@@ -493,6 +498,7 @@ export type BranchUpdateInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateInput = {
@@ -521,6 +527,7 @@ export type BranchUncheckedUpdateInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyInput = {
@@ -769,6 +776,20 @@ export type BranchUpdateOneRequiredWithoutPurchaseRequisitionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutPurchaseRequisitionsInput, Prisma.BranchUpdateWithoutPurchaseRequisitionsInput>, Prisma.BranchUncheckedUpdateWithoutPurchaseRequisitionsInput>
 }
 
+export type BranchCreateNestedOneWithoutWhatsappConversationAccessesInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedCreateWithoutWhatsappConversationAccessesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutWhatsappConversationAccessesInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutWhatsappConversationAccessesNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedCreateWithoutWhatsappConversationAccessesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutWhatsappConversationAccessesInput
+  upsert?: Prisma.BranchUpsertWithoutWhatsappConversationAccessesInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutWhatsappConversationAccessesInput, Prisma.BranchUpdateWithoutWhatsappConversationAccessesInput>, Prisma.BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput>
+}
+
 export type BranchCreateWithoutQuoteCatalogOptionsInput = {
   id?: string
   code: string
@@ -794,6 +815,7 @@ export type BranchCreateWithoutQuoteCatalogOptionsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
@@ -821,6 +843,7 @@ export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuoteCatalogOptionsInput = {
@@ -864,6 +887,7 @@ export type BranchUpdateWithoutQuoteCatalogOptionsInput = {
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
@@ -891,6 +915,7 @@ export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutUsersInput = {
@@ -918,6 +943,7 @@ export type BranchCreateWithoutUsersInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutUsersInput = {
@@ -945,6 +971,7 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutUsersInput = {
@@ -988,6 +1015,7 @@ export type BranchUpdateWithoutUsersInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutUsersInput = {
@@ -1015,6 +1043,7 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutErpWarehouseAssignmentsInput = {
@@ -1042,6 +1071,7 @@ export type BranchCreateWithoutErpWarehouseAssignmentsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
@@ -1069,6 +1099,7 @@ export type BranchUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutErpWarehouseAssignmentsInput = {
@@ -1112,6 +1143,7 @@ export type BranchUpdateWithoutErpWarehouseAssignmentsInput = {
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
@@ -1139,6 +1171,7 @@ export type BranchUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutProductsInput = {
@@ -1166,6 +1199,7 @@ export type BranchCreateWithoutProductsInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutProductsInput = {
@@ -1193,6 +1227,7 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutProductsInput = {
@@ -1236,6 +1271,7 @@ export type BranchUpdateWithoutProductsInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutProductsInput = {
@@ -1263,6 +1299,7 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutQuotesInput = {
@@ -1290,6 +1327,7 @@ export type BranchCreateWithoutQuotesInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuotesInput = {
@@ -1317,6 +1355,7 @@ export type BranchUncheckedCreateWithoutQuotesInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuotesInput = {
@@ -1360,6 +1399,7 @@ export type BranchUpdateWithoutQuotesInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuotesInput = {
@@ -1387,6 +1427,7 @@ export type BranchUncheckedUpdateWithoutQuotesInput = {
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutPurchaseRequisitionsInput = {
@@ -1414,6 +1455,7 @@ export type BranchCreateWithoutPurchaseRequisitionsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutPurchaseRequisitionsInput = {
@@ -1441,6 +1483,7 @@ export type BranchUncheckedCreateWithoutPurchaseRequisitionsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutPurchaseRequisitionsInput = {
@@ -1484,6 +1527,7 @@ export type BranchUpdateWithoutPurchaseRequisitionsInput = {
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutPurchaseRequisitionsInput = {
@@ -1511,6 +1555,135 @@ export type BranchUncheckedUpdateWithoutPurchaseRequisitionsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutWhatsappConversationAccessesInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutWhatsappConversationAccessesInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutWhatsappConversationAccessesInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedCreateWithoutWhatsappConversationAccessesInput>
+}
+
+export type BranchUpsertWithoutWhatsappConversationAccessesInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedCreateWithoutWhatsappConversationAccessesInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutWhatsappConversationAccessesInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutWhatsappConversationAccessesInput, Prisma.BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput>
+}
+
+export type BranchUpdateWithoutWhatsappConversationAccessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 
@@ -1525,6 +1698,7 @@ export type BranchCountOutputType = {
   quoteCatalogOptions: number
   purchaseRequisitions: number
   erpWarehouseAssignments: number
+  whatsappConversationAccesses: number
 }
 
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1534,6 +1708,7 @@ export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   quoteCatalogOptions?: boolean | BranchCountOutputTypeCountQuoteCatalogOptionsArgs
   purchaseRequisitions?: boolean | BranchCountOutputTypeCountPurchaseRequisitionsArgs
   erpWarehouseAssignments?: boolean | BranchCountOutputTypeCountErpWarehouseAssignmentsArgs
+  whatsappConversationAccesses?: boolean | BranchCountOutputTypeCountWhatsappConversationAccessesArgs
 }
 
 /**
@@ -1588,6 +1763,13 @@ export type BranchCountOutputTypeCountErpWarehouseAssignmentsArgs<ExtArgs extend
   where?: Prisma.BranchErpWarehouseWhereInput
 }
 
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountWhatsappConversationAccessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppConversationAccessWhereInput
+}
+
 
 export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1615,6 +1797,7 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   quoteCatalogOptions?: boolean | Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>
   purchaseRequisitions?: boolean | Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>
   erpWarehouseAssignments?: boolean | Prisma.Branch$erpWarehouseAssignmentsArgs<ExtArgs>
+  whatsappConversationAccesses?: boolean | Prisma.Branch$whatsappConversationAccessesArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1692,6 +1875,7 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quoteCatalogOptions?: boolean | Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>
   purchaseRequisitions?: boolean | Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>
   erpWarehouseAssignments?: boolean | Prisma.Branch$erpWarehouseAssignmentsArgs<ExtArgs>
+  whatsappConversationAccesses?: boolean | Prisma.Branch$whatsappConversationAccessesArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1706,6 +1890,7 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     quoteCatalogOptions: Prisma.$QuoteCatalogOptionPayload<ExtArgs>[]
     purchaseRequisitions: Prisma.$PurchaseRequisitionPayload<ExtArgs>[]
     erpWarehouseAssignments: Prisma.$BranchErpWarehousePayload<ExtArgs>[]
+    whatsappConversationAccesses: Prisma.$WhatsAppConversationAccessPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2127,6 +2312,7 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   quoteCatalogOptions<T extends Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$quoteCatalogOptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteCatalogOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseRequisitions<T extends Prisma.Branch$purchaseRequisitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$purchaseRequisitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   erpWarehouseAssignments<T extends Prisma.Branch$erpWarehouseAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$erpWarehouseAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchErpWarehousePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappConversationAccesses<T extends Prisma.Branch$whatsappConversationAccessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$whatsappConversationAccessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppConversationAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2704,6 +2890,30 @@ export type Branch$erpWarehouseAssignmentsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.BranchErpWarehouseScalarFieldEnum | Prisma.BranchErpWarehouseScalarFieldEnum[]
+}
+
+/**
+ * Branch.whatsappConversationAccesses
+ */
+export type Branch$whatsappConversationAccessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppConversationAccess
+   */
+  select?: Prisma.WhatsAppConversationAccessSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppConversationAccess
+   */
+  omit?: Prisma.WhatsAppConversationAccessOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppConversationAccessInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppConversationAccessWhereInput
+  orderBy?: Prisma.WhatsAppConversationAccessOrderByWithRelationInput | Prisma.WhatsAppConversationAccessOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppConversationAccessWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppConversationAccessScalarFieldEnum | Prisma.WhatsAppConversationAccessScalarFieldEnum[]
 }
 
 /**
