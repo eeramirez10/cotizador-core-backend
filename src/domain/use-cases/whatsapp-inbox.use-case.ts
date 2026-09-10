@@ -1,11 +1,13 @@
 import type { WhatsAppConversationMode } from "../../infrastructure/database/generated/enums";
 import type { WhatsAppInboxActor } from "../entities/whatsapp-inbox.entity";
 import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 export class WhatsAppInboxUseCase {
   constructor(
     private readonly repository: WhatsAppInboxRepository,
     private readonly now: () => Date = () => new Date(),
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   list(input: {
@@ -30,12 +32,14 @@ export class WhatsAppInboxUseCase {
     conversationId: string;
     actor: WhatsAppInboxActor;
     cursor?: string;
+    after?: string;
     pageSize?: number;
   }) {
     return this.repository.listMessages({
       conversationId: input.conversationId,
       actor: input.actor,
       cursor: input.cursor?.trim() || undefined,
+      after: input.after ? new Date(input.after) : undefined,
       pageSize: Math.min(Math.max(input.pageSize || 50, 1), 100),
     });
   }
@@ -44,12 +48,26 @@ export class WhatsAppInboxUseCase {
     return this.repository.markRead(conversationId, actor, this.now());
   }
 
-  changeMode(conversationId: string, actor: WhatsAppInboxActor, mode: WhatsAppConversationMode) {
-    return this.repository.setMode({
+  async changeMode(conversationId: string, actor: WhatsAppInboxActor, mode: WhatsAppConversationMode) {
+    const changedAt = this.now();
+    const conversation = await this.repository.setMode({
       conversationId,
       actor,
       mode,
-      changedAt: this.now(),
+      changedAt,
     });
+    if (conversation) {
+      void this.realtime?.publish({
+        type: "WHATSAPP_CONVERSATION_CHANGED",
+        conversationId,
+        reason: "CONVERSATION_MODE_CHANGED",
+        occurredAt: changedAt.toISOString(),
+        conversation: {
+          mode: conversation.mode,
+          handledByName: conversation.handledByName,
+        },
+      });
+    }
+    return conversation;
   }
 }

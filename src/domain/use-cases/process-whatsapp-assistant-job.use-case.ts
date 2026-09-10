@@ -1,6 +1,7 @@
 import type { WhatsAppAssistantAgentPort } from "../contracts/whatsapp-assistant-agent.port";
 import type { WhatsAppAssistantMessagingPort } from "../contracts/whatsapp-assistant-messaging.port";
 import type { WhatsAppAssistantRepository } from "../repositories/whatsapp-assistant.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 export class ProcessWhatsAppAssistantJobUseCase {
   constructor(
@@ -8,6 +9,7 @@ export class ProcessWhatsAppAssistantJobUseCase {
     private readonly agent: WhatsAppAssistantAgentPort,
     private readonly messaging: WhatsAppAssistantMessagingPort,
     private readonly maxAttempts: number,
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   async execute(): Promise<boolean> {
@@ -31,13 +33,37 @@ export class ProcessWhatsAppAssistantJobUseCase {
         return true;
       }
       const delivery = await this.messaging.sendReply(job.participantPhone, response.text);
-      await this.repository.completeJob({
+      const sentAt = new Date();
+      const completed = await this.repository.completeJob({
         jobId: job.id,
         conversationId: job.conversationId,
         responseId: response.responseId,
         body: response.text,
         providerMessageId: delivery.providerMessageId,
-        sentAt: new Date(),
+        sentAt,
+      });
+      void this.realtime?.publish({
+        type: "WHATSAPP_CONVERSATION_CHANGED",
+        conversationId: job.conversationId,
+        reason: "MESSAGE_SENT",
+        occurredAt: sentAt.toISOString(),
+        message: {
+          id: completed.outboundMessageId,
+          conversationId: job.conversationId,
+          direction: "OUTBOUND",
+          authorType: "AI",
+          authorName: "Asistente Tuvansa",
+          body: response.text,
+          messageType: "TEXT",
+          status: "QUEUED",
+          occurredAt: sentAt.toISOString(),
+          quote: null,
+          fileAssetId: null,
+        },
+        conversation: {
+          lastMessage: response.text,
+          lastMessageAt: sentAt.toISOString(),
+        },
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown WhatsApp assistant error.";

@@ -272,6 +272,81 @@ export const QuoteDeliveryAttemptStatus = {
 export type QuoteDeliveryAttemptStatus = (typeof QuoteDeliveryAttemptStatus)[keyof typeof QuoteDeliveryAttemptStatus]
 
 
+export const WhatsAppAssistantJobStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type WhatsAppAssistantJobStatus = (typeof WhatsAppAssistantJobStatus)[keyof typeof WhatsAppAssistantJobStatus]
+
+
+export const WhatsAppConversationMode = {
+  AI: 'AI',
+  HUMAN: 'HUMAN'
+} as const
+
+export type WhatsAppConversationMode = (typeof WhatsAppConversationMode)[keyof typeof WhatsAppConversationMode]
+
+
+export const WhatsAppOutboundAuthorType = {
+  AI: 'AI',
+  USER: 'USER',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type WhatsAppOutboundAuthorType = (typeof WhatsAppOutboundAuthorType)[keyof typeof WhatsAppOutboundAuthorType]
+
+
+export const WhatsAppOutboundMessageType = {
+  TEXT: 'TEXT',
+  QUOTE_DOCUMENT: 'QUOTE_DOCUMENT'
+} as const
+
+export type WhatsAppOutboundMessageType = (typeof WhatsAppOutboundMessageType)[keyof typeof WhatsAppOutboundMessageType]
+
+
+export const WhatsAppOutboundMessageStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  DELIVERED: 'DELIVERED',
+  READ: 'READ',
+  FAILED: 'FAILED'
+} as const
+
+export type WhatsAppOutboundMessageStatus = (typeof WhatsAppOutboundMessageStatus)[keyof typeof WhatsAppOutboundMessageStatus]
+
+
+export const WhatsAppPendingActionType = {
+  ACCEPT_QUOTE: 'ACCEPT_QUOTE',
+  REJECT_QUOTE: 'REJECT_QUOTE'
+} as const
+
+export type WhatsAppPendingActionType = (typeof WhatsAppPendingActionType)[keyof typeof WhatsAppPendingActionType]
+
+
+export const WhatsAppPendingActionStatus = {
+  PENDING: 'PENDING',
+  EXECUTED: 'EXECUTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type WhatsAppPendingActionStatus = (typeof WhatsAppPendingActionStatus)[keyof typeof WhatsAppPendingActionStatus]
+
+
+export const QuoteCustomerChangeRequestStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type QuoteCustomerChangeRequestStatus = (typeof QuoteCustomerChangeRequestStatus)[keyof typeof QuoteCustomerChangeRequestStatus]
+
+
 export const OrderGenerationStatus = {
   NOT_GENERATED: 'NOT_GENERATED',
   GENERATED: 'GENERATED'

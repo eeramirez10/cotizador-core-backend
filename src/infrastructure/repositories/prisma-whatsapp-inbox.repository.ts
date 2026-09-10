@@ -117,6 +117,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     conversationId: string;
     actor: WhatsAppInboxActor;
     cursor?: string;
+    after?: Date;
     pageSize: number;
   }): Promise<WhatsAppInboxMessagePage> {
     const allowed = await prisma.whatsAppConversation.findFirst({
@@ -126,13 +127,20 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     if (!allowed) return { items: [], nextCursor: null, hasMore: false };
 
     const before = this.decodeMessageCursor(input.cursor);
+    const after = input.after;
+    const dateFilter = before
+      ? { lt: before }
+      : after
+        ? { gt: after }
+        : undefined;
+    const direction = after ? "asc" as const : "desc" as const;
     const [inbound, outbound] = await Promise.all([
       prisma.whatsAppInboundMessage.findMany({
         where: {
           conversationId: input.conversationId,
-          ...(before ? { receivedAt: { lt: before } } : {}),
+          ...(dateFilter ? { receivedAt: dateFilter } : {}),
         },
-        orderBy: { receivedAt: "desc" },
+        orderBy: { receivedAt: direction },
         take: input.pageSize + 1,
         select: {
           id: true,
@@ -145,9 +153,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
       prisma.whatsAppOutboundMessage.findMany({
         where: {
           conversationId: input.conversationId,
-          ...(before ? { sentAt: { lt: before } } : {}),
+          ...(dateFilter ? { sentAt: dateFilter } : {}),
         },
-        orderBy: { sentAt: "desc" },
+        orderBy: { sentAt: direction },
         take: input.pageSize + 1,
         select: {
           id: true,
@@ -199,17 +207,23 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         } : null,
         fileAssetId: row.fileAssetId,
       })),
-    ].sort((a, b) => b.occurredAt.getTime() - a.occurredAt.getTime());
+    ].sort((a, b) => after
+      ? a.occurredAt.getTime() - b.occurredAt.getTime()
+      : b.occurredAt.getTime() - a.occurredAt.getTime());
 
     const hasMore = inbound.length > input.pageSize
       || outbound.length > input.pageSize
       || messages.length > input.pageSize;
-    const selected = messages.slice(0, input.pageSize).reverse();
+    const selected = after
+      ? messages.slice(0, input.pageSize)
+      : messages.slice(0, input.pageSize).reverse();
     return {
       items: selected,
       hasMore,
       nextCursor: hasMore && selected.length > 0
-        ? this.encodeMessageCursor(selected[0].occurredAt)
+        ? after
+          ? selected[selected.length - 1].occurredAt.toISOString()
+          : this.encodeMessageCursor(selected[0].occurredAt)
         : null,
     };
   }
@@ -272,9 +286,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     body: string;
     sentByUserId: string;
     sentAt: Date;
-  }): Promise<void> {
-    await prisma.$transaction([
-      prisma.whatsAppOutboundMessage.create({
+  }): Promise<WhatsAppInboxMessage> {
+    return prisma.$transaction(async (tx) => {
+      const message = await tx.whatsAppOutboundMessage.create({
         data: {
           id: input.messageId,
           conversationId: input.conversationId,
@@ -286,16 +300,35 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
           sentByUserId: input.sentByUserId,
           sentAt: input.sentAt,
         },
-      }),
-      prisma.whatsAppConversation.update({
+        include: { sentByUser: { select: { firstName: true, lastName: true } } },
+      });
+      await tx.whatsAppConversation.update({
         where: { id: input.conversationId },
         data: { lastMessageAt: input.sentAt },
-      }),
-    ]);
+      });
+      return {
+        id: message.id,
+        conversationId: message.conversationId,
+        direction: "OUTBOUND",
+        authorType: message.authorType,
+        authorName: message.sentByUser
+          ? `${message.sentByUser.firstName} ${message.sentByUser.lastName}`.trim()
+          : "Tuvansa",
+        body: message.body,
+        messageType: message.messageType,
+        status: message.status,
+        occurredAt: message.sentAt,
+        quote: null,
+        fileAssetId: message.fileAssetId,
+      };
+    });
   }
 
-  async registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<void> {
-    await prisma.$transaction(async (tx) => {
+  async registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<{
+    conversationId: string;
+    messageId: string;
+  }> {
+    return prisma.$transaction(async (tx) => {
       const conversation = await tx.whatsAppConversation.upsert({
         where: {
           businessPhoneE164_participantPhoneE164: {
@@ -340,8 +373,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         where: { providerMessageId: input.providerMessageId },
         select: { id: true },
       });
-      if (!existing) {
-        await tx.whatsAppOutboundMessage.create({
+      const message = existing || await tx.whatsAppOutboundMessage.create({
           data: {
             conversationId: conversation.id,
             providerMessageId: input.providerMessageId,
@@ -354,8 +386,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
             fileAssetId: input.fileAssetId,
             sentAt: input.sentAt,
           },
+          select: { id: true },
         });
-      }
+      return { conversationId: conversation.id, messageId: message.id };
     });
   }
 
@@ -364,8 +397,13 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     status: WhatsAppOutboundMessageStatus;
     errorMessage: string | null;
     occurredAt: Date;
-  }): Promise<boolean> {
-    const result = await prisma.whatsAppOutboundMessage.updateMany({
+  }): Promise<{ conversationId: string; messageId: string } | null> {
+    const message = await prisma.whatsAppOutboundMessage.findUnique({
+      where: { providerMessageId: input.providerMessageId },
+      select: { id: true, conversationId: true },
+    });
+    if (!message) return null;
+    await prisma.whatsAppOutboundMessage.update({
       where: { providerMessageId: input.providerMessageId },
       data: {
         status: input.status,
@@ -375,7 +413,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         ...(input.status === "FAILED" ? { failedAt: input.occurredAt } : {}),
       },
     });
-    return result.count > 0;
+    return { conversationId: message.conversationId, messageId: message.id };
   }
 
   private visibilityWhere(actor: WhatsAppInboxActor): Prisma.WhatsAppConversationWhereInput {

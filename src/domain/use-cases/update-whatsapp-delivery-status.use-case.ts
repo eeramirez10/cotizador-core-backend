@@ -1,6 +1,7 @@
 import type { QuoteDeliveryAttemptStatus } from "../../infrastructure/database/generated/enums";
 import type { QuoteRepository } from "../repositories/quote.repository";
 import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 const STATUS_MAP: Record<string, QuoteDeliveryAttemptStatus> = {
   queued: "QUEUED",
@@ -17,6 +18,7 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
     private readonly inboxRepository: WhatsAppInboxRepository,
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   async execute(input: {
@@ -30,7 +32,7 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
     if (!providerMessageId || !status) return Promise.resolve(false);
     const details = [input.errorCode?.trim(), input.errorMessage?.trim()].filter(Boolean).join(": ") || null;
     const occurredAt = new Date();
-    const [quoteUpdated, inboxUpdated] = await Promise.all([
+    const [quoteUpdated, message] = await Promise.all([
       this.quoteRepository.updateDeliveryAttemptStatus({
         providerMessageId,
         status,
@@ -44,6 +46,15 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
         occurredAt,
       }),
     ]);
-    return quoteUpdated || inboxUpdated;
+    if (message) {
+      void this.realtime?.publish({
+        type: "WHATSAPP_CONVERSATION_CHANGED",
+        conversationId: message.conversationId,
+        reason: "MESSAGE_STATUS_CHANGED",
+        occurredAt: occurredAt.toISOString(),
+        messagePatch: { id: message.messageId, status },
+      });
+    }
+    return quoteUpdated || Boolean(message);
   }
 }

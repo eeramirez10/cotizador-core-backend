@@ -1,6 +1,7 @@
 import type { WhatsAppAssistantMessagingPort } from "../contracts/whatsapp-assistant-messaging.port";
 import type { WhatsAppInboxActor } from "../entities/whatsapp-inbox.entity";
 import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 const WINDOW_DURATION_MS = 24 * 60 * 60 * 1000;
 
@@ -9,6 +10,7 @@ export class SendWhatsAppInboxMessageUseCase {
     private readonly repository: WhatsAppInboxRepository,
     private readonly messaging: WhatsAppAssistantMessagingPort,
     private readonly now: () => Date = () => new Date(),
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   async execute(input: {
@@ -39,13 +41,27 @@ export class SendWhatsAppInboxMessageUseCase {
     }
 
     const delivery = await this.messaging.sendReply(conversation.participantPhone, body);
-    await this.repository.recordManualMessage({
+    const message = await this.repository.recordManualMessage({
       messageId: input.clientMessageId,
       conversationId: conversation.id,
       providerMessageId: delivery.providerMessageId,
       body,
       sentByUserId: input.actor.id,
       sentAt,
+    });
+    void this.realtime?.publish({
+      type: "WHATSAPP_CONVERSATION_CHANGED",
+      conversationId: conversation.id,
+      reason: "MESSAGE_SENT",
+      occurredAt: sentAt.toISOString(),
+      message: {
+        ...message,
+        occurredAt: message.occurredAt.toISOString(),
+      },
+      conversation: {
+        lastMessage: body,
+        lastMessageAt: sentAt.toISOString(),
+      },
     });
     return { providerMessageId: delivery.providerMessageId, sentAt };
   }

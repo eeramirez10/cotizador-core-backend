@@ -1,5 +1,6 @@
 import type { RecordedWhatsAppInboundMessage } from "../entities/whatsapp-conversation.entity";
 import type { WhatsAppConversationRepository } from "../repositories/whatsapp-conversation.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 import { WhatsAppPhone } from "../utils/whatsapp-phone";
 
 interface RecordInboundWhatsAppMessageInput {
@@ -15,6 +16,7 @@ export class RecordInboundWhatsAppMessageUseCase {
     private readonly repository: WhatsAppConversationRepository,
     private readonly now: () => Date = () => new Date(),
     private readonly assistantEnabled = false,
+    private readonly realtime?: WhatsAppRealtimePublisher,
   ) {}
 
   async execute(input: RecordInboundWhatsAppMessageInput): Promise<RecordedWhatsAppInboundMessage> {
@@ -27,14 +29,44 @@ export class RecordInboundWhatsAppMessageUseCase {
       throw new Error("Inbound WhatsApp message id is invalid.");
     }
 
-    return this.repository.recordInboundMessage({
+    const receivedAt = this.now();
+    const body = input.body?.trim() || null;
+    const mediaCount = Math.max(0, Math.trunc(input.mediaCount || 0));
+    const recorded = await this.repository.recordInboundMessage({
       businessPhoneE164: business.value,
       participantPhoneE164: participant.value,
       providerMessageId,
-      body: input.body?.trim() || null,
-      mediaCount: Math.max(0, Math.trunc(input.mediaCount || 0)),
-      receivedAt: this.now(),
+      body,
+      mediaCount,
+      receivedAt,
       enqueueAssistant: this.assistantEnabled,
     });
+    if (recorded.created) {
+      void this.realtime?.publish({
+        type: "WHATSAPP_CONVERSATION_CHANGED",
+        conversationId: recorded.conversationId,
+        reason: "MESSAGE_RECEIVED",
+        occurredAt: receivedAt.toISOString(),
+        message: {
+          id: recorded.inboundMessageId,
+          conversationId: recorded.conversationId,
+          direction: "INBOUND",
+          authorType: "CUSTOMER",
+          authorName: "Cliente",
+          body: body || (mediaCount > 0 ? `Archivo recibido (${mediaCount})` : "Mensaje sin texto"),
+          messageType: "TEXT",
+          status: "RECEIVED",
+          occurredAt: receivedAt.toISOString(),
+          quote: null,
+          fileAssetId: null,
+        },
+        conversation: {
+          lastMessage: body || (mediaCount > 0 ? "Archivo recibido" : "Mensaje recibido"),
+          lastMessageAt: receivedAt.toISOString(),
+          lastInboundAt: receivedAt.toISOString(),
+        },
+      });
+    }
+    return recorded;
   }
 }

@@ -4,6 +4,7 @@ import { SendWhatsAppInboxMessageUseCase } from "../../domain/use-cases/send-wha
 import { WhatsAppInboxUseCase } from "../../domain/use-cases/whatsapp-inbox.use-case";
 import { TwilioWhatsAppAssistantAdapter } from "../../infrastructure/messaging/twilio-whatsapp-assistant.adapter";
 import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
+import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { WhatsAppInboxController } from "./whatsapp-inbox.controller";
@@ -13,7 +14,7 @@ export class WhatsAppInboxRoutes {
     const router = Router();
     const repository = new PrismaWhatsAppInboxRepository();
     const controller = new WhatsAppInboxController(
-      new WhatsAppInboxUseCase(repository),
+      new WhatsAppInboxUseCase(repository, () => new Date(), whatsAppRealtimeBus),
       new SendWhatsAppInboxMessageUseCase(
         repository,
         new TwilioWhatsAppAssistantAdapter({
@@ -23,6 +24,8 @@ export class WhatsAppInboxRoutes {
           from: Envs.twilioWhatsAppFrom,
           statusCallbackUrl: Envs.twilioStatusCallbackUrl,
         }),
+        () => new Date(),
+        whatsAppRealtimeBus,
       ),
     );
     const access = [requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER")] as const;

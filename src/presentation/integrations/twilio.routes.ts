@@ -7,6 +7,7 @@ import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-q
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
 import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
+import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { TwilioController } from "./twilio.controller";
 
@@ -19,11 +20,13 @@ export class TwilioRoutes {
       new UpdateWhatsAppDeliveryStatusUseCase(
         new QuoteRepositoryImpl(new PrismaQuoteDatasource()),
         inboxRepository,
+        whatsAppRealtimeBus,
       ),
       new RecordInboundWhatsAppMessageUseCase(
         conversationRepository,
         () => new Date(),
         Envs.whatsAppAssistantEnabled,
+        whatsAppRealtimeBus,
       ),
       new GetWhatsAppConversationWindowUseCase(conversationRepository, Envs.twilioWhatsAppFrom),
       Envs.twilioAuthToken,

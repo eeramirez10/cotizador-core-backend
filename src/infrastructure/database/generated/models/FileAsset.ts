@@ -261,6 +261,7 @@ export type FileAssetWhereInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
 }
 
 export type FileAssetOrderByWithRelationInput = {
@@ -279,6 +280,7 @@ export type FileAssetOrderByWithRelationInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptOrderByRelationAggregateInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentOrderByRelationAggregateInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteOrderByRelationAggregateInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageOrderByRelationAggregateInput
 }
 
 export type FileAssetWhereUniqueInput = Prisma.AtLeast<{
@@ -300,6 +302,7 @@ export type FileAssetWhereUniqueInput = Prisma.AtLeast<{
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentListRelationFilter
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteListRelationFilter
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
 }, "id" | "storageKey">
 
 export type FileAssetOrderByWithAggregationInput = {
@@ -351,6 +354,7 @@ export type FileAssetCreateInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateInput = {
@@ -368,6 +372,7 @@ export type FileAssetUncheckedCreateInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUpdateInput = {
@@ -385,6 +390,7 @@ export type FileAssetUpdateInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateInput = {
@@ -402,6 +408,7 @@ export type FileAssetUncheckedUpdateInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetCreateManyInput = {
@@ -615,6 +622,22 @@ export type FileAssetUpdateOneWithoutQuoteDeliveryAttemptsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FileAssetUpdateToOneWithWhereWithoutQuoteDeliveryAttemptsInput, Prisma.FileAssetUpdateWithoutQuoteDeliveryAttemptsInput>, Prisma.FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput>
 }
 
+export type FileAssetCreateNestedOneWithoutWhatsappOutboundMessagesInput = {
+  create?: Prisma.XOR<Prisma.FileAssetCreateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedCreateWithoutWhatsappOutboundMessagesInput>
+  connectOrCreate?: Prisma.FileAssetCreateOrConnectWithoutWhatsappOutboundMessagesInput
+  connect?: Prisma.FileAssetWhereUniqueInput
+}
+
+export type FileAssetUpdateOneWithoutWhatsappOutboundMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.FileAssetCreateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedCreateWithoutWhatsappOutboundMessagesInput>
+  connectOrCreate?: Prisma.FileAssetCreateOrConnectWithoutWhatsappOutboundMessagesInput
+  upsert?: Prisma.FileAssetUpsertWithoutWhatsappOutboundMessagesInput
+  disconnect?: Prisma.FileAssetWhereInput | boolean
+  delete?: Prisma.FileAssetWhereInput | boolean
+  connect?: Prisma.FileAssetWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileAssetUpdateToOneWithWhereWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUpdateWithoutWhatsappOutboundMessagesInput>, Prisma.FileAssetUncheckedUpdateWithoutWhatsappOutboundMessagesInput>
+}
+
 export type FileAssetCreateWithoutUploadedByInput = {
   id?: string
   originalName: string
@@ -629,6 +652,7 @@ export type FileAssetCreateWithoutUploadedByInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateWithoutUploadedByInput = {
@@ -645,6 +669,7 @@ export type FileAssetUncheckedCreateWithoutUploadedByInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetCreateOrConnectWithoutUploadedByInput = {
@@ -703,6 +728,7 @@ export type FileAssetCreateWithoutPurchaseSupplierQuotesInput = {
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateWithoutPurchaseSupplierQuotesInput = {
@@ -719,6 +745,7 @@ export type FileAssetUncheckedCreateWithoutPurchaseSupplierQuotesInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetCreateOrConnectWithoutPurchaseSupplierQuotesInput = {
@@ -751,6 +778,7 @@ export type FileAssetUpdateWithoutPurchaseSupplierQuotesInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateWithoutPurchaseSupplierQuotesInput = {
@@ -767,6 +795,7 @@ export type FileAssetUncheckedUpdateWithoutPurchaseSupplierQuotesInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetCreateWithoutQuoteAttachmentsInput = {
@@ -783,6 +812,7 @@ export type FileAssetCreateWithoutQuoteAttachmentsInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateWithoutQuoteAttachmentsInput = {
@@ -799,6 +829,7 @@ export type FileAssetUncheckedCreateWithoutQuoteAttachmentsInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetCreateOrConnectWithoutQuoteAttachmentsInput = {
@@ -831,6 +862,7 @@ export type FileAssetUpdateWithoutQuoteAttachmentsInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateWithoutQuoteAttachmentsInput = {
@@ -847,6 +879,7 @@ export type FileAssetUncheckedUpdateWithoutQuoteAttachmentsInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetCreateWithoutPurchaseOfferAttachmentsInput = {
@@ -863,6 +896,7 @@ export type FileAssetCreateWithoutPurchaseOfferAttachmentsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateWithoutPurchaseOfferAttachmentsInput = {
@@ -879,6 +913,7 @@ export type FileAssetUncheckedCreateWithoutPurchaseOfferAttachmentsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetCreateOrConnectWithoutPurchaseOfferAttachmentsInput = {
@@ -911,6 +946,7 @@ export type FileAssetUpdateWithoutPurchaseOfferAttachmentsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateWithoutPurchaseOfferAttachmentsInput = {
@@ -927,6 +963,7 @@ export type FileAssetUncheckedUpdateWithoutPurchaseOfferAttachmentsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -943,6 +980,7 @@ export type FileAssetCreateWithoutQuoteDeliveryAttemptsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -959,6 +997,7 @@ export type FileAssetUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutFileAssetInput
 }
 
 export type FileAssetCreateOrConnectWithoutQuoteDeliveryAttemptsInput = {
@@ -991,6 +1030,7 @@ export type FileAssetUpdateWithoutQuoteDeliveryAttemptsInput = {
   quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
@@ -1005,6 +1045,91 @@ export type FileAssetUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
+}
+
+export type FileAssetCreateWithoutWhatsappOutboundMessagesInput = {
+  id?: string
+  originalName: string
+  storageKey: string
+  mimeType: string
+  sizeBytes: number
+  checksumSha256: string
+  status?: $Enums.FileAssetStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  uploadedBy: Prisma.UserCreateNestedOneWithoutUploadedFileAssetsInput
+  quoteAttachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutFileAssetInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentCreateNestedManyWithoutFileAssetInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutFileAssetInput
+}
+
+export type FileAssetUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
+  id?: string
+  originalName: string
+  storageKey: string
+  mimeType: string
+  sizeBytes: number
+  checksumSha256: string
+  status?: $Enums.FileAssetStatus
+  uploadedByUserId: string
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  quoteAttachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutFileAssetInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedCreateNestedManyWithoutFileAssetInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutFileAssetInput
+}
+
+export type FileAssetCreateOrConnectWithoutWhatsappOutboundMessagesInput = {
+  where: Prisma.FileAssetWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileAssetCreateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedCreateWithoutWhatsappOutboundMessagesInput>
+}
+
+export type FileAssetUpsertWithoutWhatsappOutboundMessagesInput = {
+  update: Prisma.XOR<Prisma.FileAssetUpdateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedUpdateWithoutWhatsappOutboundMessagesInput>
+  create: Prisma.XOR<Prisma.FileAssetCreateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedCreateWithoutWhatsappOutboundMessagesInput>
+  where?: Prisma.FileAssetWhereInput
+}
+
+export type FileAssetUpdateToOneWithWhereWithoutWhatsappOutboundMessagesInput = {
+  where?: Prisma.FileAssetWhereInput
+  data: Prisma.XOR<Prisma.FileAssetUpdateWithoutWhatsappOutboundMessagesInput, Prisma.FileAssetUncheckedUpdateWithoutWhatsappOutboundMessagesInput>
+}
+
+export type FileAssetUpdateWithoutWhatsappOutboundMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
+  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumFileAssetStatusFieldUpdateOperationsInput | $Enums.FileAssetStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  uploadedBy?: Prisma.UserUpdateOneRequiredWithoutUploadedFileAssetsNestedInput
+  quoteAttachments?: Prisma.QuoteAttachmentUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
+  purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
+  purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+}
+
+export type FileAssetUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  originalName?: Prisma.StringFieldUpdateOperationsInput | string
+  storageKey?: Prisma.StringFieldUpdateOperationsInput | string
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  sizeBytes?: Prisma.IntFieldUpdateOperationsInput | number
+  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumFileAssetStatusFieldUpdateOperationsInput | $Enums.FileAssetStatus
+  uploadedByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quoteAttachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
 }
@@ -1035,6 +1160,7 @@ export type FileAssetUpdateWithoutUploadedByInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateWithoutUploadedByInput = {
@@ -1051,6 +1177,7 @@ export type FileAssetUncheckedUpdateWithoutUploadedByInput = {
   quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseOfferAttachments?: Prisma.PurchaseOfferAttachmentUncheckedUpdateManyWithoutFileAssetNestedInput
   purchaseSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutFileAssetNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutFileAssetNestedInput
 }
 
 export type FileAssetUncheckedUpdateManyWithoutUploadedByInput = {
@@ -1075,6 +1202,7 @@ export type FileAssetCountOutputType = {
   quoteDeliveryAttempts: number
   purchaseOfferAttachments: number
   purchaseSupplierQuotes: number
+  whatsappOutboundMessages: number
 }
 
 export type FileAssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1082,6 +1210,7 @@ export type FileAssetCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensi
   quoteDeliveryAttempts?: boolean | FileAssetCountOutputTypeCountQuoteDeliveryAttemptsArgs
   purchaseOfferAttachments?: boolean | FileAssetCountOutputTypeCountPurchaseOfferAttachmentsArgs
   purchaseSupplierQuotes?: boolean | FileAssetCountOutputTypeCountPurchaseSupplierQuotesArgs
+  whatsappOutboundMessages?: boolean | FileAssetCountOutputTypeCountWhatsappOutboundMessagesArgs
 }
 
 /**
@@ -1122,6 +1251,13 @@ export type FileAssetCountOutputTypeCountPurchaseSupplierQuotesArgs<ExtArgs exte
   where?: Prisma.PurchaseSupplierQuoteWhereInput
 }
 
+/**
+ * FileAssetCountOutputType without action
+ */
+export type FileAssetCountOutputTypeCountWhatsappOutboundMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppOutboundMessageWhereInput
+}
+
 
 export type FileAssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1139,6 +1275,7 @@ export type FileAssetSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   quoteDeliveryAttempts?: boolean | Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>
   purchaseOfferAttachments?: boolean | Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>
   purchaseSupplierQuotes?: boolean | Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>
+  whatsappOutboundMessages?: boolean | Prisma.FileAsset$whatsappOutboundMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.FileAssetCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fileAsset"]>
 
@@ -1190,6 +1327,7 @@ export type FileAssetInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   quoteDeliveryAttempts?: boolean | Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>
   purchaseOfferAttachments?: boolean | Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>
   purchaseSupplierQuotes?: boolean | Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>
+  whatsappOutboundMessages?: boolean | Prisma.FileAsset$whatsappOutboundMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.FileAssetCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FileAssetIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1207,6 +1345,7 @@ export type $FileAssetPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     quoteDeliveryAttempts: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>[]
     purchaseOfferAttachments: Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>[]
     purchaseSupplierQuotes: Prisma.$PurchaseSupplierQuotePayload<ExtArgs>[]
+    whatsappOutboundMessages: Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1618,6 +1757,7 @@ export interface Prisma__FileAssetClient<T, Null = never, ExtArgs extends runtim
   quoteDeliveryAttempts<T extends Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$quoteDeliveryAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOfferAttachments<T extends Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$purchaseOfferAttachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOfferAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseSupplierQuotes<T extends Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$purchaseSupplierQuotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseSupplierQuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappOutboundMessages<T extends Prisma.FileAsset$whatsappOutboundMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileAsset$whatsappOutboundMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2146,6 +2286,30 @@ export type FileAsset$purchaseSupplierQuotesArgs<ExtArgs extends runtime.Types.E
   take?: number
   skip?: number
   distinct?: Prisma.PurchaseSupplierQuoteScalarFieldEnum | Prisma.PurchaseSupplierQuoteScalarFieldEnum[]
+}
+
+/**
+ * FileAsset.whatsappOutboundMessages
+ */
+export type FileAsset$whatsappOutboundMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppOutboundMessage
+   */
+  select?: Prisma.WhatsAppOutboundMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppOutboundMessage
+   */
+  omit?: Prisma.WhatsAppOutboundMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppOutboundMessageInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppOutboundMessageWhereInput
+  orderBy?: Prisma.WhatsAppOutboundMessageOrderByWithRelationInput | Prisma.WhatsAppOutboundMessageOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppOutboundMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppOutboundMessageScalarFieldEnum | Prisma.WhatsAppOutboundMessageScalarFieldEnum[]
 }
 
 /**

@@ -4,6 +4,7 @@ import type {
   WhatsAppInboxActor,
   WhatsAppInboxConversation,
   WhatsAppInboxConversationPage,
+  WhatsAppInboxMessage,
   WhatsAppInboxMessagePage,
 } from "../entities/whatsapp-inbox.entity";
 
@@ -24,6 +25,7 @@ export abstract class WhatsAppInboxRepository {
     conversationId: string;
     actor: WhatsAppInboxActor;
     cursor?: string;
+    after?: Date;
     pageSize: number;
   }): Promise<WhatsAppInboxMessagePage>;
 
@@ -43,14 +45,17 @@ export abstract class WhatsAppInboxRepository {
     body: string;
     sentByUserId: string;
     sentAt: Date;
-  }): Promise<void>;
+  }): Promise<WhatsAppInboxMessage>;
 
-  abstract registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<void>;
+  abstract registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<{
+    conversationId: string;
+    messageId: string;
+  }>;
 
   abstract updateOutboundStatus(input: {
     providerMessageId: string;
     status: WhatsAppOutboundMessageStatus;
     errorMessage: string | null;
     occurredAt: Date;
-  }): Promise<boolean>;
+  }): Promise<{ conversationId: string; messageId: string } | null>;
 }

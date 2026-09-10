@@ -177,4 +177,13 @@ export class Envs {
   static get whatsAppAssistantMaxAttempts(): number {
     return get("WHATSAPP_ASSISTANT_MAX_ATTEMPTS").default("3").asIntPositive();
   }
+
+  static get realtimeRedisUrl(): string | undefined {
+    const value = get("REALTIME_REDIS_URL").default("").asString().trim();
+    return value || undefined;
+  }
+
+  static get realtimeRedisChannel(): string {
+    return get("REALTIME_REDIS_CHANNEL").default("cotizador:whatsapp:realtime").asString();
+  }
 }

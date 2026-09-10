@@ -18,56 +18,59 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
   }
 
   async claimNextJob(staleBefore: Date): Promise<WhatsAppAssistantJobEntity | null> {
-    return prisma.$transaction(async (tx) => {
-      const candidate = await tx.whatsAppAssistantJob.findFirst({
-        where: {
-          nextAttemptAt: { lte: new Date() },
-          conversation: { mode: "AI" },
-          OR: [
-            { status: "PENDING" },
-            { status: "PROCESSING", lockedAt: { lt: staleBefore } },
-          ],
-        },
-        orderBy: { createdAt: "asc" },
-        select: {
-          id: true,
-          status: true,
-          lockedAt: true,
-          attempts: true,
-          conversationId: true,
-          conversation: { select: { participantPhoneE164: true, previousResponseId: true } },
-          inboundMessage: { select: { body: true, mediaCount: true } },
-        },
-      });
-      if (!candidate) return null;
-
-      const claimed = await tx.whatsAppAssistantJob.updateMany({
-        where: {
-          id: candidate.id,
-          OR: [
-            { status: "PENDING" },
-            { status: "PROCESSING", lockedAt: candidate.lockedAt },
-          ],
-        },
-        data: {
-          status: "PROCESSING",
-          lockedAt: new Date(),
-          attempts: { increment: 1 },
-          errorMessage: null,
-        },
-      });
-      if (claimed.count === 0) return null;
-
-      return {
-        id: candidate.id,
-        conversationId: candidate.conversationId,
-        participantPhone: candidate.conversation.participantPhoneE164,
-        message: candidate.inboundMessage.body?.trim() || "El cliente envió un archivo sin texto.",
-        mediaCount: candidate.inboundMessage.mediaCount,
-        previousResponseId: candidate.conversation.previousResponseId,
-        attempts: candidate.attempts + 1,
-      };
+    const candidate = await prisma.whatsAppAssistantJob.findFirst({
+      where: {
+        nextAttemptAt: { lte: new Date() },
+        conversation: { mode: "AI" },
+        OR: [
+          { status: "PENDING" },
+          { status: "PROCESSING", lockedAt: { lt: staleBefore } },
+        ],
+      },
+      orderBy: { createdAt: "asc" },
+      select: {
+        id: true,
+        status: true,
+        lockedAt: true,
+        attempts: true,
+        conversationId: true,
+        conversation: { select: { participantPhoneE164: true, previousResponseId: true } },
+        inboundMessage: { select: { body: true, mediaCount: true } },
+      },
     });
+    if (!candidate) return null;
+
+    // Compare-and-set prevents two workers from claiming the same job without
+    // keeping a database transaction open across the candidate lookup.
+    const claimed = await prisma.whatsAppAssistantJob.updateMany({
+      where: {
+        id: candidate.id,
+        conversation: { mode: "AI" },
+        OR: candidate.status === "PENDING"
+          ? [{ status: "PENDING" }]
+          : [{
+            status: "PROCESSING",
+            lockedAt: candidate.lockedAt,
+          }],
+      },
+      data: {
+        status: "PROCESSING",
+        lockedAt: new Date(),
+        attempts: { increment: 1 },
+        errorMessage: null,
+      },
+    });
+    if (claimed.count === 0) return null;
+
+    return {
+      id: candidate.id,
+      conversationId: candidate.conversationId,
+      participantPhone: candidate.conversation.participantPhoneE164,
+      message: candidate.inboundMessage.body?.trim() || "El cliente envió un archivo sin texto.",
+      mediaCount: candidate.inboundMessage.mediaCount,
+      previousResponseId: candidate.conversation.previousResponseId,
+      attempts: candidate.attempts + 1,
+    };
   }
 
   async isConversationAiControlled(conversationId: string): Promise<boolean> {
@@ -97,8 +100,8 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     body: string;
     providerMessageId: string;
     sentAt: Date;
-  }): Promise<void> {
-    await prisma.$transaction([
+  }): Promise<{ outboundMessageId: string }> {
+    const [, , message] = await prisma.$transaction([
       prisma.whatsAppAssistantJob.update({
         where: { id: input.jobId },
         data: { status: "COMPLETED", completedAt: input.sentAt, lockedAt: null, errorMessage: null },
@@ -121,8 +124,10 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
           body: input.body,
           sentAt: input.sentAt,
         },
+        select: { id: true },
       }),
     ]);
+    return { outboundMessageId: message.id };
   }
 
   async failJob(input: { jobId: string; errorMessage: string; retryAt: Date; final: boolean }): Promise<void> {

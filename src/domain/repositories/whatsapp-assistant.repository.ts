@@ -19,7 +19,7 @@ export abstract class WhatsAppAssistantRepository {
     body: string;
     providerMessageId: string;
     sentAt: Date;
-  }): Promise<void>;
+  }): Promise<{ outboundMessageId: string }>;
   abstract failJob(input: {
     jobId: string;
     errorMessage: string;

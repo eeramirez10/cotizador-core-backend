@@ -46,6 +46,33 @@ services:
     networks:
       - infra-network
 
+  realtime-redis:
+    image: redis:7-alpine
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - 128mb
+      - --maxmemory-policy
+      - allkeys-lru
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - core-internal
+
   core-backend:
     build:
       context: .
@@ -59,6 +86,7 @@ services:
       PORT: "4600"
       FILE_STORAGE_ROOT: /app/storage/documents/attachments
       ERP_OUTBOX_DIR: /app/storage/documents/erp-outbox
+      REALTIME_REDIS_URL: redis://realtime-redis:6379
     ports:
       - "127.0.0.1:4600:4600"
     volumes:
@@ -66,6 +94,8 @@ services:
     depends_on:
       volume-init:
         condition: service_completed_successfully
+      realtime-redis:
+        condition: service_healthy
     init: true
     read_only: true
     restart: unless-stopped
@@ -100,6 +130,7 @@ services:
       infra-network:
         aliases:
           - cotizador-core-backend
+      core-internal:
 
   whatsapp-assistant-worker:
     build:
@@ -111,9 +142,13 @@ services:
       - .env
     environment:
       NODE_ENV: production
+      REALTIME_REDIS_URL: redis://realtime-redis:6379
     command:
       - node
       - dist/presentation/whatsapp-assistant-worker.js
+    depends_on:
+      realtime-redis:
+        condition: service_healthy
     init: true
     read_only: true
     restart: unless-stopped
@@ -131,6 +166,7 @@ services:
         max-file: "3"
     networks:
       - infra-network
+      - core-internal
 
 volumes:
   core_documents:
@@ -138,6 +174,9 @@ volumes:
     name: core-backend-documents
 
 networks:
+  core-internal:
+    driver: bridge
+    internal: true
   infra-network:
     external: true
     name: infra-network
