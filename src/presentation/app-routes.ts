@@ -15,6 +15,7 @@ import { AiPlatformRoutes } from "./integrations/ai-platform.routes";
 import { ErpWarehousesRoutes } from "./erp-warehouses/erp-warehouses.routes";
 import { TwilioRoutes } from "./integrations/twilio.routes";
 import { QuoteDocumentsRoutes } from "./public/quote-documents.routes";
+import { ManagerReportsRoutes } from "./public/manager-reports.routes";
 import { WhatsAppAssistantRoutes } from "./integrations/whatsapp-assistant.routes";
 import { WhatsAppInboxRoutes } from "./whatsapp/whatsapp-inbox.routes";
 
@@ -44,6 +45,7 @@ export class AppRoutes {
     router.use("/internal/whatsapp-assistant", WhatsAppAssistantRoutes.routes());
     router.use("/whatsapp", WhatsAppInboxRoutes.routes());
     router.use("/public/quote-documents", QuoteDocumentsRoutes.routes());
+    router.use("/public/manager-reports", ManagerReportsRoutes.routes());
     router.use(AiPlatformRoutes.routes());
 
     return router;
