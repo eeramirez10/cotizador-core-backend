@@ -58,6 +58,7 @@ ENV PORT=4600
 
 COPY --from=production-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/src/infrastructure/documents/assets ./dist/infrastructure/documents/assets
 COPY package.json ./
 
 RUN mkdir -p /app/storage/documents \

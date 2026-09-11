@@ -12,8 +12,9 @@ const daysBetween = (from: Date, to: Date): number => Math.max(0, Math.floor((to
 
 export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
   async getDashboard(params: AnalyticsDatasourceParams): Promise<AnalyticsDashboard> {
-    const scopeWhere =
-      params.scopeType === "BRANCH"
+    const scopeWhere = params.scopeType === "GLOBAL"
+      ? {}
+      : params.scopeType === "BRANCH"
         ? { branchId: params.scopeId }
         : {
             OR: [

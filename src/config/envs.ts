@@ -154,6 +154,14 @@ export class Envs {
     return get("TWILIO_WHATSAPP_QUOTE_MEDIA_VARIABLE").default("4").asString();
   }
 
+  static get twilioManagerReportContentSid(): string {
+    return get("TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID").default("").asString();
+  }
+
+  static get twilioManagerReportMediaVariable(): string {
+    return get("TWILIO_WHATSAPP_MANAGER_REPORT_MEDIA_VARIABLE").default("3").asString();
+  }
+
   static get twilioStatusCallbackUrl(): string {
     const configured = get("TWILIO_STATUS_CALLBACK_URL").default("").asString().trim();
     return configured || `${Envs.publicApiUrl.replace(/\/$/, "")}/api/integrations/twilio/whatsapp/status`;

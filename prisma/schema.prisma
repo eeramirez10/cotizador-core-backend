@@ -14,6 +14,31 @@ enum UserRole {
   PURCHASING
 }
 
+enum ManagerReportType {
+  QUOTE_PERFORMANCE
+}
+
+enum ManagerReportScope {
+  GLOBAL
+  BRANCH
+}
+
+enum ManagerReportFrequency {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+enum ManagerReportRange {
+  PREVIOUS_DAY
+  WEEK_TO_DATE
+  PREVIOUS_WEEK
+  MONTH_TO_DATE
+  PREVIOUS_MONTH
+  LAST_7_DAYS
+  LAST_30_DAYS
+}
+
 enum WarehouseAccessMode {
   INHERIT
   ADDITIVE
@@ -280,6 +305,7 @@ model Branch {
   purchaseRequisitions         PurchaseRequisition[]
   erpWarehouseAssignments      BranchErpWarehouse[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
+  managerReportSubscriptions   ManagerReportSubscription[]
 
   @@map("branches")
 }
@@ -364,9 +390,42 @@ model User {
   whatsappConversationAccesses WhatsAppConversationAccess[]    @relation("WhatsAppConversationAccessUser")
   whatsappConversationReads    WhatsAppConversationReadState[]
   sentWhatsAppMessages         WhatsAppOutboundMessage[]       @relation("WhatsAppOutboundMessageSentBy")
+  receivedManagerReports       ManagerReportSubscription[]     @relation("ManagerReportRecipient")
+  createdManagerReports        ManagerReportSubscription[]     @relation("ManagerReportCreatedBy")
+  updatedManagerReports        ManagerReportSubscription[]     @relation("ManagerReportUpdatedBy")
 
   @@index([branchId])
   @@map("users")
+}
+
+model ManagerReportSubscription {
+  id              String                 @id @default(uuid()) @db.Uuid
+  reportType      ManagerReportType      @default(QUOTE_PERFORMANCE) @map("report_type")
+  recipientUserId String                 @map("recipient_user_id") @db.Uuid
+  scope           ManagerReportScope
+  branchId        String?                @map("branch_id") @db.Uuid
+  frequency       ManagerReportFrequency
+  reportRange     ManagerReportRange     @default(MONTH_TO_DATE) @map("report_range")
+  dayOfWeek       Int?                   @map("day_of_week")
+  dayOfMonth      Int?                   @map("day_of_month")
+  sendHour        Int                    @map("send_hour")
+  sendMinute      Int                    @default(0) @map("send_minute")
+  timezone        String                 @default("America/Mexico_City") @db.VarChar(80)
+  isActive        Boolean                @default(true) @map("is_active")
+  createdByUserId String                 @map("created_by_user_id") @db.Uuid
+  updatedByUserId String?                @map("updated_by_user_id") @db.Uuid
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+
+  recipientUser User    @relation("ManagerReportRecipient", fields: [recipientUserId], references: [id], onDelete: Restrict)
+  branch        Branch? @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  createdByUser User    @relation("ManagerReportCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedByUser User?   @relation("ManagerReportUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([recipientUserId, reportType])
+  @@index([isActive, frequency])
+  @@index([branchId])
+  @@map("manager_report_subscriptions")
 }
 
 model ErpWarehouse {

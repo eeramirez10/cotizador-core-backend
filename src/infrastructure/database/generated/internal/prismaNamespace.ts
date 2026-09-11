@@ -387,6 +387,7 @@ export const ModelName = {
   Branch: 'Branch',
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
+  ManagerReportSubscription: 'ManagerReportSubscription',
   ErpWarehouse: 'ErpWarehouse',
   BranchErpWarehouse: 'BranchErpWarehouse',
   UserErpWarehouse: 'UserErpWarehouse',
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -656,6 +657,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    ManagerReportSubscription: {
+      payload: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>
+      fields: Prisma.ManagerReportSubscriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ManagerReportSubscriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ManagerReportSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.ManagerReportSubscriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ManagerReportSubscriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        findMany: {
+          args: Prisma.ManagerReportSubscriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>[]
+        }
+        create: {
+          args: Prisma.ManagerReportSubscriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        createMany: {
+          args: Prisma.ManagerReportSubscriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ManagerReportSubscriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.ManagerReportSubscriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        update: {
+          args: Prisma.ManagerReportSubscriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ManagerReportSubscriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ManagerReportSubscriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ManagerReportSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ManagerReportSubscriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportSubscriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.ManagerReportSubscriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateManagerReportSubscription>
+        }
+        groupBy: {
+          args: Prisma.ManagerReportSubscriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ManagerReportSubscriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ManagerReportSubscriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ManagerReportSubscriptionCountAggregateOutputType> | number
         }
       }
     }
@@ -3055,6 +3130,29 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const ManagerReportSubscriptionScalarFieldEnum = {
+  id: 'id',
+  reportType: 'reportType',
+  recipientUserId: 'recipientUserId',
+  scope: 'scope',
+  branchId: 'branchId',
+  frequency: 'frequency',
+  reportRange: 'reportRange',
+  dayOfWeek: 'dayOfWeek',
+  dayOfMonth: 'dayOfMonth',
+  sendHour: 'sendHour',
+  sendMinute: 'sendMinute',
+  timezone: 'timezone',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ManagerReportSubscriptionScalarFieldEnum = (typeof ManagerReportSubscriptionScalarFieldEnum)[keyof typeof ManagerReportSubscriptionScalarFieldEnum]
+
+
 export const ErpWarehouseScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -3906,6 +4004,62 @@ export type ListEnumWarehouseAccessModeFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
+ * Reference to a field of type 'ManagerReportType'
+ */
+export type EnumManagerReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportType'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportType[]'
+ */
+export type ListEnumManagerReportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportScope'
+ */
+export type EnumManagerReportScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportScope'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportScope[]'
+ */
+export type ListEnumManagerReportScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportScope[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportFrequency'
+ */
+export type EnumManagerReportFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportFrequency'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportFrequency[]'
+ */
+export type ListEnumManagerReportFrequencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportFrequency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportRange'
+ */
+export type EnumManagerReportRangeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportRange'>
+    
+
+
+/**
+ * Reference to a field of type 'ManagerReportRange[]'
+ */
+export type ListEnumManagerReportRangeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ManagerReportRange[]'>
+    
+
+
+/**
  * Reference to a field of type 'CustomerSource'
  */
 export type EnumCustomerSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomerSource'>
@@ -4520,6 +4674,7 @@ export type GlobalOmitConfig = {
   branch?: Prisma.BranchOmit
   quoteCatalogOption?: Prisma.QuoteCatalogOptionOmit
   user?: Prisma.UserOmit
+  managerReportSubscription?: Prisma.ManagerReportSubscriptionOmit
   erpWarehouse?: Prisma.ErpWarehouseOmit
   branchErpWarehouse?: Prisma.BranchErpWarehouseOmit
   userErpWarehouse?: Prisma.UserErpWarehouseOmit
