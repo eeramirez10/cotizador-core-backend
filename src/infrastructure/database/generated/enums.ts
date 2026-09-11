@@ -19,6 +19,43 @@ export const UserRole = {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const ManagerReportType = {
+  QUOTE_PERFORMANCE: 'QUOTE_PERFORMANCE'
+} as const
+
+export type ManagerReportType = (typeof ManagerReportType)[keyof typeof ManagerReportType]
+
+
+export const ManagerReportScope = {
+  GLOBAL: 'GLOBAL',
+  BRANCH: 'BRANCH'
+} as const
+
+export type ManagerReportScope = (typeof ManagerReportScope)[keyof typeof ManagerReportScope]
+
+
+export const ManagerReportFrequency = {
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY'
+} as const
+
+export type ManagerReportFrequency = (typeof ManagerReportFrequency)[keyof typeof ManagerReportFrequency]
+
+
+export const ManagerReportRange = {
+  PREVIOUS_DAY: 'PREVIOUS_DAY',
+  WEEK_TO_DATE: 'WEEK_TO_DATE',
+  PREVIOUS_WEEK: 'PREVIOUS_WEEK',
+  MONTH_TO_DATE: 'MONTH_TO_DATE',
+  PREVIOUS_MONTH: 'PREVIOUS_MONTH',
+  LAST_7_DAYS: 'LAST_7_DAYS',
+  LAST_30_DAYS: 'LAST_30_DAYS'
+} as const
+
+export type ManagerReportRange = (typeof ManagerReportRange)[keyof typeof ManagerReportRange]
+
+
 export const WarehouseAccessMode = {
   INHERIT: 'INHERIT',
   ADDITIVE: 'ADDITIVE',

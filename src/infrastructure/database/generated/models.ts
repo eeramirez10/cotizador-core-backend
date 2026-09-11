@@ -11,6 +11,7 @@
 export type * from './models/Branch'
 export type * from './models/QuoteCatalogOption'
 export type * from './models/User'
+export type * from './models/ManagerReportSubscription'
 export type * from './models/ErpWarehouse'
 export type * from './models/BranchErpWarehouse'
 export type * from './models/UserErpWarehouse'

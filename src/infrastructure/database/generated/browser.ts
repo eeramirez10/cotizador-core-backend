@@ -33,6 +33,11 @@ export type QuoteCatalogOption = Prisma.QuoteCatalogOptionModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model ManagerReportSubscription
+ * 
+ */
+export type ManagerReportSubscription = Prisma.ManagerReportSubscriptionModel
+/**
  * Model ErpWarehouse
  * 
  */

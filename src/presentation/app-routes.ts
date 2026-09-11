@@ -16,6 +16,7 @@ import { ErpWarehousesRoutes } from "./erp-warehouses/erp-warehouses.routes";
 import { TwilioRoutes } from "./integrations/twilio.routes";
 import { QuoteDocumentsRoutes } from "./public/quote-documents.routes";
 import { ManagerReportsRoutes } from "./public/manager-reports.routes";
+import { ReportSubscriptionsRoutes } from "./report-subscriptions/report-subscriptions.routes";
 import { WhatsAppAssistantRoutes } from "./integrations/whatsapp-assistant.routes";
 import { WhatsAppInboxRoutes } from "./whatsapp/whatsapp-inbox.routes";
 
@@ -35,6 +36,7 @@ export class AppRoutes {
     router.use("/local-products", LocalProductsRoutes.routes());
     router.use("/quotes", QuotesRoutes.routes());
     router.use("/analytics", AnalyticsRoutes.routes());
+    router.use("/report-subscriptions", ReportSubscriptionsRoutes.routes());
     router.use("/quote-catalogs", QuoteCatalogsRoutes.routes());
     router.use("/purchase-requisitions", PurchaseRequisitionsRoutes.routes());
     router.use("/system", SystemRoutes.routes());

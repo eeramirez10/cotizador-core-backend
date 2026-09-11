@@ -1,4 +1,4 @@
-export type AnalyticsScopeType = "BRANCH" | "USER";
+export type AnalyticsScopeType = "GLOBAL" | "BRANCH" | "USER";
 
 export interface AnalyticsDatasourceParams {
   scopeType: AnalyticsScopeType;

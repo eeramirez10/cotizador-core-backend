@@ -54,6 +54,7 @@ export const ModelName = {
   Branch: 'Branch',
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
+  ManagerReportSubscription: 'ManagerReportSubscription',
   ErpWarehouse: 'ErpWarehouse',
   BranchErpWarehouse: 'BranchErpWarehouse',
   UserErpWarehouse: 'UserErpWarehouse',
@@ -164,6 +165,29 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const ManagerReportSubscriptionScalarFieldEnum = {
+  id: 'id',
+  reportType: 'reportType',
+  recipientUserId: 'recipientUserId',
+  scope: 'scope',
+  branchId: 'branchId',
+  frequency: 'frequency',
+  reportRange: 'reportRange',
+  dayOfWeek: 'dayOfWeek',
+  dayOfMonth: 'dayOfMonth',
+  sendHour: 'sendHour',
+  sendMinute: 'sendMinute',
+  timezone: 'timezone',
+  isActive: 'isActive',
+  createdByUserId: 'createdByUserId',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ManagerReportSubscriptionScalarFieldEnum = (typeof ManagerReportSubscriptionScalarFieldEnum)[keyof typeof ManagerReportSubscriptionScalarFieldEnum]
 
 
 export const ErpWarehouseScalarFieldEnum = {
