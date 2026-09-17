@@ -5,11 +5,17 @@ import { FileStoragePort, type SaveFileInput, type SavedFile, type StoredFileCon
 
 const EXTENSIONS_BY_MIME: Record<string, string> = {
   "application/pdf": ".pdf",
+  "application/msword": ".doc",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx",
   "application/vnd.ms-excel": ".xls",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
+  "application/vnd.ms-excel.sheet.macroenabled.12": ".xlsm",
+  "application/vnd.ms-excel.sheet.binary.macroenabled.12": ".xlsb",
   "image/jpeg": ".jpg",
   "image/png": ".png",
   "image/webp": ".webp",
+  "text/plain": ".txt",
+  "text/csv": ".csv",
 };
 
 export class LocalFileStorageAdapter extends FileStoragePort {

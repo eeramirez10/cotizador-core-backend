@@ -9,6 +9,7 @@ export interface UserEntity {
   role: UserRole;
   isActive: boolean;
   phone: string | null;
+  whatsappPhoneE164: string | null;
   erpUserCode: string | null;
   branch: {
     id: string;

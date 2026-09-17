@@ -56,6 +56,7 @@ export class TwilioController {
         providerMessageId: params.MessageSid || params.SmsSid || "",
         body: params.Body,
         mediaCount: Number.parseInt(params.NumMedia || "0", 10) || 0,
+        media: this.mediaParams(params),
       });
       res.type("text/xml").status(200).send('<?xml version="1.0" encoding="UTF-8"?><Response></Response>');
     } catch (error) {
@@ -68,6 +69,15 @@ export class TwilioController {
     return Object.fromEntries(
       Object.entries((body || {}) as Record<string, unknown>).map(([key, value]) => [key, `${value ?? ""}`]),
     );
+  }
+
+  private mediaParams(params: Record<string, string>) {
+    const count = Math.min(Math.max(Number.parseInt(params.NumMedia || "0", 10) || 0, 0), 10);
+    return Array.from({ length: count }, (_, index) => ({
+      index,
+      url: params[`MediaUrl${index}`]?.trim() || "",
+      mimeType: params[`MediaContentType${index}`]?.trim().toLowerCase() || "application/octet-stream",
+    })).filter((media) => media.url.length > 0);
   }
 
   private isValidRequest(signature: string, url: string, params: Record<string, string>): boolean {

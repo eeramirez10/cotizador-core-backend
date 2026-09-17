@@ -1,6 +1,7 @@
 import type {
   UserRole,
   WhatsAppConversationMode,
+  WhatsAppLeadStatus,
   WhatsAppOutboundMessageStatus,
 } from "../../infrastructure/database/generated/enums";
 
@@ -16,8 +17,39 @@ export interface WhatsAppInboxQuoteContext {
   status: string;
 }
 
+export interface WhatsAppInboxRelatedQuote extends WhatsAppInboxQuoteContext {
+  currency: "MXN" | "USD";
+  total: number;
+  revisionNumber: number;
+  rootQuoteId: string | null;
+  previousVersionId: string | null;
+  sellerName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isCurrent: boolean;
+}
+
+export interface WhatsAppInboxLeadContext {
+  id: string;
+  status: WhatsAppLeadStatus;
+  contactName: string | null;
+  companyName: string | null;
+  email: string | null;
+  location: string | null;
+  requestSummary: string | null;
+  assignedSellerId: string | null;
+  assignedSellerName: string | null;
+  assignedBranchId: string | null;
+  assignedBranchName: string | null;
+  assignedAt: Date | null;
+  customerId: string | null;
+  convertedByUserId: string | null;
+  convertedAt: Date | null;
+}
+
 export interface WhatsAppInboxConversation {
   id: string;
+  participantType: "CUSTOMER" | "INTERNAL_USER" | "UNKNOWN";
   participantPhone: string;
   customerId: string | null;
   customerName: string;
@@ -25,6 +57,7 @@ export interface WhatsAppInboxConversation {
   contactName: string | null;
   sellerName: string | null;
   quote: WhatsAppInboxQuoteContext | null;
+  lead: WhatsAppInboxLeadContext | null;
   mode: WhatsAppConversationMode;
   handledByName: string | null;
   lastMessage: string;
@@ -45,6 +78,18 @@ export interface WhatsAppInboxMessage {
   occurredAt: Date;
   quote: WhatsAppInboxQuoteContext | null;
   fileAssetId: string | null;
+  attachments: Array<{
+    id: string;
+    originalName: string;
+    mimeType: string;
+    sizeBytes: number;
+    createdAt: Date;
+    quoteExtractedAt: Date | null;
+    quoteExtractionCount: number;
+    quoteExtractedByUserId: string | null;
+    quoteExtractedByName: string | null;
+    lastQuoteDraftId: string | null;
+  }>;
 }
 
 export interface WhatsAppInboxConversationPage {

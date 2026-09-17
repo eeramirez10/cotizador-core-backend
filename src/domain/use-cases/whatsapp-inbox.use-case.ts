@@ -44,6 +44,10 @@ export class WhatsAppInboxUseCase {
     });
   }
 
+  quotes(conversationId: string, actor: WhatsAppInboxActor) {
+    return this.repository.listRelatedQuotes({ conversationId, actor });
+  }
+
   markRead(conversationId: string, actor: WhatsAppInboxActor) {
     return this.repository.markRead(conversationId, actor, this.now());
   }

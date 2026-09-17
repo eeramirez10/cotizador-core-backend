@@ -14,12 +14,33 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
   }
 
   async respond(input: WhatsAppAssistantAgentInput): Promise<WhatsAppAssistantAgentResult> {
+    const capabilities = input.principal.audience === "CUSTOMER"
+      ? ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS"]
+      : input.principal.audience === "INTERNAL_USER" && input.principal.isVerified && input.principal.role !== "PURCHASING"
+        ? ["INTERNAL_REPORTS", "INTERNAL_QUOTES"]
+        : input.principal.audience === "INTERNAL_USER"
+          ? ["INTERNAL_VERIFICATION"]
+          : input.principal.audience === "UNKNOWN"
+            ? ["LEAD_INTAKE"]
+            : [];
     const response = await fetch(
-      `${this.baseUrl.replace(/\/+$/, "")}/api/v1/assistants/customer-whatsapp/respond`,
+      `${this.baseUrl.replace(/\/+$/, "")}/api/v1/assistants/whatsapp/respond`,
       {
         method: "POST",
         headers: { "content-type": "application/json", "x-internal-api-key": this.internalApiKey },
-        body: JSON.stringify(input),
+        body: JSON.stringify({
+          turnId: input.turnId,
+          conversationId: input.conversationId,
+          message: input.message,
+          mediaCount: input.mediaCount,
+          attachments: input.attachments,
+          previousResponseId: input.previousResponseId,
+          principal: {
+            audience: input.principal.audience,
+            isVerified: input.principal.isVerified,
+            capabilities,
+          },
+        }),
         signal: AbortSignal.timeout(this.timeoutMs),
       },
     );

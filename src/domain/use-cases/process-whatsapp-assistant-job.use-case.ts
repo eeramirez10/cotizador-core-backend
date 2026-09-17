@@ -22,7 +22,9 @@ export class ProcessWhatsAppAssistantJobUseCase {
         participantPhone: job.participantPhone,
         message: job.message,
         mediaCount: job.mediaCount,
+        attachments: job.attachments,
         previousResponseId: job.previousResponseId,
+        principal: job.principal,
       });
       if (!await this.repository.isConversationAiControlled(job.conversationId)) {
         await this.repository.cancelJob(
@@ -59,6 +61,7 @@ export class ProcessWhatsAppAssistantJobUseCase {
           occurredAt: sentAt.toISOString(),
           quote: null,
           fileAssetId: null,
+          attachments: [],
         },
         conversation: {
           lastMessage: response.text,

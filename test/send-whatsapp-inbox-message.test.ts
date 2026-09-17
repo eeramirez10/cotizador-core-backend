@@ -40,6 +40,10 @@ class WhatsAppInboxRepositoryStub extends WhatsAppInboxRepository {
     return { items: [], nextCursor: null, hasMore: false };
   }
 
+  async listRelatedQuotes() {
+    return [];
+  }
+
   async markRead(): Promise<boolean> {
     return true;
   }
@@ -64,6 +68,7 @@ class WhatsAppInboxRepositoryStub extends WhatsAppInboxRepository {
       occurredAt: input.sentAt,
       quote: null,
       fileAssetId: null,
+      attachments: [],
     };
   }
 
@@ -202,6 +207,7 @@ test("sends and records a manual reply during an active window", async () => {
       occurredAt: now.toISOString(),
       quote: null,
       fileAssetId: null,
+      attachments: [],
     },
     conversation: {
       lastMessage: "Te comparto la información.",

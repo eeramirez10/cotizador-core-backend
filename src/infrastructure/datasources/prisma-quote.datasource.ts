@@ -383,6 +383,19 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
   async createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity> {
     const quote = await prisma.$transaction(async (tx) => {
+      if (params.whatsappLeadId) {
+        const lead = await tx.whatsAppLead.findFirst({
+          where: {
+            id: params.whatsappLeadId,
+            status: "CONVERTED",
+            customerId: params.customerId,
+            assignedSellerId: params.createdByUserId,
+          },
+          select: { id: true },
+        });
+        if (!lead) throw new Error("WhatsApp lead is not converted for the selected customer or seller.");
+      }
+
       const created = await tx.quote.create({
         data: {
           quoteNumber: params.quoteNumber,
@@ -391,6 +404,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           captureMethod: params.captureMethod,
           originalQuoteDate: params.originalQuoteDate,
           sourceChannel: params.sourceChannel,
+          whatsappLeadId: params.whatsappLeadId,
           currency: params.currency,
           exchangeRate: params.exchangeRate,
           exchangeRateDate: params.exchangeRateDate,
@@ -494,6 +508,23 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         throw new Error("Quote cannot be edited in current status.");
       }
 
+      if (params.data.whatsappLeadId) {
+        const lead = await tx.whatsAppLead.findFirst({
+          where: {
+            id: params.data.whatsappLeadId,
+            status: "CONVERTED",
+            customerId: params.data.customerId,
+            ...(params.scope.role === "ADMIN"
+              ? {}
+              : params.scope.role === "MANAGER"
+                ? { assignedBranchId: params.scope.branchId }
+                : { assignedSellerId: params.scope.userId }),
+          },
+          select: { id: true },
+        });
+        if (!lead) throw new Error("WhatsApp lead is not converted for the selected customer or seller.");
+      }
+
       const subtotal = round4(params.items.reduce((sum, item) => sum + item.subtotal, 0));
       const tax = round4(subtotal * params.data.taxRate);
       const total = round4(subtotal + tax);
@@ -509,6 +540,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           captureMethod: params.data.captureMethod,
           originalQuoteDate: params.data.originalQuoteDate,
           sourceChannel: params.data.sourceChannel,
+          whatsappLeadId: params.data.whatsappLeadId,
           currency: params.data.currency,
           exchangeRate: params.data.exchangeRate,
           exchangeRateDate: params.data.exchangeRateDate,
@@ -573,6 +605,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           captureMethod: params.data.captureMethod,
           originalQuoteDate: params.data.originalQuoteDate,
           sourceChannel: params.data.sourceChannel,
+          whatsappLeadId: params.data.whatsappLeadId ?? undefined,
           currency: params.data.currency,
           exchangeRate: params.data.exchangeRate,
           exchangeRateDate: params.data.exchangeRateDate,
@@ -721,6 +754,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           captureMethod: source.captureMethod,
           originalQuoteDate: source.originalQuoteDate,
           sourceChannel: source.sourceChannel,
+          whatsappLeadId: source.whatsappLeadId,
           currency: source.currency,
           exchangeRate: source.exchangeRate,
           exchangeRateDate: source.exchangeRateDate,

@@ -57,6 +57,11 @@ export class SendWhatsAppInboxMessageUseCase {
       message: {
         ...message,
         occurredAt: message.occurredAt.toISOString(),
+        attachments: message.attachments.map((attachment) => ({
+          ...attachment,
+          createdAt: attachment.createdAt.toISOString(),
+          quoteExtractedAt: attachment.quoteExtractedAt?.toISOString() || null,
+        })),
       },
       conversation: {
         lastMessage: body,

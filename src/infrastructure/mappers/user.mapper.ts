@@ -10,6 +10,7 @@ interface UserRow {
   role: UserRole;
   isActive: boolean;
   phone: string | null;
+  whatsappPhoneE164: string | null;
   erpUserCode: string | null;
   branch: {
     id: string;
@@ -29,6 +30,7 @@ export class UserMapper {
       role: row.role,
       isActive: row.isActive,
       phone: row.phone,
+      whatsappPhoneE164: row.whatsappPhoneE164,
       erpUserCode: row.erpUserCode,
       branch: {
         id: row.branch.id,

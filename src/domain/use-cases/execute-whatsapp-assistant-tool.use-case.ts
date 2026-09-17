@@ -2,6 +2,8 @@ import { ChangeQuoteStatusRequestDto } from "../dtos/request/change-quote-status
 import type { WhatsAppAssistantQuoteDetails } from "../entities/whatsapp-assistant.entity";
 import type { WhatsAppAssistantRepository } from "../repositories/whatsapp-assistant.repository";
 import type { ChangeQuoteStatusUseCase } from "./change-quote-status.use-case";
+import type { WhatsAppInternalAssistantUseCase } from "./whatsapp-internal-assistant.use-case";
+import type { WhatsAppLeadAssistantUseCase } from "./whatsapp-lead-assistant.use-case";
 
 type ToolArguments = Record<string, unknown>;
 
@@ -10,9 +12,22 @@ export class ExecuteWhatsAppAssistantToolUseCase {
     private readonly repository: WhatsAppAssistantRepository,
     private readonly changeQuoteStatus: ChangeQuoteStatusUseCase,
     private readonly confirmationTtlMinutes = 15,
+    private readonly internalAssistant?: WhatsAppInternalAssistantUseCase,
+    private readonly leadAssistant?: WhatsAppLeadAssistantUseCase,
   ) {}
 
   async execute(conversationId: string, turnId: string, name: string, args: ToolArguments): Promise<unknown> {
+    const principal = await this.repository.getPrincipal(conversationId);
+    if (name === "get_whatsapp_lead" || name === "update_whatsapp_lead") {
+      if (!this.leadAssistant) throw new Error("WHATSAPP_LEAD_ASSISTANT_NOT_CONFIGURED");
+      return this.leadAssistant.execute(principal, conversationId, name, args);
+    }
+    if (name.startsWith("request_internal_") || name.startsWith("verify_internal_") || name.startsWith("get_internal_") || name.startsWith("list_internal_")) {
+      if (!this.internalAssistant) throw new Error("INTERNAL_ASSISTANT_NOT_CONFIGURED");
+      return this.internalAssistant.execute(principal, name, args);
+    }
+    if (principal.audience !== "CUSTOMER") throw new Error("CUSTOMER_ASSISTANT_NOT_AUTHORIZED");
+
     switch (name) {
       case "list_customer_quotes":
         return this.listQuotes(conversationId, args);

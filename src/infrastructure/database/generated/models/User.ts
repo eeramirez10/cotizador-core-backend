@@ -34,6 +34,7 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRole | null
   isActive: boolean | null
   phone: string | null
+  whatsappPhoneE164: string | null
   branchId: string | null
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode | null
@@ -51,6 +52,7 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   isActive: boolean | null
   phone: string | null
+  whatsappPhoneE164: string | null
   branchId: string | null
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode | null
@@ -68,6 +70,7 @@ export type UserCountAggregateOutputType = {
   role: number
   isActive: number
   phone: number
+  whatsappPhoneE164: number
   branchId: number
   erpUserCode: number
   warehouseAccessMode: number
@@ -87,6 +90,7 @@ export type UserMinAggregateInputType = {
   role?: true
   isActive?: true
   phone?: true
+  whatsappPhoneE164?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -104,6 +108,7 @@ export type UserMaxAggregateInputType = {
   role?: true
   isActive?: true
   phone?: true
+  whatsappPhoneE164?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -121,6 +126,7 @@ export type UserCountAggregateInputType = {
   role?: true
   isActive?: true
   phone?: true
+  whatsappPhoneE164?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -211,6 +217,7 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRole
   isActive: boolean
   phone: string | null
+  whatsappPhoneE164: string | null
   branchId: string
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode
@@ -249,6 +256,7 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  whatsappPhoneE164?: Prisma.StringNullableFilter<"User"> | string | null
   branchId?: Prisma.UuidFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFilter<"User"> | $Enums.WarehouseAccessMode
@@ -295,6 +303,12 @@ export type UserWhereInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateListRelationFilter
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationListRelationFilter
+  whatsappInternalVerification?: Prisma.XOR<Prisma.WhatsAppInternalVerificationNullableScalarRelationFilter, Prisma.WhatsAppInternalVerificationWhereInput> | null
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadListRelationFilter
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadListRelationFilter
   receivedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   createdManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   updatedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
@@ -310,6 +324,7 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappPhoneE164?: Prisma.SortOrderInput | Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrderInput | Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -356,6 +371,12 @@ export type UserOrderByWithRelationInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessOrderByRelationAggregateInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateOrderByRelationAggregateInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageOrderByRelationAggregateInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationOrderByRelationAggregateInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationOrderByWithRelationInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadOrderByRelationAggregateInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentOrderByRelationAggregateInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentOrderByRelationAggregateInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadOrderByRelationAggregateInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
@@ -365,6 +386,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   username?: string
   email?: string
+  whatsappPhoneE164?: string
   erpUserCode?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
@@ -420,10 +442,16 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateListRelationFilter
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationListRelationFilter
+  whatsappInternalVerification?: Prisma.XOR<Prisma.WhatsAppInternalVerificationNullableScalarRelationFilter, Prisma.WhatsAppInternalVerificationWhereInput> | null
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadListRelationFilter
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadListRelationFilter
   receivedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   createdManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   updatedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
-}, "id" | "username" | "email" | "erpUserCode">
+}, "id" | "username" | "email" | "whatsappPhoneE164" | "erpUserCode">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -435,6 +463,7 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappPhoneE164?: Prisma.SortOrderInput | Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrderInput | Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -458,6 +487,7 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  whatsappPhoneE164?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   branchId?: Prisma.UuidWithAggregatesFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeWithAggregatesFilter<"User"> | $Enums.WarehouseAccessMode
@@ -475,6 +505,7 @@ export type UserCreateInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -520,6 +551,12 @@ export type UserCreateInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -535,6 +572,7 @@ export type UserUncheckedCreateInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -580,6 +618,12 @@ export type UserUncheckedCreateInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -595,6 +639,7 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -640,6 +685,12 @@ export type UserUpdateInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -655,6 +706,7 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -700,6 +752,12 @@ export type UserUncheckedUpdateInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -715,6 +773,7 @@ export type UserCreateManyInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -732,6 +791,7 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -748,6 +808,7 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -775,6 +836,7 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  whatsappPhoneE164?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -792,6 +854,7 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  whatsappPhoneE164?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -809,6 +872,7 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  whatsappPhoneE164?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -1438,6 +1502,12 @@ export type UserCreateNestedOneWithoutHandledWhatsAppConversationsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutInternalWhatsAppConversationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutInternalWhatsAppConversationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInternalWhatsAppConversationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneWithoutHandledWhatsAppConversationsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutHandledWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutHandledWhatsAppConversationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutHandledWhatsAppConversationsInput
@@ -1446,6 +1516,90 @@ export type UserUpdateOneWithoutHandledWhatsAppConversationsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHandledWhatsAppConversationsInput, Prisma.UserUpdateWithoutHandledWhatsAppConversationsInput>, Prisma.UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput>
+}
+
+export type UserUpdateOneWithoutInternalWhatsAppConversationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutInternalWhatsAppConversationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInternalWhatsAppConversationsInput
+  upsert?: Prisma.UserUpsertWithoutInternalWhatsAppConversationsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInternalWhatsAppConversationsInput, Prisma.UserUpdateWithoutInternalWhatsAppConversationsInput>, Prisma.UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput>
+}
+
+export type UserCreateNestedOneWithoutAssignedWhatsAppLeadsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedWhatsAppLeadsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutConvertedWhatsAppLeadsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConvertedWhatsAppLeadsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutAssignedWhatsAppLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedWhatsAppLeadsInput
+  upsert?: Prisma.UserUpsertWithoutAssignedWhatsAppLeadsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedWhatsAppLeadsInput, Prisma.UserUpdateWithoutAssignedWhatsAppLeadsInput>, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput>
+}
+
+export type UserUpdateOneWithoutConvertedWhatsAppLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConvertedWhatsAppLeadsInput
+  upsert?: Prisma.UserUpsertWithoutConvertedWhatsAppLeadsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConvertedWhatsAppLeadsInput, Prisma.UserUpdateWithoutConvertedWhatsAppLeadsInput>, Prisma.UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput>
+}
+
+export type UserCreateNestedOneWithoutAssignedWhatsAppLeadHistoryInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedWhatsAppLeadHistoryInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutMadeWhatsAppLeadAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMadeWhatsAppLeadAssignmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssignedWhatsAppLeadHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedWhatsAppLeadHistoryInput
+  upsert?: Prisma.UserUpsertWithoutAssignedWhatsAppLeadHistoryInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUpdateWithoutAssignedWhatsAppLeadHistoryInput>, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput>
+}
+
+export type UserUpdateOneRequiredWithoutMadeWhatsAppLeadAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMadeWhatsAppLeadAssignmentsInput
+  upsert?: Prisma.UserUpsertWithoutMadeWhatsAppLeadAssignmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput>, Prisma.UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput>
+}
+
+export type UserCreateNestedOneWithoutWhatsappInternalVerificationInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalVerificationInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWhatsappInternalVerificationInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWhatsappInternalVerificationNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalVerificationInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWhatsappInternalVerificationInput
+  upsert?: Prisma.UserUpsertWithoutWhatsappInternalVerificationInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWhatsappInternalVerificationInput, Prisma.UserUpdateWithoutWhatsappInternalVerificationInput>, Prisma.UserUncheckedUpdateWithoutWhatsappInternalVerificationInput>
 }
 
 export type UserCreateNestedOneWithoutWhatsappConversationAccessesInput = {
@@ -1548,6 +1702,7 @@ export type UserCreateWithoutBranchInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1592,6 +1747,12 @@ export type UserCreateWithoutBranchInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -1607,6 +1768,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1651,6 +1813,12 @@ export type UserUncheckedCreateWithoutBranchInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -1695,6 +1863,7 @@ export type UserScalarWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  whatsappPhoneE164?: Prisma.StringNullableFilter<"User"> | string | null
   branchId?: Prisma.UuidFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFilter<"User"> | $Enums.WarehouseAccessMode
@@ -1712,6 +1881,7 @@ export type UserCreateWithoutReceivedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1757,6 +1927,12 @@ export type UserCreateWithoutReceivedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
 }
@@ -1771,6 +1947,7 @@ export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -1816,6 +1993,12 @@ export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
 }
@@ -1835,6 +2018,7 @@ export type UserCreateWithoutCreatedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1880,6 +2064,12 @@ export type UserCreateWithoutCreatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
 }
@@ -1894,6 +2084,7 @@ export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -1939,6 +2130,12 @@ export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
 }
@@ -1958,6 +2155,7 @@ export type UserCreateWithoutUpdatedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2003,6 +2201,12 @@ export type UserCreateWithoutUpdatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
 }
@@ -2017,6 +2221,7 @@ export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2062,6 +2267,12 @@ export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
 }
@@ -2092,6 +2303,7 @@ export type UserUpdateWithoutReceivedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2137,6 +2349,12 @@ export type UserUpdateWithoutReceivedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
 }
@@ -2151,6 +2369,7 @@ export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2196,6 +2415,12 @@ export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
 }
@@ -2221,6 +2446,7 @@ export type UserUpdateWithoutCreatedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2266,6 +2492,12 @@ export type UserUpdateWithoutCreatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
 }
@@ -2280,6 +2512,7 @@ export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2325,6 +2558,12 @@ export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
 }
@@ -2350,6 +2589,7 @@ export type UserUpdateWithoutUpdatedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2395,6 +2635,12 @@ export type UserUpdateWithoutUpdatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
 }
@@ -2409,6 +2655,7 @@ export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2454,6 +2701,12 @@ export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
 }
@@ -2468,6 +2721,7 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2512,6 +2766,12 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -2527,6 +2787,7 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2571,6 +2832,12 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -2602,6 +2869,7 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2646,6 +2914,12 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -2661,6 +2935,7 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2705,6 +2980,12 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -2720,6 +3001,7 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2764,6 +3046,12 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -2779,6 +3067,7 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2823,6 +3112,12 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -2843,6 +3138,7 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2887,6 +3183,12 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -2902,6 +3204,7 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2946,6 +3249,12 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -2977,6 +3286,7 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3021,6 +3331,12 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -3036,6 +3352,7 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3080,6 +3397,12 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -3106,6 +3429,7 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3150,6 +3474,12 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -3165,6 +3495,7 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3209,6 +3540,12 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -3224,6 +3561,7 @@ export type UserCreateWithoutCreatedCustomersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3268,6 +3606,12 @@ export type UserCreateWithoutCreatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -3283,6 +3627,7 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3327,6 +3672,12 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -3347,6 +3698,7 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3391,6 +3743,12 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -3406,6 +3764,7 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3450,6 +3809,12 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -3481,6 +3846,7 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3525,6 +3891,12 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -3540,6 +3912,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3584,6 +3957,12 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -3610,6 +3989,7 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3654,6 +4034,12 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -3669,6 +4055,7 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3713,6 +4100,12 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -3728,6 +4121,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3772,6 +4166,12 @@ export type UserCreateWithoutCreatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -3787,6 +4187,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3831,6 +4232,12 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -3851,6 +4258,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3895,6 +4303,12 @@ export type UserCreateWithoutUpdatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -3910,6 +4324,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3954,6 +4369,12 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -3974,6 +4395,7 @@ export type UserCreateWithoutProcurementProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4018,6 +4440,12 @@ export type UserCreateWithoutProcurementProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -4033,6 +4461,7 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4077,6 +4506,12 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -4108,6 +4543,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4152,6 +4588,12 @@ export type UserUpdateWithoutCreatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -4167,6 +4609,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4211,6 +4654,12 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -4237,6 +4686,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4281,6 +4731,12 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -4296,6 +4752,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4340,6 +4797,12 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -4366,6 +4829,7 @@ export type UserUpdateWithoutProcurementProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4410,6 +4874,12 @@ export type UserUpdateWithoutProcurementProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -4425,6 +4895,7 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4469,6 +4940,12 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -4484,6 +4961,7 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4528,6 +5006,12 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -4543,6 +5027,7 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4587,6 +5072,12 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -4607,6 +5098,7 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4651,6 +5143,12 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -4666,6 +5164,7 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4710,6 +5209,12 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -4741,6 +5246,7 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4785,6 +5291,12 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -4800,6 +5312,7 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4844,6 +5357,12 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -4870,6 +5389,7 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4914,6 +5434,12 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -4929,6 +5455,7 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4973,6 +5500,12 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -4988,6 +5521,7 @@ export type UserCreateWithoutCreatedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5032,6 +5566,12 @@ export type UserCreateWithoutCreatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5047,6 +5587,7 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5091,6 +5632,12 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5111,6 +5658,7 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5155,6 +5703,12 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5170,6 +5724,7 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5214,6 +5769,12 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5234,6 +5795,7 @@ export type UserCreateWithoutProvidedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5278,6 +5840,12 @@ export type UserCreateWithoutProvidedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5293,6 +5861,7 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5337,6 +5906,12 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5357,6 +5932,7 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5401,6 +5977,12 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5416,6 +5998,7 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5460,6 +6043,12 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5480,6 +6069,7 @@ export type UserCreateWithoutRejectedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5524,6 +6114,12 @@ export type UserCreateWithoutRejectedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5539,6 +6135,7 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5583,6 +6180,12 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5603,6 +6206,7 @@ export type UserCreateWithoutCancelledQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5647,6 +6251,12 @@ export type UserCreateWithoutCancelledQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5662,6 +6272,7 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5706,6 +6317,12 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5726,6 +6343,7 @@ export type UserCreateWithoutArchivedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5770,6 +6388,12 @@ export type UserCreateWithoutArchivedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5785,6 +6409,7 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5829,6 +6454,12 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5849,6 +6480,7 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5893,6 +6525,12 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -5908,6 +6546,7 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5952,6 +6591,12 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -5983,6 +6628,7 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6027,6 +6673,12 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6042,6 +6694,7 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6086,6 +6739,12 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6112,6 +6771,7 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6156,6 +6816,12 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6171,6 +6837,7 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6215,6 +6882,12 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6241,6 +6914,7 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6285,6 +6959,12 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6300,6 +6980,7 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6344,6 +7025,12 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6370,6 +7057,7 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6414,6 +7102,12 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6429,6 +7123,7 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6473,6 +7168,12 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6499,6 +7200,7 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6543,6 +7245,12 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6558,6 +7266,7 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6602,6 +7311,12 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6628,6 +7343,7 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6672,6 +7388,12 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6687,6 +7409,7 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6731,6 +7454,12 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6757,6 +7486,7 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6801,6 +7531,12 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6816,6 +7552,7 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6860,6 +7597,12 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -6886,6 +7629,7 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6930,6 +7674,12 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -6945,6 +7695,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6989,6 +7740,12 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -7004,6 +7761,7 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -7048,6 +7806,12 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -7063,6 +7827,7 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -7107,6 +7872,12 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -7127,6 +7898,7 @@ export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -7171,6 +7943,12 @@ export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -7186,6 +7964,7 @@ export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -7230,6 +8009,12 @@ export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -7261,6 +8046,7 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7305,6 +8091,12 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -7320,6 +8112,7 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7364,6 +8157,12 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -7390,6 +8189,7 @@ export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7434,6 +8234,12 @@ export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -7449,6 +8255,7 @@ export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7493,6 +8300,12 @@ export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -7508,6 +8321,7 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -7552,6 +8366,12 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -7567,6 +8387,7 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -7611,6 +8432,12 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -7631,6 +8458,7 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -7675,6 +8503,12 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -7690,6 +8524,7 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -7734,6 +8569,12 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -7765,6 +8606,7 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7809,6 +8651,12 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -7824,6 +8672,7 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7868,6 +8717,12 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -7894,6 +8749,7 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7938,6 +8794,12 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -7953,6 +8815,7 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7997,6 +8860,12 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -8012,6 +8881,7 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8056,6 +8926,12 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -8071,6 +8947,7 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8115,6 +8992,12 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -8135,6 +9018,7 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8179,6 +9063,12 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -8194,6 +9084,7 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8238,6 +9129,12 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -8258,6 +9155,7 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8302,6 +9200,12 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -8317,6 +9221,7 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8361,6 +9266,12 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -8392,6 +9303,7 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8436,6 +9348,12 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -8451,6 +9369,7 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8495,6 +9414,12 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -8521,6 +9446,7 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8565,6 +9491,12 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -8580,6 +9512,7 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8624,6 +9557,12 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -8650,6 +9589,7 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8694,6 +9634,12 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -8709,6 +9655,7 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8753,6 +9700,12 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -8768,6 +9721,7 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8812,6 +9766,12 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -8827,6 +9787,7 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8871,6 +9832,12 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -8902,6 +9869,7 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8946,6 +9914,12 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -8961,6 +9935,7 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9005,6 +9980,12 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -9020,6 +10001,7 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9064,6 +10046,12 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -9079,6 +10067,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9123,6 +10112,12 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -9143,6 +10138,7 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9187,6 +10183,12 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -9202,6 +10204,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9246,6 +10249,12 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -9277,6 +10286,7 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9321,6 +10331,12 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -9336,6 +10352,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9380,6 +10397,12 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -9406,6 +10429,7 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9450,6 +10474,12 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -9465,6 +10495,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9509,6 +10540,12 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -9524,6 +10561,7 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9568,6 +10606,12 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -9583,6 +10627,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9627,6 +10672,12 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -9647,6 +10698,7 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9691,6 +10743,12 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -9706,6 +10764,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9750,6 +10809,12 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -9781,6 +10846,7 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9825,6 +10891,12 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -9840,6 +10912,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9884,6 +10957,12 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -9910,6 +10989,7 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9954,6 +11034,12 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -9969,6 +11055,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10013,6 +11100,12 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -10028,6 +11121,7 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10072,6 +11166,12 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -10087,6 +11187,7 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10131,6 +11232,12 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -10162,6 +11269,7 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10206,6 +11314,12 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -10221,6 +11335,7 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10265,6 +11380,12 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -10280,6 +11401,7 @@ export type UserCreateWithoutQuoteEventsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10324,6 +11446,12 @@ export type UserCreateWithoutQuoteEventsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -10339,6 +11467,7 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10383,6 +11512,12 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -10414,6 +11549,7 @@ export type UserUpdateWithoutQuoteEventsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10458,6 +11594,12 @@ export type UserUpdateWithoutQuoteEventsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -10473,6 +11615,7 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10517,6 +11660,12 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -10532,6 +11681,7 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10576,6 +11726,12 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -10591,6 +11747,7 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10635,6 +11792,12 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -10666,6 +11829,7 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10710,6 +11874,12 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -10725,6 +11895,7 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10769,6 +11940,12 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -10784,6 +11961,7 @@ export type UserCreateWithoutHandledWhatsAppConversationsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10828,6 +12006,12 @@ export type UserCreateWithoutHandledWhatsAppConversationsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -10843,6 +12027,7 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10887,6 +12072,12 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -10895,6 +12086,143 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
 export type UserCreateOrConnectWithoutHandledWhatsAppConversationsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutHandledWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutHandledWhatsAppConversationsInput>
+}
+
+export type UserCreateWithoutInternalWhatsAppConversationsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutInternalWhatsAppConversationsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutInternalWhatsAppConversationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutInternalWhatsAppConversationsInput>
 }
 
 export type UserUpsertWithoutHandledWhatsAppConversationsInput = {
@@ -10918,6 +12246,7 @@ export type UserUpdateWithoutHandledWhatsAppConversationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10962,6 +12291,12 @@ export type UserUpdateWithoutHandledWhatsAppConversationsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -10977,6 +12312,7 @@ export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11021,6 +12357,1555 @@ export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUpsertWithoutInternalWhatsAppConversationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedCreateWithoutInternalWhatsAppConversationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutInternalWhatsAppConversationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutInternalWhatsAppConversationsInput, Prisma.UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput>
+}
+
+export type UserUpdateWithoutInternalWhatsAppConversationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserCreateWithoutAssignedWhatsAppLeadsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutAssignedWhatsAppLeadsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput>
+}
+
+export type UserCreateWithoutConvertedWhatsAppLeadsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutConvertedWhatsAppLeadsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput>
+}
+
+export type UserUpsertWithoutAssignedWhatsAppLeadsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedWhatsAppLeadsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedWhatsAppLeadsInput, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput>
+}
+
+export type UserUpdateWithoutAssignedWhatsAppLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUpsertWithoutConvertedWhatsAppLeadsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConvertedWhatsAppLeadsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConvertedWhatsAppLeadsInput, Prisma.UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput>
+}
+
+export type UserUpdateWithoutConvertedWhatsAppLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserCreateWithoutAssignedWhatsAppLeadHistoryInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutAssignedWhatsAppLeadHistoryInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput>
+}
+
+export type UserCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutMadeWhatsAppLeadAssignmentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput>
+}
+
+export type UserUpsertWithoutAssignedWhatsAppLeadHistoryInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedWhatsAppLeadHistoryInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedWhatsAppLeadHistoryInput, Prisma.UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput>
+}
+
+export type UserUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUpsertWithoutMadeWhatsAppLeadAssignmentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMadeWhatsAppLeadAssignmentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput, Prisma.UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput>
+}
+
+export type UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserCreateWithoutWhatsappInternalVerificationInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutWhatsappInternalVerificationInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutWhatsappInternalVerificationInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalVerificationInput>
+}
+
+export type UserUpsertWithoutWhatsappInternalVerificationInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedUpdateWithoutWhatsappInternalVerificationInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalVerificationInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWhatsappInternalVerificationInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWhatsappInternalVerificationInput, Prisma.UserUncheckedUpdateWithoutWhatsappInternalVerificationInput>
+}
+
+export type UserUpdateWithoutWhatsappInternalVerificationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWhatsappInternalVerificationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -11036,6 +13921,7 @@ export type UserCreateWithoutWhatsappConversationAccessesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11080,6 +13966,12 @@ export type UserCreateWithoutWhatsappConversationAccessesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -11095,6 +13987,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11139,6 +14032,12 @@ export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -11170,6 +14069,7 @@ export type UserUpdateWithoutWhatsappConversationAccessesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11214,6 +14114,12 @@ export type UserUpdateWithoutWhatsappConversationAccessesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -11229,6 +14135,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11273,6 +14180,12 @@ export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -11288,6 +14201,7 @@ export type UserCreateWithoutWhatsappConversationReadsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11332,6 +14246,12 @@ export type UserCreateWithoutWhatsappConversationReadsInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -11347,6 +14267,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11391,6 +14312,12 @@ export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -11422,6 +14349,7 @@ export type UserUpdateWithoutWhatsappConversationReadsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11466,6 +14394,12 @@ export type UserUpdateWithoutWhatsappConversationReadsInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -11481,6 +14415,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11525,6 +14460,12 @@ export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -11540,6 +14481,7 @@ export type UserCreateWithoutSentWhatsAppMessagesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11584,6 +14526,12 @@ export type UserCreateWithoutSentWhatsAppMessagesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -11599,6 +14547,7 @@ export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11643,6 +14592,12 @@ export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -11674,6 +14629,7 @@ export type UserUpdateWithoutSentWhatsAppMessagesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11718,6 +14674,12 @@ export type UserUpdateWithoutSentWhatsAppMessagesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -11733,6 +14695,7 @@ export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11777,6 +14740,12 @@ export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -11792,6 +14761,7 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11836,6 +14806,12 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -11851,6 +14827,7 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11895,6 +14872,12 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -11926,6 +14909,7 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11970,6 +14954,12 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -11985,6 +14975,7 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12029,6 +15020,12 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -12044,6 +15041,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12088,6 +15086,12 @@ export type UserCreateWithoutRefreshTokensInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -12103,6 +15107,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12147,6 +15152,12 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -12178,6 +15189,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12222,6 +15234,12 @@ export type UserUpdateWithoutRefreshTokensInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -12237,6 +15255,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12281,6 +15300,12 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -12296,6 +15321,7 @@ export type UserCreateWithoutAuditLogsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12340,6 +15366,12 @@ export type UserCreateWithoutAuditLogsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
@@ -12355,6 +15387,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12399,6 +15432,12 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
@@ -12430,6 +15469,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12474,6 +15514,12 @@ export type UserUpdateWithoutAuditLogsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -12489,6 +15535,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12533,6 +15580,12 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -12548,6 +15601,7 @@ export type UserCreateManyBranchInput = {
   role: $Enums.UserRole
   isActive?: boolean
   phone?: string | null
+  whatsappPhoneE164?: string | null
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12564,6 +15618,7 @@ export type UserUpdateWithoutBranchInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12608,6 +15663,12 @@ export type UserUpdateWithoutBranchInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
@@ -12623,6 +15684,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12667,6 +15729,12 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
   sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
@@ -12682,6 +15750,7 @@ export type UserUncheckedUpdateManyWithoutBranchInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12734,6 +15803,11 @@ export type UserCountOutputType = {
   whatsappConversationAccesses: number
   whatsappConversationReads: number
   sentWhatsAppMessages: number
+  internalWhatsAppConversations: number
+  assignedWhatsAppLeads: number
+  assignedWhatsAppLeadHistory: number
+  madeWhatsAppLeadAssignments: number
+  convertedWhatsAppLeads: number
   receivedManagerReports: number
   createdManagerReports: number
   updatedManagerReports: number
@@ -12780,6 +15854,11 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   whatsappConversationAccesses?: boolean | UserCountOutputTypeCountWhatsappConversationAccessesArgs
   whatsappConversationReads?: boolean | UserCountOutputTypeCountWhatsappConversationReadsArgs
   sentWhatsAppMessages?: boolean | UserCountOutputTypeCountSentWhatsAppMessagesArgs
+  internalWhatsAppConversations?: boolean | UserCountOutputTypeCountInternalWhatsAppConversationsArgs
+  assignedWhatsAppLeads?: boolean | UserCountOutputTypeCountAssignedWhatsAppLeadsArgs
+  assignedWhatsAppLeadHistory?: boolean | UserCountOutputTypeCountAssignedWhatsAppLeadHistoryArgs
+  madeWhatsAppLeadAssignments?: boolean | UserCountOutputTypeCountMadeWhatsAppLeadAssignmentsArgs
+  convertedWhatsAppLeads?: boolean | UserCountOutputTypeCountConvertedWhatsAppLeadsArgs
   receivedManagerReports?: boolean | UserCountOutputTypeCountReceivedManagerReportsArgs
   createdManagerReports?: boolean | UserCountOutputTypeCountCreatedManagerReportsArgs
   updatedManagerReports?: boolean | UserCountOutputTypeCountUpdatedManagerReportsArgs
@@ -13078,6 +16157,41 @@ export type UserCountOutputTypeCountSentWhatsAppMessagesArgs<ExtArgs extends run
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountInternalWhatsAppConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppConversationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssignedWhatsAppLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppLeadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssignedWhatsAppLeadHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppLeadAssignmentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMadeWhatsAppLeadAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppLeadAssignmentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConvertedWhatsAppLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppLeadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountReceivedManagerReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ManagerReportSubscriptionWhereInput
 }
@@ -13107,6 +16221,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   isActive?: boolean
   phone?: boolean
+  whatsappPhoneE164?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -13153,6 +16268,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   whatsappConversationAccesses?: boolean | Prisma.User$whatsappConversationAccessesArgs<ExtArgs>
   whatsappConversationReads?: boolean | Prisma.User$whatsappConversationReadsArgs<ExtArgs>
   sentWhatsAppMessages?: boolean | Prisma.User$sentWhatsAppMessagesArgs<ExtArgs>
+  internalWhatsAppConversations?: boolean | Prisma.User$internalWhatsAppConversationsArgs<ExtArgs>
+  whatsappInternalVerification?: boolean | Prisma.User$whatsappInternalVerificationArgs<ExtArgs>
+  assignedWhatsAppLeads?: boolean | Prisma.User$assignedWhatsAppLeadsArgs<ExtArgs>
+  assignedWhatsAppLeadHistory?: boolean | Prisma.User$assignedWhatsAppLeadHistoryArgs<ExtArgs>
+  madeWhatsAppLeadAssignments?: boolean | Prisma.User$madeWhatsAppLeadAssignmentsArgs<ExtArgs>
+  convertedWhatsAppLeads?: boolean | Prisma.User$convertedWhatsAppLeadsArgs<ExtArgs>
   receivedManagerReports?: boolean | Prisma.User$receivedManagerReportsArgs<ExtArgs>
   createdManagerReports?: boolean | Prisma.User$createdManagerReportsArgs<ExtArgs>
   updatedManagerReports?: boolean | Prisma.User$updatedManagerReportsArgs<ExtArgs>
@@ -13169,6 +16290,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isActive?: boolean
   phone?: boolean
+  whatsappPhoneE164?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -13187,6 +16309,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isActive?: boolean
   phone?: boolean
+  whatsappPhoneE164?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -13205,6 +16328,7 @@ export type UserSelectScalar = {
   role?: boolean
   isActive?: boolean
   phone?: boolean
+  whatsappPhoneE164?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -13212,7 +16336,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "passwordHash" | "role" | "isActive" | "phone" | "branchId" | "erpUserCode" | "warehouseAccessMode" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "passwordHash" | "role" | "isActive" | "phone" | "whatsappPhoneE164" | "branchId" | "erpUserCode" | "warehouseAccessMode" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   createdCustomers?: boolean | Prisma.User$createdCustomersArgs<ExtArgs>
@@ -13255,6 +16379,12 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   whatsappConversationAccesses?: boolean | Prisma.User$whatsappConversationAccessesArgs<ExtArgs>
   whatsappConversationReads?: boolean | Prisma.User$whatsappConversationReadsArgs<ExtArgs>
   sentWhatsAppMessages?: boolean | Prisma.User$sentWhatsAppMessagesArgs<ExtArgs>
+  internalWhatsAppConversations?: boolean | Prisma.User$internalWhatsAppConversationsArgs<ExtArgs>
+  whatsappInternalVerification?: boolean | Prisma.User$whatsappInternalVerificationArgs<ExtArgs>
+  assignedWhatsAppLeads?: boolean | Prisma.User$assignedWhatsAppLeadsArgs<ExtArgs>
+  assignedWhatsAppLeadHistory?: boolean | Prisma.User$assignedWhatsAppLeadHistoryArgs<ExtArgs>
+  madeWhatsAppLeadAssignments?: boolean | Prisma.User$madeWhatsAppLeadAssignmentsArgs<ExtArgs>
+  convertedWhatsAppLeads?: boolean | Prisma.User$convertedWhatsAppLeadsArgs<ExtArgs>
   receivedManagerReports?: boolean | Prisma.User$receivedManagerReportsArgs<ExtArgs>
   createdManagerReports?: boolean | Prisma.User$createdManagerReportsArgs<ExtArgs>
   updatedManagerReports?: boolean | Prisma.User$updatedManagerReportsArgs<ExtArgs>
@@ -13311,6 +16441,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     whatsappConversationAccesses: Prisma.$WhatsAppConversationAccessPayload<ExtArgs>[]
     whatsappConversationReads: Prisma.$WhatsAppConversationReadStatePayload<ExtArgs>[]
     sentWhatsAppMessages: Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>[]
+    internalWhatsAppConversations: Prisma.$WhatsAppConversationPayload<ExtArgs>[]
+    whatsappInternalVerification: Prisma.$WhatsAppInternalVerificationPayload<ExtArgs> | null
+    assignedWhatsAppLeads: Prisma.$WhatsAppLeadPayload<ExtArgs>[]
+    assignedWhatsAppLeadHistory: Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>[]
+    madeWhatsAppLeadAssignments: Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>[]
+    convertedWhatsAppLeads: Prisma.$WhatsAppLeadPayload<ExtArgs>[]
     receivedManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
     createdManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
     updatedManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
@@ -13325,6 +16461,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRole
     isActive: boolean
     phone: string | null
+    whatsappPhoneE164: string | null
     branchId: string
     erpUserCode: string | null
     warehouseAccessMode: $Enums.WarehouseAccessMode
@@ -13765,6 +16902,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   whatsappConversationAccesses<T extends Prisma.User$whatsappConversationAccessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$whatsappConversationAccessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppConversationAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappConversationReads<T extends Prisma.User$whatsappConversationReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$whatsappConversationReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppConversationReadStatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentWhatsAppMessages<T extends Prisma.User$sentWhatsAppMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentWhatsAppMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  internalWhatsAppConversations<T extends Prisma.User$internalWhatsAppConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$internalWhatsAppConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappInternalVerification<T extends Prisma.User$whatsappInternalVerificationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$whatsappInternalVerificationArgs<ExtArgs>>): Prisma.Prisma__WhatsAppInternalVerificationClient<runtime.Types.Result.GetResult<Prisma.$WhatsAppInternalVerificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  assignedWhatsAppLeads<T extends Prisma.User$assignedWhatsAppLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedWhatsAppLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedWhatsAppLeadHistory<T extends Prisma.User$assignedWhatsAppLeadHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedWhatsAppLeadHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  madeWhatsAppLeadAssignments<T extends Prisma.User$madeWhatsAppLeadAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$madeWhatsAppLeadAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  convertedWhatsAppLeads<T extends Prisma.User$convertedWhatsAppLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$convertedWhatsAppLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedManagerReports<T extends Prisma.User$receivedManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdManagerReports<T extends Prisma.User$createdManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedManagerReports<T extends Prisma.User$updatedManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -13806,6 +16949,7 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly whatsappPhoneE164: Prisma.FieldRef<"User", 'String'>
   readonly branchId: Prisma.FieldRef<"User", 'String'>
   readonly erpUserCode: Prisma.FieldRef<"User", 'String'>
   readonly warehouseAccessMode: Prisma.FieldRef<"User", 'WarehouseAccessMode'>
@@ -15164,6 +18308,145 @@ export type User$sentWhatsAppMessagesArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.WhatsAppOutboundMessageScalarFieldEnum | Prisma.WhatsAppOutboundMessageScalarFieldEnum[]
+}
+
+/**
+ * User.internalWhatsAppConversations
+ */
+export type User$internalWhatsAppConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppConversation
+   */
+  select?: Prisma.WhatsAppConversationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppConversation
+   */
+  omit?: Prisma.WhatsAppConversationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppConversationInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppConversationWhereInput
+  orderBy?: Prisma.WhatsAppConversationOrderByWithRelationInput | Prisma.WhatsAppConversationOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppConversationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppConversationScalarFieldEnum | Prisma.WhatsAppConversationScalarFieldEnum[]
+}
+
+/**
+ * User.whatsappInternalVerification
+ */
+export type User$whatsappInternalVerificationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppInternalVerification
+   */
+  select?: Prisma.WhatsAppInternalVerificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppInternalVerification
+   */
+  omit?: Prisma.WhatsAppInternalVerificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppInternalVerificationInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppInternalVerificationWhereInput
+}
+
+/**
+ * User.assignedWhatsAppLeads
+ */
+export type User$assignedWhatsAppLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppLead
+   */
+  select?: Prisma.WhatsAppLeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppLead
+   */
+  omit?: Prisma.WhatsAppLeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppLeadInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppLeadWhereInput
+  orderBy?: Prisma.WhatsAppLeadOrderByWithRelationInput | Prisma.WhatsAppLeadOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppLeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppLeadScalarFieldEnum | Prisma.WhatsAppLeadScalarFieldEnum[]
+}
+
+/**
+ * User.assignedWhatsAppLeadHistory
+ */
+export type User$assignedWhatsAppLeadHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppLeadAssignment
+   */
+  select?: Prisma.WhatsAppLeadAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppLeadAssignment
+   */
+  omit?: Prisma.WhatsAppLeadAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppLeadAssignmentInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppLeadAssignmentWhereInput
+  orderBy?: Prisma.WhatsAppLeadAssignmentOrderByWithRelationInput | Prisma.WhatsAppLeadAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppLeadAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppLeadAssignmentScalarFieldEnum | Prisma.WhatsAppLeadAssignmentScalarFieldEnum[]
+}
+
+/**
+ * User.madeWhatsAppLeadAssignments
+ */
+export type User$madeWhatsAppLeadAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppLeadAssignment
+   */
+  select?: Prisma.WhatsAppLeadAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppLeadAssignment
+   */
+  omit?: Prisma.WhatsAppLeadAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppLeadAssignmentInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppLeadAssignmentWhereInput
+  orderBy?: Prisma.WhatsAppLeadAssignmentOrderByWithRelationInput | Prisma.WhatsAppLeadAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppLeadAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppLeadAssignmentScalarFieldEnum | Prisma.WhatsAppLeadAssignmentScalarFieldEnum[]
+}
+
+/**
+ * User.convertedWhatsAppLeads
+ */
+export type User$convertedWhatsAppLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppLead
+   */
+  select?: Prisma.WhatsAppLeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppLead
+   */
+  omit?: Prisma.WhatsAppLeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppLeadInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppLeadWhereInput
+  orderBy?: Prisma.WhatsAppLeadOrderByWithRelationInput | Prisma.WhatsAppLeadOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppLeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppLeadScalarFieldEnum | Prisma.WhatsAppLeadScalarFieldEnum[]
 }
 
 /**

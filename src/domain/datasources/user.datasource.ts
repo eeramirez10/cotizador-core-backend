@@ -23,6 +23,7 @@ export interface CreateUserDatasourceParams {
   passwordHash: string;
   role: UserRole;
   phone: string | null;
+  whatsappPhoneE164: string | null;
   erpUserCode: string | null;
   branchId: string;
 }
@@ -44,6 +45,7 @@ export interface UpdateUserDatasourceParams {
   email: string;
   role: UserRole;
   phone: string | null;
+  whatsappPhoneE164: string | null;
   erpUserCode: string | null;
   branchId: string;
   passwordHash?: string;

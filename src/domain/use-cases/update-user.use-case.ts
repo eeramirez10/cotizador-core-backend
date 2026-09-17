@@ -4,6 +4,7 @@ import { UpdateUserRequestDto } from "../dtos/request/update-user-request.dto";
 import { UserResponseDto } from "../dtos/response/user-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { UserRepository } from "../repositories/user.repository";
+import { WhatsAppPhone } from "../utils/whatsapp-phone";
 
 interface UpdateUserActorContext {
   id: string;
@@ -55,8 +56,9 @@ export class UpdateUserUseCase {
       if (usernameExists) throw new Error("Username already exists.");
     }
 
-    if (dto.phone && dto.phone !== target.phone) {
-      const phoneExists = await this.userRepository.existsByPhone(dto.phone);
+    const normalizedPhone = WhatsAppPhone.create(dto.phone)?.value ?? null;
+    if (normalizedPhone && normalizedPhone !== target.whatsappPhoneE164) {
+      const phoneExists = await this.userRepository.existsByPhone(normalizedPhone);
       if (phoneExists) throw new Error("Phone already exists.");
     }
 
@@ -80,6 +82,7 @@ export class UpdateUserUseCase {
         email: dto.email,
         role: dto.role,
         phone: dto.phone,
+        whatsappPhoneE164: normalizedPhone,
         erpUserCode: dto.erpUserCode,
         branchId: branch.id,
         passwordHash,

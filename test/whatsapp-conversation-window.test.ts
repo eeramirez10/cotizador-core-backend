@@ -89,6 +89,7 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     providerMessageId: "SM123",
     body: "  Hola  ",
     mediaCount: 1,
+    media: [],
   });
 
   assert.deepEqual(repository.recorded, {
@@ -97,8 +98,13 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     providerMessageId: "SM123",
     body: "Hola",
     mediaCount: 1,
+    media: [],
     receivedAt: now,
     enqueueAssistant: false,
+    participantType: "UNKNOWN",
+    internalUserId: null,
+    internalUserBranchId: null,
+    principalResolvedAt: now,
   });
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(realtime.events, [{
@@ -118,6 +124,7 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
       occurredAt: now.toISOString(),
       quote: null,
       fileAssetId: null,
+      attachments: [],
     },
     conversation: {
       lastMessage: "Hola",

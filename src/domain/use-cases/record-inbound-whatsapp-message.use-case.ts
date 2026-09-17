@@ -2,6 +2,9 @@ import type { RecordedWhatsAppInboundMessage } from "../entities/whatsapp-conver
 import type { WhatsAppConversationRepository } from "../repositories/whatsapp-conversation.repository";
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 import { WhatsAppPhone } from "../utils/whatsapp-phone";
+import type { WhatsAppParticipantResolverPort } from "../contracts/whatsapp-participant-resolver.port";
+import type { WhatsAppInboundMediaReference } from "../entities/whatsapp-inbound-attachment.entity";
+import type { CaptureWhatsAppInboundMediaUseCase } from "./capture-whatsapp-inbound-media.use-case";
 
 interface RecordInboundWhatsAppMessageInput {
   from: string;
@@ -9,6 +12,7 @@ interface RecordInboundWhatsAppMessageInput {
   providerMessageId: string;
   body?: string;
   mediaCount?: number;
+  media?: WhatsAppInboundMediaReference[];
 }
 
 export class RecordInboundWhatsAppMessageUseCase {
@@ -17,6 +21,8 @@ export class RecordInboundWhatsAppMessageUseCase {
     private readonly now: () => Date = () => new Date(),
     private readonly assistantEnabled = false,
     private readonly realtime?: WhatsAppRealtimePublisher,
+    private readonly participantResolver?: WhatsAppParticipantResolverPort,
+    private readonly captureMedia?: CaptureWhatsAppInboundMediaUseCase,
   ) {}
 
   async execute(input: RecordInboundWhatsAppMessageInput): Promise<RecordedWhatsAppInboundMessage> {
@@ -30,17 +36,37 @@ export class RecordInboundWhatsAppMessageUseCase {
     }
 
     const receivedAt = this.now();
+    const principal = this.participantResolver
+      ? await this.participantResolver.resolve(participant.value)
+      : {
+          audience: "UNKNOWN" as const,
+          userId: null,
+          branchId: null,
+        };
     const body = input.body?.trim() || null;
     const mediaCount = Math.max(0, Math.trunc(input.mediaCount || 0));
+    const media = (input.media || []).slice(0, mediaCount);
     const recorded = await this.repository.recordInboundMessage({
       businessPhoneE164: business.value,
       participantPhoneE164: participant.value,
       providerMessageId,
       body,
       mediaCount,
+      media,
       receivedAt,
       enqueueAssistant: this.assistantEnabled,
+      participantType: principal.audience,
+      internalUserId: principal.userId,
+      internalUserBranchId: principal.branchId,
+      principalResolvedAt: receivedAt,
     });
+    const attachments = this.captureMedia && media.length > 0
+      ? await this.captureMedia.execute({
+          inboundMessageId: recorded.inboundMessageId,
+          providerMessageId,
+          media,
+        })
+      : [];
     if (recorded.created) {
       void this.realtime?.publish({
         type: "WHATSAPP_CONVERSATION_CHANGED",
@@ -52,13 +78,18 @@ export class RecordInboundWhatsAppMessageUseCase {
           conversationId: recorded.conversationId,
           direction: "INBOUND",
           authorType: "CUSTOMER",
-          authorName: "Cliente",
+          authorName: principal.audience === "INTERNAL_USER" ? principal.displayName : "Cliente",
           body: body || (mediaCount > 0 ? `Archivo recibido (${mediaCount})` : "Mensaje sin texto"),
           messageType: "TEXT",
           status: "RECEIVED",
           occurredAt: receivedAt.toISOString(),
           quote: null,
           fileAssetId: null,
+          attachments: attachments.map((attachment) => ({
+            ...attachment,
+            createdAt: attachment.createdAt.toISOString(),
+            quoteExtractedAt: attachment.quoteExtractedAt?.toISOString() || null,
+          })),
         },
         conversation: {
           lastMessage: body || (mediaCount > 0 ? "Archivo recibido" : "Mensaje recibido"),

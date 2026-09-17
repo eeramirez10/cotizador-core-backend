@@ -409,9 +409,13 @@ export const ModelName = {
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   WhatsAppConversation: 'WhatsAppConversation',
+  WhatsAppLead: 'WhatsAppLead',
+  WhatsAppLeadAssignment: 'WhatsAppLeadAssignment',
+  WhatsAppInternalVerification: 'WhatsAppInternalVerification',
   WhatsAppConversationAccess: 'WhatsAppConversationAccess',
   WhatsAppConversationReadState: 'WhatsAppConversationReadState',
   WhatsAppInboundMessage: 'WhatsAppInboundMessage',
+  WhatsAppInboundAttachment: 'WhatsAppInboundAttachment',
   WhatsAppOutboundMessage: 'WhatsAppOutboundMessage',
   WhatsAppAssistantJob: 'WhatsAppAssistantJob',
   WhatsAppPendingAction: 'WhatsAppPendingAction',
@@ -434,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2288,6 +2292,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WhatsAppLead: {
+      payload: Prisma.$WhatsAppLeadPayload<ExtArgs>
+      fields: Prisma.WhatsAppLeadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppLeadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppLeadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppLeadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppLeadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppLeadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppLeadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppLeadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppLeadCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppLeadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppLeadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppLeadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppLeadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppLeadUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppLeadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppLeadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppLead>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppLeadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppLeadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppLeadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppLeadCountAggregateOutputType> | number
+        }
+      }
+    }
+    WhatsAppLeadAssignment: {
+      payload: Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>
+      fields: Prisma.WhatsAppLeadAssignmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppLeadAssignmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppLeadAssignmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppLeadAssignmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppLeadAssignmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppLeadAssignmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppLeadAssignmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppLeadAssignmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppLeadAssignmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppLeadAssignmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppLeadAssignmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppLeadAssignmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppLeadAssignmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppLeadAssignmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppLeadAssignmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppLeadAssignmentPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppLeadAssignmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppLeadAssignment>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppLeadAssignmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppLeadAssignmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppLeadAssignmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppLeadAssignmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    WhatsAppInternalVerification: {
+      payload: Prisma.$WhatsAppInternalVerificationPayload<ExtArgs>
+      fields: Prisma.WhatsAppInternalVerificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppInternalVerificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppInternalVerificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppInternalVerificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppInternalVerificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppInternalVerificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppInternalVerificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppInternalVerificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppInternalVerificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppInternalVerificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppInternalVerificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppInternalVerificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppInternalVerificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppInternalVerificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppInternalVerificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalVerificationPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppInternalVerificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppInternalVerification>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppInternalVerificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInternalVerificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppInternalVerificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInternalVerificationCountAggregateOutputType> | number
+        }
+      }
+    }
     WhatsAppConversationAccess: {
       payload: Prisma.$WhatsAppConversationAccessPayload<ExtArgs>
       fields: Prisma.WhatsAppConversationAccessFieldRefs
@@ -2507,6 +2733,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WhatsAppInboundMessageCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WhatsAppInboundMessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    WhatsAppInboundAttachment: {
+      payload: Prisma.$WhatsAppInboundAttachmentPayload<ExtArgs>
+      fields: Prisma.WhatsAppInboundAttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppInboundAttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppInboundAttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppInboundAttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppInboundAttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppInboundAttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppInboundAttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppInboundAttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppInboundAttachmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppInboundAttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppInboundAttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppInboundAttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppInboundAttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppInboundAttachmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppInboundAttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInboundAttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppInboundAttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppInboundAttachment>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppInboundAttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInboundAttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppInboundAttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInboundAttachmentCountAggregateOutputType> | number
         }
       }
     }
@@ -3120,6 +3420,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   isActive: 'isActive',
   phone: 'phone',
+  whatsappPhoneE164: 'whatsappPhoneE164',
   branchId: 'branchId',
   erpUserCode: 'erpUserCode',
   warehouseAccessMode: 'warehouseAccessMode',
@@ -3312,6 +3613,7 @@ export const QuoteScalarFieldEnum = {
   captureMethod: 'captureMethod',
   originalQuoteDate: 'originalQuoteDate',
   sourceChannel: 'sourceChannel',
+  whatsappLeadId: 'whatsappLeadId',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
   exchangeRateDate: 'exchangeRateDate',
@@ -3691,6 +3993,9 @@ export const WhatsAppConversationScalarFieldEnum = {
   id: 'id',
   businessPhoneE164: 'businessPhoneE164',
   participantPhoneE164: 'participantPhoneE164',
+  participantType: 'participantType',
+  internalUserId: 'internalUserId',
+  principalResolvedAt: 'principalResolvedAt',
   mode: 'mode',
   handledByUserId: 'handledByUserId',
   handledAt: 'handledAt',
@@ -3703,6 +4008,56 @@ export const WhatsAppConversationScalarFieldEnum = {
 } as const
 
 export type WhatsAppConversationScalarFieldEnum = (typeof WhatsAppConversationScalarFieldEnum)[keyof typeof WhatsAppConversationScalarFieldEnum]
+
+
+export const WhatsAppLeadScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  phoneE164: 'phoneE164',
+  contactName: 'contactName',
+  companyName: 'companyName',
+  email: 'email',
+  location: 'location',
+  requestSummary: 'requestSummary',
+  status: 'status',
+  assignedSellerId: 'assignedSellerId',
+  assignedBranchId: 'assignedBranchId',
+  assignedAt: 'assignedAt',
+  customerId: 'customerId',
+  convertedByUserId: 'convertedByUserId',
+  convertedAt: 'convertedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppLeadScalarFieldEnum = (typeof WhatsAppLeadScalarFieldEnum)[keyof typeof WhatsAppLeadScalarFieldEnum]
+
+
+export const WhatsAppLeadAssignmentScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  sellerId: 'sellerId',
+  branchId: 'branchId',
+  assignedByUserId: 'assignedByUserId',
+  assignedAt: 'assignedAt'
+} as const
+
+export type WhatsAppLeadAssignmentScalarFieldEnum = (typeof WhatsAppLeadAssignmentScalarFieldEnum)[keyof typeof WhatsAppLeadAssignmentScalarFieldEnum]
+
+
+export const WhatsAppInternalVerificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  phoneE164: 'phoneE164',
+  verificationRequestedAt: 'verificationRequestedAt',
+  verifiedAt: 'verifiedAt',
+  verifiedUntil: 'verifiedUntil',
+  failedAttempts: 'failedAttempts',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppInternalVerificationScalarFieldEnum = (typeof WhatsAppInternalVerificationScalarFieldEnum)[keyof typeof WhatsAppInternalVerificationScalarFieldEnum]
 
 
 export const WhatsAppConversationAccessScalarFieldEnum = {
@@ -3743,6 +4098,26 @@ export const WhatsAppInboundMessageScalarFieldEnum = {
 } as const
 
 export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
+
+
+export const WhatsAppInboundAttachmentScalarFieldEnum = {
+  id: 'id',
+  inboundMessageId: 'inboundMessageId',
+  providerMediaUrl: 'providerMediaUrl',
+  originalName: 'originalName',
+  storageKey: 'storageKey',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  checksumSha256: 'checksumSha256',
+  createdAt: 'createdAt',
+  quoteExtractedAt: 'quoteExtractedAt',
+  quoteExtractionCount: 'quoteExtractionCount',
+  quoteExtractedByUserId: 'quoteExtractedByUserId',
+  quoteExtractedByName: 'quoteExtractedByName',
+  lastQuoteDraftId: 'lastQuoteDraftId'
+} as const
+
+export type WhatsAppInboundAttachmentScalarFieldEnum = (typeof WhatsAppInboundAttachmentScalarFieldEnum)[keyof typeof WhatsAppInboundAttachmentScalarFieldEnum]
 
 
 export const WhatsAppOutboundMessageScalarFieldEnum = {
@@ -4438,6 +4813,20 @@ export type ListEnumQuoteDeliveryAttemptStatusFieldRefInput<$PrismaModel> = Fiel
 
 
 /**
+ * Reference to a field of type 'WhatsAppParticipantType'
+ */
+export type EnumWhatsAppParticipantTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppParticipantType'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppParticipantType[]'
+ */
+export type ListEnumWhatsAppParticipantTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppParticipantType[]'>
+    
+
+
+/**
  * Reference to a field of type 'WhatsAppConversationMode'
  */
 export type EnumWhatsAppConversationModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppConversationMode'>
@@ -4448,6 +4837,20 @@ export type EnumWhatsAppConversationModeFieldRefInput<$PrismaModel> = FieldRefIn
  * Reference to a field of type 'WhatsAppConversationMode[]'
  */
 export type ListEnumWhatsAppConversationModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppConversationMode[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppLeadStatus'
+ */
+export type EnumWhatsAppLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppLeadStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppLeadStatus[]'
+ */
+export type ListEnumWhatsAppLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppLeadStatus[]'>
     
 
 
@@ -4696,9 +5099,13 @@ export type GlobalOmitConfig = {
   quoteEvent?: Prisma.QuoteEventOmit
   quoteDeliveryAttempt?: Prisma.QuoteDeliveryAttemptOmit
   whatsAppConversation?: Prisma.WhatsAppConversationOmit
+  whatsAppLead?: Prisma.WhatsAppLeadOmit
+  whatsAppLeadAssignment?: Prisma.WhatsAppLeadAssignmentOmit
+  whatsAppInternalVerification?: Prisma.WhatsAppInternalVerificationOmit
   whatsAppConversationAccess?: Prisma.WhatsAppConversationAccessOmit
   whatsAppConversationReadState?: Prisma.WhatsAppConversationReadStateOmit
   whatsAppInboundMessage?: Prisma.WhatsAppInboundMessageOmit
+  whatsAppInboundAttachment?: Prisma.WhatsAppInboundAttachmentOmit
   whatsAppOutboundMessage?: Prisma.WhatsAppOutboundMessageOmit
   whatsAppAssistantJob?: Prisma.WhatsAppAssistantJobOmit
   whatsAppPendingAction?: Prisma.WhatsAppPendingActionOmit

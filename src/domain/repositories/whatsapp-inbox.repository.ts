@@ -6,6 +6,7 @@ import type {
   WhatsAppInboxConversationPage,
   WhatsAppInboxMessage,
   WhatsAppInboxMessagePage,
+  WhatsAppInboxRelatedQuote,
 } from "../entities/whatsapp-inbox.entity";
 
 export abstract class WhatsAppInboxRepository {
@@ -28,6 +29,11 @@ export abstract class WhatsAppInboxRepository {
     after?: Date;
     pageSize: number;
   }): Promise<WhatsAppInboxMessagePage>;
+
+  abstract listRelatedQuotes(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+  }): Promise<WhatsAppInboxRelatedQuote[] | null>;
 
   abstract markRead(conversationId: string, actor: WhatsAppInboxActor, readAt: Date): Promise<boolean>;
 

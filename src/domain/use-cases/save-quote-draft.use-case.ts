@@ -320,6 +320,7 @@ export class SaveQuoteDraftUseCase {
         captureMethod: dto.quote.captureMethod,
         originalQuoteDate: dto.quote.originalQuoteDate,
         sourceChannel: dto.quote.sourceChannel,
+        whatsappLeadId: dto.quote.whatsappLeadId,
         currency: dto.quote.currency,
         exchangeRate: dto.quote.exchangeRate,
         exchangeRateDate: dto.quote.exchangeRateDate,

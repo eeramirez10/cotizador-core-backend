@@ -13,6 +13,7 @@ import { UserEntity } from "../../domain/entities/user.entity";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
 import { UserMapper } from "../mappers/user.mapper";
+import { WhatsAppPhone } from "../../domain/utils/whatsapp-phone";
 
 const userInclude = {
   branch: true,
@@ -118,9 +119,13 @@ export class PrismaUserDatasource implements UserDatasource {
   }
 
   async existsByPhone(phone: string): Promise<boolean> {
+    const normalized = WhatsAppPhone.create(phone)?.value;
     const user = await prisma.user.findFirst({
       where: {
-        phone: phone.trim(),
+        OR: [
+          ...(normalized ? [{ whatsappPhoneE164: normalized }] : []),
+          { phone: phone.trim() },
+        ],
       },
       select: { id: true },
     });
@@ -139,6 +144,7 @@ export class PrismaUserDatasource implements UserDatasource {
           passwordHash: params.passwordHash,
           role: params.role,
           phone: params.phone,
+          whatsappPhoneE164: params.whatsappPhoneE164,
           erpUserCode: params.erpUserCode,
           branchId: params.branchId,
           isActive: true,
@@ -165,6 +171,7 @@ export class PrismaUserDatasource implements UserDatasource {
           email: params.data.email,
           role: params.data.role,
           phone: params.data.phone,
+          whatsappPhoneE164: params.data.whatsappPhoneE164,
           erpUserCode: params.data.erpUserCode,
           branchId: params.data.branchId,
           ...(params.data.passwordHash ? { passwordHash: params.data.passwordHash } : {}),

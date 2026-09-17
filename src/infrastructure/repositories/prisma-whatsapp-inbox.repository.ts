@@ -10,6 +10,7 @@ import type {
   WhatsAppInboxConversationPage,
   WhatsAppInboxMessage,
   WhatsAppInboxMessagePage,
+  WhatsAppInboxRelatedQuote,
 } from "../../domain/entities/whatsapp-inbox.entity";
 import { WhatsAppInboxRepository } from "../../domain/repositories/whatsapp-inbox.repository";
 import { prisma } from "../database/prisma-client";
@@ -38,6 +39,12 @@ const conversationInclude = {
   readStates: {
     select: { userId: true, lastReadAt: true },
   },
+  lead: {
+    include: {
+      assignedSeller: { select: { firstName: true, lastName: true } },
+      assignedBranch: { select: { name: true } },
+    },
+  },
 } satisfies Prisma.WhatsAppConversationInclude;
 
 type ConversationRow = Prisma.WhatsAppConversationGetPayload<{ include: typeof conversationInclude }>;
@@ -63,6 +70,10 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         ...(search ? [{
           OR: [
             { participantPhoneE164: { contains: search } },
+            { lead: { is: { contactName: { contains: search, mode: "insensitive" as const } } } },
+            { lead: { is: { companyName: { contains: search, mode: "insensitive" as const } } } },
+            { lead: { is: { email: { contains: search, mode: "insensitive" as const } } } },
+            { lead: { is: { requestSummary: { contains: search, mode: "insensitive" as const } } } },
             {
               accesses: {
                 some: {
@@ -122,7 +133,12 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
   }): Promise<WhatsAppInboxMessagePage> {
     const allowed = await prisma.whatsAppConversation.findFirst({
       where: { id: input.conversationId, ...this.visibilityWhere(input.actor) },
-      select: { id: true },
+      select: {
+        id: true,
+        participantType: true,
+        internalUser: { select: { firstName: true, lastName: true } },
+        lead: { select: { contactName: true } },
+      },
     });
     if (!allowed) return { items: [], nextCursor: null, hasMore: false };
 
@@ -148,6 +164,21 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
           body: true,
           mediaCount: true,
           receivedAt: true,
+          attachments: {
+            orderBy: { createdAt: "asc" },
+            select: {
+              id: true,
+              originalName: true,
+              mimeType: true,
+              sizeBytes: true,
+              createdAt: true,
+              quoteExtractedAt: true,
+              quoteExtractionCount: true,
+              quoteExtractedByUserId: true,
+              quoteExtractedByName: true,
+              lastQuoteDraftId: true,
+            },
+          },
         },
       }),
       prisma.whatsAppOutboundMessage.findMany({
@@ -178,13 +209,16 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         conversationId: row.conversationId,
         direction: "INBOUND",
         authorType: "CUSTOMER",
-        authorName: "Cliente",
+        authorName: allowed.participantType === "INTERNAL_USER" && allowed.internalUser
+          ? `${allowed.internalUser.firstName} ${allowed.internalUser.lastName}`.trim()
+          : allowed.lead?.contactName?.trim() || "Cliente",
         body: row.body?.trim() || (row.mediaCount > 0 ? `Archivo recibido (${row.mediaCount})` : "Mensaje sin texto"),
         messageType: "TEXT",
         status: "RECEIVED",
         occurredAt: row.receivedAt,
         quote: null,
         fileAssetId: null,
+        attachments: row.attachments,
       })),
       ...outbound.map((row): WhatsAppInboxMessage => ({
         id: row.id,
@@ -206,6 +240,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
           status: row.quote.status,
         } : null,
         fileAssetId: row.fileAssetId,
+        attachments: [],
       })),
     ].sort((a, b) => after
       ? a.occurredAt.getTime() - b.occurredAt.getTime()
@@ -226,6 +261,96 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
           : this.encodeMessageCursor(selected[0].occurredAt)
         : null,
     };
+  }
+
+  async listRelatedQuotes(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+  }): Promise<WhatsAppInboxRelatedQuote[] | null> {
+    const conversation = await prisma.whatsAppConversation.findFirst({
+      where: {
+        id: input.conversationId,
+        ...this.visibilityWhere(input.actor),
+      },
+      select: {
+        lead: { select: { id: true, customerId: true } },
+        accesses: {
+          select: { customerId: true, quoteId: true },
+        },
+        outboundMessages: {
+          where: { quoteId: { not: null } },
+          select: { quoteId: true },
+          distinct: ["quoteId"],
+        },
+      },
+    });
+    if (!conversation) return null;
+
+    const customerIds = [...new Set([
+      ...conversation.accesses.map((access) => access.customerId),
+      conversation.lead?.customerId,
+    ].filter((value): value is string => Boolean(value)))];
+    const linkedQuoteIds = [...new Set([
+      ...conversation.accesses.map((access) => access.quoteId),
+      ...conversation.outboundMessages.map((message) => message.quoteId),
+    ].filter((value): value is string => Boolean(value)))];
+    const relationWhere: Prisma.QuoteWhereInput[] = [
+      ...(linkedQuoteIds.length > 0 ? [{ id: { in: linkedQuoteIds } }] : []),
+      ...(customerIds.length > 0 ? [{ customerId: { in: customerIds } }] : []),
+      ...(conversation.lead?.id ? [{ whatsappLeadId: conversation.lead.id }] : []),
+    ];
+    if (relationWhere.length === 0) return [];
+
+    const scopeWhere: Prisma.QuoteWhereInput = input.actor.role === "ADMIN"
+      ? {}
+      : input.actor.role === "MANAGER"
+        ? { branchId: input.actor.branchId }
+        : { createdByUserId: input.actor.id };
+    const currentQuoteIds = new Set(conversation.accesses
+      .map((access) => access.quoteId)
+      .filter((value): value is string => Boolean(value)));
+    const rows = await prisma.quote.findMany({
+      where: {
+        AND: [
+          { OR: relationWhere },
+          scopeWhere,
+          { archivedAt: null },
+        ],
+      },
+      orderBy: [{ updatedAt: "desc" }, { createdAt: "desc" }],
+      take: 100,
+      select: {
+        id: true,
+        quoteNumber: true,
+        status: true,
+        currency: true,
+        total: true,
+        revisionNumber: true,
+        rootQuoteId: true,
+        previousVersionId: true,
+        createdAt: true,
+        updatedAt: true,
+        createdByUser: { select: { firstName: true, lastName: true } },
+      },
+    });
+
+    return rows
+      .map((row): WhatsAppInboxRelatedQuote => ({
+        id: row.id,
+        quoteNumber: row.quoteNumber,
+        status: row.status,
+        currency: row.currency,
+        total: Number(row.total),
+        revisionNumber: row.revisionNumber,
+        rootQuoteId: row.rootQuoteId,
+        previousVersionId: row.previousVersionId,
+        sellerName: `${row.createdByUser.firstName} ${row.createdByUser.lastName}`.trim(),
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+        isCurrent: currentQuoteIds.has(row.id),
+      }))
+      .sort((left, right) => Number(right.isCurrent) - Number(left.isCurrent)
+        || right.updatedAt.getTime() - left.updatedAt.getTime());
   }
 
   async markRead(conversationId: string, actor: WhatsAppInboxActor, readAt: Date): Promise<boolean> {
@@ -320,6 +445,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         occurredAt: message.sentAt,
         quote: null,
         fileAssetId: message.fileAssetId,
+        attachments: [],
       };
     });
   }
@@ -417,11 +543,33 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
   }
 
   private visibilityWhere(actor: WhatsAppInboxActor): Prisma.WhatsAppConversationWhereInput {
-    if (actor.role === "ADMIN") return {};
+    const customerConversation: Prisma.WhatsAppConversationWhereInput = {
+      participantType: { not: "INTERNAL_USER" },
+    };
+    if (actor.role === "ADMIN") return customerConversation;
     if (actor.role === "MANAGER") {
-      return { accesses: { some: { branchId: actor.branchId } } };
+      return {
+        AND: [
+          customerConversation,
+          {
+            OR: [
+              { accesses: { some: { branchId: actor.branchId } } },
+              { lead: { is: { assignedBranchId: actor.branchId } } },
+              {
+                participantType: "UNKNOWN",
+                lead: {
+                  is: {
+                    assignedSellerId: null,
+                    status: { notIn: ["CONVERTED", "DISCARDED"] },
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      };
     }
-    return { accesses: { some: { userId: actor.id } } };
+    return { ...customerConversation, accesses: { some: { userId: actor.id } } };
   }
 
   private toConversation(row: ConversationRow, actor: WhatsAppInboxActor): WhatsAppInboxConversation {
@@ -442,22 +590,45 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     const customerName = access?.customer?.legalName?.trim()
       || access?.customer?.displayName?.trim()
       || access?.customerContact?.name?.trim()
+      || row.lead?.companyName?.trim()
+      || row.lead?.contactName?.trim()
       || row.participantPhoneE164;
+    const leadSellerName = row.lead?.assignedSeller
+      ? `${row.lead.assignedSeller.firstName} ${row.lead.assignedSeller.lastName}`.trim()
+      : null;
 
     return {
       id: row.id,
+      participantType: row.participantType,
       participantPhone: row.participantPhoneE164,
       customerId: access?.customer?.id ?? null,
       customerName,
       contactId: access?.customerContact?.id ?? null,
-      contactName: access?.customerContact?.name ?? null,
+      contactName: access?.customerContact?.name ?? row.lead?.contactName ?? null,
       sellerName: access?.user
         ? `${access.user.firstName} ${access.user.lastName}`.trim()
-        : null,
+        : leadSellerName,
       quote: access?.quote ? {
         id: access.quote.id,
         quoteNumber: access.quote.quoteNumber,
         status: access.quote.status,
+      } : null,
+      lead: row.lead ? {
+        id: row.lead.id,
+        status: row.lead.status,
+        contactName: row.lead.contactName,
+        companyName: row.lead.companyName,
+        email: row.lead.email,
+        location: row.lead.location,
+        requestSummary: row.lead.requestSummary,
+        assignedSellerId: row.lead.assignedSellerId,
+        assignedSellerName: leadSellerName,
+        assignedBranchId: row.lead.assignedBranchId,
+        assignedBranchName: row.lead.assignedBranch?.name ?? null,
+        assignedAt: row.lead.assignedAt,
+        customerId: row.lead.customerId,
+        convertedByUserId: row.lead.convertedByUserId,
+        convertedAt: row.lead.convertedAt,
       } : null,
       mode: row.mode,
       handledByName: row.handledByUser

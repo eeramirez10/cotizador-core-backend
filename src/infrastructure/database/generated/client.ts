@@ -165,6 +165,21 @@ export type QuoteDeliveryAttempt = Prisma.QuoteDeliveryAttemptModel
  */
 export type WhatsAppConversation = Prisma.WhatsAppConversationModel
 /**
+ * Model WhatsAppLead
+ * 
+ */
+export type WhatsAppLead = Prisma.WhatsAppLeadModel
+/**
+ * Model WhatsAppLeadAssignment
+ * 
+ */
+export type WhatsAppLeadAssignment = Prisma.WhatsAppLeadAssignmentModel
+/**
+ * Model WhatsAppInternalVerification
+ * 
+ */
+export type WhatsAppInternalVerification = Prisma.WhatsAppInternalVerificationModel
+/**
  * Model WhatsAppConversationAccess
  * 
  */
@@ -179,6 +194,11 @@ export type WhatsAppConversationReadState = Prisma.WhatsAppConversationReadState
  * 
  */
 export type WhatsAppInboundMessage = Prisma.WhatsAppInboundMessageModel
+/**
+ * Model WhatsAppInboundAttachment
+ * 
+ */
+export type WhatsAppInboundAttachment = Prisma.WhatsAppInboundAttachmentModel
 /**
  * Model WhatsAppOutboundMessage
  * 

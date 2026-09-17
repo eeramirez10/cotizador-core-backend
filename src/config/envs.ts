@@ -142,6 +142,22 @@ export class Envs {
     return get("TWILIO_AUTH_TOKEN").default("").asString();
   }
 
+  static get twilioVerifyServiceSid(): string {
+    return get("TWILIO_VERIFY_SERVICE_SID").default("").asString();
+  }
+
+  static get whatsAppInternalVerificationEnabled(): boolean {
+    return get("WHATSAPP_INTERNAL_VERIFICATION_ENABLED").default("true").asBool();
+  }
+
+  static get whatsAppInternalVerificationTtlDays(): number {
+    return get("WHATSAPP_INTERNAL_VERIFICATION_TTL_DAYS").default("30").asIntPositive();
+  }
+
+  static get whatsAppInternalVerificationResendSeconds(): number {
+    return get("WHATSAPP_INTERNAL_VERIFICATION_RESEND_SECONDS").default("60").asIntPositive();
+  }
+
   static get twilioWhatsAppFrom(): string {
     return get("TWILIO_WHATSAPP_FROM").default("").asString();
   }
