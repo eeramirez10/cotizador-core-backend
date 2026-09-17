@@ -1,6 +1,7 @@
 import type {
   WhatsAppAssistantActionType,
   WhatsAppAssistantJobEntity,
+  WhatsAppAssistantPrincipal,
   WhatsAppAssistantQuoteDetails,
   WhatsAppAssistantQuoteSummary,
   WhatsAppCustomerChangeRequestEntity,
@@ -9,10 +10,42 @@ import type {
 import { WhatsAppAssistantRepository } from "../../domain/repositories/whatsapp-assistant.repository";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
+import { PrismaWhatsAppParticipantResolver } from "./prisma-whatsapp-participant-resolver";
 
 const visibleStatuses = ["QUOTED", "APPROVED", "REJECTED", "SUPERSEDED"] as const;
 
 export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantRepository {
+  private readonly participantResolver = new PrismaWhatsAppParticipantResolver();
+
+  async getPrincipal(conversationId: string): Promise<WhatsAppAssistantPrincipal> {
+    const conversation = await prisma.whatsAppConversation.findUnique({
+      where: { id: conversationId },
+      select: {
+        participantPhoneE164: true,
+        participantType: true,
+        internalUserId: true,
+      },
+    });
+    if (!conversation) return this.unknownPrincipal();
+
+    const principal = await this.participantResolver.resolve(conversation.participantPhoneE164);
+    if (
+      conversation.participantType !== principal.audience
+      || conversation.internalUserId !== principal.userId
+    ) {
+      await prisma.whatsAppConversation.update({
+        where: { id: conversationId },
+        data: {
+          participantType: principal.audience,
+          internalUserId: principal.userId,
+          principalResolvedAt: new Date(),
+          previousResponseId: null,
+        },
+      });
+    }
+    return principal;
+  }
+
   async getParticipantPhone(conversationId: string): Promise<string | null> {
     return this.participantPhone(conversationId);
   }
@@ -35,7 +68,16 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         attempts: true,
         conversationId: true,
         conversation: { select: { participantPhoneE164: true, previousResponseId: true } },
-        inboundMessage: { select: { body: true, mediaCount: true } },
+        inboundMessage: {
+          select: {
+            body: true,
+            mediaCount: true,
+            attachments: {
+              orderBy: { createdAt: "asc" },
+              select: { originalName: true, mimeType: true },
+            },
+          },
+        },
       },
     });
     if (!candidate) return null;
@@ -62,14 +104,22 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     });
     if (claimed.count === 0) return null;
 
+    const principal = await this.getPrincipal(candidate.conversationId);
+    const conversationContext = await prisma.whatsAppConversation.findUnique({
+      where: { id: candidate.conversationId },
+      select: { previousResponseId: true },
+    });
+
     return {
       id: candidate.id,
       conversationId: candidate.conversationId,
       participantPhone: candidate.conversation.participantPhoneE164,
       message: candidate.inboundMessage.body?.trim() || "El cliente envió un archivo sin texto.",
       mediaCount: candidate.inboundMessage.mediaCount,
-      previousResponseId: candidate.conversation.previousResponseId,
+      attachments: candidate.inboundMessage.attachments,
+      previousResponseId: conversationContext?.previousResponseId ?? null,
       attempts: candidate.attempts + 1,
+      principal,
     };
   }
 
@@ -409,5 +459,21 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
 
   private jsonRecord(value: unknown): Record<string, unknown> {
     return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+  }
+
+  private unknownPrincipal(): WhatsAppAssistantPrincipal {
+    return {
+      audience: "UNKNOWN",
+      displayName: "Usuario de WhatsApp",
+      phoneE164: "",
+      userId: null,
+      role: null,
+      branchId: null,
+      branchName: null,
+      reportScope: null,
+      reportBranchId: null,
+      reportRange: null,
+      isVerified: false,
+    };
   }
 }

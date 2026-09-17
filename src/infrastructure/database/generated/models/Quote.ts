@@ -63,6 +63,7 @@ export type QuoteMinAggregateOutputType = {
   captureMethod: $Enums.QuoteCaptureMethod | null
   originalQuoteDate: Date | null
   sourceChannel: $Enums.QuoteSourceChannel | null
+  whatsappLeadId: string | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
   exchangeRateDate: Date | null
@@ -127,6 +128,7 @@ export type QuoteMaxAggregateOutputType = {
   captureMethod: $Enums.QuoteCaptureMethod | null
   originalQuoteDate: Date | null
   sourceChannel: $Enums.QuoteSourceChannel | null
+  whatsappLeadId: string | null
   currency: $Enums.Currency | null
   exchangeRate: runtime.Decimal | null
   exchangeRateDate: Date | null
@@ -191,6 +193,7 @@ export type QuoteCountAggregateOutputType = {
   captureMethod: number
   originalQuoteDate: number
   sourceChannel: number
+  whatsappLeadId: number
   currency: number
   exchangeRate: number
   exchangeRateDate: number
@@ -277,6 +280,7 @@ export type QuoteMinAggregateInputType = {
   captureMethod?: true
   originalQuoteDate?: true
   sourceChannel?: true
+  whatsappLeadId?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -341,6 +345,7 @@ export type QuoteMaxAggregateInputType = {
   captureMethod?: true
   originalQuoteDate?: true
   sourceChannel?: true
+  whatsappLeadId?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -405,6 +410,7 @@ export type QuoteCountAggregateInputType = {
   captureMethod?: true
   originalQuoteDate?: true
   sourceChannel?: true
+  whatsappLeadId?: true
   currency?: true
   exchangeRate?: true
   exchangeRateDate?: true
@@ -556,6 +562,7 @@ export type QuoteGroupByOutputType = {
   captureMethod: $Enums.QuoteCaptureMethod
   originalQuoteDate: Date | null
   sourceChannel: $Enums.QuoteSourceChannel
+  whatsappLeadId: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal
   exchangeRateDate: Date
@@ -643,6 +650,7 @@ export type QuoteWhereInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -690,6 +698,7 @@ export type QuoteWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
+  whatsappLead?: Prisma.XOR<Prisma.WhatsAppLeadNullableScalarRelationFilter, Prisma.WhatsAppLeadWhereInput> | null
   customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -734,6 +743,7 @@ export type QuoteOrderByWithRelationInput = {
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceChannel?: Prisma.SortOrder
+  whatsappLeadId?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -781,6 +791,7 @@ export type QuoteOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   branch?: Prisma.BranchOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
+  whatsappLead?: Prisma.WhatsAppLeadOrderByWithRelationInput
   customerContact?: Prisma.CustomerContactOrderByWithRelationInput
   createdByUser?: Prisma.UserOrderByWithRelationInput
   updatedByUser?: Prisma.UserOrderByWithRelationInput
@@ -831,6 +842,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -877,6 +889,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
+  whatsappLead?: Prisma.XOR<Prisma.WhatsAppLeadNullableScalarRelationFilter, Prisma.WhatsAppLeadWhereInput> | null
   customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -921,6 +934,7 @@ export type QuoteOrderByWithAggregationInput = {
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceChannel?: Prisma.SortOrder
+  whatsappLeadId?: Prisma.SortOrderInput | Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -993,6 +1007,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodWithAggregatesFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelWithAggregatesFilter<"Quote"> | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   currency?: Prisma.EnumCurrencyWithAggregatesFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalWithAggregatesFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
@@ -1090,6 +1105,7 @@ export type QuoteCreateInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -1134,6 +1150,7 @@ export type QuoteUncheckedCreateInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1244,6 +1261,7 @@ export type QuoteUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -1288,6 +1306,7 @@ export type QuoteUncheckedUpdateInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1365,6 +1384,7 @@ export type QuoteCreateManyInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -1479,6 +1499,7 @@ export type QuoteUncheckedUpdateManyInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1568,6 +1589,7 @@ export type QuoteCountOrderByAggregateInput = {
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
   sourceChannel?: Prisma.SortOrder
+  whatsappLeadId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -1642,6 +1664,7 @@ export type QuoteMaxOrderByAggregateInput = {
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
   sourceChannel?: Prisma.SortOrder
+  whatsappLeadId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -1706,6 +1729,7 @@ export type QuoteMinOrderByAggregateInput = {
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
   sourceChannel?: Prisma.SortOrder
+  whatsappLeadId?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   exchangeRate?: Prisma.SortOrder
   exchangeRateDate?: Prisma.SortOrder
@@ -2490,6 +2514,48 @@ export type QuoteUpdateOneRequiredWithoutDeliveryAttemptsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutDeliveryAttemptsInput, Prisma.QuoteUpdateWithoutDeliveryAttemptsInput>, Prisma.QuoteUncheckedUpdateWithoutDeliveryAttemptsInput>
 }
 
+export type QuoteCreateNestedManyWithoutWhatsappLeadInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput> | Prisma.QuoteCreateWithoutWhatsappLeadInput[] | Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput | Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput[]
+  createMany?: Prisma.QuoteCreateManyWhatsappLeadInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUncheckedCreateNestedManyWithoutWhatsappLeadInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput> | Prisma.QuoteCreateWithoutWhatsappLeadInput[] | Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput | Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput[]
+  createMany?: Prisma.QuoteCreateManyWhatsappLeadInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUpdateManyWithoutWhatsappLeadNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput> | Prisma.QuoteCreateWithoutWhatsappLeadInput[] | Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput | Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutWhatsappLeadInput | Prisma.QuoteUpsertWithWhereUniqueWithoutWhatsappLeadInput[]
+  createMany?: Prisma.QuoteCreateManyWhatsappLeadInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutWhatsappLeadInput | Prisma.QuoteUpdateWithWhereUniqueWithoutWhatsappLeadInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutWhatsappLeadInput | Prisma.QuoteUpdateManyWithWhereWithoutWhatsappLeadInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUncheckedUpdateManyWithoutWhatsappLeadNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput> | Prisma.QuoteCreateWithoutWhatsappLeadInput[] | Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput | Prisma.QuoteCreateOrConnectWithoutWhatsappLeadInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutWhatsappLeadInput | Prisma.QuoteUpsertWithWhereUniqueWithoutWhatsappLeadInput[]
+  createMany?: Prisma.QuoteCreateManyWhatsappLeadInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutWhatsappLeadInput | Prisma.QuoteUpdateWithWhereUniqueWithoutWhatsappLeadInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutWhatsappLeadInput | Prisma.QuoteUpdateManyWithWhereWithoutWhatsappLeadInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
 export type QuoteCreateNestedOneWithoutWhatsappConversationAccessesInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappConversationAccessesInput, Prisma.QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappConversationAccessesInput
@@ -2613,6 +2679,7 @@ export type QuoteCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -2657,6 +2724,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -2762,6 +2830,7 @@ export type QuoteScalarWhereInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFilter<"Quote"> | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   currency?: Prisma.EnumCurrencyFilter<"Quote"> | $Enums.Currency
   exchangeRate?: Prisma.DecimalFilter<"Quote"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFilter<"Quote"> | Date | string
@@ -2859,6 +2928,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -2902,6 +2972,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3021,6 +3092,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -3064,6 +3136,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3183,6 +3256,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3226,6 +3300,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3345,6 +3420,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3388,6 +3464,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3507,6 +3584,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3550,6 +3628,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3669,6 +3748,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3712,6 +3792,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3831,6 +3912,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3874,6 +3956,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -3993,6 +4076,7 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4035,6 +4119,7 @@ export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -4282,6 +4367,7 @@ export type QuoteCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4326,6 +4412,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -4461,6 +4548,7 @@ export type QuoteCreateWithoutCustomerContactInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -4504,6 +4592,7 @@ export type QuoteUncheckedCreateWithoutCustomerContactInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -4639,6 +4728,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4682,6 +4772,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -4796,6 +4887,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4839,6 +4931,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -4958,6 +5051,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5001,6 +5095,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -5115,6 +5210,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5158,6 +5254,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -5277,6 +5374,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5320,6 +5418,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -5434,6 +5533,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5477,6 +5577,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -5602,6 +5703,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -5645,6 +5747,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5781,6 +5884,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -5824,6 +5928,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5960,6 +6065,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6003,6 +6109,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6123,6 +6230,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6166,6 +6274,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6275,6 +6384,7 @@ export type QuoteCreateWithoutItemsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -6318,6 +6428,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -6443,6 +6554,7 @@ export type QuoteUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6486,6 +6598,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6595,6 +6708,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -6638,6 +6752,7 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -6763,6 +6878,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6806,6 +6922,7 @@ export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6915,6 +7032,7 @@ export type QuoteCreateWithoutAttachmentsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -6958,6 +7076,7 @@ export type QuoteUncheckedCreateWithoutAttachmentsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -7083,6 +7202,7 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7126,6 +7246,7 @@ export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7235,6 +7356,7 @@ export type QuoteCreateWithoutEventsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -7278,6 +7400,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -7403,6 +7526,7 @@ export type QuoteUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7446,6 +7570,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7555,6 +7680,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -7598,6 +7724,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -7723,6 +7850,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7766,6 +7894,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7825,7 +7954,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
-export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
+export type QuoteCreateWithoutWhatsappLeadInput = {
   id?: string
   quoteNumber: string
   clientDraftId?: string | null
@@ -7898,6 +8027,187 @@ export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
+  nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
+  supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutWhatsappLeadInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput>
+}
+
+export type QuoteCreateManyWhatsappLeadInputEnvelope = {
+  data: Prisma.QuoteCreateManyWhatsappLeadInput | Prisma.QuoteCreateManyWhatsappLeadInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteUpsertWithWhereUniqueWithoutWhatsappLeadInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappLeadInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedCreateWithoutWhatsappLeadInput>
+}
+
+export type QuoteUpdateWithWhereUniqueWithoutWhatsappLeadInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappLeadInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappLeadInput>
+}
+
+export type QuoteUpdateManyWithWhereWithoutWhatsappLeadInput = {
+  where: Prisma.QuoteScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutWhatsappLeadInput>
+}
+
+export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
+  revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
+  previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
+  nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
+  supersededByQuote?: Prisma.QuoteCreateNestedOneWithoutSupersedesQuoteInput
+  supersedesQuote?: Prisma.QuoteCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
 }
 
@@ -7918,6 +8228,7 @@ export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -8043,6 +8354,7 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -8086,6 +8398,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8195,6 +8508,7 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8238,6 +8552,7 @@ export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -8363,6 +8678,7 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -8406,6 +8722,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8515,6 +8832,7 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8558,6 +8876,7 @@ export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -8683,6 +9002,7 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -8726,6 +9046,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8835,6 +9156,7 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8878,6 +9200,7 @@ export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9003,6 +9326,7 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9046,6 +9370,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9155,6 +9480,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -9198,6 +9524,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9323,6 +9650,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9366,6 +9694,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9442,6 +9771,7 @@ export type QuoteCreateManyBranchInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9537,6 +9867,7 @@ export type QuoteUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9581,6 +9912,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9657,6 +9989,7 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9720,6 +10053,7 @@ export type QuoteCreateManyCreatedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9783,6 +10117,7 @@ export type QuoteCreateManyUpdatedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9846,6 +10181,7 @@ export type QuoteCreateManyRejectedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9909,6 +10245,7 @@ export type QuoteCreateManyCancelledByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -9972,6 +10309,7 @@ export type QuoteCreateManyArchivedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -10035,6 +10373,7 @@ export type QuoteCreateManyProvidedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -10098,6 +10437,7 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -10160,6 +10500,7 @@ export type QuoteCreateManyErpQuoteRegisteredByUserInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -10257,6 +10598,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -10300,6 +10642,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10376,6 +10719,7 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10472,6 +10816,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -10515,6 +10860,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10591,6 +10937,7 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10687,6 +11034,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -10730,6 +11078,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10806,6 +11155,7 @@ export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10902,6 +11252,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -10945,6 +11296,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11021,6 +11373,7 @@ export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11117,6 +11470,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11160,6 +11514,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11236,6 +11591,7 @@ export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11332,6 +11688,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11375,6 +11732,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11451,6 +11809,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11547,6 +11906,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11590,6 +11950,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11666,6 +12027,7 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11762,6 +12124,7 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11804,6 +12167,7 @@ export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11880,6 +12244,7 @@ export type QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11944,6 +12309,7 @@ export type QuoteCreateManyCustomerInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -12039,6 +12405,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -12083,6 +12450,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12159,6 +12527,7 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12222,6 +12591,7 @@ export type QuoteCreateManyCustomerContactInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -12318,6 +12688,7 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -12361,6 +12732,7 @@ export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12437,6 +12809,7 @@ export type QuoteUncheckedUpdateManyWithoutCustomerContactInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12500,6 +12873,7 @@ export type QuoteCreateManyRootQuoteInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -12563,6 +12937,7 @@ export type QuoteCreateManyPreviousVersionInput = {
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
   sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
   currency: $Enums.Currency
   exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate: Date | string
@@ -12659,6 +13034,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -12702,6 +13078,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12778,6 +13155,7 @@ export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12874,6 +13252,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -12917,6 +13296,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12993,6 +13373,7 @@ export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -13026,6 +13407,288 @@ export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteCreateManyWhatsappLeadInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteUpdateWithoutWhatsappLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
+  revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
+  previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
+  nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
+  supersededByQuote?: Prisma.QuoteUpdateOneWithoutSupersedesQuoteNestedInput
+  supersedesQuote?: Prisma.QuoteUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
+  nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
+  supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateManyWithoutWhatsappLeadInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -13177,6 +13840,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   captureMethod?: boolean
   originalQuoteDate?: boolean
   sourceChannel?: boolean
+  whatsappLeadId?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -13224,6 +13888,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   updatedAt?: boolean
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13269,6 +13934,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   captureMethod?: boolean
   originalQuoteDate?: boolean
   sourceChannel?: boolean
+  whatsappLeadId?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -13316,6 +13982,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13347,6 +14014,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   captureMethod?: boolean
   originalQuoteDate?: boolean
   sourceChannel?: boolean
+  whatsappLeadId?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -13394,6 +14062,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   updatedAt?: boolean
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13425,6 +14094,7 @@ export type QuoteSelectScalar = {
   captureMethod?: boolean
   originalQuoteDate?: boolean
   sourceChannel?: boolean
+  whatsappLeadId?: boolean
   currency?: boolean
   exchangeRate?: boolean
   exchangeRateDate?: boolean
@@ -13472,10 +14142,11 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "erpQuoteNumber" | "erpQuoteRegisteredAt" | "erpQuoteRegisteredByUserId" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "commercialConditions" | "validityDays" | "validUntil" | "branchId" | "customerId" | "customerContactId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "erpQuoteNumber" | "erpQuoteRegisteredAt" | "erpQuoteRegisteredByUserId" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "whatsappLeadId" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "commercialConditions" | "validityDays" | "validUntil" | "branchId" | "customerId" | "customerContactId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13506,6 +14177,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13522,6 +14194,7 @@ export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type QuoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
+  whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13541,6 +14214,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     branch: Prisma.$BranchPayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs>
+    whatsappLead: Prisma.$WhatsAppLeadPayload<ExtArgs> | null
     customerContact: Prisma.$CustomerContactPayload<ExtArgs> | null
     createdByUser: Prisma.$UserPayload<ExtArgs>
     updatedByUser: Prisma.$UserPayload<ExtArgs> | null
@@ -13584,6 +14258,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     captureMethod: $Enums.QuoteCaptureMethod
     originalQuoteDate: Date | null
     sourceChannel: $Enums.QuoteSourceChannel
+    whatsappLeadId: string | null
     currency: $Enums.Currency
     exchangeRate: runtime.Decimal
     exchangeRateDate: Date
@@ -14025,6 +14700,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  whatsappLead<T extends Prisma.Quote$whatsappLeadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappLeadArgs<ExtArgs>>): Prisma.Prisma__WhatsAppLeadClient<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   customerContact<T extends Prisma.Quote$customerContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$customerContactArgs<ExtArgs>>): Prisma.Prisma__CustomerContactClient<runtime.Types.Result.GetResult<Prisma.$CustomerContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdByUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedByUser<T extends Prisma.Quote$updatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$updatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -14095,6 +14771,7 @@ export interface QuoteFieldRefs {
   readonly captureMethod: Prisma.FieldRef<"Quote", 'QuoteCaptureMethod'>
   readonly originalQuoteDate: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly sourceChannel: Prisma.FieldRef<"Quote", 'QuoteSourceChannel'>
+  readonly whatsappLeadId: Prisma.FieldRef<"Quote", 'String'>
   readonly currency: Prisma.FieldRef<"Quote", 'Currency'>
   readonly exchangeRate: Prisma.FieldRef<"Quote", 'Decimal'>
   readonly exchangeRateDate: Prisma.FieldRef<"Quote", 'DateTime'>
@@ -14533,6 +15210,25 @@ export type QuoteDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Quotes to delete.
    */
   limit?: number
+}
+
+/**
+ * Quote.whatsappLead
+ */
+export type Quote$whatsappLeadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppLead
+   */
+  select?: Prisma.WhatsAppLeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppLead
+   */
+  omit?: Prisma.WhatsAppLeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppLeadInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppLeadWhereInput
 }
 
 /**

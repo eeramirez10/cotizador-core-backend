@@ -114,7 +114,11 @@ export class WhatsAppWebSocketGateway {
     if (this.clients.size === 0) return;
     const conversation = await prisma.whatsAppConversation.findUnique({
       where: { id: event.conversationId },
-      select: { accesses: { select: { userId: true, branchId: true } } },
+      select: {
+        participantType: true,
+        accesses: { select: { userId: true, branchId: true } },
+        lead: { select: { assignedSellerId: true, assignedBranchId: true, status: true } },
+      },
     });
     if (!conversation) return;
 
@@ -122,9 +126,22 @@ export class WhatsAppWebSocketGateway {
     const branchIds = new Set(conversation.accesses.map((access) => access.branchId));
     const payload = JSON.stringify(event);
     for (const client of this.clients) {
-      const canReceive = client.actor.role === "ADMIN"
-        || (client.actor.role === "MANAGER" && branchIds.has(client.actor.branchId))
-        || (client.actor.role === "SELLER" && userIds.has(client.actor.id));
+      const isExternal = conversation.participantType !== "INTERNAL_USER";
+      const unassignedLead = conversation.participantType === "UNKNOWN"
+        && !conversation.lead?.assignedSellerId
+        && !["CONVERTED", "DISCARDED"].includes(conversation.lead?.status || "");
+      const canReceive = isExternal && (
+        client.actor.role === "ADMIN"
+        || (client.actor.role === "MANAGER" && (
+          branchIds.has(client.actor.branchId)
+          || conversation.lead?.assignedBranchId === client.actor.branchId
+          || unassignedLead
+        ))
+        || (client.actor.role === "SELLER" && (
+          userIds.has(client.actor.id)
+          || conversation.lead?.assignedSellerId === client.actor.id
+        ))
+      );
       if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
     }
   }

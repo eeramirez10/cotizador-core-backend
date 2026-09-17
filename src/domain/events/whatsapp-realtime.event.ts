@@ -3,6 +3,9 @@ export type WhatsAppRealtimeEventReason =
   | "MESSAGE_SENT"
   | "MESSAGE_STATUS_CHANGED"
   | "CONVERSATION_MODE_CHANGED"
+  | "LEAD_UPDATED"
+  | "LEAD_ASSIGNED"
+  | "LEAD_CONVERTED"
   | "QUOTE_SENT";
 
 export interface WhatsAppRealtimeMessagePayload {
@@ -17,6 +20,18 @@ export interface WhatsAppRealtimeMessagePayload {
   occurredAt: string;
   quote: { id: string; quoteNumber: string; status: string } | null;
   fileAssetId: string | null;
+  attachments: Array<{
+    id: string;
+    originalName: string;
+    mimeType: string;
+    sizeBytes: number;
+    createdAt: string;
+    quoteExtractedAt: string | null;
+    quoteExtractionCount: number;
+    quoteExtractedByUserId: string | null;
+    quoteExtractedByName: string | null;
+    lastQuoteDraftId: string | null;
+  }>;
 }
 
 export interface WhatsAppRealtimeConversationPatch {
@@ -25,6 +40,10 @@ export interface WhatsAppRealtimeConversationPatch {
   lastMessage?: string;
   lastMessageAt?: string;
   lastInboundAt?: string | null;
+  sellerName?: string | null;
+  customerName?: string;
+  contactName?: string | null;
+  lead?: import("../entities/whatsapp-inbox.entity").WhatsAppInboxLeadContext | null;
 }
 
 export interface WhatsAppRealtimeMessagePatch {

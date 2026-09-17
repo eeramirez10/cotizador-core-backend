@@ -21,6 +21,7 @@ interface CreateQuoteRequestDtoProps {
   captureMethod: QuoteCaptureMethod;
   originalQuoteDate: Date | null;
   sourceChannel: QuoteSourceChannel;
+  whatsappLeadId: string | null;
   providedByUserId: string | null;
   notes: string | null;
 }
@@ -41,6 +42,7 @@ export class CreateQuoteRequestDto {
   public readonly captureMethod: QuoteCaptureMethod;
   public readonly originalQuoteDate: Date | null;
   public readonly sourceChannel: QuoteSourceChannel;
+  public readonly whatsappLeadId: string | null;
   public readonly providedByUserId: string | null;
   public readonly notes: string | null;
 
@@ -60,6 +62,7 @@ export class CreateQuoteRequestDto {
     this.captureMethod = props.captureMethod;
     this.originalQuoteDate = props.originalQuoteDate;
     this.sourceChannel = props.sourceChannel;
+    this.whatsappLeadId = props.whatsappLeadId;
     this.providedByUserId = props.providedByUserId;
     this.notes = props.notes;
   }
@@ -169,6 +172,13 @@ export class CreateQuoteRequestDto {
       return ["sourceChannel is invalid."];
     }
 
+    const whatsappLeadId = typeof body.whatsappLeadId === "string" && body.whatsappLeadId.trim()
+      ? body.whatsappLeadId.trim()
+      : null;
+    if (whatsappLeadId && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(whatsappLeadId)) {
+      return ["whatsappLeadId must be a valid UUID."];
+    }
+
     const providedByUserId =
       typeof body.providedByUserId === "undefined" || body.providedByUserId === null
         ? null
@@ -200,6 +210,7 @@ export class CreateQuoteRequestDto {
         captureMethod: captureMethodRaw as QuoteCaptureMethod,
         originalQuoteDate,
         sourceChannel: sourceChannelRaw as QuoteSourceChannel,
+        whatsappLeadId,
         providedByUserId,
         notes,
       }),

@@ -27,6 +27,7 @@ export class QuoteResponseDto {
         ? this.quote.originalQuoteDate.toISOString().split("T")[0]
         : null,
       sourceChannel: this.quote.sourceChannel,
+      whatsappLeadId: this.quote.whatsappLeadId,
       currency: this.quote.currency,
       exchangeRate: this.quote.exchangeRate,
       exchangeRateDate: this.quote.exchangeRateDate.toISOString().split("T")[0],

@@ -328,6 +328,27 @@ export const WhatsAppConversationMode = {
 export type WhatsAppConversationMode = (typeof WhatsAppConversationMode)[keyof typeof WhatsAppConversationMode]
 
 
+export const WhatsAppParticipantType = {
+  CUSTOMER: 'CUSTOMER',
+  INTERNAL_USER: 'INTERNAL_USER',
+  UNKNOWN: 'UNKNOWN'
+} as const
+
+export type WhatsAppParticipantType = (typeof WhatsAppParticipantType)[keyof typeof WhatsAppParticipantType]
+
+
+export const WhatsAppLeadStatus = {
+  NEW: 'NEW',
+  COLLECTING_INFORMATION: 'COLLECTING_INFORMATION',
+  PENDING_ASSIGNMENT: 'PENDING_ASSIGNMENT',
+  ASSIGNED: 'ASSIGNED',
+  CONVERTED: 'CONVERTED',
+  DISCARDED: 'DISCARDED'
+} as const
+
+export type WhatsAppLeadStatus = (typeof WhatsAppLeadStatus)[keyof typeof WhatsAppLeadStatus]
+
+
 export const WhatsAppOutboundAuthorType = {
   AI: 'AI',
   USER: 'USER',

@@ -28,6 +28,7 @@ interface QuoteRow {
   captureMethod: QuoteEntity["captureMethod"];
   originalQuoteDate: Date | null;
   sourceChannel: QuoteEntity["sourceChannel"];
+  whatsappLeadId: string | null;
   currency: QuoteEntity["currency"];
   exchangeRate: number | DecimalLike;
   exchangeRateDate: Date;
@@ -272,6 +273,7 @@ export class QuoteMapper {
       captureMethod: row.captureMethod,
       originalQuoteDate: row.originalQuoteDate,
       sourceChannel: row.sourceChannel,
+      whatsappLeadId: row.whatsappLeadId,
       currency: row.currency,
       exchangeRate: Number(toNumber(row.exchangeRate)),
       exchangeRateDate: row.exchangeRateDate,

@@ -76,9 +76,13 @@ export const ModelName = {
   QuoteEvent: 'QuoteEvent',
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   WhatsAppConversation: 'WhatsAppConversation',
+  WhatsAppLead: 'WhatsAppLead',
+  WhatsAppLeadAssignment: 'WhatsAppLeadAssignment',
+  WhatsAppInternalVerification: 'WhatsAppInternalVerification',
   WhatsAppConversationAccess: 'WhatsAppConversationAccess',
   WhatsAppConversationReadState: 'WhatsAppConversationReadState',
   WhatsAppInboundMessage: 'WhatsAppInboundMessage',
+  WhatsAppInboundAttachment: 'WhatsAppInboundAttachment',
   WhatsAppOutboundMessage: 'WhatsAppOutboundMessage',
   WhatsAppAssistantJob: 'WhatsAppAssistantJob',
   WhatsAppPendingAction: 'WhatsAppPendingAction',
@@ -157,6 +161,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   isActive: 'isActive',
   phone: 'phone',
+  whatsappPhoneE164: 'whatsappPhoneE164',
   branchId: 'branchId',
   erpUserCode: 'erpUserCode',
   warehouseAccessMode: 'warehouseAccessMode',
@@ -349,6 +354,7 @@ export const QuoteScalarFieldEnum = {
   captureMethod: 'captureMethod',
   originalQuoteDate: 'originalQuoteDate',
   sourceChannel: 'sourceChannel',
+  whatsappLeadId: 'whatsappLeadId',
   currency: 'currency',
   exchangeRate: 'exchangeRate',
   exchangeRateDate: 'exchangeRateDate',
@@ -728,6 +734,9 @@ export const WhatsAppConversationScalarFieldEnum = {
   id: 'id',
   businessPhoneE164: 'businessPhoneE164',
   participantPhoneE164: 'participantPhoneE164',
+  participantType: 'participantType',
+  internalUserId: 'internalUserId',
+  principalResolvedAt: 'principalResolvedAt',
   mode: 'mode',
   handledByUserId: 'handledByUserId',
   handledAt: 'handledAt',
@@ -740,6 +749,56 @@ export const WhatsAppConversationScalarFieldEnum = {
 } as const
 
 export type WhatsAppConversationScalarFieldEnum = (typeof WhatsAppConversationScalarFieldEnum)[keyof typeof WhatsAppConversationScalarFieldEnum]
+
+
+export const WhatsAppLeadScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  phoneE164: 'phoneE164',
+  contactName: 'contactName',
+  companyName: 'companyName',
+  email: 'email',
+  location: 'location',
+  requestSummary: 'requestSummary',
+  status: 'status',
+  assignedSellerId: 'assignedSellerId',
+  assignedBranchId: 'assignedBranchId',
+  assignedAt: 'assignedAt',
+  customerId: 'customerId',
+  convertedByUserId: 'convertedByUserId',
+  convertedAt: 'convertedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppLeadScalarFieldEnum = (typeof WhatsAppLeadScalarFieldEnum)[keyof typeof WhatsAppLeadScalarFieldEnum]
+
+
+export const WhatsAppLeadAssignmentScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  sellerId: 'sellerId',
+  branchId: 'branchId',
+  assignedByUserId: 'assignedByUserId',
+  assignedAt: 'assignedAt'
+} as const
+
+export type WhatsAppLeadAssignmentScalarFieldEnum = (typeof WhatsAppLeadAssignmentScalarFieldEnum)[keyof typeof WhatsAppLeadAssignmentScalarFieldEnum]
+
+
+export const WhatsAppInternalVerificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  phoneE164: 'phoneE164',
+  verificationRequestedAt: 'verificationRequestedAt',
+  verifiedAt: 'verifiedAt',
+  verifiedUntil: 'verifiedUntil',
+  failedAttempts: 'failedAttempts',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppInternalVerificationScalarFieldEnum = (typeof WhatsAppInternalVerificationScalarFieldEnum)[keyof typeof WhatsAppInternalVerificationScalarFieldEnum]
 
 
 export const WhatsAppConversationAccessScalarFieldEnum = {
@@ -780,6 +839,26 @@ export const WhatsAppInboundMessageScalarFieldEnum = {
 } as const
 
 export type WhatsAppInboundMessageScalarFieldEnum = (typeof WhatsAppInboundMessageScalarFieldEnum)[keyof typeof WhatsAppInboundMessageScalarFieldEnum]
+
+
+export const WhatsAppInboundAttachmentScalarFieldEnum = {
+  id: 'id',
+  inboundMessageId: 'inboundMessageId',
+  providerMediaUrl: 'providerMediaUrl',
+  originalName: 'originalName',
+  storageKey: 'storageKey',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  checksumSha256: 'checksumSha256',
+  createdAt: 'createdAt',
+  quoteExtractedAt: 'quoteExtractedAt',
+  quoteExtractionCount: 'quoteExtractionCount',
+  quoteExtractedByUserId: 'quoteExtractedByUserId',
+  quoteExtractedByName: 'quoteExtractedByName',
+  lastQuoteDraftId: 'lastQuoteDraftId'
+} as const
+
+export type WhatsAppInboundAttachmentScalarFieldEnum = (typeof WhatsAppInboundAttachmentScalarFieldEnum)[keyof typeof WhatsAppInboundAttachmentScalarFieldEnum]
 
 
 export const WhatsAppOutboundMessageScalarFieldEnum = {

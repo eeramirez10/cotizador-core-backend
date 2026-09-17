@@ -17,6 +17,22 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
 
   async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage> {
     return prisma.$transaction(async (tx) => {
+      const existingConversation = await tx.whatsAppConversation.findUnique({
+        where: {
+          businessPhoneE164_participantPhoneE164: {
+            businessPhoneE164: input.businessPhoneE164,
+            participantPhoneE164: input.participantPhoneE164,
+          },
+        },
+        select: { participantType: true, internalUserId: true },
+      });
+      const principalChanged = Boolean(
+        existingConversation
+        && (
+          existingConversation.participantType !== input.participantType
+          || existingConversation.internalUserId !== input.internalUserId
+        ),
+      );
       const conversation = await tx.whatsAppConversation.upsert({
         where: {
           businessPhoneE164_participantPhoneE164: {
@@ -29,10 +45,51 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
           participantPhoneE164: input.participantPhoneE164,
           lastInboundAt: input.receivedAt,
           lastMessageAt: input.receivedAt,
+          participantType: input.participantType,
+          internalUserId: input.internalUserId,
+          principalResolvedAt: input.principalResolvedAt,
         },
-        update: {},
+        update: {
+          participantType: input.participantType,
+          internalUserId: input.internalUserId,
+          principalResolvedAt: input.principalResolvedAt,
+          ...(principalChanged ? { previousResponseId: null } : {}),
+        },
         select: { id: true, mode: true },
       });
+
+      if (input.participantType === "UNKNOWN") {
+        await tx.whatsAppLead.upsert({
+          where: { conversationId: conversation.id },
+          create: {
+            conversationId: conversation.id,
+            phoneE164: input.participantPhoneE164,
+          },
+          update: { phoneE164: input.participantPhoneE164 },
+        });
+      } else if (input.participantType === "CUSTOMER") {
+        await tx.whatsAppLead.updateMany({
+          where: { conversationId: conversation.id, status: { not: "DISCARDED" } },
+          data: { status: "CONVERTED" },
+        });
+      }
+
+      if (input.internalUserId && input.internalUserBranchId) {
+        await tx.whatsAppConversationAccess.upsert({
+          where: {
+            conversationId_userId: {
+              conversationId: conversation.id,
+              userId: input.internalUserId,
+            },
+          },
+          create: {
+            conversationId: conversation.id,
+            userId: input.internalUserId,
+            branchId: input.internalUserBranchId,
+          },
+          update: { branchId: input.internalUserBranchId },
+        });
+      }
 
       const inserted = await tx.whatsAppInboundMessage.createMany({
         data: [{

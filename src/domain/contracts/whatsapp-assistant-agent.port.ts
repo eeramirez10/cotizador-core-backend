@@ -4,7 +4,12 @@ export interface WhatsAppAssistantAgentInput {
   participantPhone: string;
   message: string;
   mediaCount: number;
+  attachments: Array<{
+    originalName: string;
+    mimeType: string;
+  }>;
   previousResponseId: string | null;
+  principal: WhatsAppAssistantPrincipal;
 }
 
 export interface WhatsAppAssistantAgentResult {
@@ -15,3 +20,4 @@ export interface WhatsAppAssistantAgentResult {
 export abstract class WhatsAppAssistantAgentPort {
   abstract respond(input: WhatsAppAssistantAgentInput): Promise<WhatsAppAssistantAgentResult>;
 }
+import type { WhatsAppAssistantPrincipal } from "../entities/whatsapp-assistant.entity";

@@ -4,6 +4,7 @@ import { CreateUserRequestDto } from "../dtos/request/create-user-request.dto";
 import { UserResponseDto } from "../dtos/response/user-response.dto";
 import { BranchRepository } from "../repositories/branch.repository";
 import { UserRepository } from "../repositories/user.repository";
+import { WhatsAppPhone } from "../utils/whatsapp-phone";
 
 interface CreateUserActorContext {
   role: UserRole;
@@ -51,6 +52,7 @@ export class CreateUserUseCase {
       passwordHash,
       role: dto.role,
       phone: dto.phone,
+      whatsappPhoneE164: WhatsAppPhone.create(dto.phone)?.value ?? null,
       erpUserCode: dto.erpUserCode,
       branchId: branch.id,
     });

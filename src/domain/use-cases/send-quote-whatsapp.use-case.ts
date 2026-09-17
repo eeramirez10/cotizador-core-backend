@@ -148,6 +148,7 @@ export class SendQuoteWhatsAppUseCase {
               occurredAt: sentAt.toISOString(),
               quote: { id: quote.id, quoteNumber: quote.quoteNumber, status: quote.status },
               fileAssetId: attachment.id,
+              attachments: [],
             },
             conversation: {
               lastMessage: input.message,

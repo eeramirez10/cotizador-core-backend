@@ -1,6 +1,7 @@
 import type {
   WhatsAppAssistantActionType,
   WhatsAppAssistantJobEntity,
+  WhatsAppAssistantPrincipal,
   WhatsAppAssistantQuoteDetails,
   WhatsAppAssistantQuoteSummary,
   WhatsAppCustomerChangeRequestEntity,
@@ -8,6 +9,7 @@ import type {
 } from "../entities/whatsapp-assistant.entity";
 
 export abstract class WhatsAppAssistantRepository {
+  abstract getPrincipal(conversationId: string): Promise<WhatsAppAssistantPrincipal>;
   abstract getParticipantPhone(conversationId: string): Promise<string | null>;
   abstract claimNextJob(staleBefore: Date): Promise<WhatsAppAssistantJobEntity | null>;
   abstract isConversationAiControlled(conversationId: string): Promise<boolean>;

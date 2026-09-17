@@ -227,6 +227,21 @@ enum WhatsAppConversationMode {
   HUMAN
 }
 
+enum WhatsAppParticipantType {
+  CUSTOMER
+  INTERNAL_USER
+  UNKNOWN
+}
+
+enum WhatsAppLeadStatus {
+  NEW
+  COLLECTING_INFORMATION
+  PENDING_ASSIGNMENT
+  ASSIGNED
+  CONVERTED
+  DISCARDED
+}
+
 enum WhatsAppOutboundAuthorType {
   AI
   USER
@@ -306,6 +321,8 @@ model Branch {
   erpWarehouseAssignments      BranchErpWarehouse[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
   managerReportSubscriptions   ManagerReportSubscription[]
+  whatsappLeads                WhatsAppLead[]
+  whatsappLeadAssignments      WhatsAppLeadAssignment[]
 
   @@map("branches")
 }
@@ -342,6 +359,7 @@ model User {
   role                UserRole
   isActive            Boolean             @default(true) @map("is_active")
   phone               String?             @db.VarChar(40)
+  whatsappPhoneE164   String?             @unique @map("whatsapp_phone_e164") @db.VarChar(20)
   branchId            String              @map("branch_id") @db.Uuid
   erpUserCode         String?             @unique @map("erp_user_code") @db.VarChar(80)
   warehouseAccessMode WarehouseAccessMode @default(INHERIT) @map("warehouse_access_mode")
@@ -350,49 +368,55 @@ model User {
 
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
-  createdCustomers             Customer[]                      @relation("CustomerCreatedBy")
-  updatedCustomers             Customer[]                      @relation("CustomerUpdatedBy")
-  createdProducts              Product[]                       @relation("ProductCreatedBy")
-  updatedProducts              Product[]                       @relation("ProductUpdatedBy")
-  procurementProducts          Product[]                       @relation("ProductProcurementUpdatedBy")
-  createdProcurementOffers     LocalProductProcurementOffer[]  @relation("ProcurementOfferCreatedBy")
-  updatedProcurementOffers     LocalProductProcurementOffer[]  @relation("ProcurementOfferUpdatedBy")
-  createdQuotes                Quote[]                         @relation("QuoteCreatedBy")
-  updatedQuotes                Quote[]                         @relation("QuoteUpdatedBy")
-  rejectedQuotes               Quote[]                         @relation("QuoteRejectedBy")
-  cancelledQuotes              Quote[]                         @relation("QuoteCancelledBy")
-  archivedQuotes               Quote[]                         @relation("QuoteArchivedBy")
-  providedQuotes               Quote[]                         @relation("QuoteProvidedBy")
-  providerAssignments          Quote[]                         @relation("QuoteProviderAssignedBy")
-  erpRegisteredQuotes          Quote[]                         @relation("QuoteErpRegisteredBy")
-  quoteDeliveryAttempts        QuoteDeliveryAttempt[]          @relation("QuoteDeliveryAttemptSentBy")
-  quoteOrderExports            QuoteOrderExport[]              @relation("QuoteOrderExportGeneratedBy")
-  quoteEvents                  QuoteEvent[]                    @relation("QuoteEventActor")
-  refreshTokens                RefreshToken[]
-  auditLogs                    AuditLog[]                      @relation("AuditLogActor")
-  createdSuppliers             Supplier[]                      @relation("SupplierCreatedBy")
-  updatedSuppliers             Supplier[]                      @relation("SupplierUpdatedBy")
-  requestedRequisitions        PurchaseRequisition[]           @relation("PurchaseRequisitionRequestedBy")
-  assignedRequisitions         PurchaseRequisition[]           @relation("PurchaseRequisitionAssignedBuyer")
-  approvedCostRequisitions     PurchaseRequisition[]           @relation("PurchaseRequisitionCostApprovedBy")
-  erpLinkedRequisitionItems    PurchaseRequisitionItem[]       @relation("PurchaseRequisitionItemErpLinkedBy")
-  createdSupplierOffers        PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferCreatedBy")
-  updatedSupplierOffers        PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferUpdatedBy")
-  createdSupplierQuotes        PurchaseSupplierQuote[]         @relation("PurchaseSupplierQuoteCreatedBy")
-  updatedSupplierQuotes        PurchaseSupplierQuote[]         @relation("PurchaseSupplierQuoteUpdatedBy")
-  uploadedFileAssets           FileAsset[]                     @relation("FileAssetUploadedBy")
-  editedQuoteItemDescriptions  QuoteItem[]                     @relation("QuoteItemCustomerDescriptionEditedBy")
-  evaluatedQuoteItemCosts      QuoteItem[]                     @relation("QuoteItemEffectiveCostEvaluatedBy")
-  erpWarehouseAssignments      UserErpWarehouse[]              @relation("UserWarehouseOwner")
-  assignedBranchWarehouses     BranchErpWarehouse[]            @relation("BranchWarehouseAssignedBy")
-  assignedUserWarehouses       UserErpWarehouse[]              @relation("UserWarehouseAssignedBy")
-  handledWhatsAppConversations WhatsAppConversation[]          @relation("WhatsAppConversationHandledBy")
-  whatsappConversationAccesses WhatsAppConversationAccess[]    @relation("WhatsAppConversationAccessUser")
-  whatsappConversationReads    WhatsAppConversationReadState[]
-  sentWhatsAppMessages         WhatsAppOutboundMessage[]       @relation("WhatsAppOutboundMessageSentBy")
-  receivedManagerReports       ManagerReportSubscription[]     @relation("ManagerReportRecipient")
-  createdManagerReports        ManagerReportSubscription[]     @relation("ManagerReportCreatedBy")
-  updatedManagerReports        ManagerReportSubscription[]     @relation("ManagerReportUpdatedBy")
+  createdCustomers              Customer[]                      @relation("CustomerCreatedBy")
+  updatedCustomers              Customer[]                      @relation("CustomerUpdatedBy")
+  createdProducts               Product[]                       @relation("ProductCreatedBy")
+  updatedProducts               Product[]                       @relation("ProductUpdatedBy")
+  procurementProducts           Product[]                       @relation("ProductProcurementUpdatedBy")
+  createdProcurementOffers      LocalProductProcurementOffer[]  @relation("ProcurementOfferCreatedBy")
+  updatedProcurementOffers      LocalProductProcurementOffer[]  @relation("ProcurementOfferUpdatedBy")
+  createdQuotes                 Quote[]                         @relation("QuoteCreatedBy")
+  updatedQuotes                 Quote[]                         @relation("QuoteUpdatedBy")
+  rejectedQuotes                Quote[]                         @relation("QuoteRejectedBy")
+  cancelledQuotes               Quote[]                         @relation("QuoteCancelledBy")
+  archivedQuotes                Quote[]                         @relation("QuoteArchivedBy")
+  providedQuotes                Quote[]                         @relation("QuoteProvidedBy")
+  providerAssignments           Quote[]                         @relation("QuoteProviderAssignedBy")
+  erpRegisteredQuotes           Quote[]                         @relation("QuoteErpRegisteredBy")
+  quoteDeliveryAttempts         QuoteDeliveryAttempt[]          @relation("QuoteDeliveryAttemptSentBy")
+  quoteOrderExports             QuoteOrderExport[]              @relation("QuoteOrderExportGeneratedBy")
+  quoteEvents                   QuoteEvent[]                    @relation("QuoteEventActor")
+  refreshTokens                 RefreshToken[]
+  auditLogs                     AuditLog[]                      @relation("AuditLogActor")
+  createdSuppliers              Supplier[]                      @relation("SupplierCreatedBy")
+  updatedSuppliers              Supplier[]                      @relation("SupplierUpdatedBy")
+  requestedRequisitions         PurchaseRequisition[]           @relation("PurchaseRequisitionRequestedBy")
+  assignedRequisitions          PurchaseRequisition[]           @relation("PurchaseRequisitionAssignedBuyer")
+  approvedCostRequisitions      PurchaseRequisition[]           @relation("PurchaseRequisitionCostApprovedBy")
+  erpLinkedRequisitionItems     PurchaseRequisitionItem[]       @relation("PurchaseRequisitionItemErpLinkedBy")
+  createdSupplierOffers         PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferCreatedBy")
+  updatedSupplierOffers         PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferUpdatedBy")
+  createdSupplierQuotes         PurchaseSupplierQuote[]         @relation("PurchaseSupplierQuoteCreatedBy")
+  updatedSupplierQuotes         PurchaseSupplierQuote[]         @relation("PurchaseSupplierQuoteUpdatedBy")
+  uploadedFileAssets            FileAsset[]                     @relation("FileAssetUploadedBy")
+  editedQuoteItemDescriptions   QuoteItem[]                     @relation("QuoteItemCustomerDescriptionEditedBy")
+  evaluatedQuoteItemCosts       QuoteItem[]                     @relation("QuoteItemEffectiveCostEvaluatedBy")
+  erpWarehouseAssignments       UserErpWarehouse[]              @relation("UserWarehouseOwner")
+  assignedBranchWarehouses      BranchErpWarehouse[]            @relation("BranchWarehouseAssignedBy")
+  assignedUserWarehouses        UserErpWarehouse[]              @relation("UserWarehouseAssignedBy")
+  handledWhatsAppConversations  WhatsAppConversation[]          @relation("WhatsAppConversationHandledBy")
+  whatsappConversationAccesses  WhatsAppConversationAccess[]    @relation("WhatsAppConversationAccessUser")
+  whatsappConversationReads     WhatsAppConversationReadState[]
+  sentWhatsAppMessages          WhatsAppOutboundMessage[]       @relation("WhatsAppOutboundMessageSentBy")
+  internalWhatsAppConversations WhatsAppConversation[]          @relation("WhatsAppConversationInternalUser")
+  whatsappInternalVerification  WhatsAppInternalVerification?
+  assignedWhatsAppLeads         WhatsAppLead[]                  @relation("WhatsAppLeadAssignedSeller")
+  assignedWhatsAppLeadHistory   WhatsAppLeadAssignment[]        @relation("WhatsAppLeadAssignmentSeller")
+  madeWhatsAppLeadAssignments   WhatsAppLeadAssignment[]        @relation("WhatsAppLeadAssignmentActor")
+  convertedWhatsAppLeads        WhatsAppLead[]                  @relation("WhatsAppLeadConvertedBy")
+  receivedManagerReports        ManagerReportSubscription[]     @relation("ManagerReportRecipient")
+  createdManagerReports         ManagerReportSubscription[]     @relation("ManagerReportCreatedBy")
+  updatedManagerReports         ManagerReportSubscription[]     @relation("ManagerReportUpdatedBy")
 
   @@index([branchId])
   @@map("users")
@@ -514,6 +538,7 @@ model Customer {
 
   contacts                     CustomerContact[]
   quotes                       Quote[]
+  whatsappLeads                WhatsAppLead[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
 
   @@index([externalId])
@@ -641,6 +666,7 @@ model Quote {
   captureMethod                QuoteCaptureMethod    @default(SYSTEM) @map("capture_method")
   originalQuoteDate            DateTime?             @map("original_quote_date") @db.Date
   sourceChannel                QuoteSourceChannel    @default(UNSPECIFIED) @map("source_channel")
+  whatsappLeadId               String?               @map("whatsapp_lead_id") @db.Uuid
   currency                     Currency
   exchangeRate                 Decimal               @map("exchange_rate") @db.Decimal(14, 6)
   exchangeRateDate             DateTime              @map("exchange_rate_date") @db.Date
@@ -689,6 +715,7 @@ model Quote {
 
   branch                   Branch           @relation(fields: [branchId], references: [id], onDelete: Restrict)
   customer                 Customer         @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  whatsappLead             WhatsAppLead?    @relation(fields: [whatsappLeadId], references: [id], onDelete: SetNull)
   customerContact          CustomerContact? @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
   createdByUser            User             @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
   updatedByUser            User?            @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
@@ -725,6 +752,7 @@ model Quote {
   @@index([orderStatus])
   @@index([branchId])
   @@index([customerId])
+  @@index([whatsappLeadId])
   @@index([customerContactId])
   @@index([createdByUserId])
   @@index([providedByUserId])
@@ -1174,6 +1202,9 @@ model WhatsAppConversation {
   id                   String                   @id @default(uuid()) @db.Uuid
   businessPhoneE164    String                   @map("business_phone_e164") @db.VarChar(20)
   participantPhoneE164 String                   @map("participant_phone_e164") @db.VarChar(20)
+  participantType      WhatsAppParticipantType  @default(UNKNOWN) @map("participant_type")
+  internalUserId       String?                  @map("internal_user_id") @db.Uuid
+  principalResolvedAt  DateTime?                @map("principal_resolved_at")
   mode                 WhatsAppConversationMode @default(AI)
   handledByUserId      String?                  @map("handled_by_user_id") @db.Uuid
   handledAt            DateTime?                @map("handled_at")
@@ -1185,6 +1216,7 @@ model WhatsAppConversation {
   updatedAt            DateTime                 @updatedAt @map("updated_at")
 
   handledByUser    User?                           @relation("WhatsAppConversationHandledBy", fields: [handledByUserId], references: [id], onDelete: SetNull)
+  internalUser     User?                           @relation("WhatsAppConversationInternalUser", fields: [internalUserId], references: [id], onDelete: SetNull)
   inboundMessages  WhatsAppInboundMessage[]
   outboundMessages WhatsAppOutboundMessage[]
   assistantJobs    WhatsAppAssistantJob[]
@@ -1192,12 +1224,86 @@ model WhatsAppConversation {
   changeRequests   WhatsAppCustomerChangeRequest[]
   accesses         WhatsAppConversationAccess[]
   readStates       WhatsAppConversationReadState[]
+  lead             WhatsAppLead?
 
   @@unique([businessPhoneE164, participantPhoneE164], map: "whatsapp_conversations_business_participant_key")
   @@index([lastInboundAt])
   @@index([lastMessageAt])
   @@index([handledByUserId])
+  @@index([participantType, internalUserId])
   @@map("whatsapp_conversations")
+}
+
+model WhatsAppLead {
+  id                String             @id @default(uuid()) @db.Uuid
+  conversationId    String             @unique @map("conversation_id") @db.Uuid
+  phoneE164         String             @map("phone_e164") @db.VarChar(20)
+  contactName       String?            @map("contact_name") @db.VarChar(160)
+  companyName       String?            @map("company_name") @db.VarChar(200)
+  email             String?            @db.VarChar(180)
+  location          String?            @db.VarChar(180)
+  requestSummary    String?            @map("request_summary") @db.Text
+  status            WhatsAppLeadStatus @default(NEW)
+  assignedSellerId  String?            @map("assigned_seller_id") @db.Uuid
+  assignedBranchId  String?            @map("assigned_branch_id") @db.Uuid
+  assignedAt        DateTime?          @map("assigned_at")
+  customerId        String?            @map("customer_id") @db.Uuid
+  convertedByUserId String?            @map("converted_by_user_id") @db.Uuid
+  convertedAt       DateTime?          @map("converted_at")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+
+  conversation   WhatsAppConversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  assignedSeller User?                    @relation("WhatsAppLeadAssignedSeller", fields: [assignedSellerId], references: [id], onDelete: SetNull)
+  assignedBranch Branch?                  @relation(fields: [assignedBranchId], references: [id], onDelete: SetNull)
+  customer       Customer?                @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  convertedBy    User?                    @relation("WhatsAppLeadConvertedBy", fields: [convertedByUserId], references: [id], onDelete: SetNull)
+  quotes         Quote[]
+  assignments    WhatsAppLeadAssignment[]
+
+  @@index([status, createdAt])
+  @@index([phoneE164])
+  @@index([assignedSellerId, status])
+  @@index([assignedBranchId, status])
+  @@index([customerId])
+  @@map("whatsapp_leads")
+}
+
+model WhatsAppLeadAssignment {
+  id               String   @id @default(uuid()) @db.Uuid
+  leadId           String   @map("lead_id") @db.Uuid
+  sellerId         String   @map("seller_id") @db.Uuid
+  branchId         String   @map("branch_id") @db.Uuid
+  assignedByUserId String   @map("assigned_by_user_id") @db.Uuid
+  assignedAt       DateTime @default(now()) @map("assigned_at")
+
+  lead       WhatsAppLead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  seller     User         @relation("WhatsAppLeadAssignmentSeller", fields: [sellerId], references: [id], onDelete: Restrict)
+  branch     Branch       @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  assignedBy User         @relation("WhatsAppLeadAssignmentActor", fields: [assignedByUserId], references: [id], onDelete: Restrict)
+
+  @@index([leadId, assignedAt])
+  @@index([sellerId, assignedAt])
+  @@index([assignedByUserId, assignedAt])
+  @@map("whatsapp_lead_assignments")
+}
+
+model WhatsAppInternalVerification {
+  id                      String    @id @default(uuid()) @db.Uuid
+  userId                  String    @unique @map("user_id") @db.Uuid
+  phoneE164               String    @map("phone_e164") @db.VarChar(20)
+  verificationRequestedAt DateTime? @map("verification_requested_at")
+  verifiedAt              DateTime? @map("verified_at")
+  verifiedUntil           DateTime? @map("verified_until")
+  failedAttempts          Int       @default(0) @map("failed_attempts")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([phoneE164])
+  @@index([verifiedUntil])
+  @@map("whatsapp_internal_verifications")
 }
 
 model WhatsAppConversationAccess {
@@ -1254,9 +1360,32 @@ model WhatsAppInboundMessage {
 
   conversation WhatsAppConversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   assistantJob WhatsAppAssistantJob?
+  attachments  WhatsAppInboundAttachment[]
 
   @@index([conversationId, receivedAt])
   @@map("whatsapp_inbound_messages")
+}
+
+model WhatsAppInboundAttachment {
+  id               String   @id @default(uuid()) @db.Uuid
+  inboundMessageId String   @map("inbound_message_id") @db.Uuid
+  providerMediaUrl String   @unique @map("provider_media_url") @db.VarChar(1000)
+  originalName     String   @map("original_name") @db.VarChar(255)
+  storageKey       String   @unique @map("storage_key") @db.VarChar(500)
+  mimeType         String   @map("mime_type") @db.VarChar(120)
+  sizeBytes        Int      @map("size_bytes")
+  checksumSha256   String   @map("checksum_sha256") @db.Char(64)
+  createdAt        DateTime @default(now()) @map("created_at")
+  quoteExtractedAt       DateTime? @map("quote_extracted_at")
+  quoteExtractionCount   Int       @default(0) @map("quote_extraction_count")
+  quoteExtractedByUserId String?   @map("quote_extracted_by_user_id") @db.Uuid
+  quoteExtractedByName   String?   @map("quote_extracted_by_name") @db.VarChar(241)
+  lastQuoteDraftId       String?   @map("last_quote_draft_id") @db.Uuid
+
+  inboundMessage WhatsAppInboundMessage @relation(fields: [inboundMessageId], references: [id], onDelete: Cascade)
+
+  @@index([inboundMessageId, createdAt])
+  @@map("whatsapp_inbound_attachments")
 }
 
 model WhatsAppOutboundMessage {

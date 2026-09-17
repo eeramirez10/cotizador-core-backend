@@ -31,7 +31,23 @@ const quote: WhatsAppAssistantQuoteDetails = {
 
 class RepositoryStub extends WhatsAppAssistantRepository {
   pending: (WhatsAppPendingActionEntity & { preparedTurnId: string }) | null = null;
+  audience: "CUSTOMER" | "INTERNAL_USER" | "UNKNOWN" = "CUSTOMER";
 
+  async getPrincipal() {
+    return {
+      audience: this.audience,
+      displayName: "Cliente",
+      phoneE164: "+525511223344",
+      userId: null,
+      role: null,
+      branchId: null,
+      branchName: null,
+      reportScope: null,
+      reportBranchId: null,
+      reportRange: null,
+      isVerified: false,
+    };
+  }
   async getParticipantPhone() { return "+525511223344"; }
   async claimNextJob() { return null; }
   async completeJob() {}
@@ -117,4 +133,15 @@ test("change requests are recorded without changing quote status", async () => {
 
   assert.deepEqual(result, { success: true, requestId: "request-1", created: true, sellerName: "Alma Martínez" });
   assert.equal(changeStatus.calls.length, 0);
+});
+
+test("internal numbers cannot execute customer quote tools", async () => {
+  const repository = new RepositoryStub();
+  repository.audience = "INTERNAL_USER";
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  await assert.rejects(
+    () => useCase.execute("conversation-1", "turn-1", "list_customer_quotes", { limit: 5 }),
+    /CUSTOMER_ASSISTANT_NOT_AUTHORIZED/,
+  );
 });

@@ -7,16 +7,26 @@ const ALLOWED_MIME_TYPES = new Set([
   "application/pdf",
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.ms-excel.sheet.macroenabled.12",
+  "application/vnd.ms-excel.sheet.binary.macroenabled.12",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/csv",
   "image/jpeg",
   "image/png",
   "image/webp",
 ]);
 
-const ALLOWED_EXTENSIONS = new Set([".pdf", ".xls", ".xlsx", ".jpg", ".jpeg", ".png", ".webp"]);
+const ALLOWED_EXTENSIONS = new Set([".pdf", ".doc", ".docx", ".xls", ".xlsx", ".xlsm", ".xlsb", ".csv", ".jpg", ".jpeg", ".png", ".webp"]);
 const MIME_EXTENSIONS: Record<string, Set<string>> = {
   "application/pdf": new Set([".pdf"]),
   "application/vnd.ms-excel": new Set([".xls"]),
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": new Set([".xlsx"]),
+  "application/vnd.ms-excel.sheet.macroenabled.12": new Set([".xlsm"]),
+  "application/vnd.ms-excel.sheet.binary.macroenabled.12": new Set([".xlsb"]),
+  "application/msword": new Set([".doc"]),
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": new Set([".docx"]),
+  "text/csv": new Set([".csv"]),
   "image/jpeg": new Set([".jpg", ".jpeg"]),
   "image/png": new Set([".png"]),
   "image/webp": new Set([".webp"]),
@@ -29,9 +39,14 @@ export const hasValidAttachmentSignature = (mimeType: string, content: Uint8Arra
   }
   if (mimeType === "application/vnd.ms-excel") return bytes.subarray(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]));
   if (mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") return bytes[0] === 0x50 && bytes[1] === 0x4b;
+  if (mimeType === "application/vnd.ms-excel.sheet.macroenabled.12") return bytes[0] === 0x50 && bytes[1] === 0x4b;
+  if (mimeType === "application/vnd.ms-excel.sheet.binary.macroenabled.12") return bytes.subarray(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]));
+  if (mimeType === "application/msword") return bytes.subarray(0, 8).equals(Buffer.from([0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1]));
+  if (mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") return bytes[0] === 0x50 && bytes[1] === 0x4b;
   if (mimeType === "image/jpeg") return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
   if (mimeType === "image/png") return bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
   if (mimeType === "image/webp") return bytes.subarray(0, 4).toString("ascii") === "RIFF" && bytes.subarray(8, 12).toString("ascii") === "WEBP";
+  if (mimeType === "text/csv") return !bytes.subarray(0, Math.min(bytes.length, 4096)).includes(0);
   return false;
 };
 

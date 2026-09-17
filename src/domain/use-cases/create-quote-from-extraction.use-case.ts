@@ -68,6 +68,7 @@ export class CreateQuoteFromExtractionUseCase {
       captureMethod: dto.captureMethod,
       originalQuoteDate: dto.originalQuoteDate,
       sourceChannel: dto.sourceChannel,
+      whatsappLeadId: null,
       currency: dto.currency,
       exchangeRate: dto.exchangeRate,
       exchangeRateDate: dto.exchangeRateDate,

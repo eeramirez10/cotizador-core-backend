@@ -49,6 +49,7 @@ export interface CreateQuoteDatasourceParams {
   captureMethod: QuoteCaptureMethod;
   originalQuoteDate: Date | null;
   sourceChannel: QuoteSourceChannel;
+  whatsappLeadId: string | null;
   currency: Currency;
   exchangeRate: number;
   exchangeRateDate: Date;
