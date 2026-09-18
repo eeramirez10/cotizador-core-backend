@@ -112,6 +112,24 @@ export class WhatsAppWebSocketGateway {
 
   private async broadcast(event: WhatsAppRealtimeEvent): Promise<void> {
     if (this.clients.size === 0) return;
+    if (event.reason === "CONVERSATION_DELETED" && event.deleted && event.audience) {
+      const audience = event.audience;
+      const payload = JSON.stringify({ ...event, audience: undefined });
+      for (const client of this.clients) {
+        const canReceive = client.actor.role === "ADMIN"
+          || (client.actor.role === "MANAGER" && (
+            audience.branchIds.includes(client.actor.branchId)
+            || audience.assignedBranchId === client.actor.branchId
+            || audience.visibleToUnassignedLeadManagers
+          ))
+          || (client.actor.role === "SELLER" && (
+            audience.userIds.includes(client.actor.id)
+            || audience.assignedSellerId === client.actor.id
+          ));
+        if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
+      }
+      return;
+    }
     const conversation = await prisma.whatsAppConversation.findUnique({
       where: { id: event.conversationId },
       select: {

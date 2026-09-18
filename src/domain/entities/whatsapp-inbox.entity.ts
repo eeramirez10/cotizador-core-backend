@@ -104,6 +104,30 @@ export interface WhatsAppInboxMessagePage {
   hasMore: boolean;
 }
 
+export interface WhatsAppConversationDeletionRecord {
+  conversationId: string;
+  storageKeysToDelete: string[];
+  deletedProspect: boolean;
+  preservedQuoteCount: number;
+  preservedQuoteFileCount: number;
+  audience: {
+    userIds: string[];
+    branchIds: string[];
+    assignedSellerId: string | null;
+    assignedBranchId: string | null;
+    visibleToUnassignedLeadManagers: boolean;
+  };
+}
+
+export interface WhatsAppConversationDeletionResult {
+  conversationId: string;
+  deletedProspect: boolean;
+  deletedFileCount: number;
+  failedFileCount: number;
+  preservedQuoteCount: number;
+  preservedQuoteFileCount: number;
+}
+
 export interface RegisterWhatsAppQuoteDeliveryInput {
   businessPhoneE164: string;
   participantPhoneE164: string;

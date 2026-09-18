@@ -72,11 +72,18 @@ export class SendQuoteWhatsAppUseCase {
         : undefined;
     if (input.contactId && !selectedContact) throw new Error("Customer contact not found.");
 
-    const rawRecipient = selectedContact?.mobile || selectedContact?.phone || quote.customer.whatsapp;
+    const rawRecipient = selectedContact?.mobile
+      || selectedContact?.phone
+      || quote.customerContact?.mobile
+      || quote.customerContact?.phone
+      || quote.customer.whatsapp;
     const recipient = WhatsAppPhone.create(rawRecipient)?.value;
     if (!recipient) throw new Error("The selected customer contact does not have a valid WhatsApp number.");
 
-    const contactName = selectedContact?.name.trim() || quote.customer.displayName.trim() || "Cliente";
+    const contactName = selectedContact?.name.trim()
+      || quote.customerContact?.name.trim()
+      || quote.customer.displayName.trim()
+      || "Cliente";
     const sellerName = `${quote.createdByUser.firstName} ${quote.createdByUser.lastName}`.trim();
     const window = await this.conversationWindow.execute(recipient);
     const attachment = await this.attachments.uploadCustomerQuotePdf(input.quoteId, input.file, input.actor);

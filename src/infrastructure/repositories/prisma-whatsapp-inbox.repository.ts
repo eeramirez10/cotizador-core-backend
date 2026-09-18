@@ -1,10 +1,11 @@
+import { Prisma } from "../database/generated/client";
 import type {
-  Prisma,
   WhatsAppConversationMode,
   WhatsAppOutboundMessageStatus,
 } from "../database/generated/client";
 import type {
   RegisterWhatsAppQuoteDeliveryInput,
+  WhatsAppConversationDeletionRecord,
   WhatsAppInboxActor,
   WhatsAppInboxConversation,
   WhatsAppInboxConversationPage,
@@ -36,9 +37,6 @@ const conversationInclude = {
     take: 1,
     select: { body: true, sentAt: true },
   },
-  readStates: {
-    select: { userId: true, lastReadAt: true },
-  },
   lead: {
     include: {
       assignedSeller: { select: { firstName: true, lastName: true } },
@@ -50,6 +48,117 @@ const conversationInclude = {
 type ConversationRow = Prisma.WhatsAppConversationGetPayload<{ include: typeof conversationInclude }>;
 
 export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
+  async deleteConversation(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+  }): Promise<WhatsAppConversationDeletionRecord | null> {
+    const conversation = await prisma.whatsAppConversation.findFirst({
+      where: {
+        id: input.conversationId,
+        ...this.visibilityWhere(input.actor),
+      },
+      select: {
+        id: true,
+        participantPhoneE164: true,
+        participantType: true,
+        lead: {
+          select: {
+            id: true,
+            customerId: true,
+            assignedSellerId: true,
+            assignedBranchId: true,
+            status: true,
+            quotes: { select: { id: true } },
+          },
+        },
+        accesses: { select: { quoteId: true, userId: true, branchId: true } },
+        outboundMessages: {
+          where: { quoteId: { not: null } },
+          select: { quoteId: true },
+        },
+        inboundMessages: {
+          select: {
+            attachments: {
+              select: {
+                storageKey: true,
+                quoteExtractionCount: true,
+                lastQuoteDraftId: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!conversation) return null;
+
+    const attachments = conversation.inboundMessages.flatMap((message) => message.attachments);
+    const extractedDraftIds = [...new Set(attachments
+      .filter((attachment) => attachment.quoteExtractionCount > 0)
+      .map((attachment) => attachment.lastQuoteDraftId)
+      .filter((value): value is string => Boolean(value)))];
+    const retainedSourceLinks = extractedDraftIds.length > 0
+      ? await prisma.quoteAttachment.findMany({
+          where: {
+            clientDraftId: { in: extractedDraftIds },
+            category: "SOURCE_DOCUMENT",
+            fileAsset: { status: "READY" },
+          },
+          select: { clientDraftId: true },
+          distinct: ["clientDraftId"],
+        })
+      : [];
+    const retainedDraftIds = new Set(retainedSourceLinks.map((link) => link.clientDraftId));
+    const storageKeysToDelete = attachments
+      .filter((attachment) => attachment.quoteExtractionCount === 0
+        || Boolean(attachment.lastQuoteDraftId && retainedDraftIds.has(attachment.lastQuoteDraftId)))
+      .map((attachment) => attachment.storageKey);
+    const preservedQuoteFileCount = attachments.filter(
+      (attachment) => attachment.quoteExtractionCount > 0,
+    ).length;
+    const quoteIds = new Set([
+      ...(conversation.lead?.quotes.map((quote) => quote.id) || []),
+      ...conversation.accesses.map((access) => access.quoteId),
+      ...conversation.outboundMessages.map((message) => message.quoteId),
+    ].filter((value): value is string => Boolean(value)));
+    const deletedProspect = Boolean(conversation.lead && !conversation.lead.customerId);
+
+    await prisma.$transaction(async (tx) => {
+      await tx.whatsAppConversation.delete({ where: { id: conversation.id } });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: input.actor.id,
+          entityType: "WHATSAPP_CONVERSATION",
+          entityId: conversation.id,
+          action: "DELETE_CONVERSATION",
+          payload: {
+            participantPhone: conversation.participantPhoneE164,
+            deletedProspect,
+            deletedTemporaryFileCount: storageKeysToDelete.length,
+            preservedQuoteCount: quoteIds.size,
+            preservedQuoteFileCount,
+          },
+        },
+      });
+    });
+
+    return {
+      conversationId: conversation.id,
+      storageKeysToDelete,
+      deletedProspect,
+      preservedQuoteCount: quoteIds.size,
+      preservedQuoteFileCount,
+      audience: {
+        userIds: [...new Set(conversation.accesses.map((access) => access.userId))],
+        branchIds: [...new Set(conversation.accesses.map((access) => access.branchId))],
+        assignedSellerId: conversation.lead?.assignedSellerId ?? null,
+        assignedBranchId: conversation.lead?.assignedBranchId ?? null,
+        visibleToUnassignedLeadManagers: conversation.participantType === "UNKNOWN"
+          && !conversation.lead?.assignedSellerId
+          && !["CONVERTED", "DISCARDED"].includes(conversation.lead?.status || ""),
+      },
+    };
+  }
+
   async listConversations(input: {
     actor: WhatsAppInboxActor;
     search?: string;
@@ -101,8 +210,16 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     });
     const hasMore = rows.length > input.pageSize;
     const visible = rows.slice(0, input.pageSize);
+    const unreadCounts = await this.unreadCounts(
+      visible.map((row) => row.id),
+      input.actor.id,
+    );
     return {
-      items: visible.map((row) => this.toConversation(row, input.actor)),
+      items: visible.map((row) => this.toConversation(
+        row,
+        input.actor,
+        unreadCounts.get(row.id) || 0,
+      )),
       hasMore,
       nextCursor: hasMore && visible.length > 0
         ? this.encodeCursor(visible[visible.length - 1].lastMessageAt, visible[visible.length - 1].id)
@@ -121,7 +238,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
       },
       include: conversationInclude,
     });
-    return row ? this.toConversation(row, input.actor) : null;
+    if (!row) return null;
+    const unreadCounts = await this.unreadCounts([row.id], input.actor.id);
+    return this.toConversation(row, input.actor, unreadCounts.get(row.id) || 0);
   }
 
   async listMessages(input: {
@@ -572,7 +691,29 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     return { ...customerConversation, accesses: { some: { userId: actor.id } } };
   }
 
-  private toConversation(row: ConversationRow, actor: WhatsAppInboxActor): WhatsAppInboxConversation {
+  private async unreadCounts(conversationIds: string[], userId: string): Promise<Map<string, number>> {
+    if (conversationIds.length === 0) return new Map();
+    const ids = Prisma.join(conversationIds.map((id) => Prisma.sql`${id}::uuid`));
+    const rows = await prisma.$queryRaw<Array<{ conversationId: string; unreadCount: number }>>(Prisma.sql`
+      SELECT
+        messages.conversation_id AS "conversationId",
+        COUNT(*)::int AS "unreadCount"
+      FROM whatsapp_inbound_messages AS messages
+      LEFT JOIN whatsapp_conversation_read_states AS reads
+        ON reads.conversation_id = messages.conversation_id
+       AND reads.user_id = ${userId}::uuid
+      WHERE messages.conversation_id IN (${ids})
+        AND (reads.last_read_at IS NULL OR messages.received_at > reads.last_read_at)
+      GROUP BY messages.conversation_id
+    `);
+    return new Map(rows.map((row) => [row.conversationId, Number(row.unreadCount)]));
+  }
+
+  private toConversation(
+    row: ConversationRow,
+    actor: WhatsAppInboxActor,
+    unreadCount: number,
+  ): WhatsAppInboxConversation {
     const access = actor.role === "SELLER"
       ? row.accesses.find((item) => item.userId === actor.id)
       : actor.role === "MANAGER"
@@ -585,8 +726,6 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     const lastMessage = latestInboundAt >= latestOutboundAt
       ? inbound?.body?.trim() || (inbound?.mediaCount ? "Archivo recibido" : "Mensaje recibido")
       : outbound?.body?.trim() || "Mensaje enviado";
-    const readAt = row.readStates.find((state) => state.userId === actor.id)?.lastReadAt;
-    const unread = Boolean(row.lastInboundAt && (!readAt || row.lastInboundAt > readAt));
     const customerName = access?.customer?.legalName?.trim()
       || access?.customer?.displayName?.trim()
       || access?.customerContact?.name?.trim()
@@ -637,7 +776,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
       lastMessage,
       lastMessageAt: row.lastMessageAt,
       lastInboundAt: row.lastInboundAt,
-      unreadCount: unread ? 1 : 0,
+      unreadCount,
     };
   }
 

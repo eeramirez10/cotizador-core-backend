@@ -6,6 +6,7 @@ import { AssignWhatsAppLeadUseCase } from "../../domain/use-cases/assign-whatsap
 import { ConvertWhatsAppLeadUseCase } from "../../domain/use-cases/convert-whatsapp-lead.use-case";
 import { DownloadWhatsAppInboundAttachmentUseCase } from "../../domain/use-cases/download-whatsapp-inbound-attachment.use-case";
 import { MarkWhatsAppInboundAttachmentQuoteExtractionUseCase } from "../../domain/use-cases/mark-whatsapp-inbound-attachment-quote-extraction.use-case";
+import { DeleteWhatsAppConversationUseCase } from "../../domain/use-cases/delete-whatsapp-conversation.use-case";
 import { TwilioWhatsAppAssistantAdapter } from "../../infrastructure/messaging/twilio-whatsapp-assistant.adapter";
 import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
 import { PrismaWhatsAppLeadRepository } from "../../infrastructure/repositories/prisma-whatsapp-lead.repository";
@@ -52,6 +53,11 @@ export class WhatsAppInboxRoutes {
         new LocalFileStorageAdapter(Envs.fileStorageRoot),
       ),
       new MarkWhatsAppInboundAttachmentQuoteExtractionUseCase(attachmentRepository),
+      new DeleteWhatsAppConversationUseCase(
+        repository,
+        new LocalFileStorageAdapter(Envs.fileStorageRoot),
+        whatsAppRealtimeBus,
+      ),
     );
     const access = [requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER")] as const;
 
@@ -64,6 +70,7 @@ export class WhatsAppInboxRoutes {
       controller.markAttachmentQuoteExtraction,
     );
     router.get("/:id", ...access, controller.get);
+    router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.delete);
     router.get("/:id/messages", ...access, controller.messages);
     router.get("/:id/quotes", ...access, controller.quotes);
     router.post("/:id/messages", ...access, controller.send);

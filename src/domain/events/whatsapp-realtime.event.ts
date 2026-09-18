@@ -6,7 +6,16 @@ export type WhatsAppRealtimeEventReason =
   | "LEAD_UPDATED"
   | "LEAD_ASSIGNED"
   | "LEAD_CONVERTED"
-  | "QUOTE_SENT";
+  | "QUOTE_SENT"
+  | "CONVERSATION_DELETED";
+
+export interface WhatsAppRealtimeDeletionAudience {
+  userIds: string[];
+  branchIds: string[];
+  assignedSellerId: string | null;
+  assignedBranchId: string | null;
+  visibleToUnassignedLeadManagers: boolean;
+}
 
 export interface WhatsAppRealtimeMessagePayload {
   id: string;
@@ -59,6 +68,8 @@ export interface WhatsAppRealtimeEvent {
   message?: WhatsAppRealtimeMessagePayload;
   messagePatch?: WhatsAppRealtimeMessagePatch;
   conversation?: WhatsAppRealtimeConversationPatch;
+  deleted?: boolean;
+  audience?: WhatsAppRealtimeDeletionAudience;
 }
 
 export abstract class WhatsAppRealtimePublisher {

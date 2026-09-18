@@ -3,6 +3,7 @@ import type {
   RegisterWhatsAppQuoteDeliveryInput,
   WhatsAppInboxActor,
   WhatsAppInboxConversation,
+  WhatsAppConversationDeletionRecord,
   WhatsAppInboxConversationPage,
   WhatsAppInboxMessage,
   WhatsAppInboxMessagePage,
@@ -10,6 +11,11 @@ import type {
 } from "../entities/whatsapp-inbox.entity";
 
 export abstract class WhatsAppInboxRepository {
+  abstract deleteConversation(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+  }): Promise<WhatsAppConversationDeletionRecord | null>;
+
   abstract listConversations(input: {
     actor: WhatsAppInboxActor;
     search?: string;

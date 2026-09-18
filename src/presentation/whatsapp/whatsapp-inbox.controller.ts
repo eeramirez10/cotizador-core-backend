@@ -11,6 +11,7 @@ import type { SendWhatsAppInboxMessageUseCase } from "../../domain/use-cases/sen
 import type { WhatsAppInboxUseCase } from "../../domain/use-cases/whatsapp-inbox.use-case";
 import type { DownloadWhatsAppInboundAttachmentUseCase } from "../../domain/use-cases/download-whatsapp-inbound-attachment.use-case";
 import type { MarkWhatsAppInboundAttachmentQuoteExtractionUseCase } from "../../domain/use-cases/mark-whatsapp-inbound-attachment-quote-extraction.use-case";
+import type { DeleteWhatsAppConversationUseCase } from "../../domain/use-cases/delete-whatsapp-conversation.use-case";
 
 export class WhatsAppInboxController {
   constructor(
@@ -20,7 +21,20 @@ export class WhatsAppInboxController {
     private readonly convertLeadUseCase: ConvertWhatsAppLeadUseCase,
     private readonly downloadAttachmentUseCase: DownloadWhatsAppInboundAttachmentUseCase,
     private readonly markAttachmentQuoteExtractionUseCase: MarkWhatsAppInboundAttachmentQuoteExtractionUseCase,
+    private readonly deleteConversationUseCase: DeleteWhatsAppConversationUseCase,
   ) {}
+
+  delete = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.id(req);
+    if (!id) return void res.status(400).json({ error: "Conversation id is required." });
+    try {
+      const result = await this.deleteConversationUseCase.execute(id, req.user);
+      res.status(200).json(result);
+    } catch (caught) {
+      this.handleError(res, caught, "No se pudo eliminar la conversación.");
+    }
+  };
 
   list = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
