@@ -6,6 +6,9 @@ import {
   FindCustomerContactsDatasourceParams,
   FindCustomersDatasourceParams,
   FindCustomersDatasourceResult,
+  SetCustomerActiveStatusDatasourceParams,
+  ResetCustomerWhatsAppTestDatasourceParams,
+  ResetCustomerWhatsAppTestDatasourceResult,
   SoftDeleteCustomerByIdDatasourceParams,
   UpdateCustomerContactDatasourceParams,
   UpdateCustomerByIdDatasourceParams,
@@ -35,6 +38,16 @@ export class CustomerRepositoryImpl implements CustomerRepository {
 
   softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean> {
     return this.datasource.softDeleteById(params);
+  }
+
+  setActiveStatus(params: SetCustomerActiveStatusDatasourceParams): Promise<boolean> {
+    return this.datasource.setActiveStatus(params);
+  }
+
+  resetWhatsAppTestIdentity(
+    params: ResetCustomerWhatsAppTestDatasourceParams,
+  ): Promise<ResetCustomerWhatsAppTestDatasourceResult | null> {
+    return this.datasource.resetWhatsAppTestIdentity(params);
   }
 
   findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]> {

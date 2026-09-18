@@ -11,6 +11,8 @@ import { DeleteCustomerUseCase } from "../../domain/use-cases/delete-customer.us
 import { GetCustomerByIdUseCase } from "../../domain/use-cases/get-customer-by-id.use-case";
 import { GetCustomerContactsUseCase } from "../../domain/use-cases/get-customer-contacts.use-case";
 import { GetCustomersUseCase } from "../../domain/use-cases/get-customers.use-case";
+import { ReactivateCustomerUseCase } from "../../domain/use-cases/reactivate-customer.use-case";
+import { ResetCustomerWhatsAppTestUseCase } from "../../domain/use-cases/reset-customer-whatsapp-test.use-case";
 import { UpdateCustomerContactUseCase } from "../../domain/use-cases/update-customer-contact.use-case";
 import { UpdateCustomerUseCase } from "../../domain/use-cases/update-customer.use-case";
 
@@ -24,7 +26,9 @@ export class CustomersController {
     private readonly getCustomerContactsUseCase: GetCustomerContactsUseCase,
     private readonly createCustomerContactUseCase: CreateCustomerContactUseCase,
     private readonly updateCustomerContactUseCase: UpdateCustomerContactUseCase,
-    private readonly deleteCustomerContactUseCase: DeleteCustomerContactUseCase
+    private readonly deleteCustomerContactUseCase: DeleteCustomerContactUseCase,
+    private readonly reactivateCustomerUseCase: ReactivateCustomerUseCase,
+    private readonly resetCustomerWhatsAppTestUseCase: ResetCustomerWhatsAppTestUseCase,
   ) {}
 
   list = async (req: Request, res: Response): Promise<void> => {
@@ -46,7 +50,12 @@ export class CustomersController {
       });
 
       res.status(200).json(result.toJSON());
-    } catch {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unexpected error while listing customers.";
+      if (message === "Only ADMIN or MANAGER can list inactive customers.") {
+        res.status(403).json({ error: message });
+        return;
+      }
       res.status(500).json({ error: "Unexpected error while listing customers." });
     }
   };
@@ -164,6 +173,56 @@ export class CustomersController {
       res.status(204).send();
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unexpected error while deleting customer.";
+      if (message === "Customer not found.") {
+        res.status(404).json({ error: message });
+        return;
+      }
+      res.status(400).json({ error: message });
+    }
+  };
+
+  reactivate = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+    const id = this.getSingleParam(req.params.id);
+    if (!id) {
+      res.status(400).json({ error: "Customer id is required." });
+      return;
+    }
+    try {
+      await this.reactivateCustomerUseCase.execute(id, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(204).send();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unexpected error while reactivating customer.";
+      res.status(message === "Customer not found or already active." ? 404 : 400).json({ error: message });
+    }
+  };
+
+  resetWhatsAppTest = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) {
+      res.status(401).json({ error: "Unauthorized." });
+      return;
+    }
+    const id = this.getSingleParam(req.params.id);
+    if (!id) {
+      res.status(400).json({ error: "Customer id is required." });
+      return;
+    }
+    const confirmation = typeof req.body?.confirmation === "string" ? req.body.confirmation : "";
+    try {
+      await this.resetCustomerWhatsAppTestUseCase.execute(id, confirmation, {
+        id: req.user.id,
+        role: req.user.role,
+      });
+      res.status(204).send();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unexpected error while resetting WhatsApp test identity.";
       if (message === "Customer not found.") {
         res.status(404).json({ error: message });
         return;

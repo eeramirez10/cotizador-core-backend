@@ -17,6 +17,7 @@ import { requireAuth } from "../middlewares/auth.middleware";
 import { requireWhatsAppInboxEnabled } from "../middlewares/feature-flags.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { WhatsAppInboxController } from "./whatsapp-inbox.controller";
+import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 
 export class WhatsAppInboxRoutes {
   static routes(): Router {
@@ -24,6 +25,7 @@ export class WhatsAppInboxRoutes {
     router.use(requireWhatsAppInboxEnabled);
     const repository = new PrismaWhatsAppInboxRepository();
     const attachmentRepository = new PrismaWhatsAppInboundAttachmentRepository();
+    const internalAlerts = composeWhatsAppInternalAlert();
     const controller = new WhatsAppInboxController(
       new WhatsAppInboxUseCase(repository, () => new Date(), whatsAppRealtimeBus),
       new SendWhatsAppInboxMessageUseCase(
@@ -42,6 +44,15 @@ export class WhatsAppInboxRoutes {
         new PrismaWhatsAppLeadRepository(),
         repository,
         whatsAppRealtimeBus,
+        () => new Date(),
+        Envs.twilioWhatsAppEnabled ? new TwilioWhatsAppAssistantAdapter({
+          enabled: Envs.twilioWhatsAppEnabled,
+          accountSid: Envs.twilioAccountSid,
+          authToken: Envs.twilioAuthToken,
+          from: Envs.twilioWhatsAppFrom,
+          statusCallbackUrl: Envs.twilioStatusCallbackUrl,
+        }) : undefined,
+        internalAlerts,
       ),
       new ConvertWhatsAppLeadUseCase(
         new PrismaWhatsAppLeadRepository(),

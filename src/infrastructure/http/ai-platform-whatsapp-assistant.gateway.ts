@@ -15,13 +15,13 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
 
   async respond(input: WhatsAppAssistantAgentInput): Promise<WhatsAppAssistantAgentResult> {
     const capabilities = input.principal.audience === "CUSTOMER"
-      ? ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS"]
+      ? ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS", "QUOTE_REQUESTS"]
       : input.principal.audience === "INTERNAL_USER" && input.principal.isVerified && input.principal.role !== "PURCHASING"
         ? ["INTERNAL_REPORTS", "INTERNAL_QUOTES"]
         : input.principal.audience === "INTERNAL_USER"
           ? ["INTERNAL_VERIFICATION"]
           : input.principal.audience === "UNKNOWN"
-            ? ["LEAD_INTAKE"]
+            ? ["LEAD_INTAKE", "QUOTE_REQUESTS"]
             : [];
     const response = await fetch(
       `${this.baseUrl.replace(/\/+$/, "")}/api/v1/assistants/whatsapp/respond`,

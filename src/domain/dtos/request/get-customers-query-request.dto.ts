@@ -9,6 +9,7 @@ interface GetCustomersQueryRequestDtoProps {
   search?: string;
   source?: CustomerSource;
   profileStatus?: CustomerProfileStatus;
+  active?: boolean;
 }
 
 export class GetCustomersQueryRequestDto {
@@ -17,6 +18,7 @@ export class GetCustomersQueryRequestDto {
   public readonly search?: string;
   public readonly source?: CustomerSource;
   public readonly profileStatus?: CustomerProfileStatus;
+  public readonly active?: boolean;
 
   constructor(props: GetCustomersQueryRequestDtoProps) {
     this.page = props.page;
@@ -24,6 +26,7 @@ export class GetCustomersQueryRequestDto {
     this.search = props.search;
     this.source = props.source;
     this.profileStatus = props.profileStatus;
+    this.active = props.active;
   }
 
   static create(input: unknown): [string?, GetCustomersQueryRequestDto?] {
@@ -49,6 +52,11 @@ export class GetCustomersQueryRequestDto {
       typeof source.profileStatus === "string" && source.profileStatus.trim().length > 0
         ? source.profileStatus.trim().toUpperCase()
         : undefined;
+    const activeRaw = typeof source.active === "string" ? source.active.trim().toLowerCase() : undefined;
+    let active: boolean | undefined = true;
+    if (activeRaw === "false") active = false;
+    else if (activeRaw === "all") active = undefined;
+    else if (activeRaw && activeRaw !== "true") return ["active must be true, false, or all."];
 
     if (!Number.isInteger(page) || page <= 0) {
       return ["page must be a positive integer."];
@@ -77,6 +85,7 @@ export class GetCustomersQueryRequestDto {
         search,
         source: sourceRaw as CustomerSource | undefined,
         profileStatus: profileStatusRaw as CustomerProfileStatus | undefined,
+        active,
       }),
     ];
   }

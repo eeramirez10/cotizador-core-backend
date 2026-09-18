@@ -431,6 +431,25 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
       });
 
+      if (params.whatsappLeadId) {
+        await tx.whatsAppQuoteRequest.updateMany({
+          where: {
+            leadId: params.whatsappLeadId,
+            status: { in: ["COLLECTING", "READY", "ASSIGNED"] },
+          },
+          data: {
+            customerId: params.customerId,
+            quoteId: created.id,
+            status: "CONVERTED",
+            closedAt: new Date(),
+          },
+        });
+        await tx.whatsAppLead.update({
+          where: { id: params.whatsappLeadId },
+          data: { requestSummary: null },
+        });
+      }
+
       await tx.quoteEvent.create({
         data: {
           quoteId: created.id,
@@ -574,6 +593,25 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           providedByUserId: true,
         },
       });
+
+      if (params.data.whatsappLeadId) {
+        await tx.whatsAppQuoteRequest.updateMany({
+          where: {
+            leadId: params.data.whatsappLeadId,
+            status: { in: ["COLLECTING", "READY", "ASSIGNED"] },
+          },
+          data: {
+            customerId: params.data.customerId,
+            quoteId: quote.id,
+            status: "CONVERTED",
+            closedAt: new Date(),
+          },
+        });
+        await tx.whatsAppLead.update({
+          where: { id: params.data.whatsappLeadId },
+          data: { requestSummary: null },
+        });
+      }
 
       if (wasCreated) {
         await tx.quoteEvent.create({
@@ -721,7 +759,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           status: { notIn: ["CANCELLED", "SUPERSEDED"] },
         },
         orderBy: { revisionNumber: "desc" },
-        select: { id: true, previousVersionId: true, revisionNumber: true },
+        select: { id: true, revisionNumber: true },
       });
       if (activeVersion?.id !== source.id) {
         throw new Error("Only the latest active quote version can be revised.");
@@ -1322,7 +1360,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: params.id,
           ...this.buildScopeWhere(params.scope),
         },
-        select: { id: true, previousVersionId: true, revisionNumber: true },
+        select: { id: true, rootQuoteId: true, previousVersionId: true, revisionNumber: true },
       });
       if (!quote) return null;
 
@@ -1365,6 +1403,22 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           updatedByUserId: params.actorUserId,
         },
       });
+
+      const requestStatus = params.status === "APPROVED"
+        ? "ACCEPTED"
+        : params.status === "REJECTED"
+          ? "REJECTED"
+          : params.status === "CANCELLED"
+            ? "CANCELLED"
+            : null;
+      if (requestStatus) {
+        const relatedQuoteIds = [quote.id, quote.rootQuoteId, quote.previousVersionId]
+          .filter((id): id is string => Boolean(id));
+        await tx.whatsAppQuoteRequest.updateMany({
+          where: { quoteId: { in: relatedQuoteIds } },
+          data: { status: requestStatus, closedAt: new Date() },
+        });
+      }
 
       await tx.quoteEvent.create({
         data: {

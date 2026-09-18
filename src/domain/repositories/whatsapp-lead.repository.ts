@@ -10,6 +10,19 @@ export abstract class WhatsAppLeadRepository {
     status: WhatsAppLeadStatus;
   }): Promise<WhatsAppLeadEntity | null>;
 
+  abstract upsertActiveRequest(input: {
+    conversationId: string;
+    summary: string;
+    startNew: boolean;
+    occurredAt: Date;
+  }): Promise<WhatsAppLeadEntity | null>;
+
+  abstract closeActiveRequest(input: {
+    conversationId: string;
+    cancelled: boolean;
+    occurredAt: Date;
+  }): Promise<WhatsAppLeadEntity | null>;
+
   abstract assign(input: {
     conversationId: string;
     sellerId: string;

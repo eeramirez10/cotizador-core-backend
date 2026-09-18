@@ -3,6 +3,7 @@ import type {
   CustomerSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
+import type { WhatsAppRealtimeDeletionAudience } from "../events/whatsapp-realtime.event";
 import { CustomerContactEntity, CustomerEntity } from "../entities/customer.entity";
 
 export interface CustomerAccessScope {
@@ -16,6 +17,7 @@ export interface FindCustomersDatasourceParams {
   search?: string;
   source?: CustomerSource;
   profileStatus?: CustomerProfileStatus;
+  active?: boolean;
   scope: CustomerAccessScope;
 }
 
@@ -109,6 +111,27 @@ export interface SoftDeleteCustomerByIdDatasourceParams {
   scope: CustomerAccessScope;
 }
 
+export interface SetCustomerActiveStatusDatasourceParams {
+  id: string;
+  isActive: boolean;
+  updatedByUserId: string;
+  scope: CustomerAccessScope;
+}
+
+export interface ResetCustomerWhatsAppTestDatasourceParams {
+  id: string;
+  actorUserId: string;
+}
+
+export interface ResetCustomerWhatsAppTestDatasourceResult {
+  customerId: string;
+  storageKeysToDelete: string[];
+  conversations: Array<{
+    id: string;
+    audience: WhatsAppRealtimeDeletionAudience;
+  }>;
+}
+
 export interface FindCustomerContactsDatasourceParams {
   customerId: string;
   scope: CustomerAccessScope;
@@ -157,6 +180,10 @@ export abstract class CustomerDatasource {
   abstract create(params: CreateCustomerDatasourceParams): Promise<CustomerEntity>;
   abstract updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null>;
   abstract softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean>;
+  abstract setActiveStatus(params: SetCustomerActiveStatusDatasourceParams): Promise<boolean>;
+  abstract resetWhatsAppTestIdentity(
+    params: ResetCustomerWhatsAppTestDatasourceParams,
+  ): Promise<ResetCustomerWhatsAppTestDatasourceResult | null>;
   abstract findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]>;
   abstract createContact(params: CreateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;
   abstract updateContact(params: UpdateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;

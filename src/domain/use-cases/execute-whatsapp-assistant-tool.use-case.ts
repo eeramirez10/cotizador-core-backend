@@ -4,6 +4,8 @@ import type { WhatsAppAssistantRepository } from "../repositories/whatsapp-assis
 import type { ChangeQuoteStatusUseCase } from "./change-quote-status.use-case";
 import type { WhatsAppInternalAssistantUseCase } from "./whatsapp-internal-assistant.use-case";
 import type { WhatsAppLeadAssistantUseCase } from "./whatsapp-lead-assistant.use-case";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
+import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
 
 type ToolArguments = Record<string, unknown>;
 
@@ -14,11 +16,18 @@ export class ExecuteWhatsAppAssistantToolUseCase {
     private readonly confirmationTtlMinutes = 15,
     private readonly internalAssistant?: WhatsAppInternalAssistantUseCase,
     private readonly leadAssistant?: WhatsAppLeadAssistantUseCase,
+    private readonly realtime?: WhatsAppRealtimePublisher,
+    private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
   ) {}
 
   async execute(conversationId: string, turnId: string, name: string, args: ToolArguments): Promise<unknown> {
     const principal = await this.repository.getPrincipal(conversationId);
-    if (name === "get_whatsapp_lead" || name === "update_whatsapp_lead") {
+    if ([
+      "get_whatsapp_lead",
+      "update_whatsapp_lead",
+      "upsert_whatsapp_quote_request",
+      "close_whatsapp_quote_request",
+    ].includes(name)) {
       if (!this.leadAssistant) throw new Error("WHATSAPP_LEAD_ASSISTANT_NOT_CONFIGURED");
       return this.leadAssistant.execute(principal, conversationId, name, args);
     }
@@ -33,6 +42,8 @@ export class ExecuteWhatsAppAssistantToolUseCase {
         return this.listQuotes(conversationId, args);
       case "get_quote_details":
         return this.getQuote(conversationId, args);
+      case "search_quote_items":
+        return this.searchQuoteItems(conversationId, args);
       case "list_rejection_reasons":
         return this.listRejectionReasons(conversationId, args);
       case "prepare_quote_acceptance":
@@ -45,6 +56,8 @@ export class ExecuteWhatsAppAssistantToolUseCase {
         return this.confirmRejection(conversationId, turnId, args);
       case "create_quote_change_request":
         return this.createChangeRequest(conversationId, args);
+      case "create_quote_information_request":
+        return this.createInformationRequest(conversationId, args);
       case "contact_sales_representative":
         return this.contactSeller(conversationId, args);
       default:
@@ -61,6 +74,21 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   private async getQuote(conversationId: string, args: ToolArguments) {
     const quote = await this.requiredQuote(conversationId, args);
     return { quote: this.publicQuote(quote) };
+  }
+
+  private async searchQuoteItems(conversationId: string, args: ToolArguments) {
+    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
+    const query = this.optionalText(args.query);
+    const position = this.positiveInteger(args.position);
+    if (!query && position === null) return { error: "ITEM_QUERY_OR_POSITION_REQUIRED" };
+    const result = await this.repository.searchAuthorizedQuoteItems({
+      conversationId,
+      quoteNumber,
+      query,
+      position,
+      limit: 5,
+    });
+    return result || { error: "QUOTE_NOT_FOUND_OR_NOT_AUTHORIZED" };
   }
 
   private async listRejectionReasons(conversationId: string, args: ToolArguments) {
@@ -176,11 +204,27 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async createChangeRequest(conversationId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
+    const requestedChanges = this.requiredText(args.requestedChanges, "requestedChanges");
+    return this.createCustomerRequest(conversationId, quoteNumber, "MODIFICATION", requestedChanges);
+  }
+
+  private async createInformationRequest(conversationId: string, args: ToolArguments) {
+    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
+    const requestedInformation = this.requiredText(args.requestedInformation, "requestedInformation");
+    return this.createCustomerRequest(conversationId, quoteNumber, "INFORMATION", requestedInformation);
+  }
+
+  private async createCustomerRequest(
+    conversationId: string,
+    quoteNumber: string,
+    requestType: "INFORMATION" | "MODIFICATION",
+    requestText: string,
+  ) {
+    const quote = await this.requiredQuote(conversationId, { quoteNumber });
     if (!["QUOTED", "APPROVED"].includes(quote.status)) {
       return { error: "QUOTE_DOES_NOT_ACCEPT_CHANGE_REQUESTS", currentStatus: quote.status };
     }
-    const requestedChanges = this.requiredText(args.requestedChanges, "requestedChanges");
     const requestedByPhone = await this.repository.getParticipantPhone(conversationId);
     if (!requestedByPhone) throw new Error("WHATSAPP_CONVERSATION_NOT_FOUND");
     const result = await this.repository.createChangeRequest({
@@ -188,8 +232,36 @@ export class ExecuteWhatsAppAssistantToolUseCase {
       quoteId: quote.id,
       customerContactId: quote.contactId,
       requestedByPhone,
-      requestedChanges,
+      requestedChanges: requestText,
+      requestType,
     });
+    if (result.created) {
+      const occurredAt = new Date().toISOString();
+      await this.realtime?.publish({
+        type: "QUOTE_CUSTOMER_REQUEST",
+        conversationId,
+        reason: requestType === "INFORMATION" ? "CUSTOMER_INFORMATION_REQUESTED" : "CUSTOMER_CHANGE_REQUESTED",
+        occurredAt,
+        customerRequest: {
+          requestId: result.id,
+          requestType,
+          quoteId: quote.id,
+          quoteNumber: quote.quoteNumber,
+          sellerId: quote.sellerId,
+          branchId: quote.branchId,
+          detail: requestText,
+        },
+      });
+      await this.internalAlerts?.execute({
+        eventKey: `customer-request:${result.id}`,
+        type: requestType === "INFORMATION" ? "INFORMATION_REQUESTED" : "QUOTE_CHANGE_REQUESTED",
+        recipientUserId: quote.sellerId,
+        conversationId,
+        quoteId: quote.id,
+        reference: quote.quoteNumber,
+        detail: requestText,
+      });
+    }
     return { success: true, requestId: result.id, created: result.created, sellerName: quote.sellerName };
   }
 
@@ -248,6 +320,10 @@ export class ExecuteWhatsAppAssistantToolUseCase {
 
   private number(value: unknown): number | null {
     return typeof value === "number" && Number.isFinite(value) ? value : null;
+  }
+
+  private positiveInteger(value: unknown): number | null {
+    return typeof value === "number" && Number.isInteger(value) && value > 0 ? value : null;
   }
 
 }

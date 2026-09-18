@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Envs } from "../../config/envs";
 import { CreateCustomerUseCase } from "../../domain/use-cases/create-customer.use-case";
 import { CreateCustomerContactUseCase } from "../../domain/use-cases/create-customer-contact.use-case";
 import { DeleteCustomerUseCase } from "../../domain/use-cases/delete-customer.use-case";
@@ -8,8 +9,13 @@ import { GetCustomerContactsUseCase } from "../../domain/use-cases/get-customer-
 import { GetCustomersUseCase } from "../../domain/use-cases/get-customers.use-case";
 import { UpdateCustomerUseCase } from "../../domain/use-cases/update-customer.use-case";
 import { UpdateCustomerContactUseCase } from "../../domain/use-cases/update-customer-contact.use-case";
+import { ReactivateCustomerUseCase } from "../../domain/use-cases/reactivate-customer.use-case";
+import { ResetCustomerWhatsAppTestUseCase } from "../../domain/use-cases/reset-customer-whatsapp-test.use-case";
 import { PrismaCustomerDatasource } from "../../infrastructure/datasources/prisma-customer.datasource";
 import { CustomerRepositoryImpl } from "../../infrastructure/repositories/customer.repository-impl";
+import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file-storage.adapter";
+import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
+import { requireDevelopment } from "../middlewares/development-only.middleware";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { CustomersController } from "./customers.controller";
@@ -30,6 +36,13 @@ export class CustomersRoutes {
     const createCustomerContactUseCase = new CreateCustomerContactUseCase(repository);
     const updateCustomerContactUseCase = new UpdateCustomerContactUseCase(repository);
     const deleteCustomerContactUseCase = new DeleteCustomerContactUseCase(repository);
+    const reactivateCustomerUseCase = new ReactivateCustomerUseCase(repository);
+    const resetCustomerWhatsAppTestUseCase = new ResetCustomerWhatsAppTestUseCase(
+      repository,
+      new LocalFileStorageAdapter(Envs.fileStorageRoot),
+      (process.env.NODE_ENV || "").toLowerCase() === "development",
+      whatsAppRealtimeBus,
+    );
 
     const controller = new CustomersController(
       getCustomersUseCase,
@@ -40,7 +53,9 @@ export class CustomersRoutes {
       getCustomerContactsUseCase,
       createCustomerContactUseCase,
       updateCustomerContactUseCase,
-      deleteCustomerContactUseCase
+      deleteCustomerContactUseCase,
+      reactivateCustomerUseCase,
+      resetCustomerWhatsAppTestUseCase
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.list);
@@ -52,6 +67,8 @@ export class CustomersRoutes {
     router.patch("/:id/contacts/:contactId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.updateContact);
     router.delete("/:id/contacts/:contactId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.removeContact);
     router.delete("/:id", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.remove);
+    router.patch("/:id/reactivate", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.reactivate);
+    router.post("/:id/reset-whatsapp-test", requireDevelopment, requireAuth, requireRoles("ADMIN"), controller.resetWhatsAppTest);
 
     return router;
   }

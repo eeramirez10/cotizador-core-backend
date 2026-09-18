@@ -59,6 +59,13 @@ export abstract class WhatsAppInboxRepository {
     sentAt: Date;
   }): Promise<WhatsAppInboxMessage>;
 
+  abstract recordSystemMessage(input: {
+    conversationId: string;
+    providerMessageId: string;
+    body: string;
+    sentAt: Date;
+  }): Promise<WhatsAppInboxMessage>;
+
   abstract registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<{
     conversationId: string;
     messageId: string;

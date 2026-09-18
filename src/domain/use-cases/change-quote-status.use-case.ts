@@ -1,6 +1,7 @@
 import type { QuoteStatus, UserRole } from "../../infrastructure/database/generated/enums";
 import { ChangeQuoteStatusRequestDto } from "../dtos/request/change-quote-status-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
+import type { QuoteEntity } from "../entities/quote.entity";
 import { QuoteCatalogRepository } from "../repositories/quote-catalog.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { QuoteCatalogType } from "../../infrastructure/database/generated/enums";
@@ -9,6 +10,8 @@ import {
   formatQuoteItemReviewError,
   getQuoteItemReviewIssues,
 } from "./quote-item-review.helper";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
+import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -38,7 +41,9 @@ export class ChangeQuoteStatusUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly quoteCatalogRepository: QuoteCatalogRepository,
     private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository,
-    private readonly internalApprovalEnabled = true
+    private readonly internalApprovalEnabled = true,
+    private readonly realtime?: WhatsAppRealtimePublisher,
+    private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
   ) {}
 
   async execute(
@@ -176,7 +181,56 @@ export class ChangeQuoteStatusUseCase {
     if (updatedQuote.status === "APPROVED" && updatedQuote.captureMethod !== "EXCEL_IMPORT") {
       await this.purchaseRequisitionRepository.ensureForApprovedQuote(updatedQuote);
     }
+    const customerInitiatedByWhatsApp = Object.prototype.hasOwnProperty.call(actor, "auditActorUserId")
+      && actor.auditActorUserId === null;
+    await this.publishCustomerDecision(updatedQuote, customerInitiatedByWhatsApp);
     return new QuoteResponseDto(updatedQuote);
+  }
+
+  private async publishCustomerDecision(quote: QuoteEntity, customerInitiatedByWhatsApp: boolean): Promise<void> {
+    if (!["APPROVED", "REJECTED", "CANCELLED"].includes(quote.status)) return;
+    const reason = quote.status === "APPROVED"
+      ? "QUOTE_ACCEPTED"
+      : quote.status === "REJECTED"
+        ? "QUOTE_REJECTED"
+        : "QUOTE_CANCELLED";
+    await this.realtime?.publish({
+      type: "QUOTE_CUSTOMER_DECISION",
+      conversationId: `quote:${quote.id}`,
+      reason,
+      occurredAt: quote.updatedAt.toISOString(),
+      quoteDecision: {
+        quoteId: quote.id,
+        quoteNumber: quote.quoteNumber,
+        status: quote.status as "APPROVED" | "REJECTED" | "CANCELLED",
+        customerName: quote.customer.displayName,
+        contactName: quote.customerContact?.name || quote.customer.displayName,
+        sellerId: quote.createdByUserId,
+        branchId: quote.branchId,
+        currency: quote.currency,
+        total: quote.total,
+      },
+      audience: {
+        userIds: [quote.createdByUserId],
+        branchIds: [quote.branchId],
+        assignedSellerId: quote.createdByUserId,
+        assignedBranchId: quote.branchId,
+        visibleToUnassignedLeadManagers: false,
+      },
+    });
+    if (customerInitiatedByWhatsApp && ["APPROVED", "REJECTED"].includes(quote.status)) {
+      await this.internalAlerts?.execute({
+        eventKey: `quote-customer-decision:${quote.id}:${quote.status}`,
+        type: quote.status === "APPROVED" ? "QUOTE_ACCEPTED" : "QUOTE_REJECTED",
+        recipientUserId: quote.createdByUserId,
+        quoteId: quote.id,
+        customerName: quote.customer.displayName,
+        reference: quote.quoteNumber,
+        detail: quote.status === "APPROVED"
+          ? "El cliente aceptó la cotización mediante WhatsApp."
+          : "El cliente rechazó la cotización mediante WhatsApp.",
+      });
+    }
   }
 
   private async validateCatalogReason(

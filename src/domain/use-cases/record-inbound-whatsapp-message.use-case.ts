@@ -5,6 +5,8 @@ import { WhatsAppPhone } from "../utils/whatsapp-phone";
 import type { WhatsAppParticipantResolverPort } from "../contracts/whatsapp-participant-resolver.port";
 import type { WhatsAppInboundMediaReference } from "../entities/whatsapp-inbound-attachment.entity";
 import type { CaptureWhatsAppInboundMediaUseCase } from "./capture-whatsapp-inbound-media.use-case";
+import type { WhatsAppAssistantPrincipal } from "../entities/whatsapp-assistant.entity";
+import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
 
 interface RecordInboundWhatsAppMessageInput {
   from: string;
@@ -23,6 +25,7 @@ export class RecordInboundWhatsAppMessageUseCase {
     private readonly realtime?: WhatsAppRealtimePublisher,
     private readonly participantResolver?: WhatsAppParticipantResolverPort,
     private readonly captureMedia?: CaptureWhatsAppInboundMediaUseCase,
+    private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
   ) {}
 
   async execute(input: RecordInboundWhatsAppMessageInput): Promise<RecordedWhatsAppInboundMessage> {
@@ -36,12 +39,20 @@ export class RecordInboundWhatsAppMessageUseCase {
     }
 
     const receivedAt = this.now();
-    const principal = this.participantResolver
+    const principal: WhatsAppAssistantPrincipal = this.participantResolver
       ? await this.participantResolver.resolve(participant.value)
       : {
           audience: "UNKNOWN" as const,
+          displayName: "Usuario de WhatsApp",
+          phoneE164: participant.value,
           userId: null,
+          role: null,
           branchId: null,
+          branchName: null,
+          reportScope: null,
+          reportBranchId: null,
+          reportRange: null,
+          isVerified: false,
         };
     const body = input.body?.trim() || null;
     const mediaCount = Math.max(0, Math.trunc(input.mediaCount || 0));
@@ -58,6 +69,13 @@ export class RecordInboundWhatsAppMessageUseCase {
       participantType: principal.audience,
       internalUserId: principal.userId,
       internalUserBranchId: principal.branchId,
+      customerId: principal.customerId ?? null,
+      customerContactId: principal.customerContactId ?? null,
+      customerOwnerUserId: principal.customerOwnerUserId ?? null,
+      customerOwnerBranchId: principal.customerOwnerBranchId ?? null,
+      customerQuoteId: principal.customerQuoteId ?? null,
+      customerName: principal.customerName ?? null,
+      customerContactName: principal.customerContactName ?? null,
       principalResolvedAt: receivedAt,
     });
     const attachments = this.captureMedia && media.length > 0
@@ -78,7 +96,7 @@ export class RecordInboundWhatsAppMessageUseCase {
           conversationId: recorded.conversationId,
           direction: "INBOUND",
           authorType: "CUSTOMER",
-          authorName: principal.audience === "INTERNAL_USER" ? principal.displayName : "Cliente",
+          authorName: principal.audience === "UNKNOWN" ? "Cliente" : principal.displayName,
           body: body || (mediaCount > 0 ? `Archivo recibido (${mediaCount})` : "Mensaje sin texto"),
           messageType: "TEXT",
           status: "RECEIVED",
@@ -97,6 +115,18 @@ export class RecordInboundWhatsAppMessageUseCase {
           lastInboundAt: receivedAt.toISOString(),
         },
       });
+      if (attachments.length > 0) {
+        await this.internalAlerts?.execute({
+          eventKey: `file-review:${recorded.inboundMessageId}`,
+          type: "FILE_REVIEW_REQUIRED",
+          conversationId: recorded.conversationId,
+          customerName: principal.customerName || principal.displayName || "Cliente de WhatsApp",
+          reference: attachments.map((attachment) => attachment.originalName).join(", "),
+          detail: attachments.length === 1
+            ? `Revisa el archivo ${attachments[0].originalName} enviado por el cliente.`
+            : `Revisa los ${attachments.length} archivos enviados por el cliente.`,
+        });
+      }
     }
     return recorded;
   }

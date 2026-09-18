@@ -112,6 +112,17 @@ export class WhatsAppWebSocketGateway {
 
   private async broadcast(event: WhatsAppRealtimeEvent): Promise<void> {
     if (this.clients.size === 0) return;
+    if (event.type === "QUOTE_CUSTOMER_DECISION" && event.quoteDecision && event.audience) {
+      const audience = event.audience;
+      const payload = JSON.stringify({ ...event, audience: undefined });
+      for (const client of this.clients) {
+        const canReceive = client.actor.role === "ADMIN"
+          || (client.actor.role === "MANAGER" && audience.branchIds.includes(client.actor.branchId))
+          || (client.actor.role === "SELLER" && audience.userIds.includes(client.actor.id));
+        if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
+      }
+      return;
+    }
     if (event.reason === "CONVERSATION_DELETED" && event.deleted && event.audience) {
       const audience = event.audience;
       const payload = JSON.stringify({ ...event, audience: undefined });

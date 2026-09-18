@@ -61,7 +61,10 @@ export class WhatsAppRealtimeBus extends WhatsAppRealtimePublisher {
         const sourceId = "sourceId" in parsed ? parsed.sourceId : undefined;
         if (sourceId === this.sourceId) return;
         const event = "event" in parsed ? parsed.event : parsed;
-        if (event.type === "WHATSAPP_CONVERSATION_CHANGED" && event.conversationId) {
+        if (
+          ["WHATSAPP_CONVERSATION_CHANGED", "QUOTE_CUSTOMER_DECISION", "QUOTE_CUSTOMER_REQUEST"].includes(event.type)
+          && event.conversationId
+        ) {
           void Promise.resolve(listener(event)).catch((error) => this.logError("listener_failed", error));
         }
       } catch (error) {

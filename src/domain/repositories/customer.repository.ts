@@ -6,6 +6,9 @@ import {
   FindCustomerContactsDatasourceParams,
   FindCustomersDatasourceParams,
   FindCustomersDatasourceResult,
+  SetCustomerActiveStatusDatasourceParams,
+  ResetCustomerWhatsAppTestDatasourceParams,
+  ResetCustomerWhatsAppTestDatasourceResult,
   SoftDeleteCustomerByIdDatasourceParams,
   UpdateCustomerContactDatasourceParams,
   UpdateCustomerByIdDatasourceParams,
@@ -18,6 +21,10 @@ export abstract class CustomerRepository {
   abstract create(params: CreateCustomerDatasourceParams): Promise<CustomerEntity>;
   abstract updateById(params: UpdateCustomerByIdDatasourceParams): Promise<CustomerEntity | null>;
   abstract softDeleteById(params: SoftDeleteCustomerByIdDatasourceParams): Promise<boolean>;
+  abstract setActiveStatus(params: SetCustomerActiveStatusDatasourceParams): Promise<boolean>;
+  abstract resetWhatsAppTestIdentity(
+    params: ResetCustomerWhatsAppTestDatasourceParams,
+  ): Promise<ResetCustomerWhatsAppTestDatasourceResult | null>;
   abstract findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]>;
   abstract createContact(params: CreateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;
   abstract updateContact(params: UpdateCustomerContactDatasourceParams): Promise<CustomerContactEntity | null>;

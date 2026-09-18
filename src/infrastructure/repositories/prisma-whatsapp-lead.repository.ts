@@ -1,11 +1,18 @@
-import type { WhatsAppLeadStatus } from "../database/generated/enums";
+import type { WhatsAppLeadStatus, WhatsAppQuoteRequestStatus } from "../database/generated/enums";
 import type { WhatsAppLeadEntity, WhatsAppLeadProfilePatch } from "../../domain/entities/whatsapp-lead.entity";
 import { WhatsAppLeadRepository } from "../../domain/repositories/whatsapp-lead.repository";
 import { prisma } from "../database/prisma-client";
 
+const activeRequestStatuses: WhatsAppQuoteRequestStatus[] = ["COLLECTING", "READY", "ASSIGNED"];
+
 const leadInclude = {
   assignedSeller: { select: { firstName: true, lastName: true } },
   assignedBranch: { select: { name: true } },
+  quoteRequests: {
+    where: { status: { in: activeRequestStatuses } },
+    orderBy: { updatedAt: "desc" as const },
+    take: 1,
+  },
 } as const;
 
 export class PrismaWhatsAppLeadRepository extends WhatsAppLeadRepository {
@@ -27,6 +34,97 @@ export class PrismaWhatsAppLeadRepository extends WhatsAppLeadRepository {
       data: { ...input.patch, status: input.status },
     });
     if (!updated.count) return this.findByConversationId(input.conversationId);
+    return this.findByConversationId(input.conversationId);
+  }
+
+  async upsertActiveRequest(input: {
+    conversationId: string;
+    summary: string;
+    startNew: boolean;
+    occurredAt: Date;
+  }): Promise<WhatsAppLeadEntity | null> {
+    await prisma.$transaction(async (tx) => {
+      const lead = await tx.whatsAppLead.findUnique({
+        where: { conversationId: input.conversationId },
+        include: {
+          quoteRequests: {
+            where: { status: { in: ["COLLECTING", "READY", "ASSIGNED"] } },
+            orderBy: { updatedAt: "desc" },
+            take: 1,
+          },
+        },
+      });
+      if (!lead) return;
+
+      const active = lead.quoteRequests[0];
+      if (input.startNew && active) {
+        await tx.whatsAppQuoteRequest.update({
+          where: { id: active.id },
+          data: { status: "CLOSED", closedAt: input.occurredAt },
+        });
+      }
+      const requestStatus = lead.assignedSellerId ? "ASSIGNED" : "READY";
+      if (!input.startNew && active) {
+        await tx.whatsAppQuoteRequest.update({
+          where: { id: active.id },
+          data: { summary: input.summary, status: requestStatus },
+        });
+      } else {
+        await tx.whatsAppQuoteRequest.create({
+          data: {
+            conversationId: lead.conversationId,
+            leadId: lead.id,
+            customerId: lead.customerId,
+            summary: input.summary,
+            status: requestStatus,
+            openedAt: input.occurredAt,
+          },
+        });
+      }
+      await tx.whatsAppLead.update({
+        where: { id: lead.id },
+        data: {
+          requestSummary: input.summary,
+          ...(!["CONVERTED", "DISCARDED"].includes(lead.status)
+            ? { status: lead.assignedSellerId ? "ASSIGNED" : lead.contactName ? "PENDING_ASSIGNMENT" : "COLLECTING_INFORMATION" }
+            : {}),
+        },
+      });
+    });
+    return this.findByConversationId(input.conversationId);
+  }
+
+  async closeActiveRequest(input: {
+    conversationId: string;
+    cancelled: boolean;
+    occurredAt: Date;
+  }): Promise<WhatsAppLeadEntity | null> {
+    await prisma.$transaction(async (tx) => {
+      const lead = await tx.whatsAppLead.findUnique({
+        where: { conversationId: input.conversationId },
+        select: { id: true, status: true, contactName: true },
+      });
+      if (!lead) return;
+      await tx.whatsAppQuoteRequest.updateMany({
+        where: {
+          conversationId: input.conversationId,
+          status: { in: ["COLLECTING", "READY", "ASSIGNED"] },
+        },
+        data: {
+          status: input.cancelled ? "CANCELLED" : "CLOSED",
+          closedAt: input.occurredAt,
+        },
+      });
+      await tx.whatsAppLead.update({
+        where: { id: lead.id },
+        data: {
+          requestSummary: null,
+          ...(!["CONVERTED", "DISCARDED"].includes(lead.status)
+            ? { status: lead.contactName ? "COLLECTING_INFORMATION" : "NEW" }
+            : {}),
+        },
+      });
+    });
     return this.findByConversationId(input.conversationId);
   }
 
@@ -84,6 +182,13 @@ export class PrismaWhatsAppLeadRepository extends WhatsAppLeadRepository {
           assignedBranchId: seller.branchId,
           assignedAt: input.assignedAt,
         },
+      });
+      await tx.whatsAppQuoteRequest.updateMany({
+        where: {
+          conversationId: input.conversationId,
+          status: { in: ["COLLECTING", "READY"] },
+        },
+        data: { status: "ASSIGNED" },
       });
       await tx.whatsAppLeadAssignment.create({
         data: {
@@ -195,13 +300,26 @@ export class PrismaWhatsAppLeadRepository extends WhatsAppLeadRepository {
           convertedAt: lead.convertedAt ?? input.convertedAt,
         },
       });
+      await tx.whatsAppQuoteRequest.updateMany({
+        where: {
+          conversationId: input.conversationId,
+          status: { in: ["COLLECTING", "READY", "ASSIGNED"] },
+        },
+        data: { customerId: customer.id, status: "ASSIGNED" },
+      });
     });
   }
 
   private map(row: Awaited<ReturnType<typeof prisma.whatsAppLead.findUniqueOrThrow>> & {
     assignedSeller?: { firstName: string; lastName: string } | null;
     assignedBranch?: { name: string } | null;
+    quoteRequests?: Array<{
+      id: string;
+      summary: string;
+      status: WhatsAppLeadEntity["requestStatus"];
+    }>;
   }): WhatsAppLeadEntity {
+    const activeRequest = row.quoteRequests?.[0] ?? null;
     return {
       id: row.id,
       conversationId: row.conversationId,
@@ -210,7 +328,9 @@ export class PrismaWhatsAppLeadRepository extends WhatsAppLeadRepository {
       companyName: row.companyName,
       email: row.email,
       location: row.location,
-      requestSummary: row.requestSummary,
+      activeRequestId: activeRequest?.id ?? null,
+      requestSummary: activeRequest?.summary ?? null,
+      requestStatus: activeRequest?.status ?? null,
       status: row.status,
       assignedSellerId: row.assignedSellerId,
       assignedSellerName: row.assignedSeller

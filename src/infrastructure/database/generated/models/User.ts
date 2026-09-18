@@ -312,6 +312,7 @@ export type UserWhereInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   createdManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   updatedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -380,6 +381,7 @@ export type UserOrderByWithRelationInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -451,6 +453,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   receivedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   createdManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
   updatedManagerReports?: Prisma.ManagerReportSubscriptionListRelationFilter
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertListRelationFilter
 }, "id" | "username" | "email" | "whatsappPhoneE164" | "erpUserCode">
 
 export type UserOrderByWithAggregationInput = {
@@ -560,6 +563,7 @@ export type UserCreateInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -627,6 +631,7 @@ export type UserUncheckedCreateInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUpdateInput = {
@@ -694,6 +699,7 @@ export type UserUpdateInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -761,6 +767,7 @@ export type UserUncheckedUpdateInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1646,6 +1653,20 @@ export type UserUpdateOneWithoutSentWhatsAppMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentWhatsAppMessagesInput, Prisma.UserUpdateWithoutSentWhatsAppMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentWhatsAppMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutWhatsappInternalAlertsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWhatsappInternalAlertsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWhatsappInternalAlertsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWhatsappInternalAlertsInput
+  upsert?: Prisma.UserUpsertWithoutWhatsappInternalAlertsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWhatsappInternalAlertsInput, Prisma.UserUpdateWithoutWhatsappInternalAlertsInput>, Prisma.UserUncheckedUpdateWithoutWhatsappInternalAlertsInput>
+}
+
 export type UserCreateNestedOneWithoutQuoteOrderExportsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutQuoteOrderExportsInput, Prisma.UserUncheckedCreateWithoutQuoteOrderExportsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutQuoteOrderExportsInput
@@ -1756,6 +1777,7 @@ export type UserCreateWithoutBranchInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -1822,6 +1844,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -1935,6 +1958,7 @@ export type UserCreateWithoutReceivedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
@@ -2001,6 +2025,7 @@ export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutReceivedManagerReportsInput = {
@@ -2072,6 +2097,7 @@ export type UserCreateWithoutCreatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
@@ -2138,6 +2164,7 @@ export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedManagerReportsInput = {
@@ -2209,6 +2236,7 @@ export type UserCreateWithoutUpdatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
@@ -2275,6 +2303,7 @@ export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedManagerReportsInput = {
@@ -2357,6 +2386,7 @@ export type UserUpdateWithoutReceivedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
@@ -2423,6 +2453,7 @@ export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutCreatedManagerReportsInput = {
@@ -2500,6 +2531,7 @@ export type UserUpdateWithoutCreatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
@@ -2566,6 +2598,7 @@ export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedManagerReportsInput = {
@@ -2643,6 +2676,7 @@ export type UserUpdateWithoutUpdatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
@@ -2709,6 +2743,7 @@ export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
   convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutAssignedBranchWarehousesInput = {
@@ -2775,6 +2810,7 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
@@ -2841,6 +2877,7 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedBranchWarehousesInput = {
@@ -2923,6 +2960,7 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
@@ -2989,6 +3027,7 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutErpWarehouseAssignmentsInput = {
@@ -3055,6 +3094,7 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
@@ -3121,6 +3161,7 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutErpWarehouseAssignmentsInput = {
@@ -3192,6 +3233,7 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
@@ -3258,6 +3300,7 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedUserWarehousesInput = {
@@ -3340,6 +3383,7 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
@@ -3406,6 +3450,7 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutAssignedUserWarehousesInput = {
@@ -3483,6 +3528,7 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
@@ -3549,6 +3595,7 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedCustomersInput = {
@@ -3615,6 +3662,7 @@ export type UserCreateWithoutCreatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedCustomersInput = {
@@ -3681,6 +3729,7 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedCustomersInput = {
@@ -3752,6 +3801,7 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
@@ -3818,6 +3868,7 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedCustomersInput = {
@@ -3900,6 +3951,7 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
@@ -3966,6 +4018,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedCustomersInput = {
@@ -4043,6 +4096,7 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
@@ -4109,6 +4163,7 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedProductsInput = {
@@ -4175,6 +4230,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProductsInput = {
@@ -4241,6 +4297,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProductsInput = {
@@ -4312,6 +4369,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProductsInput = {
@@ -4378,6 +4436,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProductsInput = {
@@ -4449,6 +4508,7 @@ export type UserCreateWithoutProcurementProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutProcurementProductsInput = {
@@ -4515,6 +4575,7 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutProcurementProductsInput = {
@@ -4597,6 +4658,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProductsInput = {
@@ -4663,6 +4725,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProductsInput = {
@@ -4740,6 +4803,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
@@ -4806,6 +4870,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutProcurementProductsInput = {
@@ -4883,6 +4948,7 @@ export type UserUpdateWithoutProcurementProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProcurementProductsInput = {
@@ -4949,6 +5015,7 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedProcurementOffersInput = {
@@ -5015,6 +5082,7 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
@@ -5081,6 +5149,7 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedProcurementOffersInput = {
@@ -5152,6 +5221,7 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
@@ -5218,6 +5288,7 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedProcurementOffersInput = {
@@ -5300,6 +5371,7 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
@@ -5366,6 +5438,7 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedProcurementOffersInput = {
@@ -5443,6 +5516,7 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
@@ -5509,6 +5583,7 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedQuotesInput = {
@@ -5575,6 +5650,7 @@ export type UserCreateWithoutCreatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedQuotesInput = {
@@ -5641,6 +5717,7 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedQuotesInput = {
@@ -5712,6 +5789,7 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
@@ -5778,6 +5856,7 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedQuotesInput = {
@@ -5849,6 +5928,7 @@ export type UserCreateWithoutProvidedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutProvidedQuotesInput = {
@@ -5915,6 +5995,7 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutProvidedQuotesInput = {
@@ -5986,6 +6067,7 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
@@ -6052,6 +6134,7 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutProviderAssignmentsInput = {
@@ -6123,6 +6206,7 @@ export type UserCreateWithoutRejectedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutRejectedQuotesInput = {
@@ -6189,6 +6273,7 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutRejectedQuotesInput = {
@@ -6260,6 +6345,7 @@ export type UserCreateWithoutCancelledQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCancelledQuotesInput = {
@@ -6326,6 +6412,7 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCancelledQuotesInput = {
@@ -6397,6 +6484,7 @@ export type UserCreateWithoutArchivedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutArchivedQuotesInput = {
@@ -6463,6 +6551,7 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutArchivedQuotesInput = {
@@ -6534,6 +6623,7 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
@@ -6600,6 +6690,7 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutErpRegisteredQuotesInput = {
@@ -6682,6 +6773,7 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
@@ -6748,6 +6840,7 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedQuotesInput = {
@@ -6825,6 +6918,7 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
@@ -6891,6 +6985,7 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutProvidedQuotesInput = {
@@ -6968,6 +7063,7 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
@@ -7034,6 +7130,7 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutProviderAssignmentsInput = {
@@ -7111,6 +7208,7 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
@@ -7177,6 +7275,7 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutRejectedQuotesInput = {
@@ -7254,6 +7353,7 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
@@ -7320,6 +7420,7 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutCancelledQuotesInput = {
@@ -7397,6 +7498,7 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
@@ -7463,6 +7565,7 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutArchivedQuotesInput = {
@@ -7540,6 +7643,7 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
@@ -7606,6 +7710,7 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutErpRegisteredQuotesInput = {
@@ -7683,6 +7788,7 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
@@ -7749,6 +7855,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
@@ -7815,6 +7922,7 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
@@ -7881,6 +7989,7 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutEditedQuoteItemDescriptionsInput = {
@@ -7952,6 +8061,7 @@ export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
@@ -8018,6 +8128,7 @@ export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutEvaluatedQuoteItemCostsInput = {
@@ -8100,6 +8211,7 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
@@ -8166,6 +8278,7 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutEvaluatedQuoteItemCostsInput = {
@@ -8243,6 +8356,7 @@ export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
@@ -8309,6 +8423,7 @@ export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedSuppliersInput = {
@@ -8375,6 +8490,7 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
@@ -8441,6 +8557,7 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSuppliersInput = {
@@ -8512,6 +8629,7 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
@@ -8578,6 +8696,7 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSuppliersInput = {
@@ -8660,6 +8779,7 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
@@ -8726,6 +8846,7 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSuppliersInput = {
@@ -8803,6 +8924,7 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
@@ -8869,6 +8991,7 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutRequestedRequisitionsInput = {
@@ -8935,6 +9058,7 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
@@ -9001,6 +9125,7 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutRequestedRequisitionsInput = {
@@ -9072,6 +9197,7 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
@@ -9138,6 +9264,7 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedRequisitionsInput = {
@@ -9209,6 +9336,7 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
@@ -9275,6 +9403,7 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutApprovedCostRequisitionsInput = {
@@ -9357,6 +9486,7 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
@@ -9423,6 +9553,7 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutAssignedRequisitionsInput = {
@@ -9500,6 +9631,7 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
@@ -9566,6 +9698,7 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutApprovedCostRequisitionsInput = {
@@ -9643,6 +9776,7 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
@@ -9709,6 +9843,7 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
@@ -9775,6 +9910,7 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
@@ -9841,6 +9977,7 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutErpLinkedRequisitionItemsInput = {
@@ -9923,6 +10060,7 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
@@ -9989,6 +10127,7 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedSupplierOffersInput = {
@@ -10055,6 +10194,7 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
@@ -10121,6 +10261,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSupplierOffersInput = {
@@ -10192,6 +10333,7 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
@@ -10258,6 +10400,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSupplierOffersInput = {
@@ -10340,6 +10483,7 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
@@ -10406,6 +10550,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSupplierOffersInput = {
@@ -10483,6 +10628,7 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
@@ -10549,6 +10695,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutCreatedSupplierQuotesInput = {
@@ -10615,6 +10762,7 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
@@ -10681,6 +10829,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedSupplierQuotesInput = {
@@ -10752,6 +10901,7 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
@@ -10818,6 +10968,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedSupplierQuotesInput = {
@@ -10900,6 +11051,7 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
@@ -10966,6 +11118,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutUpdatedSupplierQuotesInput = {
@@ -11043,6 +11196,7 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
@@ -11109,6 +11263,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutUploadedFileAssetsInput = {
@@ -11175,6 +11330,7 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
@@ -11241,6 +11397,7 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutUploadedFileAssetsInput = {
@@ -11323,6 +11480,7 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
@@ -11389,6 +11547,7 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutQuoteEventsInput = {
@@ -11455,6 +11614,7 @@ export type UserCreateWithoutQuoteEventsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteEventsInput = {
@@ -11521,6 +11681,7 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteEventsInput = {
@@ -11603,6 +11764,7 @@ export type UserUpdateWithoutQuoteEventsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteEventsInput = {
@@ -11669,6 +11831,7 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -11735,6 +11898,7 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
@@ -11801,6 +11965,7 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteDeliveryAttemptsInput = {
@@ -11883,6 +12048,7 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
@@ -11949,6 +12115,7 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutHandledWhatsAppConversationsInput = {
@@ -12015,6 +12182,7 @@ export type UserCreateWithoutHandledWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
@@ -12081,6 +12249,7 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutHandledWhatsAppConversationsInput = {
@@ -12152,6 +12321,7 @@ export type UserCreateWithoutInternalWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutInternalWhatsAppConversationsInput = {
@@ -12218,6 +12388,7 @@ export type UserUncheckedCreateWithoutInternalWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutInternalWhatsAppConversationsInput = {
@@ -12300,6 +12471,7 @@ export type UserUpdateWithoutHandledWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
@@ -12366,6 +12538,7 @@ export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutInternalWhatsAppConversationsInput = {
@@ -12443,6 +12616,7 @@ export type UserUpdateWithoutInternalWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput = {
@@ -12509,6 +12683,7 @@ export type UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutAssignedWhatsAppLeadsInput = {
@@ -12575,6 +12750,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput = {
@@ -12641,6 +12817,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedWhatsAppLeadsInput = {
@@ -12712,6 +12889,7 @@ export type UserCreateWithoutConvertedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput = {
@@ -12778,6 +12956,7 @@ export type UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutConvertedWhatsAppLeadsInput = {
@@ -12860,6 +13039,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput = {
@@ -12926,6 +13106,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutConvertedWhatsAppLeadsInput = {
@@ -13003,6 +13184,7 @@ export type UserUpdateWithoutConvertedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput = {
@@ -13069,6 +13251,7 @@ export type UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutAssignedWhatsAppLeadHistoryInput = {
@@ -13135,6 +13318,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput = {
@@ -13201,6 +13385,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedWhatsAppLeadHistoryInput = {
@@ -13272,6 +13457,7 @@ export type UserCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
@@ -13338,6 +13524,7 @@ export type UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutMadeWhatsAppLeadAssignmentsInput = {
@@ -13420,6 +13607,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
@@ -13486,6 +13674,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUpsertWithoutMadeWhatsAppLeadAssignmentsInput = {
@@ -13563,6 +13752,7 @@ export type UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
@@ -13629,6 +13819,7 @@ export type UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutWhatsappInternalVerificationInput = {
@@ -13695,6 +13886,7 @@ export type UserCreateWithoutWhatsappInternalVerificationInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutWhatsappInternalVerificationInput = {
@@ -13761,6 +13953,7 @@ export type UserUncheckedCreateWithoutWhatsappInternalVerificationInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutWhatsappInternalVerificationInput = {
@@ -13843,6 +14036,7 @@ export type UserUpdateWithoutWhatsappInternalVerificationInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWhatsappInternalVerificationInput = {
@@ -13909,6 +14103,7 @@ export type UserUncheckedUpdateWithoutWhatsappInternalVerificationInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutWhatsappConversationAccessesInput = {
@@ -13975,6 +14170,7 @@ export type UserCreateWithoutWhatsappConversationAccessesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
@@ -14041,6 +14237,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutWhatsappConversationAccessesInput = {
@@ -14123,6 +14320,7 @@ export type UserUpdateWithoutWhatsappConversationAccessesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
@@ -14189,6 +14387,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutWhatsappConversationReadsInput = {
@@ -14255,6 +14454,7 @@ export type UserCreateWithoutWhatsappConversationReadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
@@ -14321,6 +14521,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutWhatsappConversationReadsInput = {
@@ -14403,6 +14604,7 @@ export type UserUpdateWithoutWhatsappConversationReadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
@@ -14469,6 +14671,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutSentWhatsAppMessagesInput = {
@@ -14535,6 +14738,7 @@ export type UserCreateWithoutSentWhatsAppMessagesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
@@ -14601,6 +14805,7 @@ export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutSentWhatsAppMessagesInput = {
@@ -14683,6 +14888,7 @@ export type UserUpdateWithoutSentWhatsAppMessagesInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
@@ -14740,6 +14946,291 @@ export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
   handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
   whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
+}
+
+export type UserCreateWithoutWhatsappInternalAlertsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserUncheckedCreateWithoutWhatsappInternalAlertsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+}
+
+export type UserCreateOrConnectWithoutWhatsappInternalAlertsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalAlertsInput>
+}
+
+export type UserUpsertWithoutWhatsappInternalAlertsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedUpdateWithoutWhatsappInternalAlertsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWhatsappInternalAlertsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWhatsappInternalAlertsInput, Prisma.UserUncheckedUpdateWithoutWhatsappInternalAlertsInput>
+}
+
+export type UserUpdateWithoutWhatsappInternalAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
   internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
   whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
   assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
@@ -14815,6 +15306,7 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
@@ -14881,6 +15373,7 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutQuoteOrderExportsInput = {
@@ -14963,6 +15456,7 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
@@ -15029,6 +15523,7 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -15095,6 +15590,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -15161,6 +15657,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -15243,6 +15740,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -15309,6 +15807,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -15375,6 +15874,7 @@ export type UserCreateWithoutAuditLogsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -15441,6 +15941,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -15523,6 +16024,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -15589,6 +16091,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserCreateManyBranchInput = {
@@ -15672,6 +16175,7 @@ export type UserUpdateWithoutBranchInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -15738,6 +16242,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
   createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -15811,6 +16316,7 @@ export type UserCountOutputType = {
   receivedManagerReports: number
   createdManagerReports: number
   updatedManagerReports: number
+  whatsappInternalAlerts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -15862,6 +16368,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   receivedManagerReports?: boolean | UserCountOutputTypeCountReceivedManagerReportsArgs
   createdManagerReports?: boolean | UserCountOutputTypeCountCreatedManagerReportsArgs
   updatedManagerReports?: boolean | UserCountOutputTypeCountUpdatedManagerReportsArgs
+  whatsappInternalAlerts?: boolean | UserCountOutputTypeCountWhatsappInternalAlertsArgs
 }
 
 /**
@@ -16210,6 +16717,13 @@ export type UserCountOutputTypeCountUpdatedManagerReportsArgs<ExtArgs extends ru
   where?: Prisma.ManagerReportSubscriptionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWhatsappInternalAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppInternalAlertWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -16277,6 +16791,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   receivedManagerReports?: boolean | Prisma.User$receivedManagerReportsArgs<ExtArgs>
   createdManagerReports?: boolean | Prisma.User$createdManagerReportsArgs<ExtArgs>
   updatedManagerReports?: boolean | Prisma.User$updatedManagerReportsArgs<ExtArgs>
+  whatsappInternalAlerts?: boolean | Prisma.User$whatsappInternalAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -16388,6 +16903,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   receivedManagerReports?: boolean | Prisma.User$receivedManagerReportsArgs<ExtArgs>
   createdManagerReports?: boolean | Prisma.User$createdManagerReportsArgs<ExtArgs>
   updatedManagerReports?: boolean | Prisma.User$updatedManagerReportsArgs<ExtArgs>
+  whatsappInternalAlerts?: boolean | Prisma.User$whatsappInternalAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -16450,6 +16966,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     receivedManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
     createdManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
     updatedManagerReports: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
+    whatsappInternalAlerts: Prisma.$WhatsAppInternalAlertPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -16911,6 +17428,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   receivedManagerReports<T extends Prisma.User$receivedManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdManagerReports<T extends Prisma.User$createdManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedManagerReports<T extends Prisma.User$updatedManagerReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedManagerReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappInternalAlerts<T extends Prisma.User$whatsappInternalAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$whatsappInternalAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppInternalAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18519,6 +19037,30 @@ export type User$updatedManagerReportsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.ManagerReportSubscriptionScalarFieldEnum | Prisma.ManagerReportSubscriptionScalarFieldEnum[]
+}
+
+/**
+ * User.whatsappInternalAlerts
+ */
+export type User$whatsappInternalAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppInternalAlert
+   */
+  select?: Prisma.WhatsAppInternalAlertSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppInternalAlert
+   */
+  omit?: Prisma.WhatsAppInternalAlertOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppInternalAlertInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppInternalAlertWhereInput
+  orderBy?: Prisma.WhatsAppInternalAlertOrderByWithRelationInput | Prisma.WhatsAppInternalAlertOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppInternalAlertWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppInternalAlertScalarFieldEnum | Prisma.WhatsAppInternalAlertScalarFieldEnum[]
 }
 
 /**

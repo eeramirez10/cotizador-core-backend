@@ -699,6 +699,7 @@ export type QuoteWhereInput = {
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   whatsappLead?: Prisma.XOR<Prisma.WhatsAppLeadNullableScalarRelationFilter, Prisma.WhatsAppLeadWhereInput> | null
+  whatsappQuoteRequest?: Prisma.XOR<Prisma.WhatsAppQuoteRequestNullableScalarRelationFilter, Prisma.WhatsAppQuoteRequestWhereInput> | null
   customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -724,6 +725,7 @@ export type QuoteWhereInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestListRelationFilter
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertListRelationFilter
 }
 
 export type QuoteOrderByWithRelationInput = {
@@ -792,6 +794,7 @@ export type QuoteOrderByWithRelationInput = {
   branch?: Prisma.BranchOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   whatsappLead?: Prisma.WhatsAppLeadOrderByWithRelationInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestOrderByWithRelationInput
   customerContact?: Prisma.CustomerContactOrderByWithRelationInput
   createdByUser?: Prisma.UserOrderByWithRelationInput
   updatedByUser?: Prisma.UserOrderByWithRelationInput
@@ -817,6 +820,7 @@ export type QuoteOrderByWithRelationInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestOrderByRelationAggregateInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessOrderByRelationAggregateInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageOrderByRelationAggregateInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertOrderByRelationAggregateInput
 }
 
 export type QuoteWhereUniqueInput = Prisma.AtLeast<{
@@ -890,6 +894,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   whatsappLead?: Prisma.XOR<Prisma.WhatsAppLeadNullableScalarRelationFilter, Prisma.WhatsAppLeadWhereInput> | null
+  whatsappQuoteRequest?: Prisma.XOR<Prisma.WhatsAppQuoteRequestNullableScalarRelationFilter, Prisma.WhatsAppQuoteRequestWhereInput> | null
   customerContact?: Prisma.XOR<Prisma.CustomerContactNullableScalarRelationFilter, Prisma.CustomerContactWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -915,6 +920,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestListRelationFilter
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessListRelationFilter
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertListRelationFilter
 }, "id" | "quoteNumber" | "orderReference" | "erpQuoteNumber" | "supersededByQuoteId" | "createdByUserId_clientDraftId" | "rootQuoteId_revisionNumber">
 
 export type QuoteOrderByWithAggregationInput = {
@@ -1106,6 +1112,7 @@ export type QuoteCreateInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -1131,6 +1138,7 @@ export type QuoteCreateInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateInput = {
@@ -1196,6 +1204,7 @@ export type QuoteUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -1209,6 +1218,7 @@ export type QuoteUncheckedCreateInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUpdateInput = {
@@ -1262,6 +1272,7 @@ export type QuoteUpdateInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -1287,6 +1298,7 @@ export type QuoteUpdateInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateInput = {
@@ -1352,6 +1364,7 @@ export type QuoteUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -1365,6 +1378,7 @@ export type QuoteUncheckedUpdateInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyInput = {
@@ -2556,6 +2570,22 @@ export type QuoteUncheckedUpdateManyWithoutWhatsappLeadNestedInput = {
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
+export type QuoteCreateNestedOneWithoutWhatsappQuoteRequestInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappQuoteRequestInput
+  connect?: Prisma.QuoteWhereUniqueInput
+}
+
+export type QuoteUpdateOneWithoutWhatsappQuoteRequestNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappQuoteRequestInput
+  upsert?: Prisma.QuoteUpsertWithoutWhatsappQuoteRequestInput
+  disconnect?: Prisma.QuoteWhereInput | boolean
+  delete?: Prisma.QuoteWhereInput | boolean
+  connect?: Prisma.QuoteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutWhatsappQuoteRequestInput, Prisma.QuoteUpdateWithoutWhatsappQuoteRequestInput>, Prisma.QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput>
+}
+
 export type QuoteCreateNestedOneWithoutWhatsappConversationAccessesInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappConversationAccessesInput, Prisma.QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappConversationAccessesInput
@@ -2614,6 +2644,22 @@ export type QuoteUpdateOneRequiredWithoutWhatsappChangeRequestsNestedInput = {
   upsert?: Prisma.QuoteUpsertWithoutWhatsappChangeRequestsInput
   connect?: Prisma.QuoteWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutWhatsappChangeRequestsInput, Prisma.QuoteUpdateWithoutWhatsappChangeRequestsInput>, Prisma.QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput>
+}
+
+export type QuoteCreateNestedOneWithoutWhatsappInternalAlertsInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappInternalAlertsInput
+  connect?: Prisma.QuoteWhereUniqueInput
+}
+
+export type QuoteUpdateOneWithoutWhatsappInternalAlertsNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutWhatsappInternalAlertsInput
+  upsert?: Prisma.QuoteUpsertWithoutWhatsappInternalAlertsInput
+  disconnect?: Prisma.QuoteWhereInput | boolean
+  delete?: Prisma.QuoteWhereInput | boolean
+  connect?: Prisma.QuoteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutWhatsappInternalAlertsInput, Prisma.QuoteUpdateWithoutWhatsappInternalAlertsInput>, Prisma.QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput>
 }
 
 export type QuoteCreateNestedOneWithoutOrderExportsInput = {
@@ -2680,6 +2726,7 @@ export type QuoteCreateWithoutBranchInput = {
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -2705,6 +2752,7 @@ export type QuoteCreateWithoutBranchInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutBranchInput = {
@@ -2769,6 +2817,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -2782,6 +2831,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutBranchInput = {
@@ -2929,6 +2979,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -2953,6 +3004,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
@@ -3017,6 +3069,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3030,6 +3083,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCreatedByUserInput = {
@@ -3093,6 +3147,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -3117,6 +3172,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
@@ -3181,6 +3237,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3194,6 +3251,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutUpdatedByUserInput = {
@@ -3257,6 +3315,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3281,6 +3340,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
@@ -3345,6 +3405,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3358,6 +3419,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRejectedByUserInput = {
@@ -3421,6 +3483,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3445,6 +3508,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
@@ -3509,6 +3573,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3522,6 +3587,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCancelledByUserInput = {
@@ -3585,6 +3651,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3609,6 +3676,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
@@ -3673,6 +3741,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3686,6 +3755,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutArchivedByUserInput = {
@@ -3749,6 +3819,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3773,6 +3844,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
@@ -3837,6 +3909,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -3850,6 +3923,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProvidedByUserInput = {
@@ -3913,6 +3987,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -3937,6 +4012,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
@@ -4001,6 +4077,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -4014,6 +4091,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProvidedByAssignedByUserInput = {
@@ -4077,6 +4155,7 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4101,6 +4180,7 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
@@ -4165,6 +4245,7 @@ export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -4178,6 +4259,7 @@ export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutErpQuoteRegisteredByUserInput = {
@@ -4368,6 +4450,7 @@ export type QuoteCreateWithoutCustomerInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4393,6 +4476,7 @@ export type QuoteCreateWithoutCustomerInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCustomerInput = {
@@ -4457,6 +4541,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -4470,6 +4555,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCustomerInput = {
@@ -4549,6 +4635,7 @@ export type QuoteCreateWithoutCustomerContactInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
   providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
@@ -4573,6 +4660,7 @@ export type QuoteCreateWithoutCustomerContactInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutCustomerContactInput = {
@@ -4637,6 +4725,7 @@ export type QuoteUncheckedCreateWithoutCustomerContactInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -4650,6 +4739,7 @@ export type QuoteUncheckedCreateWithoutCustomerContactInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutCustomerContactInput = {
@@ -4729,6 +4819,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4753,6 +4844,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRevisionsInput = {
@@ -4818,6 +4910,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
@@ -4830,6 +4923,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRevisionsInput = {
@@ -4888,6 +4982,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -4912,6 +5007,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutRootQuoteInput = {
@@ -4976,6 +5072,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -4989,6 +5086,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutRootQuoteInput = {
@@ -5052,6 +5150,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5076,6 +5175,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutNextVersionsInput = {
@@ -5141,6 +5241,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
@@ -5153,6 +5254,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutNextVersionsInput = {
@@ -5211,6 +5313,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5235,6 +5338,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
@@ -5299,6 +5403,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -5312,6 +5417,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutPreviousVersionInput = {
@@ -5375,6 +5481,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5399,6 +5506,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
@@ -5464,6 +5572,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
@@ -5476,6 +5585,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSupersedesQuoteInput = {
@@ -5534,6 +5644,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -5558,6 +5669,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
@@ -5622,6 +5734,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -5635,6 +5748,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSupersededByQuoteInput = {
@@ -5704,6 +5818,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -5728,6 +5843,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRevisionsInput = {
@@ -5793,6 +5909,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
@@ -5805,6 +5922,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithWhereUniqueWithoutRootQuoteInput = {
@@ -5885,6 +6003,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -5909,6 +6028,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
@@ -5974,6 +6094,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
@@ -5986,6 +6107,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithWhereUniqueWithoutPreviousVersionInput = {
@@ -6066,6 +6188,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6090,6 +6213,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
@@ -6155,6 +6279,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
@@ -6167,6 +6292,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUpsertWithoutSupersededByQuoteInput = {
@@ -6231,6 +6357,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6255,6 +6382,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
@@ -6319,6 +6447,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -6332,6 +6461,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutItemsInput = {
@@ -6385,6 +6515,7 @@ export type QuoteCreateWithoutItemsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -6409,6 +6540,7 @@ export type QuoteCreateWithoutItemsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutItemsInput = {
@@ -6474,6 +6606,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -6486,6 +6619,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutItemsInput = {
@@ -6555,6 +6689,7 @@ export type QuoteUpdateWithoutItemsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6579,6 +6714,7 @@ export type QuoteUpdateWithoutItemsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutItemsInput = {
@@ -6644,6 +6780,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -6656,6 +6793,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutPurchaseRequisitionInput = {
@@ -6709,6 +6847,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -6733,6 +6872,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
@@ -6798,6 +6938,7 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -6810,6 +6951,7 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutPurchaseRequisitionInput = {
@@ -6879,6 +7021,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -6903,6 +7046,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
@@ -6968,6 +7112,7 @@ export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -6980,6 +7125,7 @@ export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutAttachmentsInput = {
@@ -7033,6 +7179,7 @@ export type QuoteCreateWithoutAttachmentsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -7057,6 +7204,7 @@ export type QuoteCreateWithoutAttachmentsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutAttachmentsInput = {
@@ -7122,6 +7270,7 @@ export type QuoteUncheckedCreateWithoutAttachmentsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -7134,6 +7283,7 @@ export type QuoteUncheckedCreateWithoutAttachmentsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutAttachmentsInput = {
@@ -7203,6 +7353,7 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7227,6 +7378,7 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
@@ -7292,6 +7444,7 @@ export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -7304,6 +7457,7 @@ export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutEventsInput = {
@@ -7357,6 +7511,7 @@ export type QuoteCreateWithoutEventsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -7381,6 +7536,7 @@ export type QuoteCreateWithoutEventsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutEventsInput = {
@@ -7446,6 +7602,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -7458,6 +7615,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutEventsInput = {
@@ -7527,6 +7685,7 @@ export type QuoteUpdateWithoutEventsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7551,6 +7710,7 @@ export type QuoteUpdateWithoutEventsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutEventsInput = {
@@ -7616,6 +7776,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -7628,6 +7789,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutDeliveryAttemptsInput = {
@@ -7681,6 +7843,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -7705,6 +7868,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
@@ -7770,6 +7934,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -7782,6 +7947,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutDeliveryAttemptsInput = {
@@ -7851,6 +8017,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -7875,6 +8042,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
@@ -7940,6 +8108,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -7952,6 +8121,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutWhatsappLeadInput = {
@@ -8004,6 +8174,7 @@ export type QuoteCreateWithoutWhatsappLeadInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8029,6 +8200,7 @@ export type QuoteCreateWithoutWhatsappLeadInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
@@ -8093,6 +8265,7 @@ export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -8106,6 +8279,7 @@ export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutWhatsappLeadInput = {
@@ -8134,7 +8308,7 @@ export type QuoteUpdateManyWithWhereWithoutWhatsappLeadInput = {
   data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutWhatsappLeadInput>
 }
 
-export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
+export type QuoteCreateWithoutWhatsappQuoteRequestInput = {
   id?: string
   quoteNumber: string
   clientDraftId?: string | null
@@ -8208,10 +8382,12 @@ export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
-export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
+export type QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput = {
   id?: string
   quoteNumber: string
   clientDraftId?: string | null
@@ -8285,7 +8461,341 @@ export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutWhatsappQuoteRequestInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput>
+}
+
+export type QuoteUpsertWithoutWhatsappQuoteRequestInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput>
+  where?: Prisma.QuoteWhereInput
+}
+
+export type QuoteUpdateToOneWithWhereWithoutWhatsappQuoteRequestInput = {
+  where?: Prisma.QuoteWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappQuoteRequestInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput>
+}
+
+export type QuoteUpdateWithoutWhatsappQuoteRequestInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
+  revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
+  previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
+  nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
+  supersededByQuote?: Prisma.QuoteUpdateOneWithoutSupersedesQuoteNestedInput
+  supersedesQuote?: Prisma.QuoteUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
+  nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
+  supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
+  revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
+  previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
+  nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
+  supersededByQuote?: Prisma.QuoteCreateNestedOneWithoutSupersedesQuoteInput
+  supersedesQuote?: Prisma.QuoteCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
+  revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
+  nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
+  supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutWhatsappConversationAccessesInput = {
@@ -8355,6 +8865,7 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -8379,6 +8890,7 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
@@ -8444,6 +8956,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -8456,6 +8969,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
@@ -8509,6 +9023,7 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8533,6 +9048,7 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
@@ -8598,6 +9114,7 @@ export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -8610,6 +9127,7 @@ export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutWhatsappOutboundMessagesInput = {
@@ -8679,6 +9197,7 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -8703,6 +9222,7 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
@@ -8768,6 +9288,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -8780,6 +9301,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutWhatsappPendingActionsInput = {
@@ -8833,6 +9355,7 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -8857,6 +9380,7 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
@@ -8922,6 +9446,7 @@ export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -8934,6 +9459,7 @@ export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutWhatsappPendingActionsInput = {
@@ -9003,6 +9529,7 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9027,6 +9554,7 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
@@ -9092,6 +9620,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -9104,6 +9633,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
@@ -9157,6 +9687,7 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -9181,6 +9712,7 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
@@ -9246,6 +9778,7 @@ export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -9258,6 +9791,7 @@ export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutWhatsappChangeRequestsInput = {
@@ -9327,6 +9861,7 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9351,6 +9886,7 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
@@ -9416,6 +9952,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -9426,6 +9963,339 @@ export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
   purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteCreateWithoutWhatsappInternalAlertsInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
+  revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
+  previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
+  nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
+  supersededByQuote?: Prisma.QuoteCreateNestedOneWithoutSupersedesQuoteInput
+  supersedesQuote?: Prisma.QuoteCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
+  revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
+  nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
+  supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutWhatsappInternalAlertsInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput>
+}
+
+export type QuoteUpsertWithoutWhatsappInternalAlertsInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput>
+  where?: Prisma.QuoteWhereInput
+}
+
+export type QuoteUpdateToOneWithWhereWithoutWhatsappInternalAlertsInput = {
+  where?: Prisma.QuoteWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutWhatsappInternalAlertsInput, Prisma.QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput>
+}
+
+export type QuoteUpdateWithoutWhatsappInternalAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
+  revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
+  previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
+  nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
+  supersededByQuote?: Prisma.QuoteUpdateOneWithoutSupersedesQuoteNestedInput
+  supersedesQuote?: Prisma.QuoteUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
+  revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
+  nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
+  supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
 }
@@ -9481,6 +10351,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
   customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
   whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
   customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
   createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
@@ -9505,6 +10376,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutOrderExportsInput = {
@@ -9570,6 +10442,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
   revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
   supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
@@ -9582,6 +10455,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutOrderExportsInput = {
@@ -9651,6 +10525,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9675,6 +10550,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
@@ -9740,6 +10616,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -9752,6 +10629,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyBranchInput = {
@@ -9868,6 +10746,7 @@ export type QuoteUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -9893,6 +10772,7 @@ export type QuoteUpdateWithoutBranchInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutBranchInput = {
@@ -9957,6 +10837,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -9970,6 +10851,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutBranchInput = {
@@ -10599,6 +11481,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -10623,6 +11506,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
@@ -10687,6 +11571,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -10700,6 +11585,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
@@ -10817,6 +11703,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -10841,6 +11728,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
@@ -10905,6 +11793,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -10918,6 +11807,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
@@ -11035,6 +11925,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11059,6 +11950,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
@@ -11123,6 +12015,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -11136,6 +12029,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
@@ -11253,6 +12147,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11277,6 +12172,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
@@ -11341,6 +12237,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -11354,6 +12251,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
@@ -11471,6 +12369,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11495,6 +12394,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
@@ -11559,6 +12459,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -11572,6 +12473,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
@@ -11689,6 +12591,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11713,6 +12616,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
@@ -11777,6 +12681,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -11790,6 +12695,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
@@ -11907,6 +12813,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -11931,6 +12838,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
@@ -11995,6 +12903,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -12008,6 +12917,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
@@ -12125,6 +13035,7 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -12149,6 +13060,7 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
@@ -12213,6 +13125,7 @@ export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -12226,6 +13139,7 @@ export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserInput = {
@@ -12406,6 +13320,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -12431,6 +13346,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCustomerInput = {
@@ -12495,6 +13411,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -12508,6 +13425,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
@@ -12689,6 +13607,7 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
   providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
@@ -12713,6 +13632,7 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
@@ -12777,6 +13697,7 @@ export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -12790,6 +13711,7 @@ export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutCustomerContactInput = {
@@ -13035,6 +13957,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -13059,6 +13982,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
@@ -13123,6 +14047,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -13136,6 +14061,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
@@ -13253,6 +14179,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
   whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -13277,6 +14204,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
@@ -13341,6 +14269,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -13354,6 +14283,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
@@ -13534,6 +14464,7 @@ export type QuoteUpdateWithoutWhatsappLeadInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
   customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
   createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
@@ -13559,6 +14490,7 @@ export type QuoteUpdateWithoutWhatsappLeadInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
@@ -13623,6 +14555,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
   revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
   supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
@@ -13636,6 +14569,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutWhatsappLeadInput = {
@@ -13719,6 +14653,7 @@ export type QuoteCountOutputType = {
   whatsappChangeRequests: number
   whatsappConversationAccesses: number
   whatsappOutboundMessages: number
+  whatsappInternalAlerts: number
 }
 
 export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -13733,6 +14668,7 @@ export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   whatsappChangeRequests?: boolean | QuoteCountOutputTypeCountWhatsappChangeRequestsArgs
   whatsappConversationAccesses?: boolean | QuoteCountOutputTypeCountWhatsappConversationAccessesArgs
   whatsappOutboundMessages?: boolean | QuoteCountOutputTypeCountWhatsappOutboundMessagesArgs
+  whatsappInternalAlerts?: boolean | QuoteCountOutputTypeCountWhatsappInternalAlertsArgs
 }
 
 /**
@@ -13822,6 +14758,13 @@ export type QuoteCountOutputTypeCountWhatsappOutboundMessagesArgs<ExtArgs extend
   where?: Prisma.WhatsAppOutboundMessageWhereInput
 }
 
+/**
+ * QuoteCountOutputType without action
+ */
+export type QuoteCountOutputTypeCountWhatsappInternalAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WhatsAppInternalAlertWhereInput
+}
+
 
 export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -13889,6 +14832,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
+  whatsappQuoteRequest?: boolean | Prisma.Quote$whatsappQuoteRequestArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -13914,6 +14858,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   whatsappChangeRequests?: boolean | Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>
   whatsappConversationAccesses?: boolean | Prisma.Quote$whatsappConversationAccessesArgs<ExtArgs>
   whatsappOutboundMessages?: boolean | Prisma.Quote$whatsappOutboundMessagesArgs<ExtArgs>
+  whatsappInternalAlerts?: boolean | Prisma.Quote$whatsappInternalAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
@@ -14147,6 +15092,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   whatsappLead?: boolean | Prisma.Quote$whatsappLeadArgs<ExtArgs>
+  whatsappQuoteRequest?: boolean | Prisma.Quote$whatsappQuoteRequestArgs<ExtArgs>
   customerContact?: boolean | Prisma.Quote$customerContactArgs<ExtArgs>
   createdByUser?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Quote$updatedByUserArgs<ExtArgs>
@@ -14172,6 +15118,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   whatsappChangeRequests?: boolean | Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>
   whatsappConversationAccesses?: boolean | Prisma.Quote$whatsappConversationAccessesArgs<ExtArgs>
   whatsappOutboundMessages?: boolean | Prisma.Quote$whatsappOutboundMessagesArgs<ExtArgs>
+  whatsappInternalAlerts?: boolean | Prisma.Quote$whatsappInternalAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -14215,6 +15162,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     branch: Prisma.$BranchPayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs>
     whatsappLead: Prisma.$WhatsAppLeadPayload<ExtArgs> | null
+    whatsappQuoteRequest: Prisma.$WhatsAppQuoteRequestPayload<ExtArgs> | null
     customerContact: Prisma.$CustomerContactPayload<ExtArgs> | null
     createdByUser: Prisma.$UserPayload<ExtArgs>
     updatedByUser: Prisma.$UserPayload<ExtArgs> | null
@@ -14240,6 +15188,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     whatsappChangeRequests: Prisma.$WhatsAppCustomerChangeRequestPayload<ExtArgs>[]
     whatsappConversationAccesses: Prisma.$WhatsAppConversationAccessPayload<ExtArgs>[]
     whatsappOutboundMessages: Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>[]
+    whatsappInternalAlerts: Prisma.$WhatsAppInternalAlertPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -14701,6 +15650,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   whatsappLead<T extends Prisma.Quote$whatsappLeadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappLeadArgs<ExtArgs>>): Prisma.Prisma__WhatsAppLeadClient<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  whatsappQuoteRequest<T extends Prisma.Quote$whatsappQuoteRequestArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappQuoteRequestArgs<ExtArgs>>): Prisma.Prisma__WhatsAppQuoteRequestClient<runtime.Types.Result.GetResult<Prisma.$WhatsAppQuoteRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   customerContact<T extends Prisma.Quote$customerContactArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$customerContactArgs<ExtArgs>>): Prisma.Prisma__CustomerContactClient<runtime.Types.Result.GetResult<Prisma.$CustomerContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdByUser<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedByUser<T extends Prisma.Quote$updatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$updatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -14726,6 +15676,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   whatsappChangeRequests<T extends Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppCustomerChangeRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappConversationAccesses<T extends Prisma.Quote$whatsappConversationAccessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappConversationAccessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppConversationAccessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappOutboundMessages<T extends Prisma.Quote$whatsappOutboundMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappOutboundMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppOutboundMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappInternalAlerts<T extends Prisma.Quote$whatsappInternalAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappInternalAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppInternalAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15229,6 +16180,25 @@ export type Quote$whatsappLeadArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.WhatsAppLeadInclude<ExtArgs> | null
   where?: Prisma.WhatsAppLeadWhereInput
+}
+
+/**
+ * Quote.whatsappQuoteRequest
+ */
+export type Quote$whatsappQuoteRequestArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppQuoteRequest
+   */
+  select?: Prisma.WhatsAppQuoteRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppQuoteRequest
+   */
+  omit?: Prisma.WhatsAppQuoteRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppQuoteRequestInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppQuoteRequestWhereInput
 }
 
 /**
@@ -15740,6 +16710,30 @@ export type Quote$whatsappOutboundMessagesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.WhatsAppOutboundMessageScalarFieldEnum | Prisma.WhatsAppOutboundMessageScalarFieldEnum[]
+}
+
+/**
+ * Quote.whatsappInternalAlerts
+ */
+export type Quote$whatsappInternalAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppInternalAlert
+   */
+  select?: Prisma.WhatsAppInternalAlertSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppInternalAlert
+   */
+  omit?: Prisma.WhatsAppInternalAlertOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppInternalAlertInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppInternalAlertWhereInput
+  orderBy?: Prisma.WhatsAppInternalAlertOrderByWithRelationInput | Prisma.WhatsAppInternalAlertOrderByWithRelationInput[]
+  cursor?: Prisma.WhatsAppInternalAlertWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WhatsAppInternalAlertScalarFieldEnum | Prisma.WhatsAppInternalAlertScalarFieldEnum[]
 }
 
 /**

@@ -15,12 +15,14 @@ import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { TwilioController } from "./twilio.controller";
+import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 
 export class TwilioRoutes {
   static routes(): Router {
     const router = Router();
     const conversationRepository = new PrismaWhatsAppConversationRepository();
     const inboxRepository = new PrismaWhatsAppInboxRepository();
+    const internalAlerts = composeWhatsAppInternalAlert();
     const controller = new TwilioController(
       new UpdateWhatsAppDeliveryStatusUseCase(
         new QuoteRepositoryImpl(new PrismaQuoteDatasource()),
@@ -42,6 +44,7 @@ export class TwilioRoutes {
           ),
           new LocalFileStorageAdapter(Envs.fileStorageRoot),
         ),
+        internalAlerts,
       ),
       new GetWhatsAppConversationWindowUseCase(conversationRepository, Envs.twilioWhatsAppFrom),
       Envs.twilioAuthToken,

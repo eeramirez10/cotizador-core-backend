@@ -19,11 +19,13 @@ import { WhatsAppInternalAssistantUseCase } from "../../domain/use-cases/whatsap
 import { WhatsAppLeadAssistantUseCase } from "../../domain/use-cases/whatsapp-lead-assistant.use-case";
 import { PrismaWhatsAppLeadRepository } from "../../infrastructure/repositories/prisma-whatsapp-lead.repository";
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
+import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 
 export class WhatsAppAssistantRoutes {
   static routes(): Router {
     const router = Router();
     const repository = new PrismaWhatsAppAssistantRepository();
+    const internalAlerts = composeWhatsAppInternalAlert();
     const changeStatus = new ChangeQuoteStatusUseCase(
       new QuoteRepositoryImpl(new PrismaQuoteDatasource()),
       new QuoteCatalogRepositoryImpl(new PrismaQuoteCatalogDatasource()),
@@ -31,6 +33,8 @@ export class WhatsAppAssistantRoutes {
         new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled),
       ),
       Envs.quoteInternalApprovalEnabled,
+      whatsAppRealtimeBus,
+      internalAlerts,
     );
     const controller = new WhatsAppAssistantController(
       new ExecuteWhatsAppAssistantToolUseCase(
@@ -50,6 +54,8 @@ export class WhatsAppAssistantRoutes {
           Envs.whatsAppInternalVerificationResendSeconds,
         ),
         new WhatsAppLeadAssistantUseCase(new PrismaWhatsAppLeadRepository(), whatsAppRealtimeBus),
+        whatsAppRealtimeBus,
+        internalAlerts,
       ),
     );
     router.post("/tools", requireInternalApiKey(Envs.whatsAppAssistantInternalApiKey), controller.execute);

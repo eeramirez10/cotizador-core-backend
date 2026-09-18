@@ -32,6 +32,7 @@ const quote: WhatsAppAssistantQuoteDetails = {
 class RepositoryStub extends WhatsAppAssistantRepository {
   pending: (WhatsAppPendingActionEntity & { preparedTurnId: string }) | null = null;
   audience: "CUSTOMER" | "INTERNAL_USER" | "UNKNOWN" = "CUSTOMER";
+  requestTypes: Array<"INFORMATION" | "MODIFICATION"> = [];
 
   async getPrincipal() {
     return {
@@ -55,6 +56,30 @@ class RepositoryStub extends WhatsAppAssistantRepository {
   async listAuthorizedQuotes() { return [quote]; }
   async findAuthorizedQuote(_conversationId: string, quoteNumber: string) {
     return quoteNumber === quote.quoteNumber ? quote : null;
+  }
+  async searchAuthorizedQuoteItems(input: {
+    quoteNumber: string;
+    query: string | null;
+    position: number | null;
+  }) {
+    if (input.quoteNumber !== quote.quoteNumber) return null;
+    return {
+      quoteNumber: quote.quoteNumber,
+      currency: quote.currency,
+      totalMatches: 1,
+      truncated: false,
+      items: [{
+        position: input.position || 1,
+        code: "01300492",
+        description: "VÁLVULA DE ACERO",
+        quantity: 2,
+        unit: "PZ",
+        unitPrice: 50,
+        lineTotal: 100,
+        deliveryTime: "3 a 5 días",
+        customerComment: null,
+      }],
+    };
   }
   async listRejectionReasons() { return [{ code: "OTHER", label: "Otro", requiresComment: true }]; }
   async prepareAction(input: {
@@ -87,7 +112,10 @@ class RepositoryStub extends WhatsAppAssistantRepository {
     return this.pending;
   }
   async markActionExecuted() { this.pending = null; }
-  async createChangeRequest() { return { id: "request-1", created: true }; }
+  async createChangeRequest(input: { requestType: "INFORMATION" | "MODIFICATION" }) {
+    this.requestTypes.push(input.requestType);
+    return { id: "request-1", created: true };
+  }
 }
 
 class ChangeStatusStub {
@@ -133,6 +161,51 @@ test("change requests are recorded without changing quote status", async () => {
 
   assert.deepEqual(result, { success: true, requestId: "request-1", created: true, sellerName: "Alma Martínez" });
   assert.equal(changeStatus.calls.length, 0);
+  assert.deepEqual(repository.requestTypes, ["MODIFICATION"]);
+});
+
+test("specific quote items expose only customer-safe commercial data", async () => {
+  const repository = new RepositoryStub();
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  const result = await useCase.execute("conversation-1", "turn-1", "search_quote_items", {
+    quoteNumber: quote.quoteNumber,
+    position: 1,
+    query: null,
+  });
+
+  assert.deepEqual(result, {
+    quoteNumber: quote.quoteNumber,
+    currency: "USD",
+    totalMatches: 1,
+    truncated: false,
+    items: [{
+      position: 1,
+      code: "01300492",
+      description: "VÁLVULA DE ACERO",
+      quantity: 2,
+      unit: "PZ",
+      unitPrice: 50,
+      lineTotal: 100,
+      deliveryTime: "3 a 5 días",
+      customerComment: null,
+    }],
+  });
+  assert.equal(Object.hasOwn(result as object, "cost"), false);
+  assert.equal(Object.hasOwn(result as object, "margin"), false);
+});
+
+test("information requests are recorded separately from modification requests", async () => {
+  const repository = new RepositoryStub();
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  const result = await useCase.execute("conversation-1", "turn-1", "create_quote_information_request", {
+    quoteNumber: quote.quoteNumber,
+    requestedInformation: "Confirmar los tiempos de entrega de todas las partidas.",
+  });
+
+  assert.deepEqual(result, { success: true, requestId: "request-1", created: true, sellerName: "Alma Martínez" });
+  assert.deepEqual(repository.requestTypes, ["INFORMATION"]);
 });
 
 test("internal numbers cannot execute customer quote tools", async () => {

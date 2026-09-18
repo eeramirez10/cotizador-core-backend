@@ -2,6 +2,7 @@ import { Prisma } from "../database/generated/client";
 import type {
   WhatsAppConversationMode,
   WhatsAppOutboundMessageStatus,
+  WhatsAppQuoteRequestStatus,
 } from "../database/generated/client";
 import type {
   RegisterWhatsAppQuoteDeliveryInput,
@@ -15,6 +16,8 @@ import type {
 } from "../../domain/entities/whatsapp-inbox.entity";
 import { WhatsAppInboxRepository } from "../../domain/repositories/whatsapp-inbox.repository";
 import { prisma } from "../database/prisma-client";
+
+const activeRequestStatuses: WhatsAppQuoteRequestStatus[] = ["COLLECTING", "READY", "ASSIGNED"];
 
 const conversationInclude = {
   handledByUser: { select: { firstName: true, lastName: true } },
@@ -41,6 +44,11 @@ const conversationInclude = {
     include: {
       assignedSeller: { select: { firstName: true, lastName: true } },
       assignedBranch: { select: { name: true } },
+      quoteRequests: {
+        where: { status: { in: activeRequestStatuses } },
+        orderBy: { updatedAt: "desc" as const },
+        take: 1,
+      },
     },
   },
 } satisfies Prisma.WhatsAppConversationInclude;
@@ -182,7 +190,18 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
             { lead: { is: { contactName: { contains: search, mode: "insensitive" as const } } } },
             { lead: { is: { companyName: { contains: search, mode: "insensitive" as const } } } },
             { lead: { is: { email: { contains: search, mode: "insensitive" as const } } } },
-            { lead: { is: { requestSummary: { contains: search, mode: "insensitive" as const } } } },
+            {
+              lead: {
+                is: {
+                  quoteRequests: {
+                    some: {
+                      status: { in: activeRequestStatuses },
+                      summary: { contains: search, mode: "insensitive" as const },
+                    },
+                  },
+                },
+              },
+            },
             {
               accesses: {
                 some: {
@@ -569,6 +588,45 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     });
   }
 
+  async recordSystemMessage(input: {
+    conversationId: string;
+    providerMessageId: string;
+    body: string;
+    sentAt: Date;
+  }): Promise<WhatsAppInboxMessage> {
+    return prisma.$transaction(async (tx) => {
+      const message = await tx.whatsAppOutboundMessage.create({
+        data: {
+          conversationId: input.conversationId,
+          providerMessageId: input.providerMessageId,
+          authorType: "SYSTEM",
+          messageType: "TEXT",
+          status: "QUEUED",
+          body: input.body,
+          sentAt: input.sentAt,
+        },
+      });
+      await tx.whatsAppConversation.update({
+        where: { id: input.conversationId },
+        data: { lastMessageAt: input.sentAt },
+      });
+      return {
+        id: message.id,
+        conversationId: message.conversationId,
+        direction: "OUTBOUND",
+        authorType: "SYSTEM",
+        authorName: "Tuvansa",
+        body: message.body,
+        messageType: message.messageType,
+        status: message.status,
+        occurredAt: message.sentAt,
+        quote: null,
+        fileAssetId: message.fileAssetId,
+        attachments: [],
+      };
+    });
+  }
+
   async registerQuoteDelivery(input: RegisterWhatsAppQuoteDeliveryInput): Promise<{
     conversationId: string;
     messageId: string;
@@ -735,6 +793,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     const leadSellerName = row.lead?.assignedSeller
       ? `${row.lead.assignedSeller.firstName} ${row.lead.assignedSeller.lastName}`.trim()
       : null;
+    const activeRequest = row.lead?.quoteRequests[0] ?? null;
 
     return {
       id: row.id,
@@ -759,7 +818,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         companyName: row.lead.companyName,
         email: row.lead.email,
         location: row.lead.location,
-        requestSummary: row.lead.requestSummary,
+        activeRequestId: activeRequest?.id ?? null,
+        requestSummary: activeRequest?.summary ?? null,
+        requestStatus: activeRequest?.status ?? null,
         assignedSellerId: row.lead.assignedSellerId,
         assignedSellerName: leadSellerName,
         assignedBranchId: row.lead.assignedBranchId,

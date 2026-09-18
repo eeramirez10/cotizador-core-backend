@@ -1,4 +1,7 @@
-import type { WhatsAppLeadStatus } from "../../infrastructure/database/generated/enums";
+import type {
+  WhatsAppLeadStatus,
+  WhatsAppQuoteRequestStatus,
+} from "../../infrastructure/database/generated/enums";
 
 export interface WhatsAppLeadEntity {
   id: string;
@@ -8,7 +11,9 @@ export interface WhatsAppLeadEntity {
   companyName: string | null;
   email: string | null;
   location: string | null;
+  activeRequestId: string | null;
   requestSummary: string | null;
+  requestStatus: WhatsAppQuoteRequestStatus | null;
   status: WhatsAppLeadStatus;
   assignedSellerId: string | null;
   assignedSellerName: string | null;
@@ -27,5 +32,4 @@ export interface WhatsAppLeadProfilePatch {
   companyName?: string;
   email?: string;
   location?: string;
-  requestSummary?: string;
 }

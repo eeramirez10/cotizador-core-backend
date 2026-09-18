@@ -12,6 +12,7 @@ import {
 } from "../src/domain/events/whatsapp-realtime.event";
 import { GetWhatsAppConversationWindowUseCase } from "../src/domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { RecordInboundWhatsAppMessageUseCase } from "../src/domain/use-cases/record-inbound-whatsapp-message.use-case";
+import type { WhatsAppParticipantResolverPort } from "../src/domain/contracts/whatsapp-participant-resolver.port";
 
 class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository {
   conversation: WhatsAppConversationEntity | null = null;
@@ -104,6 +105,13 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     participantType: "UNKNOWN",
     internalUserId: null,
     internalUserBranchId: null,
+    customerId: null,
+    customerContactId: null,
+    customerOwnerUserId: null,
+    customerOwnerBranchId: null,
+    customerQuoteId: null,
+    customerName: null,
+    customerContactName: null,
     principalResolvedAt: now,
   });
   await new Promise((resolve) => setImmediate(resolve));
@@ -132,4 +140,51 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
       lastInboundAt: now.toISOString(),
     },
   }]);
+});
+
+test("restores a known customer identity when a deleted conversation is recreated", async () => {
+  const repository = new WhatsAppConversationRepositoryStub();
+  const resolver = {
+    resolve: async () => ({
+      audience: "CUSTOMER" as const,
+      displayName: "Luz Vázquez",
+      phoneE164: "+525511223344",
+      userId: null,
+      role: null,
+      branchId: null,
+      branchName: null,
+      reportScope: null,
+      reportBranchId: null,
+      reportRange: null,
+      isVerified: false,
+      customerId: "customer-1",
+      customerContactId: "contact-1",
+      customerOwnerUserId: "seller-1",
+      customerOwnerBranchId: "branch-1",
+      customerQuoteId: "quote-1",
+      customerName: "PROESA, SA DE CV",
+      customerContactName: "Luz Vázquez",
+    }),
+  } as WhatsAppParticipantResolverPort;
+  const useCase = new RecordInboundWhatsAppMessageUseCase(
+    repository,
+    () => now,
+    false,
+    undefined,
+    resolver,
+  );
+
+  await useCase.execute({
+    from: "whatsapp:+525511223344",
+    to: "whatsapp:+525651020069",
+    providerMessageId: "SM-CUSTOMER",
+    body: "Necesito otra cotización",
+  });
+
+  assert.equal(repository.recorded?.participantType, "CUSTOMER");
+  assert.equal(repository.recorded?.customerId, "customer-1");
+  assert.equal(repository.recorded?.customerContactId, "contact-1");
+  assert.equal(repository.recorded?.customerOwnerUserId, "seller-1");
+  assert.equal(repository.recorded?.customerOwnerBranchId, "branch-1");
+  assert.equal(repository.recorded?.customerQuoteId, "quote-1");
 });

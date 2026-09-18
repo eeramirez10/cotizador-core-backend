@@ -242,6 +242,17 @@ enum WhatsAppLeadStatus {
   DISCARDED
 }
 
+enum WhatsAppQuoteRequestStatus {
+  COLLECTING
+  READY
+  ASSIGNED
+  CONVERTED
+  ACCEPTED
+  REJECTED
+  CANCELLED
+  CLOSED
+}
+
 enum WhatsAppOutboundAuthorType {
   AI
   USER
@@ -278,6 +289,27 @@ enum QuoteCustomerChangeRequestStatus {
   IN_PROGRESS
   RESOLVED
   CANCELLED
+}
+
+enum WhatsAppCustomerRequestType {
+  INFORMATION
+  MODIFICATION
+}
+
+enum WhatsAppInternalAlertType {
+  LEAD_ASSIGNED
+  INFORMATION_REQUESTED
+  QUOTE_CHANGE_REQUESTED
+  QUOTE_ACCEPTED
+  QUOTE_REJECTED
+  FILE_REVIEW_REQUIRED
+}
+
+enum WhatsAppInternalAlertStatus {
+  PENDING
+  SENT
+  FAILED
+  SKIPPED
 }
 
 enum OrderGenerationStatus {
@@ -417,6 +449,7 @@ model User {
   receivedManagerReports        ManagerReportSubscription[]     @relation("ManagerReportRecipient")
   createdManagerReports         ManagerReportSubscription[]     @relation("ManagerReportCreatedBy")
   updatedManagerReports         ManagerReportSubscription[]     @relation("ManagerReportUpdatedBy")
+  whatsappInternalAlerts        WhatsAppInternalAlert[]         @relation("WhatsAppInternalAlertRecipient")
 
   @@index([branchId])
   @@map("users")
@@ -539,6 +572,7 @@ model Customer {
   contacts                     CustomerContact[]
   quotes                       Quote[]
   whatsappLeads                WhatsAppLead[]
+  whatsappQuoteRequests        WhatsAppQuoteRequest[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
 
   @@index([externalId])
@@ -713,24 +747,25 @@ model Quote {
   createdAt                    DateTime              @default(now()) @map("created_at")
   updatedAt                    DateTime              @updatedAt @map("updated_at")
 
-  branch                   Branch           @relation(fields: [branchId], references: [id], onDelete: Restrict)
-  customer                 Customer         @relation(fields: [customerId], references: [id], onDelete: Restrict)
-  whatsappLead             WhatsAppLead?    @relation(fields: [whatsappLeadId], references: [id], onDelete: SetNull)
-  customerContact          CustomerContact? @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
-  createdByUser            User             @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
-  updatedByUser            User?            @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
-  providedByUser           User?            @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
-  providedByAssignedByUser User?            @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
-  rejectedByUser           User?            @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
-  cancelledByUser          User?            @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
-  archivedByUser           User?            @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
-  erpQuoteRegisteredByUser User?            @relation("QuoteErpRegisteredBy", fields: [erpQuoteRegisteredByUserId], references: [id], onDelete: SetNull)
-  rootQuote                Quote?           @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
-  revisions                Quote[]          @relation("QuoteRevisionRoot")
-  previousVersion          Quote?           @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
-  nextVersions             Quote[]          @relation("QuotePreviousVersion")
-  supersededByQuote        Quote?           @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
-  supersedesQuote          Quote?           @relation("QuoteSupersededBy")
+  branch                   Branch                @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  customer                 Customer              @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  whatsappLead             WhatsAppLead?         @relation(fields: [whatsappLeadId], references: [id], onDelete: SetNull)
+  whatsappQuoteRequest     WhatsAppQuoteRequest?
+  customerContact          CustomerContact?      @relation(fields: [customerContactId], references: [id], onDelete: SetNull)
+  createdByUser            User                  @relation("QuoteCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  updatedByUser            User?                 @relation("QuoteUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  providedByUser           User?                 @relation("QuoteProvidedBy", fields: [providedByUserId], references: [id], onDelete: SetNull)
+  providedByAssignedByUser User?                 @relation("QuoteProviderAssignedBy", fields: [providedByAssignedByUserId], references: [id], onDelete: SetNull)
+  rejectedByUser           User?                 @relation("QuoteRejectedBy", fields: [rejectedByUserId], references: [id], onDelete: SetNull)
+  cancelledByUser          User?                 @relation("QuoteCancelledBy", fields: [cancelledByUserId], references: [id], onDelete: SetNull)
+  archivedByUser           User?                 @relation("QuoteArchivedBy", fields: [archivedByUserId], references: [id], onDelete: SetNull)
+  erpQuoteRegisteredByUser User?                 @relation("QuoteErpRegisteredBy", fields: [erpQuoteRegisteredByUserId], references: [id], onDelete: SetNull)
+  rootQuote                Quote?                @relation("QuoteRevisionRoot", fields: [rootQuoteId], references: [id], onDelete: Restrict)
+  revisions                Quote[]               @relation("QuoteRevisionRoot")
+  previousVersion          Quote?                @relation("QuotePreviousVersion", fields: [previousVersionId], references: [id], onDelete: Restrict)
+  nextVersions             Quote[]               @relation("QuotePreviousVersion")
+  supersededByQuote        Quote?                @relation("QuoteSupersededBy", fields: [supersededByQuoteId], references: [id], onDelete: SetNull)
+  supersedesQuote          Quote?                @relation("QuoteSupersededBy")
 
   items                        QuoteItem[]
   deliveryAttempts             QuoteDeliveryAttempt[]
@@ -742,6 +777,7 @@ model Quote {
   whatsappChangeRequests       WhatsAppCustomerChangeRequest[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
   whatsappOutboundMessages     WhatsAppOutboundMessage[]
+  whatsappInternalAlerts       WhatsAppInternalAlert[]
 
   @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
@@ -1222,9 +1258,11 @@ model WhatsAppConversation {
   assistantJobs    WhatsAppAssistantJob[]
   pendingActions   WhatsAppPendingAction[]
   changeRequests   WhatsAppCustomerChangeRequest[]
+  internalAlerts   WhatsAppInternalAlert[]
   accesses         WhatsAppConversationAccess[]
   readStates       WhatsAppConversationReadState[]
   lead             WhatsAppLead?
+  quoteRequests    WhatsAppQuoteRequest[]
 
   @@unique([businessPhoneE164, participantPhoneE164], map: "whatsapp_conversations_business_participant_key")
   @@index([lastInboundAt])
@@ -1260,6 +1298,7 @@ model WhatsAppLead {
   convertedBy    User?                    @relation("WhatsAppLeadConvertedBy", fields: [convertedByUserId], references: [id], onDelete: SetNull)
   quotes         Quote[]
   assignments    WhatsAppLeadAssignment[]
+  quoteRequests  WhatsAppQuoteRequest[]
 
   @@index([status, createdAt])
   @@index([phoneE164])
@@ -1267,6 +1306,30 @@ model WhatsAppLead {
   @@index([assignedBranchId, status])
   @@index([customerId])
   @@map("whatsapp_leads")
+}
+
+model WhatsAppQuoteRequest {
+  id             String                     @id @default(uuid()) @db.Uuid
+  conversationId String?                    @map("conversation_id") @db.Uuid
+  leadId         String?                    @map("lead_id") @db.Uuid
+  customerId     String?                    @map("customer_id") @db.Uuid
+  quoteId        String?                    @unique @map("quote_id") @db.Uuid
+  summary        String                     @db.Text
+  status         WhatsAppQuoteRequestStatus @default(COLLECTING)
+  openedAt       DateTime                   @default(now()) @map("opened_at")
+  closedAt       DateTime?                  @map("closed_at")
+  createdAt      DateTime                   @default(now()) @map("created_at")
+  updatedAt      DateTime                   @updatedAt @map("updated_at")
+
+  conversation WhatsAppConversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  lead         WhatsAppLead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  customer     Customer?             @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  quote        Quote?                @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, status, updatedAt])
+  @@index([leadId, createdAt])
+  @@index([customerId, createdAt])
+  @@map("whatsapp_quote_requests")
 }
 
 model WhatsAppLeadAssignment {
@@ -1358,7 +1421,7 @@ model WhatsAppInboundMessage {
   receivedAt        DateTime @map("received_at")
   createdAt         DateTime @default(now()) @map("created_at")
 
-  conversation WhatsAppConversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversation WhatsAppConversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   assistantJob WhatsAppAssistantJob?
   attachments  WhatsAppInboundAttachment[]
 
@@ -1367,15 +1430,15 @@ model WhatsAppInboundMessage {
 }
 
 model WhatsAppInboundAttachment {
-  id               String   @id @default(uuid()) @db.Uuid
-  inboundMessageId String   @map("inbound_message_id") @db.Uuid
-  providerMediaUrl String   @unique @map("provider_media_url") @db.VarChar(1000)
-  originalName     String   @map("original_name") @db.VarChar(255)
-  storageKey       String   @unique @map("storage_key") @db.VarChar(500)
-  mimeType         String   @map("mime_type") @db.VarChar(120)
-  sizeBytes        Int      @map("size_bytes")
-  checksumSha256   String   @map("checksum_sha256") @db.Char(64)
-  createdAt        DateTime @default(now()) @map("created_at")
+  id                     String    @id @default(uuid()) @db.Uuid
+  inboundMessageId       String    @map("inbound_message_id") @db.Uuid
+  providerMediaUrl       String    @unique @map("provider_media_url") @db.VarChar(1000)
+  originalName           String    @map("original_name") @db.VarChar(255)
+  storageKey             String    @unique @map("storage_key") @db.VarChar(500)
+  mimeType               String    @map("mime_type") @db.VarChar(120)
+  sizeBytes              Int       @map("size_bytes")
+  checksumSha256         String    @map("checksum_sha256") @db.Char(64)
+  createdAt              DateTime  @default(now()) @map("created_at")
   quoteExtractedAt       DateTime? @map("quote_extracted_at")
   quoteExtractionCount   Int       @default(0) @map("quote_extraction_count")
   quoteExtractedByUserId String?   @map("quote_extracted_by_user_id") @db.Uuid
@@ -1467,6 +1530,7 @@ model WhatsAppCustomerChangeRequest {
   customerContactId String?                          @map("customer_contact_id") @db.Uuid
   requestedByPhone  String                           @map("requested_by_phone") @db.VarChar(20)
   requestedChanges  String                           @map("requested_changes") @db.Text
+  requestType       WhatsAppCustomerRequestType      @default(MODIFICATION) @map("request_type")
   status            QuoteCustomerChangeRequestStatus @default(OPEN)
   createdAt         DateTime                         @default(now()) @map("created_at")
   updatedAt         DateTime                         @updatedAt @map("updated_at")
@@ -1478,6 +1542,33 @@ model WhatsAppCustomerChangeRequest {
   @@index([quoteId, status, createdAt], map: "whatsapp_customer_change_requests_quote_id_status_created_at_id")
   @@index([conversationId, createdAt], map: "whatsapp_customer_change_requests_conversation_id_created_at_id")
   @@map("whatsapp_customer_change_requests")
+}
+
+model WhatsAppInternalAlert {
+  id                String                      @id @default(uuid()) @db.Uuid
+  eventKey          String                      @unique @map("event_key") @db.VarChar(220)
+  type              WhatsAppInternalAlertType
+  status            WhatsAppInternalAlertStatus @default(PENDING)
+  recipientUserId   String                      @map("recipient_user_id") @db.Uuid
+  conversationId    String?                     @map("conversation_id") @db.Uuid
+  quoteId           String?                     @map("quote_id") @db.Uuid
+  customerName      String                      @map("customer_name") @db.VarChar(260)
+  reference         String                      @db.VarChar(160)
+  detail            String                      @db.VarChar(500)
+  providerMessageId String?                     @map("provider_message_id") @db.VarChar(160)
+  errorMessage      String?                     @map("error_message") @db.Text
+  sentAt            DateTime?                   @map("sent_at")
+  createdAt         DateTime                    @default(now()) @map("created_at")
+  updatedAt         DateTime                    @updatedAt @map("updated_at")
+
+  recipientUser User                  @relation("WhatsAppInternalAlertRecipient", fields: [recipientUserId], references: [id], onDelete: Restrict)
+  conversation  WhatsAppConversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  quote         Quote?                @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+
+  @@index([recipientUserId, status, createdAt])
+  @@index([conversationId, createdAt])
+  @@index([quoteId, createdAt])
+  @@map("whatsapp_internal_alerts")
 }
 
 model QuoteOrderExport {

@@ -49,6 +49,7 @@ import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repos
 import { PrismaWhatsAppAssistantRepository } from "../../infrastructure/repositories/prisma-whatsapp-assistant.repository";
 import { PrismaWhatsAppInboxRepository } from "../../infrastructure/repositories/prisma-whatsapp-inbox.repository";
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
+import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 import { QuoteCustomerChangeRequestsController } from "./quote-customer-change-requests.controller";
 
@@ -112,7 +113,9 @@ export class QuotesRoutes {
       quoteRepository,
       quoteCatalogRepository,
       purchaseRequisitionRepository,
-      Envs.quoteInternalApprovalEnabled
+      Envs.quoteInternalApprovalEnabled,
+      whatsAppRealtimeBus,
+      composeWhatsAppInternalAlert(),
     );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
     const registerErpQuoteUseCase = new RegisterErpQuoteUseCase(quoteRepository);

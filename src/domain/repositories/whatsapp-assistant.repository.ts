@@ -3,6 +3,7 @@ import type {
   WhatsAppAssistantJobEntity,
   WhatsAppAssistantPrincipal,
   WhatsAppAssistantQuoteDetails,
+  WhatsAppAssistantQuoteItemSearch,
   WhatsAppAssistantQuoteSummary,
   WhatsAppCustomerChangeRequestEntity,
   WhatsAppPendingActionEntity,
@@ -30,6 +31,13 @@ export abstract class WhatsAppAssistantRepository {
   }): Promise<void>;
   abstract listAuthorizedQuotes(conversationId: string, limit: number): Promise<WhatsAppAssistantQuoteSummary[]>;
   abstract findAuthorizedQuote(conversationId: string, quoteNumber: string): Promise<WhatsAppAssistantQuoteDetails | null>;
+  abstract searchAuthorizedQuoteItems(input: {
+    conversationId: string;
+    quoteNumber: string;
+    query: string | null;
+    position: number | null;
+    limit: number;
+  }): Promise<WhatsAppAssistantQuoteItemSearch | null>;
   abstract listRejectionReasons(conversationId: string, quoteNumber: string): Promise<Array<{
     code: string;
     label: string;
@@ -57,6 +65,7 @@ export abstract class WhatsAppAssistantRepository {
     customerContactId: string | null;
     requestedByPhone: string;
     requestedChanges: string;
+    requestType: "INFORMATION" | "MODIFICATION";
   }): Promise<{ id: string; created: boolean }>;
   abstract listChangeRequests(quoteId: string): Promise<WhatsAppCustomerChangeRequestEntity[]>;
 }

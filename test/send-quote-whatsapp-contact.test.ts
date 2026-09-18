@@ -46,11 +46,15 @@ test("uses the quote contact name instead of the customer company when sending W
     },
   } as unknown as QuoteEntity;
   let sentMessage: SendQuoteWhatsAppMessage | null = null;
+  let recordedContactId: string | null = null;
 
   const useCase = new SendQuoteWhatsAppUseCase(
     {
       findById: async () => quote,
-      recordDeliveryAttempt: async () => quote,
+      recordDeliveryAttempt: async (params: { data: { customerContactId: string | null } }) => {
+        recordedContactId = params.data.customerContactId;
+        return quote;
+      },
     } as unknown as QuoteRepository,
     { findContacts: async () => [] } as unknown as CustomerRepository,
     {
@@ -101,4 +105,5 @@ test("uses the quote contact name instead of the customer company when sending W
   assert.ok(sentMessage);
   assert.equal(sentMessage.contactName, "Luz Vázquez");
   assert.equal(sentMessage.recipient, "+525511112222");
+  assert.equal(recordedContactId, quote.customerContactId);
 });

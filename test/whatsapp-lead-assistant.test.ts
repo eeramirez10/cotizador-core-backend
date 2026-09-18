@@ -28,7 +28,9 @@ class LeadRepositoryStub extends WhatsAppLeadRepository {
     companyName: null,
     email: null,
     location: null,
+    activeRequestId: null,
     requestSummary: null,
+    requestStatus: null,
     status: "NEW",
     assignedSellerId: null,
     assignedSellerName: null,
@@ -51,6 +53,22 @@ class LeadRepositoryStub extends WhatsAppLeadRepository {
     return this.lead;
   }
 
+  async upsertActiveRequest(input: { summary: string }) {
+    this.lead = {
+      ...this.lead,
+      activeRequestId: "request-1",
+      requestSummary: input.summary,
+      requestStatus: this.lead.assignedSellerId ? "ASSIGNED" : "READY",
+      status: this.lead.assignedSellerId ? "ASSIGNED" : this.lead.contactName ? "PENDING_ASSIGNMENT" : "COLLECTING_INFORMATION",
+    };
+    return this.lead;
+  }
+
+  async closeActiveRequest() {
+    this.lead = { ...this.lead, activeRequestId: null, requestSummary: null, requestStatus: null };
+    return this.lead;
+  }
+
   async assign(): Promise<void> {}
   async convert(): Promise<void> {}
 }
@@ -58,12 +76,15 @@ class LeadRepositoryStub extends WhatsAppLeadRepository {
 test("lead intake stores expressed data and becomes ready for assignment", async () => {
   const repository = new LeadRepositoryStub();
   const useCase = new WhatsAppLeadAssistantUseCase(repository);
-  const result = await useCase.execute(principal, "conversation-1", "update_whatsapp_lead", {
+  await useCase.execute(principal, "conversation-1", "update_whatsapp_lead", {
     contactName: "  Ana   López ",
     companyName: "Aceros del Centro",
     email: "ANA@EJEMPLO.COM",
     location: "Monterrey, Nuevo León",
-    requestSummary: "Necesita 20 metros de tubería de acero al carbón",
+  });
+  const result = await useCase.execute(principal, "conversation-1", "upsert_whatsapp_quote_request", {
+    summary: "Necesita 20 metros de tubería de acero al carbón",
+    startNew: true,
   }) as Record<string, unknown>;
 
   assert.equal(repository.lead.status, "PENDING_ASSIGNMENT");
@@ -79,9 +100,35 @@ test("lead intake rejects malformed email without changing the profile", async (
   const result = await useCase.execute(principal, "conversation-1", "update_whatsapp_lead", {
     contactName: "Ana",
     email: "correo-invalido",
-    requestSummary: "Solicita una cotización",
   }) as Record<string, unknown>;
 
   assert.equal(result.error, "INVALID_LEAD_EMAIL");
   assert.equal(repository.lead.status, "NEW");
+});
+
+test("known customers can replace and close their active quote request", async () => {
+  const repository = new LeadRepositoryStub();
+  repository.lead = {
+    ...repository.lead,
+    contactName: "Ana López",
+    customerId: "customer-1",
+    status: "CONVERTED",
+    assignedSellerId: "seller-1",
+    assignedSellerName: "Alma Martínez",
+  };
+  const useCase = new WhatsAppLeadAssistantUseCase(repository);
+  const customerPrincipal: WhatsAppAssistantPrincipal = { ...principal, audience: "CUSTOMER" };
+
+  await useCase.execute(customerPrincipal, "conversation-1", "upsert_whatsapp_quote_request", {
+    summary: "Solicita válvulas de 4 pulgadas",
+    startNew: true,
+  });
+  assert.equal(repository.lead.requestSummary, "Solicita válvulas de 4 pulgadas");
+  assert.equal(repository.lead.requestStatus, "ASSIGNED");
+
+  const result = await useCase.execute(customerPrincipal, "conversation-1", "close_whatsapp_quote_request", {
+    cancelled: true,
+  }) as Record<string, unknown>;
+  assert.equal(repository.lead.requestSummary, null);
+  assert.equal(result.hasActiveRequest, false);
 });

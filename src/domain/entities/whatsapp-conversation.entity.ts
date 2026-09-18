@@ -19,6 +19,13 @@ export interface RecordWhatsAppInboundMessageInput {
   participantType: WhatsAppAssistantAudience;
   internalUserId: string | null;
   internalUserBranchId: string | null;
+  customerId: string | null;
+  customerContactId: string | null;
+  customerOwnerUserId: string | null;
+  customerOwnerBranchId: string | null;
+  customerQuoteId: string | null;
+  customerName: string | null;
+  customerContactName: string | null;
   principalResolvedAt: Date;
 }
 

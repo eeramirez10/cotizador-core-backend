@@ -410,6 +410,7 @@ export const ModelName = {
   QuoteDeliveryAttempt: 'QuoteDeliveryAttempt',
   WhatsAppConversation: 'WhatsAppConversation',
   WhatsAppLead: 'WhatsAppLead',
+  WhatsAppQuoteRequest: 'WhatsAppQuoteRequest',
   WhatsAppLeadAssignment: 'WhatsAppLeadAssignment',
   WhatsAppInternalVerification: 'WhatsAppInternalVerification',
   WhatsAppConversationAccess: 'WhatsAppConversationAccess',
@@ -420,6 +421,7 @@ export const ModelName = {
   WhatsAppAssistantJob: 'WhatsAppAssistantJob',
   WhatsAppPendingAction: 'WhatsAppPendingAction',
   WhatsAppCustomerChangeRequest: 'WhatsAppCustomerChangeRequest',
+  WhatsAppInternalAlert: 'WhatsAppInternalAlert',
   QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
   AuditLog: 'AuditLog'
@@ -438,7 +440,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "quoteOrderExport" | "refreshToken" | "auditLog"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2366,6 +2368,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WhatsAppQuoteRequest: {
+      payload: Prisma.$WhatsAppQuoteRequestPayload<ExtArgs>
+      fields: Prisma.WhatsAppQuoteRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppQuoteRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppQuoteRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppQuoteRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppQuoteRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppQuoteRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppQuoteRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppQuoteRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppQuoteRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppQuoteRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppQuoteRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppQuoteRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppQuoteRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppQuoteRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppQuoteRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppQuoteRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppQuoteRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppQuoteRequest>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppQuoteRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppQuoteRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppQuoteRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppQuoteRequestCountAggregateOutputType> | number
+        }
+      }
+    }
     WhatsAppLeadAssignment: {
       payload: Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>
       fields: Prisma.WhatsAppLeadAssignmentFieldRefs
@@ -3103,6 +3179,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.WhatsAppCustomerChangeRequestCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.WhatsAppCustomerChangeRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    WhatsAppInternalAlert: {
+      payload: Prisma.$WhatsAppInternalAlertPayload<ExtArgs>
+      fields: Prisma.WhatsAppInternalAlertFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WhatsAppInternalAlertFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WhatsAppInternalAlertFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        findFirst: {
+          args: Prisma.WhatsAppInternalAlertFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WhatsAppInternalAlertFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        findMany: {
+          args: Prisma.WhatsAppInternalAlertFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>[]
+        }
+        create: {
+          args: Prisma.WhatsAppInternalAlertCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        createMany: {
+          args: Prisma.WhatsAppInternalAlertCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WhatsAppInternalAlertCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>[]
+        }
+        delete: {
+          args: Prisma.WhatsAppInternalAlertDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        update: {
+          args: Prisma.WhatsAppInternalAlertUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        deleteMany: {
+          args: Prisma.WhatsAppInternalAlertDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WhatsAppInternalAlertUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WhatsAppInternalAlertUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>[]
+        }
+        upsert: {
+          args: Prisma.WhatsAppInternalAlertUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WhatsAppInternalAlertPayload>
+        }
+        aggregate: {
+          args: Prisma.WhatsAppInternalAlertAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWhatsAppInternalAlert>
+        }
+        groupBy: {
+          args: Prisma.WhatsAppInternalAlertGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInternalAlertGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WhatsAppInternalAlertCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WhatsAppInternalAlertCountAggregateOutputType> | number
         }
       }
     }
@@ -4033,6 +4183,23 @@ export const WhatsAppLeadScalarFieldEnum = {
 export type WhatsAppLeadScalarFieldEnum = (typeof WhatsAppLeadScalarFieldEnum)[keyof typeof WhatsAppLeadScalarFieldEnum]
 
 
+export const WhatsAppQuoteRequestScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  leadId: 'leadId',
+  customerId: 'customerId',
+  quoteId: 'quoteId',
+  summary: 'summary',
+  status: 'status',
+  openedAt: 'openedAt',
+  closedAt: 'closedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppQuoteRequestScalarFieldEnum = (typeof WhatsAppQuoteRequestScalarFieldEnum)[keyof typeof WhatsAppQuoteRequestScalarFieldEnum]
+
+
 export const WhatsAppLeadAssignmentScalarFieldEnum = {
   id: 'id',
   leadId: 'leadId',
@@ -4183,12 +4350,34 @@ export const WhatsAppCustomerChangeRequestScalarFieldEnum = {
   customerContactId: 'customerContactId',
   requestedByPhone: 'requestedByPhone',
   requestedChanges: 'requestedChanges',
+  requestType: 'requestType',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type WhatsAppCustomerChangeRequestScalarFieldEnum = (typeof WhatsAppCustomerChangeRequestScalarFieldEnum)[keyof typeof WhatsAppCustomerChangeRequestScalarFieldEnum]
+
+
+export const WhatsAppInternalAlertScalarFieldEnum = {
+  id: 'id',
+  eventKey: 'eventKey',
+  type: 'type',
+  status: 'status',
+  recipientUserId: 'recipientUserId',
+  conversationId: 'conversationId',
+  quoteId: 'quoteId',
+  customerName: 'customerName',
+  reference: 'reference',
+  detail: 'detail',
+  providerMessageId: 'providerMessageId',
+  errorMessage: 'errorMessage',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppInternalAlertScalarFieldEnum = (typeof WhatsAppInternalAlertScalarFieldEnum)[keyof typeof WhatsAppInternalAlertScalarFieldEnum]
 
 
 export const QuoteOrderExportScalarFieldEnum = {
@@ -4855,6 +5044,20 @@ export type ListEnumWhatsAppLeadStatusFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
+ * Reference to a field of type 'WhatsAppQuoteRequestStatus'
+ */
+export type EnumWhatsAppQuoteRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppQuoteRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppQuoteRequestStatus[]'
+ */
+export type ListEnumWhatsAppQuoteRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppQuoteRequestStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'WhatsAppOutboundAuthorType'
  */
 export type EnumWhatsAppOutboundAuthorTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppOutboundAuthorType'>
@@ -4939,6 +5142,20 @@ export type ListEnumWhatsAppPendingActionStatusFieldRefInput<$PrismaModel> = Fie
 
 
 /**
+ * Reference to a field of type 'WhatsAppCustomerRequestType'
+ */
+export type EnumWhatsAppCustomerRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppCustomerRequestType'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppCustomerRequestType[]'
+ */
+export type ListEnumWhatsAppCustomerRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppCustomerRequestType[]'>
+    
+
+
+/**
  * Reference to a field of type 'QuoteCustomerChangeRequestStatus'
  */
 export type EnumQuoteCustomerChangeRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCustomerChangeRequestStatus'>
@@ -4949,6 +5166,34 @@ export type EnumQuoteCustomerChangeRequestStatusFieldRefInput<$PrismaModel> = Fi
  * Reference to a field of type 'QuoteCustomerChangeRequestStatus[]'
  */
 export type ListEnumQuoteCustomerChangeRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuoteCustomerChangeRequestStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppInternalAlertType'
+ */
+export type EnumWhatsAppInternalAlertTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppInternalAlertType'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppInternalAlertType[]'
+ */
+export type ListEnumWhatsAppInternalAlertTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppInternalAlertType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppInternalAlertStatus'
+ */
+export type EnumWhatsAppInternalAlertStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppInternalAlertStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'WhatsAppInternalAlertStatus[]'
+ */
+export type ListEnumWhatsAppInternalAlertStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppInternalAlertStatus[]'>
     
 
 
@@ -5100,6 +5345,7 @@ export type GlobalOmitConfig = {
   quoteDeliveryAttempt?: Prisma.QuoteDeliveryAttemptOmit
   whatsAppConversation?: Prisma.WhatsAppConversationOmit
   whatsAppLead?: Prisma.WhatsAppLeadOmit
+  whatsAppQuoteRequest?: Prisma.WhatsAppQuoteRequestOmit
   whatsAppLeadAssignment?: Prisma.WhatsAppLeadAssignmentOmit
   whatsAppInternalVerification?: Prisma.WhatsAppInternalVerificationOmit
   whatsAppConversationAccess?: Prisma.WhatsAppConversationAccessOmit
@@ -5110,6 +5356,7 @@ export type GlobalOmitConfig = {
   whatsAppAssistantJob?: Prisma.WhatsAppAssistantJobOmit
   whatsAppPendingAction?: Prisma.WhatsAppPendingActionOmit
   whatsAppCustomerChangeRequest?: Prisma.WhatsAppCustomerChangeRequestOmit
+  whatsAppInternalAlert?: Prisma.WhatsAppInternalAlertOmit
   quoteOrderExport?: Prisma.QuoteOrderExportOmit
   refreshToken?: Prisma.RefreshTokenOmit
   auditLog?: Prisma.AuditLogOmit

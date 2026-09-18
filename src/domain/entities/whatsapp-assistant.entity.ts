@@ -14,6 +14,13 @@ export interface WhatsAppAssistantPrincipal {
   reportBranchId: string | null;
   reportRange: ManagerReportRange | null;
   isVerified: boolean;
+  customerId?: string | null;
+  customerContactId?: string | null;
+  customerOwnerUserId?: string | null;
+  customerOwnerBranchId?: string | null;
+  customerQuoteId?: string | null;
+  customerName?: string | null;
+  customerContactName?: string | null;
 }
 
 export interface WhatsAppAssistantJobEntity {
@@ -92,6 +99,26 @@ export interface WhatsAppAssistantQuoteDetails extends WhatsAppAssistantQuoteSum
   branchId: string;
 }
 
+export interface WhatsAppAssistantQuoteItem {
+  position: number;
+  code: string | null;
+  description: string;
+  quantity: number;
+  unit: string;
+  unitPrice: number;
+  lineTotal: number;
+  deliveryTime: string | null;
+  customerComment: string | null;
+}
+
+export interface WhatsAppAssistantQuoteItemSearch {
+  quoteNumber: string;
+  currency: string;
+  items: WhatsAppAssistantQuoteItem[];
+  totalMatches: number;
+  truncated: boolean;
+}
+
 export type WhatsAppAssistantActionType = "ACCEPT_QUOTE" | "REJECT_QUOTE";
 
 export interface WhatsAppPendingActionEntity {
@@ -108,6 +135,7 @@ export interface WhatsAppCustomerChangeRequestEntity {
   quoteId: string;
   requestedByPhone: string;
   requestedChanges: string;
+  requestType: "INFORMATION" | "MODIFICATION";
   status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CANCELLED";
   createdAt: Date;
   updatedAt: Date;

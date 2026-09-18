@@ -16,12 +16,16 @@ export class GetCustomersUseCase {
     dto: GetCustomersQueryRequestDto,
     actor: GetCustomersActorContext
   ): Promise<PaginatedCustomersResponseDto> {
+    if (dto.active !== true && !["ADMIN", "MANAGER"].includes(actor.role)) {
+      throw new Error("Only ADMIN or MANAGER can list inactive customers.");
+    }
     const result = await this.customerRepository.findPaginated({
       page: dto.page,
       pageSize: dto.pageSize,
       search: dto.search,
       source: dto.source,
       profileStatus: dto.profileStatus,
+      active: dto.active,
       scope: {
         role: actor.role,
         branchId: actor.branchId,

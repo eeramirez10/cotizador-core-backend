@@ -9,6 +9,9 @@ import {
   FindCustomerContactsDatasourceParams,
   FindCustomersDatasourceParams,
   FindCustomersDatasourceResult,
+  ResetCustomerWhatsAppTestDatasourceParams,
+  ResetCustomerWhatsAppTestDatasourceResult,
+  SetCustomerActiveStatusDatasourceParams,
   SoftDeleteCustomerByIdDatasourceParams,
   UpdateCustomerContactDatasourceParams,
   UpdateCustomerByIdDatasourceParams,
@@ -278,6 +281,137 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
     return updated.count > 0;
   }
 
+  async setActiveStatus(params: SetCustomerActiveStatusDatasourceParams): Promise<boolean> {
+    try {
+      const updated = await prisma.customer.updateMany({
+        where: {
+          id: params.id,
+          isActive: !params.isActive,
+          ...this.buildWriteScopeWhere(params.scope),
+        },
+        data: {
+          isActive: params.isActive,
+          updatedByUserId: params.updatedByUserId,
+        },
+      });
+      return updated.count > 0;
+    } catch (error) {
+      throw this.mapCustomerUniqueError(error);
+    }
+  }
+
+  async resetWhatsAppTestIdentity(
+    params: ResetCustomerWhatsAppTestDatasourceParams,
+  ): Promise<ResetCustomerWhatsAppTestDatasourceResult | null> {
+    return prisma.$transaction(async (tx) => {
+      const customer = await tx.customer.findUnique({
+        where: { id: params.id },
+        select: {
+          id: true,
+          displayName: true,
+          legalName: true,
+          whatsapp: true,
+          phone: true,
+          contacts: { select: { mobile: true, phone: true } },
+        },
+      });
+      if (!customer) return null;
+
+      const phoneSuffixes = [...new Set([
+        customer.whatsapp,
+        customer.phone,
+        ...customer.contacts.flatMap((contact) => [contact.mobile, contact.phone]),
+      ].map((value) => value?.replace(/\D/g, "").slice(-10) || "").filter((value) => value.length === 10))];
+      const phoneConversationIds = phoneSuffixes.length > 0
+        ? await tx.$queryRaw<Array<{ id: string }>>(Prisma.sql`
+            SELECT id
+            FROM whatsapp_conversations
+            WHERE RIGHT(REGEXP_REPLACE(participant_phone_e164, '[^0-9]', '', 'g'), 10)
+              IN (${Prisma.join(phoneSuffixes)})
+          `)
+        : [];
+      const conversations = await tx.whatsAppConversation.findMany({
+        where: {
+          participantType: { not: "INTERNAL_USER" },
+          OR: [
+            { accesses: { some: { customerId: customer.id } } },
+            { lead: { is: { customerId: customer.id } } },
+            ...(phoneConversationIds.length > 0
+              ? [{ id: { in: phoneConversationIds.map((conversation) => conversation.id) } }]
+              : []),
+          ],
+        },
+        select: {
+          id: true,
+          participantType: true,
+          accesses: { select: { userId: true, branchId: true } },
+          lead: { select: { assignedSellerId: true, assignedBranchId: true, status: true } },
+          inboundMessages: {
+            select: {
+              attachments: {
+                where: { quoteExtractionCount: 0 },
+                select: { storageKey: true },
+              },
+            },
+          },
+        },
+      });
+      const conversationIds = conversations.map((conversation) => conversation.id);
+      const storageKeysToDelete = [...new Set(conversations.flatMap((conversation) =>
+        conversation.inboundMessages.flatMap((message) => message.attachments.map((attachment) => attachment.storageKey))
+      ))];
+
+      if (conversationIds.length > 0) {
+        await tx.whatsAppConversation.deleteMany({ where: { id: { in: conversationIds } } });
+      }
+      const deletedDeliveryAttempts = await tx.quoteDeliveryAttempt.deleteMany({
+        where: {
+          channel: "WHATSAPP",
+          OR: [
+            { quote: { customerId: customer.id } },
+            { customerContact: { customerId: customer.id } },
+          ],
+        },
+      });
+      await tx.customer.update({
+        where: { id: customer.id },
+        data: { isActive: false, updatedByUserId: params.actorUserId },
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: params.actorUserId,
+          entityType: "CUSTOMER",
+          entityId: customer.id,
+          action: "RESET_WHATSAPP_TEST_IDENTITY",
+          payload: {
+            customerName: customer.legalName || customer.displayName,
+            phoneSuffixes,
+            deletedConversationCount: conversations.length,
+            deletedTemporaryFileCount: storageKeysToDelete.length,
+            deletedDeliveryAttemptCount: deletedDeliveryAttempts.count,
+          },
+        },
+      });
+
+      return {
+        customerId: customer.id,
+        storageKeysToDelete,
+        conversations: conversations.map((conversation) => ({
+          id: conversation.id,
+          audience: {
+            userIds: [...new Set(conversation.accesses.map((access) => access.userId))],
+            branchIds: [...new Set(conversation.accesses.map((access) => access.branchId))],
+            assignedSellerId: conversation.lead?.assignedSellerId ?? null,
+            assignedBranchId: conversation.lead?.assignedBranchId ?? null,
+            visibleToUnassignedLeadManagers: conversation.participantType === "UNKNOWN"
+              && !conversation.lead?.assignedSellerId
+              && !["CONVERTED", "DISCARDED"].includes(conversation.lead?.status || ""),
+          },
+        })),
+      };
+    }, { maxWait: 10_000, timeout: 30_000 });
+  }
+
   async findContacts(params: FindCustomerContactsDatasourceParams): Promise<CustomerContactEntity[]> {
     const customer = await this.findAccessibleCustomer(params.customerId, params.scope, prisma);
     if (!customer) return [];
@@ -463,9 +597,12 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
 
   private buildFindWhere(params: FindCustomersDatasourceParams): Prisma.CustomerWhereInput {
     const andFilters: Prisma.CustomerWhereInput[] = [
-      { isActive: true },
       this.buildReadScopeWhere(params.scope),
     ];
+
+    if (typeof params.active === "boolean") {
+      andFilters.push({ isActive: params.active });
+    }
 
     if (params.source) {
       andFilters.push({ source: params.source });

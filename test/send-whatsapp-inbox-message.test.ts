@@ -72,6 +72,10 @@ class WhatsAppInboxRepositoryStub extends WhatsAppInboxRepository {
     };
   }
 
+  async recordSystemMessage(): Promise<never> {
+    throw new Error("Not implemented");
+  }
+
   async registerQuoteDelivery(_input: RegisterWhatsAppQuoteDeliveryInput) {
     return {
       conversationId: "33333333-3333-4333-8333-333333333333",

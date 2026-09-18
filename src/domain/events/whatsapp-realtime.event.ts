@@ -7,6 +7,11 @@ export type WhatsAppRealtimeEventReason =
   | "LEAD_ASSIGNED"
   | "LEAD_CONVERTED"
   | "QUOTE_SENT"
+  | "QUOTE_ACCEPTED"
+  | "QUOTE_REJECTED"
+  | "QUOTE_CANCELLED"
+  | "CUSTOMER_INFORMATION_REQUESTED"
+  | "CUSTOMER_CHANGE_REQUESTED"
   | "CONVERSATION_DELETED";
 
 export interface WhatsAppRealtimeDeletionAudience {
@@ -15,6 +20,28 @@ export interface WhatsAppRealtimeDeletionAudience {
   assignedSellerId: string | null;
   assignedBranchId: string | null;
   visibleToUnassignedLeadManagers: boolean;
+}
+
+export interface QuoteCustomerDecisionRealtimePayload {
+  quoteId: string;
+  quoteNumber: string;
+  status: "APPROVED" | "REJECTED" | "CANCELLED";
+  customerName: string;
+  contactName: string;
+  sellerId: string;
+  branchId: string;
+  currency: "MXN" | "USD";
+  total: number;
+}
+
+export interface QuoteCustomerRequestRealtimePayload {
+  requestId: string;
+  requestType: "INFORMATION" | "MODIFICATION";
+  quoteId: string;
+  quoteNumber: string;
+  sellerId: string;
+  branchId: string;
+  detail: string;
 }
 
 export interface WhatsAppRealtimeMessagePayload {
@@ -61,7 +88,7 @@ export interface WhatsAppRealtimeMessagePatch {
 }
 
 export interface WhatsAppRealtimeEvent {
-  type: "WHATSAPP_CONVERSATION_CHANGED";
+  type: "WHATSAPP_CONVERSATION_CHANGED" | "QUOTE_CUSTOMER_DECISION" | "QUOTE_CUSTOMER_REQUEST";
   conversationId: string;
   reason: WhatsAppRealtimeEventReason;
   occurredAt: string;
@@ -70,6 +97,8 @@ export interface WhatsAppRealtimeEvent {
   conversation?: WhatsAppRealtimeConversationPatch;
   deleted?: boolean;
   audience?: WhatsAppRealtimeDeletionAudience;
+  quoteDecision?: QuoteCustomerDecisionRealtimePayload;
+  customerRequest?: QuoteCustomerRequestRealtimePayload;
 }
 
 export abstract class WhatsAppRealtimePublisher {

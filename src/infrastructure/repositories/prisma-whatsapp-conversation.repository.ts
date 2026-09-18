@@ -68,10 +68,39 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
           update: { phoneE164: input.participantPhoneE164 },
         });
       } else if (input.participantType === "CUSTOMER") {
-        await tx.whatsAppLead.updateMany({
-          where: { conversationId: conversation.id, status: { not: "DISCARDED" } },
-          data: { status: "CONVERTED" },
-        });
+        if (input.customerId) {
+          await tx.whatsAppLead.upsert({
+            where: { conversationId: conversation.id },
+            create: {
+              conversationId: conversation.id,
+              phoneE164: input.participantPhoneE164,
+              contactName: input.customerContactName,
+              companyName: input.customerName,
+              status: "CONVERTED",
+              customerId: input.customerId,
+              assignedSellerId: input.customerOwnerUserId,
+              assignedBranchId: input.customerOwnerBranchId,
+              assignedAt: input.customerOwnerUserId ? input.receivedAt : null,
+            },
+            update: {
+              phoneE164: input.participantPhoneE164,
+              contactName: input.customerContactName,
+              companyName: input.customerName,
+              status: "CONVERTED",
+              customerId: input.customerId,
+              ...(input.customerOwnerUserId ? {
+                assignedSellerId: input.customerOwnerUserId,
+                assignedBranchId: input.customerOwnerBranchId,
+                assignedAt: input.receivedAt,
+              } : {}),
+            },
+          });
+        } else {
+          await tx.whatsAppLead.updateMany({
+            where: { conversationId: conversation.id, status: { not: "DISCARDED" } },
+            data: { status: "CONVERTED" },
+          });
+        }
       }
 
       if (input.internalUserId && input.internalUserBranchId) {
@@ -88,6 +117,36 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
             branchId: input.internalUserBranchId,
           },
           update: { branchId: input.internalUserBranchId },
+        });
+      }
+
+      if (
+        input.participantType === "CUSTOMER"
+        && input.customerId
+        && input.customerOwnerUserId
+        && input.customerOwnerBranchId
+      ) {
+        await tx.whatsAppConversationAccess.upsert({
+          where: {
+            conversationId_userId: {
+              conversationId: conversation.id,
+              userId: input.customerOwnerUserId,
+            },
+          },
+          create: {
+            conversationId: conversation.id,
+            userId: input.customerOwnerUserId,
+            branchId: input.customerOwnerBranchId,
+            customerId: input.customerId,
+            customerContactId: input.customerContactId,
+            quoteId: input.customerQuoteId,
+          },
+          update: {
+            branchId: input.customerOwnerBranchId,
+            customerId: input.customerId,
+            customerContactId: input.customerContactId,
+            quoteId: input.customerQuoteId,
+          },
         });
       }
 

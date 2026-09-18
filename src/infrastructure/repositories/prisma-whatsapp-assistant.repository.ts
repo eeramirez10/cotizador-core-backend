@@ -3,6 +3,7 @@ import type {
   WhatsAppAssistantJobEntity,
   WhatsAppAssistantPrincipal,
   WhatsAppAssistantQuoteDetails,
+  WhatsAppAssistantQuoteItemSearch,
   WhatsAppAssistantQuoteSummary,
   WhatsAppCustomerChangeRequestEntity,
   WhatsAppPendingActionEntity,
@@ -278,6 +279,76 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     };
   }
 
+  async searchAuthorizedQuoteItems(input: {
+    conversationId: string;
+    quoteNumber: string;
+    query: string | null;
+    position: number | null;
+    limit: number;
+  }): Promise<WhatsAppAssistantQuoteItemSearch | null> {
+    const phone = await this.participantPhone(input.conversationId);
+    if (!phone) return null;
+    const quote = await prisma.quote.findFirst({
+      where: {
+        quoteNumber: input.quoteNumber.trim().toUpperCase(),
+        archivedAt: null,
+        status: { in: [...visibleStatuses] },
+        deliveryAttempts: {
+          some: { channel: "WHATSAPP", recipient: phone, status: { not: "FAILED" } },
+        },
+      },
+      select: {
+        quoteNumber: true,
+        currency: true,
+        items: {
+          orderBy: { createdAt: "asc" },
+          select: {
+            externalProductCode: true,
+            customerDescription: true,
+            erpDescription: true,
+            qty: true,
+            unit: true,
+            unitPrice: true,
+            subtotal: true,
+            deliveryTime: true,
+            itemComment: true,
+          },
+        },
+      },
+    });
+    if (!quote) return null;
+
+    const query = this.searchText(input.query || "");
+    const positioned = quote.items.map((item, index) => ({ item, position: index + 1 }));
+    const matches = positioned.filter(({ item, position }) => {
+      if (input.position !== null) return position === input.position;
+      if (!query) return false;
+      return [
+        item.externalProductCode,
+        item.customerDescription,
+        item.erpDescription,
+      ].some((value) => this.searchText(value || "").includes(query));
+    });
+    const limit = Math.min(Math.max(input.limit, 1), 5);
+    return {
+      quoteNumber: quote.quoteNumber,
+      currency: quote.currency,
+      totalMatches: matches.length,
+      truncated: matches.length > limit,
+      items: matches.slice(0, limit).map(({ item, position }) => ({
+        position,
+        code: item.externalProductCode,
+        description: item.customerDescription || item.erpDescription || "Partida sin descripción",
+        quantity: Number(item.qty),
+        unit: item.unit,
+        unitPrice: Number(item.unitPrice),
+        lineTotal: Number(item.subtotal),
+        deliveryTime: item.deliveryTime,
+        customerComment: item.itemComment,
+      })),
+    };
+  }
+
   async listRejectionReasons(conversationId: string, quoteNumber: string) {
     const quote = await this.findAuthorizedQuote(conversationId, quoteNumber);
     if (!quote) return [];
@@ -379,6 +450,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     customerContactId: string | null;
     requestedByPhone: string;
     requestedChanges: string;
+    requestType: "INFORMATION" | "MODIFICATION";
   }): Promise<{ id: string; created: boolean }> {
     const existing = await prisma.whatsAppCustomerChangeRequest.findFirst({
       where: {
@@ -386,6 +458,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         quoteId: input.quoteId,
         status: { in: ["OPEN", "IN_PROGRESS"] },
         requestedChanges: input.requestedChanges,
+        requestType: input.requestType,
         createdAt: { gte: new Date(Date.now() - 60 * 60 * 1000) },
       },
       select: { id: true },
@@ -399,7 +472,9 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
           quoteId: input.quoteId,
           status: quote.status,
           actorUserId: null,
-          note: `Cliente solicitó cambios por WhatsApp: ${input.requestedChanges}`,
+          note: input.requestType === "INFORMATION"
+            ? `Cliente solicitó información por WhatsApp: ${input.requestedChanges}`
+            : `Cliente solicitó cambios por WhatsApp: ${input.requestedChanges}`,
         },
       });
       return request;
@@ -416,6 +491,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         quoteId: true,
         requestedByPhone: true,
         requestedChanges: true,
+        requestType: true,
         status: true,
         createdAt: true,
         updatedAt: true,
@@ -459,6 +535,10 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
 
   private jsonRecord(value: unknown): Record<string, unknown> {
     return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
+  }
+
+  private searchText(value: string): string {
+    return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
   }
 
   private unknownPrincipal(): WhatsAppAssistantPrincipal {

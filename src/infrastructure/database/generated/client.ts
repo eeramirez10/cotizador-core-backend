@@ -170,6 +170,11 @@ export type WhatsAppConversation = Prisma.WhatsAppConversationModel
  */
 export type WhatsAppLead = Prisma.WhatsAppLeadModel
 /**
+ * Model WhatsAppQuoteRequest
+ * 
+ */
+export type WhatsAppQuoteRequest = Prisma.WhatsAppQuoteRequestModel
+/**
  * Model WhatsAppLeadAssignment
  * 
  */
@@ -219,6 +224,11 @@ export type WhatsAppPendingAction = Prisma.WhatsAppPendingActionModel
  * 
  */
 export type WhatsAppCustomerChangeRequest = Prisma.WhatsAppCustomerChangeRequestModel
+/**
+ * Model WhatsAppInternalAlert
+ * 
+ */
+export type WhatsAppInternalAlert = Prisma.WhatsAppInternalAlertModel
 /**
  * Model QuoteOrderExport
  * 

@@ -110,7 +110,7 @@ export class SendQuoteWhatsAppUseCase {
           status: message.status,
           providerMessageId: message.providerMessageId,
           fileAssetId: attachment.id,
-          customerContactId: selectedContact?.id ?? null,
+          customerContactId: selectedContact?.id ?? quote.customerContact?.id ?? null,
           templateSid: message.templateSid,
           errorMessage: null,
           note: input.message,
@@ -130,7 +130,7 @@ export class SendQuoteWhatsAppUseCase {
           ownerUserId: quote.createdByUserId,
           branchId: quote.branchId,
           customerId: quote.customerId,
-          customerContactId: selectedContact?.id ?? null,
+          customerContactId: selectedContact?.id ?? quote.customerContact?.id ?? null,
           quoteId: quote.id,
           fileAssetId: attachment.id,
         }).catch((error) => {

@@ -349,6 +349,20 @@ export const WhatsAppLeadStatus = {
 export type WhatsAppLeadStatus = (typeof WhatsAppLeadStatus)[keyof typeof WhatsAppLeadStatus]
 
 
+export const WhatsAppQuoteRequestStatus = {
+  COLLECTING: 'COLLECTING',
+  READY: 'READY',
+  ASSIGNED: 'ASSIGNED',
+  CONVERTED: 'CONVERTED',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type WhatsAppQuoteRequestStatus = (typeof WhatsAppQuoteRequestStatus)[keyof typeof WhatsAppQuoteRequestStatus]
+
+
 export const WhatsAppOutboundAuthorType = {
   AI: 'AI',
   USER: 'USER',
@@ -403,6 +417,36 @@ export const QuoteCustomerChangeRequestStatus = {
 } as const
 
 export type QuoteCustomerChangeRequestStatus = (typeof QuoteCustomerChangeRequestStatus)[keyof typeof QuoteCustomerChangeRequestStatus]
+
+
+export const WhatsAppCustomerRequestType = {
+  INFORMATION: 'INFORMATION',
+  MODIFICATION: 'MODIFICATION'
+} as const
+
+export type WhatsAppCustomerRequestType = (typeof WhatsAppCustomerRequestType)[keyof typeof WhatsAppCustomerRequestType]
+
+
+export const WhatsAppInternalAlertType = {
+  LEAD_ASSIGNED: 'LEAD_ASSIGNED',
+  INFORMATION_REQUESTED: 'INFORMATION_REQUESTED',
+  QUOTE_CHANGE_REQUESTED: 'QUOTE_CHANGE_REQUESTED',
+  QUOTE_ACCEPTED: 'QUOTE_ACCEPTED',
+  QUOTE_REJECTED: 'QUOTE_REJECTED',
+  FILE_REVIEW_REQUIRED: 'FILE_REVIEW_REQUIRED'
+} as const
+
+export type WhatsAppInternalAlertType = (typeof WhatsAppInternalAlertType)[keyof typeof WhatsAppInternalAlertType]
+
+
+export const WhatsAppInternalAlertStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+  SKIPPED: 'SKIPPED'
+} as const
+
+export type WhatsAppInternalAlertStatus = (typeof WhatsAppInternalAlertStatus)[keyof typeof WhatsAppInternalAlertStatus]
 
 
 export const OrderGenerationStatus = {
