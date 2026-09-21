@@ -9,6 +9,7 @@ declare global {
         role: UserRole;
         branchId: string;
         erpUserCode: string | null;
+        whatsappInboxEnabled: boolean;
       };
     }
   }

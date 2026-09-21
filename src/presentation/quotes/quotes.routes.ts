@@ -52,6 +52,7 @@ import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-real
 import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 import { QuoteCustomerChangeRequestsController } from "./quote-customer-change-requests.controller";
+import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
 
 export class QuotesRoutes {
   static routes(): Router {
@@ -70,7 +71,7 @@ export class QuotesRoutes {
     const userRepository = new UserRepositoryImpl(userDatasource);
     const orderGenerationRepository = new OrderGenerationRepositoryImpl(orderGenerationDatasource);
     const purchaseRequisitionRepository = new PurchaseRequisitionRepositoryImpl(
-      new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled)
+      new PrismaPurchaseRequisitionDatasource(() => runtimeSystemSettings.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"))
     );
 
     const createQuoteUseCase = new CreateQuoteUseCase(
@@ -78,21 +79,21 @@ export class QuotesRoutes {
       customerRepository,
       branchRepository,
       userRepository,
-      Envs.sellerExcelImportEnabled
+      () => runtimeSystemSettings.boolean("SELLER_EXCEL_IMPORT_ENABLED")
     );
     const saveQuoteDraftUseCase = new SaveQuoteDraftUseCase(
       quoteRepository,
       customerRepository,
       userRepository,
-      Envs.quoteInternalApprovalEnabled,
-      Envs.sellerExcelImportEnabled
+      () => runtimeSystemSettings.boolean("QUOTE_INTERNAL_APPROVAL_ENABLED"),
+      () => runtimeSystemSettings.boolean("SELLER_EXCEL_IMPORT_ENABLED")
     );
     const createQuoteFromExtractionUseCase = new CreateQuoteFromExtractionUseCase(
       quoteRepository,
       customerRepository,
       branchRepository,
       userRepository,
-      Envs.sellerExcelImportEnabled
+      () => runtimeSystemSettings.boolean("SELLER_EXCEL_IMPORT_ENABLED")
     );
     const createQuoteRevisionUseCase = new CreateQuoteRevisionUseCase(quoteRepository, quoteCatalogRepository);
     const archiveQuoteUseCase = new ArchiveQuoteUseCase(quoteRepository);
@@ -113,7 +114,7 @@ export class QuotesRoutes {
       quoteRepository,
       quoteCatalogRepository,
       purchaseRequisitionRepository,
-      Envs.quoteInternalApprovalEnabled,
+      () => runtimeSystemSettings.boolean("QUOTE_INTERNAL_APPROVAL_ENABLED"),
       whatsAppRealtimeBus,
       composeWhatsAppInternalAlert(),
     );

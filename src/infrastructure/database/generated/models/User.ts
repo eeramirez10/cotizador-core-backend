@@ -35,6 +35,7 @@ export type UserMinAggregateOutputType = {
   isActive: boolean | null
   phone: string | null
   whatsappPhoneE164: string | null
+  whatsappInboxEnabled: boolean | null
   branchId: string | null
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode | null
@@ -53,6 +54,7 @@ export type UserMaxAggregateOutputType = {
   isActive: boolean | null
   phone: string | null
   whatsappPhoneE164: string | null
+  whatsappInboxEnabled: boolean | null
   branchId: string | null
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode | null
@@ -71,6 +73,7 @@ export type UserCountAggregateOutputType = {
   isActive: number
   phone: number
   whatsappPhoneE164: number
+  whatsappInboxEnabled: number
   branchId: number
   erpUserCode: number
   warehouseAccessMode: number
@@ -91,6 +94,7 @@ export type UserMinAggregateInputType = {
   isActive?: true
   phone?: true
   whatsappPhoneE164?: true
+  whatsappInboxEnabled?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -109,6 +113,7 @@ export type UserMaxAggregateInputType = {
   isActive?: true
   phone?: true
   whatsappPhoneE164?: true
+  whatsappInboxEnabled?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -127,6 +132,7 @@ export type UserCountAggregateInputType = {
   isActive?: true
   phone?: true
   whatsappPhoneE164?: true
+  whatsappInboxEnabled?: true
   branchId?: true
   erpUserCode?: true
   warehouseAccessMode?: true
@@ -218,6 +224,7 @@ export type UserGroupByOutputType = {
   isActive: boolean
   phone: string | null
   whatsappPhoneE164: string | null
+  whatsappInboxEnabled: boolean
   branchId: string
   erpUserCode: string | null
   warehouseAccessMode: $Enums.WarehouseAccessMode
@@ -257,6 +264,7 @@ export type UserWhereInput = {
   isActive?: Prisma.BoolFilter<"User"> | boolean
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   whatsappPhoneE164?: Prisma.StringNullableFilter<"User"> | string | null
+  whatsappInboxEnabled?: Prisma.BoolFilter<"User"> | boolean
   branchId?: Prisma.UuidFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFilter<"User"> | $Enums.WarehouseAccessMode
@@ -326,6 +334,7 @@ export type UserOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappPhoneE164?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappInboxEnabled?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrderInput | Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -399,6 +408,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
   phone?: Prisma.StringNullableFilter<"User"> | string | null
+  whatsappInboxEnabled?: Prisma.BoolFilter<"User"> | boolean
   branchId?: Prisma.UuidFilter<"User"> | string
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFilter<"User"> | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -467,6 +477,7 @@ export type UserOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappPhoneE164?: Prisma.SortOrderInput | Prisma.SortOrder
+  whatsappInboxEnabled?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrderInput | Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -491,6 +502,7 @@ export type UserScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   whatsappPhoneE164?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  whatsappInboxEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   branchId?: Prisma.UuidWithAggregatesFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeWithAggregatesFilter<"User"> | $Enums.WarehouseAccessMode
@@ -509,6 +521,7 @@ export type UserCreateInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -577,6 +590,7 @@ export type UserUncheckedCreateInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -645,6 +659,7 @@ export type UserUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -713,6 +728,7 @@ export type UserUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -781,6 +797,7 @@ export type UserCreateManyInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -799,6 +816,7 @@ export type UserUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -816,6 +834,7 @@ export type UserUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -844,6 +863,7 @@ export type UserCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   whatsappPhoneE164?: Prisma.SortOrder
+  whatsappInboxEnabled?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -862,6 +882,7 @@ export type UserMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   whatsappPhoneE164?: Prisma.SortOrder
+  whatsappInboxEnabled?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -880,6 +901,7 @@ export type UserMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   whatsappPhoneE164?: Prisma.SortOrder
+  whatsappInboxEnabled?: Prisma.SortOrder
   branchId?: Prisma.SortOrder
   erpUserCode?: Prisma.SortOrder
   warehouseAccessMode?: Prisma.SortOrder
@@ -1724,6 +1746,7 @@ export type UserCreateWithoutBranchInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1791,6 +1814,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1887,6 +1911,7 @@ export type UserScalarWhereInput = {
   isActive?: Prisma.BoolFilter<"User"> | boolean
   phone?: Prisma.StringNullableFilter<"User"> | string | null
   whatsappPhoneE164?: Prisma.StringNullableFilter<"User"> | string | null
+  whatsappInboxEnabled?: Prisma.BoolFilter<"User"> | boolean
   branchId?: Prisma.UuidFilter<"User"> | string
   erpUserCode?: Prisma.StringNullableFilter<"User"> | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFilter<"User"> | $Enums.WarehouseAccessMode
@@ -1905,6 +1930,7 @@ export type UserCreateWithoutReceivedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -1972,6 +1998,7 @@ export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2044,6 +2071,7 @@ export type UserCreateWithoutCreatedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2111,6 +2139,7 @@ export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2183,6 +2212,7 @@ export type UserCreateWithoutUpdatedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2250,6 +2280,7 @@ export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2333,6 +2364,7 @@ export type UserUpdateWithoutReceivedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2400,6 +2432,7 @@ export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2478,6 +2511,7 @@ export type UserUpdateWithoutCreatedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2545,6 +2579,7 @@ export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2623,6 +2658,7 @@ export type UserUpdateWithoutUpdatedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2690,6 +2726,7 @@ export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -2757,6 +2794,7 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -2824,6 +2862,7 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -2907,6 +2946,7 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2974,6 +3014,7 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3041,6 +3082,7 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3108,6 +3150,7 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3180,6 +3223,7 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3247,6 +3291,7 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3330,6 +3375,7 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3397,6 +3443,7 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3475,6 +3522,7 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3542,6 +3590,7 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -3609,6 +3658,7 @@ export type UserCreateWithoutCreatedCustomersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3676,6 +3726,7 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3748,6 +3799,7 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -3815,6 +3867,7 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -3898,6 +3951,7 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3965,6 +4019,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4043,6 +4098,7 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4110,6 +4166,7 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4177,6 +4234,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4244,6 +4302,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4316,6 +4375,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4383,6 +4443,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4455,6 +4516,7 @@ export type UserCreateWithoutProcurementProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -4522,6 +4584,7 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -4605,6 +4668,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4672,6 +4736,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4750,6 +4815,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4817,6 +4883,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -4895,6 +4962,7 @@ export type UserUpdateWithoutProcurementProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4962,6 +5030,7 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -5029,6 +5098,7 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5096,6 +5166,7 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5168,6 +5239,7 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5235,6 +5307,7 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5318,6 +5391,7 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5385,6 +5459,7 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -5463,6 +5538,7 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5530,6 +5606,7 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -5597,6 +5674,7 @@ export type UserCreateWithoutCreatedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5664,6 +5742,7 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5736,6 +5815,7 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5803,6 +5883,7 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -5875,6 +5956,7 @@ export type UserCreateWithoutProvidedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -5942,6 +6024,7 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6014,6 +6097,7 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -6081,6 +6165,7 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6153,6 +6238,7 @@ export type UserCreateWithoutRejectedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -6220,6 +6306,7 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6292,6 +6379,7 @@ export type UserCreateWithoutCancelledQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -6359,6 +6447,7 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6431,6 +6520,7 @@ export type UserCreateWithoutArchivedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -6498,6 +6588,7 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6570,6 +6661,7 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -6637,6 +6729,7 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -6720,6 +6813,7 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6787,6 +6881,7 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -6865,6 +6960,7 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6932,6 +7028,7 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7010,6 +7107,7 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7077,6 +7175,7 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7155,6 +7254,7 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7222,6 +7322,7 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7300,6 +7401,7 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7367,6 +7469,7 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7445,6 +7548,7 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7512,6 +7616,7 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7590,6 +7695,7 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7657,6 +7763,7 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7735,6 +7842,7 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7802,6 +7910,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -7869,6 +7978,7 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -7936,6 +8046,7 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8008,6 +8119,7 @@ export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8075,6 +8187,7 @@ export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8158,6 +8271,7 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8225,6 +8339,7 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8303,6 +8418,7 @@ export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8370,6 +8486,7 @@ export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8437,6 +8554,7 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8504,6 +8622,7 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8576,6 +8695,7 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -8643,6 +8763,7 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -8726,6 +8847,7 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8793,6 +8915,7 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -8871,6 +8994,7 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -8938,6 +9062,7 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9005,6 +9130,7 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9072,6 +9198,7 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9144,6 +9271,7 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9211,6 +9339,7 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9283,6 +9412,7 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9350,6 +9480,7 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -9433,6 +9564,7 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9500,6 +9632,7 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9578,6 +9711,7 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9645,6 +9779,7 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9723,6 +9858,7 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -9790,6 +9926,7 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -9857,6 +9994,7 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -9924,6 +10062,7 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10007,6 +10146,7 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10074,6 +10214,7 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10141,6 +10282,7 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10208,6 +10350,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10280,6 +10423,7 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10347,6 +10491,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10430,6 +10575,7 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10497,6 +10643,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10575,6 +10722,7 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -10642,6 +10790,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -10709,6 +10858,7 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10776,6 +10926,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10848,6 +10999,7 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -10915,6 +11067,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -10998,6 +11151,7 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11065,6 +11219,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11143,6 +11298,7 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11210,6 +11366,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11277,6 +11434,7 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11344,6 +11502,7 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11427,6 +11586,7 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11494,6 +11654,7 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11561,6 +11722,7 @@ export type UserCreateWithoutQuoteEventsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11628,6 +11790,7 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11711,6 +11874,7 @@ export type UserUpdateWithoutQuoteEventsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -11778,6 +11942,7 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -11845,6 +12010,7 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -11912,6 +12078,7 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -11995,6 +12162,7 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12062,6 +12230,7 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12129,6 +12298,7 @@ export type UserCreateWithoutHandledWhatsAppConversationsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12196,6 +12366,7 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12268,6 +12439,7 @@ export type UserCreateWithoutInternalWhatsAppConversationsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12335,6 +12507,7 @@ export type UserUncheckedCreateWithoutInternalWhatsAppConversationsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12418,6 +12591,7 @@ export type UserUpdateWithoutHandledWhatsAppConversationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12485,6 +12659,7 @@ export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12563,6 +12738,7 @@ export type UserUpdateWithoutInternalWhatsAppConversationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -12630,6 +12806,7 @@ export type UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -12697,6 +12874,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12764,6 +12942,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12836,6 +13015,7 @@ export type UserCreateWithoutConvertedWhatsAppLeadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -12903,6 +13083,7 @@ export type UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -12986,6 +13167,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -13053,6 +13235,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -13131,6 +13314,7 @@ export type UserUpdateWithoutConvertedWhatsAppLeadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -13198,6 +13382,7 @@ export type UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -13265,6 +13450,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -13332,6 +13518,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -13404,6 +13591,7 @@ export type UserCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -13471,6 +13659,7 @@ export type UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -13554,6 +13743,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -13621,6 +13811,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -13699,6 +13890,7 @@ export type UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -13766,6 +13958,7 @@ export type UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -13833,6 +14026,7 @@ export type UserCreateWithoutWhatsappInternalVerificationInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -13900,6 +14094,7 @@ export type UserUncheckedCreateWithoutWhatsappInternalVerificationInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -13983,6 +14178,7 @@ export type UserUpdateWithoutWhatsappInternalVerificationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -14050,6 +14246,7 @@ export type UserUncheckedUpdateWithoutWhatsappInternalVerificationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -14117,6 +14314,7 @@ export type UserCreateWithoutWhatsappConversationAccessesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -14184,6 +14382,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -14267,6 +14466,7 @@ export type UserUpdateWithoutWhatsappConversationAccessesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -14334,6 +14534,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -14401,6 +14602,7 @@ export type UserCreateWithoutWhatsappConversationReadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -14468,6 +14670,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -14551,6 +14754,7 @@ export type UserUpdateWithoutWhatsappConversationReadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -14618,6 +14822,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -14685,6 +14890,7 @@ export type UserCreateWithoutSentWhatsAppMessagesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -14752,6 +14958,7 @@ export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -14835,6 +15042,7 @@ export type UserUpdateWithoutSentWhatsAppMessagesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -14902,6 +15110,7 @@ export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -14969,6 +15178,7 @@ export type UserCreateWithoutWhatsappInternalAlertsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -15036,6 +15246,7 @@ export type UserUncheckedCreateWithoutWhatsappInternalAlertsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -15119,6 +15330,7 @@ export type UserUpdateWithoutWhatsappInternalAlertsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -15186,6 +15398,7 @@ export type UserUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -15253,6 +15466,7 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -15320,6 +15534,7 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -15403,6 +15618,7 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -15470,6 +15686,7 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -15537,6 +15754,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -15604,6 +15822,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -15687,6 +15906,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -15754,6 +15974,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -15821,6 +16042,7 @@ export type UserCreateWithoutAuditLogsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -15888,6 +16110,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   branchId: string
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
@@ -15971,6 +16194,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -16038,6 +16262,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   branchId?: Prisma.StringFieldUpdateOperationsInput | string
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
@@ -16105,6 +16330,7 @@ export type UserCreateManyBranchInput = {
   isActive?: boolean
   phone?: string | null
   whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
   erpUserCode?: string | null
   warehouseAccessMode?: $Enums.WarehouseAccessMode
   createdAt?: Date | string
@@ -16122,6 +16348,7 @@ export type UserUpdateWithoutBranchInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -16189,6 +16416,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -16256,6 +16484,7 @@ export type UserUncheckedUpdateManyWithoutBranchInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -16736,6 +16965,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isActive?: boolean
   phone?: boolean
   whatsappPhoneE164?: boolean
+  whatsappInboxEnabled?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -16806,6 +17036,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isActive?: boolean
   phone?: boolean
   whatsappPhoneE164?: boolean
+  whatsappInboxEnabled?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -16825,6 +17056,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isActive?: boolean
   phone?: boolean
   whatsappPhoneE164?: boolean
+  whatsappInboxEnabled?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -16844,6 +17076,7 @@ export type UserSelectScalar = {
   isActive?: boolean
   phone?: boolean
   whatsappPhoneE164?: boolean
+  whatsappInboxEnabled?: boolean
   branchId?: boolean
   erpUserCode?: boolean
   warehouseAccessMode?: boolean
@@ -16851,7 +17084,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "passwordHash" | "role" | "isActive" | "phone" | "whatsappPhoneE164" | "branchId" | "erpUserCode" | "warehouseAccessMode" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "email" | "passwordHash" | "role" | "isActive" | "phone" | "whatsappPhoneE164" | "whatsappInboxEnabled" | "branchId" | "erpUserCode" | "warehouseAccessMode" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   createdCustomers?: boolean | Prisma.User$createdCustomersArgs<ExtArgs>
@@ -16979,6 +17212,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isActive: boolean
     phone: string | null
     whatsappPhoneE164: string | null
+    whatsappInboxEnabled: boolean
     branchId: string
     erpUserCode: string | null
     warehouseAccessMode: $Enums.WarehouseAccessMode
@@ -17468,6 +17702,7 @@ export interface UserFieldRefs {
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly whatsappPhoneE164: Prisma.FieldRef<"User", 'String'>
+  readonly whatsappInboxEnabled: Prisma.FieldRef<"User", 'Boolean'>
   readonly branchId: Prisma.FieldRef<"User", 'String'>
   readonly erpUserCode: Prisma.FieldRef<"User", 'String'>
   readonly warehouseAccessMode: Prisma.FieldRef<"User", 'WarehouseAccessMode'>

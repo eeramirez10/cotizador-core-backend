@@ -6,6 +6,7 @@ import type { WhatsAppRealtimeEvent } from "../../domain/events/whatsapp-realtim
 import type { WhatsAppInboxActor } from "../../domain/entities/whatsapp-inbox.entity";
 import { JwtAdapter } from "../adapters/jwt.adapter";
 import { prisma } from "../database/prisma-client";
+import { runtimeSystemSettings } from "../config/runtime-system-settings";
 import type { WhatsAppRealtimeBus } from "./whatsapp-realtime.bus";
 
 interface ConnectedClient {
@@ -102,16 +103,32 @@ export class WhatsAppWebSocketGateway {
     const authProtocol = protocols.find((value) => value.startsWith(AUTH_PROTOCOL_PREFIX));
     const token = authProtocol?.slice(AUTH_PROTOCOL_PREFIX.length) || "";
     const payload = JwtAdapter.verifyAccessToken(token);
+    await runtimeSystemSettings.refresh();
+    if (!runtimeSystemSettings.boolean("WHATSAPP_INBOX_ENABLED")) {
+      throw new Error("WhatsApp inbox is disabled.");
+    }
     const user = await prisma.user.findUnique({
       where: { id: payload.sub },
-      select: { id: true, role: true, branchId: true, isActive: true },
+      select: { id: true, role: true, branchId: true, isActive: true, whatsappInboxEnabled: true },
     });
-    if (!user?.isActive || !ALLOWED_ROLES.has(user.role)) throw new Error("Unauthorized realtime user.");
+    if (!user?.isActive || !user.whatsappInboxEnabled || !ALLOWED_ROLES.has(user.role)) {
+      throw new Error("Unauthorized realtime user.");
+    }
     return { id: user.id, role: user.role, branchId: user.branchId };
   }
 
   private async broadcast(event: WhatsAppRealtimeEvent): Promise<void> {
     if (this.clients.size === 0) return;
+    await runtimeSystemSettings.refresh();
+    if (!runtimeSystemSettings.boolean("WHATSAPP_INBOX_ENABLED")) return;
+    const eligibleUsers = new Set((await prisma.user.findMany({
+      where: {
+        id: { in: [...this.clients].map((client) => client.actor.id) },
+        isActive: true,
+        whatsappInboxEnabled: true,
+      },
+      select: { id: true },
+    })).map((user) => user.id));
     if (event.type === "QUOTE_CUSTOMER_DECISION" && event.quoteDecision && event.audience) {
       const audience = event.audience;
       const payload = JSON.stringify({ ...event, audience: undefined });
@@ -119,7 +136,9 @@ export class WhatsAppWebSocketGateway {
         const canReceive = client.actor.role === "ADMIN"
           || (client.actor.role === "MANAGER" && audience.branchIds.includes(client.actor.branchId))
           || (client.actor.role === "SELLER" && audience.userIds.includes(client.actor.id));
-        if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
+        if (eligibleUsers.has(client.actor.id) && canReceive && client.socket.readyState === WebSocket.OPEN) {
+          client.socket.send(payload);
+        }
       }
       return;
     }
@@ -137,7 +156,9 @@ export class WhatsAppWebSocketGateway {
             audience.userIds.includes(client.actor.id)
             || audience.assignedSellerId === client.actor.id
           ));
-        if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
+        if (eligibleUsers.has(client.actor.id) && canReceive && client.socket.readyState === WebSocket.OPEN) {
+          client.socket.send(payload);
+        }
       }
       return;
     }
@@ -171,7 +192,9 @@ export class WhatsAppWebSocketGateway {
           || conversation.lead?.assignedSellerId === client.actor.id
         ))
       );
-      if (canReceive && client.socket.readyState === WebSocket.OPEN) client.socket.send(payload);
+      if (eligibleUsers.has(client.actor.id) && canReceive && client.socket.readyState === WebSocket.OPEN) {
+        client.socket.send(payload);
+      }
     }
   }
 

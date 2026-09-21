@@ -19,7 +19,14 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
     const payload = JwtAdapter.verifyAccessToken(token);
     const user = await prisma.user.findUnique({
       where: { id: payload.sub },
-      select: { id: true, role: true, branchId: true, erpUserCode: true, isActive: true },
+      select: {
+        id: true,
+        role: true,
+        branchId: true,
+        erpUserCode: true,
+        whatsappInboxEnabled: true,
+        isActive: true,
+      },
     });
 
     if (!user?.isActive) {
@@ -32,6 +39,7 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
       role: user.role,
       branchId: user.branchId,
       erpUserCode: user.erpUserCode,
+      whatsappInboxEnabled: user.whatsappInboxEnabled,
     };
 
     next();

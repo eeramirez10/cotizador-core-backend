@@ -5,7 +5,7 @@ import {
 } from "../../domain/contracts/whatsapp-assistant-messaging.port";
 
 interface Config {
-  enabled: boolean;
+  enabled: boolean | (() => boolean);
   accountSid: string;
   authToken: string;
   from: string;
@@ -18,7 +18,8 @@ export class TwilioWhatsAppAssistantAdapter extends WhatsAppAssistantMessagingPo
   }
 
   async sendReply(recipient: string, body: string): Promise<WhatsAppAssistantReplyResult> {
-    if (!this.config.enabled || !this.config.accountSid || !this.config.authToken || !this.config.from) {
+    const enabled = typeof this.config.enabled === "function" ? this.config.enabled() : this.config.enabled;
+    if (!enabled || !this.config.accountSid || !this.config.authToken || !this.config.from) {
       throw new Error("Twilio WhatsApp assistant is not configured.");
     }
     const result = await twilio(this.config.accountSid, this.config.authToken).messages.create({

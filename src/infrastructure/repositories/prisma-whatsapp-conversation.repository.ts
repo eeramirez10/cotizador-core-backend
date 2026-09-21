@@ -55,8 +55,27 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
           principalResolvedAt: input.principalResolvedAt,
           ...(principalChanged ? { previousResponseId: null } : {}),
         },
-        select: { id: true, mode: true },
+        select: {
+          id: true,
+          mode: true,
+          handledAt: true,
+          humanControlExpiresAt: true,
+        },
       });
+
+      let humanControlExpiresAt = conversation.humanControlExpiresAt;
+      if (conversation.mode === "HUMAN" && conversation.handledAt) {
+        const maximum = new Date(conversation.handledAt.getTime() + input.humanControlMaxDurationMs);
+        const grace = new Date(Math.min(
+          input.receivedAt.getTime() + input.humanResponseGraceMs,
+          maximum.getTime(),
+        ));
+        const adjusted = await tx.whatsAppConversation.updateMany({
+          where: { id: conversation.id, mode: "HUMAN" },
+          data: { humanControlExpiresAt: grace },
+        });
+        if (adjusted.count > 0) humanControlExpiresAt = grace;
+      }
 
       if (input.participantType === "UNKNOWN") {
         await tx.whatsAppLead.upsert({
@@ -165,7 +184,12 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
         select: { id: true },
       });
       if (inserted.count === 0) {
-        return { conversationId: conversation.id, inboundMessageId: inbound.id, created: false };
+        return {
+          conversationId: conversation.id,
+          inboundMessageId: inbound.id,
+          created: false,
+          humanControlExpiresAt,
+        };
       }
 
       if (input.enqueueAssistant && conversation.mode === "AI") {
@@ -184,7 +208,12 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
         },
         data: { lastInboundAt: input.receivedAt, lastMessageAt: input.receivedAt },
       });
-      return { conversationId: conversation.id, inboundMessageId: inbound.id, created: true };
+      return {
+        conversationId: conversation.id,
+        inboundMessageId: inbound.id,
+        created: true,
+        humanControlExpiresAt,
+      };
     });
   }
 }

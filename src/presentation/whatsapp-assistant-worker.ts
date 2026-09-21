@@ -4,7 +4,10 @@ import { prisma } from "../infrastructure/database/prisma-client";
 import { AiPlatformWhatsAppAssistantGateway } from "../infrastructure/http/ai-platform-whatsapp-assistant.gateway";
 import { TwilioWhatsAppAssistantAdapter } from "../infrastructure/messaging/twilio-whatsapp-assistant.adapter";
 import { PrismaWhatsAppAssistantRepository } from "../infrastructure/repositories/prisma-whatsapp-assistant.repository";
+import { PrismaWhatsAppHumanControlRepository } from "../infrastructure/repositories/prisma-whatsapp-human-control.repository";
 import { whatsAppRealtimeBus } from "../infrastructure/realtime/whatsapp-realtime.container";
+import { ReleaseExpiredWhatsAppHumanControlsUseCase } from "../domain/use-cases/release-expired-whatsapp-human-controls.use-case";
+import { runtimeSystemSettings } from "../infrastructure/config/runtime-system-settings";
 
 const wait = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 const MAX_RETRY_DELAY_MS = 30_000;
@@ -18,13 +21,18 @@ const processor = new ProcessWhatsAppAssistantJobUseCase(
     Envs.aiPlatformInternalApiKey,
   ),
   new TwilioWhatsAppAssistantAdapter({
-    enabled: Envs.twilioWhatsAppEnabled && Envs.whatsAppAssistantEnabled,
+    enabled: () => Envs.twilioWhatsAppEnabled && runtimeSystemSettings.boolean("WHATSAPP_ASSISTANT_ENABLED"),
     accountSid: Envs.twilioAccountSid,
     authToken: Envs.twilioAuthToken,
     from: Envs.twilioWhatsAppFrom,
     statusCallbackUrl: Envs.twilioStatusCallbackUrl,
   }),
   Envs.whatsAppAssistantMaxAttempts,
+  whatsAppRealtimeBus,
+);
+const releaseExpiredHumanControls = new ReleaseExpiredWhatsAppHumanControlsUseCase(
+  new PrismaWhatsAppHumanControlRepository(),
+  () => runtimeSystemSettings.boolean("WHATSAPP_ASSISTANT_ENABLED"),
   whatsAppRealtimeBus,
 );
 
@@ -43,12 +51,14 @@ const run = async (): Promise<void> => {
   console.log(JSON.stringify({
     level: "info",
     event: "whatsapp_assistant.worker_started",
-    enabled: Envs.whatsAppAssistantEnabled,
+    enabled: runtimeSystemSettings.boolean("WHATSAPP_ASSISTANT_ENABLED"),
   }));
   let consecutiveFailures = 0;
   while (!stopping) {
     try {
-      if (!Envs.whatsAppAssistantEnabled || !await processor.execute()) {
+      await runtimeSystemSettings.refresh();
+      await releaseExpiredHumanControls.execute();
+      if (!runtimeSystemSettings.boolean("WHATSAPP_ASSISTANT_ENABLED") || !await processor.execute()) {
         await wait(Envs.whatsAppAssistantPollIntervalMs);
       }
       consecutiveFailures = 0;

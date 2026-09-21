@@ -2,12 +2,15 @@ import type { WhatsAppConversationMode } from "../../infrastructure/database/gen
 import type { WhatsAppInboxActor } from "../entities/whatsapp-inbox.entity";
 import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
+import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
 
 export class WhatsAppInboxUseCase {
   constructor(
     private readonly repository: WhatsAppInboxRepository,
     private readonly now: () => Date = () => new Date(),
     private readonly realtime?: WhatsAppRealtimePublisher,
+    private readonly humanTakeoverDurationMs: RuntimeValue<number> = 15 * 60 * 1000,
+    private readonly humanTakeoverMaxDurationMs: RuntimeValue<number> = 60 * 60 * 1000,
   ) {}
 
   list(input: {
@@ -59,6 +62,8 @@ export class WhatsAppInboxUseCase {
       actor,
       mode,
       changedAt,
+      leaseDurationMs: resolveRuntimeValue(this.humanTakeoverDurationMs),
+      maxDurationMs: resolveRuntimeValue(this.humanTakeoverMaxDurationMs),
     });
     if (conversation) {
       void this.realtime?.publish({
@@ -68,7 +73,10 @@ export class WhatsAppInboxUseCase {
         occurredAt: changedAt.toISOString(),
         conversation: {
           mode: conversation.mode,
+          handledByUserId: conversation.handledByUserId,
           handledByName: conversation.handledByName,
+          humanControlExpiresAt: conversation.humanControlExpiresAt?.toISOString() || null,
+          humanLastActivityAt: conversation.humanLastActivityAt?.toISOString() || null,
         },
       });
     }

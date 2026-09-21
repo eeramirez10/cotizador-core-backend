@@ -23,6 +23,7 @@ export class AuthUserResponseDto {
       branchCode: this.user.branchCode,
       branchName: this.user.branchName,
       erpUserCode: this.user.erpUserCode,
+      whatsappInboxEnabled: this.user.whatsappInboxEnabled,
       isActive: this.user.isActive,
     };
   }

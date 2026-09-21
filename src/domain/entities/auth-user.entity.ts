@@ -11,5 +11,6 @@ export interface AuthUserEntity {
   branchCode: string;
   branchName: string;
   erpUserCode: string | null;
+  whatsappInboxEnabled: boolean;
   passwordHash: string;
 }

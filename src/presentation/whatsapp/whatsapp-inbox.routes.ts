@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Envs } from "../../config/envs";
+import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
 import { SendWhatsAppInboxMessageUseCase } from "../../domain/use-cases/send-whatsapp-inbox-message.use-case";
 import { WhatsAppInboxUseCase } from "../../domain/use-cases/whatsapp-inbox.use-case";
 import { AssignWhatsAppLeadUseCase } from "../../domain/use-cases/assign-whatsapp-lead.use-case";
@@ -22,12 +23,18 @@ import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-a
 export class WhatsAppInboxRoutes {
   static routes(): Router {
     const router = Router();
-    router.use(requireWhatsAppInboxEnabled);
+    router.use(requireAuth, requireWhatsAppInboxEnabled);
     const repository = new PrismaWhatsAppInboxRepository();
     const attachmentRepository = new PrismaWhatsAppInboundAttachmentRepository();
     const internalAlerts = composeWhatsAppInternalAlert();
     const controller = new WhatsAppInboxController(
-      new WhatsAppInboxUseCase(repository, () => new Date(), whatsAppRealtimeBus),
+      new WhatsAppInboxUseCase(
+        repository,
+        () => new Date(),
+        whatsAppRealtimeBus,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_TAKEOVER_MINUTES") * 60 * 1000,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_TAKEOVER_MAX_MINUTES") * 60 * 1000,
+      ),
       new SendWhatsAppInboxMessageUseCase(
         repository,
         new TwilioWhatsAppAssistantAdapter({
@@ -39,6 +46,8 @@ export class WhatsAppInboxRoutes {
         }),
         () => new Date(),
         whatsAppRealtimeBus,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_TAKEOVER_MINUTES") * 60 * 1000,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_TAKEOVER_MAX_MINUTES") * 60 * 1000,
       ),
       new AssignWhatsAppLeadUseCase(
         new PrismaWhatsAppLeadRepository(),
@@ -70,18 +79,17 @@ export class WhatsAppInboxRoutes {
         whatsAppRealtimeBus,
       ),
     );
-    const access = [requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER")] as const;
+    const access = [requireRoles("ADMIN", "MANAGER", "SELLER")] as const;
 
     router.get("/", ...access, controller.list);
     router.get("/attachments/:attachmentId/download", ...access, controller.downloadAttachment);
     router.post(
       "/attachments/:attachmentId/quote-extractions",
-      requireAuth,
       requireRoles("SELLER"),
       controller.markAttachmentQuoteExtraction,
     );
     router.get("/:id", ...access, controller.get);
-    router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.delete);
+    router.delete("/:id", requireRoles("ADMIN"), controller.delete);
     router.get("/:id/messages", ...access, controller.messages);
     router.get("/:id/quotes", ...access, controller.quotes);
     router.post("/:id/messages", ...access, controller.send);
@@ -89,7 +97,6 @@ export class WhatsAppInboxRoutes {
     router.patch("/:id/mode", ...access, controller.changeMode);
     router.patch(
       "/:id/lead-assignment",
-      requireAuth,
       requireRoles("ADMIN", "MANAGER"),
       controller.assignLead,
     );

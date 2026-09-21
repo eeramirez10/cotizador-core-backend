@@ -210,6 +210,18 @@ export class Envs {
     return get("WHATSAPP_ASSISTANT_MAX_ATTEMPTS").default("3").asIntPositive();
   }
 
+  static get whatsAppHumanTakeoverMinutes(): number {
+    return get("WHATSAPP_HUMAN_TAKEOVER_MINUTES").default("15").asIntPositive();
+  }
+
+  static get whatsAppHumanResponseGraceMinutes(): number {
+    return get("WHATSAPP_HUMAN_RESPONSE_GRACE_MINUTES").default("5").asIntPositive();
+  }
+
+  static get whatsAppHumanTakeoverMaxMinutes(): number {
+    return get("WHATSAPP_HUMAN_TAKEOVER_MAX_MINUTES").default("60").asIntPositive();
+  }
+
   static get realtimeRedisUrl(): string | undefined {
     const value = get("REALTIME_REDIS_URL").default("").asString().trim();
     return value || undefined;

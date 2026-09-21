@@ -20,6 +20,7 @@ import { WhatsAppLeadAssistantUseCase } from "../../domain/use-cases/whatsapp-le
 import { PrismaWhatsAppLeadRepository } from "../../infrastructure/repositories/prisma-whatsapp-lead.repository";
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
+import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
 
 export class WhatsAppAssistantRoutes {
   static routes(): Router {
@@ -30,9 +31,9 @@ export class WhatsAppAssistantRoutes {
       new QuoteRepositoryImpl(new PrismaQuoteDatasource()),
       new QuoteCatalogRepositoryImpl(new PrismaQuoteCatalogDatasource()),
       new PurchaseRequisitionRepositoryImpl(
-        new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled),
+        new PrismaPurchaseRequisitionDatasource(() => runtimeSystemSettings.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED")),
       ),
-      Envs.quoteInternalApprovalEnabled,
+      () => runtimeSystemSettings.boolean("QUOTE_INTERNAL_APPROVAL_ENABLED"),
       whatsAppRealtimeBus,
       internalAlerts,
     );

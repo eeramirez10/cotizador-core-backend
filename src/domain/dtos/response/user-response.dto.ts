@@ -14,6 +14,7 @@ export class UserResponseDto {
       role: this.user.role,
       isActive: this.user.isActive,
       phone: this.user.phone,
+      whatsappInboxEnabled: this.user.whatsappInboxEnabled,
       erpUserCode: this.user.erpUserCode,
       branch: {
         id: this.user.branch.id,

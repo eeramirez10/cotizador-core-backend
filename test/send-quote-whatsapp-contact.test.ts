@@ -66,6 +66,7 @@ test("uses the quote contact name instead of the customer company when sending W
         return {
           providerMessageId: "SM0001",
           status: "QUEUED" as const,
+          errorMessage: null,
           templateSid: "HX0001",
           deliveryMode: "TEMPLATE" as const,
         };

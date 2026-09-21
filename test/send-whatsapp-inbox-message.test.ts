@@ -52,6 +52,10 @@ class WhatsAppInboxRepositoryStub extends WhatsAppInboxRepository {
     return this.conversation;
   }
 
+  async renewHumanControl(): Promise<Date | null> {
+    return this.conversation?.humanControlExpiresAt || null;
+  }
+
   async recordManualMessage(
     input: Parameters<WhatsAppInboxRepository["recordManualMessage"]>[0],
   ): Promise<WhatsAppInboxMessage> {
@@ -121,7 +125,10 @@ function createConversation(overrides: Partial<WhatsAppInboxConversation> = {}):
     sellerName: "Alma Martinez",
     quote: null,
     mode: "HUMAN",
+    handledByUserId: actor.id,
     handledByName: "Alma Martinez",
+    humanControlExpiresAt: new Date(now.getTime() + 15 * 60_000),
+    humanLastActivityAt: now,
     lastMessage: "Necesito ayuda",
     lastMessageAt: now,
     lastInboundAt: new Date(now.getTime() - 60_000),
@@ -164,6 +171,24 @@ test("rejects manual replies after the 24-hour WhatsApp window", async () => {
       actor,
     }),
     /24 horas/,
+  );
+  assert.equal(messaging.recipient, null);
+});
+
+test("rejects manual replies after human control expires", async () => {
+  const repository = new WhatsAppInboxRepositoryStub();
+  repository.conversation = createConversation({ humanControlExpiresAt: now });
+  const messaging = new WhatsAppMessagingStub();
+  const useCase = new SendWhatsAppInboxMessageUseCase(repository, messaging, () => now);
+
+  await assert.rejects(
+    () => useCase.execute({
+      conversationId: repository.conversation!.id,
+      clientMessageId: "44444444-4444-4444-8444-444444444444",
+      body: "Hola",
+      actor,
+    }),
+    /control humano venció/i,
   );
   assert.equal(messaging.recipient, null);
 });
@@ -213,9 +238,11 @@ test("sends and records a manual reply during an active window", async () => {
       fileAssetId: null,
       attachments: [],
     },
-    conversation: {
-      lastMessage: "Te comparto la información.",
-      lastMessageAt: now.toISOString(),
-    },
+      conversation: {
+        lastMessage: "Te comparto la información.",
+        lastMessageAt: now.toISOString(),
+        humanControlExpiresAt: new Date(now.getTime() + 15 * 60_000).toISOString(),
+        humanLastActivityAt: now.toISOString(),
+      },
   }]);
 });

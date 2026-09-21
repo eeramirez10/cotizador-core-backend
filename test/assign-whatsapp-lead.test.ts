@@ -47,7 +47,10 @@ const conversation: WhatsAppInboxConversation = {
     convertedAt: null,
   },
   mode: "AI",
+  handledByUserId: null,
   handledByName: null,
+  humanControlExpiresAt: null,
+  humanLastActivityAt: null,
   lastMessage: "Necesito una cotización",
   lastMessageAt: assignedAt,
   lastInboundAt: assignedAt,
@@ -74,6 +77,7 @@ class InboxRepositoryStub extends WhatsAppInboxRepository {
   async listRelatedQuotes() { return []; }
   async markRead() { return true; }
   async setMode() { return conversation; }
+  async renewHumanControl() { return null; }
   async recordManualMessage(): Promise<never> { throw new Error("Not implemented"); }
   async recordSystemMessage(input: Parameters<WhatsAppInboxRepository["recordSystemMessage"]>[0]) {
     this.systemMessage = input;

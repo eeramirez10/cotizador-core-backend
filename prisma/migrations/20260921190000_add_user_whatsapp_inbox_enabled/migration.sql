@@ -1,0 +1,2 @@
+ALTER TABLE "users"
+ADD COLUMN IF NOT EXISTS "whatsapp_inbox_enabled" BOOLEAN NOT NULL DEFAULT true;

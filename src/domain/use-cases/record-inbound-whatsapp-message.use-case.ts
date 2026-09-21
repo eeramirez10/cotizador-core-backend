@@ -7,6 +7,7 @@ import type { WhatsAppInboundMediaReference } from "../entities/whatsapp-inbound
 import type { CaptureWhatsAppInboundMediaUseCase } from "./capture-whatsapp-inbound-media.use-case";
 import type { WhatsAppAssistantPrincipal } from "../entities/whatsapp-assistant.entity";
 import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
+import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
 
 interface RecordInboundWhatsAppMessageInput {
   from: string;
@@ -21,11 +22,13 @@ export class RecordInboundWhatsAppMessageUseCase {
   constructor(
     private readonly repository: WhatsAppConversationRepository,
     private readonly now: () => Date = () => new Date(),
-    private readonly assistantEnabled = false,
+    private readonly assistantEnabled: RuntimeValue<boolean> = false,
     private readonly realtime?: WhatsAppRealtimePublisher,
     private readonly participantResolver?: WhatsAppParticipantResolverPort,
     private readonly captureMedia?: CaptureWhatsAppInboundMediaUseCase,
     private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
+    private readonly humanResponseGraceMs: RuntimeValue<number> = 5 * 60 * 1000,
+    private readonly humanControlMaxDurationMs: RuntimeValue<number> = 60 * 60 * 1000,
   ) {}
 
   async execute(input: RecordInboundWhatsAppMessageInput): Promise<RecordedWhatsAppInboundMessage> {
@@ -65,7 +68,7 @@ export class RecordInboundWhatsAppMessageUseCase {
       mediaCount,
       media,
       receivedAt,
-      enqueueAssistant: this.assistantEnabled,
+      enqueueAssistant: resolveRuntimeValue(this.assistantEnabled),
       participantType: principal.audience,
       internalUserId: principal.userId,
       internalUserBranchId: principal.branchId,
@@ -77,6 +80,8 @@ export class RecordInboundWhatsAppMessageUseCase {
       customerName: principal.customerName ?? null,
       customerContactName: principal.customerContactName ?? null,
       principalResolvedAt: receivedAt,
+      humanResponseGraceMs: resolveRuntimeValue(this.humanResponseGraceMs),
+      humanControlMaxDurationMs: resolveRuntimeValue(this.humanControlMaxDurationMs),
     });
     const attachments = this.captureMedia && media.length > 0
       ? await this.captureMedia.execute({
@@ -113,6 +118,7 @@ export class RecordInboundWhatsAppMessageUseCase {
           lastMessage: body || (mediaCount > 0 ? "Archivo recibido" : "Mensaje recibido"),
           lastMessageAt: receivedAt.toISOString(),
           lastInboundAt: receivedAt.toISOString(),
+          humanControlExpiresAt: recorded.humanControlExpiresAt?.toISOString() || null,
         },
       });
       if (attachments.length > 0) {

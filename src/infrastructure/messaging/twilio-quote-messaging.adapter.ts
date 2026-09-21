@@ -2,8 +2,11 @@ import twilio from "twilio";
 import {
   QuoteMessagingPort,
   type QuoteMessageResult,
+  type QuoteMessageStatus,
+  type QuoteMessageStatusResult,
   type SendQuoteWhatsAppMessage,
 } from "../../domain/contracts/quote-messaging.port";
+import { describeWhatsAppDeliveryError } from "../../domain/utils/whatsapp-delivery-error";
 
 interface TwilioQuoteMessagingConfig {
   enabled: boolean;
@@ -46,9 +49,21 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
 
     return {
       providerMessageId: result.sid,
-      status: result.status === "sent" ? "SENT" : "QUEUED",
+      status: this.mapStatus(result.status),
+      errorMessage: describeWhatsAppDeliveryError(result.errorCode, result.errorMessage),
       templateSid: useTemplate ? this.config.contentSid : null,
       deliveryMode: message.deliveryMode,
+    };
+  }
+
+  async getWhatsAppMessageStatus(providerMessageId: string): Promise<QuoteMessageStatusResult> {
+    this.assertConfigured();
+    const message = await twilio(this.config.accountSid, this.config.authToken)
+      .messages(providerMessageId)
+      .fetch();
+    return {
+      status: this.mapStatus(message.status),
+      errorMessage: describeWhatsAppDeliveryError(message.errorCode, message.errorMessage),
     };
   }
 
@@ -105,5 +120,21 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
   private whatsappAddress(value: string): string {
     const normalized = value.trim();
     return normalized.startsWith("whatsapp:") ? normalized : `whatsapp:${normalized}`;
+  }
+
+  private mapStatus(providerStatus: string): QuoteMessageStatus {
+    switch (providerStatus.trim().toLowerCase()) {
+      case "sent":
+        return "SENT";
+      case "delivered":
+        return "DELIVERED";
+      case "read":
+        return "READ";
+      case "failed":
+      case "undelivered":
+        return "FAILED";
+      default:
+        return "QUEUED";
+    }
   }
 }

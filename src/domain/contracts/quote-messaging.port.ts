@@ -10,11 +10,20 @@ export interface SendQuoteWhatsAppMessage {
 
 export interface QuoteMessageResult {
   providerMessageId: string;
-  status: "QUEUED" | "SENT";
+  status: QuoteMessageStatus;
+  errorMessage: string | null;
   templateSid: string | null;
   deliveryMode: "FREE_FORM" | "TEMPLATE";
 }
 
+export type QuoteMessageStatus = "QUEUED" | "SENT" | "DELIVERED" | "READ" | "FAILED";
+
+export interface QuoteMessageStatusResult {
+  status: QuoteMessageStatus;
+  errorMessage: string | null;
+}
+
 export abstract class QuoteMessagingPort {
   abstract sendWhatsAppQuote(message: SendQuoteWhatsAppMessage): Promise<QuoteMessageResult>;
+  getWhatsAppMessageStatus?(providerMessageId: string): Promise<QuoteMessageStatusResult>;
 }

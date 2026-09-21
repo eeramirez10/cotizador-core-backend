@@ -11,6 +11,7 @@ import {
 } from "./quote-item-review.helper";
 import { convertQuoteAmount } from "./quote-currency.helper";
 import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "./quote-item-fulfillment.helper";
+import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
 
 interface SaveQuoteDraftActorContext {
   id: string;
@@ -32,8 +33,8 @@ export class SaveQuoteDraftUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly customerRepository: CustomerRepository,
     private readonly userRepository: UserRepository,
-    private readonly internalApprovalEnabled = true,
-    private readonly sellerExcelImportEnabled = true
+    private readonly internalApprovalEnabled: RuntimeValue<boolean> = true,
+    private readonly sellerExcelImportEnabled: RuntimeValue<boolean> = true
   ) {}
 
   async execute(
@@ -53,7 +54,7 @@ export class SaveQuoteDraftUseCase {
       : null;
     if (dto.quoteId && !existingQuote) throw new Error("Quote not found.");
 
-    if (dto.quote.captureMethod === "EXCEL_IMPORT" && !this.sellerExcelImportEnabled) {
+    if (dto.quote.captureMethod === "EXCEL_IMPORT" && !resolveRuntimeValue(this.sellerExcelImportEnabled)) {
       throw new Error(existingQuote
         ? "Excel-imported quotes are read-only because seller Excel import is disabled."
         : "Seller Excel quote import is disabled.");
@@ -314,7 +315,7 @@ export class SaveQuoteDraftUseCase {
       quoteId: dto.quoteId,
       quoteNumber: buildQuoteNumber(),
       action: dto.action,
-      submissionStatus: this.internalApprovalEnabled ? "PENDING_APPROVAL" : "QUOTED",
+      submissionStatus: resolveRuntimeValue(this.internalApprovalEnabled) ? "PENDING_APPROVAL" : "QUOTED",
       data: {
         origin: dto.quote.origin,
         captureMethod: dto.quote.captureMethod,

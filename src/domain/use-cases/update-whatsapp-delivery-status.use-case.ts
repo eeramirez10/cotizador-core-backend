@@ -2,6 +2,7 @@ import type { QuoteDeliveryAttemptStatus } from "../../infrastructure/database/g
 import type { QuoteRepository } from "../repositories/quote.repository";
 import type { WhatsAppInboxRepository } from "../repositories/whatsapp-inbox.repository";
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
+import { describeWhatsAppDeliveryError } from "../utils/whatsapp-delivery-error";
 
 const STATUS_MAP: Record<string, QuoteDeliveryAttemptStatus> = {
   queued: "QUEUED",
@@ -30,7 +31,7 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
     const providerMessageId = input.providerMessageId.trim();
     const status = STATUS_MAP[input.providerStatus.trim().toLowerCase()];
     if (!providerMessageId || !status) return Promise.resolve(false);
-    const details = [input.errorCode?.trim(), input.errorMessage?.trim()].filter(Boolean).join(": ") || null;
+    const details = describeWhatsAppDeliveryError(input.errorCode, input.errorMessage);
     const occurredAt = new Date();
     const [quoteUpdated, message] = await Promise.all([
       this.quoteRepository.updateDeliveryAttemptStatus({
@@ -52,7 +53,7 @@ export class UpdateWhatsAppDeliveryStatusUseCase {
         conversationId: message.conversationId,
         reason: "MESSAGE_STATUS_CHANGED",
         occurredAt: occurredAt.toISOString(),
-        messagePatch: { id: message.messageId, status },
+        messagePatch: { id: message.messageId, status, errorMessage: status === "FAILED" ? details : null },
       });
     }
     return quoteUpdated || Boolean(message);

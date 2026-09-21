@@ -24,7 +24,12 @@ class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository 
 
   async recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage> {
     this.recorded = input;
-    return { conversationId: "conversation-1", inboundMessageId: "message-1", created: true };
+    return {
+      conversationId: "conversation-1",
+      inboundMessageId: "message-1",
+      created: true,
+      humanControlExpiresAt: null,
+    };
   }
 }
 
@@ -113,6 +118,8 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     customerName: null,
     customerContactName: null,
     principalResolvedAt: now,
+    humanResponseGraceMs: 5 * 60 * 1000,
+    humanControlMaxDurationMs: 60 * 60 * 1000,
   });
   await new Promise((resolve) => setImmediate(resolve));
   assert.deepEqual(realtime.events, [{
@@ -138,6 +145,7 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
       lastMessage: "Hola",
       lastMessageAt: now.toISOString(),
       lastInboundAt: now.toISOString(),
+      humanControlExpiresAt: null,
     },
   }]);
 });

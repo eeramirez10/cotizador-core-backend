@@ -61,7 +61,10 @@ export interface WhatsAppInboxConversation {
   quote: WhatsAppInboxQuoteContext | null;
   lead: WhatsAppInboxLeadContext | null;
   mode: WhatsAppConversationMode;
+  handledByUserId: string | null;
   handledByName: string | null;
+  humanControlExpiresAt: Date | null;
+  humanLastActivityAt: Date | null;
   lastMessage: string;
   lastMessageAt: Date;
   lastInboundAt: Date | null;

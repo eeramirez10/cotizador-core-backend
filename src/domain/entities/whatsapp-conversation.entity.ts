@@ -27,10 +27,13 @@ export interface RecordWhatsAppInboundMessageInput {
   customerName: string | null;
   customerContactName: string | null;
   principalResolvedAt: Date;
+  humanResponseGraceMs: number;
+  humanControlMaxDurationMs: number;
 }
 
 export interface RecordedWhatsAppInboundMessage {
   conversationId: string;
   inboundMessageId: string;
   created: boolean;
+  humanControlExpiresAt: Date | null;
 }

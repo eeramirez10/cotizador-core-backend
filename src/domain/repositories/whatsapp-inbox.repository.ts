@@ -48,7 +48,17 @@ export abstract class WhatsAppInboxRepository {
     actor: WhatsAppInboxActor;
     mode: WhatsAppConversationMode;
     changedAt: Date;
+    leaseDurationMs: number;
+    maxDurationMs: number;
   }): Promise<WhatsAppInboxConversation | null>;
+
+  abstract renewHumanControl(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+    activityAt: Date;
+    leaseDurationMs: number;
+    maxDurationMs: number;
+  }): Promise<Date | null>;
 
   abstract recordManualMessage(input: {
     messageId: string;

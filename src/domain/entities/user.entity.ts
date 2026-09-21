@@ -10,6 +10,7 @@ export interface UserEntity {
   isActive: boolean;
   phone: string | null;
   whatsappPhoneE164: string | null;
+  whatsappInboxEnabled: boolean;
   erpUserCode: string | null;
   branch: {
     id: string;

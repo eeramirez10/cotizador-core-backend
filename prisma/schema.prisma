@@ -382,21 +382,22 @@ model QuoteCatalogOption {
 }
 
 model User {
-  id                  String              @id @default(uuid()) @db.Uuid
-  firstName           String              @map("first_name") @db.VarChar(120)
-  lastName            String              @map("last_name") @db.VarChar(120)
-  username            String              @unique @db.VarChar(80)
-  email               String              @unique @db.VarChar(160)
-  passwordHash        String              @map("password_hash") @db.VarChar(255)
-  role                UserRole
-  isActive            Boolean             @default(true) @map("is_active")
-  phone               String?             @db.VarChar(40)
-  whatsappPhoneE164   String?             @unique @map("whatsapp_phone_e164") @db.VarChar(20)
-  branchId            String              @map("branch_id") @db.Uuid
-  erpUserCode         String?             @unique @map("erp_user_code") @db.VarChar(80)
-  warehouseAccessMode WarehouseAccessMode @default(INHERIT) @map("warehouse_access_mode")
-  createdAt           DateTime            @default(now()) @map("created_at")
-  updatedAt           DateTime            @updatedAt @map("updated_at")
+  id                   String              @id @default(uuid()) @db.Uuid
+  firstName            String              @map("first_name") @db.VarChar(120)
+  lastName             String              @map("last_name") @db.VarChar(120)
+  username             String              @unique @db.VarChar(80)
+  email                String              @unique @db.VarChar(160)
+  passwordHash         String              @map("password_hash") @db.VarChar(255)
+  role                 UserRole
+  isActive             Boolean             @default(true) @map("is_active")
+  phone                String?             @db.VarChar(40)
+  whatsappPhoneE164    String?             @unique @map("whatsapp_phone_e164") @db.VarChar(20)
+  whatsappInboxEnabled Boolean             @default(true) @map("whatsapp_inbox_enabled")
+  branchId             String              @map("branch_id") @db.Uuid
+  erpUserCode          String?             @unique @map("erp_user_code") @db.VarChar(80)
+  warehouseAccessMode  WarehouseAccessMode @default(INHERIT) @map("warehouse_access_mode")
+  createdAt            DateTime            @default(now()) @map("created_at")
+  updatedAt            DateTime            @updatedAt @map("updated_at")
 
   branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
 
@@ -1235,21 +1236,23 @@ model QuoteDeliveryAttempt {
 }
 
 model WhatsAppConversation {
-  id                   String                   @id @default(uuid()) @db.Uuid
-  businessPhoneE164    String                   @map("business_phone_e164") @db.VarChar(20)
-  participantPhoneE164 String                   @map("participant_phone_e164") @db.VarChar(20)
-  participantType      WhatsAppParticipantType  @default(UNKNOWN) @map("participant_type")
-  internalUserId       String?                  @map("internal_user_id") @db.Uuid
-  principalResolvedAt  DateTime?                @map("principal_resolved_at")
-  mode                 WhatsAppConversationMode @default(AI)
-  handledByUserId      String?                  @map("handled_by_user_id") @db.Uuid
-  handledAt            DateTime?                @map("handled_at")
-  lastInboundAt        DateTime?                @map("last_inbound_at")
-  lastMessageAt        DateTime                 @default(now()) @map("last_message_at")
-  previousResponseId   String?                  @map("previous_response_id") @db.VarChar(180)
-  lastAssistantAt      DateTime?                @map("last_assistant_at")
-  createdAt            DateTime                 @default(now()) @map("created_at")
-  updatedAt            DateTime                 @updatedAt @map("updated_at")
+  id                    String                   @id @default(uuid()) @db.Uuid
+  businessPhoneE164     String                   @map("business_phone_e164") @db.VarChar(20)
+  participantPhoneE164  String                   @map("participant_phone_e164") @db.VarChar(20)
+  participantType       WhatsAppParticipantType  @default(UNKNOWN) @map("participant_type")
+  internalUserId        String?                  @map("internal_user_id") @db.Uuid
+  principalResolvedAt   DateTime?                @map("principal_resolved_at")
+  mode                  WhatsAppConversationMode @default(AI)
+  handledByUserId       String?                  @map("handled_by_user_id") @db.Uuid
+  handledAt             DateTime?                @map("handled_at")
+  humanControlExpiresAt DateTime?                @map("human_control_expires_at")
+  humanLastActivityAt   DateTime?                @map("human_last_activity_at")
+  lastInboundAt         DateTime?                @map("last_inbound_at")
+  lastMessageAt         DateTime                 @default(now()) @map("last_message_at")
+  previousResponseId    String?                  @map("previous_response_id") @db.VarChar(180)
+  lastAssistantAt       DateTime?                @map("last_assistant_at")
+  createdAt             DateTime                 @default(now()) @map("created_at")
+  updatedAt             DateTime                 @updatedAt @map("updated_at")
 
   handledByUser    User?                           @relation("WhatsAppConversationHandledBy", fields: [handledByUserId], references: [id], onDelete: SetNull)
   internalUser     User?                           @relation("WhatsAppConversationInternalUser", fields: [internalUserId], references: [id], onDelete: SetNull)
@@ -1268,6 +1271,7 @@ model WhatsAppConversation {
   @@index([lastInboundAt])
   @@index([lastMessageAt])
   @@index([handledByUserId])
+  @@index([mode, humanControlExpiresAt])
   @@index([participantType, internalUserId])
   @@map("whatsapp_conversations")
 }
@@ -1622,4 +1626,14 @@ model AuditLog {
   @@index([entityType, entityId])
   @@index([createdAt])
   @@map("audit_logs")
+}
+
+model SystemSetting {
+  key             String   @id @db.VarChar(100)
+  value           Json
+  updatedByUserId String?  @map("updated_by_user_id") @db.Uuid
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
 }

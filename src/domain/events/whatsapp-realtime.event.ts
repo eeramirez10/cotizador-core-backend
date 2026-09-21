@@ -72,7 +72,10 @@ export interface WhatsAppRealtimeMessagePayload {
 
 export interface WhatsAppRealtimeConversationPatch {
   mode?: "AI" | "HUMAN";
+  handledByUserId?: string | null;
   handledByName?: string | null;
+  humanControlExpiresAt?: string | null;
+  humanLastActivityAt?: string | null;
   lastMessage?: string;
   lastMessageAt?: string;
   lastInboundAt?: string | null;
@@ -85,6 +88,7 @@ export interface WhatsAppRealtimeConversationPatch {
 export interface WhatsAppRealtimeMessagePatch {
   id: string;
   status: "QUEUED" | "SENT" | "DELIVERED" | "READ" | "FAILED";
+  errorMessage?: string | null;
 }
 
 export interface WhatsAppRealtimeEvent {

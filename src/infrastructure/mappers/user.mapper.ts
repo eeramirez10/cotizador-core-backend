@@ -11,6 +11,7 @@ interface UserRow {
   isActive: boolean;
   phone: string | null;
   whatsappPhoneE164: string | null;
+  whatsappInboxEnabled: boolean;
   erpUserCode: string | null;
   branch: {
     id: string;
@@ -31,6 +32,7 @@ export class UserMapper {
       isActive: row.isActive,
       phone: row.phone,
       whatsappPhoneE164: row.whatsappPhoneE164,
+      whatsappInboxEnabled: row.whatsappInboxEnabled,
       erpUserCode: row.erpUserCode,
       branch: {
         id: row.branch.id,

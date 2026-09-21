@@ -19,6 +19,7 @@ import { ManagerReportsRoutes } from "./public/manager-reports.routes";
 import { ReportSubscriptionsRoutes } from "./report-subscriptions/report-subscriptions.routes";
 import { WhatsAppAssistantRoutes } from "./integrations/whatsapp-assistant.routes";
 import { WhatsAppInboxRoutes } from "./whatsapp/whatsapp-inbox.routes";
+import { refreshSystemSettings } from "./middlewares/system-settings.middleware";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -27,6 +28,8 @@ export class AppRoutes {
     router.get("/health", (_req, res) => {
       res.status(200).json({ ok: true, service: "cotizador-core-backend" });
     });
+
+    router.use(refreshSystemSettings);
 
     router.use("/auth", AuthRoutes.routes());
     router.use("/branches", BranchesRoutes.routes());

@@ -510,19 +510,74 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     actor: WhatsAppInboxActor;
     mode: WhatsAppConversationMode;
     changedAt: Date;
+    leaseDurationMs: number;
+    maxDurationMs: number;
   }): Promise<WhatsAppInboxConversation | null> {
     const allowed = await prisma.whatsAppConversation.findFirst({
       where: { id: input.conversationId, ...this.visibilityWhere(input.actor) },
-      select: { id: true },
+      select: {
+        id: true,
+        mode: true,
+        handledByUserId: true,
+        handledAt: true,
+        humanControlExpiresAt: true,
+      },
     });
     if (!allowed) return null;
+
+    const activeHumanControl = allowed.mode === "HUMAN"
+      && Boolean(allowed.humanControlExpiresAt && allowed.humanControlExpiresAt > input.changedAt);
+    if (
+      activeHumanControl
+      && allowed.handledByUserId !== input.actor.id
+      && input.actor.role === "SELLER"
+    ) {
+      throw new Error("La conversación está bajo el control de otro usuario.");
+    }
+
+    const startsAt = activeHumanControl && allowed.handledAt ? allowed.handledAt : input.changedAt;
+    const maximumExpiresAt = new Date(startsAt.getTime() + input.maxDurationMs);
+    const leaseExpiresAt = new Date(Math.min(
+      input.changedAt.getTime() + input.leaseDurationMs,
+      maximumExpiresAt.getTime(),
+    ));
 
     await prisma.$transaction(async (tx) => {
       await tx.whatsAppConversation.update({
         where: { id: input.conversationId },
         data: input.mode === "HUMAN"
-          ? { mode: "HUMAN", handledByUserId: input.actor.id, handledAt: input.changedAt }
-          : { mode: "AI", handledByUserId: null, handledAt: null },
+          ? {
+              mode: "HUMAN",
+              handledByUserId: input.actor.id,
+              handledAt: startsAt,
+              humanLastActivityAt: input.changedAt,
+              humanControlExpiresAt: leaseExpiresAt,
+            }
+          : {
+              mode: "AI",
+              handledByUserId: null,
+              handledAt: null,
+              humanLastActivityAt: null,
+              humanControlExpiresAt: null,
+            },
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: input.actor.id,
+          entityType: "WHATSAPP_CONVERSATION",
+          entityId: input.conversationId,
+          action: input.mode === "AI"
+            ? "RETURN_TO_AI"
+            : activeHumanControl
+              ? "EXTEND_HUMAN_CONTROL"
+              : "TAKE_HUMAN_CONTROL",
+          payload: input.mode === "HUMAN"
+            ? {
+                startedAt: startsAt.toISOString(),
+                expiresAt: leaseExpiresAt.toISOString(),
+              }
+            : { returnedAt: input.changedAt.toISOString() },
+        },
       });
       if (input.mode === "HUMAN") {
         await tx.whatsAppAssistantJob.updateMany({
@@ -540,6 +595,44 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
       }
     });
     return this.findConversation({ conversationId: input.conversationId, actor: input.actor });
+  }
+
+  async renewHumanControl(input: {
+    conversationId: string;
+    actor: WhatsAppInboxActor;
+    activityAt: Date;
+    leaseDurationMs: number;
+    maxDurationMs: number;
+  }): Promise<Date | null> {
+    const conversation = await prisma.whatsAppConversation.findFirst({
+      where: {
+        id: input.conversationId,
+        mode: "HUMAN",
+        handledByUserId: input.actor.id,
+        humanControlExpiresAt: { gt: input.activityAt },
+        ...this.visibilityWhere(input.actor),
+      },
+      select: { handledAt: true },
+    });
+    if (!conversation?.handledAt) return null;
+
+    const expiresAt = new Date(Math.min(
+      input.activityAt.getTime() + input.leaseDurationMs,
+      conversation.handledAt.getTime() + input.maxDurationMs,
+    ));
+    const renewed = await prisma.whatsAppConversation.updateMany({
+      where: {
+        id: input.conversationId,
+        mode: "HUMAN",
+        handledByUserId: input.actor.id,
+        humanControlExpiresAt: { gt: input.activityAt },
+      },
+      data: {
+        humanLastActivityAt: input.activityAt,
+        humanControlExpiresAt: expiresAt,
+      },
+    });
+    return renewed.count > 0 ? expiresAt : null;
   }
 
   async recordManualMessage(input: {
@@ -831,9 +924,12 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         convertedAt: row.lead.convertedAt,
       } : null,
       mode: row.mode,
+      handledByUserId: row.handledByUserId,
       handledByName: row.handledByUser
         ? `${row.handledByUser.firstName} ${row.handledByUser.lastName}`.trim()
         : null,
+      humanControlExpiresAt: row.humanControlExpiresAt,
+      humanLastActivityAt: row.humanLastActivityAt,
       lastMessage,
       lastMessageAt: row.lastMessageAt,
       lastInboundAt: row.lastInboundAt,

@@ -1,5 +1,9 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
-import type { QuoteMessagingPort } from "../contracts/quote-messaging.port";
+import type {
+  QuoteMessageStatus,
+  QuoteMessageStatusResult,
+  QuoteMessagingPort,
+} from "../contracts/quote-messaging.port";
 import type { QuoteDocumentLinkPort } from "../contracts/quote-document-link.port";
 import type { UploadedFileInput, FileAttachmentsUseCase } from "./file-attachments.use-case";
 import type { CustomerRepository } from "../repositories/customer.repository";
@@ -28,7 +32,8 @@ interface SendQuoteWhatsAppInput {
 
 export interface SendQuoteWhatsAppResult {
   providerMessageId: string;
-  status: "QUEUED" | "SENT";
+  status: QuoteMessageStatus;
+  errorMessage: string | null;
   recipient: string;
   contactName: string;
   sellerName: string;
@@ -47,6 +52,9 @@ export class SendQuoteWhatsAppUseCase {
     private readonly inboxRepository: WhatsAppInboxRepository,
     private readonly businessPhone: string,
     private readonly realtime?: WhatsAppRealtimePublisher,
+    private readonly deliveryStatusPollDelaysMs: number[] = [750, 1_250, 2_000],
+    private readonly sleep: (milliseconds: number) => Promise<void> = (milliseconds) =>
+      new Promise((resolve) => setTimeout(resolve, milliseconds)),
   ) {}
 
   async execute(input: SendQuoteWhatsAppInput): Promise<SendQuoteWhatsAppResult> {
@@ -112,14 +120,15 @@ export class SendQuoteWhatsAppUseCase {
           fileAssetId: attachment.id,
           customerContactId: selectedContact?.id ?? quote.customerContact?.id ?? null,
           templateSid: message.templateSid,
-          errorMessage: null,
+          errorMessage: message.errorMessage,
           note: input.message,
           sentAt,
         },
       });
       const normalizedBusinessPhone = WhatsAppPhone.create(this.businessPhone)?.value;
+      let registered: { conversationId: string; messageId: string } | null = null;
       if (normalizedBusinessPhone) {
-        const registered = await this.inboxRepository.registerQuoteDelivery({
+        registered = await this.inboxRepository.registerQuoteDelivery({
           businessPhoneE164: normalizedBusinessPhone,
           participantPhoneE164: recipient,
           providerMessageId: message.providerMessageId,
@@ -164,9 +173,48 @@ export class SendQuoteWhatsAppUseCase {
           });
         }
       }
+
+      const verified = await this.verifyDeliveryStatus(message.providerMessageId, {
+        status: message.status,
+        errorMessage: message.errorMessage,
+      });
+      if (verified.status !== message.status || verified.errorMessage !== message.errorMessage) {
+        const occurredAt = new Date();
+        await Promise.all([
+          this.quoteRepository.updateDeliveryAttemptStatus({
+            providerMessageId: message.providerMessageId,
+            status: verified.status,
+            errorMessage: verified.status === "FAILED" ? verified.errorMessage : null,
+            occurredAt,
+          }),
+          this.inboxRepository.updateOutboundStatus({
+            providerMessageId: message.providerMessageId,
+            status: verified.status,
+            errorMessage: verified.status === "FAILED" ? verified.errorMessage : null,
+            occurredAt,
+          }).catch((error) => {
+            console.error("whatsapp_inbox_delivery_status_sync_failed", error);
+            return null;
+          }),
+        ]);
+        if (registered) {
+          void this.realtime?.publish({
+            type: "WHATSAPP_CONVERSATION_CHANGED",
+            conversationId: registered.conversationId,
+            reason: "MESSAGE_STATUS_CHANGED",
+            occurredAt: occurredAt.toISOString(),
+            messagePatch: {
+              id: registered.messageId,
+              status: verified.status,
+              errorMessage: verified.status === "FAILED" ? verified.errorMessage : null,
+            },
+          });
+        }
+      }
       return {
         providerMessageId: message.providerMessageId,
-        status: message.status,
+        status: verified.status,
+        errorMessage: verified.errorMessage,
         recipient,
         contactName,
         sellerName,
@@ -194,6 +242,25 @@ export class SendQuoteWhatsAppUseCase {
       }).catch(() => undefined);
       throw error;
     }
+  }
+
+  private async verifyDeliveryStatus(
+    providerMessageId: string,
+    initial: QuoteMessageStatusResult,
+  ): Promise<QuoteMessageStatusResult> {
+    if (!["QUEUED", "SENT"].includes(initial.status) || !this.messaging.getWhatsAppMessageStatus) return initial;
+
+    let current = initial;
+    for (const delay of this.deliveryStatusPollDelaysMs) {
+      await this.sleep(delay);
+      try {
+        current = await this.messaging.getWhatsAppMessageStatus(providerMessageId);
+        if (["DELIVERED", "READ", "FAILED"].includes(current.status)) return current;
+      } catch (error) {
+        console.error("twilio_delivery_status_poll_failed", error);
+      }
+    }
+    return current;
   }
 
 }

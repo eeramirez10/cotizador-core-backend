@@ -31,6 +31,7 @@ export class PrismaAuthDatasource implements AuthDatasource {
       branchCode: row.branch.code,
       branchName: row.branch.name,
       erpUserCode: row.erpUserCode ?? null,
+      whatsappInboxEnabled: row.whatsappInboxEnabled,
       passwordHash: row.passwordHash,
     };
   }
@@ -59,6 +60,7 @@ export class PrismaAuthDatasource implements AuthDatasource {
       branchCode: row.branch.code,
       branchName: row.branch.name,
       erpUserCode: row.erpUserCode ?? null,
+      whatsappInboxEnabled: row.whatsappInboxEnabled,
       passwordHash: row.passwordHash,
     };
   }

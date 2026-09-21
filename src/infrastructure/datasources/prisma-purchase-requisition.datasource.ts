@@ -18,6 +18,7 @@ import type {
 } from "../../domain/entities/purchase-requisition.entity";
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
 import { getQuoteItemFulfillment } from "../../domain/use-cases/quote-item-fulfillment.helper";
+import { resolveRuntimeValue, type RuntimeValue } from "../../domain/services/runtime-value";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../../domain/utils/canonical-product-text";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
@@ -271,7 +272,7 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
 });
 
 export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionDatasource {
-  constructor(private readonly internalApprovalEnabled = true) {
+  constructor(private readonly internalApprovalEnabled: RuntimeValue<boolean> = true) {
     super();
   }
 
@@ -675,7 +676,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
   }
 
   async approveCostVariance(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
-    if (!this.internalApprovalEnabled) throw new Error("Internal requisition approval is disabled.");
+    if (!resolveRuntimeValue(this.internalApprovalEnabled)) throw new Error("Internal requisition approval is disabled.");
     if (!["ADMIN", "MANAGER"].includes(actor.role)) throw new Error("Only ADMIN or MANAGER can approve cost variance.");
     const current = await prisma.purchaseRequisition.findFirst({ where: { id, ...this.scopeWhere(actor) }, select: { id: true, status: true } });
     if (!current) return null;
@@ -698,7 +699,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     return Boolean(
       requisition &&
       (["READY_FOR_ORDER", "COMPLETED"].includes(requisition.status)
-        || (!this.internalApprovalEnabled && requisition.status === "COST_REVIEW")) &&
+        || (!resolveRuntimeValue(this.internalApprovalEnabled) && requisition.status === "COST_REVIEW")) &&
       requisition.items.every((item) => item.status === "READY"),
     );
   }
@@ -707,7 +708,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     await prisma.purchaseRequisition.updateMany({
       where: {
         quoteId,
-        status: this.internalApprovalEnabled
+        status: resolveRuntimeValue(this.internalApprovalEnabled)
           ? "READY_FOR_ORDER"
           : { in: ["READY_FOR_ORDER", "COST_REVIEW"] },
       },
@@ -1220,7 +1221,8 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     });
     const allReady = requisition.items.length > 0 && requisition.items.every((item) => item.status === "READY");
     const hasSelected = requisition.items.some((item) => Boolean(item.selectedOffer));
-    const requiresInternalCostApproval = this.internalApprovalEnabled && hasHigherCost && !requisition.costApprovedAt;
+    const internalApprovalEnabled = resolveRuntimeValue(this.internalApprovalEnabled);
+    const requiresInternalCostApproval = internalApprovalEnabled && hasHigherCost && !requisition.costApprovedAt;
     const status = requiresInternalCostApproval
       ? "COST_REVIEW"
       : allReady
@@ -1230,7 +1232,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           : "IN_PROGRESS";
     await tx.purchaseRequisition.update({ where: { id: requisitionId }, data: { status } });
     if (
-      !this.internalApprovalEnabled
+      !internalApprovalEnabled
       && hasHigherCost
       && actorUserId
       && requisition.status !== status

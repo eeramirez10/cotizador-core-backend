@@ -91,7 +91,8 @@ export const ModelName = {
   WhatsAppInternalAlert: 'WhatsAppInternalAlert',
   QuoteOrderExport: 'QuoteOrderExport',
   RefreshToken: 'RefreshToken',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  SystemSetting: 'SystemSetting'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -164,6 +165,7 @@ export const UserScalarFieldEnum = {
   isActive: 'isActive',
   phone: 'phone',
   whatsappPhoneE164: 'whatsappPhoneE164',
+  whatsappInboxEnabled: 'whatsappInboxEnabled',
   branchId: 'branchId',
   erpUserCode: 'erpUserCode',
   warehouseAccessMode: 'warehouseAccessMode',
@@ -742,6 +744,8 @@ export const WhatsAppConversationScalarFieldEnum = {
   mode: 'mode',
   handledByUserId: 'handledByUserId',
   handledAt: 'handledAt',
+  humanControlExpiresAt: 'humanControlExpiresAt',
+  humanLastActivityAt: 'humanLastActivityAt',
   lastInboundAt: 'lastInboundAt',
   lastMessageAt: 'lastMessageAt',
   previousResponseId: 'previousResponseId',
@@ -1013,6 +1017,17 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const SystemSettingScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SystemSettingScalarFieldEnum = (typeof SystemSettingScalarFieldEnum)[keyof typeof SystemSettingScalarFieldEnum]
 
 
 export const SortOrder = {

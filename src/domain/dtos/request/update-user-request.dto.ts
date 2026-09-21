@@ -10,6 +10,7 @@ interface UpdateUserRequestDtoProps {
   phone: string | null;
   erpUserCode: string | null;
   password?: string;
+  whatsappInboxEnabled?: boolean;
 }
 
 export class UpdateUserRequestDto {
@@ -22,6 +23,7 @@ export class UpdateUserRequestDto {
   public readonly phone: string | null;
   public readonly erpUserCode: string | null;
   public readonly password?: string;
+  public readonly whatsappInboxEnabled?: boolean;
 
   constructor(props: UpdateUserRequestDtoProps) {
     this.firstName = props.firstName;
@@ -33,6 +35,7 @@ export class UpdateUserRequestDto {
     this.phone = props.phone;
     this.erpUserCode = props.erpUserCode;
     this.password = props.password;
+    this.whatsappInboxEnabled = props.whatsappInboxEnabled;
   }
 
   static create(input: unknown): [string?, UpdateUserRequestDto?] {
@@ -58,6 +61,9 @@ export class UpdateUserRequestDto {
       typeof body.password === "string" && body.password.trim().length > 0
         ? body.password.trim()
         : undefined;
+    const whatsappInboxEnabled = body.whatsappInboxEnabled === undefined
+      ? undefined
+      : body.whatsappInboxEnabled;
 
     if (!firstName) return ["firstName is required."];
     if (!lastName) return ["lastName is required."];
@@ -67,6 +73,9 @@ export class UpdateUserRequestDto {
     if (password && password.length < 8) return ["password must contain at least 8 characters."];
     if (!Object.values(UserRole).includes(roleRaw as UserRole)) return ["role is invalid."];
     if (phone && !UpdateUserRequestDto.isValidPhone(phone)) return ["phone is invalid."];
+    if (whatsappInboxEnabled !== undefined && typeof whatsappInboxEnabled !== "boolean") {
+      return ["whatsappInboxEnabled must be boolean."];
+    }
 
     return [
       ,
@@ -80,6 +89,7 @@ export class UpdateUserRequestDto {
         phone,
         erpUserCode,
         password,
+        whatsappInboxEnabled,
       }),
     ];
   }

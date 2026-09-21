@@ -5,6 +5,7 @@ import { BranchRepository } from "../repositories/branch.repository";
 import { CustomerRepository } from "../repositories/customer.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { UserRepository } from "../repositories/user.repository";
+import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
 
 interface CreateQuoteFromExtractionActorContext {
   id: string;
@@ -28,14 +29,14 @@ export class CreateQuoteFromExtractionUseCase {
     private readonly customerRepository: CustomerRepository,
     private readonly branchRepository: BranchRepository,
     private readonly userRepository: UserRepository,
-    private readonly sellerExcelImportEnabled = true
+    private readonly sellerExcelImportEnabled: RuntimeValue<boolean> = true
   ) {}
 
   async execute(
     dto: CreateQuoteFromExtractionRequestDto,
     actor: CreateQuoteFromExtractionActorContext
   ): Promise<QuoteResponseDto> {
-    if (dto.captureMethod === "EXCEL_IMPORT" && !this.sellerExcelImportEnabled) {
+    if (dto.captureMethod === "EXCEL_IMPORT" && !resolveRuntimeValue(this.sellerExcelImportEnabled)) {
       throw new Error("Seller Excel quote import is disabled.");
     }
     let branchId = actor.branchId;

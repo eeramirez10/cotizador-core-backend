@@ -16,6 +16,7 @@ import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-real
 import { requireAuth } from "../middlewares/auth.middleware";
 import { TwilioController } from "./twilio.controller";
 import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
+import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
 
 export class TwilioRoutes {
   static routes(): Router {
@@ -32,7 +33,7 @@ export class TwilioRoutes {
       new RecordInboundWhatsAppMessageUseCase(
         conversationRepository,
         () => new Date(),
-        Envs.whatsAppAssistantEnabled,
+        () => runtimeSystemSettings.boolean("WHATSAPP_ASSISTANT_ENABLED"),
         whatsAppRealtimeBus,
         new PrismaWhatsAppParticipantResolver(),
         new CaptureWhatsAppInboundMediaUseCase(
@@ -45,6 +46,8 @@ export class TwilioRoutes {
           new LocalFileStorageAdapter(Envs.fileStorageRoot),
         ),
         internalAlerts,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_RESPONSE_GRACE_MINUTES") * 60 * 1000,
+        () => runtimeSystemSettings.number("WHATSAPP_HUMAN_TAKEOVER_MAX_MINUTES") * 60 * 1000,
       ),
       new GetWhatsAppConversationWindowUseCase(conversationRepository, Envs.twilioWhatsAppFrom),
       Envs.twilioAuthToken,

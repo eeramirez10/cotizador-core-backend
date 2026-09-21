@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { PurchaseRequisitionUseCase } from "../../domain/use-cases/purchase-requisition.use-case";
 import { Envs } from "../../config/envs";
+import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
 import { PrismaPurchaseRequisitionDatasource } from "../../infrastructure/datasources/prisma-purchase-requisition.datasource";
 import { PrismaQuoteDatasource } from "../../infrastructure/datasources/prisma-quote.datasource";
 import { GptLocalProductSemanticAdapter } from "../../infrastructure/http/gpt-local-product-semantic.adapter";
@@ -16,7 +17,7 @@ export class PurchaseRequisitionsRoutes {
   static routes(): Router {
     const router = Router();
     const repository = new PurchaseRequisitionRepositoryImpl(
-      new PrismaPurchaseRequisitionDatasource(Envs.requisitionInternalApprovalEnabled)
+      new PrismaPurchaseRequisitionDatasource(() => runtimeSystemSettings.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"))
     );
     const quoteRepository = new QuoteRepositoryImpl(new PrismaQuoteDatasource());
     const semanticAdapter = new GptLocalProductSemanticAdapter(

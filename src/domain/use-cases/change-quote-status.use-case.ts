@@ -12,6 +12,7 @@ import {
 } from "./quote-item-review.helper";
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
+import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -41,7 +42,7 @@ export class ChangeQuoteStatusUseCase {
     private readonly quoteRepository: QuoteRepository,
     private readonly quoteCatalogRepository: QuoteCatalogRepository,
     private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository,
-    private readonly internalApprovalEnabled = true,
+    private readonly internalApprovalEnabled: RuntimeValue<boolean> = true,
     private readonly realtime?: WhatsAppRealtimePublisher,
     private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
   ) {}
@@ -69,7 +70,8 @@ export class ChangeQuoteStatusUseCase {
       throw new Error("Quote status cannot change while a revision is in progress.");
     }
 
-    const bypassInternalApproval = dto.status === "PENDING_APPROVAL" && !this.internalApprovalEnabled;
+    const internalApprovalEnabled = resolveRuntimeValue(this.internalApprovalEnabled);
+    const bypassInternalApproval = dto.status === "PENDING_APPROVAL" && !internalApprovalEnabled;
     const targetStatus: QuoteStatus = bypassInternalApproval ? "QUOTED" : dto.status;
     const canBypassFromCurrentStatus = ["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status);
 
