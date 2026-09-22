@@ -101,6 +101,25 @@ export const ProductProcurementStatus = {
 export type ProductProcurementStatus = (typeof ProductProcurementStatus)[keyof typeof ProductProcurementStatus]
 
 
+export const ProductCostStatus = {
+  PENDING: 'PENDING',
+  ESTIMATED: 'ESTIMATED',
+  CONFIRMED: 'CONFIRMED'
+} as const
+
+export type ProductCostStatus = (typeof ProductCostStatus)[keyof typeof ProductCostStatus]
+
+
+export const ProductCostSource = {
+  ERP: 'ERP',
+  SUPPLIER_QUOTE: 'SUPPLIER_QUOTE',
+  PRICE_LIST: 'PRICE_LIST',
+  MANUAL_ESTIMATE: 'MANUAL_ESTIMATE'
+} as const
+
+export type ProductCostSource = (typeof ProductCostSource)[keyof typeof ProductCostSource]
+
+
 export const SupplierSource = {
   ERP: 'ERP',
   LOCAL: 'LOCAL'

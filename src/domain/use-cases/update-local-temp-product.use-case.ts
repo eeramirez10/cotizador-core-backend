@@ -22,6 +22,8 @@ export class UpdateLocalTempProductUseCase {
     dto: UpdateLocalTempProductRequestDto,
     actor: UpdateLocalTempProductActorContext
   ): Promise<ProductResponseDto> {
+    const hasCostUpdate = typeof dto.averageCost !== "undefined" || typeof dto.lastCost !== "undefined";
+    const updatedCostIsPositive = Math.max(dto.averageCost ?? 0, dto.lastCost ?? 0) > 0;
     const updated = await this.productRepository.updateLocalTempById({
       id: productId,
       scope: {
@@ -33,10 +35,21 @@ export class UpdateLocalTempProductUseCase {
         ean: typeof dto.ean === "string" ? normalizeProductDisplayText(dto.ean) : dto.ean,
         description: typeof dto.description === "string" ? normalizeProductDisplayText(dto.description) : undefined,
         canonicalDescription: typeof dto.description === "string" ? canonicalizeProductText(dto.description) : undefined,
+        commercialDescription: typeof dto.commercialDescription === "string"
+          ? normalizeProductDisplayText(dto.commercialDescription)
+          : dto.commercialDescription,
+        family: typeof dto.family === "string" ? normalizeProductDisplayText(dto.family) : dto.family,
+        subfamily: typeof dto.subfamily === "string" ? normalizeProductDisplayText(dto.subfamily) : dto.subfamily,
+        brand: typeof dto.brand === "string" ? normalizeProductDisplayText(dto.brand) : dto.brand,
+        technicalAttributes: dto.technicalAttributes,
         unit: typeof dto.unit === "string" ? normalizeProductDisplayText(dto.unit) : undefined,
         currency: dto.currency,
         averageCost: dto.averageCost,
         lastCost: dto.lastCost,
+        costStatus: dto.costStatus ?? (hasCostUpdate ? (updatedCostIsPositive ? "ESTIMATED" : "PENDING") : undefined),
+        costSource: typeof dto.costSource !== "undefined"
+          ? dto.costSource
+          : (hasCostUpdate ? (updatedCostIsPositive ? "MANUAL_ESTIMATE" : null) : undefined),
         stock: dto.stock,
         isActive: dto.isActive,
         updatedByUserId: actor.id,

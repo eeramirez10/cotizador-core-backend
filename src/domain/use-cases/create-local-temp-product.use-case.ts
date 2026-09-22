@@ -38,6 +38,7 @@ export class CreateLocalTempProductUseCase {
     const description = normalizeProductDisplayText(dto.description);
     const canonicalDescription = canonicalizeProductText(dto.description);
     const unit = normalizeProductDisplayText(dto.unit);
+    const hasEstimatedCost = Math.max(dto.averageCost ?? 0, dto.lastCost ?? 0) > 0;
     const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({ canonicalDescription, unit });
     if (existing) {
       await this.semanticPort.upsert(existing);
@@ -47,12 +48,21 @@ export class CreateLocalTempProductUseCase {
     const product = await this.productRepository.createLocalTemp({
       description,
       canonicalDescription,
+      commercialDescription: dto.commercialDescription
+        ? normalizeProductDisplayText(dto.commercialDescription)
+        : null,
+      family: dto.family ? normalizeProductDisplayText(dto.family) : null,
+      subfamily: dto.subfamily ? normalizeProductDisplayText(dto.subfamily) : null,
+      brand: dto.brand ? normalizeProductDisplayText(dto.brand) : null,
+      technicalAttributes: dto.technicalAttributes,
       unit,
       currency: dto.currency,
       averageCost: dto.averageCost,
       lastCost: dto.lastCost,
       stock: dto.stock,
       ean: dto.ean,
+      costStatus: hasEstimatedCost ? "ESTIMATED" : "PENDING",
+      costSource: hasEstimatedCost ? "MANUAL_ESTIMATE" : null,
       createdByUserId: actor.id,
       updatedByUserId: actor.id,
       branchId: targetBranchId,

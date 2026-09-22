@@ -18,10 +18,17 @@ interface ProductRow {
   code: string | null;
   ean: string | null;
   description: string;
+  commercialDescription: string | null;
+  family: string | null;
+  subfamily: string | null;
+  brand: string | null;
+  technicalAttributes: unknown;
   unit: string;
   currency: ProductEntity["currency"];
   averageCost: number | DecimalLike | null;
   lastCost: number | DecimalLike | null;
+  costStatus: ProductEntity["costStatus"];
+  costSource: ProductEntity["costSource"];
   stock: number | DecimalLike | null;
   branchId: string | null;
   isActive: boolean;
@@ -51,10 +58,24 @@ export class ProductMapper {
       code: row.code,
       ean: row.ean,
       description: row.description,
+      commercialDescription: row.commercialDescription,
+      family: row.family,
+      subfamily: row.subfamily,
+      brand: row.brand,
+      technicalAttributes:
+        row.technicalAttributes && typeof row.technicalAttributes === "object" && !Array.isArray(row.technicalAttributes)
+          ? Object.fromEntries(
+              Object.entries(row.technicalAttributes).filter(
+                (entry): entry is [string, string] => typeof entry[1] === "string",
+              ),
+            )
+          : {},
       unit: row.unit,
       currency: row.currency,
       averageCost: toNumber(row.averageCost),
       lastCost: toNumber(row.lastCost),
+      costStatus: row.costStatus,
+      costSource: row.costSource,
       stock: toNumber(row.stock),
       branchId: row.branchId,
       isActive: row.isActive,

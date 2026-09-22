@@ -296,10 +296,17 @@ export const ProductScalarFieldEnum = {
   ean: 'ean',
   description: 'description',
   canonicalDescription: 'canonicalDescription',
+  commercialDescription: 'commercialDescription',
+  family: 'family',
+  subfamily: 'subfamily',
+  brand: 'brand',
+  technicalAttributes: 'technicalAttributes',
   unit: 'unit',
   currency: 'currency',
   averageCost: 'averageCost',
   lastCost: 'lastCost',
+  costStatus: 'costStatus',
+  costSource: 'costSource',
   stock: 'stock',
   branchId: 'branchId',
   isActive: 'isActive',
@@ -1038,19 +1045,19 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-export const JsonNullValueInput = {
-  JsonNull: JsonNull
-} as const
-
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

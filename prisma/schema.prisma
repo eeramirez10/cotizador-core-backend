@@ -69,6 +69,19 @@ enum ProductProcurementStatus {
   REJECTED
 }
 
+enum ProductCostStatus {
+  PENDING
+  ESTIMATED
+  CONFIRMED
+}
+
+enum ProductCostSource {
+  ERP
+  SUPPLIER_QUOTE
+  PRICE_LIST
+  MANUAL_ESTIMATE
+}
+
 enum SupplierSource {
   ERP
   LOCAL
@@ -616,10 +629,17 @@ model Product {
   ean                        String?                  @db.VarChar(120)
   description                String                   @db.VarChar(500)
   canonicalDescription       String                   @default("") @map("canonical_description") @db.VarChar(500)
+  commercialDescription      String?                  @map("commercial_description") @db.VarChar(500)
+  family                     String?                  @db.VarChar(80)
+  subfamily                  String?                  @db.VarChar(120)
+  brand                      String?                  @db.VarChar(120)
+  technicalAttributes        Json                     @default("{}") @map("technical_attributes")
   unit                       String                   @db.VarChar(30)
   currency                   Currency                 @default(USD)
   averageCost                Decimal?                 @map("average_cost") @db.Decimal(14, 4)
   lastCost                   Decimal?                 @map("last_cost") @db.Decimal(14, 4)
+  costStatus                 ProductCostStatus        @default(PENDING) @map("cost_status")
+  costSource                 ProductCostSource?       @map("cost_source")
   stock                      Decimal?                 @db.Decimal(14, 4)
   branchId                   String?                  @map("branch_id") @db.Uuid
   isActive                   Boolean                  @default(true) @map("is_active")
@@ -646,6 +666,8 @@ model Product {
   @@index([code])
   @@index([ean])
   @@index([description])
+  @@index([family, subfamily])
+  @@index([costStatus])
   @@index([source, isActive, canonicalDescription, unit])
   @@index([branchId])
   @@index([procurementStatus])

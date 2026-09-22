@@ -1,9 +1,15 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
 import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface LocalProductItemInput {
   itemId: string;
   description: string;
+  commercialDescription: string | null;
+  family: string | null;
+  subfamily: string | null;
+  brand: string | null;
+  technicalAttributes: Record<string, string>;
   unit: string | null;
   currency?: Currency;
   averageCost: number | null;
@@ -79,6 +85,10 @@ export class CreateLocalProductsFromItemsRequestDto {
           row.unit_original
       );
       const unit = normalizeMeasurementUnit(rawUnit);
+      const [technicalError, technicalAttributes = {}] = parseTechnicalAttributes(
+        row.technicalAttributes ?? row.technical_attributes,
+      );
+      if (technicalError) return [`items[${i}].${technicalError}`];
 
       if (!itemId) return [`items[${i}].itemId is required.`];
       if (!description) return [`items[${i}].description is required.`];
@@ -116,6 +126,14 @@ export class CreateLocalProductsFromItemsRequestDto {
       items.push({
         itemId,
         description,
+        commercialDescription: normalizeOptionalCatalogText(
+          row.commercialDescription ?? row.commercial_description,
+          500,
+        ) ?? null,
+        family: normalizeOptionalCatalogText(row.family ?? row.technicalFamily, 80) ?? null,
+        subfamily: normalizeOptionalCatalogText(row.subfamily, 120) ?? null,
+        brand: normalizeOptionalCatalogText(row.brand, 120) ?? null,
+        technicalAttributes,
         unit,
         currency: currency as Currency | undefined,
         averageCost,

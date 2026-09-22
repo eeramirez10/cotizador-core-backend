@@ -1,5 +1,7 @@
 import type {
   Currency,
+  ProductCostSource,
+  ProductCostStatus,
   ProductProcurementStatus,
 } from "../../infrastructure/database/generated/enums";
 
@@ -32,10 +34,17 @@ export interface LocalProductProcurementOfferEntity {
 export interface LocalProductProcurementEntity {
   id: string;
   description: string;
+  commercialDescription: string | null;
+  family: string | null;
+  subfamily: string | null;
+  brand: string | null;
+  technicalAttributes: Record<string, string>;
   unit: string;
   currency: Currency;
   averageCost: number | null;
   lastCost: number | null;
+  costStatus: ProductCostStatus;
+  costSource: ProductCostSource | null;
   branch: {
     id: string;
     code: string;

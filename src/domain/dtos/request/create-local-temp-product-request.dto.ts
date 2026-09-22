@@ -1,8 +1,14 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
 import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface CreateLocalTempProductRequestDtoProps {
   description: string;
+  commercialDescription: string | null;
+  family: string | null;
+  subfamily: string | null;
+  brand: string | null;
+  technicalAttributes: Record<string, string>;
   unit: string;
   currency: Currency;
   averageCost: number | null;
@@ -14,6 +20,11 @@ interface CreateLocalTempProductRequestDtoProps {
 
 export class CreateLocalTempProductRequestDto {
   public readonly description: string;
+  public readonly commercialDescription: string | null;
+  public readonly family: string | null;
+  public readonly subfamily: string | null;
+  public readonly brand: string | null;
+  public readonly technicalAttributes: Record<string, string>;
   public readonly unit: string;
   public readonly currency: Currency;
   public readonly averageCost: number | null;
@@ -24,6 +35,11 @@ export class CreateLocalTempProductRequestDto {
 
   constructor(props: CreateLocalTempProductRequestDtoProps) {
     this.description = props.description;
+    this.commercialDescription = props.commercialDescription;
+    this.family = props.family;
+    this.subfamily = props.subfamily;
+    this.brand = props.brand;
+    this.technicalAttributes = props.technicalAttributes;
     this.unit = props.unit;
     this.currency = props.currency;
     this.averageCost = props.averageCost;
@@ -45,6 +61,9 @@ export class CreateLocalTempProductRequestDto {
     if (!description) return ["description is required."];
     if (!rawUnit) return ["unit is required."];
     if (!unit) return ["unit is invalid."];
+
+    const [technicalError, technicalAttributes = {}] = parseTechnicalAttributes(body.technicalAttributes);
+    if (technicalError) return [technicalError];
 
     const currencyRaw =
       typeof body.currency === "string" && body.currency.trim().length > 0
@@ -78,6 +97,11 @@ export class CreateLocalTempProductRequestDto {
       ,
       new CreateLocalTempProductRequestDto({
         description,
+        commercialDescription: normalizeOptionalCatalogText(body.commercialDescription, 500) ?? null,
+        family: normalizeOptionalCatalogText(body.family, 80) ?? null,
+        subfamily: normalizeOptionalCatalogText(body.subfamily, 120) ?? null,
+        brand: normalizeOptionalCatalogText(body.brand, 120) ?? null,
+        technicalAttributes,
         unit,
         currency: currencyRaw as Currency,
         averageCost,

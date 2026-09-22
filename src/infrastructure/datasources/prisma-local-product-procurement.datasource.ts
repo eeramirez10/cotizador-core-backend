@@ -178,6 +178,8 @@ export class PrismaLocalProductProcurementDatasource extends LocalProductProcure
                 averageCost: params.unitCost,
                 lastCost: params.unitCost,
                 currency: params.currency,
+                costStatus: "CONFIRMED",
+                costSource: "SUPPLIER_QUOTE",
               }
             : {}),
           procurementUpdatedAt: new Date(),
@@ -257,6 +259,8 @@ export class PrismaLocalProductProcurementDatasource extends LocalProductProcure
           averageCost: offer.unitCost,
           lastCost: offer.unitCost,
           currency: offer.currency,
+          costStatus: "CONFIRMED",
+          costSource: "SUPPLIER_QUOTE",
           procurementUpdatedAt: new Date(),
           procurementUpdatedByUserId: actorUserId,
           updatedByUserId: actorUserId,
@@ -320,10 +324,17 @@ export class PrismaLocalProductProcurementDatasource extends LocalProductProcure
     return {
       id: row.id,
       description: row.description,
+      commercialDescription: row.commercialDescription,
+      family: row.family,
+      subfamily: row.subfamily,
+      brand: row.brand,
+      technicalAttributes: this.stringRecord(row.technicalAttributes),
       unit: row.unit,
       currency: row.currency,
       averageCost: this.number(row.averageCost),
       lastCost: this.number(row.lastCost),
+      costStatus: row.costStatus,
+      costSource: row.costSource,
       branch: row.branch,
       createdBy: row.createdByUser ? this.user(row.createdByUser) : null,
       procurementStatus: row.procurementStatus,
@@ -360,6 +371,13 @@ export class PrismaLocalProductProcurementDatasource extends LocalProductProcure
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
     };
+  }
+
+  private stringRecord(value: unknown): Record<string, string> {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    return Object.fromEntries(
+      Object.entries(value).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
+    );
   }
 
   private user(user: { id: string; firstName: string; lastName: string }) {

@@ -1,5 +1,7 @@
 import type {
   Currency,
+  ProductCostSource,
+  ProductCostStatus,
   ProductSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
@@ -34,12 +36,19 @@ export interface FindLocalTempByDescriptionAndUnitDatasourceParams {
 export interface CreateLocalTempProductDatasourceParams {
   description: string;
   canonicalDescription: string;
+  commercialDescription: string | null;
+  family: string | null;
+  subfamily: string | null;
+  brand: string | null;
+  technicalAttributes: Record<string, string>;
   unit: string;
   currency: Currency;
   averageCost: number | null;
   lastCost: number | null;
   stock: number | null;
   ean: string | null;
+  costStatus: ProductCostStatus;
+  costSource: ProductCostSource | null;
   createdByUserId: string;
   updatedByUserId: string;
   branchId: string;
@@ -53,10 +62,17 @@ export interface UpdateLocalTempProductDatasourceParams {
     ean?: string | null;
     description?: string;
     canonicalDescription?: string;
+    commercialDescription?: string | null;
+    family?: string | null;
+    subfamily?: string | null;
+    brand?: string | null;
+    technicalAttributes?: Record<string, string>;
     unit?: string;
     currency?: Currency;
     averageCost?: number | null;
     lastCost?: number | null;
+    costStatus?: ProductCostStatus;
+    costSource?: ProductCostSource | null;
     stock?: number | null;
     isActive?: boolean;
     updatedByUserId: string;
