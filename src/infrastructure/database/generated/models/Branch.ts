@@ -304,6 +304,7 @@ export type BranchWhereInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionListRelationFilter
   whatsappLeads?: Prisma.WhatsAppLeadListRelationFilter
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  customerOnboardings?: Prisma.CustomerOnboardingListRelationFilter
 }
 
 export type BranchOrderByWithRelationInput = {
@@ -336,6 +337,7 @@ export type BranchOrderByWithRelationInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionOrderByRelationAggregateInput
   whatsappLeads?: Prisma.WhatsAppLeadOrderByRelationAggregateInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentOrderByRelationAggregateInput
+  customerOnboardings?: Prisma.CustomerOnboardingOrderByRelationAggregateInput
 }
 
 export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -371,6 +373,7 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionListRelationFilter
   whatsappLeads?: Prisma.WhatsAppLeadListRelationFilter
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentListRelationFilter
+  customerOnboardings?: Prisma.CustomerOnboardingListRelationFilter
 }, "id" | "code">
 
 export type BranchOrderByWithAggregationInput = {
@@ -453,6 +456,7 @@ export type BranchCreateInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateInput = {
@@ -485,6 +489,7 @@ export type BranchUncheckedCreateInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUpdateInput = {
@@ -517,6 +522,7 @@ export type BranchUpdateInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateInput = {
@@ -549,6 +555,7 @@ export type BranchUncheckedUpdateInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyInput = {
@@ -769,6 +776,20 @@ export type BranchUpdateOneRequiredWithoutErpWarehouseAssignmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutErpWarehouseAssignmentsInput, Prisma.BranchUpdateWithoutErpWarehouseAssignmentsInput>, Prisma.BranchUncheckedUpdateWithoutErpWarehouseAssignmentsInput>
 }
 
+export type BranchCreateNestedOneWithoutCustomerOnboardingsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedCreateWithoutCustomerOnboardingsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutCustomerOnboardingsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutCustomerOnboardingsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedCreateWithoutCustomerOnboardingsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutCustomerOnboardingsInput
+  upsert?: Prisma.BranchUpsertWithoutCustomerOnboardingsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutCustomerOnboardingsInput, Prisma.BranchUpdateWithoutCustomerOnboardingsInput>, Prisma.BranchUncheckedUpdateWithoutCustomerOnboardingsInput>
+}
+
 export type BranchCreateNestedOneWithoutProductsInput = {
   create?: Prisma.XOR<Prisma.BranchCreateWithoutProductsInput, Prisma.BranchUncheckedCreateWithoutProductsInput>
   connectOrCreate?: Prisma.BranchCreateOrConnectWithoutProductsInput
@@ -886,6 +907,7 @@ export type BranchCreateWithoutQuoteCatalogOptionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
@@ -917,6 +939,7 @@ export type BranchUncheckedCreateWithoutQuoteCatalogOptionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuoteCatalogOptionsInput = {
@@ -964,6 +987,7 @@ export type BranchUpdateWithoutQuoteCatalogOptionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
@@ -995,6 +1019,7 @@ export type BranchUncheckedUpdateWithoutQuoteCatalogOptionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutUsersInput = {
@@ -1026,6 +1051,7 @@ export type BranchCreateWithoutUsersInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutUsersInput = {
@@ -1057,6 +1083,7 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutUsersInput = {
@@ -1104,6 +1131,7 @@ export type BranchUpdateWithoutUsersInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutUsersInput = {
@@ -1135,6 +1163,7 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutManagerReportSubscriptionsInput = {
@@ -1166,6 +1195,7 @@ export type BranchCreateWithoutManagerReportSubscriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutManagerReportSubscriptionsInput = {
@@ -1197,6 +1227,7 @@ export type BranchUncheckedCreateWithoutManagerReportSubscriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutManagerReportSubscriptionsInput = {
@@ -1244,6 +1275,7 @@ export type BranchUpdateWithoutManagerReportSubscriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutManagerReportSubscriptionsInput = {
@@ -1275,6 +1307,7 @@ export type BranchUncheckedUpdateWithoutManagerReportSubscriptionsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutErpWarehouseAssignmentsInput = {
@@ -1306,6 +1339,7 @@ export type BranchCreateWithoutErpWarehouseAssignmentsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
@@ -1337,6 +1371,7 @@ export type BranchUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutErpWarehouseAssignmentsInput = {
@@ -1384,6 +1419,7 @@ export type BranchUpdateWithoutErpWarehouseAssignmentsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
@@ -1411,6 +1447,151 @@ export type BranchUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
   purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
+  managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
+  whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
+  whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutCustomerOnboardingsInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutBranchInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
+  managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
+  whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
+  whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutCustomerOnboardingsInput = {
+  id?: string
+  code: string
+  name: string
+  address?: string | null
+  street?: string | null
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city?: string | null
+  municipality?: string | null
+  state?: string | null
+  postalCode?: string | null
+  country?: string | null
+  email?: string | null
+  phone?: string | null
+  secondaryPhone?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedCreateNestedManyWithoutBranchInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutBranchInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutBranchInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
+  managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
+  whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
+  whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutCustomerOnboardingsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedCreateWithoutCustomerOnboardingsInput>
+}
+
+export type BranchUpsertWithoutCustomerOnboardingsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedUpdateWithoutCustomerOnboardingsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedCreateWithoutCustomerOnboardingsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutCustomerOnboardingsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutCustomerOnboardingsInput, Prisma.BranchUncheckedUpdateWithoutCustomerOnboardingsInput>
+}
+
+export type BranchUpdateWithoutCustomerOnboardingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutBranchNestedInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUpdateManyWithoutBranchNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
+  managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
+  whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
+  whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutCustomerOnboardingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  street?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  municipality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  quoteCatalogOptions?: Prisma.QuoteCatalogOptionUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutBranchNestedInput
+  erpWarehouseAssignments?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutBranchNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
@@ -1446,6 +1627,7 @@ export type BranchCreateWithoutProductsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutProductsInput = {
@@ -1477,6 +1659,7 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutProductsInput = {
@@ -1524,6 +1707,7 @@ export type BranchUpdateWithoutProductsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutProductsInput = {
@@ -1555,6 +1739,7 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutQuotesInput = {
@@ -1586,6 +1771,7 @@ export type BranchCreateWithoutQuotesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutQuotesInput = {
@@ -1617,6 +1803,7 @@ export type BranchUncheckedCreateWithoutQuotesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutQuotesInput = {
@@ -1664,6 +1851,7 @@ export type BranchUpdateWithoutQuotesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutQuotesInput = {
@@ -1695,6 +1883,7 @@ export type BranchUncheckedUpdateWithoutQuotesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutPurchaseRequisitionsInput = {
@@ -1726,6 +1915,7 @@ export type BranchCreateWithoutPurchaseRequisitionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutPurchaseRequisitionsInput = {
@@ -1757,6 +1947,7 @@ export type BranchUncheckedCreateWithoutPurchaseRequisitionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutPurchaseRequisitionsInput = {
@@ -1804,6 +1995,7 @@ export type BranchUpdateWithoutPurchaseRequisitionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutPurchaseRequisitionsInput = {
@@ -1835,6 +2027,7 @@ export type BranchUncheckedUpdateWithoutPurchaseRequisitionsInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutWhatsappLeadsInput = {
@@ -1866,6 +2059,7 @@ export type BranchCreateWithoutWhatsappLeadsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutWhatsappLeadsInput = {
@@ -1897,6 +2091,7 @@ export type BranchUncheckedCreateWithoutWhatsappLeadsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutWhatsappLeadsInput = {
@@ -1944,6 +2139,7 @@ export type BranchUpdateWithoutWhatsappLeadsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutWhatsappLeadsInput = {
@@ -1975,6 +2171,7 @@ export type BranchUncheckedUpdateWithoutWhatsappLeadsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutWhatsappLeadAssignmentsInput = {
@@ -2006,6 +2203,7 @@ export type BranchCreateWithoutWhatsappLeadAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutBranchInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutWhatsappLeadAssignmentsInput = {
@@ -2037,6 +2235,7 @@ export type BranchUncheckedCreateWithoutWhatsappLeadAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutBranchInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutWhatsappLeadAssignmentsInput = {
@@ -2084,6 +2283,7 @@ export type BranchUpdateWithoutWhatsappLeadAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutBranchNestedInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutWhatsappLeadAssignmentsInput = {
@@ -2115,6 +2315,7 @@ export type BranchUncheckedUpdateWithoutWhatsappLeadAssignmentsInput = {
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutBranchNestedInput
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutWhatsappConversationAccessesInput = {
@@ -2146,6 +2347,7 @@ export type BranchCreateWithoutWhatsappConversationAccessesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutWhatsappConversationAccessesInput = {
@@ -2177,6 +2379,7 @@ export type BranchUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutBranchInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedBranchInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutBranchInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutWhatsappConversationAccessesInput = {
@@ -2224,6 +2427,7 @@ export type BranchUpdateWithoutWhatsappConversationAccessesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
@@ -2255,6 +2459,7 @@ export type BranchUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   managerReportSubscriptions?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutBranchNestedInput
   whatsappLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedBranchNestedInput
   whatsappLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutBranchNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 
@@ -2273,6 +2478,7 @@ export type BranchCountOutputType = {
   managerReportSubscriptions: number
   whatsappLeads: number
   whatsappLeadAssignments: number
+  customerOnboardings: number
 }
 
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2286,6 +2492,7 @@ export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   managerReportSubscriptions?: boolean | BranchCountOutputTypeCountManagerReportSubscriptionsArgs
   whatsappLeads?: boolean | BranchCountOutputTypeCountWhatsappLeadsArgs
   whatsappLeadAssignments?: boolean | BranchCountOutputTypeCountWhatsappLeadAssignmentsArgs
+  customerOnboardings?: boolean | BranchCountOutputTypeCountCustomerOnboardingsArgs
 }
 
 /**
@@ -2368,6 +2575,13 @@ export type BranchCountOutputTypeCountWhatsappLeadAssignmentsArgs<ExtArgs extend
   where?: Prisma.WhatsAppLeadAssignmentWhereInput
 }
 
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountCustomerOnboardingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CustomerOnboardingWhereInput
+}
+
 
 export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2399,6 +2613,7 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   managerReportSubscriptions?: boolean | Prisma.Branch$managerReportSubscriptionsArgs<ExtArgs>
   whatsappLeads?: boolean | Prisma.Branch$whatsappLeadsArgs<ExtArgs>
   whatsappLeadAssignments?: boolean | Prisma.Branch$whatsappLeadAssignmentsArgs<ExtArgs>
+  customerOnboardings?: boolean | Prisma.Branch$customerOnboardingsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -2480,6 +2695,7 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   managerReportSubscriptions?: boolean | Prisma.Branch$managerReportSubscriptionsArgs<ExtArgs>
   whatsappLeads?: boolean | Prisma.Branch$whatsappLeadsArgs<ExtArgs>
   whatsappLeadAssignments?: boolean | Prisma.Branch$whatsappLeadAssignmentsArgs<ExtArgs>
+  customerOnboardings?: boolean | Prisma.Branch$customerOnboardingsArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2498,6 +2714,7 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     managerReportSubscriptions: Prisma.$ManagerReportSubscriptionPayload<ExtArgs>[]
     whatsappLeads: Prisma.$WhatsAppLeadPayload<ExtArgs>[]
     whatsappLeadAssignments: Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>[]
+    customerOnboardings: Prisma.$CustomerOnboardingPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2923,6 +3140,7 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   managerReportSubscriptions<T extends Prisma.Branch$managerReportSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$managerReportSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerReportSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappLeads<T extends Prisma.Branch$whatsappLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$whatsappLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappLeadAssignments<T extends Prisma.Branch$whatsappLeadAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$whatsappLeadAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppLeadAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customerOnboardings<T extends Prisma.Branch$customerOnboardingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$customerOnboardingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerOnboardingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3596,6 +3814,30 @@ export type Branch$whatsappLeadAssignmentsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.WhatsAppLeadAssignmentScalarFieldEnum | Prisma.WhatsAppLeadAssignmentScalarFieldEnum[]
+}
+
+/**
+ * Branch.customerOnboardings
+ */
+export type Branch$customerOnboardingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CustomerOnboarding
+   */
+  select?: Prisma.CustomerOnboardingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CustomerOnboarding
+   */
+  omit?: Prisma.CustomerOnboardingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerOnboardingInclude<ExtArgs> | null
+  where?: Prisma.CustomerOnboardingWhereInput
+  orderBy?: Prisma.CustomerOnboardingOrderByWithRelationInput | Prisma.CustomerOnboardingOrderByWithRelationInput[]
+  cursor?: Prisma.CustomerOnboardingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CustomerOnboardingScalarFieldEnum | Prisma.CustomerOnboardingScalarFieldEnum[]
 }
 
 /**

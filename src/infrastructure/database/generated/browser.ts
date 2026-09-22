@@ -63,6 +63,11 @@ export type Customer = Prisma.CustomerModel
  */
 export type CustomerContact = Prisma.CustomerContactModel
 /**
+ * Model CustomerOnboarding
+ * 
+ */
+export type CustomerOnboarding = Prisma.CustomerOnboardingModel
+/**
  * Model Product
  * 
  */

@@ -20,6 +20,7 @@ import { ReportSubscriptionsRoutes } from "./report-subscriptions/report-subscri
 import { WhatsAppAssistantRoutes } from "./integrations/whatsapp-assistant.routes";
 import { WhatsAppInboxRoutes } from "./whatsapp/whatsapp-inbox.routes";
 import { refreshSystemSettings } from "./middlewares/system-settings.middleware";
+import { CustomerOnboardingsRoutes } from "./customer-onboardings/customer-onboardings.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -35,6 +36,7 @@ export class AppRoutes {
     router.use("/branches", BranchesRoutes.routes());
     router.use("/users", UsersRoutes.routes());
     router.use("/customers", CustomersRoutes.routes());
+    router.use("/customer-onboardings", CustomerOnboardingsRoutes.routes());
     router.use("/products", ProductsRoutes.routes());
     router.use("/local-products", LocalProductsRoutes.routes());
     router.use("/quotes", QuotesRoutes.routes());

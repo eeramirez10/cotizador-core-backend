@@ -21,6 +21,9 @@ import { PrismaWhatsAppLeadRepository } from "../../infrastructure/repositories/
 import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-alert.composition";
 import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
+import { CustomerOnboardingUseCase } from "../../domain/use-cases/customer-onboarding.use-case";
+import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file-storage.adapter";
+import { AiPlatformCustomerTaxDocumentExtractorAdapter } from "../../infrastructure/http/ai-platform-customer-tax-document-extractor.adapter";
 
 export class WhatsAppAssistantRoutes {
   static routes(): Router {
@@ -57,6 +60,10 @@ export class WhatsAppAssistantRoutes {
         new WhatsAppLeadAssistantUseCase(new PrismaWhatsAppLeadRepository(), whatsAppRealtimeBus),
         whatsAppRealtimeBus,
         internalAlerts,
+        new CustomerOnboardingUseCase(
+          new LocalFileStorageAdapter(Envs.fileStorageRoot),
+          new AiPlatformCustomerTaxDocumentExtractorAdapter(Envs.aiPlatformBaseUrl, Envs.aiPlatformInternalApiKey, Envs.aiPlatformTimeoutMs),
+        ),
       ),
     );
     router.post("/tools", requireInternalApiKey(Envs.whatsAppAssistantInternalApiKey), controller.execute);

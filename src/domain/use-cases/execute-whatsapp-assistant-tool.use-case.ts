@@ -6,6 +6,7 @@ import type { WhatsAppInternalAssistantUseCase } from "./whatsapp-internal-assis
 import type { WhatsAppLeadAssistantUseCase } from "./whatsapp-lead-assistant.use-case";
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
+import type { CustomerOnboardingUseCase, CustomerOnboardingWriteInput } from "./customer-onboarding.use-case";
 
 type ToolArguments = Record<string, unknown>;
 
@@ -18,6 +19,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
     private readonly leadAssistant?: WhatsAppLeadAssistantUseCase,
     private readonly realtime?: WhatsAppRealtimePublisher,
     private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
+    private readonly customerOnboarding?: CustomerOnboardingUseCase,
   ) {}
 
   async execute(conversationId: string, turnId: string, name: string, args: ToolArguments): Promise<unknown> {
@@ -36,6 +38,8 @@ export class ExecuteWhatsAppAssistantToolUseCase {
       return this.internalAssistant.execute(principal, name, args);
     }
     if (principal.audience !== "CUSTOMER") throw new Error("CUSTOMER_ASSISTANT_NOT_AUTHORIZED");
+    if (["get_customer_onboarding", "update_customer_onboarding", "process_customer_tax_document"].includes(name)
+      && principal.customerSource !== "LOCAL") throw new Error("CUSTOMER_ONBOARDING_LOCAL_ONLY");
 
     switch (name) {
       case "list_customer_quotes":
@@ -60,6 +64,12 @@ export class ExecuteWhatsAppAssistantToolUseCase {
         return this.createInformationRequest(conversationId, args);
       case "contact_sales_representative":
         return this.contactSeller(conversationId, args);
+      case "get_customer_onboarding":
+        return this.customerOnboarding?.getForConversation(conversationId) ?? { error: "CUSTOMER_ONBOARDING_NOT_CONFIGURED" };
+      case "update_customer_onboarding":
+        return this.customerOnboarding?.updateFromAssistant(conversationId, this.onboardingInput(args)) ?? { error: "CUSTOMER_ONBOARDING_NOT_CONFIGURED" };
+      case "process_customer_tax_document":
+        return this.customerOnboarding?.processWhatsAppTaxDocument(conversationId, this.requiredText(args.attachmentId, "attachmentId")) ?? { error: "CUSTOMER_ONBOARDING_NOT_CONFIGURED" };
       default:
         throw new Error(`Unsupported assistant tool: ${name}`);
     }
@@ -126,7 +136,9 @@ export class ExecuteWhatsAppAssistantToolUseCase {
     if (!action) return { error: "CONFIRMATION_NOT_FOUND_OR_EXPIRED" };
     if (quote.status === "APPROVED") {
       await this.repository.markActionExecuted(action.id, new Date());
-      return { success: true, alreadyApplied: true, quoteNumber: quote.quoteNumber, status: "APPROVED" };
+      const onboarding = await this.customerOnboarding?.ensureAfterAcceptance(quote.id, conversationId);
+      const result = { success: true, alreadyApplied: true, quoteNumber: quote.quoteNumber, status: "APPROVED" };
+      return onboarding ? { ...result, customerOnboarding: onboarding } : result;
     }
     if (quote.status !== "QUOTED") return { error: "QUOTE_NOT_ACCEPTABLE", currentStatus: quote.status };
 
@@ -145,7 +157,9 @@ export class ExecuteWhatsAppAssistantToolUseCase {
       { id: quote.sellerId, role: "SELLER", branchId: quote.branchId, auditActorUserId: null },
     );
     await this.repository.markActionExecuted(action.id, new Date());
-    return { success: true, quoteNumber: quote.quoteNumber, status: "APPROVED" };
+    const onboarding = await this.customerOnboarding?.ensureAfterAcceptance(quote.id, conversationId);
+    const result = { success: true, quoteNumber: quote.quoteNumber, status: "APPROVED" };
+    return onboarding ? { ...result, customerOnboarding: onboarding } : result;
   }
 
   private async prepareRejection(conversationId: string, turnId: string, args: ToolArguments) {
@@ -324,6 +338,15 @@ export class ExecuteWhatsAppAssistantToolUseCase {
 
   private positiveInteger(value: unknown): number | null {
     return typeof value === "number" && Number.isInteger(value) && value > 0 ? value : null;
+  }
+
+  private onboardingInput(args: ToolArguments): CustomerOnboardingWriteInput {
+    const fields: Array<keyof CustomerOnboardingWriteInput> = [
+      "legalName", "taxId", "taxRegime", "cfdiUse", "billingStreet", "billingExteriorNumber",
+      "billingInteriorNumber", "billingNeighborhood", "billingCity", "billingState", "billingPostalCode",
+      "billingCountry", "contactName", "contactEmail", "contactPhone", "contactWhatsapp",
+    ];
+    return Object.fromEntries(fields.map((field) => [field, typeof args[field] === "string" ? args[field] : null]));
   }
 
 }

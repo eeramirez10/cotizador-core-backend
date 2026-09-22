@@ -75,7 +75,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
             mediaCount: true,
             attachments: {
               orderBy: { createdAt: "asc" },
-              select: { originalName: true, mimeType: true },
+              select: { id: true, originalName: true, mimeType: true },
             },
           },
         },
@@ -208,6 +208,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       take: Math.min(Math.max(limit, 1), 10),
       select: {
         id: true,
+        customerId: true,
         quoteNumber: true,
         status: true,
         currency: true,
@@ -240,6 +241,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       },
       select: {
         id: true,
+        customerId: true,
         quoteNumber: true,
         status: true,
         currency: true,
@@ -267,6 +269,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     if (!row) return null;
     return {
       ...this.toSummary(row),
+      customerId: row.customerId,
       subtotal: Number(row.subtotal),
       tax: Number(row.tax),
       deliveryPlace: row.deliveryPlace,

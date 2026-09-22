@@ -5,6 +5,7 @@ export interface WhatsAppAssistantAgentInput {
   message: string;
   mediaCount: number;
   attachments: Array<{
+    id: string;
     originalName: string;
     mimeType: string;
   }>;

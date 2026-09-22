@@ -73,6 +73,28 @@ export const CustomerProfileStatus = {
 export type CustomerProfileStatus = (typeof CustomerProfileStatus)[keyof typeof CustomerProfileStatus]
 
 
+export const CustomerOnboardingStatus = {
+  COLLECTING: 'COLLECTING',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  PENDING_CXC: 'PENDING_CXC',
+  READY_FOR_ERP: 'READY_FOR_ERP',
+  ERP_LINKED: 'ERP_LINKED',
+  REJECTED: 'REJECTED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CustomerOnboardingStatus = (typeof CustomerOnboardingStatus)[keyof typeof CustomerOnboardingStatus]
+
+
+export const CustomerOnboardingSource = {
+  WHATSAPP: 'WHATSAPP',
+  MANUAL: 'MANUAL'
+} as const
+
+export type CustomerOnboardingSource = (typeof CustomerOnboardingSource)[keyof typeof CustomerOnboardingSource]
+
+
 export const CustomerSource = {
   ERP: 'ERP',
   LOCAL: 'LOCAL'

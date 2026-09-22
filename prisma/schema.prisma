@@ -50,6 +50,22 @@ enum CustomerProfileStatus {
   FISCAL_COMPLETED
 }
 
+enum CustomerOnboardingStatus {
+  COLLECTING
+  PENDING_REVIEW
+  PENDING_CXC
+  READY_FOR_ERP
+  ERP_LINKED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum CustomerOnboardingSource {
+  WHATSAPP
+  MANUAL
+}
+
 enum CustomerSource {
   ERP
   LOCAL
@@ -368,6 +384,7 @@ model Branch {
   managerReportSubscriptions   ManagerReportSubscription[]
   whatsappLeads                WhatsAppLead[]
   whatsappLeadAssignments      WhatsAppLeadAssignment[]
+  customerOnboardings          CustomerOnboarding[]
 
   @@map("branches")
 }
@@ -464,6 +481,8 @@ model User {
   createdManagerReports         ManagerReportSubscription[]     @relation("ManagerReportCreatedBy")
   updatedManagerReports         ManagerReportSubscription[]     @relation("ManagerReportUpdatedBy")
   whatsappInternalAlerts        WhatsAppInternalAlert[]         @relation("WhatsAppInternalAlertRecipient")
+  customerOnboardings           CustomerOnboarding[]            @relation("CustomerOnboardingSeller")
+  reviewedCustomerOnboardings   CustomerOnboarding[]            @relation("CustomerOnboardingReviewedBy")
 
   @@index([branchId])
   @@map("users")
@@ -588,6 +607,7 @@ model Customer {
   whatsappLeads                WhatsAppLead[]
   whatsappQuoteRequests        WhatsAppQuoteRequest[]
   whatsappConversationAccesses WhatsAppConversationAccess[]
+  onboarding                   CustomerOnboarding?
 
   @@index([externalId])
   @@index([code])
@@ -618,6 +638,60 @@ model CustomerContact {
 
   @@index([customerId])
   @@map("customer_contacts")
+}
+
+model CustomerOnboarding {
+  id                      String                   @id @default(uuid()) @db.Uuid
+  customerId              String                   @unique @map("customer_id") @db.Uuid
+  acceptedQuoteId         String?                  @unique @map("accepted_quote_id") @db.Uuid
+  conversationId          String?                  @unique @map("conversation_id") @db.Uuid
+  taxDocumentAttachmentId String?                  @unique @map("tax_document_attachment_id") @db.Uuid
+  taxDocumentStorageKey   String?                  @unique @map("tax_document_storage_key") @db.VarChar(500)
+  taxDocumentOriginalName String?                  @map("tax_document_original_name") @db.VarChar(255)
+  taxDocumentMimeType     String?                  @map("tax_document_mime_type") @db.VarChar(120)
+  sellerId                String                   @map("seller_id") @db.Uuid
+  branchId                String                   @map("branch_id") @db.Uuid
+  source                  CustomerOnboardingSource @default(WHATSAPP)
+  status                  CustomerOnboardingStatus @default(COLLECTING)
+  legalName               String?                  @map("legal_name") @db.VarChar(260)
+  taxId                   String?                  @map("tax_id") @db.VarChar(60)
+  taxRegime               String?                  @map("tax_regime") @db.VarChar(160)
+  cfdiUse                 String?                  @map("cfdi_use") @db.VarChar(120)
+  billingStreet           String?                  @map("billing_street") @db.VarChar(255)
+  billingExteriorNumber   String?                  @map("billing_exterior_number") @db.VarChar(30)
+  billingInteriorNumber   String?                  @map("billing_interior_number") @db.VarChar(30)
+  billingNeighborhood     String?                  @map("billing_neighborhood") @db.VarChar(160)
+  billingCity             String?                  @map("billing_city") @db.VarChar(120)
+  billingState            String?                  @map("billing_state") @db.VarChar(120)
+  billingPostalCode       String?                  @map("billing_postal_code") @db.VarChar(20)
+  billingCountry          String?                  @map("billing_country") @db.VarChar(80)
+  contactName             String?                  @map("contact_name") @db.VarChar(160)
+  contactEmail            String?                  @map("contact_email") @db.VarChar(180)
+  contactPhone            String?                  @map("contact_phone") @db.VarChar(40)
+  contactWhatsapp         String?                  @map("contact_whatsapp") @db.VarChar(40)
+  extractionConfidence    Decimal?                 @map("extraction_confidence") @db.Decimal(5, 4)
+  extractionEvidence      String?                  @map("extraction_evidence") @db.Text
+  reviewedByUserId        String?                  @map("reviewed_by_user_id") @db.Uuid
+  erpCode                 String?                  @map("erp_code") @db.VarChar(80)
+  submittedAt             DateTime?                @map("submitted_at")
+  approvedAt              DateTime?                @map("approved_at")
+  linkedAt                DateTime?                @map("linked_at")
+  completedAt             DateTime?                @map("completed_at")
+  createdAt               DateTime                 @default(now()) @map("created_at")
+  updatedAt               DateTime                 @updatedAt @map("updated_at")
+
+  customer              Customer                   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  acceptedQuote         Quote?                     @relation(fields: [acceptedQuoteId], references: [id], onDelete: SetNull)
+  conversation          WhatsAppConversation?      @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  taxDocumentAttachment WhatsAppInboundAttachment? @relation(fields: [taxDocumentAttachmentId], references: [id], onDelete: SetNull)
+  seller                User                       @relation("CustomerOnboardingSeller", fields: [sellerId], references: [id], onDelete: Restrict)
+  branch                Branch                     @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  reviewedByUser        User?                      @relation("CustomerOnboardingReviewedBy", fields: [reviewedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([status, updatedAt])
+  @@index([sellerId, status])
+  @@index([branchId, status])
+  @@map("customer_onboardings")
 }
 
 model Product {
@@ -801,6 +875,7 @@ model Quote {
   whatsappConversationAccesses WhatsAppConversationAccess[]
   whatsappOutboundMessages     WhatsAppOutboundMessage[]
   whatsappInternalAlerts       WhatsAppInternalAlert[]
+  customerOnboarding           CustomerOnboarding?
 
   @@unique([createdByUserId, clientDraftId])
   @@unique([rootQuoteId, revisionNumber])
@@ -1276,18 +1351,19 @@ model WhatsAppConversation {
   createdAt             DateTime                 @default(now()) @map("created_at")
   updatedAt             DateTime                 @updatedAt @map("updated_at")
 
-  handledByUser    User?                           @relation("WhatsAppConversationHandledBy", fields: [handledByUserId], references: [id], onDelete: SetNull)
-  internalUser     User?                           @relation("WhatsAppConversationInternalUser", fields: [internalUserId], references: [id], onDelete: SetNull)
-  inboundMessages  WhatsAppInboundMessage[]
-  outboundMessages WhatsAppOutboundMessage[]
-  assistantJobs    WhatsAppAssistantJob[]
-  pendingActions   WhatsAppPendingAction[]
-  changeRequests   WhatsAppCustomerChangeRequest[]
-  internalAlerts   WhatsAppInternalAlert[]
-  accesses         WhatsAppConversationAccess[]
-  readStates       WhatsAppConversationReadState[]
-  lead             WhatsAppLead?
-  quoteRequests    WhatsAppQuoteRequest[]
+  handledByUser      User?                           @relation("WhatsAppConversationHandledBy", fields: [handledByUserId], references: [id], onDelete: SetNull)
+  internalUser       User?                           @relation("WhatsAppConversationInternalUser", fields: [internalUserId], references: [id], onDelete: SetNull)
+  inboundMessages    WhatsAppInboundMessage[]
+  outboundMessages   WhatsAppOutboundMessage[]
+  assistantJobs      WhatsAppAssistantJob[]
+  pendingActions     WhatsAppPendingAction[]
+  changeRequests     WhatsAppCustomerChangeRequest[]
+  internalAlerts     WhatsAppInternalAlert[]
+  accesses           WhatsAppConversationAccess[]
+  readStates         WhatsAppConversationReadState[]
+  lead               WhatsAppLead?
+  quoteRequests      WhatsAppQuoteRequest[]
+  customerOnboarding CustomerOnboarding?
 
   @@unique([businessPhoneE164, participantPhoneE164], map: "whatsapp_conversations_business_participant_key")
   @@index([lastInboundAt])
@@ -1471,7 +1547,8 @@ model WhatsAppInboundAttachment {
   quoteExtractedByName   String?   @map("quote_extracted_by_name") @db.VarChar(241)
   lastQuoteDraftId       String?   @map("last_quote_draft_id") @db.Uuid
 
-  inboundMessage WhatsAppInboundMessage @relation(fields: [inboundMessageId], references: [id], onDelete: Cascade)
+  inboundMessage     WhatsAppInboundMessage @relation(fields: [inboundMessageId], references: [id], onDelete: Cascade)
+  customerOnboarding CustomerOnboarding?
 
   @@index([inboundMessageId, createdAt])
   @@map("whatsapp_inbound_attachments")

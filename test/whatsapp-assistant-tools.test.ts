@@ -32,6 +32,7 @@ const quote: WhatsAppAssistantQuoteDetails = {
 class RepositoryStub extends WhatsAppAssistantRepository {
   pending: (WhatsAppPendingActionEntity & { preparedTurnId: string }) | null = null;
   audience: "CUSTOMER" | "INTERNAL_USER" | "UNKNOWN" = "CUSTOMER";
+  customerSource: "LOCAL" | "ERP" = "LOCAL";
   requestTypes: Array<"INFORMATION" | "MODIFICATION"> = [];
 
   async getPrincipal() {
@@ -47,6 +48,7 @@ class RepositoryStub extends WhatsAppAssistantRepository {
       reportBranchId: null,
       reportRange: null,
       isVerified: false,
+      customerSource: this.customerSource,
     };
   }
   async getParticipantPhone() { return "+525511223344"; }
@@ -216,5 +218,20 @@ test("internal numbers cannot execute customer quote tools", async () => {
   await assert.rejects(
     () => useCase.execute("conversation-1", "turn-1", "list_customer_quotes", { limit: 5 }),
     /CUSTOMER_ASSISTANT_NOT_AUTHORIZED/,
+  );
+});
+
+test("ERP customers cannot use fiscal onboarding tools", async () => {
+  const repository = new RepositoryStub();
+  repository.customerSource = "ERP";
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  await assert.rejects(
+    () => useCase.execute("conversation-1", "turn-1", "get_customer_onboarding", {}),
+    /CUSTOMER_ONBOARDING_LOCAL_ONLY/,
+  );
+  await assert.rejects(
+    () => useCase.execute("conversation-1", "turn-1", "process_customer_tax_document", { attachmentId: "file-1" }),
+    /CUSTOMER_ONBOARDING_LOCAL_ONLY/,
   );
 });

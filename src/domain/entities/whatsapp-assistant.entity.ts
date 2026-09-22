@@ -15,6 +15,7 @@ export interface WhatsAppAssistantPrincipal {
   reportRange: ManagerReportRange | null;
   isVerified: boolean;
   customerId?: string | null;
+  customerSource?: "LOCAL" | "ERP" | null;
   customerContactId?: string | null;
   customerOwnerUserId?: string | null;
   customerOwnerBranchId?: string | null;
@@ -30,6 +31,7 @@ export interface WhatsAppAssistantJobEntity {
   message: string;
   mediaCount: number;
   attachments: Array<{
+    id: string;
     originalName: string;
     mimeType: string;
   }>;
@@ -88,6 +90,7 @@ export interface WhatsAppAssistantQuoteSummary {
 }
 
 export interface WhatsAppAssistantQuoteDetails extends WhatsAppAssistantQuoteSummary {
+  customerId: string;
   subtotal: number;
   tax: number;
   deliveryPlace: string | null;

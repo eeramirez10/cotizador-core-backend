@@ -60,6 +60,7 @@ export const ModelName = {
   UserErpWarehouse: 'UserErpWarehouse',
   Customer: 'Customer',
   CustomerContact: 'CustomerContact',
+  CustomerOnboarding: 'CustomerOnboarding',
   Product: 'Product',
   LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
@@ -285,6 +286,50 @@ export const CustomerContactScalarFieldEnum = {
 } as const
 
 export type CustomerContactScalarFieldEnum = (typeof CustomerContactScalarFieldEnum)[keyof typeof CustomerContactScalarFieldEnum]
+
+
+export const CustomerOnboardingScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  acceptedQuoteId: 'acceptedQuoteId',
+  conversationId: 'conversationId',
+  taxDocumentAttachmentId: 'taxDocumentAttachmentId',
+  taxDocumentStorageKey: 'taxDocumentStorageKey',
+  taxDocumentOriginalName: 'taxDocumentOriginalName',
+  taxDocumentMimeType: 'taxDocumentMimeType',
+  sellerId: 'sellerId',
+  branchId: 'branchId',
+  source: 'source',
+  status: 'status',
+  legalName: 'legalName',
+  taxId: 'taxId',
+  taxRegime: 'taxRegime',
+  cfdiUse: 'cfdiUse',
+  billingStreet: 'billingStreet',
+  billingExteriorNumber: 'billingExteriorNumber',
+  billingInteriorNumber: 'billingInteriorNumber',
+  billingNeighborhood: 'billingNeighborhood',
+  billingCity: 'billingCity',
+  billingState: 'billingState',
+  billingPostalCode: 'billingPostalCode',
+  billingCountry: 'billingCountry',
+  contactName: 'contactName',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  contactWhatsapp: 'contactWhatsapp',
+  extractionConfidence: 'extractionConfidence',
+  extractionEvidence: 'extractionEvidence',
+  reviewedByUserId: 'reviewedByUserId',
+  erpCode: 'erpCode',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  linkedAt: 'linkedAt',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerOnboardingScalarFieldEnum = (typeof CustomerOnboardingScalarFieldEnum)[keyof typeof CustomerOnboardingScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {

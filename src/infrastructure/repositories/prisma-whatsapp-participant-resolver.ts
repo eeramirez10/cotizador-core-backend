@@ -5,6 +5,7 @@ import { prisma } from "../database/prisma-client";
 
 interface CustomerPhoneMatch {
   customerId: string;
+  customerSource: "LOCAL" | "ERP";
   customerContactId: string | null;
   customerName: string;
   customerContactName: string | null;
@@ -85,7 +86,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
             customerId: true,
             createdByUserId: true,
             branchId: true,
-            customer: { select: { legalName: true, displayName: true } },
+            customer: { select: { legalName: true, displayName: true, source: true } },
           },
         },
       },
@@ -96,6 +97,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
         || "Cliente";
       return this.customerPrincipal(participantPhoneE164, {
         customerId: delivery.quote.customerId,
+        customerSource: delivery.quote.customer.source,
         customerContactId: delivery.customerContact?.id ?? null,
         customerName,
         customerContactName: delivery.customerContact?.name ?? null,
@@ -129,6 +131,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
     const contacts = await prisma.$queryRaw<CustomerPhoneMatch[]>(Prisma.sql`
       SELECT
         c.id AS "customerId",
+        c.source AS "customerSource",
         cc.id AS "customerContactId",
         COALESCE(c.legal_name, c.display_name) AS "customerName",
         cc.name AS "customerContactName",
@@ -148,6 +151,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
     const customers = await prisma.$queryRaw<CustomerPhoneMatch[]>(Prisma.sql`
       SELECT
         c.id AS "customerId",
+        c.source AS "customerSource",
         NULL::uuid AS "customerContactId",
         COALESCE(c.legal_name, c.display_name) AS "customerName",
         NULL::varchar AS "customerContactName",
@@ -213,6 +217,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
       reportRange: null,
       isVerified: false,
       customerId: customer.customerId,
+      customerSource: customer.customerSource,
       customerContactId: customer.customerContactId,
       customerOwnerUserId: owner.userId,
       customerOwnerBranchId: owner.branchId,
