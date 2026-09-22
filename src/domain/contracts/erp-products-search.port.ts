@@ -13,6 +13,7 @@ export interface ErpWarehouseProduct {
   lastCost: number;
   averageCostMxn: number;
   lastCostMxn: number;
+  hasUsableCost: boolean;
   warehouseId: string;
   warehouseName: string;
 }

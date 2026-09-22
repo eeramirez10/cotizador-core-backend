@@ -64,7 +64,7 @@ export class ErpProductsSearchAdapter extends ErpProductsSearchPort {
     const ean = text(row.ean);
     const description = text(row.description);
     const warehouseId = text(row.warehouseId);
-    if (!code || !ean || !description || !warehouseId) return null;
+    if (!code || !ean || !description) return null;
     const saleCurrency = text(row.saleCurrency ?? row.currency).toUpperCase() === "MXN" ? "MXN" : "USD";
     const averageCostMxn = number(row.averageCostMxn ?? row.averageCost);
     const lastCostMxn = number(row.lastCostMxn ?? row.lastCost);
@@ -83,8 +83,11 @@ export class ErpProductsSearchAdapter extends ErpProductsSearchPort {
       lastCost: lastCostMxn,
       averageCostMxn,
       lastCostMxn,
+      hasUsableCost: typeof row.hasUsableCost === "boolean"
+        ? row.hasUsableCost
+        : Math.max(averageCostMxn, lastCostMxn) > 0,
       warehouseId,
-      warehouseName: text(row.warehouseName) || `ALMACEN ${warehouseId}`,
+      warehouseName: text(row.warehouseName) || (warehouseId ? `ALMACEN ${warehouseId}` : "SIN ALMACEN ERP"),
     };
   }
 }
