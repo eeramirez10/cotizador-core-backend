@@ -14,6 +14,7 @@ export interface WhatsAppAssistantPrincipal {
   reportBranchId: string | null;
   reportRange: ManagerReportRange | null;
   isVerified: boolean;
+  sharedCustomerPhone?: boolean;
   customerId?: string | null;
   customerSource?: "LOCAL" | "ERP" | null;
   customerContactId?: string | null;

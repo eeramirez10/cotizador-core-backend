@@ -2,6 +2,7 @@ import { Prisma } from "../database/generated/client";
 import type { WhatsAppAssistantPrincipal } from "../../domain/entities/whatsapp-assistant.entity";
 import { WhatsAppParticipantResolverPort } from "../../domain/contracts/whatsapp-participant-resolver.port";
 import { prisma } from "../database/prisma-client";
+import { customerIdsForPhone } from "./customer-phone-associations";
 
 interface CustomerPhoneMatch {
   customerId: string;
@@ -65,8 +66,26 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
       };
     }
 
+    const customerIds = await customerIdsForPhone(participantPhoneE164);
+    if (customerIds.length > 1) {
+      return {
+        audience: "CUSTOMER",
+        displayName: "Contacto compartido",
+        phoneE164: participantPhoneE164,
+        userId: null,
+        role: null,
+        branchId: null,
+        branchName: null,
+        reportScope: null,
+        reportBranchId: null,
+        reportRange: null,
+        isVerified: false,
+        sharedCustomerPhone: true,
+      };
+    }
+
     const customer = await this.findCustomerByPhone(participantPhoneE164);
-    if (customer) {
+    if (customer && customerIds.includes(customer.customerId)) {
       const owner = await this.findCustomerOwner(customer);
       return this.customerPrincipal(participantPhoneE164, customer, owner);
     }

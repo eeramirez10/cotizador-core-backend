@@ -24,6 +24,12 @@ export class ExecuteWhatsAppAssistantToolUseCase {
 
   async execute(conversationId: string, turnId: string, name: string, args: ToolArguments): Promise<unknown> {
     const principal = await this.repository.getPrincipal(conversationId);
+    if (principal.sharedCustomerPhone && ([
+      "get_whatsapp_lead", "update_whatsapp_lead", "upsert_whatsapp_quote_request", "close_whatsapp_quote_request",
+      "list_customer_quotes", "get_customer_onboarding", "update_customer_onboarding", "process_customer_tax_document",
+    ].includes(name))) {
+      return { error: "QUOTE_NUMBER_REQUIRED_FOR_SHARED_PHONE" };
+    }
     if ([
       "get_whatsapp_lead",
       "update_whatsapp_lead",

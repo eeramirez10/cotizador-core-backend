@@ -15,6 +15,7 @@ import { ReactivateCustomerUseCase } from "../../domain/use-cases/reactivate-cus
 import { ResetCustomerWhatsAppTestUseCase } from "../../domain/use-cases/reset-customer-whatsapp-test.use-case";
 import { UpdateCustomerContactUseCase } from "../../domain/use-cases/update-customer-contact.use-case";
 import { UpdateCustomerUseCase } from "../../domain/use-cases/update-customer.use-case";
+import { sharedCustomerPhones } from "../../infrastructure/repositories/customer-phone-associations";
 
 export class CustomersController {
   constructor(
@@ -101,6 +102,9 @@ export class CustomersController {
     }
 
     try {
+      if (dto!.source !== "ERP" && !await this.confirmSharedPhones(req, res, [
+        dto!.whatsapp, dto!.phone, ...dto!.contacts.flatMap((contact) => [contact.mobile, contact.phone]),
+      ])) return;
       const result = await this.createCustomerUseCase.execute(dto!, {
         id: req.user.id,
         role: req.user.role,
@@ -136,6 +140,9 @@ export class CustomersController {
     }
 
     try {
+      if (!await this.confirmSharedPhones(req, res, [
+        dto!.whatsapp, dto!.phone, ...(dto!.contacts || []).flatMap((contact) => [contact.mobile, contact.phone]),
+      ], id)) return;
       const result = await this.updateCustomerUseCase.execute(id, dto!, {
         id: req.user.id,
         role: req.user.role,
@@ -279,6 +286,7 @@ export class CustomersController {
     }
 
     try {
+      if (!await this.confirmSharedPhones(req, res, [dto!.mobile, dto!.phone], customerId)) return;
       const contact = await this.createCustomerContactUseCase.execute(customerId, dto!, {
         role: req.user.role,
         branchId: req.user.branchId,
@@ -320,6 +328,7 @@ export class CustomersController {
     }
 
     try {
+      if (!await this.confirmSharedPhones(req, res, [dto!.mobile, dto!.phone], customerId)) return;
       const contact = await this.updateCustomerContactUseCase.execute(customerId, contactId, dto!, {
         role: req.user.role,
         branchId: req.user.branchId,
@@ -375,5 +384,22 @@ export class CustomersController {
     if (typeof value === "string") return value;
     if (Array.isArray(value) && value.length > 0) return value[0];
     return null;
+  }
+
+  private async confirmSharedPhones(
+    req: Request,
+    res: Response,
+    phones: Array<string | null | undefined>,
+    excludedCustomerId?: string,
+  ): Promise<boolean> {
+    if (req.body?.allowSharedPhone === true) return true;
+    const conflicts = await sharedCustomerPhones(phones, excludedCustomerId);
+    if (conflicts.length === 0) return true;
+    res.status(409).json({
+      code: "SHARED_CUSTOMER_PHONE",
+      error: "El número ya está asociado a otro cliente. Confirma si deseas compartirlo.",
+      phones: conflicts,
+    });
+    return false;
   }
 }

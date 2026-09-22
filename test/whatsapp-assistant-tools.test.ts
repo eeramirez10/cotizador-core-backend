@@ -33,6 +33,7 @@ class RepositoryStub extends WhatsAppAssistantRepository {
   pending: (WhatsAppPendingActionEntity & { preparedTurnId: string }) | null = null;
   audience: "CUSTOMER" | "INTERNAL_USER" | "UNKNOWN" = "CUSTOMER";
   customerSource: "LOCAL" | "ERP" = "LOCAL";
+  sharedCustomerPhone = false;
   requestTypes: Array<"INFORMATION" | "MODIFICATION"> = [];
 
   async getPrincipal() {
@@ -48,6 +49,7 @@ class RepositoryStub extends WhatsAppAssistantRepository {
       reportBranchId: null,
       reportRange: null,
       isVerified: false,
+      sharedCustomerPhone: this.sharedCustomerPhone,
       customerSource: this.customerSource,
     };
   }
@@ -234,4 +236,21 @@ test("ERP customers cannot use fiscal onboarding tools", async () => {
     () => useCase.execute("conversation-1", "turn-1", "process_customer_tax_document", { attachmentId: "file-1" }),
     /CUSTOMER_ONBOARDING_LOCAL_ONLY/,
   );
+});
+
+test("shared customer phones require a folio instead of listing customers' quotes", async () => {
+  const repository = new RepositoryStub();
+  repository.sharedCustomerPhone = true;
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  assert.deepEqual(await useCase.execute("conversation-1", "turn-1", "list_customer_quotes", { limit: 5 }), {
+    error: "QUOTE_NUMBER_REQUIRED_FOR_SHARED_PHONE",
+  });
+  assert.deepEqual(await useCase.execute("conversation-1", "turn-1", "get_customer_onboarding", {}), {
+    error: "QUOTE_NUMBER_REQUIRED_FOR_SHARED_PHONE",
+  });
+  const result = await useCase.execute("conversation-1", "turn-1", "get_quote_details", {
+    quoteNumber: quote.quoteNumber,
+  });
+  assert.equal((result as { quote: { quoteNumber: string } }).quote.quoteNumber, quote.quoteNumber);
 });
