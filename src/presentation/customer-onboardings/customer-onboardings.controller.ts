@@ -111,6 +111,12 @@ export class CustomerOnboardingsController {
     catch (error) { this.handle(error, res); }
   };
 
+  requestCorrection = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    try { res.json(await this.useCase.requestCorrection(String(req.params.id), typeof req.body?.reason === "string" ? req.body.reason : "", req.user)); }
+    catch (error) { this.handle(error, res); }
+  };
+
   markErpLinked = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
     try { res.json(await this.useCase.markErpLinked(String(req.params.id), typeof req.body?.erpCode === "string" ? req.body.erpCode : "", req.user)); }
@@ -138,6 +144,12 @@ export class CustomerOnboardingsController {
     if (message === "CUSTOMER_ONBOARDING_ADMIN_REQUIRED") return void res.status(403).json({ error: "Esta acción requiere autorización de Crédito y Cobranza o administrador." });
     if (message === "CUSTOMER_ONBOARDING_NOT_READY_FOR_ERP") return void res.status(400).json({ error: "El expediente todavía no está listo para registrarse en ERP." });
     if (message === "ERP_CODE_REQUIRED") return void res.status(400).json({ error: "El código asignado en Proscai es obligatorio." });
+    if (message === "ERP_CUSTOMER_CODE_NOT_FOUND") return void res.status(404).json({ error: "El código no existe en Proscai. Verifica el alta antes de vincular." });
+    if (message === "ERP_CUSTOMER_TAX_ID_MISMATCH") return void res.status(409).json({ error: "El RFC del cliente en Proscai no coincide con el expediente fiscal." });
+    if (message === "ERP_CUSTOMER_ALREADY_LINKED") return void res.status(409).json({ error: "Ese cliente de Proscai ya está vinculado a otro cliente local." });
+    if (message === "CUSTOMER_ONBOARDING_NOT_PENDING_CXC") return void res.status(409).json({ error: "El expediente no está pendiente de revisión por Crédito y Cobranza." });
+    if (message === "CUSTOMER_ONBOARDING_REVIEW_NOTE_REQUIRED") return void res.status(400).json({ error: "Explica la corrección requerida (entre 10 y 1000 caracteres)." });
+    if (message === "ERP_CUSTOMER_LOOKUP_UNAVAILABLE" || message.startsWith("ERP_CUSTOMER_LOOKUP_FAILED:") || message === "ERP_CUSTOMER_LOOKUP_INVALID_RESPONSE") return void res.status(503).json({ error: "No se pudo verificar el cliente en Proscai. Intenta más tarde." });
     if (message === "TAX_DOCUMENT_MUST_BE_PDF") return void res.status(400).json({ error: "La Constancia de Situación Fiscal debe estar en formato PDF." });
     if (message === "TAX_DOCUMENT_NOT_FOUND") return void res.status(404).json({ error: "No se encontró la constancia fiscal del expediente." });
     if (message === "CUSTOMER_ONBOARDING_LOCKED") return void res.status(409).json({ error: "El expediente ya fue enviado a revisión y no puede modificarse con este permiso." });

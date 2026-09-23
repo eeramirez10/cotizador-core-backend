@@ -632,6 +632,7 @@ export class QuotesController {
       message === "Rejection reason is required before moving to REJECTED." ||
       message === "Rejection comment is required when rejection reason is OTHER." ||
       message === "Quote must be APPROVED to generate order." ||
+      message === "Customer must be linked to an ERP account before generating order." ||
       message === "Purchase requisition must be READY_FOR_ORDER before generating order." ||
       message === "Order was already generated for this quote." ||
       message === "Order cannot be generated while a quote revision is in progress." ||

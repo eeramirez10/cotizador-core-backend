@@ -2,6 +2,8 @@ import type { CustomerOnboardingStatus, UserRole } from "../../infrastructure/da
 import { prisma } from "../../infrastructure/database/prisma-client";
 import type { CustomerTaxDocumentExtractorPort, ExtractedCustomerTaxDocument } from "../contracts/customer-tax-document-extractor.port";
 import type { FileStoragePort } from "../contracts/file-storage.port";
+import type { ErpCustomerLookupPort } from "../contracts/erp-customer-lookup.port";
+import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
 
 export interface CustomerOnboardingActor {
   id: string;
@@ -46,6 +48,8 @@ export class CustomerOnboardingUseCase {
   constructor(
     private readonly storage?: FileStoragePort,
     private readonly taxDocumentExtractor?: CustomerTaxDocumentExtractorPort,
+    private readonly erpCustomerLookup?: ErpCustomerLookupPort,
+    private readonly internalAlerts?: SendWhatsAppInternalAlertUseCase,
   ) {}
 
   async createManual(customerId: string, actor: CustomerOnboardingActor) {
@@ -156,7 +160,7 @@ export class CustomerOnboardingUseCase {
   }
 
   async list(actor: CustomerOnboardingActor, input: { status?: CustomerOnboardingStatus; page: number; pageSize: number }) {
-    const where = { ...this.scope(actor), ...(input.status ? { status: input.status } : {}) };
+    const where = { AND: [this.scope(actor), ...(input.status ? [{ status: input.status }] : [])] };
     const [total, rows] = await prisma.$transaction([
       prisma.customerOnboarding.count({ where }),
       prisma.customerOnboarding.findMany({
@@ -191,7 +195,8 @@ export class CustomerOnboardingUseCase {
 
   async update(id: string, input: CustomerOnboardingWriteInput, actor: CustomerOnboardingActor) {
     const existing = await this.get(id, actor);
-    if (actor.role !== "ADMIN" && !["COLLECTING", "PENDING_REVIEW"].includes(existing.status)) {
+    if (actor.role === "CREDIT_COLLECTIONS") throw new Error("CUSTOMER_ONBOARDING_LOCKED");
+    if (actor.role !== "ADMIN" && !["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(existing.status)) {
       throw new Error("CUSTOMER_ONBOARDING_LOCKED");
     }
     return this.updateRow(id, input);
@@ -200,7 +205,7 @@ export class CustomerOnboardingUseCase {
   async updateFromAssistant(conversationId: string, input: CustomerOnboardingWriteInput) {
     const existing = await prisma.customerOnboarding.findUnique({ where: { conversationId }, select: { id: true, status: true } });
     if (!existing) return { error: "CUSTOMER_ONBOARDING_NOT_FOUND" };
-    if (!["COLLECTING", "PENDING_REVIEW"].includes(existing.status)) return { error: "CUSTOMER_ONBOARDING_LOCKED" };
+    if (!["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(existing.status)) return { error: "CUSTOMER_ONBOARDING_LOCKED" };
     const incremental = Object.fromEntries(Object.entries(input).filter(([, value]) => typeof value === "string" && value.trim()));
     return { success: true, onboarding: await this.updateRow(existing.id, incremental) };
   }
@@ -208,7 +213,7 @@ export class CustomerOnboardingUseCase {
   async uploadTaxDocument(id: string, file: CustomerTaxDocumentUpload, actor: CustomerOnboardingActor) {
     if (!this.storage || !this.taxDocumentExtractor) throw new Error("TAX_DOCUMENT_EXTRACTION_NOT_CONFIGURED");
     const existing = await this.get(id, actor);
-    if (actor.role !== "ADMIN" && !["COLLECTING", "PENDING_REVIEW"].includes(existing.status)) {
+    if (actor.role !== "ADMIN" && !["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(existing.status)) {
       throw new Error("CUSTOMER_ONBOARDING_LOCKED");
     }
     this.assertPdf(file);
@@ -237,7 +242,7 @@ export class CustomerOnboardingUseCase {
       select: { id: true, status: true },
     });
     if (!onboarding) return { error: "CUSTOMER_ONBOARDING_NOT_FOUND" };
-    if (!["COLLECTING", "PENDING_REVIEW"].includes(onboarding.status)) return { error: "CUSTOMER_ONBOARDING_LOCKED" };
+    if (!["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(onboarding.status)) return { error: "CUSTOMER_ONBOARDING_LOCKED" };
     const attachment = await prisma.whatsAppInboundAttachment.findFirst({
       where: { id: attachmentId, inboundMessage: { conversationId } },
       select: { id: true, originalName: true, mimeType: true, storageKey: true },
@@ -280,19 +285,39 @@ export class CustomerOnboardingUseCase {
   }
 
   async submitForCxc(id: string, actor: CustomerOnboardingActor) {
+    if (actor.role === "CREDIT_COLLECTIONS") throw new Error("CUSTOMER_ONBOARDING_LOCKED");
     const existing = await prisma.customerOnboarding.findFirst({ where: { id, ...this.scope(actor) } });
     if (!existing) throw new Error("CUSTOMER_ONBOARDING_NOT_FOUND");
-    if (!["COLLECTING", "PENDING_REVIEW"].includes(existing.status)) throw new Error("CUSTOMER_ONBOARDING_LOCKED");
+    if (!["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(existing.status)) throw new Error("CUSTOMER_ONBOARDING_LOCKED");
     const missing = this.missingFields(existing);
     if (missing.length) throw new Error(`CUSTOMER_ONBOARDING_INCOMPLETE:${missing.join(",")}`);
     const row = await prisma.customerOnboarding.update({
-      where: { id }, data: { status: "PENDING_CXC", submittedAt: new Date() }, include: detailInclude,
+      where: { id }, data: { status: "PENDING_CXC", submittedAt: new Date(), reviewNote: null }, include: detailInclude,
     });
+    if (this.internalAlerts) {
+      const recipients = await prisma.user.findMany({
+        where: { role: "CREDIT_COLLECTIONS", branchId: row.branchId, isActive: true },
+        select: { id: true },
+      });
+      await Promise.all(recipients.map(async ({ id: recipientUserId }) => {
+        try {
+          await this.internalAlerts!.execute({
+            eventKey: `customer-onboarding:${row.id}:submitted:${row.submittedAt?.getTime()}:${recipientUserId}`,
+            type: "CUSTOMER_ONBOARDING_PENDING", recipientUserId,
+            customerName: row.legalName || row.customer.displayName,
+            reference: row.acceptedQuote?.quoteNumber || "Alta de cliente",
+            detail: "Revisa la constancia fiscal y valida el expediente para Proscai.",
+          });
+        } catch (error) { console.error("customer_onboarding_alert_failed", error); }
+      }));
+    }
     return this.toResponse(row);
   }
 
   async approveForErp(id: string, actor: CustomerOnboardingActor) {
-    if (actor.role !== "ADMIN") throw new Error("CUSTOMER_ONBOARDING_ADMIN_REQUIRED");
+    if (!["ADMIN", "CREDIT_COLLECTIONS"].includes(actor.role)) throw new Error("CUSTOMER_ONBOARDING_ADMIN_REQUIRED");
+    const existing = await this.get(id, actor);
+    if (existing.status !== "PENDING_CXC") throw new Error("CUSTOMER_ONBOARDING_NOT_PENDING_CXC");
     const completed = await this.complete(id, actor);
     const row = await prisma.customerOnboarding.update({
       where: { id }, data: { status: "READY_FOR_ERP", approvedAt: new Date() }, include: detailInclude,
@@ -301,17 +326,58 @@ export class CustomerOnboardingUseCase {
   }
 
   async markErpLinked(id: string, erpCode: string, actor: CustomerOnboardingActor) {
-    if (actor.role !== "ADMIN") throw new Error("CUSTOMER_ONBOARDING_ADMIN_REQUIRED");
-    const existing = await prisma.customerOnboarding.findUnique({ where: { id }, select: { customerId: true, status: true } });
+    if (!["ADMIN", "CREDIT_COLLECTIONS"].includes(actor.role)) throw new Error("CUSTOMER_ONBOARDING_ADMIN_REQUIRED");
+    const existing = await prisma.customerOnboarding.findFirst({ where: { id, ...this.scope(actor) }, select: { customerId: true, status: true, taxId: true } });
     if (!existing) throw new Error("CUSTOMER_ONBOARDING_NOT_FOUND");
     if (existing.status !== "READY_FOR_ERP") throw new Error("CUSTOMER_ONBOARDING_NOT_READY_FOR_ERP");
     const normalizedCode = erpCode.trim();
-    if (!normalizedCode) throw new Error("ERP_CODE_REQUIRED");
+    if (normalizedCode.length < 2 || normalizedCode.length > 80) throw new Error("ERP_CODE_REQUIRED");
+    if (!this.erpCustomerLookup) throw new Error("ERP_CUSTOMER_LOOKUP_UNAVAILABLE");
+    const erpCustomer = await this.erpCustomerLookup.findByCode(normalizedCode.toUpperCase());
+    if (!erpCustomer) throw new Error("ERP_CUSTOMER_CODE_NOT_FOUND");
+    const expectedTaxId = existing.taxId?.replace(/\s+/g, "").toUpperCase();
+    if (!erpCustomer.taxId || erpCustomer.taxId.replace(/\s+/g, "") !== expectedTaxId) {
+      throw new Error("ERP_CUSTOMER_TAX_ID_MISMATCH");
+    }
+    const duplicate = await prisma.customer.findFirst({
+      where: { id: { not: existing.customerId }, source: "ERP", OR: [
+        { code: erpCustomer.code }, { externalId: erpCustomer.externalId },
+      ] }, select: { id: true },
+    });
+    if (duplicate) throw new Error("ERP_CUSTOMER_ALREADY_LINKED");
     await prisma.$transaction([
-      prisma.customer.update({ where: { id: existing.customerId }, data: { source: "ERP", externalSystem: "PROSCAI", externalId: normalizedCode, code: normalizedCode, updatedByUserId: actor.id } }),
-      prisma.customerOnboarding.update({ where: { id }, data: { status: "ERP_LINKED", erpCode: normalizedCode, linkedAt: new Date(), reviewedByUserId: actor.id } }),
+      prisma.customer.update({ where: { id: existing.customerId }, data: { source: "ERP", externalSystem: "PROSCAI", externalId: erpCustomer.externalId, code: erpCustomer.code, updatedByUserId: actor.id } }),
+      prisma.customerOnboarding.update({ where: { id }, data: { status: "ERP_LINKED", erpCode: erpCustomer.code, linkedAt: new Date(), reviewedByUserId: actor.id } }),
     ]);
-    return this.get(id, actor);
+    const linked = await this.get(id, actor);
+    await this.notifySeller(linked, "CUSTOMER_ONBOARDING_ERP_LINKED", "Cliente vinculado en Proscai. Ya puedes continuar con el pedido.");
+    return linked;
+  }
+
+  async requestCorrection(id: string, reason: string, actor: CustomerOnboardingActor) {
+    if (!["ADMIN", "CREDIT_COLLECTIONS"].includes(actor.role)) throw new Error("CUSTOMER_ONBOARDING_ADMIN_REQUIRED");
+    const note = reason.trim();
+    if (note.length < 10 || note.length > 1000) throw new Error("CUSTOMER_ONBOARDING_REVIEW_NOTE_REQUIRED");
+    const existing = await prisma.customerOnboarding.findFirst({ where: { id, ...this.scope(actor) }, select: { id: true, status: true } });
+    if (!existing) throw new Error("CUSTOMER_ONBOARDING_NOT_FOUND");
+    if (existing.status !== "PENDING_CXC") throw new Error("CUSTOMER_ONBOARDING_NOT_PENDING_CXC");
+    const row = await prisma.customerOnboarding.update({ where: { id }, data: { status: "REJECTED", reviewNote: note, reviewedByUserId: actor.id }, include: detailInclude });
+    const response = this.toResponse(row);
+    await this.notifySeller(response, "CUSTOMER_ONBOARDING_CORRECTION", note);
+    return response;
+  }
+
+  private async notifySeller(row: { id: string; updatedAt: Date; seller: { id: string }; legalName: string | null; customer: { displayName: string }; acceptedQuote: { quoteNumber: string } | null }, type: "CUSTOMER_ONBOARDING_CORRECTION" | "CUSTOMER_ONBOARDING_ERP_LINKED", detail: string): Promise<void> {
+    if (!this.internalAlerts) return;
+    try {
+      await this.internalAlerts.execute({
+        eventKey: `customer-onboarding:${row.id}:${type}:${row.updatedAt.getTime()}:${row.seller.id}`,
+        type, recipientUserId: row.seller.id,
+        customerName: row.legalName || row.customer.displayName,
+        reference: row.acceptedQuote?.quoteNumber || "Alta de cliente",
+        detail,
+      });
+    } catch (error) { console.error("customer_onboarding_alert_failed", error); }
   }
 
   async complete(id: string, actor: CustomerOnboardingActor) {
@@ -386,6 +452,7 @@ export class CustomerOnboardingUseCase {
 
   private scope(actor: CustomerOnboardingActor) {
     if (actor.role === "ADMIN") return {};
+    if (actor.role === "CREDIT_COLLECTIONS") return { branchId: actor.branchId, status: { in: ["PENDING_CXC", "READY_FOR_ERP", "ERP_LINKED", "REJECTED", "COMPLETED"] as CustomerOnboardingStatus[] } };
     if (actor.role === "MANAGER") return { branchId: actor.branchId };
     return { sellerId: actor.id };
   }

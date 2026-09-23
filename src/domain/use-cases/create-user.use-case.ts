@@ -53,7 +53,7 @@ export class CreateUserUseCase {
       role: dto.role,
       phone: dto.phone,
       whatsappPhoneE164: WhatsAppPhone.create(dto.phone)?.value ?? null,
-      whatsappInboxEnabled: dto.whatsappInboxEnabled,
+      whatsappInboxEnabled: dto.role === "CREDIT_COLLECTIONS" ? false : dto.whatsappInboxEnabled,
       erpUserCode: dto.erpUserCode,
       branchId: branch.id,
     });

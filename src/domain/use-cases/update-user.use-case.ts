@@ -83,7 +83,7 @@ export class UpdateUserUseCase {
         role: dto.role,
         phone: dto.phone,
         whatsappPhoneE164: normalizedPhone,
-        whatsappInboxEnabled: dto.whatsappInboxEnabled ?? target.whatsappInboxEnabled,
+        whatsappInboxEnabled: dto.role === "CREDIT_COLLECTIONS" ? false : dto.whatsappInboxEnabled ?? target.whatsappInboxEnabled,
         erpUserCode: dto.erpUserCode,
         branchId: branch.id,
         passwordHash,

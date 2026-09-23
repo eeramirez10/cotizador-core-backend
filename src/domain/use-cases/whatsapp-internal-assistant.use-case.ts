@@ -1,4 +1,5 @@
 import type { ManagerReportRange } from "../../infrastructure/database/generated/enums";
+import { prisma } from "../../infrastructure/database/prisma-client";
 import type { WhatsAppInternalVerificationPort } from "../contracts/whatsapp-internal-verification.port";
 import type {
   WhatsAppAssistantPrincipal,
@@ -51,16 +52,60 @@ export class WhatsAppInternalAssistantUseCase {
         return this.verifyCode(principal, args);
       case "get_internal_performance":
         this.assertVerified(principal);
+        this.assertCommercial(principal);
         return this.performance(principal, args);
       case "list_internal_quotes":
         this.assertVerified(principal);
+        this.assertCommercial(principal);
         return this.listQuotes(principal, args);
       case "get_internal_quote_details":
         this.assertVerified(principal);
+        this.assertCommercial(principal);
         return this.getQuote(principal, args);
+      case "list_internal_onboardings":
+        this.assertVerified(principal);
+        return this.listOnboardings(principal, args);
+      case "get_internal_onboarding":
+        this.assertVerified(principal);
+        return this.getOnboarding(principal, args);
       default:
         throw new Error(`Unsupported internal assistant tool: ${name}`);
     }
+  }
+
+  private async listOnboardings(principal: WhatsAppAssistantPrincipal, args: ToolArguments) {
+    this.assertCxc(principal);
+    const limit = Math.min(10, Math.max(1, this.number(args.limit) ?? 5));
+    const rows = await prisma.customerOnboarding.findMany({
+      where: { branchId: principal.branchId!, status: { in: ["PENDING_CXC", "READY_FOR_ERP", "REJECTED"] } },
+      orderBy: { updatedAt: "desc" }, take: limit,
+      select: { status: true, legalName: true, erpCode: true, reviewNote: true,
+        acceptedQuote: { select: { quoteNumber: true } }, customer: { select: { displayName: true } } },
+    });
+    return { items: rows.map((row) => ({ customer: row.legalName || row.customer.displayName,
+      quoteNumber: row.acceptedQuote?.quoteNumber || null, status: row.status,
+      erpCode: row.erpCode, reviewNote: row.reviewNote })), count: rows.length };
+  }
+
+  private async getOnboarding(principal: WhatsAppAssistantPrincipal, args: ToolArguments) {
+    this.assertCxc(principal);
+    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
+    const row = await prisma.customerOnboarding.findFirst({
+      where: { branchId: principal.branchId!, acceptedQuote: { quoteNumber } },
+      select: { status: true, legalName: true, erpCode: true, reviewNote: true,
+        acceptedQuote: { select: { quoteNumber: true } }, customer: { select: { displayName: true } } },
+    });
+    return row ? { customer: row.legalName || row.customer.displayName,
+      quoteNumber: row.acceptedQuote?.quoteNumber, status: row.status,
+      erpCode: row.erpCode, reviewNote: row.reviewNote } : { error: "ONBOARDING_NOT_FOUND_IN_BRANCH" };
+  }
+
+  private assertCxc(principal: WhatsAppAssistantPrincipal): void {
+    if (principal.role !== "CREDIT_COLLECTIONS" || !principal.branchId) throw new Error("CREDIT_COLLECTIONS_REQUIRED");
+  }
+
+  private assertCommercial(principal: WhatsAppAssistantPrincipal): void {
+    if (!principal.role || !["ADMIN", "MANAGER", "SELLER"].includes(principal.role)) throw new Error("COMMERCIAL_ACCESS_REQUIRED");
   }
 
   private async requestVerification(principal: WhatsAppAssistantPrincipal) {

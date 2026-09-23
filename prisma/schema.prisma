@@ -12,6 +12,7 @@ enum UserRole {
   SELLER
   MANAGER
   PURCHASING
+  CREDIT_COLLECTIONS
 }
 
 enum ManagerReportType {
@@ -326,6 +327,9 @@ enum WhatsAppCustomerRequestType {
 }
 
 enum WhatsAppInternalAlertType {
+  CUSTOMER_ONBOARDING_PENDING
+  CUSTOMER_ONBOARDING_CORRECTION
+  CUSTOMER_ONBOARDING_ERP_LINKED
   LEAD_ASSIGNED
   INFORMATION_REQUESTED
   QUOTE_CHANGE_REQUESTED
@@ -673,6 +677,7 @@ model CustomerOnboarding {
   extractionEvidence      String?                  @map("extraction_evidence") @db.Text
   reviewedByUserId        String?                  @map("reviewed_by_user_id") @db.Uuid
   erpCode                 String?                  @map("erp_code") @db.VarChar(80)
+  reviewNote              String?                  @map("review_note") @db.VarChar(1000)
   submittedAt             DateTime?                @map("submitted_at")
   approvedAt              DateTime?                @map("approved_at")
   linkedAt                DateTime?                @map("linked_at")

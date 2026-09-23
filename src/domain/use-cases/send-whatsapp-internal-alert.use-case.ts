@@ -6,6 +6,9 @@ import type {
 import type { WhatsAppInternalAlertRepository } from "../repositories/whatsapp-internal-alert.repository";
 
 const labels: Record<WhatsAppInternalAlertType, string> = {
+  CUSTOMER_ONBOARDING_PENDING: "Alta fiscal pendiente",
+  CUSTOMER_ONBOARDING_CORRECTION: "Corrección fiscal solicitada",
+  CUSTOMER_ONBOARDING_ERP_LINKED: "Cliente vinculado en ERP",
   LEAD_ASSIGNED: "Nuevo prospecto asignado",
   INFORMATION_REQUESTED: "Solicitud de información",
   QUOTE_CHANGE_REQUESTED: "Solicitud de modificación",

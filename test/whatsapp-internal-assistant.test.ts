@@ -133,3 +133,11 @@ test("quote visibility is derived from the verified user's role", async () => {
   await useCase.execute(principal({ role: "ADMIN", isVerified: true }), "list_internal_quotes", { limit: 5, status: null });
   assert.deepEqual(repository.lastScope, { type: "GLOBAL", id: "user-1" });
 });
+
+test("credit and collections cannot consult commercial quote tools", async () => {
+  const useCase = new WhatsAppInternalAssistantUseCase(new InternalRepositoryStub(), analytics as never, new VerificationStub());
+  await assert.rejects(
+    () => useCase.execute(principal({ role: "CREDIT_COLLECTIONS", isVerified: true }), "list_internal_quotes", { limit: 5 }),
+    /COMMERCIAL_ACCESS_REQUIRED/,
+  );
+});

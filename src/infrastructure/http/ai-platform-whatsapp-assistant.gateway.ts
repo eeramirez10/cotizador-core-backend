@@ -18,6 +18,8 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
       ? input.principal.sharedCustomerPhone
         ? ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS"]
         : ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS", "QUOTE_REQUESTS", ...(input.principal.customerSource === "LOCAL" ? ["CUSTOMER_ONBOARDING"] : [])]
+      : input.principal.audience === "INTERNAL_USER" && input.principal.isVerified && input.principal.role === "CREDIT_COLLECTIONS"
+        ? ["INTERNAL_ONBOARDINGS"]
       : input.principal.audience === "INTERNAL_USER" && input.principal.isVerified && input.principal.role !== "PURCHASING"
         ? ["INTERNAL_REPORTS", "INTERNAL_QUOTES"]
         : input.principal.audience === "INTERNAL_USER"

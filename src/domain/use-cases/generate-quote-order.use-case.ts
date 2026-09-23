@@ -1,4 +1,5 @@
 import type { UserRole } from "../../infrastructure/database/generated/enums";
+import { prisma } from "../../infrastructure/database/prisma-client";
 import { GenerateOrderResponseDto } from "../dtos/response/generate-order-response.dto";
 import { OrderGenerationRepository } from "../repositories/order-generation.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
@@ -40,6 +41,13 @@ export class GenerateQuoteOrderUseCase {
     }
     if (quote.orderStatus === "GENERATED") {
       throw new Error("Order was already generated for this quote.");
+    }
+    const customer = await prisma.customer.findUnique({
+      where: { id: quote.customerId },
+      select: { source: true, code: true },
+    });
+    if (!customer || customer.source !== "ERP" || !customer.code) {
+      throw new Error("Customer must be linked to an ERP account before generating order.");
     }
     if (quote.nextRevision && ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(quote.nextRevision.status)) {
       throw new Error("Order cannot be generated while a quote revision is in progress.");

@@ -3876,6 +3876,7 @@ export const CustomerOnboardingScalarFieldEnum = {
   extractionEvidence: 'extractionEvidence',
   reviewedByUserId: 'reviewedByUserId',
   erpCode: 'erpCode',
+  reviewNote: 'reviewNote',
   submittedAt: 'submittedAt',
   approvedAt: 'approvedAt',
   linkedAt: 'linkedAt',
