@@ -4,6 +4,7 @@ import { GenerateOrderResponseDto } from "../dtos/response/generate-order-respon
 import { OrderGenerationRepository } from "../repositories/order-generation.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
+import { evaluateQuoteOrderItems, isCustomerEligibleForOrderFile } from "./quote-order-eligibility";
 
 interface GenerateQuoteOrderActorContext {
   id: string;
@@ -15,7 +16,9 @@ export class GenerateQuoteOrderUseCase {
   constructor(
     private readonly quoteRepository: QuoteRepository,
     private readonly orderGenerationRepository: OrderGenerationRepository,
-    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository
+    private readonly purchaseRequisitionRepository: PurchaseRequisitionRepository,
+    private readonly allowOrderFileWithoutStock: () => boolean = () => false,
+    private readonly allowOrderFileWithLocalCustomer: () => boolean = () => false,
   ) {}
 
   async execute(quoteId: string, actor: GenerateQuoteOrderActorContext): Promise<GenerateOrderResponseDto> {
@@ -46,27 +49,22 @@ export class GenerateQuoteOrderUseCase {
       where: { id: quote.customerId },
       select: { source: true, code: true },
     });
-    if (!customer || customer.source !== "ERP" || !customer.code) {
+    if (!isCustomerEligibleForOrderFile(customer, this.allowOrderFileWithLocalCustomer())) {
       throw new Error("Customer must be linked to an ERP account before generating order.");
     }
     if (quote.nextRevision && ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"].includes(quote.nextRevision.status)) {
       throw new Error("Order cannot be generated while a quote revision is in progress.");
     }
-    const unlinkedItems = quote.items.filter(
-      (item) => !item.productId && !item.externalProductCode && !item.ean
-    );
-    if (unlinkedItems.length > 0) {
-      throw new Error("All quote items must be linked to an ERP or local product before generating order.");
+    const eligibility = evaluateQuoteOrderItems(quote.items, this.allowOrderFileWithoutStock());
+    if (eligibility.missingErpCode) {
+      throw new Error("All quote items must have an ERP product code to generate order file.");
     }
     if (quote.items.some((item) => item.requiresReview)) {
       throw new Error("All quote items must be reviewed before generating order.");
     }
-    const requiresPurchasing = quote.items.some((item) => {
-      const erpCode = (item.externalProductCode || item.product?.code || "").trim();
-      const availableStock = Math.max(0, item.stock ?? 0);
-      return !erpCode || availableStock < item.qty;
-    });
-    if (requiresPurchasing && !(await this.purchaseRequisitionRepository.isReadyForOrder(quote.id))) {
+    const requisitionReady = eligibility.requiresPurchasing
+      && await this.purchaseRequisitionRepository.isReadyForOrder(quote.id);
+    if (eligibility.requiresReadyRequisition && !requisitionReady) {
       throw new Error("Purchase requisition must be READY_FOR_ORDER before generating order.");
     }
 
@@ -89,7 +87,7 @@ export class GenerateQuoteOrderUseCase {
     });
 
     if (!updatedQuote) throw new Error("Quote not found.");
-    if (requiresPurchasing) {
+    if (eligibility.requiresPurchasing && requisitionReady) {
       await this.purchaseRequisitionRepository.markCompletedByQuoteId(quote.id);
     }
 

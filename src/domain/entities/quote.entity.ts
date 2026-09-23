@@ -67,6 +67,7 @@ export interface QuoteListSummaryEntity {
   id: string;
   quoteNumber: string;
   erpQuoteNumber: string | null;
+  erpOrderNumber: string | null;
   status: QuoteStatus;
   captureMethod: QuoteCaptureMethod;
   originalQuoteDate: Date | null;
@@ -100,6 +101,9 @@ export interface QuoteEntity {
   erpQuoteNumber: string | null;
   erpQuoteRegisteredAt: Date | null;
   erpQuoteRegisteredByUserId: string | null;
+  erpOrderNumber: string | null;
+  erpOrderRegisteredAt: Date | null;
+  erpOrderRegisteredByUserId: string | null;
   origin: QuoteOrigin;
   captureMethod: QuoteCaptureMethod;
   originalQuoteDate: Date | null;
@@ -160,6 +164,7 @@ export interface QuoteEntity {
   cancelledByUser: QuoteUserSummary | null;
   archivedByUser: QuoteUserSummary | null;
   erpQuoteRegisteredByUser: QuoteUserSummary | null;
+  erpOrderRegisteredByUser: QuoteUserSummary | null;
   items: QuoteItemEntity[];
   events: QuoteEventEntity[];
 }

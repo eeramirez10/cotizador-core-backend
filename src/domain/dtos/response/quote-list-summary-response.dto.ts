@@ -8,6 +8,7 @@ export class QuoteListSummaryResponseDto {
       id: this.quote.id,
       quoteNumber: this.quote.quoteNumber,
       erpQuoteNumber: this.quote.erpQuoteNumber,
+      erpOrderNumber: this.quote.erpOrderNumber,
       status: this.quote.status,
       captureMethod: this.quote.captureMethod,
       originalQuoteDate: this.quote.originalQuoteDate?.toISOString().split("T")[0] ?? null,

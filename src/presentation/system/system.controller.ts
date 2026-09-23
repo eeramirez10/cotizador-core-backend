@@ -16,6 +16,8 @@ export class SystemController {
       res.status(200).json({
         quoteInternalApprovalEnabled: this.runtime.boolean("QUOTE_INTERNAL_APPROVAL_ENABLED"),
         requisitionInternalApprovalEnabled: this.runtime.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"),
+        orderFileWithoutStockEnabled: this.runtime.boolean("ORDER_FILE_WITHOUT_STOCK_ENABLED"),
+        orderFileWithLocalCustomerEnabled: this.runtime.boolean("ORDER_FILE_WITH_LOCAL_CUSTOMER_ENABLED"),
         sellerExcelImportEnabled: this.runtime.boolean("SELLER_EXCEL_IMPORT_ENABLED"),
         whatsAppInboxEnabled: this.runtime.boolean("WHATSAPP_INBOX_ENABLED")
           && req.user?.whatsappInboxEnabled === true,

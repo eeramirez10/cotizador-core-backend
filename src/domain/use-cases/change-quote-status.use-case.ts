@@ -27,7 +27,7 @@ const allowedTransitions: Record<QuoteStatus, QuoteStatus[]> = {
   PENDING_APPROVAL: ["QUOTED", "CHANGES_REQUESTED", "CANCELLED"],
   CHANGES_REQUESTED: ["PENDING_APPROVAL", "CANCELLED"],
   QUOTED: ["APPROVED", "REJECTED", "CANCELLED"],
-  APPROVED: [],
+  APPROVED: ["CANCELLED"],
   REJECTED: [],
   CANCELLED: [],
   SUPERSEDED: [],
@@ -68,6 +68,9 @@ export class ChangeQuoteStatusUseCase {
     );
     if (hasRevisionInProgress) {
       throw new Error("Quote status cannot change while a revision is in progress.");
+    }
+    if (dto.status === "CANCELLED" && (quote.erpQuoteNumber || quote.erpOrderNumber)) {
+      throw new Error("A quote linked to ERP cannot be cancelled.");
     }
 
     const internalApprovalEnabled = resolveRuntimeValue(this.internalApprovalEnabled);

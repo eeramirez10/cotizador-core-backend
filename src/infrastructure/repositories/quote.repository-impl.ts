@@ -14,6 +14,7 @@ import {
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RegisterErpQuoteDatasourceParams,
+  RegisterErpOrderDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -102,5 +103,9 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null> {
     return this.datasource.registerErpQuote(params);
+  }
+
+  registerErpOrder(params: RegisterErpOrderDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.registerErpOrder(params);
   }
 }

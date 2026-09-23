@@ -1,8 +1,7 @@
-import "dotenv/config";
+import { Envs } from "../config/envs";
 import { createServer } from "node:http";
 import cors from "cors";
 import express from "express";
-import { Envs } from "../config/envs";
 import { AppRoutes } from "./app-routes";
 import { prisma } from "../infrastructure/database/prisma-client";
 import { whatsAppRealtimeBus } from "../infrastructure/realtime/whatsapp-realtime.container";

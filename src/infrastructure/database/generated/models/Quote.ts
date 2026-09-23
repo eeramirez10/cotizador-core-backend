@@ -59,6 +59,9 @@ export type QuoteMinAggregateOutputType = {
   erpQuoteNumber: string | null
   erpQuoteRegisteredAt: Date | null
   erpQuoteRegisteredByUserId: string | null
+  erpOrderNumber: string | null
+  erpOrderRegisteredAt: Date | null
+  erpOrderRegisteredByUserId: string | null
   origin: $Enums.QuoteOrigin | null
   captureMethod: $Enums.QuoteCaptureMethod | null
   originalQuoteDate: Date | null
@@ -124,6 +127,9 @@ export type QuoteMaxAggregateOutputType = {
   erpQuoteNumber: string | null
   erpQuoteRegisteredAt: Date | null
   erpQuoteRegisteredByUserId: string | null
+  erpOrderNumber: string | null
+  erpOrderRegisteredAt: Date | null
+  erpOrderRegisteredByUserId: string | null
   origin: $Enums.QuoteOrigin | null
   captureMethod: $Enums.QuoteCaptureMethod | null
   originalQuoteDate: Date | null
@@ -189,6 +195,9 @@ export type QuoteCountAggregateOutputType = {
   erpQuoteNumber: number
   erpQuoteRegisteredAt: number
   erpQuoteRegisteredByUserId: number
+  erpOrderNumber: number
+  erpOrderRegisteredAt: number
+  erpOrderRegisteredByUserId: number
   origin: number
   captureMethod: number
   originalQuoteDate: number
@@ -276,6 +285,9 @@ export type QuoteMinAggregateInputType = {
   erpQuoteNumber?: true
   erpQuoteRegisteredAt?: true
   erpQuoteRegisteredByUserId?: true
+  erpOrderNumber?: true
+  erpOrderRegisteredAt?: true
+  erpOrderRegisteredByUserId?: true
   origin?: true
   captureMethod?: true
   originalQuoteDate?: true
@@ -341,6 +353,9 @@ export type QuoteMaxAggregateInputType = {
   erpQuoteNumber?: true
   erpQuoteRegisteredAt?: true
   erpQuoteRegisteredByUserId?: true
+  erpOrderNumber?: true
+  erpOrderRegisteredAt?: true
+  erpOrderRegisteredByUserId?: true
   origin?: true
   captureMethod?: true
   originalQuoteDate?: true
@@ -406,6 +421,9 @@ export type QuoteCountAggregateInputType = {
   erpQuoteNumber?: true
   erpQuoteRegisteredAt?: true
   erpQuoteRegisteredByUserId?: true
+  erpOrderNumber?: true
+  erpOrderRegisteredAt?: true
+  erpOrderRegisteredByUserId?: true
   origin?: true
   captureMethod?: true
   originalQuoteDate?: true
@@ -558,6 +576,9 @@ export type QuoteGroupByOutputType = {
   erpQuoteNumber: string | null
   erpQuoteRegisteredAt: Date | null
   erpQuoteRegisteredByUserId: string | null
+  erpOrderNumber: string | null
+  erpOrderRegisteredAt: Date | null
+  erpOrderRegisteredByUserId: string | null
   origin: $Enums.QuoteOrigin
   captureMethod: $Enums.QuoteCaptureMethod
   originalQuoteDate: Date | null
@@ -646,6 +667,9 @@ export type QuoteWhereInput = {
   erpQuoteNumber?: Prisma.StringNullableFilter<"Quote"> | string | null
   erpQuoteRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  erpOrderNumber?: Prisma.StringNullableFilter<"Quote"> | string | null
+  erpOrderRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -709,6 +733,7 @@ export type QuoteWhereInput = {
   cancelledByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   archivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   erpQuoteRegisteredByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  erpOrderRegisteredByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   rootQuote?: Prisma.XOR<Prisma.QuoteNullableScalarRelationFilter, Prisma.QuoteWhereInput> | null
   revisions?: Prisma.QuoteListRelationFilter
   previousVersion?: Prisma.XOR<Prisma.QuoteNullableScalarRelationFilter, Prisma.QuoteWhereInput> | null
@@ -742,6 +767,9 @@ export type QuoteOrderByWithRelationInput = {
   erpQuoteNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   erpQuoteRegisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   erpQuoteRegisteredByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderRegisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderRegisteredByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrder
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -805,6 +833,7 @@ export type QuoteOrderByWithRelationInput = {
   cancelledByUser?: Prisma.UserOrderByWithRelationInput
   archivedByUser?: Prisma.UserOrderByWithRelationInput
   erpQuoteRegisteredByUser?: Prisma.UserOrderByWithRelationInput
+  erpOrderRegisteredByUser?: Prisma.UserOrderByWithRelationInput
   rootQuote?: Prisma.QuoteOrderByWithRelationInput
   revisions?: Prisma.QuoteOrderByRelationAggregateInput
   previousVersion?: Prisma.QuoteOrderByWithRelationInput
@@ -830,6 +859,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   quoteNumber?: string
   orderReference?: string
   erpQuoteNumber?: string
+  erpOrderNumber?: string
   supersededByQuoteId?: string
   createdByUserId_clientDraftId?: Prisma.QuoteCreatedByUserIdClientDraftIdCompoundUniqueInput
   rootQuoteId_revisionNumber?: Prisma.QuoteRootQuoteIdRevisionNumberCompoundUniqueInput
@@ -844,6 +874,8 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   orderGeneratedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   erpQuoteRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  erpOrderRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -906,6 +938,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   cancelledByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   archivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   erpQuoteRegisteredByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  erpOrderRegisteredByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   rootQuote?: Prisma.XOR<Prisma.QuoteNullableScalarRelationFilter, Prisma.QuoteWhereInput> | null
   revisions?: Prisma.QuoteListRelationFilter
   previousVersion?: Prisma.XOR<Prisma.QuoteNullableScalarRelationFilter, Prisma.QuoteWhereInput> | null
@@ -924,7 +957,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageListRelationFilter
   whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertListRelationFilter
   customerOnboarding?: Prisma.XOR<Prisma.CustomerOnboardingNullableScalarRelationFilter, Prisma.CustomerOnboardingWhereInput> | null
-}, "id" | "quoteNumber" | "orderReference" | "erpQuoteNumber" | "supersededByQuoteId" | "createdByUserId_clientDraftId" | "rootQuoteId_revisionNumber">
+}, "id" | "quoteNumber" | "orderReference" | "erpQuoteNumber" | "erpOrderNumber" | "supersededByQuoteId" | "createdByUserId_clientDraftId" | "rootQuoteId_revisionNumber">
 
 export type QuoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -939,6 +972,9 @@ export type QuoteOrderByWithAggregationInput = {
   erpQuoteNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   erpQuoteRegisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
   erpQuoteRegisteredByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderRegisteredAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  erpOrderRegisteredByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   origin?: Prisma.SortOrder
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -1012,6 +1048,9 @@ export type QuoteScalarWhereWithAggregatesInput = {
   erpQuoteNumber?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   erpQuoteRegisteredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
+  erpOrderNumber?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  erpOrderRegisteredAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.UuidNullableWithAggregatesFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginWithAggregatesFilter<"Quote"> | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodWithAggregatesFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -1076,6 +1115,8 @@ export type QuoteCreateInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -1125,6 +1166,7 @@ export type QuoteCreateInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -1158,6 +1200,9 @@ export type QuoteUncheckedCreateInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -1238,6 +1283,8 @@ export type QuoteUpdateInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1287,6 +1334,7 @@ export type QuoteUpdateInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -1320,6 +1368,9 @@ export type QuoteUncheckedUpdateInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1401,6 +1452,9 @@ export type QuoteCreateManyInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -1465,6 +1519,8 @@ export type QuoteUpdateManyMutationInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1516,6 +1572,9 @@ export type QuoteUncheckedUpdateManyInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1606,6 +1665,9 @@ export type QuoteCountOrderByAggregateInput = {
   erpQuoteNumber?: Prisma.SortOrder
   erpQuoteRegisteredAt?: Prisma.SortOrder
   erpQuoteRegisteredByUserId?: Prisma.SortOrder
+  erpOrderNumber?: Prisma.SortOrder
+  erpOrderRegisteredAt?: Prisma.SortOrder
+  erpOrderRegisteredByUserId?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
@@ -1681,6 +1743,9 @@ export type QuoteMaxOrderByAggregateInput = {
   erpQuoteNumber?: Prisma.SortOrder
   erpQuoteRegisteredAt?: Prisma.SortOrder
   erpQuoteRegisteredByUserId?: Prisma.SortOrder
+  erpOrderNumber?: Prisma.SortOrder
+  erpOrderRegisteredAt?: Prisma.SortOrder
+  erpOrderRegisteredByUserId?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
@@ -1746,6 +1811,9 @@ export type QuoteMinOrderByAggregateInput = {
   erpQuoteNumber?: Prisma.SortOrder
   erpQuoteRegisteredAt?: Prisma.SortOrder
   erpQuoteRegisteredByUserId?: Prisma.SortOrder
+  erpOrderNumber?: Prisma.SortOrder
+  erpOrderRegisteredAt?: Prisma.SortOrder
+  erpOrderRegisteredByUserId?: Prisma.SortOrder
   origin?: Prisma.SortOrder
   captureMethod?: Prisma.SortOrder
   originalQuoteDate?: Prisma.SortOrder
@@ -1911,6 +1979,13 @@ export type QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput = {
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
 }
 
+export type QuoteCreateNestedManyWithoutErpOrderRegisteredByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput> | Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput[] | Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput | Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput[]
+  createMany?: Prisma.QuoteCreateManyErpOrderRegisteredByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
 export type QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutCreatedByUserInput, Prisma.QuoteUncheckedCreateWithoutCreatedByUserInput> | Prisma.QuoteCreateWithoutCreatedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCreatedByUserInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCreatedByUserInput | Prisma.QuoteCreateOrConnectWithoutCreatedByUserInput[]
@@ -1964,6 +2039,13 @@ export type QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput =
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutErpQuoteRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput> | Prisma.QuoteCreateWithoutErpQuoteRegisteredByUserInput[] | Prisma.QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutErpQuoteRegisteredByUserInput | Prisma.QuoteCreateOrConnectWithoutErpQuoteRegisteredByUserInput[]
   createMany?: Prisma.QuoteCreateManyErpQuoteRegisteredByUserInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUncheckedCreateNestedManyWithoutErpOrderRegisteredByUserInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput> | Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput[] | Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput | Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput[]
+  createMany?: Prisma.QuoteCreateManyErpOrderRegisteredByUserInputEnvelope
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
 }
 
@@ -2079,6 +2161,20 @@ export type QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput = {
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
+export type QuoteUpdateManyWithoutErpOrderRegisteredByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput> | Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput[] | Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput | Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutErpOrderRegisteredByUserInput[]
+  createMany?: Prisma.QuoteCreateManyErpOrderRegisteredByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutErpOrderRegisteredByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutErpOrderRegisteredByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
 export type QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutCreatedByUserInput, Prisma.QuoteUncheckedCreateWithoutCreatedByUserInput> | Prisma.QuoteCreateWithoutCreatedByUserInput[] | Prisma.QuoteUncheckedCreateWithoutCreatedByUserInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutCreatedByUserInput | Prisma.QuoteCreateOrConnectWithoutCreatedByUserInput[]
@@ -2188,6 +2284,20 @@ export type QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput =
   connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
   update?: Prisma.QuoteUpdateWithWhereUniqueWithoutErpQuoteRegisteredByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutErpQuoteRegisteredByUserInput[]
   updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutErpQuoteRegisteredByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutErpQuoteRegisteredByUserInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUncheckedUpdateManyWithoutErpOrderRegisteredByUserNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput> | Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput[] | Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput | Prisma.QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpsertWithWhereUniqueWithoutErpOrderRegisteredByUserInput[]
+  createMany?: Prisma.QuoteCreateManyErpOrderRegisteredByUserInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpdateWithWhereUniqueWithoutErpOrderRegisteredByUserInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutErpOrderRegisteredByUserInput | Prisma.QuoteUpdateManyWithWhereWithoutErpOrderRegisteredByUserInput[]
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
@@ -2711,6 +2821,8 @@ export type QuoteCreateWithoutBranchInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -2759,6 +2871,7 @@ export type QuoteCreateWithoutBranchInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -2792,6 +2905,9 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -2901,6 +3017,9 @@ export type QuoteScalarWhereInput = {
   erpQuoteNumber?: Prisma.StringNullableFilter<"Quote"> | string | null
   erpQuoteRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
+  erpOrderNumber?: Prisma.StringNullableFilter<"Quote"> | string | null
+  erpOrderRegisteredAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.UuidNullableFilter<"Quote"> | string | null
   origin?: Prisma.EnumQuoteOriginFilter<"Quote"> | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFilter<"Quote"> | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -2965,6 +3084,8 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3013,6 +3134,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3046,6 +3168,9 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3135,6 +3260,8 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3183,6 +3310,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3216,6 +3344,9 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3305,6 +3436,8 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3353,6 +3486,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3386,6 +3520,9 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3475,6 +3612,8 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3523,6 +3662,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3556,6 +3696,9 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3645,6 +3788,8 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3693,6 +3838,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3726,6 +3872,9 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3815,6 +3964,8 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3863,6 +4014,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -3896,6 +4048,9 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -3985,6 +4140,8 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4033,6 +4190,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -4066,6 +4224,9 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4155,6 +4316,8 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4203,6 +4366,7 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -4235,6 +4399,9 @@ export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4310,6 +4477,182 @@ export type QuoteCreateOrConnectWithoutErpQuoteRegisteredByUserInput = {
 
 export type QuoteCreateManyErpQuoteRegisteredByUserInputEnvelope = {
   data: Prisma.QuoteCreateManyErpQuoteRegisteredByUserInput | Prisma.QuoteCreateManyErpQuoteRegisteredByUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type QuoteCreateWithoutErpOrderRegisteredByUserInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutQuotesInput
+  customer: Prisma.CustomerCreateNestedOneWithoutQuotesInput
+  whatsappLead?: Prisma.WhatsAppLeadCreateNestedOneWithoutQuotesInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestCreateNestedOneWithoutQuoteInput
+  customerContact?: Prisma.CustomerContactCreateNestedOneWithoutQuotesInput
+  createdByUser: Prisma.UserCreateNestedOneWithoutCreatedQuotesInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedQuotesInput
+  providedByUser?: Prisma.UserCreateNestedOneWithoutProvidedQuotesInput
+  providedByAssignedByUser?: Prisma.UserCreateNestedOneWithoutProviderAssignmentsInput
+  rejectedByUser?: Prisma.UserCreateNestedOneWithoutRejectedQuotesInput
+  cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
+  archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
+  erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
+  revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
+  previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
+  nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
+  supersededByQuote?: Prisma.QuoteCreateNestedOneWithoutSupersedesQuoteInput
+  supersedesQuote?: Prisma.QuoteCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutQuoteInput
+  customerOnboarding?: Prisma.CustomerOnboardingCreateNestedOneWithoutAcceptedQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedCreateNestedOneWithoutQuoteInput
+  revisions?: Prisma.QuoteUncheckedCreateNestedManyWithoutRootQuoteInput
+  nextVersions?: Prisma.QuoteUncheckedCreateNestedManyWithoutPreviousVersionInput
+  supersedesQuote?: Prisma.QuoteUncheckedCreateNestedOneWithoutSupersededByQuoteInput
+  items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
+  events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutQuoteInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutQuoteInput
+  customerOnboarding?: Prisma.CustomerOnboardingUncheckedCreateNestedOneWithoutAcceptedQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutErpOrderRegisteredByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput>
+}
+
+export type QuoteCreateManyErpOrderRegisteredByUserInputEnvelope = {
+  data: Prisma.QuoteCreateManyErpOrderRegisteredByUserInput | Prisma.QuoteCreateManyErpOrderRegisteredByUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -4441,6 +4784,22 @@ export type QuoteUpdateManyWithWhereWithoutErpQuoteRegisteredByUserInput = {
   data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserInput>
 }
 
+export type QuoteUpsertWithWhereUniqueWithoutErpOrderRegisteredByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedUpdateWithoutErpOrderRegisteredByUserInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput>
+}
+
+export type QuoteUpdateWithWhereUniqueWithoutErpOrderRegisteredByUserInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutErpOrderRegisteredByUserInput, Prisma.QuoteUncheckedUpdateWithoutErpOrderRegisteredByUserInput>
+}
+
+export type QuoteUpdateManyWithWhereWithoutErpOrderRegisteredByUserInput = {
+  where: Prisma.QuoteScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutErpOrderRegisteredByUserInput>
+}
+
 export type QuoteCreateWithoutCustomerInput = {
   id?: string
   quoteNumber: string
@@ -4453,6 +4812,8 @@ export type QuoteCreateWithoutCustomerInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4501,6 +4862,7 @@ export type QuoteCreateWithoutCustomerInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -4534,6 +4896,9 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4639,6 +5004,8 @@ export type QuoteCreateWithoutCustomerContactInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4687,6 +5054,7 @@ export type QuoteCreateWithoutCustomerContactInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -4720,6 +5088,9 @@ export type QuoteUncheckedCreateWithoutCustomerContactInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4825,6 +5196,8 @@ export type QuoteCreateWithoutCustomerOnboardingInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -4874,6 +5247,7 @@ export type QuoteCreateWithoutCustomerOnboardingInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -4906,6 +5280,9 @@ export type QuoteUncheckedCreateWithoutCustomerOnboardingInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5001,6 +5378,8 @@ export type QuoteUpdateWithoutCustomerOnboardingInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5050,6 +5429,7 @@ export type QuoteUpdateWithoutCustomerOnboardingInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -5082,6 +5462,9 @@ export type QuoteUncheckedUpdateWithoutCustomerOnboardingInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5161,6 +5544,8 @@ export type QuoteCreateWithoutRevisionsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5210,6 +5595,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
   nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
@@ -5242,6 +5628,9 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5326,6 +5715,8 @@ export type QuoteCreateWithoutRootQuoteInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5375,6 +5766,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
   nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
@@ -5407,6 +5799,9 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5496,6 +5891,8 @@ export type QuoteCreateWithoutNextVersionsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5545,6 +5942,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -5577,6 +5975,9 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5661,6 +6062,8 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5710,6 +6113,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   nextVersions?: Prisma.QuoteCreateNestedManyWithoutPreviousVersionInput
@@ -5742,6 +6146,9 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5831,6 +6238,8 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5880,6 +6289,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -5912,6 +6322,9 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -5996,6 +6409,8 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -6045,6 +6460,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -6077,6 +6493,9 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -6172,6 +6591,8 @@ export type QuoteUpdateWithoutRevisionsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6221,6 +6642,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
   nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
@@ -6253,6 +6675,9 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6359,6 +6784,8 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6408,6 +6835,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -6440,6 +6868,9 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6546,6 +6977,8 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6595,6 +7028,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -6627,6 +7061,9 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6717,6 +7154,8 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6766,6 +7205,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -6798,6 +7238,9 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6877,6 +7320,8 @@ export type QuoteCreateWithoutItemsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -6926,6 +7371,7 @@ export type QuoteCreateWithoutItemsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -6958,6 +7404,9 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7053,6 +7502,8 @@ export type QuoteUpdateWithoutItemsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7102,6 +7553,7 @@ export type QuoteUpdateWithoutItemsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -7134,6 +7586,9 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7213,6 +7668,8 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7262,6 +7719,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -7294,6 +7752,9 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7389,6 +7850,8 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7438,6 +7901,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -7470,6 +7934,9 @@ export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7549,6 +8016,8 @@ export type QuoteCreateWithoutAttachmentsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7598,6 +8067,7 @@ export type QuoteCreateWithoutAttachmentsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -7630,6 +8100,9 @@ export type QuoteUncheckedCreateWithoutAttachmentsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7725,6 +8198,8 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7774,6 +8249,7 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -7806,6 +8282,9 @@ export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -7885,6 +8364,8 @@ export type QuoteCreateWithoutEventsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -7934,6 +8415,7 @@ export type QuoteCreateWithoutEventsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -7966,6 +8448,9 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8061,6 +8546,8 @@ export type QuoteUpdateWithoutEventsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8110,6 +8597,7 @@ export type QuoteUpdateWithoutEventsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -8142,6 +8630,9 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8221,6 +8712,8 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8270,6 +8763,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -8302,6 +8796,9 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8397,6 +8894,8 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8446,6 +8945,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -8478,6 +8978,9 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8557,6 +9060,8 @@ export type QuoteCreateWithoutWhatsappLeadInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8605,6 +9110,7 @@ export type QuoteCreateWithoutWhatsappLeadInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -8638,6 +9144,9 @@ export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8743,6 +9252,8 @@ export type QuoteCreateWithoutWhatsappQuoteRequestInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8791,6 +9302,7 @@ export type QuoteCreateWithoutWhatsappQuoteRequestInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -8824,6 +9336,9 @@ export type QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -8919,6 +9434,8 @@ export type QuoteUpdateWithoutWhatsappQuoteRequestInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -8967,6 +9484,7 @@ export type QuoteUpdateWithoutWhatsappQuoteRequestInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -9000,6 +9518,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9079,6 +9600,8 @@ export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9128,6 +9651,7 @@ export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -9160,6 +9684,9 @@ export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9255,6 +9782,8 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9304,6 +9833,7 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -9336,6 +9866,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9415,6 +9948,8 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9464,6 +9999,7 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -9496,6 +10032,9 @@ export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9591,6 +10130,8 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9640,6 +10181,7 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -9672,6 +10214,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9751,6 +10296,8 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9800,6 +10347,7 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -9832,6 +10380,9 @@ export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -9927,6 +10478,8 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -9976,6 +10529,7 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -10008,6 +10562,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10087,6 +10644,8 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10136,6 +10695,7 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -10168,6 +10728,9 @@ export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10263,6 +10826,8 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10312,6 +10877,7 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -10344,6 +10910,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10423,6 +10992,8 @@ export type QuoteCreateWithoutWhatsappInternalAlertsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10472,6 +11043,7 @@ export type QuoteCreateWithoutWhatsappInternalAlertsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -10504,6 +11076,9 @@ export type QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10599,6 +11174,8 @@ export type QuoteUpdateWithoutWhatsappInternalAlertsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10648,6 +11225,7 @@ export type QuoteUpdateWithoutWhatsappInternalAlertsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -10680,6 +11258,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10759,6 +11340,8 @@ export type QuoteCreateWithoutOrderExportsInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10808,6 +11391,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   cancelledByUser?: Prisma.UserCreateNestedOneWithoutCancelledQuotesInput
   archivedByUser?: Prisma.UserCreateNestedOneWithoutArchivedQuotesInput
   erpQuoteRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredQuotesInput
+  erpOrderRegisteredByUser?: Prisma.UserCreateNestedOneWithoutErpRegisteredOrdersInput
   rootQuote?: Prisma.QuoteCreateNestedOneWithoutRevisionsInput
   revisions?: Prisma.QuoteCreateNestedManyWithoutRootQuoteInput
   previousVersion?: Prisma.QuoteCreateNestedOneWithoutNextVersionsInput
@@ -10840,6 +11424,9 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -10935,6 +11522,8 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -10984,6 +11573,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -11016,6 +11606,9 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11096,6 +11689,9 @@ export type QuoteCreateManyBranchInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11159,6 +11755,8 @@ export type QuoteUpdateWithoutBranchInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11207,6 +11805,7 @@ export type QuoteUpdateWithoutBranchInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -11240,6 +11839,9 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11320,6 +11922,9 @@ export type QuoteUncheckedUpdateManyWithoutBranchInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11384,6 +11989,9 @@ export type QuoteCreateManyCreatedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11448,6 +12056,9 @@ export type QuoteCreateManyUpdatedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11512,6 +12123,9 @@ export type QuoteCreateManyRejectedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11576,6 +12190,9 @@ export type QuoteCreateManyCancelledByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11640,6 +12257,9 @@ export type QuoteCreateManyArchivedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11704,6 +12324,9 @@ export type QuoteCreateManyProvidedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11768,6 +12391,9 @@ export type QuoteCreateManyProvidedByAssignedByUserInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11831,6 +12457,76 @@ export type QuoteCreateManyErpQuoteRegisteredByUserInput = {
   orderReference?: string | null
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
+  origin?: $Enums.QuoteOrigin
+  captureMethod?: $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Date | string | null
+  sourceChannel?: $Enums.QuoteSourceChannel
+  whatsappLeadId?: string | null
+  currency: $Enums.Currency
+  exchangeRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate: Date | string
+  taxRate: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: string | null
+  paymentTerms?: string
+  commercialConditions?: string | null
+  validityDays?: number
+  validUntil: Date | string
+  branchId: string
+  customerId: string
+  customerContactId?: string | null
+  createdByUserId: string
+  updatedByUserId?: string | null
+  providedByUserId?: string | null
+  providedByNameSnapshot?: string | null
+  providedByBranchNameSnapshot?: string | null
+  providedAt?: Date | string | null
+  providedByAssignedByUserId?: string | null
+  rejectionReason?: string | null
+  rejectionComment?: string | null
+  rejectedAt?: Date | string | null
+  rejectedByUserId?: string | null
+  cancellationReason?: string | null
+  cancellationComment?: string | null
+  cancelledAt?: Date | string | null
+  cancelledByUserId?: string | null
+  approvalReturnReason?: string | null
+  approvalReturnComment?: string | null
+  rootQuoteId?: string | null
+  previousVersionId?: string | null
+  supersededByQuoteId?: string | null
+  revisionNumber?: number
+  revisionReason?: string | null
+  revisionComment?: string | null
+  supersededAt?: Date | string | null
+  archivedAt?: Date | string | null
+  archivedByUserId?: string | null
+  archiveReason?: string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type QuoteCreateManyErpOrderRegisteredByUserInput = {
+  id?: string
+  quoteNumber: string
+  clientDraftId?: string | null
+  status?: $Enums.QuoteStatus
+  deliveryStatus?: $Enums.QuoteDeliveryStatus
+  firstSentAt?: Date | string | null
+  orderStatus?: $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Date | string | null
+  orderReference?: string | null
+  erpQuoteNumber?: string | null
+  erpQuoteRegisteredAt?: Date | string | null
+  erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -11895,6 +12591,8 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -11943,6 +12641,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -11976,6 +12675,9 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12056,6 +12758,9 @@ export type QuoteUncheckedUpdateManyWithoutCreatedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12119,6 +12824,8 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12167,6 +12874,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -12200,6 +12908,9 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12280,6 +12991,9 @@ export type QuoteUncheckedUpdateManyWithoutUpdatedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12343,6 +13057,8 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12391,6 +13107,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -12424,6 +13141,9 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12504,6 +13224,9 @@ export type QuoteUncheckedUpdateManyWithoutRejectedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12567,6 +13290,8 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12615,6 +13340,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -12648,6 +13374,9 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12728,6 +13457,9 @@ export type QuoteUncheckedUpdateManyWithoutCancelledByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12791,6 +13523,8 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12839,6 +13573,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -12872,6 +13607,9 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -12952,6 +13690,9 @@ export type QuoteUncheckedUpdateManyWithoutArchivedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13015,6 +13756,8 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13063,6 +13806,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -13096,6 +13840,9 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13176,6 +13923,9 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13239,6 +13989,8 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13287,6 +14039,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -13320,6 +14073,9 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13400,6 +14156,9 @@ export type QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13463,6 +14222,8 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13511,6 +14272,7 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -13543,6 +14305,9 @@ export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13623,6 +14388,242 @@ export type QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type QuoteUpdateWithoutErpOrderRegisteredByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutQuotesNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutQuotesNestedInput
+  whatsappLead?: Prisma.WhatsAppLeadUpdateOneWithoutQuotesNestedInput
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUpdateOneWithoutQuoteNestedInput
+  customerContact?: Prisma.CustomerContactUpdateOneWithoutQuotesNestedInput
+  createdByUser?: Prisma.UserUpdateOneRequiredWithoutCreatedQuotesNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedQuotesNestedInput
+  providedByUser?: Prisma.UserUpdateOneWithoutProvidedQuotesNestedInput
+  providedByAssignedByUser?: Prisma.UserUpdateOneWithoutProviderAssignmentsNestedInput
+  rejectedByUser?: Prisma.UserUpdateOneWithoutRejectedQuotesNestedInput
+  cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
+  archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
+  erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
+  revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
+  previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
+  nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
+  supersededByQuote?: Prisma.QuoteUpdateOneWithoutSupersedesQuoteNestedInput
+  supersedesQuote?: Prisma.QuoteUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutQuoteNestedInput
+  customerOnboarding?: Prisma.CustomerOnboardingUpdateOneWithoutAcceptedQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutErpOrderRegisteredByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
+  captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
+  originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sourceChannel?: Prisma.EnumQuoteSourceChannelFieldUpdateOperationsInput | $Enums.QuoteSourceChannel
+  whatsappLeadId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  exchangeRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  exchangeRateDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  taxRate?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  validityDays?: Prisma.IntFieldUpdateOperationsInput | number
+  validUntil?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerContactId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedByBranchNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  providedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providedByAssignedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancellationComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvalReturnComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rootQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededByQuoteId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  revisionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supersededAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archivedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  archiveReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  whatsappQuoteRequest?: Prisma.WhatsAppQuoteRequestUncheckedUpdateOneWithoutQuoteNestedInput
+  revisions?: Prisma.QuoteUncheckedUpdateManyWithoutRootQuoteNestedInput
+  nextVersions?: Prisma.QuoteUncheckedUpdateManyWithoutPreviousVersionNestedInput
+  supersedesQuote?: Prisma.QuoteUncheckedUpdateOneWithoutSupersededByQuoteNestedInput
+  items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
+  deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
+  orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
+  events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
+  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappOutboundMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutQuoteNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutQuoteNestedInput
+  customerOnboarding?: Prisma.CustomerOnboardingUncheckedUpdateOneWithoutAcceptedQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateManyWithoutErpOrderRegisteredByUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumQuoteStatusFieldUpdateOperationsInput | $Enums.QuoteStatus
+  deliveryStatus?: Prisma.EnumQuoteDeliveryStatusFieldUpdateOperationsInput | $Enums.QuoteDeliveryStatus
+  firstSentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderStatus?: Prisma.EnumOrderGenerationStatusFieldUpdateOperationsInput | $Enums.OrderGenerationStatus
+  orderGeneratedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13688,6 +14689,9 @@ export type QuoteCreateManyCustomerInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -13751,6 +14755,8 @@ export type QuoteUpdateWithoutCustomerInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13799,6 +14805,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -13832,6 +14839,9 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13912,6 +14922,9 @@ export type QuoteUncheckedUpdateManyWithoutCustomerInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -13976,6 +14989,9 @@ export type QuoteCreateManyCustomerContactInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -14039,6 +15055,8 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14087,6 +15105,7 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -14120,6 +15139,9 @@ export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14200,6 +15222,9 @@ export type QuoteUncheckedUpdateManyWithoutCustomerContactInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14264,6 +15289,9 @@ export type QuoteCreateManyRootQuoteInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -14328,6 +15356,9 @@ export type QuoteCreateManyPreviousVersionInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -14391,6 +15422,8 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14440,6 +15473,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
   nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
@@ -14472,6 +15506,9 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14552,6 +15589,9 @@ export type QuoteUncheckedUpdateManyWithoutRootQuoteInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14615,6 +15655,8 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14664,6 +15706,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   nextVersions?: Prisma.QuoteUpdateManyWithoutPreviousVersionNestedInput
@@ -14696,6 +15739,9 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14776,6 +15822,9 @@ export type QuoteUncheckedUpdateManyWithoutPreviousVersionInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14840,6 +15889,9 @@ export type QuoteCreateManyWhatsappLeadInput = {
   erpQuoteNumber?: string | null
   erpQuoteRegisteredAt?: Date | string | null
   erpQuoteRegisteredByUserId?: string | null
+  erpOrderNumber?: string | null
+  erpOrderRegisteredAt?: Date | string | null
+  erpOrderRegisteredByUserId?: string | null
   origin?: $Enums.QuoteOrigin
   captureMethod?: $Enums.QuoteCaptureMethod
   originalQuoteDate?: Date | string | null
@@ -14903,6 +15955,8 @@ export type QuoteUpdateWithoutWhatsappLeadInput = {
   orderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14951,6 +16005,7 @@ export type QuoteUpdateWithoutWhatsappLeadInput = {
   cancelledByUser?: Prisma.UserUpdateOneWithoutCancelledQuotesNestedInput
   archivedByUser?: Prisma.UserUpdateOneWithoutArchivedQuotesNestedInput
   erpQuoteRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredQuotesNestedInput
+  erpOrderRegisteredByUser?: Prisma.UserUpdateOneWithoutErpRegisteredOrdersNestedInput
   rootQuote?: Prisma.QuoteUpdateOneWithoutRevisionsNestedInput
   revisions?: Prisma.QuoteUpdateManyWithoutRootQuoteNestedInput
   previousVersion?: Prisma.QuoteUpdateOneWithoutNextVersionsNestedInput
@@ -14984,6 +16039,9 @@ export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15064,6 +16122,9 @@ export type QuoteUncheckedUpdateManyWithoutWhatsappLeadInput = {
   erpQuoteNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   erpQuoteRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   erpQuoteRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  erpOrderRegisteredAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  erpOrderRegisteredByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   origin?: Prisma.EnumQuoteOriginFieldUpdateOperationsInput | $Enums.QuoteOrigin
   captureMethod?: Prisma.EnumQuoteCaptureMethodFieldUpdateOperationsInput | $Enums.QuoteCaptureMethod
   originalQuoteDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -15258,6 +16319,9 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   erpQuoteNumber?: boolean
   erpQuoteRegisteredAt?: boolean
   erpQuoteRegisteredByUserId?: boolean
+  erpOrderNumber?: boolean
+  erpOrderRegisteredAt?: boolean
+  erpOrderRegisteredByUserId?: boolean
   origin?: boolean
   captureMethod?: boolean
   originalQuoteDate?: boolean
@@ -15321,6 +16385,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   revisions?: boolean | Prisma.Quote$revisionsArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
@@ -15355,6 +16420,9 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   erpQuoteNumber?: boolean
   erpQuoteRegisteredAt?: boolean
   erpQuoteRegisteredByUserId?: boolean
+  erpOrderNumber?: boolean
+  erpOrderRegisteredAt?: boolean
+  erpOrderRegisteredByUserId?: boolean
   origin?: boolean
   captureMethod?: boolean
   originalQuoteDate?: boolean
@@ -15417,6 +16485,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
   supersededByQuote?: boolean | Prisma.Quote$supersededByQuoteArgs<ExtArgs>
@@ -15435,6 +16504,9 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   erpQuoteNumber?: boolean
   erpQuoteRegisteredAt?: boolean
   erpQuoteRegisteredByUserId?: boolean
+  erpOrderNumber?: boolean
+  erpOrderRegisteredAt?: boolean
+  erpOrderRegisteredByUserId?: boolean
   origin?: boolean
   captureMethod?: boolean
   originalQuoteDate?: boolean
@@ -15497,6 +16569,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
   supersededByQuote?: boolean | Prisma.Quote$supersededByQuoteArgs<ExtArgs>
@@ -15515,6 +16588,9 @@ export type QuoteSelectScalar = {
   erpQuoteNumber?: boolean
   erpQuoteRegisteredAt?: boolean
   erpQuoteRegisteredByUserId?: boolean
+  erpOrderNumber?: boolean
+  erpOrderRegisteredAt?: boolean
+  erpOrderRegisteredByUserId?: boolean
   origin?: boolean
   captureMethod?: boolean
   originalQuoteDate?: boolean
@@ -15567,7 +16643,7 @@ export type QuoteSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "erpQuoteNumber" | "erpQuoteRegisteredAt" | "erpQuoteRegisteredByUserId" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "whatsappLeadId" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "commercialConditions" | "validityDays" | "validUntil" | "branchId" | "customerId" | "customerContactId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteNumber" | "clientDraftId" | "status" | "deliveryStatus" | "firstSentAt" | "orderStatus" | "orderGeneratedAt" | "orderReference" | "erpQuoteNumber" | "erpQuoteRegisteredAt" | "erpQuoteRegisteredByUserId" | "erpOrderNumber" | "erpOrderRegisteredAt" | "erpOrderRegisteredByUserId" | "origin" | "captureMethod" | "originalQuoteDate" | "sourceChannel" | "whatsappLeadId" | "currency" | "exchangeRate" | "exchangeRateDate" | "taxRate" | "subtotal" | "tax" | "total" | "deliveryPlace" | "paymentTerms" | "commercialConditions" | "validityDays" | "validUntil" | "branchId" | "customerId" | "customerContactId" | "createdByUserId" | "updatedByUserId" | "providedByUserId" | "providedByNameSnapshot" | "providedByBranchNameSnapshot" | "providedAt" | "providedByAssignedByUserId" | "rejectionReason" | "rejectionComment" | "rejectedAt" | "rejectedByUserId" | "cancellationReason" | "cancellationComment" | "cancelledAt" | "cancelledByUserId" | "approvalReturnReason" | "approvalReturnComment" | "rootQuoteId" | "previousVersionId" | "supersededByQuoteId" | "revisionNumber" | "revisionReason" | "revisionComment" | "supersededAt" | "archivedAt" | "archivedByUserId" | "archiveReason" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
@@ -15582,6 +16658,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   revisions?: boolean | Prisma.Quote$revisionsArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
@@ -15615,6 +16692,7 @@ export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
   supersededByQuote?: boolean | Prisma.Quote$supersededByQuoteArgs<ExtArgs>
@@ -15632,6 +16710,7 @@ export type QuoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   cancelledByUser?: boolean | Prisma.Quote$cancelledByUserArgs<ExtArgs>
   archivedByUser?: boolean | Prisma.Quote$archivedByUserArgs<ExtArgs>
   erpQuoteRegisteredByUser?: boolean | Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>
+  erpOrderRegisteredByUser?: boolean | Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>
   rootQuote?: boolean | Prisma.Quote$rootQuoteArgs<ExtArgs>
   previousVersion?: boolean | Prisma.Quote$previousVersionArgs<ExtArgs>
   supersededByQuote?: boolean | Prisma.Quote$supersededByQuoteArgs<ExtArgs>
@@ -15653,6 +16732,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     cancelledByUser: Prisma.$UserPayload<ExtArgs> | null
     archivedByUser: Prisma.$UserPayload<ExtArgs> | null
     erpQuoteRegisteredByUser: Prisma.$UserPayload<ExtArgs> | null
+    erpOrderRegisteredByUser: Prisma.$UserPayload<ExtArgs> | null
     rootQuote: Prisma.$QuotePayload<ExtArgs> | null
     revisions: Prisma.$QuotePayload<ExtArgs>[]
     previousVersion: Prisma.$QuotePayload<ExtArgs> | null
@@ -15685,6 +16765,9 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     erpQuoteNumber: string | null
     erpQuoteRegisteredAt: Date | null
     erpQuoteRegisteredByUserId: string | null
+    erpOrderNumber: string | null
+    erpOrderRegisteredAt: Date | null
+    erpOrderRegisteredByUserId: string | null
     origin: $Enums.QuoteOrigin
     captureMethod: $Enums.QuoteCaptureMethod
     originalQuoteDate: Date | null
@@ -16142,6 +17225,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   cancelledByUser<T extends Prisma.Quote$cancelledByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$cancelledByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   archivedByUser<T extends Prisma.Quote$archivedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$archivedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   erpQuoteRegisteredByUser<T extends Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$erpQuoteRegisteredByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  erpOrderRegisteredByUser<T extends Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$erpOrderRegisteredByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   rootQuote<T extends Prisma.Quote$rootQuoteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$rootQuoteArgs<ExtArgs>>): Prisma.Prisma__QuoteClient<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   revisions<T extends Prisma.Quote$revisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$revisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   previousVersion<T extends Prisma.Quote$previousVersionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$previousVersionArgs<ExtArgs>>): Prisma.Prisma__QuoteClient<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -16201,6 +17285,9 @@ export interface QuoteFieldRefs {
   readonly erpQuoteNumber: Prisma.FieldRef<"Quote", 'String'>
   readonly erpQuoteRegisteredAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly erpQuoteRegisteredByUserId: Prisma.FieldRef<"Quote", 'String'>
+  readonly erpOrderNumber: Prisma.FieldRef<"Quote", 'String'>
+  readonly erpOrderRegisteredAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly erpOrderRegisteredByUserId: Prisma.FieldRef<"Quote", 'String'>
   readonly origin: Prisma.FieldRef<"Quote", 'QuoteOrigin'>
   readonly captureMethod: Prisma.FieldRef<"Quote", 'QuoteCaptureMethod'>
   readonly originalQuoteDate: Prisma.FieldRef<"Quote", 'DateTime'>
@@ -16821,6 +17908,25 @@ export type Quote$archivedByUserArgs<ExtArgs extends runtime.Types.Extensions.In
  * Quote.erpQuoteRegisteredByUser
  */
 export type Quote$erpQuoteRegisteredByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Quote.erpOrderRegisteredByUser
+ */
+export type Quote$erpOrderRegisteredByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

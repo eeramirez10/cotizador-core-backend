@@ -10,6 +10,7 @@ import { GetQuotesQueryRequestDto } from "../../domain/dtos/request/get-quotes-q
 import { MatchQuoteItemErpRequestDto } from "../../domain/dtos/request/match-quote-item-erp-request.dto";
 import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/request/register-quote-delivery-attempt-request.dto";
 import { RegisterErpQuoteRequestDto } from "../../domain/dtos/request/register-erp-quote-request.dto";
+import { RegisterErpOrderRequestDto } from "../../domain/dtos/request/register-erp-order-request.dto";
 import { SaveQuoteDraftRequestDto } from "../../domain/dtos/request/save-quote-draft-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
 import { UpdateQuoteProcurementReferenceRequestDto } from "../../domain/dtos/request/update-quote-procurement-reference-request.dto";
@@ -30,6 +31,7 @@ import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
+import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
@@ -59,6 +61,7 @@ export class QuotesController {
     private readonly downloadQuoteOrderFileUseCase: DownloadQuoteOrderFileUseCase,
     private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase,
     private readonly registerErpQuoteUseCase: RegisterErpQuoteUseCase,
+    private readonly registerErpOrderUseCase: RegisterErpOrderUseCase,
     private readonly sendQuoteWhatsAppUseCase: SendQuoteWhatsAppUseCase
   ) {}
 
@@ -580,6 +583,24 @@ export class QuotesController {
     }
   };
 
+  registerErpOrder = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    const [bodyError, bodyDto] = RegisterErpOrderRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+    try {
+      const result = await this.registerErpOrderUseCase.execute(quoteId, bodyDto!, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result.toJSON());
+    } catch (error) {
+      this.handleError(res, error, "Unexpected error while linking ERP order.");
+    }
+  };
+
   private getSingleParam(value: string | string[] | undefined): string | null {
     if (typeof value === "string") return value;
     if (Array.isArray(value) && value.length > 0) return value[0];
@@ -588,6 +609,15 @@ export class QuotesController {
 
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
     const message = error instanceof Error ? error.message : fallbackMessage;
+
+    if (message.startsWith("ERP_QUOTE_LOOKUP_")) {
+      res.status(503).json({ error: "No se pudo validar el folio en Proscai. Verifica la conexión ERP e inténtalo de nuevo." });
+      return;
+    }
+    if (message.startsWith("ERP_ORDER_LOOKUP_")) {
+      res.status(503).json({ error: "No se pudo validar el pedido en Proscai. Verifica la conexión ERP e inténtalo de nuevo." });
+      return;
+    }
 
     if (message === "Branch not found." || message === "Customer not found." || message === "Quote not found.") {
       res.status(404).json({ error: message });
@@ -619,6 +649,11 @@ export class QuotesController {
       message === "Quote number confirmation does not match." ||
       message === "Only DRAFT or CANCELLED quotes can be permanently deleted." ||
       message === "A quote with a generated order cannot be deleted." ||
+      message === "A quote with a generated order cannot be cancelled." ||
+      message === "A quote linked to an ERP quote cannot be cancelled." ||
+      message === "A quote linked to ERP cannot be cancelled." ||
+      message === "A quote linked to ERP cannot be deleted." ||
+      message === "A quote linked to an ERP quote cannot be deleted." ||
       message === "A quote that belongs to a revision chain cannot be deleted." ||
       message === "Quote is already in the requested status." ||
       message.startsWith("Invalid status transition") ||
@@ -641,10 +676,26 @@ export class QuotesController {
       message === "Quote must be sent before moving to APPROVED or REJECTED." ||
       message === "Quote must be QUOTED, APPROVED or REJECTED to register delivery attempts." ||
       message === "Order file is not available for this quote." ||
+      message === "Order files are not available for cancelled or unapproved quotes." ||
       message === "All quote items must have an ERP product code to generate order file." ||
       message === "Only Excel-imported quotes can be registered in ERP." ||
+      message === "Only Excel-imported quotes can be registered as ERP quotes." ||
       message === "Quote must be APPROVED before registering it in ERP." ||
+      message === "Order file must be generated before registering the ERP quote number." ||
+      message === "ERP quote number does not exist in Proscai." ||
+      message === "ERP quote belongs to a different customer." ||
+      message === "Quote customer not found." ||
       message === "ERP quote number is already registered." ||
+      message === "Quote changed while registering the ERP number. Reload and try again." ||
+      message === "Only system quotes can be linked to ERP orders." ||
+      message === "Quote must be APPROVED before linking an ERP order." ||
+      message === "Order TXT must be generated before linking an ERP order." ||
+      message === "Quote branch has no configured ERP order prefix." ||
+      message.startsWith("ERP order number must start with") ||
+      message === "ERP order number does not exist in Proscai." ||
+      message === "ERP order belongs to a different customer." ||
+      message === "ERP order number is already linked to another quote." ||
+      message === "Quote changed while linking the ERP order. Reload and try again." ||
       message === "Items from Excel-imported quotes are read-only." ||
       message === "ERP matching is not available for Excel-imported quotes." ||
       message === "Orders cannot be generated for Excel-imported quotes." ||

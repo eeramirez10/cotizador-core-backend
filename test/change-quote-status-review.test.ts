@@ -72,6 +72,88 @@ test("status change recalculates stale local-product review flags", async () => 
   }]);
 });
 
+test("approved quote can be cancelled before generating an order", async () => {
+  const quote = {
+    id: "quote-approved",
+    quoteNumber: "QT-APPROVED",
+    status: "APPROVED",
+    orderStatus: "NOT_GENERATED",
+    archivedAt: null,
+    nextRevision: null,
+    branchId: "branch-1",
+    createdByUserId: "seller-1",
+    updatedAt: new Date(),
+    customer: { displayName: "Cliente" },
+    customerContact: null,
+    currency: "MXN",
+    total: 100,
+  } as unknown as QuoteEntity;
+  let changedTo: string | null = null;
+  const quotes = {
+    findById: async () => quote,
+    changeStatus: async (params: ChangeQuoteStatusDatasourceParams) => {
+      changedTo = params.status;
+      return { ...quote, status: params.status } as QuoteEntity;
+    },
+  } as unknown as QuoteRepository;
+  const catalogs = {
+    findActiveByCode: async () => ({ requiresComment: false }),
+  } as unknown as QuoteCatalogRepository;
+  const useCase = new ChangeQuoteStatusUseCase(quotes, catalogs, {} as PurchaseRequisitionRepository);
+  await useCase.execute("quote-approved", new ChangeQuoteStatusRequestDto({
+    status: "CANCELLED", note: null, rejectionReason: null, rejectionComment: null,
+    cancellationReason: "INTERNAL", cancellationComment: null,
+    approvalReturnReason: null, approvalReturnComment: null,
+  }), { id: "seller-1", role: "SELLER", branchId: "branch-1" });
+  assert.equal(changedTo, "CANCELLED");
+});
+
+test("approved quote linked to ERP cannot be cancelled", async () => {
+  const quote = {
+    id: "quote-ordered", status: "APPROVED", orderStatus: "GENERATED",
+    erpOrderNumber: "P021827",
+    archivedAt: null, nextRevision: null,
+  } as unknown as QuoteEntity;
+  const useCase = new ChangeQuoteStatusUseCase(
+    { findById: async () => quote } as unknown as QuoteRepository,
+    {} as QuoteCatalogRepository,
+    {} as PurchaseRequisitionRepository,
+  );
+  await assert.rejects(
+    useCase.execute("quote-ordered", new ChangeQuoteStatusRequestDto({
+      status: "CANCELLED", note: null, rejectionReason: null, rejectionComment: null,
+      cancellationReason: "INTERNAL", cancellationComment: null,
+      approvalReturnReason: null, approvalReturnComment: null,
+    }), { id: "seller-1", role: "SELLER", branchId: "branch-1" }),
+    /linked to ERP cannot be cancelled/,
+  );
+});
+
+test("approved quote with TXT but without ERP link can be cancelled", async () => {
+  const quote = {
+    id: "quote-ordered", quoteNumber: "QT-ORDERED", status: "APPROVED",
+    orderStatus: "GENERATED", erpQuoteNumber: null, archivedAt: null, nextRevision: null,
+    branchId: "branch-1", createdByUserId: "seller-1", updatedAt: new Date(),
+    customer: { displayName: "Cliente" }, customerContact: null, currency: "MXN", total: 100,
+  } as unknown as QuoteEntity;
+  let changedTo: string | null = null;
+  const quotes = {
+    findById: async () => quote,
+    changeStatus: async (params: ChangeQuoteStatusDatasourceParams) => {
+      changedTo = params.status;
+      return { ...quote, status: params.status } as QuoteEntity;
+    },
+  } as unknown as QuoteRepository;
+  const catalogs = { findActiveByCode: async () => ({ requiresComment: false }) } as unknown as QuoteCatalogRepository;
+  const useCase = new ChangeQuoteStatusUseCase(quotes, catalogs, {} as PurchaseRequisitionRepository);
+  await useCase.execute("quote-ordered", new ChangeQuoteStatusRequestDto({
+    status: "CANCELLED", note: null, rejectionReason: null, rejectionComment: null,
+    cancellationReason: "INTERNAL", cancellationComment: null,
+    approvalReturnReason: null, approvalReturnComment: null,
+  }), { id: "seller-1", role: "SELLER", branchId: "branch-1" });
+  assert.equal(changedTo, "CANCELLED");
+});
+
 for (const decision of [
   { status: "APPROVED", reason: "QUOTE_ACCEPTED" },
   { status: "REJECTED", reason: "QUOTE_REJECTED" },

@@ -15,6 +15,7 @@ import {
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RegisterErpQuoteDatasourceParams,
+  RegisterErpOrderDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -133,6 +134,15 @@ const quoteInclude = {
       branch: { select: { code: true, name: true } },
     },
   },
+  erpOrderRegisteredByUser: {
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      branchId: true,
+      branch: { select: { code: true, name: true } },
+    },
+  },
   items: {
     orderBy: {
       createdAt: "asc",
@@ -194,6 +204,7 @@ const quoteListSummarySelect = {
   id: true,
   quoteNumber: true,
   erpQuoteNumber: true,
+  erpOrderNumber: true,
   status: true,
   captureMethod: true,
   originalQuoteDate: true,
@@ -234,6 +245,7 @@ const toQuoteListSummary = (row: QuoteListSummaryRow): QuoteListSummaryEntity =>
   id: row.id,
   quoteNumber: row.quoteNumber,
   erpQuoteNumber: row.erpQuoteNumber,
+  erpOrderNumber: row.erpOrderNumber,
   status: row.status,
   captureMethod: row.captureMethod,
   originalQuoteDate: row.originalQuoteDate,
@@ -963,6 +975,8 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           quoteNumber: true,
           status: true,
           orderStatus: true,
+          erpQuoteNumber: true,
+          erpOrderNumber: true,
           rootQuoteId: true,
           previousVersionId: true,
           supersededByQuoteId: true,
@@ -980,6 +994,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       if (!["DRAFT", "CANCELLED"].includes(quote.status)) {
         throw new Error("Only DRAFT or CANCELLED quotes can be permanently deleted.");
       }
+      if (quote.erpQuoteNumber || quote.erpOrderNumber) throw new Error("A quote linked to ERP cannot be deleted.");
       if (quote.orderStatus === "GENERATED") throw new Error("A quote with a generated order cannot be deleted.");
       const belongsToRevisionChain = Boolean(
         quote.rootQuoteId ||
@@ -1360,9 +1375,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: params.id,
           ...this.buildScopeWhere(params.scope),
         },
-        select: { id: true, rootQuoteId: true, previousVersionId: true, revisionNumber: true },
+        select: { id: true, rootQuoteId: true, previousVersionId: true, revisionNumber: true, erpQuoteNumber: true, erpOrderNumber: true },
       });
       if (!quote) return null;
+      if (params.status === "CANCELLED" && (quote.erpQuoteNumber || quote.erpOrderNumber)) {
+        throw new Error("A quote linked to ERP cannot be cancelled.");
+      }
 
       if (params.itemReviewUpdates?.length) {
         const readyItemIds = params.itemReviewUpdates
@@ -1386,8 +1404,8 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         }
       }
 
-      await tx.quote.update({
-        where: { id: quote.id },
+      const statusUpdate = await tx.quote.updateMany({
+        where: { id: quote.id, ...(params.status === "CANCELLED" ? { erpQuoteNumber: null, erpOrderNumber: null } : {}) },
         data: {
           status: params.status,
           rejectionReason: params.rejectionReason,
@@ -1403,6 +1421,14 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           updatedByUserId: params.actorUserId,
         },
       });
+      if (statusUpdate.count !== 1) throw new Error("A quote linked to ERP cannot be cancelled.");
+
+      if (params.status === "CANCELLED") {
+        await tx.purchaseRequisition.updateMany({
+          where: { quoteId: quote.id, status: { notIn: ["COMPLETED", "CANCELLED"] } },
+          data: { status: "CANCELLED" },
+        });
+      }
 
       const requestStatus = params.status === "APPROVED"
         ? "ACCEPTED"
@@ -1608,6 +1634,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
             id: true,
             status: true,
             captureMethod: true,
+            orderStatus: true,
             archivedAt: true,
             erpQuoteNumber: true,
           },
@@ -1615,15 +1642,19 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         if (!quote) return null;
         if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
         if (quote.captureMethod !== "EXCEL_IMPORT") {
-          throw new Error("Only Excel-imported quotes can be registered in ERP.");
+          throw new Error("Only Excel-imported quotes can be registered as ERP quotes.");
         }
         if (quote.status !== "APPROVED") {
           throw new Error("Quote must be APPROVED before registering it in ERP.");
         }
 
         const registeredAt = new Date();
-        await tx.quote.update({
-          where: { id: quote.id },
+        const registration = await tx.quote.updateMany({
+          where: {
+            id: quote.id,
+            status: "APPROVED",
+            erpQuoteNumber: quote.erpQuoteNumber,
+          },
           data: {
             erpQuoteNumber: params.erpQuoteNumber,
             erpQuoteRegisteredAt: registeredAt,
@@ -1631,6 +1662,9 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
             updatedByUserId: params.actorUserId,
           },
         });
+        if (registration.count !== 1) {
+          throw new Error("Quote changed while registering the ERP number. Reload and try again.");
+        }
 
         const note = quote.erpQuoteNumber
           ? `ERP quote registration changed from ${quote.erpQuoteNumber} to ${params.erpQuoteNumber}.`
@@ -1654,6 +1688,73 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         error.code === "P2002"
       ) {
         throw new Error("ERP quote number is already registered.");
+      }
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        error.code === "P2025"
+      ) {
+        throw new Error("Quote changed while registering the ERP number. Reload and try again.");
+      }
+      throw error;
+    }
+  }
+
+  async registerErpOrder(params: RegisterErpOrderDatasourceParams): Promise<QuoteEntity | null> {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        const quote = await tx.quote.findFirst({
+          where: { id: params.id, ...this.buildScopeWhere(params.scope) },
+          select: {
+            id: true,
+            status: true,
+            captureMethod: true,
+            orderStatus: true,
+            archivedAt: true,
+            erpOrderNumber: true,
+          },
+        });
+        if (!quote) return null;
+        if (quote.archivedAt) throw new Error("Archived quotes are read-only.");
+        if (quote.captureMethod !== "SYSTEM") throw new Error("Only system quotes can be linked to ERP orders.");
+        if (quote.status !== "APPROVED") throw new Error("Quote must be APPROVED before linking an ERP order.");
+        if (quote.orderStatus !== "GENERATED") throw new Error("Order TXT must be generated before linking an ERP order.");
+
+        const registeredAt = new Date();
+        const registration = await tx.quote.updateMany({
+          where: {
+            id: quote.id,
+            status: "APPROVED",
+            orderStatus: "GENERATED",
+            erpOrderNumber: quote.erpOrderNumber,
+          },
+          data: {
+            erpOrderNumber: params.erpOrderNumber,
+            erpOrderRegisteredAt: registeredAt,
+            erpOrderRegisteredByUserId: params.actorUserId,
+            updatedByUserId: params.actorUserId,
+          },
+        });
+        if (registration.count !== 1) {
+          throw new Error("Quote changed while linking the ERP order. Reload and try again.");
+        }
+
+        await tx.quoteEvent.create({
+          data: {
+            quoteId: quote.id,
+            status: quote.status,
+            note: quote.erpOrderNumber
+              ? `ERP order link changed from ${quote.erpOrderNumber} to ${params.erpOrderNumber}.`
+              : `ERP order linked as ${params.erpOrderNumber}.`,
+            actorUserId: params.actorUserId,
+          },
+        });
+        return this.findByIdWithClient(quote.id, params.scope, tx);
+      });
+    } catch (error) {
+      if (typeof error === "object" && error !== null && "code" in error && error.code === "P2002") {
+        throw new Error("ERP order number is already linked to another quote.");
       }
       throw error;
     }
@@ -1689,6 +1790,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         OR: [
           { quoteNumber: { contains: params.search, mode: "insensitive" } },
           { erpQuoteNumber: { contains: params.search, mode: "insensitive" } },
+          { erpOrderNumber: { contains: params.search, mode: "insensitive" } },
           { notes: { contains: params.search, mode: "insensitive" } },
           {
             customer: {

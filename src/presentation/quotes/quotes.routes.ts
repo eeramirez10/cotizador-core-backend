@@ -17,6 +17,7 @@ import { GetQuotesUseCase } from "../../domain/use-cases/get-quotes.use-case";
 import { MatchQuoteItemErpUseCase } from "../../domain/use-cases/match-quote-item-erp.use-case";
 import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/register-quote-delivery-attempt.use-case";
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
+import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
@@ -53,6 +54,8 @@ import { composeWhatsAppInternalAlert } from "../composition/whatsapp-internal-a
 import { uploadSingleAttachment } from "../middlewares/file-upload.middleware";
 import { QuoteCustomerChangeRequestsController } from "./quote-customer-change-requests.controller";
 import { runtimeSystemSettings } from "../../infrastructure/config/runtime-system-settings";
+import { ErpQuoteLookupAdapter } from "../../infrastructure/http/erp-quote-lookup.adapter";
+import { ErpOrderLookupAdapter } from "../../infrastructure/http/erp-order-lookup.adapter";
 
 export class QuotesRoutes {
   static routes(): Router {
@@ -119,7 +122,16 @@ export class QuotesRoutes {
       composeWhatsAppInternalAlert(),
     );
     const registerQuoteDeliveryAttemptUseCase = new RegisterQuoteDeliveryAttemptUseCase(quoteRepository);
-    const registerErpQuoteUseCase = new RegisterErpQuoteUseCase(quoteRepository);
+    const registerErpQuoteUseCase = new RegisterErpQuoteUseCase(
+      quoteRepository,
+      customerRepository,
+      new ErpQuoteLookupAdapter(Envs.erpApiUrl, Envs.erpApiTimeoutMs, Envs.erpInternalApiKey),
+    );
+    const registerErpOrderUseCase = new RegisterErpOrderUseCase(
+      quoteRepository,
+      customerRepository,
+      new ErpOrderLookupAdapter(Envs.erpApiUrl, Envs.erpApiTimeoutMs, Envs.erpInternalApiKey),
+    );
     const fileAttachmentRepository = new PrismaFileAttachmentRepository();
     const fileAttachmentsUseCase = new FileAttachmentsUseCase(
       fileAttachmentRepository,
@@ -160,7 +172,9 @@ export class QuotesRoutes {
     const generateQuoteOrderUseCase = new GenerateQuoteOrderUseCase(
       quoteRepository,
       orderGenerationRepository,
-      purchaseRequisitionRepository
+      purchaseRequisitionRepository,
+      () => runtimeSystemSettings.boolean("ORDER_FILE_WITHOUT_STOCK_ENABLED"),
+      () => runtimeSystemSettings.boolean("ORDER_FILE_WITH_LOCAL_CUSTOMER_ENABLED"),
     );
 
     const controller = new QuotesController(
@@ -184,6 +198,7 @@ export class QuotesRoutes {
       downloadQuoteOrderFileUseCase,
       generateQuoteOrderUseCase,
       registerErpQuoteUseCase,
+      registerErpOrderUseCase,
       sendQuoteWhatsAppUseCase
     );
     const changeRequestsController = new QuoteCustomerChangeRequestsController(
@@ -254,6 +269,12 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.registerErpQuote
+    );
+    router.patch(
+      "/:id/erp-order",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      controller.registerErpOrder
     );
     router.post(
       "/:id/delivery-attempts",

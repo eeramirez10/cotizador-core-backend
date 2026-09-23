@@ -7,6 +7,7 @@ import {
   OrderGenerationDatasource,
 } from "../../domain/datasources/order-generation.datasource";
 import { QuoteEntity } from "../../domain/entities/quote.entity";
+import { getOrderItemErpCode } from "../../domain/use-cases/quote-order-eligibility";
 
 const TAB = "\t";
 const CRLF = "\r\n";
@@ -21,7 +22,7 @@ const formatQty = (value: number): string => {
 
 const resolveProductCode = (quote: QuoteEntity, index: number): string => {
   const item = quote.items[index];
-  const code = (item.externalProductCode ?? item.product?.code ?? "").trim();
+  const code = getOrderItemErpCode(item);
   if (!code) {
     throw new Error("All quote items must have an ERP product code to generate order file.");
   }

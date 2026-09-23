@@ -405,6 +405,13 @@ export interface RegisterErpQuoteDatasourceParams {
   scope: QuoteAccessScope;
 }
 
+export interface RegisterErpOrderDatasourceParams {
+  id: string;
+  actorUserId: string;
+  erpOrderNumber: string;
+  scope: QuoteAccessScope;
+}
+
 export abstract class QuoteDatasource {
   abstract findPaginated(params: FindQuotesDatasourceParams): Promise<FindQuotesDatasourceResult>;
   abstract findPaginatedSummaries(params: FindQuotesDatasourceParams): Promise<FindQuoteSummariesDatasourceResult>;
@@ -425,4 +432,5 @@ export abstract class QuoteDatasource {
   abstract updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
   abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract registerErpOrder(params: RegisterErpOrderDatasourceParams): Promise<QuoteEntity | null>;
 }

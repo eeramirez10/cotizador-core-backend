@@ -29,6 +29,9 @@ export class DownloadQuoteOrderFileUseCase {
     if (quote.captureMethod === "EXCEL_IMPORT") {
       throw new Error("Order files are not available for Excel-imported quotes.");
     }
+    if (quote.status !== "APPROVED") {
+      throw new Error("Order files are not available for cancelled or unapproved quotes.");
+    }
     if (quote.orderStatus !== "GENERATED" || !quote.orderReference) {
       throw new Error("Order file is not available for this quote.");
     }

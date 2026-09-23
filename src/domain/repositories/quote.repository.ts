@@ -13,6 +13,7 @@ import {
   MarkQuoteOrderGeneratedDatasourceParams,
   RecordQuoteDeliveryAttemptDatasourceParams,
   RegisterErpQuoteDatasourceParams,
+  RegisterErpOrderDatasourceParams,
   RemoveQuoteItemDatasourceParams,
   SaveQuoteDraftDatasourceParams,
   SaveQuoteDraftDatasourceResult,
@@ -43,4 +44,5 @@ export abstract class QuoteRepository {
   abstract updateDeliveryAttemptStatus(params: UpdateQuoteDeliveryAttemptStatusDatasourceParams): Promise<boolean>;
   abstract markOrderGenerated(params: MarkQuoteOrderGeneratedDatasourceParams): Promise<QuoteEntity | null>;
   abstract registerErpQuote(params: RegisterErpQuoteDatasourceParams): Promise<QuoteEntity | null>;
+  abstract registerErpOrder(params: RegisterErpOrderDatasourceParams): Promise<QuoteEntity | null>;
 }
