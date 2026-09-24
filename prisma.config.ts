@@ -11,9 +11,9 @@ const primaryPath = path.resolve(process.cwd(), primaryEnvFile);
 const fallbackPath = path.resolve(process.cwd(), fallbackEnvFile);
 
 if (existsSync(primaryPath)) {
-  config({ path: primaryPath, override: true });
+  config({ path: primaryPath, override: false });
 } else if (existsSync(fallbackPath)) {
-  config({ path: fallbackPath, override: true });
+  config({ path: fallbackPath, override: false });
 }
 
 const databaseUrl = process.env.DATABASE_URL;

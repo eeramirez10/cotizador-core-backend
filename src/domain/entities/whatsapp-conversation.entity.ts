@@ -13,6 +13,7 @@ export interface RecordWhatsAppInboundMessageInput {
   providerMessageId: string;
   body: string | null;
   mediaCount: number;
+  hasUnsupportedAudio: boolean;
   media: WhatsAppInboundMediaReference[];
   receivedAt: Date;
   enqueueAssistant?: boolean;

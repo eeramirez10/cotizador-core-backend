@@ -2,6 +2,7 @@ import { Envs } from "../../config/envs";
 import { SendWhatsAppInternalAlertUseCase } from "../../domain/use-cases/send-whatsapp-internal-alert.use-case";
 import { TwilioWhatsAppInternalAlertAdapter } from "../../infrastructure/messaging/twilio-whatsapp-internal-alert.adapter";
 import { PrismaWhatsAppInternalAlertRepository } from "../../infrastructure/repositories/prisma-whatsapp-internal-alert.repository";
+import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 
 export const composeWhatsAppInternalAlert = (): SendWhatsAppInternalAlertUseCase => (
   new SendWhatsAppInternalAlertUseCase(
@@ -14,5 +15,6 @@ export const composeWhatsAppInternalAlert = (): SendWhatsAppInternalAlertUseCase
       contentSid: Envs.twilioWhatsAppInternalAlertContentSid,
       statusCallbackUrl: Envs.twilioStatusCallbackUrl,
     }),
+    whatsAppRealtimeBus,
   )
 );

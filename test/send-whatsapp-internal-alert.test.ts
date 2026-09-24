@@ -8,6 +8,7 @@ import { WhatsAppInternalAlertMessagingPort } from "../src/domain/contracts/what
 import type { WhatsAppInternalAlertInput } from "../src/domain/entities/whatsapp-internal-alert.entity";
 import { WhatsAppInternalAlertRepository } from "../src/domain/repositories/whatsapp-internal-alert.repository";
 import { SendWhatsAppInternalAlertUseCase } from "../src/domain/use-cases/send-whatsapp-internal-alert.use-case";
+import { WhatsAppRealtimePublisher, type WhatsAppRealtimeEvent } from "../src/domain/events/whatsapp-realtime.event";
 
 class AlertRepositoryStub extends WhatsAppInternalAlertRepository {
   private readonly eventKeys = new Map<string, string>();
@@ -42,6 +43,11 @@ class AlertMessagingStub extends WhatsAppInternalAlertMessagingPort {
     this.messages.push(message);
     return { providerMessageId: "SM-1" };
   }
+}
+
+class RealtimeStub extends WhatsAppRealtimePublisher {
+  events: WhatsAppRealtimeEvent[] = [];
+  async publish(event: WhatsAppRealtimeEvent) { this.events.push(event); }
 }
 
 const input: WhatsAppInternalAlertInput = {
@@ -82,4 +88,27 @@ test("internal alerts are skipped when the seller has no WhatsApp number", async
   });
   assert.equal(repository.status, "SKIPPED");
   assert.equal(messaging.messages.length, 0);
+});
+
+test("ERP-linked customer creates one in-app notification even when WhatsApp is unavailable", async () => {
+  const repository = new AlertRepositoryStub();
+  repository.recipientPhone = null;
+  const messaging = new AlertMessagingStub();
+  const realtime = new RealtimeStub();
+  const useCase = new SendWhatsAppInternalAlertUseCase(repository, messaging, realtime);
+  const erpLink = {
+    eventKey: "customer-onboarding:onboarding-1:erp-linked",
+    type: "CUSTOMER_ONBOARDING_ERP_LINKED" as const,
+    recipientUserId: "seller-1",
+    customerName: "Cliente SA de CV",
+    reference: "QT-1",
+    detail: "Cliente vinculado en Proscai.",
+    targetPath: "/clients?onboarding=onboarding-1",
+  };
+
+  assert.deepEqual(await useCase.execute(erpLink), { sent: false, reason: "RECIPIENT_HAS_NO_WHATSAPP" });
+  assert.deepEqual(await useCase.execute(erpLink), { sent: false, duplicate: true });
+  assert.equal(realtime.events.length, 1);
+  assert.equal(realtime.events[0].systemNotification?.recipientUserId, "seller-1");
+  assert.equal(realtime.events[0].systemNotification?.targetPath, erpLink.targetPath);
 });

@@ -175,6 +175,7 @@ export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRe
           providerMessageId: input.providerMessageId,
           body: input.body,
           mediaCount: input.mediaCount,
+          hasUnsupportedAudio: input.hasUnsupportedAudio,
           receivedAt: input.receivedAt,
         }],
         skipDuplicates: true,

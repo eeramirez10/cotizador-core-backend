@@ -25,7 +25,8 @@ export class CustomerOnboardingsRoutes {
     router.get("/conversation/:conversationId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.getForConversation);
     router.post("/conversation/:conversationId/tax-document/:attachmentId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.processConversationTaxDocument);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "CREDIT_COLLECTIONS"), controller.get);
-    router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.update);
+    router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.remove);
+    router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "CREDIT_COLLECTIONS"), controller.update);
     router.post("/:id/tax-document", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), upload.single("file"), controller.uploadTaxDocument);
     router.get("/:id/tax-document", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "CREDIT_COLLECTIONS"), controller.downloadTaxDocument);
     router.post("/:id/submit-for-cxc", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.submitForCxc);

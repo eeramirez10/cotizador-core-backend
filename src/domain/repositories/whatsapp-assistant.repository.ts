@@ -31,6 +31,7 @@ export abstract class WhatsAppAssistantRepository {
   }): Promise<void>;
   abstract listAuthorizedQuotes(conversationId: string, limit: number): Promise<WhatsAppAssistantQuoteSummary[]>;
   abstract findAuthorizedQuote(conversationId: string, quoteNumber: string): Promise<WhatsAppAssistantQuoteDetails | null>;
+  abstract findCurrentAuthorizedQuote(conversationId: string, quoteNumber: string): Promise<WhatsAppAssistantQuoteDetails | null>;
   abstract searchAuthorizedQuoteItems(input: {
     conversationId: string;
     quoteNumber: string;

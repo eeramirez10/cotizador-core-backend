@@ -11,7 +11,7 @@ import {
   type WhatsAppRealtimeEvent,
 } from "../src/domain/events/whatsapp-realtime.event";
 import { GetWhatsAppConversationWindowUseCase } from "../src/domain/use-cases/get-whatsapp-conversation-window.use-case";
-import { RecordInboundWhatsAppMessageUseCase } from "../src/domain/use-cases/record-inbound-whatsapp-message.use-case";
+import { RecordInboundWhatsAppMessageUseCase, isUnsupportedWhatsAppAudio } from "../src/domain/use-cases/record-inbound-whatsapp-message.use-case";
 import type { WhatsAppParticipantResolverPort } from "../src/domain/contracts/whatsapp-participant-resolver.port";
 
 class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository {
@@ -42,6 +42,12 @@ class WhatsAppRealtimePublisherStub extends WhatsAppRealtimePublisher {
 }
 
 const now = new Date("2026-09-07T18:00:00.000Z");
+
+test("recognizes audio MIME variants without classifying PDFs as audio", () => {
+  assert.equal(isUnsupportedWhatsAppAudio("audio/ogg; codecs=opus"), true);
+  assert.equal(isUnsupportedWhatsAppAudio("application/ogg"), true);
+  assert.equal(isUnsupportedWhatsAppAudio("application/pdf"), false);
+});
 
 test("uses free-form delivery within 24 hours of the last inbound message", async () => {
   const repository = new WhatsAppConversationRepositoryStub();
@@ -104,6 +110,7 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
     providerMessageId: "SM123",
     body: "Hola",
     mediaCount: 1,
+    hasUnsupportedAudio: false,
     media: [],
     receivedAt: now,
     enqueueAssistant: false,
@@ -148,6 +155,30 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
       humanControlExpiresAt: null,
     },
   }]);
+});
+
+test("classifies a WhatsApp voice note without treating it as a quote file", async () => {
+  const repository = new WhatsAppConversationRepositoryStub();
+  const realtime = new WhatsAppRealtimePublisherStub();
+  const useCase = new RecordInboundWhatsAppMessageUseCase(repository, () => now, true, realtime);
+
+  await useCase.execute({
+    from: "whatsapp:+5215511223344",
+    to: "whatsapp:+525651020069",
+    providerMessageId: "SM-audio-1",
+    mediaCount: 1,
+    media: [{ index: 0, url: "https://api.twilio.com/audio/1", mimeType: "audio/ogg; codecs=opus" }],
+  });
+
+  assert.equal(repository.recorded?.hasUnsupportedAudio, true);
+  assert.deepEqual(repository.recorded?.media, []);
+  await new Promise((resolve) => setImmediate(resolve));
+  const event = realtime.events[0];
+  assert.equal(event.type, "WHATSAPP_CONVERSATION_CHANGED");
+  if (event.type === "WHATSAPP_CONVERSATION_CHANGED") {
+    assert.equal(event.message?.body, "Nota de voz recibida (no compatible)");
+    assert.deepEqual(event.message?.attachments, []);
+  }
 });
 
 test("restores a known customer identity when a deleted conversation is recreated", async () => {

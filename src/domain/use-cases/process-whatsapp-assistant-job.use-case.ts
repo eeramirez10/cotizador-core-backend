@@ -22,6 +22,7 @@ export class ProcessWhatsAppAssistantJobUseCase {
         participantPhone: job.participantPhone,
         message: job.message,
         mediaCount: job.mediaCount,
+        hasUnsupportedAudio: job.hasUnsupportedAudio,
         attachments: job.attachments,
         previousResponseId: job.previousResponseId,
         principal: job.principal,

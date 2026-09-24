@@ -6,11 +6,13 @@ import { AppRoutes } from "./app-routes";
 import { prisma } from "../infrastructure/database/prisma-client";
 import { whatsAppRealtimeBus } from "../infrastructure/realtime/whatsapp-realtime.container";
 import { WhatsAppWebSocketGateway } from "../infrastructure/realtime/whatsapp-websocket.gateway";
+import { SystemNotificationsWebSocketGateway } from "../infrastructure/realtime/system-notifications-websocket.gateway";
 import { runtimeSystemSettings } from "../infrastructure/config/runtime-system-settings";
 
 const app = express();
 const server = createServer(app);
 const realtimeGateway = new WhatsAppWebSocketGateway(server, whatsAppRealtimeBus);
+const notificationsGateway = new SystemNotificationsWebSocketGateway(server, whatsAppRealtimeBus);
 
 app.use(
   cors({
@@ -29,6 +31,9 @@ void runtimeSystemSettings.refresh(true).catch((error) => {
 void realtimeGateway.start().catch((error) => {
   console.error("whatsapp_realtime_start_failed", error);
 });
+void notificationsGateway.start().catch((error) => {
+  console.error("system_notifications_realtime_start_failed", error);
+});
 
 server.listen(Envs.port, "0.0.0.0", () => {
   // eslint-disable-next-line no-console
@@ -41,6 +46,7 @@ const shutdown = async (signal: string): Promise<void> => {
   stopping = true;
   console.log(JSON.stringify({ level: "info", event: "server.stopping", signal }));
   await realtimeGateway.close();
+  await notificationsGateway.close();
   await whatsAppRealtimeBus.close();
   await prisma.$disconnect();
   server.close(() => process.exit(0));

@@ -118,6 +118,7 @@ export class WhatsAppWebSocketGateway {
   }
 
   private async broadcast(event: WhatsAppRealtimeEvent): Promise<void> {
+    if (event.type === "SYSTEM_NOTIFICATION_CREATED") return;
     if (this.clients.size === 0) return;
     await runtimeSystemSettings.refresh();
     if (!runtimeSystemSettings.boolean("WHATSAPP_INBOX_ENABLED")) return;

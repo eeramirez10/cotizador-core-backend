@@ -12,8 +12,10 @@ import { WhatsAppAssistantRepository } from "../../domain/repositories/whatsapp-
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
 import { PrismaWhatsAppParticipantResolver } from "./prisma-whatsapp-participant-resolver";
+import { latestSentQuotePerFamily } from "./current-whatsapp-quote-revisions";
 
 const visibleStatuses = ["QUOTED", "APPROVED", "REJECTED", "SUPERSEDED"] as const;
+const currentStatuses = ["QUOTED", "APPROVED", "REJECTED"] as const;
 
 export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantRepository {
   private readonly participantResolver = new PrismaWhatsAppParticipantResolver();
@@ -73,6 +75,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
           select: {
             body: true,
             mediaCount: true,
+            hasUnsupportedAudio: true,
             attachments: {
               orderBy: { createdAt: "asc" },
               select: { id: true, originalName: true, mimeType: true },
@@ -115,8 +118,10 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       id: candidate.id,
       conversationId: candidate.conversationId,
       participantPhone: candidate.conversation.participantPhoneE164,
-      message: candidate.inboundMessage.body?.trim() || "El cliente envió un archivo sin texto.",
+      message: candidate.inboundMessage.body?.trim()
+        || (candidate.inboundMessage.hasUnsupportedAudio ? "El cliente envió una nota de voz." : "El cliente envió un archivo sin texto."),
       mediaCount: candidate.inboundMessage.mediaCount,
+      hasUnsupportedAudio: candidate.inboundMessage.hasUnsupportedAudio,
       attachments: candidate.inboundMessage.attachments,
       previousResponseId: conversationContext?.previousResponseId ?? null,
       attempts: candidate.attempts + 1,
@@ -196,18 +201,21 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
   async listAuthorizedQuotes(conversationId: string, limit: number): Promise<WhatsAppAssistantQuoteSummary[]> {
     const phone = await this.participantPhone(conversationId);
     if (!phone) return [];
+    const requestedLimit = Math.min(Math.max(limit, 1), 10);
     const rows = await prisma.quote.findMany({
       where: {
         archivedAt: null,
-        status: { in: [...visibleStatuses] },
+        status: { in: [...currentStatuses] },
         deliveryAttempts: {
           some: { channel: "WHATSAPP", recipient: phone, status: { not: "FAILED" } },
         },
       },
       orderBy: [{ firstSentAt: "desc" }, { createdAt: "desc" }],
-      take: Math.min(Math.max(limit, 1), 10),
+      take: 100,
       select: {
         id: true,
+        rootQuoteId: true,
+        revisionNumber: true,
         customerId: true,
         quoteNumber: true,
         status: true,
@@ -224,7 +232,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         },
       },
     });
-    return rows.map((row) => this.toSummary(row));
+    return latestSentQuotePerFamily(rows, requestedLimit).map((row) => this.toSummary(row));
   }
 
   async findAuthorizedQuote(conversationId: string, quoteNumber: string): Promise<WhatsAppAssistantQuoteDetails | null> {
@@ -280,6 +288,29 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       sellerId: row.createdByUserId,
       branchId: row.branchId,
     };
+  }
+
+  async findCurrentAuthorizedQuote(conversationId: string, quoteNumber: string): Promise<WhatsAppAssistantQuoteDetails | null> {
+    const requested = await this.findAuthorizedQuote(conversationId, quoteNumber);
+    if (!requested) return null;
+    const source = await prisma.quote.findUnique({
+      where: { id: requested.id },
+      select: { rootQuoteId: true },
+    });
+    if (!source) return null;
+    const rootQuoteId = source.rootQuoteId ?? requested.id;
+    const current = await prisma.quote.findFirst({
+      where: {
+        OR: [{ id: rootQuoteId }, { rootQuoteId }],
+        archivedAt: null,
+      },
+      orderBy: [{ revisionNumber: "desc" }, { createdAt: "desc" }],
+      select: { quoteNumber: true, status: true },
+    });
+    if (!current || !currentStatuses.includes(current.status as typeof currentStatuses[number])) return null;
+    if (current.quoteNumber === requested.quoteNumber) return requested;
+    // The current revision must have been delivered to this same WhatsApp number.
+    return this.findAuthorizedQuote(conversationId, current.quoteNumber);
   }
 
   async searchAuthorizedQuoteItems(input: {

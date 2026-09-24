@@ -357,9 +357,18 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
         },
       });
       const conversationIds = conversations.map((conversation) => conversation.id);
-      const storageKeysToDelete = [...new Set(conversations.flatMap((conversation) =>
-        conversation.inboundMessages.flatMap((message) => message.attachments.map((attachment) => attachment.storageKey))
-      ))];
+      const onboarding = await tx.customerOnboarding.findUnique({
+        where: { customerId: customer.id },
+        select: { id: true, taxDocumentStorageKey: true },
+      });
+      const storageKeysToDelete = [...new Set([
+        ...conversations.flatMap((conversation) =>
+          conversation.inboundMessages.flatMap((message) => message.attachments.map((attachment) => attachment.storageKey))
+        ),
+        ...(onboarding?.taxDocumentStorageKey ? [onboarding.taxDocumentStorageKey] : []),
+      ])];
+
+      if (onboarding) await tx.customerOnboarding.delete({ where: { id: onboarding.id } });
 
       if (conversationIds.length > 0) {
         await tx.whatsAppConversation.deleteMany({ where: { id: { in: conversationIds } } });
@@ -389,6 +398,7 @@ export class PrismaCustomerDatasource implements CustomerDatasource {
             deletedConversationCount: conversations.length,
             deletedTemporaryFileCount: storageKeysToDelete.length,
             deletedDeliveryAttemptCount: deletedDeliveryAttempts.count,
+            deletedFiscalOnboardingCount: onboarding ? 1 : 0,
           },
         },
       });

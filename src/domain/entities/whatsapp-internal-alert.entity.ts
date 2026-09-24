@@ -25,4 +25,5 @@ export interface WhatsAppInternalAlertInput {
   customerName?: string | null;
   reference: string;
   detail: string;
+  targetPath?: string | null;
 }

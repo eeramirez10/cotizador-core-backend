@@ -75,7 +75,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
       case "update_customer_onboarding":
         return this.customerOnboarding?.updateFromAssistant(conversationId, this.onboardingInput(args)) ?? { error: "CUSTOMER_ONBOARDING_NOT_CONFIGURED" };
       case "process_customer_tax_document":
-        return this.customerOnboarding?.processWhatsAppTaxDocument(conversationId, this.requiredText(args.attachmentId, "attachmentId")) ?? { error: "CUSTOMER_ONBOARDING_NOT_CONFIGURED" };
+        return { error: "TAX_DOCUMENT_REQUIRES_SELLER_REVIEW" };
       default:
         throw new Error(`Unsupported assistant tool: ${name}`);
     }
@@ -88,18 +88,18 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async getQuote(conversationId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     return { quote: this.publicQuote(quote) };
   }
 
   private async searchQuoteItems(conversationId: string, args: ToolArguments) {
-    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     const query = this.optionalText(args.query);
     const position = this.positiveInteger(args.position);
     if (!query && position === null) return { error: "ITEM_QUERY_OR_POSITION_REQUIRED" };
     const result = await this.repository.searchAuthorizedQuoteItems({
       conversationId,
-      quoteNumber,
+      quoteNumber: quote.quoteNumber,
       query,
       position,
       limit: 5,
@@ -108,14 +108,12 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async listRejectionReasons(conversationId: string, args: ToolArguments) {
-    const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
-    const quote = await this.repository.findAuthorizedQuote(conversationId, quoteNumber);
-    if (!quote) return { error: "QUOTE_NOT_FOUND_OR_NOT_AUTHORIZED" };
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     return { reasons: await this.repository.listRejectionReasons(conversationId, quote.quoteNumber) };
   }
 
   private async prepareAcceptance(conversationId: string, turnId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     if (quote.status !== "QUOTED") {
       return { error: "QUOTE_NOT_ACCEPTABLE", currentStatus: quote.status };
     }
@@ -131,7 +129,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async confirmAcceptance(conversationId: string, turnId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     const action = await this.repository.findPendingAction({
       conversationId,
       currentTurnId: turnId,
@@ -169,7 +167,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async prepareRejection(conversationId: string, turnId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     if (quote.status !== "QUOTED") return { error: "QUOTE_NOT_REJECTABLE", currentStatus: quote.status };
     const reasonCode = this.requiredText(args.reasonCode, "reasonCode").toUpperCase();
     const reasons = await this.repository.listRejectionReasons(conversationId, quote.quoteNumber);
@@ -189,7 +187,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async confirmRejection(conversationId: string, turnId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     const action = await this.repository.findPendingAction({
       conversationId,
       currentTurnId: turnId,
@@ -241,7 +239,7 @@ export class ExecuteWhatsAppAssistantToolUseCase {
     requestType: "INFORMATION" | "MODIFICATION",
     requestText: string,
   ) {
-    const quote = await this.requiredQuote(conversationId, { quoteNumber });
+    const quote = await this.requiredCurrentQuote(conversationId, { quoteNumber });
     if (!["QUOTED", "APPROVED"].includes(quote.status)) {
       return { error: "QUOTE_DOES_NOT_ACCEPT_CHANGE_REQUESTS", currentStatus: quote.status };
     }
@@ -286,14 +284,14 @@ export class ExecuteWhatsAppAssistantToolUseCase {
   }
 
   private async contactSeller(conversationId: string, args: ToolArguments) {
-    const quote = await this.requiredQuote(conversationId, args);
+    const quote = await this.requiredCurrentQuote(conversationId, args);
     return { sellerName: quote.sellerName, quoteNumber: quote.quoteNumber, requestRegistered: false };
   }
 
-  private async requiredQuote(conversationId: string, args: ToolArguments) {
+  private async requiredCurrentQuote(conversationId: string, args: ToolArguments) {
     const quoteNumber = this.requiredText(args.quoteNumber, "quoteNumber");
-    const quote = await this.repository.findAuthorizedQuote(conversationId, quoteNumber);
-    if (!quote) throw new Error("QUOTE_NOT_FOUND_OR_NOT_AUTHORIZED");
+    const quote = await this.repository.findCurrentAuthorizedQuote(conversationId, quoteNumber);
+    if (!quote) throw new Error("QUOTE_CURRENT_REVISION_NOT_AVAILABLE");
     return quote;
   }
 

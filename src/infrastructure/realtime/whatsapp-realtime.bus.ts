@@ -20,6 +20,8 @@ export class WhatsAppRealtimeBus extends WhatsAppRealtimePublisher {
   private subscriber: RedisClientType | null = null;
   private publisherConnectPromise: Promise<void> | null = null;
   private subscriberConnectPromise: Promise<void> | null = null;
+  private redisSubscribePromise: Promise<void> | null = null;
+  private redisSubscribed = false;
 
   constructor(
     private readonly redisUrl: string | undefined,
@@ -54,6 +56,20 @@ export class WhatsAppRealtimeBus extends WhatsAppRealtimePublisher {
       };
     }
 
+    try {
+      this.redisSubscribePromise ??= this.subscribeRedis().finally(() => { this.redisSubscribePromise = null; });
+      await this.redisSubscribePromise;
+    } catch (error) {
+      this.localEmitter.off(this.channel, localListener);
+      throw error;
+    }
+    return async () => {
+      this.localEmitter.off(this.channel, localListener);
+    };
+  }
+
+  private async subscribeRedis(): Promise<void> {
+    if (this.redisSubscribed) return;
     const subscriber = await this.getSubscriber();
     await subscriber.subscribe(this.channel, (payload) => {
       try {
@@ -62,22 +78,21 @@ export class WhatsAppRealtimeBus extends WhatsAppRealtimePublisher {
         if (sourceId === this.sourceId) return;
         const event = "event" in parsed ? parsed.event : parsed;
         if (
-          ["WHATSAPP_CONVERSATION_CHANGED", "QUOTE_CUSTOMER_DECISION", "QUOTE_CUSTOMER_REQUEST"].includes(event.type)
-          && event.conversationId
+          (["WHATSAPP_CONVERSATION_CHANGED", "QUOTE_CUSTOMER_DECISION", "QUOTE_CUSTOMER_REQUEST"].includes(event.type)
+            && event.conversationId)
+          || (event.type === "SYSTEM_NOTIFICATION_CREATED" && event.systemNotification)
         ) {
-          void Promise.resolve(listener(event)).catch((error) => this.logError("listener_failed", error));
+          this.localEmitter.emit(this.channel, event);
         }
       } catch (error) {
         this.logError("invalid_event", error);
       }
     });
-    return async () => {
-      this.localEmitter.off(this.channel, localListener);
-      if (subscriber.isOpen) await subscriber.unsubscribe(this.channel);
-    };
+    this.redisSubscribed = true;
   }
 
   async close(): Promise<void> {
+    this.redisSubscribed = false;
     const clients = [this.subscriber, this.publisher].filter(
       (client): client is RedisClientType => Boolean(client?.isOpen),
     );

@@ -33,7 +33,7 @@ const conversationInclude = {
   inboundMessages: {
     orderBy: { receivedAt: "desc" as const },
     take: 1,
-    select: { body: true, mediaCount: true, receivedAt: true },
+    select: { body: true, mediaCount: true, hasUnsupportedAudio: true, receivedAt: true },
   },
   outboundMessages: {
     orderBy: { sentAt: "desc" as const },
@@ -301,6 +301,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
           conversationId: true,
           body: true,
           mediaCount: true,
+          hasUnsupportedAudio: true,
           receivedAt: true,
           attachments: {
             orderBy: { createdAt: "asc" },
@@ -350,7 +351,9 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
         authorName: allowed.participantType === "INTERNAL_USER" && allowed.internalUser
           ? `${allowed.internalUser.firstName} ${allowed.internalUser.lastName}`.trim()
           : allowed.lead?.contactName?.trim() || "Cliente",
-        body: row.body?.trim() || (row.mediaCount > 0 ? `Archivo recibido (${row.mediaCount})` : "Mensaje sin texto"),
+        body: row.body?.trim()
+          ? row.hasUnsupportedAudio ? `${row.body.trim()}\nNota de voz no compatible` : row.body.trim()
+          : row.hasUnsupportedAudio ? "Nota de voz recibida (no compatible)" : row.mediaCount > 0 ? `Archivo recibido (${row.mediaCount})` : "Mensaje sin texto",
         messageType: "TEXT",
         status: "RECEIVED",
         occurredAt: row.receivedAt,
@@ -875,7 +878,7 @@ export class PrismaWhatsAppInboxRepository extends WhatsAppInboxRepository {
     const latestInboundAt = inbound?.receivedAt.getTime() || 0;
     const latestOutboundAt = outbound?.sentAt.getTime() || 0;
     const lastMessage = latestInboundAt >= latestOutboundAt
-      ? inbound?.body?.trim() || (inbound?.mediaCount ? "Archivo recibido" : "Mensaje recibido")
+      ? inbound?.body?.trim() || (inbound?.hasUnsupportedAudio ? "Nota de voz no compatible" : inbound?.mediaCount ? "Archivo recibido" : "Mensaje recibido")
       : outbound?.body?.trim() || "Mensaje enviado";
     const customerName = access?.customer?.legalName?.trim()
       || access?.customer?.displayName?.trim()

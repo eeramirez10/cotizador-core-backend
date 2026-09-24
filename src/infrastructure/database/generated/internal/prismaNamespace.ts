@@ -4468,6 +4468,7 @@ export const WhatsAppInboundMessageScalarFieldEnum = {
   providerMessageId: 'providerMessageId',
   body: 'body',
   mediaCount: 'mediaCount',
+  hasUnsupportedAudio: 'hasUnsupportedAudio',
   receivedAt: 'receivedAt',
   createdAt: 'createdAt'
 } as const
@@ -4578,6 +4579,8 @@ export const WhatsAppInternalAlertScalarFieldEnum = {
   customerName: 'customerName',
   reference: 'reference',
   detail: 'detail',
+  targetPath: 'targetPath',
+  readAt: 'readAt',
   providerMessageId: 'providerMessageId',
   errorMessage: 'errorMessage',
   sentAt: 'sentAt',

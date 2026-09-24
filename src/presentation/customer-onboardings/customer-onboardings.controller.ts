@@ -43,6 +43,18 @@ export class CustomerOnboardingsController {
     }
   };
 
+  remove = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    try {
+      await this.useCase.deleteUnlinked(
+        String(req.params.id),
+        typeof req.body?.confirmation === "string" ? req.body.confirmation : "",
+        req.user,
+      );
+      res.status(204).send();
+    } catch (error) { this.handle(error, res); }
+  };
+
   getForConversation = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
     try {
@@ -136,6 +148,9 @@ export class CustomerOnboardingsController {
   private handle(error: unknown, res: Response): void {
     const message = error instanceof Error ? error.message : "Unexpected error.";
     if (message === "CUSTOMER_ONBOARDING_NOT_FOUND") return void res.status(404).json({ error: "Expediente no encontrado." });
+    if (message === "CUSTOMER_ONBOARDING_DELETE_ADMIN_REQUIRED") return void res.status(403).json({ error: "Solo el administrador puede eliminar altas fiscales." });
+    if (message === "CUSTOMER_ONBOARDING_DELETE_CONFIRMATION_REQUIRED") return void res.status(400).json({ error: "Escribe ELIMINAR para confirmar." });
+    if (message === "CUSTOMER_ONBOARDING_DELETE_LOCKED") return void res.status(409).json({ error: "No se puede eliminar un alta ya vinculada con Proscai o cuyo cliente no es local." });
     if (message === "ATTACHMENT_NOT_FOUND" || message === "ATTACHMENT_FILE_NOT_FOUND") return void res.status(404).json({ error: "No se encontró el archivo en esta conversación." });
     if (message === "CUSTOMER_NOT_AVAILABLE_FOR_ONBOARDING") return void res.status(404).json({ error: "El cliente local no existe o no está disponible en tu sucursal." });
     if (message.startsWith("CUSTOMER_ONBOARDING_INCOMPLETE:")) return void res.status(400).json({ error: "El expediente todavía tiene campos obligatorios pendientes.", missingFields: message.split(":")[1]?.split(",") || [] });

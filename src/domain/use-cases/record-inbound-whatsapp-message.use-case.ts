@@ -18,6 +18,11 @@ interface RecordInboundWhatsAppMessageInput {
   media?: WhatsAppInboundMediaReference[];
 }
 
+export const isUnsupportedWhatsAppAudio = (mimeType: string): boolean => {
+  const normalized = mimeType.split(";", 1)[0].trim().toLowerCase();
+  return normalized.startsWith("audio/") || normalized === "application/ogg";
+};
+
 export class RecordInboundWhatsAppMessageUseCase {
   constructor(
     private readonly repository: WhatsAppConversationRepository,
@@ -60,13 +65,17 @@ export class RecordInboundWhatsAppMessageUseCase {
     const body = input.body?.trim() || null;
     const mediaCount = Math.max(0, Math.trunc(input.mediaCount || 0));
     const media = (input.media || []).slice(0, mediaCount);
+    const hasUnsupportedAudio = media.some((item) => isUnsupportedWhatsAppAudio(item.mimeType));
+    const supportedMedia = media.filter((item) => !isUnsupportedWhatsAppAudio(item.mimeType));
+    const fallbackBody = hasUnsupportedAudio && supportedMedia.length === 0 ? "Nota de voz recibida (no compatible)" : `Archivo recibido (${mediaCount})`;
     const recorded = await this.repository.recordInboundMessage({
       businessPhoneE164: business.value,
       participantPhoneE164: participant.value,
       providerMessageId,
       body,
       mediaCount,
-      media,
+      hasUnsupportedAudio,
+      media: supportedMedia,
       receivedAt,
       enqueueAssistant: resolveRuntimeValue(this.assistantEnabled),
       participantType: principal.audience,
@@ -83,11 +92,11 @@ export class RecordInboundWhatsAppMessageUseCase {
       humanResponseGraceMs: resolveRuntimeValue(this.humanResponseGraceMs),
       humanControlMaxDurationMs: resolveRuntimeValue(this.humanControlMaxDurationMs),
     });
-    const attachments = this.captureMedia && media.length > 0
+    const attachments = this.captureMedia && supportedMedia.length > 0
       ? await this.captureMedia.execute({
           inboundMessageId: recorded.inboundMessageId,
           providerMessageId,
-          media,
+          media: supportedMedia,
         })
       : [];
     if (recorded.created) {
@@ -102,7 +111,9 @@ export class RecordInboundWhatsAppMessageUseCase {
           direction: "INBOUND",
           authorType: "CUSTOMER",
           authorName: principal.audience === "UNKNOWN" ? "Cliente" : principal.displayName,
-          body: body || (mediaCount > 0 ? `Archivo recibido (${mediaCount})` : "Mensaje sin texto"),
+          body: body
+            ? hasUnsupportedAudio ? `${body}\nNota de voz no compatible` : body
+            : mediaCount > 0 ? fallbackBody : "Mensaje sin texto",
           messageType: "TEXT",
           status: "RECEIVED",
           occurredAt: receivedAt.toISOString(),
@@ -115,7 +126,7 @@ export class RecordInboundWhatsAppMessageUseCase {
           })),
         },
         conversation: {
-          lastMessage: body || (mediaCount > 0 ? "Archivo recibido" : "Mensaje recibido"),
+          lastMessage: body || (mediaCount > 0 ? hasUnsupportedAudio && supportedMedia.length === 0 ? "Nota de voz no compatible" : "Archivo recibido" : "Mensaje recibido"),
           lastMessageAt: receivedAt.toISOString(),
           lastInboundAt: receivedAt.toISOString(),
           humanControlExpiresAt: recorded.humanControlExpiresAt?.toISOString() || null,

@@ -31,6 +31,7 @@ export interface WhatsAppAssistantJobEntity {
   participantPhone: string;
   message: string;
   mediaCount: number;
+  hasUnsupportedAudio: boolean;
   attachments: Array<{
     id: string;
     originalName: string;

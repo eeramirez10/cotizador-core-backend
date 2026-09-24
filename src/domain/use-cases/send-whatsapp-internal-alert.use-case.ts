@@ -4,6 +4,7 @@ import type {
   WhatsAppInternalAlertType,
 } from "../entities/whatsapp-internal-alert.entity";
 import type { WhatsAppInternalAlertRepository } from "../repositories/whatsapp-internal-alert.repository";
+import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 
 const labels: Record<WhatsAppInternalAlertType, string> = {
   CUSTOMER_ONBOARDING_PENDING: "Alta fiscal pendiente",
@@ -21,6 +22,7 @@ export class SendWhatsAppInternalAlertUseCase {
   constructor(
     private readonly repository: WhatsAppInternalAlertRepository,
     private readonly messaging: WhatsAppInternalAlertMessagingPort,
+    private readonly realtime?: WhatsAppRealtimePublisher,
     private readonly now: () => Date = () => new Date(),
   ) {}
 
@@ -41,6 +43,28 @@ export class SendWhatsAppInternalAlertUseCase {
     });
     const reservation = await this.repository.reserve({ ...normalized, recipientUserId });
     if (!reservation.created) return { sent: false, duplicate: true };
+
+    if (input.type === "CUSTOMER_ONBOARDING_ERP_LINKED" && normalized.targetPath) {
+      const occurredAt = this.now().toISOString();
+      try {
+        await this.realtime?.publish({
+          type: "SYSTEM_NOTIFICATION_CREATED",
+          conversationId: "",
+          reason: "SYSTEM_NOTIFICATION_CREATED",
+          occurredAt,
+          systemNotification: {
+            id: reservation.id,
+            recipientUserId,
+            type: "CUSTOMER_ONBOARDING_ERP_LINKED",
+            title: labels[input.type],
+            message: `${normalized.customerName}: ${normalized.detail}`,
+            targetPath: normalized.targetPath,
+          },
+        });
+      } catch (error) {
+        console.error("system_notification_publish_failed", error);
+      }
+    }
 
     if (!recipient.whatsappPhoneE164) {
       await this.repository.markSkipped(reservation.id, "The recipient has no WhatsApp phone configured.");
@@ -84,6 +108,7 @@ export class SendWhatsAppInternalAlertUseCase {
       detail: this.text(input.detail, 500),
       conversationId: input.conversationId || null,
       quoteId: input.quoteId || null,
+      targetPath: input.targetPath || null,
     };
   }
 

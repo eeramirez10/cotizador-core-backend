@@ -12,7 +12,8 @@ export type WhatsAppRealtimeEventReason =
   | "QUOTE_CANCELLED"
   | "CUSTOMER_INFORMATION_REQUESTED"
   | "CUSTOMER_CHANGE_REQUESTED"
-  | "CONVERSATION_DELETED";
+  | "CONVERSATION_DELETED"
+  | "SYSTEM_NOTIFICATION_CREATED";
 
 export interface WhatsAppRealtimeDeletionAudience {
   userIds: string[];
@@ -92,7 +93,7 @@ export interface WhatsAppRealtimeMessagePatch {
 }
 
 export interface WhatsAppRealtimeEvent {
-  type: "WHATSAPP_CONVERSATION_CHANGED" | "QUOTE_CUSTOMER_DECISION" | "QUOTE_CUSTOMER_REQUEST";
+  type: "WHATSAPP_CONVERSATION_CHANGED" | "QUOTE_CUSTOMER_DECISION" | "QUOTE_CUSTOMER_REQUEST" | "SYSTEM_NOTIFICATION_CREATED";
   conversationId: string;
   reason: WhatsAppRealtimeEventReason;
   occurredAt: string;
@@ -103,6 +104,14 @@ export interface WhatsAppRealtimeEvent {
   audience?: WhatsAppRealtimeDeletionAudience;
   quoteDecision?: QuoteCustomerDecisionRealtimePayload;
   customerRequest?: QuoteCustomerRequestRealtimePayload;
+  systemNotification?: {
+    id: string;
+    recipientUserId: string;
+    type: "CUSTOMER_ONBOARDING_ERP_LINKED";
+    title: string;
+    message: string;
+    targetPath: string;
+  };
 }
 
 export abstract class WhatsAppRealtimePublisher {

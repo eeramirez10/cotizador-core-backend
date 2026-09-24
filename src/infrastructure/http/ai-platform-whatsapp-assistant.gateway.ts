@@ -37,6 +37,7 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
           conversationId: input.conversationId,
           message: input.message,
           mediaCount: input.mediaCount,
+          hasUnsupportedAudio: input.hasUnsupportedAudio,
           attachments: input.attachments,
           previousResponseId: input.previousResponseId,
           principal: {

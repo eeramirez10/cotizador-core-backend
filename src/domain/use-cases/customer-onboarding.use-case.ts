@@ -44,6 +44,20 @@ const detailInclude = {
   taxDocumentAttachment: { select: { id: true, originalName: true, mimeType: true, createdAt: true } },
 };
 
+export const canDeleteUnlinkedOnboarding = (status: CustomerOnboardingStatus): boolean =>
+  status !== "ERP_LINKED";
+
+export const canEditCustomerOnboarding = (role: UserRole, status: CustomerOnboardingStatus): boolean => {
+  if (role === "ADMIN") return true;
+  if (role === "CREDIT_COLLECTIONS") return status === "PENDING_CXC";
+  return ["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(status);
+};
+
+export const statusAfterOnboardingEdit = (status: CustomerOnboardingStatus, hasMissingFields: boolean): CustomerOnboardingStatus => {
+  if (["PENDING_CXC", "COMPLETED", "READY_FOR_ERP", "ERP_LINKED", "CANCELLED"].includes(status)) return status;
+  return hasMissingFields ? "COLLECTING" : "PENDING_REVIEW";
+};
+
 export class CustomerOnboardingUseCase {
   constructor(
     private readonly storage?: FileStoragePort,
@@ -180,6 +194,54 @@ export class CustomerOnboardingUseCase {
     return this.toResponse(row);
   }
 
+  async deleteUnlinked(id: string, confirmation: string, actor: CustomerOnboardingActor): Promise<void> {
+    if (actor.role !== "ADMIN") throw new Error("CUSTOMER_ONBOARDING_DELETE_ADMIN_REQUIRED");
+    if (confirmation.trim() !== "ELIMINAR") throw new Error("CUSTOMER_ONBOARDING_DELETE_CONFIRMATION_REQUIRED");
+
+    const storageKey = await prisma.$transaction(async (tx) => {
+      const row = await tx.customerOnboarding.findFirst({
+        where: { id, ...this.scope(actor) },
+        select: {
+          id: true, customerId: true, acceptedQuoteId: true, status: true,
+          erpCode: true, linkedAt: true, taxDocumentStorageKey: true,
+          customer: { select: { source: true } },
+        },
+      });
+      if (!row) throw new Error("CUSTOMER_ONBOARDING_NOT_FOUND");
+      if (!canDeleteUnlinkedOnboarding(row.status) || row.erpCode || row.linkedAt || row.customer.source === "ERP") {
+        throw new Error("CUSTOMER_ONBOARDING_DELETE_LOCKED");
+      }
+      const deleted = await tx.customerOnboarding.deleteMany({
+        where: { id, status: row.status, erpCode: null, linkedAt: null },
+      });
+      if (!deleted.count) throw new Error("CUSTOMER_ONBOARDING_DELETE_LOCKED");
+      const resetFiscalProfile = ["COMPLETED", "READY_FOR_ERP"].includes(row.status);
+      if (resetFiscalProfile) {
+        const reset = await tx.customer.updateMany({
+          where: { id: row.customerId, source: "LOCAL", profileStatus: "FISCAL_COMPLETED" },
+          data: { profileStatus: "PROSPECT", updatedByUserId: actor.id },
+        });
+        if (!reset.count) throw new Error("CUSTOMER_ONBOARDING_DELETE_LOCKED");
+      }
+      await tx.auditLog.create({
+        data: {
+          actorUserId: actor.id,
+          entityType: "CUSTOMER_ONBOARDING",
+          entityId: id,
+          action: "DELETE_UNLINKED",
+          payload: { customerId: row.customerId, acceptedQuoteId: row.acceptedQuoteId, status: row.status, resetFiscalProfile },
+        },
+      });
+      return row.taxDocumentStorageKey;
+    }, { maxWait: 10_000, timeout: 20_000 });
+
+    // WhatsApp attachments can be shared with the chat; only remove a PDF uploaded directly to this expediente.
+    if (storageKey && this.storage) {
+      try { await this.storage.delete(storageKey); }
+      catch (error) { console.error("customer_onboarding_file_cleanup_failed", { id, error }); }
+    }
+  }
+
   async getForConversation(conversationId: string) {
     const row = await prisma.customerOnboarding.findUnique({ where: { conversationId }, include: detailInclude });
     return row?.customer.source === "LOCAL" ? { exists: true, onboarding: this.toResponse(row) } : { exists: false };
@@ -195,10 +257,7 @@ export class CustomerOnboardingUseCase {
 
   async update(id: string, input: CustomerOnboardingWriteInput, actor: CustomerOnboardingActor) {
     const existing = await this.get(id, actor);
-    if (actor.role === "CREDIT_COLLECTIONS") throw new Error("CUSTOMER_ONBOARDING_LOCKED");
-    if (actor.role !== "ADMIN" && !["COLLECTING", "PENDING_REVIEW", "REJECTED"].includes(existing.status)) {
-      throw new Error("CUSTOMER_ONBOARDING_LOCKED");
-    }
+    if (!canEditCustomerOnboarding(actor.role, existing.status)) throw new Error("CUSTOMER_ONBOARDING_LOCKED");
     return this.updateRow(id, input);
   }
 
@@ -235,10 +294,10 @@ export class CustomerOnboardingUseCase {
     }
   }
 
-  async processWhatsAppTaxDocument(conversationId: string, attachmentId: string, actor?: CustomerOnboardingActor) {
+  async processWhatsAppTaxDocument(conversationId: string, attachmentId: string, actor: CustomerOnboardingActor) {
     if (!this.storage || !this.taxDocumentExtractor) return { error: "TAX_DOCUMENT_EXTRACTION_NOT_CONFIGURED" };
     const onboarding = await prisma.customerOnboarding.findFirst({
-      where: { conversationId, customer: { source: "LOCAL" }, ...(actor ? this.scope(actor) : {}) },
+      where: { conversationId, customer: { source: "LOCAL" }, ...this.scope(actor) },
       select: { id: true, status: true },
     });
     if (!onboarding) return { error: "CUSTOMER_ONBOARDING_NOT_FOUND" };
@@ -376,6 +435,9 @@ export class CustomerOnboardingUseCase {
         customerName: row.legalName || row.customer.displayName,
         reference: row.acceptedQuote?.quoteNumber || "Alta de cliente",
         detail,
+        targetPath: type === "CUSTOMER_ONBOARDING_ERP_LINKED"
+          ? `/clients?onboarding=${encodeURIComponent(row.id)}`
+          : null,
       });
     } catch (error) { console.error("customer_onboarding_alert_failed", error); }
   }
@@ -443,8 +505,8 @@ export class CustomerOnboardingUseCase {
       data[key] = value;
     }
     const row = await prisma.customerOnboarding.update({ where: { id }, data, include: detailInclude });
-    const status = this.missingFields(row).length === 0 ? "PENDING_REVIEW" : "COLLECTING";
-    const normalized = ["COMPLETED", "READY_FOR_ERP", "ERP_LINKED", "CANCELLED"].includes(row.status)
+    const status = statusAfterOnboardingEdit(row.status, this.missingFields(row).length > 0);
+    const normalized = status === row.status
       ? row
       : await prisma.customerOnboarding.update({ where: { id }, data: { status }, include: detailInclude });
     return this.toResponse(normalized);

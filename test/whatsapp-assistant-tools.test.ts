@@ -35,6 +35,10 @@ class RepositoryStub extends WhatsAppAssistantRepository {
   customerSource: "LOCAL" | "ERP" = "LOCAL";
   sharedCustomerPhone = false;
   requestTypes: Array<"INFORMATION" | "MODIFICATION"> = [];
+  requestedQuoteIds: string[] = [];
+  currentRevision: WhatsAppAssistantQuoteDetails | null = null;
+  currentRevisionUnavailable = false;
+  lastReasonQuoteNumber: string | null = null;
 
   async getPrincipal() {
     return {
@@ -61,14 +65,21 @@ class RepositoryStub extends WhatsAppAssistantRepository {
   async findAuthorizedQuote(_conversationId: string, quoteNumber: string) {
     return quoteNumber === quote.quoteNumber ? quote : null;
   }
+  async findCurrentAuthorizedQuote(conversationId: string, quoteNumber: string) {
+    if (this.currentRevisionUnavailable) return null;
+    if (this.currentRevision && [quote.quoteNumber, this.currentRevision.quoteNumber].includes(quoteNumber)) {
+      return this.currentRevision;
+    }
+    return this.findAuthorizedQuote(conversationId, quoteNumber);
+  }
   async searchAuthorizedQuoteItems(input: {
     quoteNumber: string;
     query: string | null;
     position: number | null;
   }) {
-    if (input.quoteNumber !== quote.quoteNumber) return null;
+    if (input.quoteNumber !== (this.currentRevision?.quoteNumber ?? quote.quoteNumber)) return null;
     return {
-      quoteNumber: quote.quoteNumber,
+      quoteNumber: input.quoteNumber,
       currency: quote.currency,
       totalMatches: 1,
       truncated: false,
@@ -85,7 +96,10 @@ class RepositoryStub extends WhatsAppAssistantRepository {
       }],
     };
   }
-  async listRejectionReasons() { return [{ code: "OTHER", label: "Otro", requiresComment: true }]; }
+  async listRejectionReasons(_conversationId: string, quoteNumber: string) {
+    this.lastReasonQuoteNumber = quoteNumber;
+    return [{ code: "OTHER", label: "Otro", requiresComment: true }];
+  }
   async prepareAction(input: {
     conversationId: string;
     preparedTurnId: string;
@@ -97,7 +111,7 @@ class RepositoryStub extends WhatsAppAssistantRepository {
     this.pending = {
       id: "action-1",
       quoteId: input.quoteId,
-      quoteNumber: quote.quoteNumber,
+      quoteNumber: this.currentRevision?.id === input.quoteId ? this.currentRevision.quoteNumber : quote.quoteNumber,
       actionType: input.actionType,
       payload: input.payload,
       expiresAt: input.expiresAt,
@@ -116,7 +130,8 @@ class RepositoryStub extends WhatsAppAssistantRepository {
     return this.pending;
   }
   async markActionExecuted() { this.pending = null; }
-  async createChangeRequest(input: { requestType: "INFORMATION" | "MODIFICATION" }) {
+  async createChangeRequest(input: { quoteId: string; requestType: "INFORMATION" | "MODIFICATION" }) {
+    this.requestedQuoteIds.push(input.quoteId);
     this.requestTypes.push(input.requestType);
     return { id: "request-1", created: true };
   }
@@ -153,6 +168,45 @@ test("acceptance requires a later WhatsApp turn before changing status", async (
   assert.deepEqual((changeStatus.calls[0][2] as { auditActorUserId: null }).auditActorUserId, null);
 });
 
+test("accepting the original folio confirms and approves the current revision", async () => {
+  const repository = new RepositoryStub();
+  const revision = {
+    ...quote,
+    id: "quote-r01",
+    quoteNumber: `${quote.quoteNumber}-R01`,
+    revisionNumber: 1,
+    total: 145,
+  };
+  repository.currentRevision = revision;
+  const changeStatus = new ChangeStatusStub();
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, changeStatus as never);
+
+  const prepared = await useCase.execute("conversation-1", "turn-1", "prepare_quote_acceptance", {
+    quoteNumber: quote.quoteNumber,
+  }) as { quote: { quoteNumber: string; total: number } };
+  assert.equal(prepared.quote.quoteNumber, revision.quoteNumber);
+  assert.equal(prepared.quote.total, revision.total);
+
+  const confirmed = await useCase.execute("conversation-1", "turn-2", "confirm_quote_acceptance", {
+    quoteNumber: quote.quoteNumber,
+  });
+  assert.deepEqual(confirmed, { success: true, quoteNumber: revision.quoteNumber, status: "APPROVED" });
+  assert.equal(changeStatus.calls[0][0], revision.id);
+});
+
+test("does not accept an older quote when the current revision is unavailable", async () => {
+  const repository = new RepositoryStub();
+  repository.currentRevisionUnavailable = true;
+  const changeStatus = new ChangeStatusStub();
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, changeStatus as never);
+
+  await assert.rejects(
+    () => useCase.execute("conversation-1", "turn-1", "prepare_quote_acceptance", { quoteNumber: quote.quoteNumber }),
+    /QUOTE_CURRENT_REVISION_NOT_AVAILABLE/,
+  );
+  assert.equal(changeStatus.calls.length, 0);
+});
+
 test("change requests are recorded without changing quote status", async () => {
   const repository = new RepositoryStub();
   const changeStatus = new ChangeStatusStub();
@@ -166,6 +220,47 @@ test("change requests are recorded without changing quote status", async () => {
   assert.deepEqual(result, { success: true, requestId: "request-1", created: true, sellerName: "Alma Martínez" });
   assert.equal(changeStatus.calls.length, 0);
   assert.deepEqual(repository.requestTypes, ["MODIFICATION"]);
+});
+
+test("a change request for an old folio is assigned to its current revision", async () => {
+  const repository = new RepositoryStub();
+  repository.currentRevision = { ...quote, id: "quote-r01", quoteNumber: `${quote.quoteNumber}-R01`, revisionNumber: 1 };
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  await useCase.execute("conversation-1", "turn-1", "create_quote_change_request", {
+    quoteNumber: quote.quoteNumber,
+    requestedChanges: "Cambiar la cantidad de la válvula.",
+  });
+
+  assert.deepEqual(repository.requestedQuoteIds, ["quote-r01"]);
+});
+
+test("details, items and rejection reasons use the latest revision for an old folio", async () => {
+  const repository = new RepositoryStub();
+  repository.currentRevision = {
+    ...quote,
+    id: "quote-r01",
+    quoteNumber: `${quote.quoteNumber}-R01`,
+    revisionNumber: 1,
+    total: 145,
+  };
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  const details = await useCase.execute("conversation-1", "turn-1", "get_quote_details", {
+    quoteNumber: quote.quoteNumber,
+  }) as { quote: { quoteNumber: string; total: number } };
+  const items = await useCase.execute("conversation-1", "turn-1", "search_quote_items", {
+    quoteNumber: quote.quoteNumber,
+    position: 1,
+  }) as { quoteNumber: string };
+  await useCase.execute("conversation-1", "turn-1", "list_rejection_reasons", {
+    quoteNumber: quote.quoteNumber,
+  });
+
+  assert.equal(details.quote.quoteNumber, repository.currentRevision.quoteNumber);
+  assert.equal(details.quote.total, 145);
+  assert.equal(items.quoteNumber, repository.currentRevision.quoteNumber);
+  assert.equal(repository.lastReasonQuoteNumber, repository.currentRevision.quoteNumber);
 });
 
 test("specific quote items expose only customer-safe commercial data", async () => {
@@ -235,6 +330,16 @@ test("ERP customers cannot use fiscal onboarding tools", async () => {
   await assert.rejects(
     () => useCase.execute("conversation-1", "turn-1", "process_customer_tax_document", { attachmentId: "file-1" }),
     /CUSTOMER_ONBOARDING_LOCAL_ONLY/,
+  );
+});
+
+test("the assistant cannot extract a fiscal PDF before seller review", async () => {
+  const repository = new RepositoryStub();
+  const useCase = new ExecuteWhatsAppAssistantToolUseCase(repository, new ChangeStatusStub() as never);
+
+  assert.deepEqual(
+    await useCase.execute("conversation-1", "turn-1", "process_customer_tax_document", { attachmentId: "file-1" }),
+    { error: "TAX_DOCUMENT_REQUIRES_SELLER_REVIEW" },
   );
 });
 

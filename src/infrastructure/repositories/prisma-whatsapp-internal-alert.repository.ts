@@ -63,6 +63,7 @@ export class PrismaWhatsAppInternalAlertRepository extends WhatsAppInternalAlert
           customerName: input.customerName || "Cliente",
           reference: input.reference,
           detail: input.detail,
+          targetPath: input.targetPath || null,
         },
         select: { id: true },
       });

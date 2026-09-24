@@ -1531,6 +1531,7 @@ model WhatsAppInboundMessage {
   providerMessageId String   @unique @map("provider_message_id") @db.VarChar(160)
   body              String?  @db.Text
   mediaCount        Int      @default(0) @map("media_count")
+  hasUnsupportedAudio Boolean @default(false) @map("has_unsupported_audio")
   receivedAt        DateTime @map("received_at")
   createdAt         DateTime @default(now()) @map("created_at")
 
@@ -1669,6 +1670,8 @@ model WhatsAppInternalAlert {
   customerName      String                      @map("customer_name") @db.VarChar(260)
   reference         String                      @db.VarChar(160)
   detail            String                      @db.VarChar(500)
+  targetPath        String?                     @map("target_path") @db.VarChar(500)
+  readAt            DateTime?                   @map("read_at")
   providerMessageId String?                     @map("provider_message_id") @db.VarChar(160)
   errorMessage      String?                     @map("error_message") @db.Text
   sentAt            DateTime?                   @map("sent_at")
@@ -1680,6 +1683,7 @@ model WhatsAppInternalAlert {
   quote         Quote?                @relation(fields: [quoteId], references: [id], onDelete: SetNull)
 
   @@index([recipientUserId, status, createdAt])
+  @@index([recipientUserId, type, createdAt])
   @@index([conversationId, createdAt])
   @@index([quoteId, createdAt])
   @@map("whatsapp_internal_alerts")

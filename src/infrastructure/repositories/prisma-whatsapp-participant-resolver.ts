@@ -86,7 +86,7 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
 
     const customer = await this.findCustomerByPhone(participantPhoneE164);
     if (customer && customerIds.includes(customer.customerId)) {
-      const owner = await this.findCustomerOwner(customer);
+      const owner = await this.findCustomerOwner(customer, participantPhoneE164);
       return this.customerPrincipal(participantPhoneE164, customer, owner);
     }
 
@@ -187,21 +187,37 @@ export class PrismaWhatsAppParticipantResolver extends WhatsAppParticipantResolv
     return customers[0] ?? null;
   }
 
-  private async findCustomerOwner(customer: CustomerPhoneMatch): Promise<CustomerOwner> {
+  private async findCustomerOwner(customer: CustomerPhoneMatch, participantPhoneE164: string): Promise<CustomerOwner> {
+    const latestDelivery = await prisma.quoteDeliveryAttempt.findFirst({
+      where: {
+        channel: "WHATSAPP",
+        recipient: participantPhoneE164,
+        status: { not: "FAILED" },
+        quote: { customerId: customer.customerId, archivedAt: null },
+      },
+      orderBy: { sentAt: "desc" },
+      select: { quote: { select: { id: true, createdByUserId: true, branchId: true } } },
+    });
+    if (latestDelivery) {
+      const quote = latestDelivery.quote;
+      return { userId: quote.createdByUserId, branchId: quote.branchId, quoteId: quote.id };
+    }
+
     const contactQuote = customer.customerContactId
       ? await prisma.quote.findFirst({
           where: {
             customerId: customer.customerId,
             customerContactId: customer.customerContactId,
             archivedAt: null,
+            status: { notIn: ["SUPERSEDED", "CANCELLED"] },
           },
-          orderBy: { updatedAt: "desc" },
+          orderBy: [{ createdAt: "desc" }, { revisionNumber: "desc" }],
           select: { id: true, createdByUserId: true, branchId: true },
         })
       : null;
     const quote = contactQuote ?? await prisma.quote.findFirst({
-      where: { customerId: customer.customerId, archivedAt: null },
-      orderBy: { updatedAt: "desc" },
+      where: { customerId: customer.customerId, archivedAt: null, status: { notIn: ["SUPERSEDED", "CANCELLED"] } },
+      orderBy: [{ createdAt: "desc" }, { revisionNumber: "desc" }],
       select: { id: true, createdByUserId: true, branchId: true },
     });
     if (quote) {
