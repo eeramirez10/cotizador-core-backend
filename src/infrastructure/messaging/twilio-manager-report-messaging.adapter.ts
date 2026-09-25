@@ -1,4 +1,6 @@
 import twilio from "twilio";
+import { assertStagingRecipientAllowed } from "./staging-recipient-guard";
+import { assertManagerReportTemplateMatches, managerReportContentVariables } from "./manager-report-template";
 import {
   ManagerReportMessagingPort,
   type ManagerReportMessageResult,
@@ -21,10 +23,15 @@ export class TwilioManagerReportMessagingAdapter extends ManagerReportMessagingP
   }
 
   async send(message: SendManagerReportMessage): Promise<ManagerReportMessageResult> {
+    assertStagingRecipientAllowed(message.recipient);
     this.assertConfigured();
     const useTemplate = message.deliveryMode === "TEMPLATE";
     if (useTemplate) this.assertTemplateConfigured();
     const client = twilio(this.config.accountSid, this.config.authToken);
+    if (useTemplate) {
+      const template = await client.content.v1.contents(this.config.contentSid).fetch();
+      assertManagerReportTemplateMatches(template, message, this.config.mediaVariable);
+    }
     const common = {
       to: this.whatsappAddress(message.recipient),
       from: this.whatsappAddress(this.config.from),
@@ -34,11 +41,7 @@ export class TwilioManagerReportMessagingAdapter extends ManagerReportMessagingP
       ? await client.messages.create({
           ...common,
           contentSid: this.config.contentSid,
-          contentVariables: JSON.stringify({
-            "1": message.recipientName,
-            "2": message.periodLabel,
-            [this.config.mediaVariable]: message.reportUrl,
-          }),
+          contentVariables: JSON.stringify(managerReportContentVariables(message, this.config.mediaVariable)),
         })
       : await client.messages.create({
           ...common,
@@ -65,8 +68,8 @@ export class TwilioManagerReportMessagingAdapter extends ManagerReportMessagingP
     if (!/^HX[a-fA-F0-9]{32}$/.test(this.config.contentSid)) {
       throw new Error("The approved manager report WhatsApp template is not configured.");
     }
-    if (!/^\d+$/.test(this.config.mediaVariable) || ["1", "2"].includes(this.config.mediaVariable)) {
-      throw new Error("The manager report media variable must be numeric and different from 1 and 2.");
+    if (!/^\d+$/.test(this.config.mediaVariable) || Number(this.config.mediaVariable) <= 6) {
+      throw new Error("The manager report media variable must be numeric and different from body variables 1-6.");
     }
   }
 

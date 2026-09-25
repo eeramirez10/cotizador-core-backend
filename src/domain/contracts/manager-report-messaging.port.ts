@@ -1,8 +1,13 @@
 export interface SendManagerReportMessage {
   recipient: string;
   recipientName: string;
+  scopeName: string;
   periodLabel: string;
+  generatedCount: number;
+  quotedMxn: number;
+  quotedUsd: number;
   reportUrl: string;
+  reportMediaPath: string;
   messageBody: string;
   deliveryMode: "FREE_FORM" | "TEMPLATE";
 }

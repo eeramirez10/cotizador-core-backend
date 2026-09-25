@@ -1,4 +1,5 @@
 import twilio from "twilio";
+import { assertStagingRecipientAllowed } from "./staging-recipient-guard";
 import { WhatsAppInternalVerificationPort } from "../../domain/contracts/whatsapp-internal-verification.port";
 
 interface TwilioInternalVerificationConfig {
@@ -14,6 +15,7 @@ export class TwilioInternalVerificationAdapter extends WhatsAppInternalVerificat
   }
 
   async sendCode(phoneE164: string): Promise<void> {
+    assertStagingRecipientAllowed(phoneE164);
     const service = this.service();
     await service.verifications.create({ to: phoneE164, channel: "sms" });
   }

@@ -1,4 +1,5 @@
 import twilio from "twilio";
+import { assertStagingRecipientAllowed } from "./staging-recipient-guard";
 import {
   WhatsAppInternalAlertMessagingPort,
   type WhatsAppInternalAlertDelivery,
@@ -30,6 +31,7 @@ export class TwilioWhatsAppInternalAlertAdapter extends WhatsAppInternalAlertMes
   }
 
   async send(message: WhatsAppInternalAlertMessage): Promise<WhatsAppInternalAlertDelivery> {
+    assertStagingRecipientAllowed(message.recipient);
     if (!this.isConfigured()) throw new Error("The internal WhatsApp alert template is not configured.");
     const result = await twilio(this.config.accountSid, this.config.authToken).messages.create({
       from: this.address(this.config.from),

@@ -175,7 +175,7 @@ export class Envs {
   }
 
   static get twilioManagerReportMediaVariable(): string {
-    return get("TWILIO_WHATSAPP_MANAGER_REPORT_MEDIA_VARIABLE").default("3").asString();
+    return get("TWILIO_WHATSAPP_MANAGER_REPORT_MEDIA_VARIABLE").default("7").asString();
   }
 
   static get twilioWhatsAppInternalAlertContentSid(): string {

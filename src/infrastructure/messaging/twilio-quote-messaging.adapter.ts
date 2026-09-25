@@ -7,6 +7,7 @@ import {
   type SendQuoteWhatsAppMessage,
 } from "../../domain/contracts/quote-messaging.port";
 import { describeWhatsAppDeliveryError } from "../../domain/utils/whatsapp-delivery-error";
+import { assertStagingRecipientAllowed } from "./staging-recipient-guard";
 
 interface TwilioQuoteMessagingConfig {
   enabled: boolean;
@@ -25,6 +26,7 @@ export class TwilioQuoteMessagingAdapter extends QuoteMessagingPort {
   }
 
   async sendWhatsAppQuote(message: SendQuoteWhatsAppMessage): Promise<QuoteMessageResult> {
+    assertStagingRecipientAllowed(message.recipient);
     this.assertConfigured();
     const useTemplate = message.deliveryMode === "TEMPLATE";
     if (useTemplate) this.assertTemplateConfigured();

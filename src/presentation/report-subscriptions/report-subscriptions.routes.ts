@@ -7,6 +7,9 @@ import { PrismaManagerReportSubscriptionRepository } from "../../infrastructure/
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
 import { HmacManagerReportDocumentLinkAdapter } from "../../infrastructure/security/hmac-manager-report-document-link.adapter";
 import { GetWhatsAppConversationWindowUseCase } from "../../domain/use-cases/get-whatsapp-conversation-window.use-case";
+import { BuildManagerReportUseCase } from "../../domain/use-cases/build-manager-report.use-case";
+import { AnalyticsRepositoryImpl } from "../../infrastructure/repositories/analytics.repository-impl";
+import { PrismaAnalyticsDatasource } from "../../infrastructure/datasources/prisma-analytics.datasource";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
 import { ReportSubscriptionsController } from "./report-subscriptions.controller";
@@ -23,6 +26,7 @@ export class ReportSubscriptionsRoutes {
       new ManagerReportSubscriptionsUseCase(repository),
       new SendManagerReportNowUseCase(
         repository,
+        new BuildManagerReportUseCase(new AnalyticsRepositoryImpl(new PrismaAnalyticsDatasource())),
         new TwilioManagerReportMessagingAdapter({
           enabled: Envs.twilioWhatsAppEnabled,
           accountSid: Envs.twilioAccountSid,

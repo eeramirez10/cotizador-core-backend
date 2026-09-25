@@ -3,6 +3,7 @@ import type { ManagerReportMessagingPort } from "../contracts/manager-report-mes
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import type { ManagerReportSubscriptionRepository } from "../repositories/manager-report-subscription.repository";
 import type { GetWhatsAppConversationWindowUseCase } from "./get-whatsapp-conversation-window.use-case";
+import type { BuildManagerReportUseCase } from "./build-manager-report.use-case";
 import { resolveCurrentManagerReportPeriod } from "./manager-report-period";
 import { WhatsAppPhone } from "../utils/whatsapp-phone";
 
@@ -22,6 +23,7 @@ export interface SendManagerReportNowResult {
 export class SendManagerReportNowUseCase {
   constructor(
     private readonly repository: ManagerReportSubscriptionRepository,
+    private readonly buildReport: BuildManagerReportUseCase,
     private readonly messaging: ManagerReportMessagingPort,
     private readonly documentLinks: ManagerReportDocumentLinkPort,
     private readonly conversationWindow: GetWhatsAppConversationWindowUseCase,
@@ -41,10 +43,12 @@ export class SendManagerReportNowUseCase {
     const period = resolveCurrentManagerReportPeriod(subscription.reportRange, subscription.timezone, this.now());
     const from = period.from.toISOString();
     const to = period.toExclusive.toISOString();
+    const snapshot = await this.buildReport.execute(subscription, period);
     const token = this.documentLinks.createToken({ subscriptionId, from, to });
     const fileName = `Reporte-Cotizaciones-${period.label.replace(/[^0-9a-zA-Z_-]+/g, "-")}.pdf`;
     const baseUrl = this.publicApiUrl.replace(/\/+$/, "");
-    const reportUrl = `${baseUrl}/api/public/manager-reports/${encodeURIComponent(token)}/${encodeURIComponent(fileName)}`;
+    const reportMediaPath = `${encodeURIComponent(token)}/${encodeURIComponent(fileName)}`;
+    const reportUrl = `${baseUrl}/api/public/manager-reports/${reportMediaPath}`;
     const window = await this.conversationWindow.execute(recipient);
     const messageBody = `Hola ${subscription.recipient.fullName}, te compartimos el reporte de rendimiento de cotizaciones correspondiente al periodo ${period.label}.`;
 
@@ -53,8 +57,13 @@ export class SendManagerReportNowUseCase {
       result = await this.messaging.send({
         recipient,
         recipientName: subscription.recipient.fullName,
+        scopeName: snapshot.scopeName,
         periodLabel: period.label,
+        generatedCount: snapshot.totals.created,
+        quotedMxn: snapshot.totals.quotedMxn,
+        quotedUsd: snapshot.totals.quotedUsd,
         reportUrl,
+        reportMediaPath,
         messageBody,
         deliveryMode: window.deliveryMode,
       });

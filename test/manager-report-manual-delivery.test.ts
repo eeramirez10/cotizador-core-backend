@@ -8,6 +8,7 @@ import type { ManagerReportSubscriptionRepository, RecordManagerReportSendParams
 import type { GetWhatsAppConversationWindowUseCase } from "../src/domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { resolveCurrentManagerReportPeriod } from "../src/domain/use-cases/manager-report-period";
 import { SendManagerReportNowUseCase } from "../src/domain/use-cases/send-manager-report-now.use-case";
+import type { BuildManagerReportUseCase } from "../src/domain/use-cases/build-manager-report.use-case";
 import { ManagerReportPdfAdapter } from "../src/infrastructure/documents/manager-report-pdf.adapter";
 import { HmacManagerReportDocumentLinkAdapter } from "../src/infrastructure/security/hmac-manager-report-document-link.adapter";
 
@@ -87,7 +88,47 @@ test("manager report PDF supports more than one seller page", () => {
   assert.match(raw, /\/Count 2/);
   assert.match(raw, /\/Subtype \/Image/);
   assert.match(raw, /\/Logo Do/);
+  assert.match(raw, /\(ACTIVIDAD\)/);
+  assert.match(raw, /\(COTIZ\.\)/);
+  assert.match(raw, /\(MXN\)/);
+  assert.match(raw, /\(USD\)/);
   assert.match(raw, /Vendedor 26/);
+});
+
+test("manager report balances remaining sellers across pages", () => {
+  const sellers = Array.from({ length: 44 }, (_, index) => ({
+    userId: String(index + 1),
+    name: `Vendedor ${index + 1}`,
+    quotes: 1,
+    approved: 0,
+    conversionRate: 0,
+    quotedMxn: 100,
+    quotedUsd: 0,
+    approvedMxn: 0,
+    approvedUsd: 0,
+  }));
+  const snapshot: ManagerReportSnapshot = {
+    scopeName: "Todas las sucursales",
+    periodFrom: "2026-09-01",
+    periodTo: "2026-09-24",
+    generatedAt: "2026-09-24T18:00:00.000Z",
+    totals: {
+      created: 44,
+      quoted: 44,
+      approved: 0,
+      pending: 44,
+      ordersGenerated: 0,
+      quotedMxn: 4400,
+      quotedUsd: 0,
+      approvedMxn: 0,
+      approvedUsd: 0,
+    },
+    sellers,
+  };
+  const raw = new ManagerReportPdfAdapter().create(snapshot).toString("ascii");
+  const pageStreams = [...raw.matchAll(/\d+ 0 obj\n<< \/Length \d+ >>\nstream\n([\s\S]*?)\nendstream/g)];
+  assert.match(raw, /\/Count 3/);
+  assert.deepEqual(pageStreams.map((match) => (match[1].match(/\(Vendedor \d+\)/g) || []).length), [18, 13, 13]);
 });
 
 test("manual delivery sends a signed current-period report and records the attempt", async () => {
@@ -133,11 +174,32 @@ test("manual delivery sends a signed current-period report and records the attem
   const links = {
     createToken: () => "signed-report.pdf",
   } as ManagerReportDocumentLinkPort;
+  const buildReport = {
+    execute: async () => ({
+      scopeName: "Sucursal México",
+      periodFrom: "2026-09-07",
+      periodTo: "2026-09-11",
+      generatedAt: "2026-09-11T18:00:00.000Z",
+      totals: {
+        created: 48,
+        quoted: 30,
+        approved: 12,
+        pending: 6,
+        ordersGenerated: 4,
+        quotedMxn: 1_850_430,
+        quotedUsd: 24_680,
+        approvedMxn: 0,
+        approvedUsd: 0,
+      },
+      sellers: [],
+    }),
+  } as unknown as BuildManagerReportUseCase;
   const window = {
     execute: async () => ({ active: true, deliveryMode: "FREE_FORM" as const, lastInboundAt: new Date(), expiresAt: new Date() }),
   } as GetWhatsAppConversationWindowUseCase;
   const useCase = new SendManagerReportNowUseCase(
     repository,
+    buildReport,
     messaging,
     links,
     window,
@@ -153,6 +215,11 @@ test("manual delivery sends a signed current-period report and records the attem
   assert.equal(result.status, "QUEUED");
   assert.equal(sentMessage?.deliveryMode, "FREE_FORM");
   assert.match(sentMessage?.reportUrl || "", /\/api\/public\/manager-reports\/signed-report\.pdf\/Reporte-Cotizaciones-/);
+  assert.equal(sentMessage?.scopeName, "Sucursal México");
+  assert.equal(sentMessage?.generatedCount, 48);
+  assert.equal(sentMessage?.quotedMxn, 1_850_430);
+  assert.equal(sentMessage?.quotedUsd, 24_680);
+  assert.match(sentMessage?.reportMediaPath || "", /^signed-report\.pdf\/Reporte-Cotizaciones-/);
   assert.equal(recorded?.providerMessageId, "SM123");
   assert.equal(recorded?.status, "QUEUED");
 });

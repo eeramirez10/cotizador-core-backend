@@ -10,3 +10,4 @@ storage
 *.log
 .DS_Store
 src/infrastructure/database/generated/
+!.env.staging.example

@@ -1,0 +1,226 @@
+name: tuvansa-staging
+
+x-core-build: &core-build
+  context: .
+  dockerfile: Dockerfile
+  target: runtime
+
+x-ai-build: &ai-build
+  context: ../tuvansa-ai-platform
+  dockerfile: Dockerfile
+  target: runtime
+
+x-core-environment: &core-environment
+  DATABASE_URL: ${STAGING_DATABASE_URL:?STAGING_DATABASE_URL is required}
+  NODE_ENV: production
+  STAGING_MODE: "true"
+  PORT: "4600"
+  FILE_STORAGE_ROOT: /app/storage/documents/attachments
+  ERP_OUTBOX_DIR: /app/storage/documents/erp-outbox
+  REALTIME_REDIS_URL: redis://redis:6379
+  AI_PLATFORM_BASE_URL: http://ai-api:4700
+  GPT_LOCAL_PRODUCTS_URL: http://ai-api:4700/api/local-products-semantic
+  TWILIO_WHATSAPP_FROM: ${STAGING_TWILIO_WHATSAPP_FROM:-}
+  TWILIO_WHATSAPP_QUOTE_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_QUOTE_CONTENT_SID:-}
+  TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID:-}
+  TWILIO_WHATSAPP_INTERNAL_ALERT_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_INTERNAL_ALERT_CONTENT_SID:-}
+  WHATSAPP_INTERNAL_VERIFICATION_ENABLED: "false"
+
+x-ai-environment: &ai-environment
+  NODE_ENV: production
+  API_PORT: "4700"
+  REDIS_URL: redis://redis:6379
+  DOCUMENT_STORAGE_DIRECTORY: /app/storage/uploads
+  CORE_BACKEND_BASE_URL: http://core:4600
+
+services:
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --appendonly, "yes", --maxmemory-policy, noeviction]
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    networks: [staging]
+
+  postgres:
+    image: postgres:17-alpine
+    env_file: ../tuvansa-ai-platform/.env.staging.postgres
+    environment:
+      POSTGRES_DB: tuvansa_ai
+      POSTGRES_USER: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d tuvansa_ai]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+    networks: [staging]
+
+  core-volume-init:
+    build: *core-build
+    user: "0:0"
+    entrypoint: [/bin/sh, -c]
+    command:
+      - mkdir -p /app/storage/documents/attachments /app/storage/documents/erp-outbox && chown -R node:node /app/storage/documents
+    volumes:
+      - core_documents:/app/storage/documents
+    restart: "no"
+    networks: [staging]
+
+  ai-volume-init:
+    build: *ai-build
+    user: "0:0"
+    entrypoint: [/bin/sh, -c]
+    command:
+      - mkdir -p /app/storage/uploads && chown -R node:node /app/storage
+    volumes:
+      - ai_documents:/app/storage
+    restart: "no"
+    networks: [staging]
+
+  core-migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrate
+    env_file: .env.staging
+    environment: *core-environment
+    command: [pnpm, run, prisma:deploy]
+    profiles: [maintenance]
+    init: true
+    restart: "no"
+    networks: [staging]
+
+  ai-migrate:
+    build:
+      context: ../tuvansa-ai-platform
+      dockerfile: Dockerfile
+      target: migrate
+    env_file: ../tuvansa-ai-platform/.env.staging
+    environment: *ai-environment
+    command: [pnpm, prisma:deploy]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: [maintenance]
+    init: true
+    restart: "no"
+    networks: [staging]
+
+  core:
+    build: *core-build
+    env_file: .env.staging
+    environment: *core-environment
+    ports:
+      - "127.0.0.1:4610:4600"
+    volumes:
+      - core_documents:/app/storage/documents
+    depends_on:
+      core-volume-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=64m"]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:4600/api/health').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 30s
+    networks: [staging]
+
+  ai-api:
+    build: *ai-build
+    env_file: ../tuvansa-ai-platform/.env.staging
+    environment: *ai-environment
+    ports:
+      - "127.0.0.1:4710:4700"
+    volumes:
+      - ai_documents:/app/storage
+    depends_on:
+      ai-volume-init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=128m"]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:4700/health/ready').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    stop_grace_period: 30s
+    networks: [staging]
+
+  ai-worker:
+    build: *ai-build
+    env_file: ../tuvansa-ai-platform/.env.staging
+    environment: *ai-environment
+    command: [node, dist/apps/worker.js]
+    volumes:
+      - ai_documents:/app/storage
+    depends_on:
+      ai-volume-init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=128m"]
+    stop_grace_period: 60s
+    networks: [staging]
+
+  whatsapp-worker:
+    build: *core-build
+    env_file: .env.staging
+    environment: *core-environment
+    command: [node, dist/presentation/whatsapp-assistant-worker.js]
+    depends_on:
+      core:
+        condition: service_healthy
+      ai-api:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=64m"]
+    stop_grace_period: 30s
+    networks: [staging]
+
+volumes:
+  core_documents:
+  ai_documents:
+  postgres_data:
+  redis_data:
+
+networks:
+  staging:
+    driver: bridge
