@@ -178,6 +178,14 @@ export class Envs {
     return get("TWILIO_WHATSAPP_MANAGER_REPORT_MEDIA_VARIABLE").default("7").asString();
   }
 
+  static get managerReportSchedulerEnabled(): boolean {
+    return get("MANAGER_REPORT_SCHEDULER_ENABLED").default("false").asBool();
+  }
+
+  static get managerReportSchedulerPollIntervalMs(): number {
+    return get("MANAGER_REPORT_SCHEDULER_POLL_INTERVAL_MS").default("30000").asIntPositive();
+  }
+
   static get twilioWhatsAppInternalAlertContentSid(): string {
     return get("TWILIO_WHATSAPP_INTERNAL_ALERT_CONTENT_SID").default("").asString();
   }

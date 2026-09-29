@@ -25,6 +25,7 @@ x-core-environment: &core-environment
   TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID:-}
   TWILIO_WHATSAPP_INTERNAL_ALERT_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_INTERNAL_ALERT_CONTENT_SID:-}
   WHATSAPP_INTERNAL_VERIFICATION_ENABLED: "false"
+  MANAGER_REPORT_SCHEDULER_ENABLED: ${STAGING_MANAGER_REPORT_SCHEDULER_ENABLED:-false}
 
 x-ai-environment: &ai-environment
   NODE_ENV: production
@@ -205,6 +206,23 @@ services:
       core:
         condition: service_healthy
       ai-api:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=64m"]
+    stop_grace_period: 30s
+    networks: [staging]
+
+  manager-report-worker:
+    build: *core-build
+    env_file: .env.staging
+    environment: *core-environment
+    command: [node, dist/presentation/manager-report-worker.js]
+    depends_on:
+      core:
         condition: service_healthy
     init: true
     read_only: true

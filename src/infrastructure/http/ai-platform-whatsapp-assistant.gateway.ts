@@ -14,6 +14,11 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
   }
 
   async respond(input: WhatsAppAssistantAgentInput): Promise<WhatsAppAssistantAgentResult> {
+    const contactName = input.principal.audience === "CUSTOMER"
+      && !input.principal.sharedCustomerPhone
+      && input.principal.customerContactId
+      ? input.principal.customerContactName?.trim().replace(/\s+/g, " ").slice(0, 100) || null
+      : null;
     const capabilities = input.principal.audience === "CUSTOMER"
       ? input.principal.sharedCustomerPhone
         ? ["CUSTOMER_QUOTES", "CUSTOMER_QUOTE_ACTIONS"]
@@ -40,10 +45,12 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
           hasUnsupportedAudio: input.hasUnsupportedAudio,
           attachments: input.attachments,
           previousResponseId: input.previousResponseId,
+          isFirstAssistantTurn: input.isFirstAssistantTurn,
           principal: {
             audience: input.principal.audience,
             isVerified: input.principal.isVerified,
             sharedCustomerPhone: input.principal.sharedCustomerPhone === true,
+            hasKnownContactName: Boolean(contactName),
             capabilities,
           },
         }),
@@ -57,6 +64,9 @@ export class AiPlatformWhatsAppAssistantGateway extends WhatsAppAssistantAgentPo
     const responseId = typeof payload.responseId === "string" ? payload.responseId : "";
     const text = typeof payload.text === "string" ? payload.text.trim() : "";
     if (!responseId || !text) throw new Error("AI Platform returned an incomplete assistant response.");
-    return { responseId, text };
+    return {
+      responseId,
+      text: text.replaceAll("{{CONTACT_NAME}}", input.isFirstAssistantTurn && contactName ? contactName : ""),
+    };
   }
 }

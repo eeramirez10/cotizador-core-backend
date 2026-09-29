@@ -67,6 +67,7 @@ export class RecordInboundWhatsAppMessageUseCase {
     const media = (input.media || []).slice(0, mediaCount);
     const hasUnsupportedAudio = media.some((item) => isUnsupportedWhatsAppAudio(item.mimeType));
     const supportedMedia = media.filter((item) => !isUnsupportedWhatsAppAudio(item.mimeType));
+    const assistantEnabled = resolveRuntimeValue(this.assistantEnabled);
     const fallbackBody = hasUnsupportedAudio && supportedMedia.length === 0 ? "Nota de voz recibida (no compatible)" : `Archivo recibido (${mediaCount})`;
     const recorded = await this.repository.recordInboundMessage({
       businessPhoneE164: business.value,
@@ -77,7 +78,7 @@ export class RecordInboundWhatsAppMessageUseCase {
       hasUnsupportedAudio,
       media: supportedMedia,
       receivedAt,
-      enqueueAssistant: resolveRuntimeValue(this.assistantEnabled),
+      enqueueAssistant: assistantEnabled && supportedMedia.length === 0,
       participantType: principal.audience,
       internalUserId: principal.userId,
       internalUserBranchId: principal.branchId,
@@ -99,6 +100,9 @@ export class RecordInboundWhatsAppMessageUseCase {
           media: supportedMedia,
         })
       : [];
+    if (assistantEnabled && supportedMedia.length > 0) {
+      await this.repository.enqueueAssistantJob(recorded.conversationId, recorded.inboundMessageId);
+    }
     if (recorded.created) {
       void this.realtime?.publish({
         type: "WHATSAPP_CONVERSATION_CHANGED",

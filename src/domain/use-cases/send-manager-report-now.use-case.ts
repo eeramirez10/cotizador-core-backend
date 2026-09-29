@@ -2,6 +2,7 @@ import type { ManagerReportDocumentLinkPort } from "../contracts/manager-report-
 import type { ManagerReportMessagingPort } from "../contracts/manager-report-messaging.port";
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import type { ManagerReportSubscriptionRepository } from "../repositories/manager-report-subscription.repository";
+import type { ManagerReportSubscriptionEntity } from "../entities/manager-report-subscription.entity";
 import type { GetWhatsAppConversationWindowUseCase } from "./get-whatsapp-conversation-window.use-case";
 import type { BuildManagerReportUseCase } from "./build-manager-report.use-case";
 import { resolveCurrentManagerReportPeriod } from "./manager-report-period";
@@ -35,64 +36,67 @@ export class SendManagerReportNowUseCase {
     if (actor.role !== "ADMIN") throw new Error("Only ADMIN can send management reports.");
     const subscription = await this.repository.findById(subscriptionId);
     if (!subscription) throw new Error("Report subscription not found.");
-    if (!subscription.isActive) throw new Error("Activate the report subscription before sending it.");
-    if (!subscription.recipient.isActive) throw new Error("Report recipient is inactive.");
-    const recipient = WhatsAppPhone.create(subscription.recipient.phone)?.value;
-    if (!recipient) throw new Error("The report recipient must have a valid WhatsApp phone number.");
-
-    const period = resolveCurrentManagerReportPeriod(subscription.reportRange, subscription.timezone, this.now());
+    const requestedAt = this.now();
+    const period = resolveCurrentManagerReportPeriod(subscription.reportRange, subscription.timezone, requestedAt);
     const from = period.from.toISOString();
     const to = period.toExclusive.toISOString();
-    const snapshot = await this.buildReport.execute(subscription, period);
-    const token = this.documentLinks.createToken({ subscriptionId, from, to });
-    const fileName = `Reporte-Cotizaciones-${period.label.replace(/[^0-9a-zA-Z_-]+/g, "-")}.pdf`;
-    const baseUrl = this.publicApiUrl.replace(/\/+$/, "");
-    const reportMediaPath = `${encodeURIComponent(token)}/${encodeURIComponent(fileName)}`;
-    const reportUrl = `${baseUrl}/api/public/manager-reports/${reportMediaPath}`;
-    const window = await this.conversationWindow.execute(recipient);
-    const messageBody = `Hola ${subscription.recipient.fullName}, te compartimos el reporte de rendimiento de cotizaciones correspondiente al periodo ${period.label}.`;
-
-    let result;
     try {
-      result = await this.messaging.send({
-        recipient,
-        recipientName: subscription.recipient.fullName,
-        scopeName: snapshot.scopeName,
-        periodLabel: period.label,
-        generatedCount: snapshot.totals.created,
-        quotedMxn: snapshot.totals.quotedMxn,
-        quotedUsd: snapshot.totals.quotedUsd,
-        reportUrl,
-        reportMediaPath,
-        messageBody,
-        deliveryMode: window.deliveryMode,
-      });
+      const result = await this.dispatch(subscription, requestedAt);
+      await this.repository.recordSendAttempt(subscriptionId, {
+        actorUserId: actor.id,
+        status: result.status,
+        recipient: result.recipient,
+        providerMessageId: result.providerMessageId,
+        deliveryMode: result.deliveryMode,
+        periodFrom: result.period.from,
+        periodTo: result.period.to,
+        errorMessage: null,
+      }).catch((error) => console.error("manager_report_send_audit_failed", error));
+      return result;
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message.slice(0, 1000) : "Unknown report delivery error.";
       await this.repository.recordSendAttempt(subscriptionId, {
         actorUserId: actor.id,
         status: "FAILED",
-        recipient,
+        recipient: WhatsAppPhone.create(subscription.recipient.phone)?.value || "",
         providerMessageId: null,
-        deliveryMode: window.deliveryMode,
+        deliveryMode: null,
         periodFrom: from,
         periodTo: to,
         errorMessage,
       }).catch(() => undefined);
       throw error;
     }
+  }
 
-    await this.repository.recordSendAttempt(subscriptionId, {
-      actorUserId: actor.id,
-      status: result.status,
+  async dispatch(subscription: ManagerReportSubscriptionEntity, scheduledAt: Date): Promise<SendManagerReportNowResult> {
+    if (!subscription.isActive) throw new Error("Activate the report subscription before sending it.");
+    if (!subscription.recipient.isActive) throw new Error("Report recipient is inactive.");
+    const recipient = WhatsAppPhone.create(subscription.recipient.phone)?.value;
+    if (!recipient) throw new Error("The report recipient must have a valid WhatsApp phone number.");
+    const period = resolveCurrentManagerReportPeriod(subscription.reportRange, subscription.timezone, scheduledAt);
+    const from = period.from.toISOString();
+    const to = period.toExclusive.toISOString();
+    const snapshot = await this.buildReport.execute(subscription, period);
+    const token = this.documentLinks.createToken({ subscriptionId: subscription.id, from, to });
+    const fileName = `Reporte-Cotizaciones-${period.label.replace(/[^0-9a-zA-Z_-]+/g, "-")}.pdf`;
+    const baseUrl = this.publicApiUrl.replace(/\/+$/, "");
+    const reportMediaPath = `${encodeURIComponent(token)}/${encodeURIComponent(fileName)}`;
+    const reportUrl = `${baseUrl}/api/public/manager-reports/${reportMediaPath}`;
+    const window = await this.conversationWindow.execute(recipient);
+    const messageBody = `Hola ${subscription.recipient.fullName}, te compartimos el reporte de rendimiento de cotizaciones correspondiente al periodo ${period.label}.`;
+    const result = await this.messaging.send({
       recipient,
-      providerMessageId: result.providerMessageId,
-      deliveryMode: result.deliveryMode,
-      periodFrom: from,
-      periodTo: to,
-      errorMessage: null,
-    }).catch((error) => {
-      console.error("manager_report_send_audit_failed", error);
+      recipientName: subscription.recipient.fullName,
+      scopeName: snapshot.scopeName,
+      periodLabel: period.label,
+      generatedCount: snapshot.totals.created,
+      quotedMxn: snapshot.totals.quotedMxn,
+      quotedUsd: snapshot.totals.quotedUsd,
+      reportUrl,
+      reportMediaPath,
+      messageBody,
+      deliveryMode: window.deliveryMode,
     });
     return {
       providerMessageId: result.providerMessageId,

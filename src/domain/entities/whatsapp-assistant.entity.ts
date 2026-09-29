@@ -38,6 +38,7 @@ export interface WhatsAppAssistantJobEntity {
     mimeType: string;
   }>;
   previousResponseId: string | null;
+  isFirstAssistantTurn: boolean;
   attempts: number;
   principal: WhatsAppAssistantPrincipal;
 }

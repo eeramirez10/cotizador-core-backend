@@ -111,7 +111,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
     const principal = await this.getPrincipal(candidate.conversationId);
     const conversationContext = await prisma.whatsAppConversation.findUnique({
       where: { id: candidate.conversationId },
-      select: { previousResponseId: true },
+      select: { previousResponseId: true, lastAssistantAt: true },
     });
 
     return {
@@ -124,6 +124,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
       hasUnsupportedAudio: candidate.inboundMessage.hasUnsupportedAudio,
       attachments: candidate.inboundMessage.attachments,
       previousResponseId: conversationContext?.previousResponseId ?? null,
+      isFirstAssistantTurn: conversationContext?.lastAssistantAt == null,
       attempts: candidate.attempts + 1,
       principal,
     };

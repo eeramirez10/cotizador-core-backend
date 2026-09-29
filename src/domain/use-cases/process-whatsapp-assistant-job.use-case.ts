@@ -25,6 +25,7 @@ export class ProcessWhatsAppAssistantJobUseCase {
         hasUnsupportedAudio: job.hasUnsupportedAudio,
         attachments: job.attachments,
         previousResponseId: job.previousResponseId,
+        isFirstAssistantTurn: job.isFirstAssistantTurn,
         principal: job.principal,
       });
       if (!await this.repository.isConversationAiControlled(job.conversationId)) {

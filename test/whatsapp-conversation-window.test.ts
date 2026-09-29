@@ -13,10 +13,12 @@ import {
 import { GetWhatsAppConversationWindowUseCase } from "../src/domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { RecordInboundWhatsAppMessageUseCase, isUnsupportedWhatsAppAudio } from "../src/domain/use-cases/record-inbound-whatsapp-message.use-case";
 import type { WhatsAppParticipantResolverPort } from "../src/domain/contracts/whatsapp-participant-resolver.port";
+import type { CaptureWhatsAppInboundMediaUseCase } from "../src/domain/use-cases/capture-whatsapp-inbound-media.use-case";
 
 class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository {
   conversation: WhatsAppConversationEntity | null = null;
   recorded: RecordWhatsAppInboundMessageInput | null = null;
+  enqueued: Array<{ conversationId: string; inboundMessageId: string }> = [];
 
   async findByParticipants(): Promise<WhatsAppConversationEntity | null> {
     return this.conversation;
@@ -30,6 +32,10 @@ class WhatsAppConversationRepositoryStub extends WhatsAppConversationRepository 
       created: true,
       humanControlExpiresAt: null,
     };
+  }
+
+  async enqueueAssistantJob(conversationId: string, inboundMessageId: string): Promise<void> {
+    this.enqueued.push({ conversationId, inboundMessageId });
   }
 }
 
@@ -155,6 +161,56 @@ test("normalizes and records a signed inbound WhatsApp message", async () => {
       humanControlExpiresAt: null,
     },
   }]);
+});
+
+test("waits for an inbound attachment before enqueuing the assistant", async () => {
+  const repository = new WhatsAppConversationRepositoryStub();
+  let captureStarted!: () => void;
+  let finishCapture!: () => void;
+  const started = new Promise<void>((resolve) => { captureStarted = resolve; });
+  const finished = new Promise<void>((resolve) => { finishCapture = resolve; });
+  const captureMedia = {
+    execute: async () => {
+      captureStarted();
+      await finished;
+      return [{
+        id: "attachment-1",
+        originalName: "lista.xlsx",
+        mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        sizeBytes: 100,
+        createdAt: now,
+        quoteExtractedAt: null,
+        quoteExtractionCount: 0,
+        quoteExtractedByUserId: null,
+        quoteExtractedByName: null,
+        lastQuoteDraftId: null,
+      }];
+    },
+  } as unknown as CaptureWhatsAppInboundMediaUseCase;
+  const useCase = new RecordInboundWhatsAppMessageUseCase(
+    repository, () => now, true, undefined, undefined, captureMedia,
+  );
+
+  const pending = useCase.execute({
+    from: "whatsapp:+5215511223344",
+    to: "whatsapp:+5215541142931",
+    providerMessageId: "SM-file-1",
+    mediaCount: 1,
+    media: [{
+      index: 0,
+      url: "https://api.twilio.com/media/1",
+      mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    }],
+  });
+  await started;
+  try {
+    assert.equal(repository.recorded?.enqueueAssistant, false);
+    assert.deepEqual(repository.enqueued, []);
+  } finally {
+    finishCapture();
+  }
+  await pending;
+  assert.deepEqual(repository.enqueued, [{ conversationId: "conversation-1", inboundMessageId: "message-1" }]);
 });
 
 test("classifies a WhatsApp voice note without treating it as a quote file", async () => {

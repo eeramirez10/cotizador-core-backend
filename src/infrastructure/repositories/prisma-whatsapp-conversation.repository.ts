@@ -6,6 +6,19 @@ import { WhatsAppConversationRepository } from "../../domain/repositories/whatsa
 import { prisma } from "../database/prisma-client";
 
 export class PrismaWhatsAppConversationRepository extends WhatsAppConversationRepository {
+  async enqueueAssistantJob(conversationId: string, inboundMessageId: string): Promise<void> {
+    const conversation = await prisma.whatsAppConversation.findFirst({
+      where: { id: conversationId, mode: "AI" },
+      select: { id: true },
+    });
+    if (!conversation) return;
+
+    await prisma.whatsAppAssistantJob.createMany({
+      data: [{ conversationId, inboundMessageId }],
+      skipDuplicates: true,
+    });
+  }
+
   async findByParticipants(businessPhoneE164: string, participantPhoneE164: string) {
     return prisma.whatsAppConversation.findUnique({
       where: {

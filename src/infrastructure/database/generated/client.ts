@@ -60,6 +60,11 @@ export type User = Prisma.UserModel
  */
 export type ManagerReportSubscription = Prisma.ManagerReportSubscriptionModel
 /**
+ * Model ManagerReportRun
+ *
+ */
+export type ManagerReportRun = Prisma.ManagerReportRunModel
+/**
  * Model ErpWarehouse
  * 
  */

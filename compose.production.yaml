@@ -168,6 +168,41 @@ services:
       - infra-network
       - core-internal
 
+  manager-report-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: cotizador-manager-report-worker
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      MANAGER_REPORT_SCHEDULER_ENABLED: ${MANAGER_REPORT_SCHEDULER_ENABLED:-false}
+    command:
+      - node
+      - dist/presentation/manager-report-worker.js
+    depends_on:
+      core-backend:
+        condition: service_healthy
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:mode=1777,size=64m
+    stop_grace_period: 30s
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - infra-network
+
 volumes:
   core_documents:
     external: true

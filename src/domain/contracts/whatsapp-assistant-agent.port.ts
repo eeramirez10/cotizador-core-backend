@@ -11,6 +11,7 @@ export interface WhatsAppAssistantAgentInput {
     mimeType: string;
   }>;
   previousResponseId: string | null;
+  isFirstAssistantTurn: boolean;
   principal: WhatsAppAssistantPrincipal;
 }
 

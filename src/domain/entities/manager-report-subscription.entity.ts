@@ -35,6 +35,8 @@ export interface ManagerReportSubscriptionProps {
   sendMinute: number;
   timezone: string;
   isActive: boolean;
+  nextRunAt?: Date | null;
+  lastRun?: { scheduledAt: Date; status: string; providerMessageId: string | null; errorMessage: string | null; finishedAt: Date | null } | null;
   createdBy: AuditUserSummary;
   updatedBy: AuditUserSummary | null;
   createdAt: Date;
@@ -61,6 +63,12 @@ export class ManagerReportSubscriptionEntity {
       ...this.props,
       createdAt: this.props.createdAt.toISOString(),
       updatedAt: this.props.updatedAt.toISOString(),
+      nextRunAt: this.props.nextRunAt?.toISOString() ?? null,
+      lastRun: this.props.lastRun ? {
+        ...this.props.lastRun,
+        scheduledAt: this.props.lastRun.scheduledAt.toISOString(),
+        finishedAt: this.props.lastRun.finishedAt?.toISOString() ?? null,
+      } : null,
     };
   }
 }

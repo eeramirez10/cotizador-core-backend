@@ -55,6 +55,7 @@ export const ModelName = {
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
   ManagerReportSubscription: 'ManagerReportSubscription',
+  ManagerReportRun: 'ManagerReportRun',
   ErpWarehouse: 'ErpWarehouse',
   BranchErpWarehouse: 'BranchErpWarehouse',
   UserErpWarehouse: 'UserErpWarehouse',
@@ -191,6 +192,7 @@ export const ManagerReportSubscriptionScalarFieldEnum = {
   sendMinute: 'sendMinute',
   timezone: 'timezone',
   isActive: 'isActive',
+  nextRunAt: 'nextRunAt',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
   createdAt: 'createdAt',
@@ -198,6 +200,20 @@ export const ManagerReportSubscriptionScalarFieldEnum = {
 } as const
 
 export type ManagerReportSubscriptionScalarFieldEnum = (typeof ManagerReportSubscriptionScalarFieldEnum)[keyof typeof ManagerReportSubscriptionScalarFieldEnum]
+
+
+export const ManagerReportRunScalarFieldEnum = {
+  id: 'id',
+  subscriptionId: 'subscriptionId',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
+  providerMessageId: 'providerMessageId',
+  errorMessage: 'errorMessage',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt'
+} as const
+
+export type ManagerReportRunScalarFieldEnum = (typeof ManagerReportRunScalarFieldEnum)[keyof typeof ManagerReportRunScalarFieldEnum]
 
 
 export const ErpWarehouseScalarFieldEnum = {

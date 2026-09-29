@@ -9,5 +9,8 @@ coverage
 storage
 *.log
 .DS_Store
-src/infrastructure/database/generated/
+src/infrastructure/database/generated/*
+!src/infrastructure/database/generated/models/
+src/infrastructure/database/generated/models/*
+!src/infrastructure/database/generated/models/ManagerReportRun.ts
 !.env.staging.example

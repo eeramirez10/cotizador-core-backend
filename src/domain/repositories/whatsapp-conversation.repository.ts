@@ -11,4 +11,6 @@ export abstract class WhatsAppConversationRepository {
   ): Promise<WhatsAppConversationEntity | null>;
 
   abstract recordInboundMessage(input: RecordWhatsAppInboundMessageInput): Promise<RecordedWhatsAppInboundMessage>;
+
+  abstract enqueueAssistantJob(conversationId: string, inboundMessageId: string): Promise<void>;
 }

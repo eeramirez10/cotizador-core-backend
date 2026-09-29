@@ -507,6 +507,7 @@ model ManagerReportSubscription {
   sendMinute      Int                    @default(0) @map("send_minute")
   timezone        String                 @default("America/Mexico_City") @db.VarChar(80)
   isActive        Boolean                @default(true) @map("is_active")
+  nextRunAt       DateTime?               @map("next_run_at")
   createdByUserId String                 @map("created_by_user_id") @db.Uuid
   updatedByUserId String?                @map("updated_by_user_id") @db.Uuid
   createdAt       DateTime               @default(now()) @map("created_at")
@@ -516,11 +517,30 @@ model ManagerReportSubscription {
   branch        Branch? @relation(fields: [branchId], references: [id], onDelete: Restrict)
   createdByUser User    @relation("ManagerReportCreatedBy", fields: [createdByUserId], references: [id], onDelete: Restrict)
   updatedByUser User?   @relation("ManagerReportUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  runs          ManagerReportRun[]
 
   @@unique([recipientUserId, reportType])
   @@index([isActive, frequency])
+  @@index([isActive, nextRunAt])
   @@index([branchId])
   @@map("manager_report_subscriptions")
+}
+
+model ManagerReportRun {
+  id                String   @id @default(uuid()) @db.Uuid
+  subscriptionId    String   @map("subscription_id") @db.Uuid
+  scheduledAt       DateTime @map("scheduled_at")
+  status            String   @db.VarChar(24)
+  providerMessageId String?  @map("provider_message_id") @db.VarChar(100)
+  errorMessage      String?  @map("error_message") @db.VarChar(1000)
+  startedAt         DateTime @default(now()) @map("started_at")
+  finishedAt        DateTime? @map("finished_at")
+
+  subscription ManagerReportSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@unique([subscriptionId, scheduledAt])
+  @@index([subscriptionId, startedAt])
+  @@map("manager_report_runs")
 }
 
 model ErpWarehouse {

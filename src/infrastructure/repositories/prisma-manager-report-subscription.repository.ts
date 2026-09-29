@@ -9,6 +9,7 @@ import {
 } from "../../domain/repositories/manager-report-subscription.repository";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
+import { nextManagerReportRunAt } from "../../domain/use-cases/next-manager-report-run";
 
 const subscriptionInclude = {
   recipientUser: {
@@ -26,6 +27,7 @@ const subscriptionInclude = {
   branch: { select: { id: true, code: true, name: true } },
   createdByUser: { select: { id: true, firstName: true, lastName: true } },
   updatedByUser: { select: { id: true, firstName: true, lastName: true } },
+  runs: { orderBy: { startedAt: "desc" }, take: 1 },
 } satisfies Prisma.ManagerReportSubscriptionInclude;
 
 type SubscriptionRow = Prisma.ManagerReportSubscriptionGetPayload<{ include: typeof subscriptionInclude }>;
@@ -72,6 +74,7 @@ export class PrismaManagerReportSubscriptionRepository extends ManagerReportSubs
         const created = await tx.managerReportSubscription.create({
           data: {
             ...this.data(params),
+            nextRunAt: nextManagerReportRunAt(params, new Date()),
             createdByUserId: params.actorUserId,
           },
           include: subscriptionInclude,
@@ -97,7 +100,7 @@ export class PrismaManagerReportSubscriptionRepository extends ManagerReportSubs
         const row = await prisma.$transaction(async (tx) => {
           const updated = await tx.managerReportSubscription.update({
             where: { id },
-            data: { ...this.data(params), updatedByUserId: params.actorUserId },
+            data: { ...this.data(params), nextRunAt: nextManagerReportRunAt(params, new Date()), updatedByUserId: params.actorUserId },
             include: subscriptionInclude,
           });
           await tx.auditLog.create({
@@ -122,9 +125,10 @@ export class PrismaManagerReportSubscriptionRepository extends ManagerReportSubs
   async setActive(id: string, isActive: boolean, actorUserId: string): Promise<ManagerReportSubscriptionEntityType | null> {
     try {
       const row = await prisma.$transaction(async (tx) => {
+        const current = await tx.managerReportSubscription.findUniqueOrThrow({ where: { id } });
         const updated = await tx.managerReportSubscription.update({
           where: { id },
-          data: { isActive, updatedByUserId: actorUserId },
+          data: { isActive, nextRunAt: isActive ? nextManagerReportRunAt(current, new Date()) : null, updatedByUserId: actorUserId },
           include: subscriptionInclude,
         });
         await tx.auditLog.create({
@@ -196,6 +200,14 @@ export class PrismaManagerReportSubscriptionRepository extends ManagerReportSubs
       sendMinute: row.sendMinute,
       timezone: row.timezone,
       isActive: row.isActive,
+      nextRunAt: row.nextRunAt,
+      lastRun: row.runs[0] ? {
+        scheduledAt: row.runs[0].scheduledAt,
+        status: row.runs[0].status,
+        providerMessageId: row.runs[0].providerMessageId,
+        errorMessage: row.runs[0].errorMessage,
+        finishedAt: row.runs[0].finishedAt,
+      } : null,
     };
   }
 

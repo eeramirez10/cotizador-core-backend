@@ -388,6 +388,7 @@ export const ModelName = {
   QuoteCatalogOption: 'QuoteCatalogOption',
   User: 'User',
   ManagerReportSubscription: 'ManagerReportSubscription',
+  ManagerReportRun: 'ManagerReportRun',
   ErpWarehouse: 'ErpWarehouse',
   BranchErpWarehouse: 'BranchErpWarehouse',
   UserErpWarehouse: 'UserErpWarehouse',
@@ -442,7 +443,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "managerReportRun" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -739,6 +740,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ManagerReportSubscriptionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ManagerReportSubscriptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ManagerReportRun: {
+      payload: Prisma.$ManagerReportRunPayload<ExtArgs>
+      fields: Prisma.ManagerReportRunFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ManagerReportRunFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ManagerReportRunFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        findFirst: {
+          args: Prisma.ManagerReportRunFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ManagerReportRunFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        findMany: {
+          args: Prisma.ManagerReportRunFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>[]
+        }
+        create: {
+          args: Prisma.ManagerReportRunCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        createMany: {
+          args: Prisma.ManagerReportRunCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ManagerReportRunCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>[]
+        }
+        delete: {
+          args: Prisma.ManagerReportRunDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        update: {
+          args: Prisma.ManagerReportRunUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        deleteMany: {
+          args: Prisma.ManagerReportRunDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ManagerReportRunUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ManagerReportRunUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>[]
+        }
+        upsert: {
+          args: Prisma.ManagerReportRunUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ManagerReportRunPayload>
+        }
+        aggregate: {
+          args: Prisma.ManagerReportRunAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateManagerReportRun>
+        }
+        groupBy: {
+          args: Prisma.ManagerReportRunGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ManagerReportRunGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ManagerReportRunCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ManagerReportRunCountAggregateOutputType> | number
         }
       }
     }
@@ -3746,6 +3821,7 @@ export const ManagerReportSubscriptionScalarFieldEnum = {
   sendMinute: 'sendMinute',
   timezone: 'timezone',
   isActive: 'isActive',
+  nextRunAt: 'nextRunAt',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
   createdAt: 'createdAt',
@@ -3753,6 +3829,20 @@ export const ManagerReportSubscriptionScalarFieldEnum = {
 } as const
 
 export type ManagerReportSubscriptionScalarFieldEnum = (typeof ManagerReportSubscriptionScalarFieldEnum)[keyof typeof ManagerReportSubscriptionScalarFieldEnum]
+
+
+export const ManagerReportRunScalarFieldEnum = {
+  id: 'id',
+  subscriptionId: 'subscriptionId',
+  scheduledAt: 'scheduledAt',
+  status: 'status',
+  providerMessageId: 'providerMessageId',
+  errorMessage: 'errorMessage',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt'
+} as const
+
+export type ManagerReportRunScalarFieldEnum = (typeof ManagerReportRunScalarFieldEnum)[keyof typeof ManagerReportRunScalarFieldEnum]
 
 
 export const ErpWarehouseScalarFieldEnum = {
@@ -5601,6 +5691,7 @@ export type GlobalOmitConfig = {
   quoteCatalogOption?: Prisma.QuoteCatalogOptionOmit
   user?: Prisma.UserOmit
   managerReportSubscription?: Prisma.ManagerReportSubscriptionOmit
+  managerReportRun?: Prisma.ManagerReportRunOmit
   erpWarehouse?: Prisma.ErpWarehouseOmit
   branchErpWarehouse?: Prisma.BranchErpWarehouseOmit
   userErpWarehouse?: Prisma.UserErpWarehouseOmit
