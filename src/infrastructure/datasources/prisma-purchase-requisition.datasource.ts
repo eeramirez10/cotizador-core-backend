@@ -988,6 +988,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
             select: {
               id: true,
               supplierQuoteId: true,
+              supplierProductCode: true,
               supplierQuote: { select: { supplierId: true, currency: true, fileAssetId: true } },
             },
           },
@@ -1104,6 +1105,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
               supplierQuoteId,
               supplierId: quoteItem.sellerSupplierId,
               supplierDescription: quoteItem.sellerSupplierDescription,
+              supplierProductCode: quoteItem.sellerSupplierProductCode ?? existingOffer.supplierProductCode,
               qty: requisitionItem.qty,
               unit: requisitionItem.unit,
               unitCost: quoteItem.sellerQuotedUnitCost,
@@ -1156,6 +1158,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
             supplierId: quoteItem.sellerSupplierId,
             source: "SELLER",
             supplierDescription: quoteItem.sellerSupplierDescription,
+            supplierProductCode: quoteItem.sellerSupplierProductCode,
             qty: requisitionItem.qty,
             unit: requisitionItem.unit,
             unitCost: quoteItem.sellerQuotedUnitCost,

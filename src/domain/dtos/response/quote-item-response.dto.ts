@@ -34,6 +34,7 @@ export class QuoteItemResponseDto {
       sellerSupplierOrigin: this.item.sellerSupplierOrigin,
       sellerSupplierQuoteValidUntil: this.item.sellerSupplierQuoteValidUntil,
       sellerSupplierQuoteReference: this.item.sellerSupplierQuoteReference,
+      sellerSupplierProductCode: this.item.sellerSupplierProductCode,
       sellerSupplierQuoteNotes: this.item.sellerSupplierQuoteNotes,
       sellerOriginRestrictions: this.item.sellerOriginRestrictions,
       sellerDeliveryState: this.item.sellerDeliveryState,

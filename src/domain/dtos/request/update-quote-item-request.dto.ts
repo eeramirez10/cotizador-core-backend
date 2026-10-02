@@ -19,6 +19,7 @@ interface UpdateQuoteItemRequestDtoProps {
   sellerQuotedExchangeRate?: number | null;
   sellerQuotedBrand?: string | null;
   sellerSupplierDescription?: string | null;
+  sellerSupplierProductCode?: string | null;
   sellerSupplierOrigin?: string | null;
   sellerSupplierQuoteValidUntil?: Date | null;
   sellerSupplierQuoteReference?: string | null;
@@ -58,6 +59,7 @@ export class UpdateQuoteItemRequestDto {
   public readonly sellerQuotedExchangeRate?: number | null;
   public readonly sellerQuotedBrand?: string | null;
   public readonly sellerSupplierDescription?: string | null;
+  public readonly sellerSupplierProductCode?: string | null;
   public readonly sellerSupplierOrigin?: string | null;
   public readonly sellerSupplierQuoteValidUntil?: Date | null;
   public readonly sellerSupplierQuoteReference?: string | null;
@@ -96,6 +98,7 @@ export class UpdateQuoteItemRequestDto {
     this.sellerQuotedExchangeRate = props.sellerQuotedExchangeRate;
     this.sellerQuotedBrand = props.sellerQuotedBrand;
     this.sellerSupplierDescription = props.sellerSupplierDescription;
+    this.sellerSupplierProductCode = props.sellerSupplierProductCode;
     this.sellerSupplierOrigin = props.sellerSupplierOrigin;
     this.sellerSupplierQuoteValidUntil = props.sellerSupplierQuoteValidUntil;
     this.sellerSupplierQuoteReference = props.sellerSupplierQuoteReference;
@@ -122,6 +125,11 @@ export class UpdateQuoteItemRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
+      && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
+    if (typeof body.sellerSupplierProductCode === "string" && body.sellerSupplierProductCode.trim().length > 120) {
+      return ["sellerSupplierProductCode must not exceed 120 characters."];
+    }
     if (Object.keys(body).length === 0) {
       return ["At least one field is required to update item."];
     }
@@ -233,6 +241,8 @@ export class UpdateQuoteItemRequestDto {
         sellerQuotedExchangeRate,
         sellerQuotedBrand: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerQuotedBrand),
         sellerSupplierDescription: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierDescription),
+        sellerSupplierProductCode: body.sellerSupplierProductCode === undefined ? undefined
+          : UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierProductCode)?.toUpperCase() ?? null,
         sellerSupplierOrigin: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierOrigin),
         sellerSupplierQuoteValidUntil,
         sellerSupplierQuoteReference: UpdateQuoteItemRequestDto.normalizeNullableStringWhenDefined(body.sellerSupplierQuoteReference),

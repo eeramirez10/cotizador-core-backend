@@ -243,6 +243,7 @@ export class SaveQuoteDraftUseCase {
         sellerQuotedExchangeRate: item.sellerQuotedExchangeRate === null ? null : round4(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
         sellerSupplierDescription: item.sellerSupplierDescription,
+        sellerSupplierProductCode: item.sellerSupplierProductCode,
         sellerSupplierOrigin: item.sellerSupplierOrigin,
         sellerSupplierQuoteValidUntil: item.sellerSupplierQuoteValidUntil,
         sellerSupplierQuoteReference: item.sellerSupplierQuoteReference,

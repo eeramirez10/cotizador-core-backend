@@ -34,6 +34,7 @@ const request = () => {
     sellerQuotedExchangeRate: null,
     sellerDeliveryState: "QUERETARO",
     sellerSupplierDeliveryTime: "3-5 DIAS",
+    sellerSupplierProductCode: " val-500 ",
   });
   assert.equal(error, undefined);
   return dto!;
@@ -60,6 +61,18 @@ test("seller can add purchasing reference to an own quoted out-of-stock item", a
   assert.equal(update.itemId, "quote-item-1");
   assert.equal(update.data.sellerQuotedUnitCost, 125);
   assert.equal(update.data.sellerCostSource, "SELLER_SUPPLIER_QUOTE");
+  assert.equal(update.data.sellerSupplierProductCode, "VAL-500");
+});
+
+test("seller supplier code rejects invalid or oversized values", () => {
+  const base = {
+    sellerSupplierId: "supplier-1", sellerSupplierName: "PROVEEDOR DEMO",
+    sellerQuotedUnitCost: 125, sellerCostSource: "SELLER_SUPPLIER_QUOTE",
+    sellerQuotedCurrency: "MXN", sellerDeliveryState: "QUERETARO",
+    sellerSupplierDeliveryTime: "3-5 DIAS",
+  };
+  assert.match(UpdateQuoteProcurementReferenceRequestDto.create({ ...base, sellerSupplierProductCode: 123 })[0] || "", /invalid/);
+  assert.match(UpdateQuoteProcurementReferenceRequestDto.create({ ...base, sellerSupplierProductCode: "X".repeat(121) })[0] || "", /120/);
 });
 
 test("purchasing reference is locked after an approved requisition leaves draft", async () => {

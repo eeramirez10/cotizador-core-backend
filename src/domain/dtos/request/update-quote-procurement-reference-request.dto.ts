@@ -13,6 +13,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     public readonly sellerQuotedExchangeRate: number | null,
     public readonly sellerQuotedBrand: string | null,
     public readonly sellerSupplierDescription: string | null,
+    public readonly sellerSupplierProductCode: string | null,
     public readonly sellerSupplierOrigin: string | null,
     public readonly sellerSupplierQuoteValidUntil: Date | null,
     public readonly sellerSupplierQuoteReference: string | null,
@@ -41,6 +42,10 @@ export class UpdateQuoteProcurementReferenceRequestDto {
       : Number(body.sellerQuotedExchangeRate);
     const deliveryState = optionalText(body.sellerDeliveryState);
     const deliveryTime = optionalText(body.sellerSupplierDeliveryTime);
+    if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
+      && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
+    const supplierProductCode = optionalText(body.sellerSupplierProductCode)?.toUpperCase() ?? null;
+    if (supplierProductCode && supplierProductCode.length > 120) return ["sellerSupplierProductCode must not exceed 120 characters."];
     if (!supplierId) return ["sellerSupplierId is required."];
     if (!supplierName) return ["sellerSupplierName is required."];
     if (!Number.isFinite(unitCost) || unitCost <= 0) return ["sellerQuotedUnitCost must be greater than zero."];
@@ -75,7 +80,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
 
     return [, new UpdateQuoteProcurementReferenceRequestDto(
       supplierId, supplierName, unitCost, costSource as PurchaseCostSource, currency, currency === "USD" ? exchangeRate : null,
-      optionalText(body.sellerQuotedBrand), optionalText(body.sellerSupplierDescription),
+      optionalText(body.sellerQuotedBrand), optionalText(body.sellerSupplierDescription), supplierProductCode,
       optionalText(body.sellerSupplierOrigin), validUntil,
       optionalText(body.sellerSupplierQuoteReference), optionalText(body.sellerSupplierQuoteNotes),
       restrictions, deliveryState, deliveryTime,

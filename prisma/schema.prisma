@@ -959,6 +959,7 @@ model QuoteItem {
   sellerQuotedExchangeRate          Decimal?            @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
   sellerQuotedBrand                 String?             @map("seller_quoted_brand") @db.VarChar(160)
   sellerSupplierDescription         String?             @map("seller_supplier_description") @db.VarChar(500)
+  sellerSupplierProductCode         String?             @map("seller_supplier_product_code") @db.VarChar(120)
   sellerSupplierOrigin              String?             @map("seller_supplier_origin") @db.VarChar(120)
   sellerSupplierQuoteValidUntil     DateTime?           @map("seller_supplier_quote_valid_until") @db.Date
   sellerSupplierQuoteReference      String?             @map("seller_supplier_quote_reference") @db.VarChar(160)

@@ -23,6 +23,7 @@ interface CreateQuoteItemRequestDtoProps {
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
   sellerSupplierDescription: string | null;
+  sellerSupplierProductCode?: string | null;
   sellerSupplierOrigin: string | null;
   sellerSupplierQuoteValidUntil: Date | null;
   sellerSupplierQuoteReference: string | null;
@@ -71,6 +72,7 @@ export class CreateQuoteItemRequestDto {
   public readonly sellerQuotedExchangeRate: number | null;
   public readonly sellerQuotedBrand: string | null;
   public readonly sellerSupplierDescription: string | null;
+  public readonly sellerSupplierProductCode: string | null;
   public readonly sellerSupplierOrigin: string | null;
   public readonly sellerSupplierQuoteValidUntil: Date | null;
   public readonly sellerSupplierQuoteReference: string | null;
@@ -122,6 +124,7 @@ export class CreateQuoteItemRequestDto {
     this.sellerQuotedExchangeRate = props.sellerQuotedExchangeRate;
     this.sellerQuotedBrand = props.sellerQuotedBrand;
     this.sellerSupplierDescription = props.sellerSupplierDescription;
+    this.sellerSupplierProductCode = props.sellerSupplierProductCode ?? null;
     this.sellerSupplierOrigin = props.sellerSupplierOrigin;
     this.sellerSupplierQuoteValidUntil = props.sellerSupplierQuoteValidUntil;
     this.sellerSupplierQuoteReference = props.sellerSupplierQuoteReference;
@@ -153,6 +156,11 @@ export class CreateQuoteItemRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
+      && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
+    if (typeof body.sellerSupplierProductCode === "string" && body.sellerSupplierProductCode.trim().length > 120) {
+      return ["sellerSupplierProductCode must not exceed 120 characters."];
+    }
     const clientItemId = typeof body.clientItemId === "string" ? body.clientItemId.trim() : "";
     if (!clientItemId || clientItemId.length > 80) return ["clientItemId must contain between 1 and 80 characters."];
     const unit = typeof body.unit === "string" ? body.unit.trim() : "";
@@ -287,6 +295,7 @@ export class CreateQuoteItemRequestDto {
         sellerQuotedExchangeRate: typeof sellerQuotedExchangeRate === "undefined" ? null : sellerQuotedExchangeRate,
         sellerQuotedBrand: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerQuotedBrand),
         sellerSupplierDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierDescription),
+        sellerSupplierProductCode: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierProductCode)?.toUpperCase() ?? null,
         sellerSupplierOrigin: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierOrigin),
         sellerSupplierQuoteValidUntil,
         sellerSupplierQuoteReference: CreateQuoteItemRequestDto.normalizeNullableString(body.sellerSupplierQuoteReference),

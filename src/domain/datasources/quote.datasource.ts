@@ -95,6 +95,7 @@ export interface SaveQuoteDraftItemDatasourceData {
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
   sellerSupplierDescription: string | null;
+  sellerSupplierProductCode?: string | null;
   sellerSupplierOrigin: string | null;
   sellerSupplierQuoteValidUntil: Date | null;
   sellerSupplierQuoteReference: string | null;
@@ -206,6 +207,7 @@ export interface AddQuoteItemDatasourceParams {
     sellerQuotedExchangeRate: number | null;
     sellerQuotedBrand: string | null;
     sellerSupplierDescription: string | null;
+    sellerSupplierProductCode?: string | null;
     sellerSupplierOrigin: string | null;
     sellerSupplierQuoteValidUntil: Date | null;
     sellerSupplierQuoteReference: string | null;
@@ -263,6 +265,7 @@ export interface UpdateQuoteItemDatasourceParams {
     sellerQuotedExchangeRate?: number | null;
     sellerQuotedBrand?: string | null;
     sellerSupplierDescription?: string | null;
+    sellerSupplierProductCode?: string | null;
     sellerSupplierOrigin?: string | null;
     sellerSupplierQuoteValidUntil?: Date | null;
     sellerSupplierQuoteReference?: string | null;
@@ -301,7 +304,7 @@ export interface UpdateQuoteProcurementReferenceDatasourceParams {
   data: Pick<UpdateQuoteItemDatasourceParams["data"],
     | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerCostSource"
     | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand"
-    | "sellerSupplierDescription" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil"
+    | "sellerSupplierDescription" | "sellerSupplierProductCode" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil"
     | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions"
     | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard"
     | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily"

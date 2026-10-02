@@ -163,6 +163,7 @@ export class UpdateQuoteItemUseCase {
         sellerQuotedExchangeRate: dto.sellerQuotedExchangeRate,
         sellerQuotedBrand: dto.sellerQuotedBrand,
         sellerSupplierDescription: dto.sellerSupplierDescription,
+        sellerSupplierProductCode: dto.sellerSupplierProductCode,
         sellerSupplierOrigin: dto.sellerSupplierOrigin,
         sellerSupplierQuoteValidUntil: dto.sellerSupplierQuoteValidUntil,
         sellerSupplierQuoteReference: dto.sellerSupplierQuoteReference,

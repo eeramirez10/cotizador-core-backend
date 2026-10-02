@@ -35,6 +35,7 @@ export interface QuoteItemEntity {
   sellerQuotedExchangeRate: number | null;
   sellerQuotedBrand: string | null;
   sellerSupplierDescription: string | null;
+  sellerSupplierProductCode: string | null;
   sellerSupplierOrigin: string | null;
   sellerSupplierQuoteValidUntil: Date | null;
   sellerSupplierQuoteReference: string | null;

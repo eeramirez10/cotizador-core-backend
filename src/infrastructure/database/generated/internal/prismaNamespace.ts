@@ -4136,6 +4136,7 @@ export const QuoteItemScalarFieldEnum = {
   sellerQuotedExchangeRate: 'sellerQuotedExchangeRate',
   sellerQuotedBrand: 'sellerQuotedBrand',
   sellerSupplierDescription: 'sellerSupplierDescription',
+  sellerSupplierProductCode: 'sellerSupplierProductCode',
   sellerSupplierOrigin: 'sellerSupplierOrigin',
   sellerSupplierQuoteValidUntil: 'sellerSupplierQuoteValidUntil',
   sellerSupplierQuoteReference: 'sellerSupplierQuoteReference',

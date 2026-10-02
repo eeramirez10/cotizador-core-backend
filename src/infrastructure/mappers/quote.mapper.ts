@@ -198,6 +198,7 @@ interface QuoteRow {
     sellerQuotedExchangeRate: number | DecimalLike | null;
     sellerQuotedBrand: string | null;
     sellerSupplierDescription: string | null;
+    sellerSupplierProductCode: string | null;
     sellerSupplierOrigin: string | null;
     sellerSupplierQuoteValidUntil: Date | null;
     sellerSupplierQuoteReference: string | null;
@@ -432,6 +433,7 @@ export class QuoteMapper {
         sellerQuotedExchangeRate: toNumber(item.sellerQuotedExchangeRate),
         sellerQuotedBrand: item.sellerQuotedBrand,
         sellerSupplierDescription: item.sellerSupplierDescription,
+        sellerSupplierProductCode: item.sellerSupplierProductCode,
         sellerSupplierOrigin: item.sellerSupplierOrigin,
         sellerSupplierQuoteValidUntil: item.sellerSupplierQuoteValidUntil,
         sellerSupplierQuoteReference: item.sellerSupplierQuoteReference,
