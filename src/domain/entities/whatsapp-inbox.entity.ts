@@ -80,6 +80,7 @@ export interface WhatsAppInboxMessage {
   body: string;
   messageType: "TEXT" | "QUOTE_DOCUMENT";
   status: WhatsAppOutboundMessageStatus | "RECEIVED";
+  errorMessage: string | null;
   occurredAt: Date;
   quote: WhatsAppInboxQuoteContext | null;
   fileAssetId: string | null;

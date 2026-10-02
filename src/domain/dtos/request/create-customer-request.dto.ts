@@ -3,6 +3,7 @@ import {
   CustomerSource,
 } from "../../../infrastructure/database/generated/enums";
 import { CustomerContactWriteDto } from "./customer-contact-write.dto";
+import { WhatsAppPhone } from "../../utils/whatsapp-phone";
 
 interface CreateCustomerRequestDtoProps {
   source: CustomerSource;
@@ -106,7 +107,7 @@ export class CreateCustomerRequestDto {
     if (!firstName) return ["firstName is required."];
     if (!lastName) return ["lastName is required."];
     if (email && !CreateCustomerRequestDto.isValidEmail(email)) return ["email is invalid."];
-    if (whatsapp && !CreateCustomerRequestDto.isValidPhone(whatsapp)) return ["whatsapp is invalid."];
+    if (whatsapp && (!CreateCustomerRequestDto.isValidPhone(whatsapp) || !WhatsAppPhone.create(whatsapp))) return ["whatsapp is invalid."];
 
     const phone = CreateCustomerRequestDto.normalizeNullableString(body.phone);
     if (phone && !CreateCustomerRequestDto.isValidPhone(phone)) return ["phone is invalid."];
@@ -146,7 +147,7 @@ export class CreateCustomerRequestDto {
         legalName: CreateCustomerRequestDto.normalizeNullableString(body.legalName),
         email,
         phone,
-        whatsapp,
+        whatsapp: whatsapp ? WhatsAppPhone.create(whatsapp)!.value : "",
         taxId: CreateCustomerRequestDto.normalizeNullableString(body.taxId),
         taxRegime: CreateCustomerRequestDto.normalizeNullableString(body.taxRegime),
         billingStreet: CreateCustomerRequestDto.normalizeNullableString(body.billingStreet),

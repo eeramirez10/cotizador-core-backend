@@ -3,6 +3,7 @@ import {
   CustomerSource,
 } from "../../../infrastructure/database/generated/enums";
 import { CustomerContactWriteDto } from "./customer-contact-write.dto";
+import { WhatsAppPhone } from "../../utils/whatsapp-phone";
 
 interface UpdateCustomerRequestDtoProps {
   source?: CustomerSource;
@@ -107,7 +108,9 @@ export class UpdateCustomerRequestDto {
       legalName: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.legalName),
       email: UpdateCustomerRequestDto.normalizeEmailWhenDefined(body.email),
       phone: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.phone),
-      whatsapp: UpdateCustomerRequestDto.normalizeRequiredStringWhenDefined(body.whatsapp),
+      whatsapp: typeof body.whatsapp === "undefined"
+        ? undefined
+        : UpdateCustomerRequestDto.normalizeRequiredStringWhenDefined(body.whatsapp),
       taxId: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.taxId),
       taxRegime: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.taxRegime),
       billingStreet: UpdateCustomerRequestDto.normalizeNullableStringWhenDefined(body.billingStreet),
@@ -130,7 +133,7 @@ export class UpdateCustomerRequestDto {
     if (typeof body.firstName !== "undefined" && !dto.firstName) return ["firstName cannot be empty."];
     if (typeof body.lastName !== "undefined" && !dto.lastName) return ["lastName cannot be empty."];
     if (dto.email && !UpdateCustomerRequestDto.isValidEmail(dto.email)) return ["email is invalid."];
-    if (dto.whatsapp && !UpdateCustomerRequestDto.isValidPhone(dto.whatsapp)) return ["whatsapp is invalid."];
+    if (dto.whatsapp && (!UpdateCustomerRequestDto.isValidPhone(dto.whatsapp) || !WhatsAppPhone.create(dto.whatsapp))) return ["whatsapp is invalid."];
     if (dto.phone && !UpdateCustomerRequestDto.isValidPhone(dto.phone)) return ["phone is invalid."];
 
     const hasAnyField = Object.keys(body).length > 0;
@@ -138,6 +141,9 @@ export class UpdateCustomerRequestDto {
       return ["At least one field is required to update customer."];
     }
 
+    if (dto.whatsapp) {
+      return [, new UpdateCustomerRequestDto({ ...dto, whatsapp: WhatsAppPhone.create(dto.whatsapp)!.value })];
+    }
     return [, dto];
   }
 

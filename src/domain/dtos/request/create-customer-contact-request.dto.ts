@@ -1,3 +1,5 @@
+import { WhatsAppPhone } from "../../utils/whatsapp-phone";
+
 interface CreateCustomerContactRequestDtoProps {
   name: string;
   jobTitle: string | null;
@@ -49,7 +51,7 @@ export class CreateCustomerContactRequestDto {
     }
     if (email && !CreateCustomerContactRequestDto.isValidEmail(email)) return ["email is invalid."];
     if (phone && !CreateCustomerContactRequestDto.isValidPhone(phone)) return ["phone is invalid."];
-    if (mobile && !CreateCustomerContactRequestDto.isValidPhone(mobile)) return ["mobile is invalid."];
+    if (mobile && (!CreateCustomerContactRequestDto.isValidPhone(mobile) || !WhatsAppPhone.create(mobile))) return ["mobile is invalid."];
 
     return [
       ,
@@ -60,7 +62,7 @@ export class CreateCustomerContactRequestDto {
         email,
         phone,
         phoneExtension: CreateCustomerContactRequestDto.normalizeNullableString(body.phoneExtension),
-        mobile,
+        mobile: mobile ? WhatsAppPhone.create(mobile)!.value : null,
         isPrimary: Boolean(body.isPrimary),
       }),
     ];

@@ -25,6 +25,7 @@ interface SendQuoteWhatsAppActor {
 interface SendQuoteWhatsAppInput {
   quoteId: string;
   contactId?: string;
+  recipient?: string;
   message: string;
   file: UploadedFileInput;
   actor: SendQuoteWhatsAppActor;
@@ -75,21 +76,30 @@ export class SendQuoteWhatsAppUseCase {
     });
     const selectedContact = input.contactId
       ? contacts.find((contact) => contact.id === input.contactId)
-      : quote.customerContactId
+      : input.recipient
+        ? undefined
+        : quote.customerContactId
         ? contacts.find((contact) => contact.id === quote.customerContactId)
         : undefined;
     if (input.contactId && !selectedContact) throw new Error("Customer contact not found.");
 
-    const rawRecipient = selectedContact?.mobile
-      || selectedContact?.phone
-      || quote.customerContact?.mobile
-      || quote.customerContact?.phone
-      || quote.customer.whatsapp;
+    const rawRecipient = input.recipient
+      ? input.contactId
+        ? selectedContact?.mobile || selectedContact?.phone
+        : quote.customer.whatsapp
+      : selectedContact?.mobile
+        || selectedContact?.phone
+        || quote.customerContact?.mobile
+        || quote.customerContact?.phone
+        || quote.customer.whatsapp;
     const recipient = WhatsAppPhone.create(rawRecipient)?.value;
     if (!recipient) throw new Error("The selected customer contact does not have a valid WhatsApp number.");
+    if (input.recipient && WhatsAppPhone.create(input.recipient)?.value !== recipient) {
+      throw new Error("The selected WhatsApp number changed. Refresh the quote and select the recipient again.");
+    }
 
     const contactName = selectedContact?.name.trim()
-      || quote.customerContact?.name.trim()
+      || (!input.recipient ? quote.customerContact?.name.trim() : null)
       || quote.customer.displayName.trim()
       || "Cliente";
     const sellerName = `${quote.createdByUser.firstName} ${quote.createdByUser.lastName}`.trim();
@@ -118,7 +128,7 @@ export class SendQuoteWhatsAppUseCase {
           status: message.status,
           providerMessageId: message.providerMessageId,
           fileAssetId: attachment.id,
-          customerContactId: selectedContact?.id ?? quote.customerContact?.id ?? null,
+          customerContactId: selectedContact?.id ?? (input.recipient ? null : quote.customerContact?.id ?? null),
           templateSid: message.templateSid,
           errorMessage: message.errorMessage,
           note: input.message,
@@ -139,7 +149,7 @@ export class SendQuoteWhatsAppUseCase {
           ownerUserId: quote.createdByUserId,
           branchId: quote.branchId,
           customerId: quote.customerId,
-          customerContactId: selectedContact?.id ?? quote.customerContact?.id ?? null,
+          customerContactId: selectedContact?.id ?? (input.recipient ? null : quote.customerContact?.id ?? null),
           quoteId: quote.id,
           fileAssetId: attachment.id,
         }).catch((error) => {

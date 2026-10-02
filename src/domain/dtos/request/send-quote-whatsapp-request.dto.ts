@@ -1,14 +1,17 @@
 interface SendQuoteWhatsAppRequestDtoProps {
   contactId?: string;
+  recipient?: string;
   message: string;
 }
 
 export class SendQuoteWhatsAppRequestDto {
   public readonly contactId?: string;
+  public readonly recipient?: string;
   public readonly message: string;
 
   private constructor(props: SendQuoteWhatsAppRequestDtoProps) {
     this.contactId = props.contactId;
+    this.recipient = props.recipient;
     this.message = props.message;
   }
 
@@ -22,6 +25,9 @@ export class SendQuoteWhatsAppRequestDto {
     const contactId = typeof body.contactId === "string" && body.contactId.trim()
       ? body.contactId.trim()
       : undefined;
-    return [, new SendQuoteWhatsAppRequestDto({ contactId, message })];
+    const recipient = typeof body.recipient === "string" && body.recipient.trim()
+      ? body.recipient.trim()
+      : undefined;
+    return [, new SendQuoteWhatsAppRequestDto({ contactId, recipient, message })];
   }
 }

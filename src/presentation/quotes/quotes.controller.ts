@@ -38,6 +38,7 @@ import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/u
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
 import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
 import { SendQuoteWhatsAppRequestDto } from "../../domain/dtos/request/send-quote-whatsapp-request.dto";
+import { ListQuoteDeliveryAttemptsUseCase } from "../../domain/use-cases/list-quote-delivery-attempts.use-case";
 
 export class QuotesController {
   constructor(
@@ -62,7 +63,8 @@ export class QuotesController {
     private readonly generateQuoteOrderUseCase: GenerateQuoteOrderUseCase,
     private readonly registerErpQuoteUseCase: RegisterErpQuoteUseCase,
     private readonly registerErpOrderUseCase: RegisterErpOrderUseCase,
-    private readonly sendQuoteWhatsAppUseCase: SendQuoteWhatsAppUseCase
+    private readonly sendQuoteWhatsAppUseCase: SendQuoteWhatsAppUseCase,
+    private readonly listQuoteDeliveryAttemptsUseCase: ListQuoteDeliveryAttemptsUseCase,
   ) {}
 
   saveDraft = async (req: Request, res: Response): Promise<void> => {
@@ -543,6 +545,7 @@ export class QuotesController {
       const result = await this.sendQuoteWhatsAppUseCase.execute({
         quoteId,
         contactId: bodyDto!.contactId,
+        recipient: bodyDto!.recipient,
         message: bodyDto!.message,
         file: {
           originalName: req.file.originalname,
@@ -559,6 +562,22 @@ export class QuotesController {
         return void res.status(503).json({ error: message });
       }
       this.handleError(res, error, "Unexpected WhatsApp delivery error.");
+    }
+  };
+
+  listDeliveryAttempts = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    try {
+      const result = await this.listQuoteDeliveryAttemptsUseCase.execute(quoteId, {
+        id: req.user.id,
+        role: req.user.role,
+        branchId: req.user.branchId,
+      });
+      res.status(200).json(result);
+    } catch (error) {
+      this.handleError(res, error, "Unexpected error while listing quote deliveries.");
     }
   };
 
@@ -626,6 +645,11 @@ export class QuotesController {
 
     if (message === "Quote item not found.") {
       res.status(404).json({ error: message });
+      return;
+    }
+
+    if (message === "The selected WhatsApp number changed. Refresh the quote and select the recipient again.") {
+      res.status(409).json({ error: message });
       return;
     }
 

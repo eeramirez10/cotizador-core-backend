@@ -1,3 +1,5 @@
+import { WhatsAppPhone } from "../../utils/whatsapp-phone";
+
 interface UpdateCustomerContactRequestDtoProps {
   name?: string;
   jobTitle?: string | null;
@@ -51,11 +53,14 @@ export class UpdateCustomerContactRequestDto {
     if (typeof body.name !== "undefined" && !dto.name) return ["name cannot be empty."];
     if (dto.email && !UpdateCustomerContactRequestDto.isValidEmail(dto.email)) return ["email is invalid."];
     if (dto.phone && !UpdateCustomerContactRequestDto.isValidPhone(dto.phone)) return ["phone is invalid."];
-    if (dto.mobile && !UpdateCustomerContactRequestDto.isValidPhone(dto.mobile)) return ["mobile is invalid."];
+    if (dto.mobile && (!UpdateCustomerContactRequestDto.isValidPhone(dto.mobile) || !WhatsAppPhone.create(dto.mobile))) return ["mobile is invalid."];
 
     const hasAnyField = Object.keys(body).length > 0;
     if (!hasAnyField) return ["At least one field is required to update contact."];
 
+    if (dto.mobile) {
+      return [, new UpdateCustomerContactRequestDto({ ...dto, mobile: WhatsAppPhone.create(dto.mobile)!.value })];
+    }
     return [, dto];
   }
 

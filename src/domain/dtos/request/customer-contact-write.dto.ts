@@ -1,3 +1,5 @@
+import { WhatsAppPhone } from "../../utils/whatsapp-phone";
+
 export interface CustomerContactWriteDtoProps {
   name: string;
   jobTitle: string | null;
@@ -69,7 +71,7 @@ export class CustomerContactWriteDto {
     }
     if (email && !/^\S+@\S+\.\S+$/.test(email)) return [`contacts[${index}].email is invalid.`];
     if (phone && !this.isPhone(phone)) return [`contacts[${index}].phone is invalid.`];
-    if (mobile && !this.isPhone(mobile)) return [`contacts[${index}].mobile is invalid.`];
+    if (mobile && (!this.isPhone(mobile) || !WhatsAppPhone.create(mobile))) return [`contacts[${index}].mobile is invalid.`];
 
     return [
       ,
@@ -80,7 +82,7 @@ export class CustomerContactWriteDto {
         email,
         phone,
         phoneExtension: this.text(body.phoneExtension),
-        mobile,
+        mobile: mobile ? WhatsAppPhone.create(mobile)!.value : null,
         isPrimary: body.isPrimary === true,
       }),
     ];

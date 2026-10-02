@@ -45,6 +45,8 @@ import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file
 import { HmacQuoteDocumentLinkAdapter } from "../../infrastructure/security/hmac-quote-document-link.adapter";
 import { TwilioQuoteMessagingAdapter } from "../../infrastructure/messaging/twilio-quote-messaging.adapter";
 import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-whatsapp.use-case";
+import { ListQuoteDeliveryAttemptsUseCase } from "../../domain/use-cases/list-quote-delivery-attempts.use-case";
+import { PrismaQuoteDeliveryAttemptRepository } from "../../infrastructure/repositories/prisma-quote-delivery-attempt.repository";
 import { GetWhatsAppConversationWindowUseCase } from "../../domain/use-cases/get-whatsapp-conversation-window.use-case";
 import { PrismaWhatsAppConversationRepository } from "../../infrastructure/repositories/prisma-whatsapp-conversation.repository";
 import { PrismaWhatsAppAssistantRepository } from "../../infrastructure/repositories/prisma-whatsapp-assistant.repository";
@@ -199,7 +201,8 @@ export class QuotesRoutes {
       generateQuoteOrderUseCase,
       registerErpQuoteUseCase,
       registerErpOrderUseCase,
-      sendQuoteWhatsAppUseCase
+      sendQuoteWhatsAppUseCase,
+      new ListQuoteDeliveryAttemptsUseCase(quoteRepository, new PrismaQuoteDeliveryAttemptRepository()),
     );
     const changeRequestsController = new QuoteCustomerChangeRequestsController(
       new GetQuoteCustomerChangeRequestsUseCase(quoteRepository, new PrismaWhatsAppAssistantRepository()),
@@ -281,6 +284,12 @@ export class QuotesRoutes {
       requireAuth,
       requireRoles("ADMIN", "MANAGER", "SELLER"),
       controller.registerDeliveryAttempt
+    );
+    router.get(
+      "/:id/delivery-attempts",
+      requireAuth,
+      requireRoles("ADMIN", "MANAGER", "SELLER"),
+      controller.listDeliveryAttempts,
     );
     router.post(
       "/:id/deliveries/whatsapp",
