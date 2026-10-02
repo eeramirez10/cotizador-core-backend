@@ -36,6 +36,12 @@ export type PurchaseRequisitionMinAggregateOutputType = {
   deliveryState: string | null
   deliveryPlace: string | null
   notes: string | null
+  supplierOrderReference: string | null
+  shipmentReference: string | null
+  fobTerms: string | null
+  paymentTerms: string | null
+  qualityCertificatesRequired: boolean | null
+  markingInstructions: string | null
   submittedAt: Date | null
   completedAt: Date | null
   costApprovedAt: Date | null
@@ -55,6 +61,12 @@ export type PurchaseRequisitionMaxAggregateOutputType = {
   deliveryState: string | null
   deliveryPlace: string | null
   notes: string | null
+  supplierOrderReference: string | null
+  shipmentReference: string | null
+  fobTerms: string | null
+  paymentTerms: string | null
+  qualityCertificatesRequired: boolean | null
+  markingInstructions: string | null
   submittedAt: Date | null
   completedAt: Date | null
   costApprovedAt: Date | null
@@ -74,6 +86,12 @@ export type PurchaseRequisitionCountAggregateOutputType = {
   deliveryState: number
   deliveryPlace: number
   notes: number
+  supplierOrderReference: number
+  shipmentReference: number
+  fobTerms: number
+  paymentTerms: number
+  qualityCertificatesRequired: number
+  markingInstructions: number
   submittedAt: number
   completedAt: number
   costApprovedAt: number
@@ -95,6 +113,12 @@ export type PurchaseRequisitionMinAggregateInputType = {
   deliveryState?: true
   deliveryPlace?: true
   notes?: true
+  supplierOrderReference?: true
+  shipmentReference?: true
+  fobTerms?: true
+  paymentTerms?: true
+  qualityCertificatesRequired?: true
+  markingInstructions?: true
   submittedAt?: true
   completedAt?: true
   costApprovedAt?: true
@@ -114,6 +138,12 @@ export type PurchaseRequisitionMaxAggregateInputType = {
   deliveryState?: true
   deliveryPlace?: true
   notes?: true
+  supplierOrderReference?: true
+  shipmentReference?: true
+  fobTerms?: true
+  paymentTerms?: true
+  qualityCertificatesRequired?: true
+  markingInstructions?: true
   submittedAt?: true
   completedAt?: true
   costApprovedAt?: true
@@ -133,6 +163,12 @@ export type PurchaseRequisitionCountAggregateInputType = {
   deliveryState?: true
   deliveryPlace?: true
   notes?: true
+  supplierOrderReference?: true
+  shipmentReference?: true
+  fobTerms?: true
+  paymentTerms?: true
+  qualityCertificatesRequired?: true
+  markingInstructions?: true
   submittedAt?: true
   completedAt?: true
   costApprovedAt?: true
@@ -225,6 +261,12 @@ export type PurchaseRequisitionGroupByOutputType = {
   deliveryState: string | null
   deliveryPlace: string | null
   notes: string | null
+  supplierOrderReference: string | null
+  shipmentReference: string | null
+  fobTerms: string | null
+  paymentTerms: string | null
+  qualityCertificatesRequired: boolean
+  markingInstructions: string | null
   submittedAt: Date | null
   completedAt: Date | null
   costApprovedAt: Date | null
@@ -265,6 +307,12 @@ export type PurchaseRequisitionWhereInput = {
   deliveryState?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   deliveryPlace?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   notes?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  supplierOrderReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  shipmentReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  fobTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  paymentTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  qualityCertificatesRequired?: Prisma.BoolFilter<"PurchaseRequisition"> | boolean
+  markingInstructions?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   costApprovedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
@@ -291,6 +339,12 @@ export type PurchaseRequisitionOrderByWithRelationInput = {
   deliveryState?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplierOrderReference?: Prisma.SortOrderInput | Prisma.SortOrder
+  shipmentReference?: Prisma.SortOrderInput | Prisma.SortOrder
+  fobTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualityCertificatesRequired?: Prisma.SortOrder
+  markingInstructions?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   costApprovedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,6 +374,12 @@ export type PurchaseRequisitionWhereUniqueInput = Prisma.AtLeast<{
   deliveryState?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   deliveryPlace?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   notes?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  supplierOrderReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  shipmentReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  fobTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  paymentTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  qualityCertificatesRequired?: Prisma.BoolFilter<"PurchaseRequisition"> | boolean
+  markingInstructions?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   costApprovedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
@@ -346,6 +406,12 @@ export type PurchaseRequisitionOrderByWithAggregationInput = {
   deliveryState?: Prisma.SortOrderInput | Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplierOrderReference?: Prisma.SortOrderInput | Prisma.SortOrder
+  shipmentReference?: Prisma.SortOrderInput | Prisma.SortOrder
+  fobTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualityCertificatesRequired?: Prisma.SortOrder
+  markingInstructions?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   costApprovedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -371,6 +437,12 @@ export type PurchaseRequisitionScalarWhereWithAggregatesInput = {
   deliveryState?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
   deliveryPlace?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
+  supplierOrderReference?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
+  shipmentReference?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
+  fobTerms?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
+  paymentTerms?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
+  qualityCertificatesRequired?: Prisma.BoolWithAggregatesFilter<"PurchaseRequisition"> | boolean
+  markingInstructions?: Prisma.StringNullableWithAggregatesFilter<"PurchaseRequisition"> | string | null
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseRequisition"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseRequisition"> | Date | string | null
   costApprovedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"PurchaseRequisition"> | Date | string | null
@@ -385,6 +457,12 @@ export type PurchaseRequisitionCreateInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -411,6 +489,12 @@ export type PurchaseRequisitionUncheckedCreateInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -427,6 +511,12 @@ export type PurchaseRequisitionUpdateInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -453,6 +543,12 @@ export type PurchaseRequisitionUncheckedUpdateInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -474,6 +570,12 @@ export type PurchaseRequisitionCreateManyInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -488,6 +590,12 @@ export type PurchaseRequisitionUpdateManyMutationInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -507,6 +615,12 @@ export type PurchaseRequisitionUncheckedUpdateManyInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -541,6 +655,12 @@ export type PurchaseRequisitionCountOrderByAggregateInput = {
   deliveryState?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  supplierOrderReference?: Prisma.SortOrder
+  shipmentReference?: Prisma.SortOrder
+  fobTerms?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  qualityCertificatesRequired?: Prisma.SortOrder
+  markingInstructions?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   costApprovedAt?: Prisma.SortOrder
@@ -560,6 +680,12 @@ export type PurchaseRequisitionMaxOrderByAggregateInput = {
   deliveryState?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  supplierOrderReference?: Prisma.SortOrder
+  shipmentReference?: Prisma.SortOrder
+  fobTerms?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  qualityCertificatesRequired?: Prisma.SortOrder
+  markingInstructions?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   costApprovedAt?: Prisma.SortOrder
@@ -579,6 +705,12 @@ export type PurchaseRequisitionMinOrderByAggregateInput = {
   deliveryState?: Prisma.SortOrder
   deliveryPlace?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  supplierOrderReference?: Prisma.SortOrder
+  shipmentReference?: Prisma.SortOrder
+  fobTerms?: Prisma.SortOrder
+  paymentTerms?: Prisma.SortOrder
+  qualityCertificatesRequired?: Prisma.SortOrder
+  markingInstructions?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   costApprovedAt?: Prisma.SortOrder
@@ -830,6 +962,12 @@ export type PurchaseRequisitionCreateWithoutBranchInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -854,6 +992,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutBranchInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -904,6 +1048,12 @@ export type PurchaseRequisitionScalarWhereInput = {
   deliveryState?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   deliveryPlace?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   notes?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  supplierOrderReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  shipmentReference?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  fobTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  paymentTerms?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
+  qualityCertificatesRequired?: Prisma.BoolFilter<"PurchaseRequisition"> | boolean
+  markingInstructions?: Prisma.StringNullableFilter<"PurchaseRequisition"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
   costApprovedAt?: Prisma.DateTimeNullableFilter<"PurchaseRequisition"> | Date | string | null
@@ -918,6 +1068,12 @@ export type PurchaseRequisitionCreateWithoutRequestedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -942,6 +1098,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutRequestedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -968,6 +1130,12 @@ export type PurchaseRequisitionCreateWithoutAssignedBuyerInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -992,6 +1160,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutAssignedBuyerInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1018,6 +1192,12 @@ export type PurchaseRequisitionCreateWithoutCostApprovedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1042,6 +1222,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutCostApprovedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1116,6 +1302,12 @@ export type PurchaseRequisitionCreateWithoutQuoteInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1140,6 +1332,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutQuoteInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1172,6 +1370,12 @@ export type PurchaseRequisitionUpdateWithoutQuoteInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1196,6 +1400,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutQuoteInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1212,6 +1422,12 @@ export type PurchaseRequisitionCreateWithoutItemsInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1237,6 +1453,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutItemsInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1268,6 +1490,12 @@ export type PurchaseRequisitionUpdateWithoutItemsInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1293,6 +1521,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutItemsInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1308,6 +1542,12 @@ export type PurchaseRequisitionCreateWithoutSupplierQuotesInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1333,6 +1573,12 @@ export type PurchaseRequisitionUncheckedCreateWithoutSupplierQuotesInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1364,6 +1610,12 @@ export type PurchaseRequisitionUpdateWithoutSupplierQuotesInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1389,6 +1641,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutSupplierQuotesInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1408,6 +1666,12 @@ export type PurchaseRequisitionCreateManyBranchInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1422,6 +1686,12 @@ export type PurchaseRequisitionUpdateWithoutBranchInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1446,6 +1716,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutBranchInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1466,6 +1742,12 @@ export type PurchaseRequisitionUncheckedUpdateManyWithoutBranchInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1484,6 +1766,12 @@ export type PurchaseRequisitionCreateManyRequestedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1502,6 +1790,12 @@ export type PurchaseRequisitionCreateManyAssignedBuyerInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1520,6 +1814,12 @@ export type PurchaseRequisitionCreateManyCostApprovedByInput = {
   deliveryState?: string | null
   deliveryPlace?: string | null
   notes?: string | null
+  supplierOrderReference?: string | null
+  shipmentReference?: string | null
+  fobTerms?: string | null
+  paymentTerms?: string | null
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: string | null
   submittedAt?: Date | string | null
   completedAt?: Date | string | null
   costApprovedAt?: Date | string | null
@@ -1534,6 +1834,12 @@ export type PurchaseRequisitionUpdateWithoutRequestedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1558,6 +1864,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutRequestedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1578,6 +1890,12 @@ export type PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1592,6 +1910,12 @@ export type PurchaseRequisitionUpdateWithoutAssignedBuyerInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1616,6 +1940,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutAssignedBuyerInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1636,6 +1966,12 @@ export type PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1650,6 +1986,12 @@ export type PurchaseRequisitionUpdateWithoutCostApprovedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1674,6 +2016,12 @@ export type PurchaseRequisitionUncheckedUpdateWithoutCostApprovedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1694,6 +2042,12 @@ export type PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByInput = {
   deliveryState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deliveryPlace?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  supplierOrderReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shipmentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fobTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentTerms?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualityCertificatesRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  markingInstructions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   costApprovedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1753,6 +2107,12 @@ export type PurchaseRequisitionSelect<ExtArgs extends runtime.Types.Extensions.I
   deliveryState?: boolean
   deliveryPlace?: boolean
   notes?: boolean
+  supplierOrderReference?: boolean
+  shipmentReference?: boolean
+  fobTerms?: boolean
+  paymentTerms?: boolean
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: boolean
   submittedAt?: boolean
   completedAt?: boolean
   costApprovedAt?: boolean
@@ -1780,6 +2140,12 @@ export type PurchaseRequisitionSelectCreateManyAndReturn<ExtArgs extends runtime
   deliveryState?: boolean
   deliveryPlace?: boolean
   notes?: boolean
+  supplierOrderReference?: boolean
+  shipmentReference?: boolean
+  fobTerms?: boolean
+  paymentTerms?: boolean
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: boolean
   submittedAt?: boolean
   completedAt?: boolean
   costApprovedAt?: boolean
@@ -1804,6 +2170,12 @@ export type PurchaseRequisitionSelectUpdateManyAndReturn<ExtArgs extends runtime
   deliveryState?: boolean
   deliveryPlace?: boolean
   notes?: boolean
+  supplierOrderReference?: boolean
+  shipmentReference?: boolean
+  fobTerms?: boolean
+  paymentTerms?: boolean
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: boolean
   submittedAt?: boolean
   completedAt?: boolean
   costApprovedAt?: boolean
@@ -1828,6 +2200,12 @@ export type PurchaseRequisitionSelectScalar = {
   deliveryState?: boolean
   deliveryPlace?: boolean
   notes?: boolean
+  supplierOrderReference?: boolean
+  shipmentReference?: boolean
+  fobTerms?: boolean
+  paymentTerms?: boolean
+  qualityCertificatesRequired?: boolean
+  markingInstructions?: boolean
   submittedAt?: boolean
   completedAt?: boolean
   costApprovedAt?: boolean
@@ -1835,7 +2213,7 @@ export type PurchaseRequisitionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PurchaseRequisitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionNumber" | "quoteId" | "branchId" | "requestedByUserId" | "assignedBuyerUserId" | "costApprovedByUserId" | "status" | "deliveryState" | "deliveryPlace" | "notes" | "submittedAt" | "completedAt" | "costApprovedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseRequisition"]>
+export type PurchaseRequisitionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requisitionNumber" | "quoteId" | "branchId" | "requestedByUserId" | "assignedBuyerUserId" | "costApprovedByUserId" | "status" | "deliveryState" | "deliveryPlace" | "notes" | "supplierOrderReference" | "shipmentReference" | "fobTerms" | "paymentTerms" | "qualityCertificatesRequired" | "markingInstructions" | "submittedAt" | "completedAt" | "costApprovedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseRequisition"]>
 export type PurchaseRequisitionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -1884,6 +2262,12 @@ export type $PurchaseRequisitionPayload<ExtArgs extends runtime.Types.Extensions
     deliveryState: string | null
     deliveryPlace: string | null
     notes: string | null
+    supplierOrderReference: string | null
+    shipmentReference: string | null
+    fobTerms: string | null
+    paymentTerms: string | null
+    qualityCertificatesRequired: boolean
+    markingInstructions: string | null
     submittedAt: Date | null
     completedAt: Date | null
     costApprovedAt: Date | null
@@ -2330,6 +2714,12 @@ export interface PurchaseRequisitionFieldRefs {
   readonly deliveryState: Prisma.FieldRef<"PurchaseRequisition", 'String'>
   readonly deliveryPlace: Prisma.FieldRef<"PurchaseRequisition", 'String'>
   readonly notes: Prisma.FieldRef<"PurchaseRequisition", 'String'>
+  readonly supplierOrderReference: Prisma.FieldRef<"PurchaseRequisition", 'String'>
+  readonly shipmentReference: Prisma.FieldRef<"PurchaseRequisition", 'String'>
+  readonly fobTerms: Prisma.FieldRef<"PurchaseRequisition", 'String'>
+  readonly paymentTerms: Prisma.FieldRef<"PurchaseRequisition", 'String'>
+  readonly qualityCertificatesRequired: Prisma.FieldRef<"PurchaseRequisition", 'Boolean'>
+  readonly markingInstructions: Prisma.FieldRef<"PurchaseRequisition", 'String'>
   readonly submittedAt: Prisma.FieldRef<"PurchaseRequisition", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"PurchaseRequisition", 'DateTime'>
   readonly costApprovedAt: Prisma.FieldRef<"PurchaseRequisition", 'DateTime'>

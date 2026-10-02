@@ -6,6 +6,7 @@ import type {
   SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
+  UpdatePurchaseRequisitionDocumentData,
 } from "../../domain/datasources/purchase-requisition.datasource";
 import { PurchaseRequisitionDatasource } from "../../domain/datasources/purchase-requisition.datasource";
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
@@ -18,6 +19,8 @@ export class PurchaseRequisitionRepositoryImpl extends PurchaseRequisitionReposi
   findPaginated(params: FindPurchaseRequisitionsParams) { return this.datasource.findPaginated(params); }
   findById(id: string, actor: PurchaseRequisitionActor) { return this.datasource.findById(id, actor); }
   findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor) { return this.datasource.findByQuoteId(quoteId, actor); }
+  updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor) { return this.datasource.updateDocument(id, data, actor); }
+  updateSupplierCode(id: string, itemId: string, offerId: string, supplierProductCode: string | null, actor: PurchaseRequisitionActor) { return this.datasource.updateSupplierCode(id, itemId, offerId, supplierProductCode, actor); }
   updateItem(id: string, itemId: string, data: UpdatePurchaseRequisitionItemData, actor: PurchaseRequisitionActor) { return this.datasource.updateItem(id, itemId, data, actor); }
   linkItemToErp(id: string, itemId: string, data: LinkPurchaseRequisitionItemToErpData, actor: PurchaseRequisitionActor) { return this.datasource.linkItemToErp(id, itemId, data, actor); }
   submit(id: string, actor: PurchaseRequisitionActor) { return this.datasource.submit(id, actor); }

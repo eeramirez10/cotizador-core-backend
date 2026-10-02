@@ -7,6 +7,7 @@ import type {
   SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
+  UpdatePurchaseRequisitionDocumentData,
 } from "../datasources/purchase-requisition.datasource";
 import type { PurchaseRequisitionEntity, SupplierEntity } from "../entities/purchase-requisition.entity";
 import type { QuoteEntity } from "../entities/quote.entity";
@@ -16,6 +17,8 @@ export abstract class PurchaseRequisitionRepository {
   abstract findPaginated(params: FindPurchaseRequisitionsParams): Promise<FindPurchaseRequisitionsResult>;
   abstract findById(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract updateSupplierCode(id: string, itemId: string, offerId: string, supplierProductCode: string | null, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract updateItem(id: string, itemId: string, data: UpdatePurchaseRequisitionItemData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract linkItemToErp(id: string, itemId: string, data: LinkPurchaseRequisitionItemToErpData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract submit(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;

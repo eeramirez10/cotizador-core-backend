@@ -936,6 +936,13 @@ export type EnumPurchaseCostSourceFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel> | $Enums.PurchaseCostSource
 }
 
+export type EnumPurchaseOfferSourceNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOfferSource | Prisma.EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel> | $Enums.PurchaseOfferSource | null
+}
+
 export type EnumPurchaseRequisitionItemStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PurchaseRequisitionItemStatus | Prisma.EnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PurchaseRequisitionItemStatus[] | Prisma.ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel>
@@ -961,6 +968,16 @@ export type EnumPurchaseCostSourceWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel>
+}
+
+export type EnumPurchaseOfferSourceNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOfferSource | Prisma.EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseOfferSourceNullableWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseOfferSource | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel>
 }
 
 export type EnumPurchaseRequisitionItemStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -2190,6 +2207,13 @@ export type NestedEnumPurchaseCostSourceFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel> | $Enums.PurchaseCostSource
 }
 
+export type NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOfferSource | Prisma.EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel> | $Enums.PurchaseOfferSource | null
+}
+
 export type NestedEnumPurchaseRequisitionItemStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PurchaseRequisitionItemStatus | Prisma.EnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PurchaseRequisitionItemStatus[] | Prisma.ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel>
@@ -2215,6 +2239,16 @@ export type NestedEnumPurchaseCostSourceWithAggregatesFilter<$PrismaModel = neve
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPurchaseCostSourceFilter<$PrismaModel>
+}
+
+export type NestedEnumPurchaseOfferSourceNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PurchaseOfferSource | Prisma.EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  in?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.PurchaseOfferSource[] | Prisma.ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumPurchaseOfferSourceNullableWithAggregatesFilter<$PrismaModel> | $Enums.PurchaseOfferSource | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPurchaseOfferSourceNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumPurchaseRequisitionItemStatusWithAggregatesFilter<$PrismaModel = never> = {

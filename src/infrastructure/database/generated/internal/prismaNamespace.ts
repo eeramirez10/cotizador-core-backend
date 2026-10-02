@@ -4240,6 +4240,12 @@ export const PurchaseRequisitionScalarFieldEnum = {
   deliveryState: 'deliveryState',
   deliveryPlace: 'deliveryPlace',
   notes: 'notes',
+  supplierOrderReference: 'supplierOrderReference',
+  shipmentReference: 'shipmentReference',
+  fobTerms: 'fobTerms',
+  paymentTerms: 'paymentTerms',
+  qualityCertificatesRequired: 'qualityCertificatesRequired',
+  markingInstructions: 'markingInstructions',
   submittedAt: 'submittedAt',
   completedAt: 'completedAt',
   costApprovedAt: 'costApprovedAt',
@@ -4274,6 +4280,7 @@ export const PurchaseRequisitionItemScalarFieldEnum = {
   sellerCurrency: 'sellerCurrency',
   sellerExchangeRate: 'sellerExchangeRate',
   sellerCostSource: 'sellerCostSource',
+  quotationOwner: 'quotationOwner',
   sellerSupplierId: 'sellerSupplierId',
   sellerSupplierName: 'sellerSupplierName',
   sellerBrand: 'sellerBrand',
@@ -5286,20 +5293,6 @@ export type ListEnumPurchaseItemSourceFieldRefInput<$PrismaModel> = FieldRefInpu
 
 
 /**
- * Reference to a field of type 'PurchaseRequisitionItemStatus'
- */
-export type EnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseRequisitionItemStatus'>
-    
-
-
-/**
- * Reference to a field of type 'PurchaseRequisitionItemStatus[]'
- */
-export type ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseRequisitionItemStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'PurchaseOfferSource'
  */
 export type EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseOfferSource'>
@@ -5310,6 +5303,20 @@ export type EnumPurchaseOfferSourceFieldRefInput<$PrismaModel> = FieldRefInputTy
  * Reference to a field of type 'PurchaseOfferSource[]'
  */
 export type ListEnumPurchaseOfferSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseOfferSource[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseRequisitionItemStatus'
+ */
+export type EnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseRequisitionItemStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseRequisitionItemStatus[]'
+ */
+export type ListEnumPurchaseRequisitionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseRequisitionItemStatus[]'>
     
 
 

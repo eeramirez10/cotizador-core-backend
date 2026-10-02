@@ -11,6 +11,8 @@ import {
   SyncErpSupplierRequestDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
+  UpdatePurchaseRequisitionDocumentRequestDto,
+  UpdatePurchaseSupplierCodeRequestDto,
 } from "../dtos/request/purchase-requisition-request.dto";
 import { PurchaseRequisitionResponseDto, SupplierResponseDto } from "../dtos/response/purchase-requisition-response.dto";
 import type { QuoteEntity } from "../entities/quote.entity";
@@ -87,6 +89,18 @@ export class PurchaseRequisitionUseCase {
   ) {
     const updated = await this.repository.updateItem(id, itemId, dto.data, actor);
     if (!updated) throw new Error("Purchase requisition item not found.");
+    return new PurchaseRequisitionResponseDto(updated);
+  }
+
+  async updateDocument(id: string, dto: UpdatePurchaseRequisitionDocumentRequestDto, actor: PurchaseRequisitionActor) {
+    const updated = await this.repository.updateDocument(id, dto.data, actor);
+    if (!updated) throw new Error("Purchase requisition not found.");
+    return new PurchaseRequisitionResponseDto(updated);
+  }
+
+  async updateSupplierCode(id: string, itemId: string, offerId: string, dto: UpdatePurchaseSupplierCodeRequestDto, actor: PurchaseRequisitionActor) {
+    const updated = await this.repository.updateSupplierCode(id, itemId, offerId, dto.supplierProductCode, actor);
+    if (!updated) throw new Error("Supplier offer not found.");
     return new PurchaseRequisitionResponseDto(updated);
   }
 

@@ -146,6 +146,7 @@ export interface PurchaseRequisitionItemEntity {
   sellerCurrency: Currency;
   sellerExchangeRate: number;
   sellerCostSource: PurchaseCostSource;
+  quotationOwner: PurchaseOfferSource;
   sellerSupplierId: string | null;
   sellerSupplierName: string | null;
   sellerBrand: string | null;
@@ -167,6 +168,8 @@ export interface PurchaseRequisitionEntity {
   quoteCurrency: Currency;
   branchId: string;
   branchName: string;
+  branchAddress: string | null;
+  branchPhone: string | null;
   customerName: string;
   requestedByUserId: string;
   requestedBy: ProcurementUserSummary;
@@ -176,6 +179,12 @@ export interface PurchaseRequisitionEntity {
   deliveryState: string | null;
   deliveryPlace: string | null;
   notes: string | null;
+  supplierOrderReference: string | null;
+  shipmentReference: string | null;
+  fobTerms: string | null;
+  paymentTerms: string | null;
+  qualityCertificatesRequired: boolean;
+  markingInstructions: string | null;
   submittedAt: Date | null;
   completedAt: Date | null;
   costApprovedAt: Date | null;

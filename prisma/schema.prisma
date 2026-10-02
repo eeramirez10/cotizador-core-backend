@@ -1093,6 +1093,12 @@ model PurchaseRequisition {
   deliveryState        String?                   @map("delivery_state") @db.VarChar(120)
   deliveryPlace        String?                   @map("delivery_place") @db.VarChar(255)
   notes                String?                   @db.Text
+  supplierOrderReference String?                 @map("supplier_order_reference") @db.VarChar(120)
+  shipmentReference     String?                   @map("shipment_reference") @db.VarChar(120)
+  fobTerms              String?                   @map("fob_terms") @db.VarChar(255)
+  paymentTerms          String?                   @map("payment_terms") @db.VarChar(255)
+  qualityCertificatesRequired Boolean             @default(false) @map("quality_certificates_required")
+  markingInstructions  String?                   @map("marking_instructions") @db.VarChar(500)
   submittedAt          DateTime?                 @map("submitted_at")
   completedAt          DateTime?                 @map("completed_at")
   costApprovedAt       DateTime?                 @map("cost_approved_at")
@@ -1139,6 +1145,7 @@ model PurchaseRequisitionItem {
   sellerCurrency      Currency                      @map("seller_currency")
   sellerExchangeRate  Decimal                       @map("seller_exchange_rate") @db.Decimal(14, 6)
   sellerCostSource    PurchaseCostSource            @map("seller_cost_source")
+  quotationOwner      PurchaseOfferSource?          @map("quotation_owner")
   sellerSupplierId    String?                       @map("seller_supplier_id") @db.Uuid
   sellerSupplierName  String?                       @map("seller_supplier_name") @db.VarChar(220)
   sellerBrand         String?                       @map("seller_brand") @db.VarChar(160)

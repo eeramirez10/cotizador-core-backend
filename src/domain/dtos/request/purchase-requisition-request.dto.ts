@@ -1,6 +1,7 @@
 import type {
   Currency,
   PurchaseCostSource,
+  PurchaseOfferSource,
   PurchaseRequisitionStatus,
   SupplierScope,
   SupplierContactChannel,
@@ -68,6 +69,7 @@ export class UpdatePurchaseRequisitionItemRequestDto {
       sellerUnitCost?: number;
       sellerCurrency?: Currency;
       sellerCostSource?: PurchaseCostSource;
+      quotationOwner?: PurchaseOfferSource;
       sellerBrand?: string | null;
       originRestrictions?: string[];
       sellerDeliveryTime?: string | null;
@@ -103,6 +105,10 @@ export class UpdatePurchaseRequisitionItemRequestDto {
       if (!allowed.includes(body.sellerCostSource as PurchaseCostSource)) return ["sellerCostSource is invalid."];
       data.sellerCostSource = body.sellerCostSource as PurchaseCostSource;
     }
+    if (body.quotationOwner !== undefined) {
+      if (body.quotationOwner !== "SELLER" && body.quotationOwner !== "PURCHASING") return ["quotationOwner is invalid."];
+      data.quotationOwner = body.quotationOwner;
+    }
     if (body.originRestrictions !== undefined) {
       if (!Array.isArray(body.originRestrictions) || body.originRestrictions.some((value) => typeof value !== "string")) {
         return ["originRestrictions must be a string array."];
@@ -112,6 +118,58 @@ export class UpdatePurchaseRequisitionItemRequestDto {
     const defined = Object.fromEntries(Object.entries(data).filter(([, value]) => value !== undefined));
     if (Object.keys(defined).length === 0) return ["At least one field is required."];
     return [, new UpdatePurchaseRequisitionItemRequestDto(defined)];
+  }
+}
+
+export class UpdatePurchaseRequisitionDocumentRequestDto {
+  private constructor(public readonly data: {
+    supplierOrderReference?: string | null;
+    shipmentReference?: string | null;
+    fobTerms?: string | null;
+    paymentTerms?: string | null;
+    qualityCertificatesRequired?: boolean;
+    markingInstructions?: string | null;
+  }) {}
+
+  static create(input: unknown): [string?, UpdatePurchaseRequisitionDocumentRequestDto?] {
+    if (!input || typeof input !== "object" || Array.isArray(input)) return ["Invalid request body."];
+    const body = input as Record<string, unknown>;
+    const limits = {
+      supplierOrderReference: 120,
+      shipmentReference: 120,
+      fobTerms: 255,
+      paymentTerms: 255,
+      markingInstructions: 500,
+    } as const;
+    const data: UpdatePurchaseRequisitionDocumentRequestDto["data"] = {};
+    for (const [key, limit] of Object.entries(limits)) {
+      if (body[key] === undefined) continue;
+      if (body[key] !== null && typeof body[key] !== "string") return [`${key} is invalid.`];
+      const value = typeof body[key] === "string" ? body[key].trim() : null;
+      if (value && value.length > limit) return [`${key} must not exceed ${limit} characters.`];
+      data[key as keyof typeof limits] = value || null;
+    }
+    if (body.qualityCertificatesRequired !== undefined) {
+      if (typeof body.qualityCertificatesRequired !== "boolean") return ["qualityCertificatesRequired is invalid."];
+      data.qualityCertificatesRequired = body.qualityCertificatesRequired;
+    }
+    if (Object.keys(data).length === 0) return ["At least one field is required."];
+    return [, new UpdatePurchaseRequisitionDocumentRequestDto(data)];
+  }
+}
+
+export class UpdatePurchaseSupplierCodeRequestDto {
+  private constructor(public readonly supplierProductCode: string | null) {}
+
+  static create(input: unknown): [string?, UpdatePurchaseSupplierCodeRequestDto?] {
+    if (!input || typeof input !== "object" || Array.isArray(input)) return ["Invalid request body."];
+    const body = input as Record<string, unknown>;
+    if (!Object.hasOwn(body, "supplierProductCode")) return ["supplierProductCode is required."];
+    const value = body.supplierProductCode;
+    if (value !== null && typeof value !== "string") return ["supplierProductCode is invalid."];
+    const code = typeof value === "string" ? value.trim().toUpperCase() : null;
+    if (code && code.length > 120) return ["supplierProductCode must not exceed 120 characters."];
+    return [, new UpdatePurchaseSupplierCodeRequestDto(code || null)];
   }
 }
 

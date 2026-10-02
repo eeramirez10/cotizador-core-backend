@@ -7,6 +7,7 @@ import type {
   SaveErpSupplierData,
   SaveSupplierData,
   UpdatePurchaseRequisitionItemData,
+  UpdatePurchaseRequisitionDocumentData,
 } from "../../domain/datasources/purchase-requisition.datasource";
 import { PurchaseRequisitionDatasource } from "../../domain/datasources/purchase-requisition.datasource";
 import type {
@@ -18,6 +19,7 @@ import type {
 } from "../../domain/entities/purchase-requisition.entity";
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
 import { getQuoteItemFulfillment } from "../../domain/use-cases/quote-item-fulfillment.helper";
+import { requisitionSubmissionError } from "../../domain/use-cases/requisition-submission-rule";
 import { resolveRuntimeValue, type RuntimeValue } from "../../domain/services/runtime-value";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../../domain/utils/canonical-product-text";
 import { Prisma } from "../database/generated/client";
@@ -31,7 +33,7 @@ const requisitionInclude = {
       customer: { select: { legalName: true, displayName: true } },
     },
   },
-  branch: { select: { name: true } },
+  branch: { select: { name: true, address: true, phone: true } },
   requestedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
   assignedBuyer: { select: { id: true, firstName: true, lastName: true, role: true } },
   costApprovedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
@@ -218,6 +220,8 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
   quoteCurrency: row.quote.currency,
   branchId: row.branchId,
   branchName: row.branch.name,
+  branchAddress: row.branch.address,
+  branchPhone: row.branch.phone,
   customerName: row.quote.customer.legalName?.trim() || row.quote.customer.displayName,
   requestedByUserId: row.requestedByUserId,
   requestedBy: userSummary(row.requestedBy)!,
@@ -227,6 +231,12 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
   deliveryState: row.deliveryState,
   deliveryPlace: row.deliveryPlace,
   notes: row.notes,
+  supplierOrderReference: row.supplierOrderReference,
+  shipmentReference: row.shipmentReference,
+  fobTerms: row.fobTerms,
+  paymentTerms: row.paymentTerms,
+  qualityCertificatesRequired: row.qualityCertificatesRequired,
+  markingInstructions: row.markingInstructions,
   submittedAt: row.submittedAt,
   completedAt: row.completedAt,
   costApprovedAt: row.costApprovedAt,
@@ -255,6 +265,7 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
     sellerCurrency: item.sellerCurrency,
     sellerExchangeRate: number(item.sellerExchangeRate),
     sellerCostSource: item.sellerCostSource,
+    quotationOwner: item.quotationOwner ?? (item.sellerSupplierId || item.offers.some((offer) => offer.source === "SELLER") ? "SELLER" : "PURCHASING"),
     sellerSupplierId: item.sellerSupplierId,
     sellerSupplierName: item.sellerSupplierName,
     sellerBrand: item.sellerBrand,
@@ -321,6 +332,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         sellerCostSource: hasSellerQuote
           ? item.sellerCostSource || "ESTIMATED"
           : localNew ? "ESTIMATED" as const : "ERP_COST" as const,
+        quotationOwner: hasSellerQuote && item.sellerSupplierId ? "SELLER" as const : "PURCHASING" as const,
         sellerSupplierId: item.sellerSupplierId,
         sellerSupplierName: item.sellerSupplierNameSnapshot,
         sellerBrand: item.sellerQuotedBrand,
@@ -409,6 +421,50 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     return row ? requisitionEntity(row) : null;
   }
 
+  async updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
+    const current = await prisma.purchaseRequisition.findFirst({
+      where: { id, ...this.scopeWhere(actor) },
+      select: { id: true, status: true, requestedByUserId: true },
+    });
+    if (!current) return null;
+    if (["COMPLETED", "CANCELLED"].includes(current.status)) throw new Error("Closed requisitions are read-only.");
+    if (actor.role === "SELLER" && (current.status !== "DRAFT" || current.requestedByUserId !== actor.id)) {
+      throw new Error("Seller can only edit own draft requisitions.");
+    }
+    if (actor.role === "PURCHASING" && current.status === "DRAFT") throw new Error("Purchase requisition must be submitted first.");
+    await prisma.purchaseRequisition.update({ where: { id }, data });
+    return this.findById(id, actor);
+  }
+
+  async updateSupplierCode(
+    id: string,
+    itemId: string,
+    offerId: string,
+    supplierProductCode: string | null,
+    actor: PurchaseRequisitionActor,
+  ): Promise<PurchaseRequisitionEntity | null> {
+    const requisition = await prisma.purchaseRequisition.findFirst({
+      where: { id, ...this.scopeWhere(actor) },
+      select: {
+        status: true,
+        requestedByUserId: true,
+        items: {
+          where: { id: itemId },
+          select: { offers: { where: { id: offerId, isActive: true }, select: { id: true, source: true } } },
+        },
+      },
+    });
+    const offer = requisition?.items[0]?.offers[0];
+    if (!offer || !requisition) return null;
+    if (["COMPLETED", "CANCELLED"].includes(requisition.status)) throw new Error("Closed requisitions are read-only.");
+    if (actor.role === "SELLER" && (
+      requisition.requestedByUserId !== actor.id || requisition.status !== "DRAFT" || offer.source !== "SELLER"
+    )) throw new Error("Seller can only edit own draft supplier quotes.");
+    if (actor.role === "PURCHASING" && requisition.status === "DRAFT") throw new Error("Purchase requisition must be submitted first.");
+    await prisma.purchaseSupplierOffer.update({ where: { id: offerId }, data: { supplierProductCode } });
+    return this.findById(id, actor);
+  }
+
   async updateItem(
     requisitionId: string,
     itemId: string,
@@ -426,6 +482,9 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     }
     if (actor.role === "MANAGER") throw new Error("MANAGER cannot edit requisition items.");
     if (["COMPLETED", "CANCELLED"].includes(requisition.status)) throw new Error("Closed requisitions are read-only.");
+    if (data.quotationOwner !== undefined && requisition.status !== "DRAFT") {
+      throw new Error("Quotation responsibility can only change in draft requisitions.");
+    }
     await prisma.$transaction(async (tx) => {
       await tx.purchaseRequisitionItem.update({
         where: { id: itemId },
@@ -439,6 +498,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           sellerUnitCost: data.sellerUnitCost,
           sellerCurrency: data.sellerCurrency,
           sellerCostSource: data.sellerCostSource,
+          quotationOwner: data.quotationOwner,
           sellerBrand: data.sellerBrand === undefined ? undefined : nullable(data.sellerBrand),
           originRestrictions: data.originRestrictions?.map(canonicalizeProductText),
           sellerDeliveryTime: data.sellerDeliveryTime === undefined ? undefined : nullable(data.sellerDeliveryTime),
@@ -522,9 +582,8 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     if (!current) return null;
     if (current.requestedByUserId !== actor.id && actor.role !== "ADMIN") throw new Error("Only the requester can submit this requisition.");
     if (current.status !== "DRAFT") throw new Error("Only draft requisitions can be submitted.");
-    if (current.items.some((item) => item.sellerUnitCost <= 0 || !item.deliveryPlace || !item.sellerDeliveryTime)) {
-      throw new Error("Every item requires seller cost, delivery time and delivery place before submission.");
-    }
+    const submissionError = requisitionSubmissionError(current.items);
+    if (submissionError) throw new Error(submissionError);
     const row = await prisma.purchaseRequisition.update({
       where: { id },
       data: { status: "SUBMITTED", submittedAt: new Date() },
@@ -970,6 +1029,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
             sellerCostSource: hasSellerQuote
               ? quoteItem.sellerCostSource || "ESTIMATED"
               : requisitionItem.source === "LOCAL_NEW" ? "ESTIMATED" : "ERP_COST",
+            quotationOwner: requisitionItem.quotationOwner ?? (hasSellerQuote && quoteItem.sellerSupplierId ? "SELLER" : "PURCHASING"),
             sellerSupplierId: quoteItem.sellerSupplierId,
             sellerSupplierName: quoteItem.sellerSupplierNameSnapshot,
             sellerBrand: quoteItem.sellerQuotedBrand,

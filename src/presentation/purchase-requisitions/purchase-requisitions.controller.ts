@@ -8,6 +8,8 @@ import {
   SetSupplierActiveRequestDto,
   SyncErpSupplierRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
+  UpdatePurchaseRequisitionDocumentRequestDto,
+  UpdatePurchaseSupplierCodeRequestDto,
 } from "../../domain/dtos/request/purchase-requisition-request.dto";
 import { PurchaseRequisitionUseCase } from "../../domain/use-cases/purchase-requisition.use-case";
 
@@ -78,6 +80,34 @@ export class PurchaseRequisitionsController {
       res.status(200).json((await this.useCase.updateItem(id, itemId, dto!, req.user)).toJSON());
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while updating purchase requisition item.");
+    }
+  };
+
+  updateDocument = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    if (!id) return void res.status(400).json({ error: "Purchase requisition id is required." });
+    const [error, dto] = UpdatePurchaseRequisitionDocumentRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(200).json((await this.useCase.updateDocument(id, dto!, req.user)).toJSON());
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while updating requisition document.");
+    }
+  };
+
+  updateSupplierCode = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    const itemId = this.param(req.params.itemId);
+    const offerId = this.param(req.params.offerId);
+    if (!id || !itemId || !offerId) return void res.status(400).json({ error: "Requisition, item and offer ids are required." });
+    const [error, dto] = UpdatePurchaseSupplierCodeRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(200).json((await this.useCase.updateSupplierCode(id, itemId, offerId, dto!, req.user)).toJSON());
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while updating supplier code.");
     }
   };
 
@@ -246,6 +276,10 @@ export class PurchaseRequisitionsController {
     }
     const isBusinessError =
       message.startsWith("Only ") ||
+      message.startsWith("Seller ") ||
+      message.startsWith("Closed ") ||
+      message.startsWith("Quotation ") ||
+      message.startsWith("Every ") ||
       message.startsWith("Quote must") ||
       message.startsWith("Purchase requisition") ||
       message.startsWith("All requisition") ||

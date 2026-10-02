@@ -32,6 +32,7 @@ export interface FindPurchaseRequisitionsResult {
 }
 
 export interface UpdatePurchaseRequisitionItemData {
+  quotationOwner?: PurchaseOfferSource;
   standard?: string | null;
   diameter?: string | null;
   thickness?: string | null;
@@ -45,6 +46,15 @@ export interface UpdatePurchaseRequisitionItemData {
   originRestrictions?: string[];
   sellerDeliveryTime?: string | null;
   deliveryPlace?: string | null;
+}
+
+export interface UpdatePurchaseRequisitionDocumentData {
+  supplierOrderReference?: string | null;
+  shipmentReference?: string | null;
+  fobTerms?: string | null;
+  paymentTerms?: string | null;
+  qualityCertificatesRequired?: boolean;
+  markingInstructions?: string | null;
 }
 
 export interface LinkPurchaseRequisitionItemToErpData {
@@ -152,6 +162,8 @@ export abstract class PurchaseRequisitionDatasource {
   abstract findPaginated(params: FindPurchaseRequisitionsParams): Promise<FindPurchaseRequisitionsResult>;
   abstract findById(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract updateSupplierCode(id: string, itemId: string, offerId: string, supplierProductCode: string | null, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract updateItem(
     requisitionId: string,
     itemId: string,
