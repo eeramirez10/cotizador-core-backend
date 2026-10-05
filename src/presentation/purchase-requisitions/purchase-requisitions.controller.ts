@@ -178,6 +178,34 @@ export class PurchaseRequisitionsController {
     }
   };
 
+  allocateOffers = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    const itemId = this.param(req.params.itemId);
+    if (!id || !itemId) return void res.status(400).json({ error: "Requisition and item ids are required." });
+    const allocations = req.body?.allocations;
+    if (!Array.isArray(allocations) || allocations.length > 50 || allocations.some((entry) =>
+      !entry || typeof entry.offerId !== "string" || typeof entry.qty !== "number")) {
+      return void res.status(400).json({ error: "Invalid supplier allocations." });
+    }
+    try {
+      res.status(200).json((await this.useCase.allocateOffers(id, itemId, allocations, req.user)).toJSON());
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while allocating supplier offers.");
+    }
+  };
+
+  generateSupplierRequisitions = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    if (!id) return void res.status(400).json({ error: "Purchase requisition id is required." });
+    try {
+      res.status(200).json((await this.useCase.generateSupplierRequisitions(id, req.user)).toJSON());
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while generating supplier requisitions.");
+    }
+  };
+
   approveCostVariance = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
     const id = this.param(req.params.id);
@@ -269,7 +297,7 @@ export class PurchaseRequisitionsController {
       res.status(404).json({ error: message });
       return;
     }
-    const conflict = message.includes("already exists") || message.includes("already has");
+    const conflict = message.includes("already exists") || message.includes("already has") || message.startsWith("Ya existe un proveedor");
     if (conflict) {
       res.status(409).json({ error: message });
       return;
@@ -285,7 +313,16 @@ export class PurchaseRequisitionsController {
       message.startsWith("All requisition") ||
       message.startsWith("Selected supplier") ||
       message.startsWith("Supplier origin") ||
-      message.startsWith("Cannot ");
+      message.startsWith("Supplier offer origin") ||
+      message.startsWith("Requisition is not") ||
+      message.startsWith("Cannot ") ||
+      message.startsWith("Each awarded") ||
+      message.startsWith("Awarded") ||
+      message.startsWith("Select at least") ||
+      message.startsWith("Supplier requisitions") ||
+      message.startsWith("Supplier offers") ||
+      message.startsWith("USD supplier") ||
+      message.startsWith("Closed requisitions");
     res.status(isBusinessError ? 400 : 500).json({ error: message || fallback });
   }
 }

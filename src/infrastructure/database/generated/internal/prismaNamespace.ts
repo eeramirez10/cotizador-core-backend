@@ -404,6 +404,8 @@ export const ModelName = {
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
+  PurchaseSupplierRequisition: 'PurchaseSupplierRequisition',
+  PurchaseSupplierRequisitionLine: 'PurchaseSupplierRequisitionLine',
   PurchaseSupplierQuote: 'PurchaseSupplierQuote',
   FileAsset: 'FileAsset',
   QuoteAttachment: 'QuoteAttachment',
@@ -443,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "managerReportRun" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "managerReportRun" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseSupplierOffer" | "purchaseSupplierRequisition" | "purchaseSupplierRequisitionLine" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1924,6 +1926,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.PurchaseSupplierOfferCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierOfferCountAggregateOutputType> | number
+        }
+      }
+    }
+    PurchaseSupplierRequisition: {
+      payload: Prisma.$PurchaseSupplierRequisitionPayload<ExtArgs>
+      fields: Prisma.PurchaseSupplierRequisitionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseSupplierRequisitionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseSupplierRequisitionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseSupplierRequisitionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseSupplierRequisitionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseSupplierRequisitionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseSupplierRequisitionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseSupplierRequisitionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseSupplierRequisitionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseSupplierRequisitionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        update: {
+          args: Prisma.PurchaseSupplierRequisitionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseSupplierRequisitionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseSupplierRequisitionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseSupplierRequisitionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseSupplierRequisitionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionPayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseSupplierRequisitionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseSupplierRequisition>
+        }
+        groupBy: {
+          args: Prisma.PurchaseSupplierRequisitionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierRequisitionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseSupplierRequisitionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierRequisitionCountAggregateOutputType> | number
+        }
+      }
+    }
+    PurchaseSupplierRequisitionLine: {
+      payload: Prisma.$PurchaseSupplierRequisitionLinePayload<ExtArgs>
+      fields: Prisma.PurchaseSupplierRequisitionLineFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseSupplierRequisitionLineFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseSupplierRequisitionLineFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseSupplierRequisitionLineFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseSupplierRequisitionLineFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseSupplierRequisitionLineFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseSupplierRequisitionLineCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseSupplierRequisitionLineCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseSupplierRequisitionLineCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseSupplierRequisitionLineDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        update: {
+          args: Prisma.PurchaseSupplierRequisitionLineUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseSupplierRequisitionLineDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseSupplierRequisitionLineUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseSupplierRequisitionLineUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseSupplierRequisitionLineUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseSupplierRequisitionLinePayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseSupplierRequisitionLineAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseSupplierRequisitionLine>
+        }
+        groupBy: {
+          args: Prisma.PurchaseSupplierRequisitionLineGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierRequisitionLineGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseSupplierRequisitionLineCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseSupplierRequisitionLineCountAggregateOutputType> | number
         }
       }
     }
@@ -4328,6 +4478,7 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
   externalReference: 'externalReference',
   notes: 'notes',
   isSelected: 'isSelected',
+  awardedQty: 'awardedQty',
   isActive: 'isActive',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
@@ -4336,6 +4487,42 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
 } as const
 
 export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
+
+
+export const PurchaseSupplierRequisitionScalarFieldEnum = {
+  id: 'id',
+  requisitionId: 'requisitionId',
+  supplierId: 'supplierId',
+  supplierName: 'supplierName',
+  number: 'number',
+  currency: 'currency',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type PurchaseSupplierRequisitionScalarFieldEnum = (typeof PurchaseSupplierRequisitionScalarFieldEnum)[keyof typeof PurchaseSupplierRequisitionScalarFieldEnum]
+
+
+export const PurchaseSupplierRequisitionLineScalarFieldEnum = {
+  id: 'id',
+  supplierRequisitionId: 'supplierRequisitionId',
+  requisitionItemId: 'requisitionItemId',
+  offerId: 'offerId',
+  position: 'position',
+  description: 'description',
+  erpCode: 'erpCode',
+  supplierProductCode: 'supplierProductCode',
+  unit: 'unit',
+  qty: 'qty',
+  unitCost: 'unitCost',
+  exchangeRate: 'exchangeRate',
+  taxRate: 'taxRate',
+  subtotal: 'subtotal',
+  tax: 'tax',
+  total: 'total'
+} as const
+
+export type PurchaseSupplierRequisitionLineScalarFieldEnum = (typeof PurchaseSupplierRequisitionLineScalarFieldEnum)[keyof typeof PurchaseSupplierRequisitionLineScalarFieldEnum]
 
 
 export const PurchaseSupplierQuoteScalarFieldEnum = {
@@ -5715,6 +5902,8 @@ export type GlobalOmitConfig = {
   purchaseRequisition?: Prisma.PurchaseRequisitionOmit
   purchaseRequisitionItem?: Prisma.PurchaseRequisitionItemOmit
   purchaseSupplierOffer?: Prisma.PurchaseSupplierOfferOmit
+  purchaseSupplierRequisition?: Prisma.PurchaseSupplierRequisitionOmit
+  purchaseSupplierRequisitionLine?: Prisma.PurchaseSupplierRequisitionLineOmit
   purchaseSupplierQuote?: Prisma.PurchaseSupplierQuoteOmit
   fileAsset?: Prisma.FileAssetOmit
   quoteAttachment?: Prisma.QuoteAttachmentOmit

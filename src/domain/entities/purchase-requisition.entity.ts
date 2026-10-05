@@ -93,6 +93,7 @@ export interface PurchaseSupplierOfferEntity {
   externalReference: string | null;
   notes: string | null;
   isSelected: boolean;
+  awardedQty: number | null;
   isActive: boolean;
   supplierQuote: PurchaseSupplierQuoteSummary | null;
   supplier: SupplierEntity;
@@ -136,6 +137,8 @@ export interface PurchaseRequisitionItemEntity {
   qty: number;
   unit: string;
   description: string;
+  customerDescription: string | null;
+  erpDescription: string | null;
   standard: string | null;
   diameter: string | null;
   thickness: string | null;
@@ -190,6 +193,31 @@ export interface PurchaseRequisitionEntity {
   costApprovedAt: Date | null;
   costApprovedBy: ProcurementUserSummary | null;
   items: PurchaseRequisitionItemEntity[];
+  supplierRequisitions: Array<{
+    id: string;
+    number: string;
+    supplierId: string;
+    supplierName: string;
+    currency: Currency;
+    createdAt: Date;
+    lines: Array<{
+      id: string;
+      requisitionItemId: string;
+      offerId: string;
+      position: number;
+      description: string;
+      erpCode: string | null;
+      supplierProductCode: string | null;
+      unit: string;
+      qty: number;
+      unitCost: number;
+      exchangeRate: number | null;
+      taxRate: number;
+      subtotal: number;
+      tax: number;
+      total: number;
+    }>;
+  }>;
   createdAt: Date;
   updatedAt: Date;
 }

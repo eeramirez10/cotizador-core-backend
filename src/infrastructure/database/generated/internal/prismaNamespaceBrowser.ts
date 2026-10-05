@@ -71,6 +71,8 @@ export const ModelName = {
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
+  PurchaseSupplierRequisition: 'PurchaseSupplierRequisition',
+  PurchaseSupplierRequisitionLine: 'PurchaseSupplierRequisitionLine',
   PurchaseSupplierQuote: 'PurchaseSupplierQuote',
   FileAsset: 'FileAsset',
   QuoteAttachment: 'QuoteAttachment',
@@ -699,6 +701,7 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
   externalReference: 'externalReference',
   notes: 'notes',
   isSelected: 'isSelected',
+  awardedQty: 'awardedQty',
   isActive: 'isActive',
   createdByUserId: 'createdByUserId',
   updatedByUserId: 'updatedByUserId',
@@ -707,6 +710,42 @@ export const PurchaseSupplierOfferScalarFieldEnum = {
 } as const
 
 export type PurchaseSupplierOfferScalarFieldEnum = (typeof PurchaseSupplierOfferScalarFieldEnum)[keyof typeof PurchaseSupplierOfferScalarFieldEnum]
+
+
+export const PurchaseSupplierRequisitionScalarFieldEnum = {
+  id: 'id',
+  requisitionId: 'requisitionId',
+  supplierId: 'supplierId',
+  supplierName: 'supplierName',
+  number: 'number',
+  currency: 'currency',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type PurchaseSupplierRequisitionScalarFieldEnum = (typeof PurchaseSupplierRequisitionScalarFieldEnum)[keyof typeof PurchaseSupplierRequisitionScalarFieldEnum]
+
+
+export const PurchaseSupplierRequisitionLineScalarFieldEnum = {
+  id: 'id',
+  supplierRequisitionId: 'supplierRequisitionId',
+  requisitionItemId: 'requisitionItemId',
+  offerId: 'offerId',
+  position: 'position',
+  description: 'description',
+  erpCode: 'erpCode',
+  supplierProductCode: 'supplierProductCode',
+  unit: 'unit',
+  qty: 'qty',
+  unitCost: 'unitCost',
+  exchangeRate: 'exchangeRate',
+  taxRate: 'taxRate',
+  subtotal: 'subtotal',
+  tax: 'tax',
+  total: 'total'
+} as const
+
+export type PurchaseSupplierRequisitionLineScalarFieldEnum = (typeof PurchaseSupplierRequisitionLineScalarFieldEnum)[keyof typeof PurchaseSupplierRequisitionLineScalarFieldEnum]
 
 
 export const PurchaseSupplierQuoteScalarFieldEnum = {

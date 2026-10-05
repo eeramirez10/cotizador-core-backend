@@ -6,6 +6,7 @@ import type {
   SavePurchaseSupplierOfferData,
   SaveErpSupplierData,
   SaveSupplierData,
+  SupplierOfferAllocation,
   UpdatePurchaseRequisitionItemData,
   UpdatePurchaseRequisitionDocumentData,
 } from "../../domain/datasources/purchase-requisition.datasource";
@@ -20,6 +21,8 @@ import type {
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
 import { getQuoteItemFulfillment } from "../../domain/use-cases/quote-item-fulfillment.helper";
 import { requisitionSubmissionError } from "../../domain/use-cases/requisition-submission-rule";
+import { supplierRequisitionGroupKey, validateSupplierOfferAllocations } from "../../domain/use-cases/supplier-offer-allocation";
+import { resolveSupplierErpSyncTarget } from "../../domain/use-cases/supplier-erp-sync-target";
 import { resolveRuntimeValue, type RuntimeValue } from "../../domain/services/runtime-value";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../../domain/utils/canonical-product-text";
 import { Prisma } from "../database/generated/client";
@@ -37,10 +40,14 @@ const requisitionInclude = {
   requestedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
   assignedBuyer: { select: { id: true, firstName: true, lastName: true, role: true } },
   costApprovedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
+  supplierRequisitions: {
+    orderBy: { number: "asc" as const },
+    include: { supplier: { select: { name: true } }, lines: { orderBy: { position: "asc" as const } } },
+  },
   items: {
     orderBy: { position: "asc" as const },
     include: {
-      quoteItem: { select: { clientItemId: true } },
+      quoteItem: { select: { clientItemId: true, customerDescription: true, erpDescription: true } },
       offers: {
         where: { isActive: true },
         orderBy: [{ isSelected: "desc" as const }, { createdAt: "desc" as const }],
@@ -185,6 +192,7 @@ const offerEntity = (offer: RequisitionRow["items"][number]["offers"][number]): 
   externalReference: offer.externalReference,
   notes: offer.notes,
   isSelected: offer.isSelected,
+  awardedQty: offer.awardedQty === null ? null : number(offer.awardedQty),
   isActive: offer.isActive,
   supplierQuote: offer.supplierQuote ? {
     id: offer.supplierQuote.id,
@@ -255,6 +263,8 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
     qty: number(item.qty),
     unit: item.unit,
     description: item.description,
+    customerDescription: item.quoteItem.customerDescription,
+    erpDescription: item.quoteItem.erpDescription || (item.source === "ERP_NO_STOCK" ? item.description : null),
     standard: item.standard,
     diameter: item.diameter,
     thickness: item.thickness,
@@ -277,6 +287,31 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
     offers: item.offers.map(offerEntity),
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
+  })),
+  supplierRequisitions: row.supplierRequisitions.map((document) => ({
+    id: document.id,
+    number: document.number,
+    supplierId: document.supplierId,
+    supplierName: document.supplierName,
+    currency: document.currency,
+    createdAt: document.createdAt,
+    lines: document.lines.map((line) => ({
+      id: line.id,
+      requisitionItemId: line.requisitionItemId,
+      offerId: line.offerId,
+      position: line.position,
+      description: line.description,
+      erpCode: line.erpCode,
+      supplierProductCode: line.supplierProductCode,
+      unit: line.unit,
+      qty: number(line.qty),
+      unitCost: number(line.unitCost),
+      exchangeRate: line.exchangeRate === null ? null : number(line.exchangeRate),
+      taxRate: number(line.taxRate),
+      subtotal: number(line.subtotal),
+      tax: number(line.tax),
+      total: number(line.total),
+    })),
   })),
   createdAt: row.createdAt,
   updatedAt: row.updatedAt,
@@ -443,6 +478,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     supplierProductCode: string | null,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
+    await this.assertNotFinalized(id);
     const requisition = await prisma.purchaseRequisition.findFirst({
       where: { id, ...this.scopeWhere(actor) },
       select: {
@@ -471,6 +507,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     data: UpdatePurchaseRequisitionItemData,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
+    await this.assertNotFinalized(requisitionId);
     const requisition = await prisma.purchaseRequisition.findFirst({
       where: { id: requisitionId, ...this.scopeWhere(actor) },
       include: { items: { where: { id: itemId }, select: { id: true, productId: true, source: true, selectedOfferId: true } } },
@@ -523,9 +560,10 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     data: LinkPurchaseRequisitionItemToErpData,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
+    await this.assertNotFinalized(requisitionId);
     const requisition = await prisma.purchaseRequisition.findFirst({
       where: { id: requisitionId, ...this.scopeWhere(actor) },
-      include: { items: { where: { id: itemId }, select: { id: true, productId: true, selectedOfferId: true } } },
+      include: { items: { where: { id: itemId }, select: { id: true, productId: true, selectedOfferId: true, offers: { where: { isSelected: true }, select: { id: true } } } } },
     });
     const item = requisition?.items[0];
     if (!requisition || !item) return null;
@@ -544,7 +582,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           erpEan: data.erpEan,
           erpLinkedAt: new Date(),
           erpLinkedByUserId: data.actorUserId,
-          status: item.selectedOfferId ? "READY" : undefined,
+          status: item.offers.length > 0 ? "READY" : undefined,
         },
         select: { quoteItemId: true, productId: true },
       });
@@ -612,6 +650,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     data: SavePurchaseSupplierOfferData,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
+    await this.assertNotFinalized(requisitionId);
     if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can register supplier offers.");
     const requisition = await prisma.purchaseRequisition.findFirst({
       where: { id: requisitionId, ...this.scopeWhere(actor) },
@@ -694,44 +733,131 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     offerId: string,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
-    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can select supplier offers.");
-    const requisition = await prisma.purchaseRequisition.findFirst({
-      where: { id: requisitionId, ...this.scopeWhere(actor) },
-      include: {
-        items: {
-          where: { id: itemId },
-          include: { offers: { where: { id: offerId, isActive: true }, include: { supplier: true } } },
-        },
-      },
-    });
-    const item = requisition?.items[0];
-    const offer = item?.offers[0];
-    if (!requisition || !item || !offer) return null;
-    const blockedOrigin = item.originRestrictions.some(
-      (restriction) => offer.origin && canonicalizeProductText(offer.origin) === canonicalizeProductText(restriction),
-    );
-    if (blockedOrigin) throw new Error("Supplier offer origin conflicts with the customer restrictions.");
+    const item = await prisma.purchaseRequisitionItem.findFirst({ where: { id: itemId, requisitionId }, select: { qty: true } });
+    if (!item) return null;
+    await this.allocateOffers(requisitionId, itemId, [{ offerId, qty: number(item.qty) }], actor);
+    return this.findById(requisitionId, actor);
+  }
 
-    await prisma.$transaction(async (tx) => {
-      await tx.purchaseSupplierOffer.updateMany({ where: { requisitionItemId: itemId }, data: { isSelected: false } });
-      await tx.purchaseSupplierOffer.update({ where: { id: offerId }, data: { isSelected: true, updatedByUserId: actor.id } });
-      if (offer.supplier.source === "LOCAL" && offer.supplier.status === "PROSPECT") {
-        await tx.supplier.update({
-          where: { id: offer.supplierId },
-          data: { status: "PENDING_ERP", updatedByUserId: actor.id },
-        });
+  async allocateOffers(requisitionId: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can select supplier offers.");
+    const found = await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${requisitionId}))`;
+      const requisition = await tx.purchaseRequisition.findFirst({
+        where: { id: requisitionId, ...this.scopeWhere(actor) },
+        include: {
+          supplierRequisitions: { select: { id: true } },
+          items: { where: { id: itemId }, include: { offers: { include: { supplier: true } } } },
+        },
+      });
+      if (!requisition) return false;
+      if (requisition.supplierRequisitions.length) throw new Error("Supplier requisitions were already generated; awards are locked.");
+      if (["DRAFT", "COMPLETED", "CANCELLED"].includes(requisition.status)) throw new Error("Closed requisitions cannot change supplier awards.");
+      const item = requisition.items[0];
+      if (!item) return false;
+      validateSupplierOfferAllocations(number(item.qty), allocations, item.offers.map((offer) => ({
+        id: offer.id, qty: number(offer.qty), isActive: offer.isActive,
+        minimumQty: offer.minimumQty === null ? null : number(offer.minimumQty),
+      })));
+      for (const allocation of allocations) {
+        const offer = item.offers.find((candidate) => candidate.id === allocation.offerId)!;
+        if (item.originRestrictions.some((restriction) => offer.origin && canonicalizeProductText(offer.origin) === canonicalizeProductText(restriction))) {
+          throw new Error("Supplier offer origin conflicts with the customer restrictions.");
+        }
+        if (offer.currency === "USD" && (!offer.exchangeRate || number(offer.exchangeRate) <= 0)) {
+          throw new Error("USD supplier offers require an exchange rate for cost comparison.");
+        }
+      }
+      await tx.purchaseRequisitionItem.update({ where: { id: itemId }, data: { selectedOfferId: null } });
+      await tx.purchaseSupplierOffer.updateMany({ where: { requisitionItemId: itemId }, data: { isSelected: false, awardedQty: null } });
+      for (const allocation of allocations) {
+        const offer = item.offers.find((candidate) => candidate.id === allocation.offerId)!;
+        await tx.purchaseSupplierOffer.update({ where: { id: allocation.offerId }, data: { isSelected: true, awardedQty: allocation.qty, updatedByUserId: actor.id } });
+        if (offer.supplier.source === "LOCAL" && offer.supplier.status === "PROSPECT") {
+          await tx.supplier.update({ where: { id: offer.supplierId }, data: { status: "PENDING_ERP", updatedByUserId: actor.id } });
+        }
       }
       await tx.purchaseRequisitionItem.update({
         where: { id: itemId },
         data: {
-          selectedOfferId: offerId,
+          selectedOfferId: allocations.length === 1 ? allocations[0].offerId : null,
           status: item.source === "LOCAL_NEW" && !item.erpCode ? "PENDING_ERP_CODE" : "READY",
         },
       });
       await tx.purchaseRequisition.update({ where: { id: requisitionId }, data: { costApprovedAt: null, costApprovedByUserId: null } });
       await this.recomputeStatus(tx, requisitionId, actor.id);
-    });
-    return this.findById(requisitionId, actor);
+      return true;
+    }, { timeout: 20_000 });
+    return found ? this.findById(requisitionId, actor) : null;
+  }
+
+  async generateSupplierRequisitions(requisitionId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can generate supplier requisitions.");
+    const found = await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT pg_advisory_xact_lock(hashtext(${requisitionId}))`;
+      const requisition = await tx.purchaseRequisition.findFirst({
+        where: { id: requisitionId, ...this.scopeWhere(actor) },
+        include: {
+          supplierRequisitions: { select: { id: true } },
+          items: { where: { status: { not: "CANCELLED" } }, include: { offers: { where: { isSelected: true, isActive: true } } } },
+        },
+      });
+      if (!requisition) return false;
+      if (requisition.supplierRequisitions.length) return true;
+      if (!["READY_FOR_ORDER", "COMPLETED"].includes(requisition.status) || !requisition.items.length || requisition.items.some((item) => item.status !== "READY")) {
+        throw new Error("Supplier requisitions require every item ready and approved.");
+      }
+      const groups = new Map<string, { supplierId: string; currency: "MXN" | "USD"; lines: Array<{ item: typeof requisition.items[number]; offer: typeof requisition.items[number]["offers"][number]; qty: number }> }>();
+      for (const item of requisition.items) {
+        const totalQty = item.offers.reduce((sum, offer) => sum + Math.round(number(offer.awardedQty ?? item.qty) * 10_000), 0);
+        if (totalQty !== Math.round(number(item.qty) * 10_000)) throw new Error("Awarded quantities must equal the requisition item quantity.");
+        for (const offer of item.offers) {
+          const qty = number(offer.awardedQty ?? item.qty);
+          if (qty <= 0 || qty > number(offer.qty)) throw new Error("Awarded quantity exceeds the supplier offer quantity.");
+          const key = supplierRequisitionGroupKey(offer.supplierId, offer.currency);
+          const group = groups.get(key) ?? { supplierId: offer.supplierId, currency: offer.currency, lines: [] };
+          group.lines.push({ item, offer, qty });
+          groups.set(key, group);
+        }
+      }
+      let index = 0;
+      for (const group of groups.values()) {
+        index += 1;
+        const supplier = await tx.supplier.findUniqueOrThrow({ where: { id: group.supplierId }, select: { name: true } });
+        await tx.purchaseSupplierRequisition.create({
+          data: {
+            requisitionId,
+            supplierId: group.supplierId,
+            supplierName: supplier.name,
+            number: `${requisition.requisitionNumber}-${String(index).padStart(2, "0")}`,
+            currency: group.currency,
+            createdByUserId: actor.id,
+            lines: { create: group.lines.map(({ item, offer, qty }) => {
+              const subtotal = this.round4(qty * number(offer.unitCost));
+              const tax = this.round4(subtotal * number(offer.taxRate));
+              return {
+                requisitionItemId: item.id,
+                offerId: offer.id,
+                position: item.position,
+                description: offer.supplierDescription || item.description,
+                erpCode: item.erpCode,
+                supplierProductCode: offer.supplierProductCode,
+                unit: offer.unit || item.unit,
+                qty,
+                unitCost: offer.unitCost,
+                exchangeRate: offer.exchangeRate,
+                taxRate: offer.taxRate,
+                subtotal,
+                tax,
+                total: this.round4(subtotal + tax),
+              };
+            }) },
+          },
+        });
+      }
+      return true;
+    }, { timeout: 20_000 });
+    return found ? this.findById(requisitionId, actor) : null;
   }
 
   async approveCostVariance(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
@@ -814,7 +940,6 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     const hardDuplicate = data.normalizedTaxId ? await prisma.supplier.findFirst({
       where: {
         normalizedTaxId: data.normalizedTaxId,
-        isActive: true,
       },
       select: { id: true, name: true },
     }) : null;
@@ -895,41 +1020,73 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       isActive: true,
       updatedByUserId: data.actorUserId,
     };
-    const matchingLocal = await prisma.supplier.findFirst({
+    const existingByCode = await prisma.supplier.findUnique({ where: { erpCode: data.erpCode } });
+    const taxIdMatches = data.normalizedTaxId
+      ? await prisma.supplier.findMany({ where: { normalizedTaxId: data.normalizedTaxId } })
+      : [];
+    const identifiedSupplier = resolveSupplierErpSyncTarget(existingByCode, taxIdMatches);
+    const matchingLocal = identifiedSupplier || await prisma.supplier.findFirst({
       where: {
         erpCode: null,
+        normalizedTaxId: null,
         OR: [
-          ...(data.normalizedTaxId ? [{ normalizedTaxId: data.normalizedTaxId }] : []),
           { canonicalName: data.canonicalName },
           ...(data.normalizedEmail ? [{ normalizedEmail: data.normalizedEmail }] : []),
           ...(data.normalizedPhone ? [{ normalizedPhone: data.normalizedPhone }] : []),
         ],
       },
-      select: { id: true },
     });
-    if (matchingLocal) {
-      const linked = await prisma.supplier.update({
-        where: { id: matchingLocal.id },
-        data: { ...primaryData, erpCode: data.erpCode },
+    try {
+      if (matchingLocal) {
+        const linked = await prisma.supplier.update({
+          where: { id: matchingLocal.id },
+          data: {
+            ...primaryData,
+            erpCode: data.erpCode,
+            taxId: data.taxId || matchingLocal.taxId,
+            normalizedTaxId: data.normalizedTaxId || matchingLocal.normalizedTaxId,
+            contactName: data.contactName || matchingLocal.contactName,
+            contactPosition: data.contactPosition || matchingLocal.contactPosition,
+            email: data.email || matchingLocal.email,
+            normalizedEmail: data.normalizedEmail || matchingLocal.normalizedEmail,
+            phone: data.phone || matchingLocal.phone,
+            normalizedPhone: data.normalizedPhone || matchingLocal.normalizedPhone,
+            phoneExtension: data.phoneExtension || matchingLocal.phoneExtension,
+            mobile: data.mobile || matchingLocal.mobile,
+            notes: data.notes || matchingLocal.notes,
+          },
+          include: { contacts: true },
+        });
+        return supplierEntity(linked);
+      }
+      const row = await prisma.supplier.create({
+        data: {
+          ...primaryData,
+          erpCode: data.erpCode,
+          createdByUserId: data.actorUserId,
+        },
+        include: { contacts: true },
       });
-      return supplierEntity(linked);
+      return supplierEntity(row);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+        throw new Error("Ya existe un proveedor con ese código ERP o RFC. Actualiza la lista y selecciona el proveedor existente.");
+      }
+      throw error;
     }
-    const row = await prisma.supplier.upsert({
-      where: { erpCode: data.erpCode },
-      update: primaryData,
-      create: {
-        ...primaryData,
-        erpCode: data.erpCode,
-        createdByUserId: data.actorUserId,
-      },
-    });
-    return supplierEntity(row);
   }
 
   async updateSupplier(id: string, data: SaveSupplierData): Promise<SupplierEntity | null> {
     const existing = await prisma.supplier.findUnique({ where: { id }, select: { id: true, source: true } });
     if (!existing) return null;
     if (existing.source === "ERP") throw new Error("ERP suppliers must be refreshed from ERP.");
+    if (data.normalizedTaxId) {
+      const duplicate = await prisma.supplier.findFirst({
+        where: { normalizedTaxId: data.normalizedTaxId, id: { not: id } },
+        select: { name: true },
+      });
+      if (duplicate) throw new Error(`Ya existe un proveedor con ese RFC: ${duplicate.name}.`);
+    }
     const row = await prisma.$transaction(async (tx) => {
       await tx.supplierContact.deleteMany({ where: { supplierId: id } });
       return tx.supplier.update({
@@ -1247,6 +1404,12 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     return {};
   }
 
+  private async assertNotFinalized(requisitionId: string): Promise<void> {
+    if (await prisma.purchaseSupplierRequisition.count({ where: { requisitionId } })) {
+      throw new Error("Supplier requisitions were already generated; purchase details are locked.");
+    }
+  }
+
   private async recomputeStatus(
     tx: Prisma.TransactionClient,
     requisitionId: string,
@@ -1264,7 +1427,8 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
             sellerUnitCost: true,
             sellerCurrency: true,
             sellerExchangeRate: true,
-            selectedOffer: { select: { unitCost: true, currency: true, exchangeRate: true } },
+            qty: true,
+            offers: { where: { isSelected: true, isActive: true }, select: { unitCost: true, currency: true, exchangeRate: true, awardedQty: true } },
           },
         },
       },
@@ -1272,18 +1436,18 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
     if (!requisition) return;
     if (requisition.status === "DRAFT") return;
     const hasHigherCost = requisition.items.some((item) => {
-      if (!item.selectedOffer) return false;
+      if (!item.offers.length) return false;
       const sellerMxn = item.sellerCurrency === "MXN"
         ? number(item.sellerUnitCost)
         : number(item.sellerUnitCost) * number(item.sellerExchangeRate);
-      const offerRate = item.selectedOffer.exchangeRate ? number(item.selectedOffer.exchangeRate) : number(item.sellerExchangeRate);
-      const offerMxn = item.selectedOffer.currency === "MXN"
-        ? number(item.selectedOffer.unitCost)
-        : number(item.selectedOffer.unitCost) * offerRate;
-      return offerMxn > sellerMxn + 0.0001;
+      const offerTotalMxn = item.offers.reduce((sum, offer) => {
+        const rate = offer.currency === "MXN" ? 1 : number(offer.exchangeRate ?? item.sellerExchangeRate);
+        return sum + number(offer.unitCost) * number(offer.awardedQty ?? item.qty) * rate;
+      }, 0);
+      return offerTotalMxn > sellerMxn * number(item.qty) + 0.0001;
     });
     const allReady = requisition.items.length > 0 && requisition.items.every((item) => item.status === "READY");
-    const hasSelected = requisition.items.some((item) => Boolean(item.selectedOffer));
+    const hasSelected = requisition.items.some((item) => item.offers.length > 0);
     const internalApprovalEnabled = resolveRuntimeValue(this.internalApprovalEnabled);
     const requiresInternalCostApproval = internalApprovalEnabled && hasHigherCost && !requisition.costApprovedAt;
     const status = requiresInternalCostApproval

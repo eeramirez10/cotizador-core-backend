@@ -157,6 +157,8 @@ export interface SavePurchaseSupplierOfferData {
   actorUserId: string;
 }
 
+export interface SupplierOfferAllocation { offerId: string; qty: number }
+
 export abstract class PurchaseRequisitionDatasource {
   abstract ensureForApprovedQuote(quote: QuoteEntity): Promise<PurchaseRequisitionEntity | null>;
   abstract findPaginated(params: FindPurchaseRequisitionsParams): Promise<FindPurchaseRequisitionsResult>;
@@ -189,6 +191,8 @@ export abstract class PurchaseRequisitionDatasource {
     offerId: string,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null>;
+  abstract allocateOffers(requisitionId: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract generateSupplierRequisitions(requisitionId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract approveCostVariance(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract isReadyForOrder(quoteId: string): Promise<boolean>;
   abstract markCompletedByQuoteId(quoteId: string): Promise<void>;

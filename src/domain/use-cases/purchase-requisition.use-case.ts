@@ -1,7 +1,7 @@
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import { ErpProductLookupPort } from "../contracts/erp-product-lookup.port";
 import { ErpSupplierLookupPort } from "../contracts/erp-supplier-lookup.port";
-import type { PurchaseRequisitionActor } from "../datasources/purchase-requisition.datasource";
+import type { PurchaseRequisitionActor, SupplierOfferAllocation } from "../datasources/purchase-requisition.datasource";
 import {
   AssignPurchaseRequisitionRequestDto,
   CreatePurchaseSupplierOfferRequestDto,
@@ -192,6 +192,18 @@ export class PurchaseRequisitionUseCase {
   async selectOffer(id: string, itemId: string, offerId: string, actor: PurchaseRequisitionActor) {
     const updated = await this.repository.selectOffer(id, itemId, offerId, actor);
     if (!updated) throw new Error("Supplier offer not found.");
+    return new PurchaseRequisitionResponseDto(updated);
+  }
+
+  async allocateOffers(id: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor) {
+    const updated = await this.repository.allocateOffers(id, itemId, allocations, actor);
+    if (!updated) throw new Error("Purchase requisition item not found.");
+    return new PurchaseRequisitionResponseDto(updated);
+  }
+
+  async generateSupplierRequisitions(id: string, actor: PurchaseRequisitionActor) {
+    const updated = await this.repository.generateSupplierRequisitions(id, actor);
+    if (!updated) throw new Error("Purchase requisition not found.");
     return new PurchaseRequisitionResponseDto(updated);
   }
 

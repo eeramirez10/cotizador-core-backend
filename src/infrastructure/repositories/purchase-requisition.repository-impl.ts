@@ -5,6 +5,7 @@ import type {
   SavePurchaseSupplierOfferData,
   SaveErpSupplierData,
   SaveSupplierData,
+  SupplierOfferAllocation,
   UpdatePurchaseRequisitionItemData,
   UpdatePurchaseRequisitionDocumentData,
 } from "../../domain/datasources/purchase-requisition.datasource";
@@ -27,6 +28,8 @@ export class PurchaseRequisitionRepositoryImpl extends PurchaseRequisitionReposi
   assign(id: string, buyerUserId: string, actor: PurchaseRequisitionActor) { return this.datasource.assign(id, buyerUserId, actor); }
   createOffer(id: string, data: SavePurchaseSupplierOfferData, actor: PurchaseRequisitionActor) { return this.datasource.createOffer(id, data, actor); }
   selectOffer(id: string, itemId: string, offerId: string, actor: PurchaseRequisitionActor) { return this.datasource.selectOffer(id, itemId, offerId, actor); }
+  allocateOffers(id: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor) { return this.datasource.allocateOffers(id, itemId, allocations, actor); }
+  generateSupplierRequisitions(id: string, actor: PurchaseRequisitionActor) { return this.datasource.generateSupplierRequisitions(id, actor); }
   approveCostVariance(id: string, actor: PurchaseRequisitionActor) { return this.datasource.approveCostVariance(id, actor); }
   isReadyForOrder(quoteId: string) { return this.datasource.isReadyForOrder(quoteId); }
   markCompletedByQuoteId(quoteId: string) { return this.datasource.markCompletedByQuoteId(quoteId); }

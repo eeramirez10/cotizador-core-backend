@@ -61,7 +61,7 @@ export type User = Prisma.UserModel
 export type ManagerReportSubscription = Prisma.ManagerReportSubscriptionModel
 /**
  * Model ManagerReportRun
- *
+ * 
  */
 export type ManagerReportRun = Prisma.ManagerReportRunModel
 /**
@@ -139,6 +139,16 @@ export type PurchaseRequisitionItem = Prisma.PurchaseRequisitionItemModel
  * 
  */
 export type PurchaseSupplierOffer = Prisma.PurchaseSupplierOfferModel
+/**
+ * Model PurchaseSupplierRequisition
+ * 
+ */
+export type PurchaseSupplierRequisition = Prisma.PurchaseSupplierRequisitionModel
+/**
+ * Model PurchaseSupplierRequisitionLine
+ * 
+ */
+export type PurchaseSupplierRequisitionLine = Prisma.PurchaseSupplierRequisitionLineModel
 /**
  * Model PurchaseSupplierQuote
  * 

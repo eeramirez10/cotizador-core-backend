@@ -6,6 +6,7 @@ import type {
   SavePurchaseSupplierOfferData,
   SaveErpSupplierData,
   SaveSupplierData,
+  SupplierOfferAllocation,
   UpdatePurchaseRequisitionItemData,
   UpdatePurchaseRequisitionDocumentData,
 } from "../datasources/purchase-requisition.datasource";
@@ -25,6 +26,8 @@ export abstract class PurchaseRequisitionRepository {
   abstract assign(id: string, buyerUserId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract createOffer(id: string, data: SavePurchaseSupplierOfferData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract selectOffer(id: string, itemId: string, offerId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract allocateOffers(id: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract generateSupplierRequisitions(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract approveCostVariance(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract isReadyForOrder(quoteId: string): Promise<boolean>;
   abstract markCompletedByQuoteId(quoteId: string): Promise<void>;

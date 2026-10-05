@@ -11,6 +11,10 @@ export class PurchaseRequisitionResponseDto {
       costApprovedAt: this.requisition.costApprovedAt?.toISOString() ?? null,
       createdAt: this.requisition.createdAt.toISOString(),
       updatedAt: this.requisition.updatedAt.toISOString(),
+      supplierRequisitions: this.requisition.supplierRequisitions.map((document) => ({
+        ...document,
+        createdAt: document.createdAt.toISOString(),
+      })),
       items: this.requisition.items.map((item) => ({
         ...item,
         createdAt: item.createdAt.toISOString(),

@@ -58,6 +58,8 @@ export class PurchaseRequisitionsRoutes {
     router.post("/:id/items/:itemId/offers", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.createOffer);
     router.patch("/:id/items/:itemId/offers/:offerId/code", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateSupplierCode);
     router.post("/:id/items/:itemId/offers/:offerId/select", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.selectOffer);
+    router.put("/:id/items/:itemId/allocations", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.allocateOffers);
+    router.post("/:id/supplier-requisitions", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.generateSupplierRequisitions);
     router.post("/:id/approve-cost-variance", requireAuth, requireRoles("ADMIN", "MANAGER"), controller.approveCostVariance);
 
     return router;
