@@ -8,7 +8,8 @@ export class SaveQuoteDraftRequestDto {
     public readonly quote: CreateQuoteRequestDto,
     public readonly quoteId: string | null,
     public readonly action: SaveQuoteDraftAction,
-    public readonly items: CreateQuoteItemRequestDto[]
+    public readonly items: CreateQuoteItemRequestDto[],
+    public readonly reorderItems = false,
   ) {}
 
   static create(input: unknown): [string?, SaveQuoteDraftRequestDto?] {
@@ -33,6 +34,9 @@ export class SaveQuoteDraftRequestDto {
     }
 
     if (!Array.isArray(body.items)) return ["items must be an array."];
+    if (body.reorderItems !== undefined && typeof body.reorderItems !== "boolean") {
+      return ["reorderItems must be a boolean."];
+    }
     const items: CreateQuoteItemRequestDto[] = [];
     for (let index = 0; index < body.items.length; index += 1) {
       const [itemError, item] = CreateQuoteItemRequestDto.create(body.items[index]);
@@ -46,7 +50,8 @@ export class SaveQuoteDraftRequestDto {
         quote,
         quoteId,
         action as SaveQuoteDraftAction,
-        items
+        items,
+        body.reorderItems === true,
       ),
     ];
   }

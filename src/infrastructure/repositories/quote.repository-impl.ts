@@ -13,6 +13,7 @@ import {
   MarkQuoteOrderGeneratedDatasourceParams,
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
+  ReorderQuotedItemsDatasourceParams,
   RegisterErpQuoteDatasourceParams,
   RegisterErpOrderDatasourceParams,
   RemoveQuoteItemDatasourceParams,
@@ -47,6 +48,10 @@ export class QuoteRepositoryImpl implements QuoteRepository {
 
   saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult> {
     return this.datasource.saveDraft(params);
+  }
+
+  reorderQuotedItems(params: ReorderQuotedItemsDatasourceParams): Promise<QuoteEntity | null> {
+    return this.datasource.reorderQuotedItems(params);
   }
 
   updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null> {

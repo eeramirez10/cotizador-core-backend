@@ -54,6 +54,14 @@ export class SaveQuoteDraftUseCase {
       : null;
     if (dto.quoteId && !existingQuote) throw new Error("Quote not found.");
 
+    if (dto.reorderItems && (
+      dto.action !== "SAVE_DRAFT"
+      || dto.quote.captureMethod === "EXCEL_IMPORT"
+      || (existingQuote && existingQuote.status !== "DRAFT")
+    )) {
+      throw new Error("Items can only be reordered in a manual draft quote.");
+    }
+
     if (dto.quote.captureMethod === "EXCEL_IMPORT" && !resolveRuntimeValue(this.sellerExcelImportEnabled)) {
       throw new Error(existingQuote
         ? "Excel-imported quotes are read-only because seller Excel import is disabled."
@@ -316,6 +324,7 @@ export class SaveQuoteDraftUseCase {
       quoteId: dto.quoteId,
       quoteNumber: buildQuoteNumber(),
       action: dto.action,
+      reorderItems: dto.reorderItems,
       submissionStatus: resolveRuntimeValue(this.internalApprovalEnabled) ? "PENDING_APPROVAL" : "QUOTED",
       data: {
         origin: dto.quote.origin,

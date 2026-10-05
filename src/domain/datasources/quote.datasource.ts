@@ -133,6 +133,7 @@ export interface SaveQuoteDraftDatasourceParams {
   quoteId: string | null;
   quoteNumber: string;
   action: "SAVE_DRAFT" | "SUBMIT_FOR_APPROVAL";
+  reorderItems?: boolean;
   submissionStatus: "PENDING_APPROVAL" | "QUOTED";
   data: Omit<CreateQuoteDatasourceParams, "quoteNumber">;
   items: SaveQuoteDraftItemDatasourceData[];
@@ -144,6 +145,13 @@ export interface SaveQuoteDraftDatasourceResult {
   quoteNumber: string;
   clientDraftId: string;
   status: QuoteStatus;
+}
+
+export interface ReorderQuotedItemsDatasourceParams {
+  id: string;
+  itemIds: string[];
+  actorUserId: string;
+  scope: QuoteAccessScope;
 }
 
 export interface UpdateQuoteDatasourceData {
@@ -421,6 +429,7 @@ export abstract class QuoteDatasource {
   abstract findById(params: FindQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract createDraft(params: CreateQuoteDatasourceParams): Promise<QuoteEntity>;
   abstract saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult>;
+  abstract reorderQuotedItems(params: ReorderQuotedItemsDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateById(params: UpdateQuoteByIdDatasourceParams): Promise<QuoteEntity | null>;
   abstract addItem(params: AddQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;

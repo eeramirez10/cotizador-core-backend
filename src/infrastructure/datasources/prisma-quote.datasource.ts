@@ -14,6 +14,7 @@ import {
   QuoteAccessScope,
   QuoteDatasource,
   RecordQuoteDeliveryAttemptDatasourceParams,
+  ReorderQuotedItemsDatasourceParams,
   RegisterErpQuoteDatasourceParams,
   RegisterErpOrderDatasourceParams,
   RemoveQuoteItemDatasourceParams,
@@ -28,6 +29,7 @@ import { QuoteEntity, QuoteListSummaryEntity } from "../../domain/entities/quote
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
 import { QuoteMapper } from "../mappers/quote.mapper";
+import { assertSameQuoteItemIds, assignQuoteItemPositions } from "./quote-item-positions";
 
 const quoteInclude = {
   branch: {
@@ -145,7 +147,7 @@ const quoteInclude = {
   },
   items: {
     orderBy: {
-      createdAt: "asc",
+      position: "asc",
     },
     include: {
       product: {
@@ -538,6 +540,13 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       if (existing && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(existing.status)) {
         throw new Error("Quote cannot be edited in current status.");
       }
+      if (params.reorderItems && (
+        params.action !== "SAVE_DRAFT"
+        || params.data.captureMethod === "EXCEL_IMPORT"
+        || (existing && existing.status !== "DRAFT")
+      )) {
+        throw new Error("Items can only be reordered in a manual draft quote.");
+      }
 
       if (params.data.whatsappLeadId) {
         const lead = await tx.whatsAppLead.findFirst({
@@ -638,10 +647,15 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         });
       }
 
+      const existingItems = await tx.quoteItem.findMany({
+        where: { quoteId: quote.id },
+        select: { clientItemId: true, position: true },
+      });
+      const positionedItems = assignQuoteItemPositions(existingItems, params.items, params.reorderItems);
       await tx.quoteItem.deleteMany({ where: { quoteId: quote.id } });
       if (params.items.length > 0) {
         await tx.quoteItem.createMany({
-          data: params.items.map((item) => ({ quoteId: quote.id, ...item })),
+          data: positionedItems.map((item) => ({ quoteId: quote.id, ...item })),
         });
       }
 
@@ -753,6 +767,59 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     }
   }
 
+  async reorderQuotedItems(params: ReorderQuotedItemsDatasourceParams): Promise<QuoteEntity | null> {
+    return prisma.$transaction(async (tx) => {
+      // Serialize concurrent reorder requests for the same quote.
+      await tx.$queryRaw`SELECT id FROM quotes WHERE id = ${params.id}::uuid FOR UPDATE`;
+      const quote = await tx.quote.findFirst({
+        where: { id: params.id, ...this.buildScopeWhere(params.scope) },
+        select: {
+          id: true,
+          status: true,
+          captureMethod: true,
+          archivedAt: true,
+          firstSentAt: true,
+          deliveryStatus: true,
+          supersededByQuoteId: true,
+        },
+      });
+      if (!quote) return null;
+      if (quote.status !== "QUOTED" || quote.captureMethod === "EXCEL_IMPORT" || quote.archivedAt || quote.supersededByQuoteId) {
+        throw new Error("Only an active manual QUOTED quote can be reordered.");
+      }
+      if (quote.firstSentAt || quote.deliveryStatus !== "NOT_SENT"
+        || await tx.quoteDeliveryAttempt.count({ where: { quoteId: quote.id } }) > 0) {
+        throw new Error("Quote items cannot be reordered after a delivery attempt.");
+      }
+      const revision = await tx.quote.findFirst({
+        where: { previousVersionId: quote.id, status: { in: ["DRAFT", "PENDING", "PENDING_APPROVAL", "CHANGES_REQUESTED"] } },
+        select: { id: true },
+      });
+      if (revision) throw new Error("Quote items cannot be reordered while a revision is in progress.");
+
+      const current = await tx.quoteItem.findMany({
+        where: { quoteId: quote.id },
+        select: { id: true, position: true },
+        orderBy: [{ position: "asc" }, { id: "asc" }],
+      });
+      assertSameQuoteItemIds(current.map((item) => item.id), params.itemIds);
+      if (current.some((item, index) => item.id !== params.itemIds[index])) {
+        const nextFree = Math.max(0, ...current.map((item) => item.position)) + 1;
+        for (const [index, id] of params.itemIds.entries()) {
+          await tx.quoteItem.update({ where: { id }, data: { position: nextFree + index } });
+        }
+        for (const [index, id] of params.itemIds.entries()) {
+          await tx.quoteItem.update({ where: { id }, data: { position: index + 1 } });
+        }
+        await tx.quote.update({ where: { id: quote.id }, data: { updatedByUserId: params.actorUserId } });
+        await tx.quoteEvent.create({
+          data: { quoteId: quote.id, status: "QUOTED", note: "Quote items reordered before delivery.", actorUserId: params.actorUserId },
+        });
+      }
+      return this.findByIdWithClient(quote.id, params.scope, tx);
+    }, { maxWait: 5_000, timeout: 30_000 });
+  }
+
   async createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity> {
     return prisma.$transaction(async (tx) => {
       const source = await tx.quote.findFirst({
@@ -760,7 +827,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: params.sourceQuoteId,
           ...this.buildScopeWhere(params.scope),
         },
-        include: { items: true },
+        include: { items: { orderBy: { position: "asc" } } },
       });
       if (!source) throw new Error("Quote not found.");
 
@@ -835,6 +902,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           notes: source.notes,
           items: {
             create: source.items.map((item) => ({
+              position: item.position,
               clientItemId: item.clientItemId,
               productId: item.productId,
               externalProductCode: item.externalProductCode,
@@ -1133,9 +1201,15 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
       if (!quote) return null;
 
+      const lastItem = await tx.quoteItem.aggregate({
+        where: { quoteId: quote.id },
+        _max: { position: true },
+      });
+
       await tx.quoteItem.create({
         data: {
           quoteId: quote.id,
+          position: (lastItem._max.position ?? 0) + 1,
           productId: params.data.productId,
           externalProductCode: params.data.externalProductCode,
           ean: params.data.ean,

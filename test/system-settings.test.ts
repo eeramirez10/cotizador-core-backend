@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { UpdateSystemSettingsRequestDto } from "../src/domain/dtos/request/update-system-settings-request.dto";
+import { SYSTEM_SETTING_DEFINITION_BY_KEY } from "../src/config/system-settings.registry";
 import type { SystemSettingKey, SystemSettingRecord, SystemSettingValue } from "../src/domain/entities/system-setting.entity";
 import { SystemSettingRepository } from "../src/domain/repositories/system-setting.repository";
 import { SystemSettingsRuntime } from "../src/domain/services/system-settings-runtime";
@@ -57,4 +58,12 @@ test("rejects takeover duration above its configured maximum", async () => {
   });
   await assert.rejects(() => useCase.update(dto!, "admin-id"), /no puede superar/);
   assert.deepEqual(repository.updated, []);
+});
+
+test("local purchase documents without an ERP code are opt-in", () => {
+  const key = "LOCAL_PURCHASE_WITHOUT_ERP_CODE_ENABLED";
+  assert.equal(SYSTEM_SETTING_DEFINITION_BY_KEY.get(key)?.defaultValue, false);
+  const [error, dto] = UpdateSystemSettingsRequestDto.create({ settings: [{ key, value: true }] });
+  assert.equal(error, undefined);
+  assert.deepEqual(dto?.settings, [{ key, value: true }]);
 });

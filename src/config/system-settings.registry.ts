@@ -59,6 +59,16 @@ export const SYSTEM_SETTING_DEFINITIONS: readonly SystemSettingDefinition[] = [
     warning: "El TXT no incluye el código del cliente ni lo da de alta en Proscai. El cliente deberá vincularse antes de registrar el pedido en ERP; todas las partidas siguen necesitando código ERP.",
   },
   {
+    key: "LOCAL_PURCHASE_WITHOUT_ERP_CODE_ENABLED",
+    category: "PROCUREMENT",
+    label: "Requisiciones de compra para productos locales sin código ERP",
+    description: "Tras aceptar el cliente la cotización, Compras puede emitir la requisición al proveedor aunque el producto local aún no tenga código Proscai.",
+    type: "BOOLEAN",
+    defaultValue: false,
+    available: true,
+    warning: "Aplica a requisiciones pendientes de emisión, incluso de cotizaciones ya aceptadas. No habilita el TXT del pedido ERP: para importarlo en Proscai, todas las partidas deben tener un código ERP real.",
+  },
+  {
     key: "WHATSAPP_INBOX_ENABLED",
     category: "WHATSAPP",
     label: "Bandeja de WhatsApp",

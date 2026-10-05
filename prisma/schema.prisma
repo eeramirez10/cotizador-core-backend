@@ -937,6 +937,7 @@ model Quote {
 model QuoteItem {
   id                                String              @id @default(uuid()) @db.Uuid
   quoteId                           String              @map("quote_id") @db.Uuid
+  position                          Int
   clientItemId                      String?             @map("client_item_id") @db.VarChar(80)
   productId                         String?             @map("product_id") @db.Uuid
   externalProductCode               String?             @map("external_product_code") @db.VarChar(80)
@@ -1002,6 +1003,7 @@ model QuoteItem {
   purchaseRequisitionItem         PurchaseRequisitionItem?
 
   @@unique([quoteId, clientItemId])
+  @@unique([quoteId, position])
   @@index([quoteId])
   @@index([productId])
   @@index([sellerSupplierId])

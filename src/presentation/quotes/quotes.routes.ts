@@ -19,6 +19,7 @@ import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/regi
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
+import { ReorderQuotedItemsUseCase } from "../../domain/use-cases/reorder-quoted-items.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -182,6 +183,7 @@ export class QuotesRoutes {
     const controller = new QuotesController(
       createQuoteUseCase,
       saveQuoteDraftUseCase,
+      new ReorderQuotedItemsUseCase(quoteRepository),
       createQuoteFromExtractionUseCase,
       createQuoteRevisionUseCase,
       archiveQuoteUseCase,
@@ -234,6 +236,7 @@ export class QuotesRoutes {
     router.patch("/:id/restore", requireAuth, requireRoles("ADMIN"), controller.restore);
     router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.deletePermanently);
     router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.update);
+    router.patch("/:id/items/order", requireAuth, requireRoles("SELLER"), controller.reorderQuotedItems);
 
     router.post("/:id/items", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.addItem);
     router.patch(

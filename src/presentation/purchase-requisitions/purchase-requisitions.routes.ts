@@ -17,7 +17,10 @@ export class PurchaseRequisitionsRoutes {
   static routes(): Router {
     const router = Router();
     const repository = new PurchaseRequisitionRepositoryImpl(
-      new PrismaPurchaseRequisitionDatasource(() => runtimeSystemSettings.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"))
+      new PrismaPurchaseRequisitionDatasource(
+        () => runtimeSystemSettings.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"),
+        () => runtimeSystemSettings.boolean("LOCAL_PURCHASE_WITHOUT_ERP_CODE_ENABLED"),
+      )
     );
     const quoteRepository = new QuoteRepositoryImpl(new PrismaQuoteDatasource());
     const semanticAdapter = new GptLocalProductSemanticAdapter(

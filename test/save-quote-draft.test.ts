@@ -123,3 +123,97 @@ test("local and out-of-stock items can be quoted without preliminary purchasing 
   assert.equal(savedParams.items[1].sellerQuotedUnitCost, null);
   assert.equal(savedParams.items[1].sellerCostSource, "ERP_COST");
 });
+
+test("reorderItems is accepted only as an explicit boolean", () => {
+  const input = {
+    customerId: "customer-1",
+    currency: "MXN",
+    exchangeRate: 17.25,
+    exchangeRateDate: "2026-10-05",
+    taxRate: 0.16,
+    paymentTerms: "CONTADO",
+    validityDays: 15,
+    action: "SAVE_DRAFT",
+    items: [],
+  };
+
+  assert.equal(SaveQuoteDraftRequestDto.create({ ...input, reorderItems: true })[1]?.reorderItems, true);
+  assert.equal(SaveQuoteDraftRequestDto.create(input)[1]?.reorderItems, false);
+  assert.equal(SaveQuoteDraftRequestDto.create({ ...input, reorderItems: "true" })[0], "reorderItems must be a boolean.");
+});
+
+test("an editable draft passes its explicit item order to persistence", async () => {
+  let savedParams: SaveQuoteDraftDatasourceParams | null = null;
+  const repository = {
+    findById: async () => ({ status: "DRAFT", items: [] }),
+    saveDraft: async (params: SaveQuoteDraftDatasourceParams) => {
+      savedParams = params;
+      return { id: "quote-1", quoteNumber: "QT-TEST-1", clientDraftId: params.clientDraftId, status: "DRAFT" };
+    },
+  } as unknown as QuoteRepository;
+  const customers = { findById: async () => ({ id: "customer-1", contacts: [] }) } as unknown as CustomerRepository;
+  const useCase = new SaveQuoteDraftUseCase(repository, customers, {} as UserRepository);
+  const quote = new CreateQuoteRequestDto({
+    customerId: "customer-1",
+    currency: "MXN",
+    exchangeRate: 17.25,
+    exchangeRateDate: new Date("2026-10-05"),
+    taxRate: 0.16,
+    deliveryPlace: null,
+    paymentTerms: "CONTADO",
+    commercialConditions: null,
+    validityDays: 15,
+    origin: "MANUAL",
+    captureMethod: "SYSTEM",
+    originalQuoteDate: null,
+    sourceChannel: "PHONE",
+    providedByUserId: null,
+    notes: null,
+  });
+
+  await useCase.execute("draft-1", new SaveQuoteDraftRequestDto(quote, "quote-1", "SAVE_DRAFT", [
+    item({ clientItemId: "second" }),
+    item({ clientItemId: "first" }),
+  ], true), { id: "seller-1", role: "SELLER", branchId: "branch-1" });
+
+  assert.equal(savedParams?.reorderItems, true);
+  assert.deepEqual(savedParams?.items.map((entry) => entry.clientItemId), ["second", "first"]);
+});
+
+test("reordering cannot modify an issued quote or an Excel import", async () => {
+  const quote = new CreateQuoteRequestDto({
+    customerId: "customer-1",
+    currency: "MXN",
+    exchangeRate: 17.25,
+    exchangeRateDate: new Date("2026-10-05"),
+    taxRate: 0.16,
+    deliveryPlace: null,
+    paymentTerms: "CONTADO",
+    commercialConditions: null,
+    validityDays: 15,
+    origin: "MANUAL",
+    captureMethod: "SYSTEM",
+    originalQuoteDate: null,
+    sourceChannel: "PHONE",
+    providedByUserId: null,
+    notes: null,
+  });
+  const repository = { findById: async () => ({ status: "QUOTED" }) } as unknown as QuoteRepository;
+  const useCase = new SaveQuoteDraftUseCase(repository, {} as CustomerRepository, {} as UserRepository);
+  const actor = { id: "seller-1", role: "SELLER" as const, branchId: "branch-1" };
+
+  await assert.rejects(
+    useCase.execute("draft-1", new SaveQuoteDraftRequestDto(quote, "quote-1", "SAVE_DRAFT", [item()], true), actor),
+    /Items can only be reordered in a manual draft quote/,
+  );
+  await assert.rejects(
+    useCase.execute("draft-1", new SaveQuoteDraftRequestDto(
+      new CreateQuoteRequestDto({ ...quote, captureMethod: "EXCEL_IMPORT" }),
+      null,
+      "SAVE_DRAFT",
+      [item()],
+      true,
+    ), actor),
+    /Items can only be reordered in a manual draft quote/,
+  );
+});

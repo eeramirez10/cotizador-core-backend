@@ -21,6 +21,7 @@ import type {
 import type { QuoteEntity } from "../../domain/entities/quote.entity";
 import { getQuoteItemFulfillment } from "../../domain/use-cases/quote-item-fulfillment.helper";
 import { requisitionSubmissionError } from "../../domain/use-cases/requisition-submission-rule";
+import { canIssueSupplierRequisitions } from "../../domain/use-cases/supplier-requisition-eligibility";
 import { supplierRequisitionGroupKey, validateSupplierOfferAllocations } from "../../domain/use-cases/supplier-offer-allocation";
 import { resolveSupplierErpSyncTarget } from "../../domain/use-cases/supplier-erp-sync-target";
 import { resolveRuntimeValue, type RuntimeValue } from "../../domain/services/runtime-value";
@@ -318,7 +319,10 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
 });
 
 export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionDatasource {
-  constructor(private readonly internalApprovalEnabled: RuntimeValue<boolean> = true) {
+  constructor(
+    private readonly internalApprovalEnabled: RuntimeValue<boolean> = true,
+    private readonly allowLocalWithoutErpCode: RuntimeValue<boolean> = false,
+  ) {
     super();
   }
 
@@ -798,14 +802,22 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       const requisition = await tx.purchaseRequisition.findFirst({
         where: { id: requisitionId, ...this.scopeWhere(actor) },
         include: {
+          quote: { select: { status: true } },
           supplierRequisitions: { select: { id: true } },
           items: { where: { status: { not: "CANCELLED" } }, include: { offers: { where: { isSelected: true, isActive: true } } } },
         },
       });
       if (!requisition) return false;
       if (requisition.supplierRequisitions.length) return true;
-      if (!["READY_FOR_ORDER", "COMPLETED"].includes(requisition.status) || !requisition.items.length || requisition.items.some((item) => item.status !== "READY")) {
-        throw new Error("Supplier requisitions require every item ready and approved.");
+      if (requisition.quote.status !== "APPROVED") {
+        throw new Error("Supplier requisitions require a customer-approved quote.");
+      }
+      if (!canIssueSupplierRequisitions(
+        requisition.status,
+        requisition.items,
+        resolveRuntimeValue(this.allowLocalWithoutErpCode),
+      )) {
+        throw new Error("Supplier requisitions require every item awarded and approved. Local items without ERP code require the system setting to be enabled.");
       }
       const groups = new Map<string, { supplierId: string; currency: "MXN" | "USD"; lines: Array<{ item: typeof requisition.items[number]; offer: typeof requisition.items[number]["offers"][number]; qty: number }> }>();
       for (const item of requisition.items) {

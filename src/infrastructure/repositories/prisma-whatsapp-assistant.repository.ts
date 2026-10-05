@@ -224,7 +224,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         total: true,
         validUntil: true,
         createdByUser: { select: { firstName: true, lastName: true } },
-        items: { take: 3, orderBy: { createdAt: "asc" }, select: { erpDescription: true, customerDescription: true } },
+        items: { take: 3, orderBy: { position: "asc" }, select: { erpDescription: true, customerDescription: true } },
         deliveryAttempts: {
           where: { channel: "WHATSAPP", recipient: phone, status: { not: "FAILED" } },
           orderBy: { sentAt: "desc" },
@@ -266,7 +266,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         customerContactId: true,
         createdByUserId: true,
         createdByUser: { select: { firstName: true, lastName: true } },
-        items: { take: 5, orderBy: { createdAt: "asc" }, select: { erpDescription: true, customerDescription: true } },
+        items: { take: 5, orderBy: { position: "asc" }, select: { erpDescription: true, customerDescription: true } },
         deliveryAttempts: {
           where: { channel: "WHATSAPP", recipient: phone, status: { not: "FAILED" } },
           orderBy: { sentAt: "desc" },
@@ -336,7 +336,7 @@ export class PrismaWhatsAppAssistantRepository extends WhatsAppAssistantReposito
         quoteNumber: true,
         currency: true,
         items: {
-          orderBy: { createdAt: "asc" },
+          orderBy: { position: "asc" },
           select: {
             externalProductCode: true,
             customerDescription: true,

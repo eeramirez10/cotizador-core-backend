@@ -12,6 +12,7 @@ import { RegisterQuoteDeliveryAttemptRequestDto } from "../../domain/dtos/reques
 import { RegisterErpQuoteRequestDto } from "../../domain/dtos/request/register-erp-quote-request.dto";
 import { RegisterErpOrderRequestDto } from "../../domain/dtos/request/register-erp-order-request.dto";
 import { SaveQuoteDraftRequestDto } from "../../domain/dtos/request/save-quote-draft-request.dto";
+import { ReorderQuotedItemsRequestDto } from "../../domain/dtos/request/reorder-quoted-items-request.dto";
 import { UpdateQuoteItemRequestDto } from "../../domain/dtos/request/update-quote-item-request.dto";
 import { UpdateQuoteProcurementReferenceRequestDto } from "../../domain/dtos/request/update-quote-procurement-reference-request.dto";
 import { UpdateQuoteRequestDto } from "../../domain/dtos/request/update-quote-request.dto";
@@ -33,6 +34,7 @@ import { RegisterQuoteDeliveryAttemptUseCase } from "../../domain/use-cases/regi
 import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quote.use-case";
 import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
+import { ReorderQuotedItemsUseCase } from "../../domain/use-cases/reorder-quoted-items.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -44,6 +46,7 @@ export class QuotesController {
   constructor(
     private readonly createQuoteUseCase: CreateQuoteUseCase,
     private readonly saveQuoteDraftUseCase: SaveQuoteDraftUseCase,
+    private readonly reorderQuotedItemsUseCase: ReorderQuotedItemsUseCase,
     private readonly createQuoteFromExtractionUseCase: CreateQuoteFromExtractionUseCase,
     private readonly createQuoteRevisionUseCase: CreateQuoteRevisionUseCase,
     private readonly archiveQuoteUseCase: ArchiveQuoteUseCase,
@@ -280,6 +283,20 @@ export class QuotesController {
       res.status(200).json(result.toJSON());
     } catch (err) {
       this.handleError(res, err, "Unexpected error while updating quote.");
+    }
+  };
+
+  reorderQuotedItems = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    const [bodyError, bodyDto] = ReorderQuotedItemsRequestDto.create(req.body);
+    if (bodyError) return void res.status(400).json({ error: bodyError });
+    try {
+      const result = await this.reorderQuotedItemsUseCase.execute(quoteId, bodyDto!, req.user);
+      res.status(200).json(result.toJSON());
+    } catch (error) {
+      this.handleError(res, error, "Unexpected error while reordering quote items.");
     }
   };
 
@@ -653,9 +670,18 @@ export class QuotesController {
       return;
     }
 
+    if (message === "Quote items cannot be reordered after a delivery attempt."
+      || message === "Quote items cannot be reordered while a revision is in progress."
+      || message === "Item list changed. Refresh the quote and try again.") {
+      res.status(409).json({ error: message });
+      return;
+    }
+
     if (
       message === "branchCode is only allowed for ADMIN." ||
       message === "Quote cannot be edited in current status." ||
+      message === "Items can only be reordered in a manual draft quote." ||
+      message === "Only an active manual QUOTED quote can be reordered." ||
       message === "Quote items cannot be edited in current status." ||
       message === "Only SELLER can create a quote revision." ||
       message === "Only an authorized quote can be revised." ||

@@ -18,6 +18,7 @@ export class SystemController {
         requisitionInternalApprovalEnabled: this.runtime.boolean("REQUISITION_INTERNAL_APPROVAL_ENABLED"),
         orderFileWithoutStockEnabled: this.runtime.boolean("ORDER_FILE_WITHOUT_STOCK_ENABLED"),
         orderFileWithLocalCustomerEnabled: this.runtime.boolean("ORDER_FILE_WITH_LOCAL_CUSTOMER_ENABLED"),
+        localPurchaseWithoutErpCodeEnabled: this.runtime.boolean("LOCAL_PURCHASE_WITHOUT_ERP_CODE_ENABLED"),
         sellerExcelImportEnabled: this.runtime.boolean("SELLER_EXCEL_IMPORT_ENABLED"),
         whatsAppInboxEnabled: this.runtime.boolean("WHATSAPP_INBOX_ENABLED")
           && req.user?.whatsappInboxEnabled === true,
