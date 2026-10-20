@@ -13,6 +13,7 @@ import {
 import type { WhatsAppRealtimePublisher } from "../events/whatsapp-realtime.event";
 import type { SendWhatsAppInternalAlertUseCase } from "./send-whatsapp-internal-alert.use-case";
 import { resolveRuntimeValue, type RuntimeValue } from "../services/runtime-value";
+import { hasPendingPurchasingPrices } from "./purchase-price-inquiry-rule";
 
 interface ChangeQuoteStatusActorContext {
   id: string;
@@ -105,6 +106,15 @@ export class ChangeQuoteStatusUseCase {
     }
     if (dto.status === "PENDING_APPROVAL" && !quote.commercialConditions?.trim()) {
       throw new Error("Commercial conditions are required before moving to QUOTED.");
+    }
+    if (dto.status === "PENDING_APPROVAL") {
+      if (quote.items.some((item) => item.salePriceReviewRequired)) {
+        throw new Error("Confirma los precios de venta actualizados por Compras antes de generar la cotización.");
+      }
+      const requisitions = await this.purchaseRequisitionRepository.findByQuoteId(quote.id, actor);
+      if (hasPendingPurchasingPrices(requisitions)) {
+        throw new Error("Compras aún tiene partidas pendientes de cotizar. Espera sus precios antes de enviar la cotización a aprobación.");
+      }
     }
     await this.validateCatalogReason(dto.status === "CHANGES_REQUESTED" ? "APPROVAL_RETURN_REASON" : null, dto.approvalReturnReason, dto.approvalReturnComment, actor.branchId, "Approval return reason is required before requesting changes.");
     await this.validateCatalogReason(dto.status === "REJECTED" ? "REJECTION_REASON" : null, dto.rejectionReason, dto.rejectionComment, actor.branchId, "Rejection reason is required before moving to REJECTED.");

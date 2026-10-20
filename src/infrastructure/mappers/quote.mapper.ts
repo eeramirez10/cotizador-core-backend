@@ -226,6 +226,8 @@ interface QuoteRow {
     sourceUnitPrice: number | DecimalLike | null;
     sourceSubtotal: number | DecimalLike | null;
     unitPrice: number | DecimalLike;
+    salePriceReviewRequired: boolean;
+    purchaseSuggestedUnitPrice: number | DecimalLike | null;
     subtotal: number | DecimalLike;
     sourceRequiresReview: boolean;
     requiresReview: boolean;
@@ -233,6 +235,7 @@ interface QuoteRow {
     updatedAt: Date;
     product: {
       id: string;
+      source: "ERP" | "LOCAL_TEMP";
       code: string | null;
       ean: string | null;
       description: string;
@@ -464,6 +467,8 @@ export class QuoteMapper {
         sourceUnitPrice: toNumber(item.sourceUnitPrice),
         sourceSubtotal: toNumber(item.sourceSubtotal),
         unitPrice: Number(toNumber(item.unitPrice)),
+        salePriceReviewRequired: item.salePriceReviewRequired,
+        purchaseSuggestedUnitPrice: toNumber(item.purchaseSuggestedUnitPrice),
         subtotal: Number(toNumber(item.subtotal)),
         sourceRequiresReview: item.sourceRequiresReview,
         requiresReview: item.requiresReview,
@@ -472,6 +477,7 @@ export class QuoteMapper {
         product: item.product
           ? {
               id: item.product.id,
+              source: item.product.source,
               code: item.product.code,
               ean: item.product.ean,
               description: item.product.description,

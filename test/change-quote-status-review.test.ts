@@ -44,7 +44,7 @@ test("status change recalculates stale local-product review flags", async () => 
   const useCase = new ChangeQuoteStatusUseCase(
     quoteRepository,
     {} as QuoteCatalogRepository,
-    {} as PurchaseRequisitionRepository,
+    { findByQuoteId: async () => [] } as unknown as PurchaseRequisitionRepository,
     false,
   );
   const dto = new ChangeQuoteStatusRequestDto({

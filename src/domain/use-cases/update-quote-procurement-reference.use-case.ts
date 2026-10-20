@@ -37,15 +37,23 @@ export class UpdateQuoteProcurementReferenceUseCase {
 
     const item = quote.items.find((entry) => entry.id === itemId || entry.clientItemId === itemId);
     if (!item) throw new Error("Quote item not found.");
+    if (dto.unitPrice !== null && Math.abs(item.unitPrice - dto.unitPrice) > 0.0001) {
+      throw new Error("El precio de venta se modifica en la cotización, no en la referencia de Compras.");
+    }
     const erpCode = (item.externalProductCode || item.product?.code || "").trim();
     if (erpCode && Math.max(0, item.stock ?? 0) >= item.qty) {
       throw new Error("This quote item does not require purchasing.");
     }
 
     if (quote.status === "APPROVED") {
-      const requisition = await this.purchaseRequisitionRepository.findByQuoteId(quote.id, actor);
-      if (requisition && requisition.status !== "DRAFT") {
+      const requisitions = await this.purchaseRequisitionRepository.findByQuoteId(quote.id, actor);
+      const itemRequisition = requisitions.find((requisition) =>
+        requisition.items.some((requisitionItem) => requisitionItem.quoteItemId === item.id));
+      if (itemRequisition && itemRequisition.status !== "DRAFT") {
         throw new Error("Purchasing references are locked after the requisition is sent to Purchasing.");
+      }
+      if (itemRequisition && itemRequisition.supplierId !== dto.sellerSupplierId) {
+        throw new Error("La partida ya tiene requisición. No se puede cambiar su proveedor sin revisar primero esa requisición.");
       }
     }
 

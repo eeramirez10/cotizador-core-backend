@@ -8,6 +8,9 @@ import { GptLocalProductSemanticAdapter } from "../../infrastructure/http/gpt-lo
 import { ErpProductLookupAdapter } from "../../infrastructure/http/erp-product-lookup.adapter";
 import { ErpSupplierLookupAdapter } from "../../infrastructure/http/erp-supplier-lookup.adapter";
 import { PurchaseRequisitionRepositoryImpl } from "../../infrastructure/repositories/purchase-requisition.repository-impl";
+import { LocalFileStorageAdapter } from "../../infrastructure/storage/local-file-storage.adapter";
+import { PrismaPurchasePriceNotificationAdapter } from "../../infrastructure/notifications/prisma-purchase-price-notification.adapter";
+import { whatsAppRealtimeBus } from "../../infrastructure/realtime/whatsapp-realtime.container";
 import { QuoteRepositoryImpl } from "../../infrastructure/repositories/quote.repository-impl";
 import { requireAuth } from "../middlewares/auth.middleware";
 import { requireRoles } from "../middlewares/rbac.middleware";
@@ -40,11 +43,14 @@ export class PurchaseRequisitionsRoutes {
       Envs.erpInternalApiKey,
     );
     const controller = new PurchaseRequisitionsController(
-      new PurchaseRequisitionUseCase(repository, quoteRepository, semanticAdapter, erpProductLookup, erpSupplierLookup),
+      new PurchaseRequisitionUseCase(repository, quoteRepository, semanticAdapter, erpProductLookup, erpSupplierLookup, new LocalFileStorageAdapter(Envs.fileStorageRoot), new PrismaPurchasePriceNotificationAdapter(whatsAppRealtimeBus)),
     );
 
     router.get("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.list);
     router.get("/quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getByQuoteId);
+    router.get("/quote/:quoteId/buyers", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.listBuyersForQuote);
+    router.post("/quote/:quoteId/send-to-purchasing", requireAuth, requireRoles("SELLER"), controller.sendUnquotedItemsToPurchasing);
+    router.post("/quote/:quoteId/finalize-prices", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.finalizePricesForQuote);
     router.post("/from-quote/:quoteId", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.createFromQuote);
     router.get("/suppliers", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.listSuppliers);
     router.get("/suppliers/erp/search", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.searchErpSuppliers);
@@ -53,12 +59,16 @@ export class PurchaseRequisitionsRoutes {
     router.patch("/suppliers/:supplierId", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.updateSupplier);
     router.patch("/suppliers/:supplierId/status", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.setSupplierActive);
     router.get("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.getById);
+    router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.deletePermanently);
+    router.get("/:id/buyers", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), controller.listBuyers);
     router.patch("/:id/document", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateDocument);
     router.patch("/:id/items/:itemId", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateItem);
     router.post("/:id/items/:itemId/link-erp", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.linkItemToErp);
     router.post("/:id/submit", requireAuth, requireRoles("SELLER"), controller.submit);
     router.patch("/:id/assign", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.assign);
     router.post("/:id/items/:itemId/offers", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.createOffer);
+    router.post("/:id/offers/batch", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.createOffersBatch);
+    router.put("/:id/supplier-quotes/:supplierQuoteId/offers", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.updateOffersBatch);
     router.patch("/:id/items/:itemId/offers/:offerId/code", requireAuth, requireRoles("ADMIN", "SELLER", "PURCHASING"), controller.updateSupplierCode);
     router.post("/:id/items/:itemId/offers/:offerId/select", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.selectOffer);
     router.put("/:id/items/:itemId/allocations", requireAuth, requireRoles("ADMIN", "PURCHASING"), controller.allocateOffers);

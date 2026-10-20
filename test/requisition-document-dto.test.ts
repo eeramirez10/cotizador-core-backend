@@ -1,10 +1,17 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  AssignPurchaseRequisitionRequestDto,
   UpdatePurchaseRequisitionDocumentRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
   UpdatePurchaseSupplierCodeRequestDto,
 } from "../src/domain/dtos/request/purchase-requisition-request.dto";
+
+test("sending a requisition requires a selected purchasing user", () => {
+  assert.match(AssignPurchaseRequisitionRequestDto.create({})[0] || "", /buyerUserId is required/);
+  assert.match(AssignPurchaseRequisitionRequestDto.create({ buyerUserId: "   " })[0] || "", /buyerUserId is required/);
+  assert.equal(AssignPurchaseRequisitionRequestDto.create({ buyerUserId: "  buyer-1  " })[1]?.buyerUserId, "buyer-1");
+});
 
 test("document references are optional and can be cleared without changing other fields", () => {
   const [error, dto] = UpdatePurchaseRequisitionDocumentRequestDto.create({

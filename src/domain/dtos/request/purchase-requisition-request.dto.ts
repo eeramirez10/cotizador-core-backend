@@ -199,6 +199,23 @@ export class AssignPurchaseRequisitionRequestDto {
   }
 }
 
+export class SendUnquotedRequisitionRequestDto {
+  constructor(public readonly itemIds: string[], public readonly buyerUserId: string) {}
+
+  static create(input: unknown): [string?, SendUnquotedRequisitionRequestDto?] {
+    const body = input as Record<string, unknown> | null;
+    const itemIds = body?.itemIds;
+    const buyerUserId = body?.buyerUserId;
+    const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!Array.isArray(itemIds) || itemIds.length === 0) return ["Selecciona al menos una partida."];
+    if (itemIds.length > 500) return ["Selecciona un máximo de 500 partidas por solicitud."];
+    if (itemIds.some((id) => typeof id !== "string" || !uuid.test(id))) return ["La selección contiene una partida sin identificador válido. Actualiza la cotización y vuelve a intentarlo."];
+    if (new Set(itemIds).size !== itemIds.length) return ["La selección contiene partidas duplicadas."];
+    if (typeof buyerUserId !== "string" || !uuid.test(buyerUserId)) return ["Selecciona un responsable de Compras válido."];
+    return [, new SendUnquotedRequisitionRequestDto(itemIds, buyerUserId)];
+  }
+}
+
 export class CreatePurchaseSupplierOfferRequestDto {
   constructor(
     public readonly supplierId: string,
@@ -257,6 +274,8 @@ export class CreatePurchaseSupplierOfferRequestDto {
     if (!Number.isFinite(unitCost) || unitCost < 0) return ["unitCost must be zero or greater."];
     if (currency !== "MXN" && currency !== "USD") return ["currency is invalid."];
     if (currency === "USD" && (!exchangeRate || !Number.isFinite(exchangeRate) || exchangeRate <= 0)) return ["exchangeRate is required for USD offers."];
+    if (!optionalText(body.origin)) return ["origin is required for supplier offers."];
+    if (!optionalText(body.deliveryTime)) return ["deliveryTime is required for supplier offers."];
     if (!Number.isFinite(taxRate) || taxRate < 0 || taxRate > 1) return ["taxRate is invalid."];
     for (const [field, value] of Object.entries({ listUnitPrice, minimumQty, documentSubtotal, documentTax, documentTotal, documentDiscount, documentFreight, documentOtherCharges })) {
       if (value !== null && (!Number.isFinite(value) || value < 0)) return [`${field} is invalid.`];
@@ -300,6 +319,87 @@ export class CreatePurchaseSupplierOfferRequestDto {
       documentTotal,
       optionalText(body.notes) ?? null,
     )];
+  }
+}
+
+export class CreatePurchaseSupplierOffersBatchRequestDto {
+  constructor(public readonly offers: Array<{
+    itemId: string;
+    offer: CreatePurchaseSupplierOfferRequestDto;
+    itemDetails?: Pick<UpdatePurchaseRequisitionItemRequestDto["data"],
+      "standard" | "diameter" | "thickness" | "bore" | "technicalFamily" | "technicalAttributes" | "originRestrictions">;
+  }>, public readonly deliveryState: string | null) {}
+
+  static create(input: unknown): [string?, CreatePurchaseSupplierOffersBatchRequestDto?] {
+    if (!input || typeof input !== "object" || !Array.isArray((input as { offers?: unknown }).offers)) return ["offers must be an array."];
+    const rows = (input as { offers: unknown[] }).offers;
+    if (rows.length < 1 || rows.length > 100) return ["Selecciona entre 1 y 100 partidas."];
+    const offers: CreatePurchaseSupplierOffersBatchRequestDto["offers"] = [];
+    for (const [index, row] of rows.entries()) {
+      if (!row || typeof row !== "object") return [`Partida ${index + 1}: datos inválidos.`];
+      const itemId = typeof (row as { itemId?: unknown }).itemId === "string" ? (row as { itemId: string }).itemId.trim() : "";
+      if (!itemId) return [`Partida ${index + 1}: itemId es obligatorio.`];
+      const [error, offer] = CreatePurchaseSupplierOfferRequestDto.create(row);
+      if (error || !offer) return [`Partida ${index + 1}: ${error || "datos inválidos."}`];
+      const rawDetails = (row as { itemDetails?: unknown }).itemDetails;
+      let itemDetails: CreatePurchaseSupplierOffersBatchRequestDto["offers"][number]["itemDetails"];
+      if (rawDetails !== undefined) {
+        const [detailsError, parsed] = UpdatePurchaseRequisitionItemRequestDto.create(rawDetails);
+        if (detailsError || !parsed) return [`Partida ${index + 1}: ${detailsError || "datos técnicos inválidos."}`];
+        itemDetails = {
+          standard: parsed.data.standard, diameter: parsed.data.diameter,
+          thickness: parsed.data.thickness, bore: parsed.data.bore,
+          technicalFamily: parsed.data.technicalFamily,
+          technicalAttributes: parsed.data.technicalAttributes,
+          originRestrictions: parsed.data.originRestrictions,
+        };
+      }
+      offers.push({ itemId, offer, itemDetails });
+    }
+    if (new Set(offers.map(({ itemId }) => itemId)).size !== offers.length) return ["No repitas partidas en el lote."];
+    if (new Set(offers.map(({ offer }) => offer.supplierId)).size !== 1) return ["Todas las partidas deben tener el mismo proveedor."];
+    if (new Set(offers.map(({ offer }) => offer.currency)).size !== 1) return ["La cotización del proveedor debe usar una sola moneda."];
+    if (new Set(offers.map(({ offer }) => offer.exchangeRate)).size !== 1) return ["Usa el mismo tipo de cambio en todas las partidas."];
+    if (new Set(offers.map(({ offer }) => offer.taxRate)).size !== 1) return ["Usa la misma tasa de IVA en todas las partidas."];
+    const header = offers[0].offer;
+    for (const { offer } of offers.slice(1)) {
+      if (offer.quoteDate.getTime() !== header.quoteDate.getTime()
+        || offer.validUntil?.getTime() !== header.validUntil?.getTime()
+        || offer.externalReference !== header.externalReference
+        || offer.paymentTerms !== header.paymentTerms
+        || offer.deliveryTerms !== header.deliveryTerms
+        || offer.documentSubtotal !== header.documentSubtotal
+        || offer.documentDiscount !== header.documentDiscount
+        || offer.documentFreight !== header.documentFreight
+        || offer.documentOtherCharges !== header.documentOtherCharges
+        || offer.taxIncluded !== header.taxIncluded
+        || offer.documentTax !== header.documentTax
+        || offer.documentTotal !== header.documentTotal) return ["Los datos generales de la cotización deben coincidir en todo el lote."];
+    }
+    return [, new CreatePurchaseSupplierOffersBatchRequestDto(offers, optionalText((input as Record<string, unknown>).deliveryState) ?? null)];
+  }
+}
+
+export class UpdatePurchaseSupplierOffersBatchRequestDto {
+  constructor(
+    public readonly offers: Array<CreatePurchaseSupplierOffersBatchRequestDto["offers"][number] & { offerId: string | null }>,
+    public readonly deliveryState: string | null,
+  ) {}
+
+  static create(input: unknown): [string?, UpdatePurchaseSupplierOffersBatchRequestDto?] {
+    const [error, batch] = CreatePurchaseSupplierOffersBatchRequestDto.create(input);
+    if (error || !batch) return [error || "Datos del lote inválidos."];
+    const rows = (input as { offers: Array<{ offerId?: unknown }> }).offers;
+    const offers: UpdatePurchaseSupplierOffersBatchRequestDto["offers"] = [];
+    for (const [index, row] of rows.entries()) {
+      if (row.offerId !== undefined && (typeof row.offerId !== "string" || !row.offerId.trim())) {
+        return [`Partida ${index + 1}: offerId no es válido.`];
+      }
+      offers.push({ ...batch.offers[index], offerId: typeof row.offerId === "string" ? row.offerId.trim() : null });
+    }
+    const existingIds = offers.flatMap(({ offerId }) => offerId ? [offerId] : []);
+    if (new Set(existingIds).size !== existingIds.length) return ["No repitas propuestas existentes en el lote."];
+    return [, new UpdatePurchaseSupplierOffersBatchRequestDto(offers, batch.deliveryState)];
   }
 }
 

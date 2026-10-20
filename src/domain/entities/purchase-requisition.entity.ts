@@ -8,6 +8,7 @@ import type {
   SupplierSource,
   SupplierStatus,
   PurchaseOfferSource,
+  QuoteStatus,
   SupplierContactChannel,
   SupplierPhoneKind,
 } from "../../infrastructure/database/generated/enums";
@@ -168,7 +169,11 @@ export interface PurchaseRequisitionEntity {
   requisitionNumber: string;
   quoteId: string;
   quoteNumber: string;
+  quoteStatus: QuoteStatus;
+  supplierId: string | null;
+  supplierName: string | null;
   quoteCurrency: Currency;
+  quoteExchangeRate: number;
   branchId: string;
   branchName: string;
   branchAddress: string | null;

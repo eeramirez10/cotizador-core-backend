@@ -1,12 +1,17 @@
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
+import type { PurchasePriceNotificationPort } from "../contracts/purchase-price-notification.port";
+import { FileStoragePort } from "../contracts/file-storage.port";
 import { ErpProductLookupPort } from "../contracts/erp-product-lookup.port";
 import { ErpSupplierLookupPort } from "../contracts/erp-supplier-lookup.port";
 import type { PurchaseRequisitionActor, SupplierOfferAllocation } from "../datasources/purchase-requisition.datasource";
 import {
   AssignPurchaseRequisitionRequestDto,
   CreatePurchaseSupplierOfferRequestDto,
+  CreatePurchaseSupplierOffersBatchRequestDto,
+  UpdatePurchaseSupplierOffersBatchRequestDto,
   GetPurchaseRequisitionsQueryDto,
   SaveSupplierRequestDto,
+  SendUnquotedRequisitionRequestDto,
   SetSupplierActiveRequestDto,
   SyncErpSupplierRequestDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
@@ -16,6 +21,8 @@ import {
 } from "../dtos/request/purchase-requisition-request.dto";
 import { PurchaseRequisitionResponseDto, SupplierResponseDto } from "../dtos/response/purchase-requisition-response.dto";
 import type { QuoteEntity } from "../entities/quote.entity";
+import type { PurchaseRequisitionEntity } from "../entities/purchase-requisition.entity";
+import { canRequestPurchasingPrices, isPurchasingPriceReady } from "./purchase-price-inquiry-rule";
 import { PurchaseRequisitionRepository } from "../repositories/purchase-requisition.repository";
 import { QuoteRepository } from "../repositories/quote.repository";
 import { canonicalizeProductText, normalizeProductDisplayText } from "../utils/canonical-product-text";
@@ -32,12 +39,14 @@ export class PurchaseRequisitionUseCase {
     private readonly semanticPort: LocalProductSemanticPort,
     private readonly erpProductLookup: ErpProductLookupPort,
     private readonly erpSupplierLookup: ErpSupplierLookupPort,
+    private readonly fileStorage: FileStoragePort,
+    private readonly priceNotifications?: PurchasePriceNotificationPort,
   ) {}
 
   async ensureAfterApproval(quote: QuoteEntity) {
-    if (quote.captureMethod === "EXCEL_IMPORT") return null;
-    const requisition = await this.repository.ensureForApprovedQuote(quote);
-    return requisition ? new PurchaseRequisitionResponseDto(requisition) : null;
+    if (quote.captureMethod === "EXCEL_IMPORT") return [];
+    const requisitions = await this.repository.ensureForApprovedQuote(quote);
+    return requisitions.map((requisition) => new PurchaseRequisitionResponseDto(requisition));
   }
 
   async createFromApprovedQuote(quoteId: string, actor: PurchaseRequisitionActor) {
@@ -51,6 +60,29 @@ export class PurchaseRequisitionUseCase {
       throw new Error("Purchase requisitions cannot be created from Excel-imported quotes.");
     }
     return this.ensureAfterApproval(quote);
+  }
+
+  async listBuyersForQuote(quoteId: string, actor: PurchaseRequisitionActor) {
+    const quote = await this.quoteRepository.findById({
+      id: quoteId,
+      scope: { role: actor.role, userId: actor.id, branchId: actor.branchId },
+    });
+    if (!quote) throw new Error("Quote not found.");
+    return this.repository.listBuyersForBranch(quote.branchId);
+  }
+
+  async sendUnquotedItemsToPurchasing(quoteId: string, dto: SendUnquotedRequisitionRequestDto, actor: PurchaseRequisitionActor) {
+    const quote = await this.quoteRepository.findById({
+      id: quoteId,
+      scope: { role: actor.role, userId: actor.id, branchId: actor.branchId },
+    });
+    if (!quote) throw new Error("Quote not found.");
+    if (!canRequestPurchasingPrices(quote.status, quote.captureMethod)) {
+      throw new Error("La cotización debe estar en borrador o aprobada y creada en el sistema.");
+    }
+    const requisition = await this.repository.sendUnquotedItemsToPurchasing(quote, dto.itemIds, dto.buyerUserId, actor);
+    await this.notifyPriceRequest(requisition);
+    return new PurchaseRequisitionResponseDto(requisition);
   }
 
   async list(dto: GetPurchaseRequisitionsQueryDto, actor: PurchaseRequisitionActor) {
@@ -76,9 +108,24 @@ export class PurchaseRequisitionUseCase {
     return new PurchaseRequisitionResponseDto(requisition);
   }
 
+  async listBuyers(id: string, actor: PurchaseRequisitionActor) {
+    const buyers = await this.repository.listBuyers(id, actor);
+    if (!buyers) throw new Error("Purchase requisition not found.");
+    return buyers;
+  }
+
   async getByQuoteId(quoteId: string, actor: PurchaseRequisitionActor) {
-    const requisition = await this.repository.findByQuoteId(quoteId, actor);
-    return requisition ? new PurchaseRequisitionResponseDto(requisition) : null;
+    const requisitions = await this.repository.findByQuoteId(quoteId, actor);
+    return requisitions.map((requisition) => new PurchaseRequisitionResponseDto(requisition));
+  }
+
+  async deletePermanently(id: string, confirmation: string, actor: PurchaseRequisitionActor) {
+    if (actor.role !== "ADMIN") throw new Error("Only ADMIN can delete purchase requisitions.");
+    const deleted = await this.repository.deletePermanently(id, confirmation, actor);
+    if (!deleted) throw new Error("Purchase requisition not found.");
+    const results = await Promise.allSettled(deleted.storageKeysToDelete.map((key) => this.fileStorage.delete(key)));
+    const failed = results.filter((result) => result.status === "rejected");
+    if (failed.length > 0) console.error("Unable to delete some requisition files from storage.", { count: failed.length });
   }
 
   async updateItem(
@@ -132,9 +179,10 @@ export class PurchaseRequisitionUseCase {
     return new PurchaseRequisitionResponseDto(updated);
   }
 
-  async submit(id: string, actor: PurchaseRequisitionActor) {
-    const updated = await this.repository.submit(id, actor);
+  async submit(id: string, dto: AssignPurchaseRequisitionRequestDto, actor: PurchaseRequisitionActor) {
+    const updated = await this.repository.submit(id, dto.buyerUserId, actor);
     if (!updated) throw new Error("Purchase requisition not found.");
+    await this.notifyPriceRequest(updated);
     return new PurchaseRequisitionResponseDto(updated);
   }
 
@@ -189,6 +237,33 @@ export class PurchaseRequisitionUseCase {
     return new PurchaseRequisitionResponseDto(updated);
   }
 
+  async createOffersBatch(id: string, dto: CreatePurchaseSupplierOffersBatchRequestDto, actor: PurchaseRequisitionActor) {
+    const saved = await this.repository.createOffersBatch(id, dto.offers.map(({ itemId, offer, itemDetails }) => ({
+      ...offer,
+      requisitionItemId: itemId,
+      deliveryState: dto.deliveryState,
+      itemDetails,
+      source: "PURCHASING" as const,
+      actorUserId: actor.id,
+    })), actor);
+    if (!saved) throw new Error("Purchase requisition or item not found.");
+    return { requisition: new PurchaseRequisitionResponseDto(saved.requisition).toJSON(), offerIds: saved.offerIds };
+  }
+
+  async updateOffersBatch(id: string, supplierQuoteId: string, dto: UpdatePurchaseSupplierOffersBatchRequestDto, actor: PurchaseRequisitionActor) {
+    const saved = await this.repository.updateOffersBatch(id, supplierQuoteId, dto.offers.map(({ itemId, offer, itemDetails, offerId }) => ({
+      ...offer,
+      offerId,
+      requisitionItemId: itemId,
+      deliveryState: dto.deliveryState,
+      itemDetails,
+      source: "PURCHASING" as const,
+      actorUserId: actor.id,
+    })), actor);
+    if (!saved) throw new Error("Purchase requisition or supplier quote not found.");
+    return { requisition: new PurchaseRequisitionResponseDto(saved.requisition).toJSON(), offerIds: saved.offerIds };
+  }
+
   async selectOffer(id: string, itemId: string, offerId: string, actor: PurchaseRequisitionActor) {
     const updated = await this.repository.selectOffer(id, itemId, offerId, actor);
     if (!updated) throw new Error("Supplier offer not found.");
@@ -199,6 +274,30 @@ export class PurchaseRequisitionUseCase {
     const updated = await this.repository.allocateOffers(id, itemId, allocations, actor);
     if (!updated) throw new Error("Purchase requisition item not found.");
     return new PurchaseRequisitionResponseDto(updated);
+  }
+
+  async finalizePricesForQuote(quoteId: string, actor: PurchaseRequisitionActor) {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) throw new Error("Only ADMIN or PURCHASING can finalize purchasing prices.");
+    if (!this.priceNotifications) throw new Error("El servicio de notificaciones de Compras no está disponible.");
+    const requisitions = await this.repository.finalizePricesForQuote(quoteId, actor);
+    if (!requisitions) throw new Error("Quote or purchase requisitions not found.");
+    await this.notifyPriceReady(requisitions);
+    return requisitions.map((requisition) => new PurchaseRequisitionResponseDto(requisition).toJSON());
+  }
+
+  private async notifyPriceRequest(requisition: PurchaseRequisitionEntity): Promise<void> {
+    try {
+      await this.priceNotifications?.requested(requisition);
+    } catch (error) {
+      console.error("purchase_price_request_notification_failed", error);
+    }
+  }
+
+  private async notifyPriceReady(requisitions: PurchaseRequisitionEntity[]): Promise<void> {
+    if (!requisitions.length || requisitions.some((requisition) => !isPurchasingPriceReady(requisition.items))) {
+      throw new Error("Las partidas de Compras aún no tienen una propuesta confirmada para toda la cantidad.");
+    }
+    await this.priceNotifications?.ready(requisitions);
   }
 
   async generateSupplierRequisitions(id: string, actor: PurchaseRequisitionActor) {

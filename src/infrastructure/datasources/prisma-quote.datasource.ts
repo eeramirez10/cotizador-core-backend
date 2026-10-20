@@ -24,12 +24,15 @@ import {
   UpdateQuoteDeliveryAttemptStatusDatasourceParams,
   UpdateQuoteItemDatasourceParams,
   UpdateQuoteProcurementReferenceDatasourceParams,
+  ReviewQuoteSalePricesDatasourceParams,
 } from "../../domain/datasources/quote.datasource";
 import { QuoteEntity, QuoteListSummaryEntity } from "../../domain/entities/quote.entity";
 import { Prisma } from "../database/generated/client";
 import { prisma } from "../database/prisma-client";
 import { QuoteMapper } from "../mappers/quote.mapper";
 import { assertSameQuoteItemIds, assignQuoteItemPositions } from "./quote-item-positions";
+import { hasPendingPurchasingPrices } from "../../domain/use-cases/purchase-price-inquiry-rule";
+import { getQuoteItemEffectiveCostAudit, getQuoteItemEffectiveUnitCost } from "../../domain/use-cases/quote-item-fulfillment.helper";
 
 const quoteInclude = {
   branch: {
@@ -153,6 +156,7 @@ const quoteInclude = {
       product: {
         select: {
           id: true,
+          source: true,
           code: true,
           ean: true,
           description: true,
@@ -524,6 +528,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           });
 
       if (params.quoteId && !existing) throw new Error("Quote not found.");
+      if (existing) await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${existing.id}))`;
       if (existing?.archivedAt) throw new Error("Archived quotes are read-only.");
       if (existing?.clientDraftId && existing.clientDraftId !== params.clientDraftId) {
         throw new Error("Quote belongs to a different client draft.");
@@ -539,6 +544,36 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       }
       if (existing && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(existing.status)) {
         throw new Error("Quote cannot be edited in current status.");
+      }
+      if (existing && params.action === "SUBMIT_FOR_APPROVAL") {
+        if (await tx.quoteItem.count({ where: { quoteId: existing.id, salePriceReviewRequired: true } })) {
+          throw new Error("Revisa y confirma los precios de venta de las partidas actualizadas por Compras antes de generar la cotización.");
+        }
+        const requisitions = await tx.purchaseRequisition.findMany({
+          where: { quoteId: existing.id, status: { not: "DRAFT" } },
+          select: {
+            status: true,
+            items: {
+              select: {
+                qty: true, status: true,
+                offers: { where: { isSelected: true, isActive: true }, select: { isSelected: true, awardedQty: true } },
+              },
+            },
+          },
+        });
+        if (hasPendingPurchasingPrices(requisitions.map((requisition) => ({
+          status: requisition.status,
+          items: requisition.items.map((item) => ({
+            qty: Number(item.qty),
+            status: item.status,
+            offers: item.offers.map((offer) => ({
+              isSelected: offer.isSelected,
+              awardedQty: offer.awardedQty === null ? null : Number(offer.awardedQty),
+            })),
+          })),
+        })))) {
+          throw new Error("Compras aún tiene partidas pendientes de cotizar. Espera sus precios antes de enviar la cotización a aprobación.");
+        }
       }
       if (params.reorderItems && (
         params.action !== "SAVE_DRAFT"
@@ -649,14 +684,63 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
 
       const existingItems = await tx.quoteItem.findMany({
         where: { quoteId: quote.id },
-        select: { clientItemId: true, position: true },
+        select: {
+          id: true, clientItemId: true, position: true, qty: true, unit: true,
+          productId: true, externalProductCode: true, customerDescription: true,
+          sellerQuotedUnitCost: true, sellerCostSource: true, sellerQuotedCurrency: true,
+          sellerQuotedExchangeRate: true,
+          salePriceReviewRequired: true,
+          purchaseSuggestedUnitPrice: true,
+          purchaseRequisitionItem: { select: { id: true } },
+        },
       });
       const positionedItems = assignQuoteItemPositions(existingItems, params.items, params.reorderItems);
-      await tx.quoteItem.deleteMany({ where: { quoteId: quote.id } });
-      if (params.items.length > 0) {
-        await tx.quoteItem.createMany({
-          data: positionedItems.map((item) => ({ quoteId: quote.id, ...item })),
-        });
+      if (existingItems.some((item) => item.purchaseRequisitionItem)) {
+        const incomingByClientId = new Map(positionedItems.map((item) => [item.clientItemId, item]));
+        for (const current of existingItems.filter((item) => item.purchaseRequisitionItem)) {
+          const incoming = current.clientItemId ? incomingByClientId.get(current.clientItemId) : undefined;
+          if (!incoming || Number(current.qty) !== incoming.qty || current.unit !== incoming.unit
+            || current.productId !== incoming.productId
+            || current.externalProductCode !== incoming.externalProductCode
+            || current.customerDescription !== incoming.customerDescription) {
+            throw new Error("Una partida solicitada a Compras cambió de material o cantidad. Revisa la solicitud antes de modificarla.");
+          }
+        }
+        const oldByClientId = new Map(existingItems.map((item) => [item.clientItemId, item]));
+        const nextIds = new Set(positionedItems.map((item) => item.clientItemId));
+        const keptIds = existingItems.filter((item) => item.clientItemId && nextIds.has(item.clientItemId)).map((item) => item.id);
+        await tx.quoteItem.deleteMany({ where: { quoteId: quote.id, id: { notIn: keptIds } } });
+        const temporaryBase = Math.max(0, ...existingItems.map((item) => item.position), ...positionedItems.map((item) => item.position));
+        for (const [index, current] of existingItems.entries()) {
+          if (nextIds.has(current.clientItemId || "")) {
+            await tx.quoteItem.update({ where: { id: current.id }, data: { position: temporaryBase + index + 1 } });
+          }
+        }
+        for (const item of positionedItems) {
+          const current = oldByClientId.get(item.clientItemId);
+          if (!current) {
+            await tx.quoteItem.create({ data: { quoteId: quote.id, ...item } });
+          } else {
+            const protectedCost = current.purchaseRequisitionItem
+              ? {
+                  sellerQuotedUnitCost: current.sellerQuotedUnitCost,
+                  sellerCostSource: current.sellerCostSource,
+                  sellerQuotedCurrency: current.sellerQuotedCurrency,
+                  sellerQuotedExchangeRate: current.sellerQuotedExchangeRate,
+                }
+              : {};
+            await tx.quoteItem.update({ where: { id: current.id }, data: { ...item, ...protectedCost,
+              salePriceReviewRequired: current.salePriceReviewRequired,
+              purchaseSuggestedUnitPrice: current.purchaseSuggestedUnitPrice } });
+          }
+        }
+      } else {
+        await tx.quoteItem.deleteMany({ where: { quoteId: quote.id } });
+        if (params.items.length > 0) {
+          await tx.quoteItem.createMany({
+            data: positionedItems.map((item) => ({ quoteId: quote.id, ...item })),
+          });
+        }
       }
 
       const targetStatus = params.action === "SUBMIT_FOR_APPROVAL" ? params.submissionStatus : quote.status;
@@ -1368,9 +1452,20 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
     return prisma.$transaction(async (tx) => {
       const quote = await tx.quote.findFirst({
         where: { id: params.quoteId, ...this.buildScopeWhere(params.scope) },
-        select: { id: true, status: true },
+        select: { id: true, status: true, currency: true, exchangeRate: true, taxRate: true },
       });
       if (!quote) return null;
+
+      const currentItem = await tx.quoteItem.findFirst({ where: { id: params.itemId, quoteId: quote.id } });
+      if (!currentItem) return null;
+      const costAudit = getQuoteItemEffectiveCostAudit({
+        qty: Number(currentItem.qty), stock: currentItem.stock === null ? null : Number(currentItem.stock),
+        externalProductCode: currentItem.externalProductCode, cost: Number(currentItem.cost), costCurrency: currentItem.costCurrency,
+        sellerQuotedUnitCost: params.data.sellerQuotedUnitCost ?? null,
+        sellerQuotedCurrency: params.data.sellerQuotedCurrency ?? null,
+        sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate ?? null,
+        unitPrice: Number(currentItem.unitPrice),
+      }, quote.currency, Number(quote.exchangeRate));
 
       const updated = await tx.quoteItem.updateMany({
         where: { id: params.itemId, quoteId: quote.id },
@@ -1378,6 +1473,13 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           sellerSupplierId: params.data.sellerSupplierId,
           sellerSupplierNameSnapshot: params.data.sellerSupplierNameSnapshot,
           sellerQuotedUnitCost: params.data.sellerQuotedUnitCost,
+          marginPct: costAudit.effectiveCostAtQuote > 0
+            ? Number((((Number(currentItem.unitPrice) / costAudit.effectiveCostAtQuote) - 1) * 100).toFixed(4)) : 0,
+          effectiveCostAtQuote: Number(costAudit.effectiveCostAtQuote.toFixed(4)),
+          isBelowEffectiveCost: costAudit.isBelowEffectiveCost,
+          effectiveCostVariance: Number(costAudit.effectiveCostVariance.toFixed(4)),
+          effectiveCostVariancePct: Number(costAudit.effectiveCostVariancePct.toFixed(4)),
+          effectiveCostEvaluatedAt: new Date(), effectiveCostEvaluatedByUserId: params.data.updatedByUserId,
           sellerCostSource: params.data.sellerCostSource,
           sellerQuotedCurrency: params.data.sellerQuotedCurrency,
           sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate,
@@ -1401,6 +1503,8 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       });
       if (updated.count === 0) return null;
 
+      await this.recalculateQuoteTotals(tx, quote.id, Number(quote.taxRate), params.data.updatedByUserId);
+
       await tx.quote.update({
         where: { id: quote.id },
         data: { updatedByUserId: params.data.updatedByUserId },
@@ -1409,12 +1513,66 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         data: {
           quoteId: quote.id,
           status: quote.status,
-          note: "Seller purchasing reference updated without changing commercial quote data.",
+          note: "Seller purchasing reference updated; sale price preserved.",
           actorUserId: params.data.updatedByUserId,
         },
       });
       return this.findByIdWithClient(quote.id, params.scope, tx);
     });
+  }
+
+  async reviewSalePrices(params: ReviewQuoteSalePricesDatasourceParams): Promise<QuoteEntity | null> {
+    const updated = await prisma.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${params.quoteId}))`;
+      const quote = await tx.quote.findFirst({
+        where: { id: params.quoteId, ...this.buildScopeWhere(params.scope) },
+        select: { id: true, status: true, currency: true, exchangeRate: true, taxRate: true },
+      });
+      if (!quote) return false;
+      if (!["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status)) {
+        throw new Error("El precio de una cotización emitida solo puede cambiarse mediante una revisión.");
+      }
+      const rows = await tx.quoteItem.findMany({ where: { quoteId: quote.id, id: { in: params.items.map((item) => item.itemId) } } });
+      if (rows.length !== params.items.length) throw new Error("Una o más partidas ya no están disponibles.");
+      for (const input of params.items) {
+        const row = rows.find((item) => item.id === input.itemId)!;
+        if (!row.salePriceReviewRequired) throw new Error("La partida ya no requiere revisión de precio. Actualiza la pantalla.");
+        const currentCost = getQuoteItemEffectiveUnitCost({
+          qty: Number(row.qty), stock: row.stock === null ? null : Number(row.stock),
+          externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
+          sellerQuotedUnitCost: row.sellerQuotedUnitCost === null ? null : Number(row.sellerQuotedUnitCost),
+          sellerQuotedCurrency: row.sellerQuotedCurrency,
+          sellerQuotedExchangeRate: row.sellerQuotedExchangeRate === null ? null : Number(row.sellerQuotedExchangeRate),
+        }, quote.currency, Number(quote.exchangeRate));
+        if (Math.abs(currentCost - input.expectedUnitCost) > 0.0001) {
+          throw new Error("El costo cambió desde que abriste la revisión. Actualiza la pantalla antes de confirmar.");
+        }
+        const unitPrice = Number(input.unitPrice.toFixed(4));
+        const costAudit = getQuoteItemEffectiveCostAudit({
+          qty: Number(row.qty), stock: row.stock === null ? null : Number(row.stock),
+          externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
+          sellerQuotedUnitCost: row.sellerQuotedUnitCost === null ? null : Number(row.sellerQuotedUnitCost),
+          sellerQuotedCurrency: row.sellerQuotedCurrency,
+          sellerQuotedExchangeRate: row.sellerQuotedExchangeRate === null ? null : Number(row.sellerQuotedExchangeRate),
+          unitPrice,
+        }, quote.currency, Number(quote.exchangeRate));
+        await tx.quoteItem.update({ where: { id: row.id }, data: {
+          unitPrice, subtotal: Number((unitPrice * Number(row.qty)).toFixed(4)),
+          marginPct: currentCost > 0 ? Number((((unitPrice / currentCost) - 1) * 100).toFixed(4)) : 0,
+          effectiveCostAtQuote: Number(costAudit.effectiveCostAtQuote.toFixed(4)),
+          isBelowEffectiveCost: costAudit.isBelowEffectiveCost,
+          effectiveCostVariance: Number(costAudit.effectiveCostVariance.toFixed(4)),
+          effectiveCostVariancePct: Number(costAudit.effectiveCostVariancePct.toFixed(4)),
+          effectiveCostEvaluatedAt: new Date(), effectiveCostEvaluatedByUserId: params.actorUserId,
+          salePriceReviewRequired: false,
+        } });
+      }
+      await this.recalculateQuoteTotals(tx, quote.id, Number(quote.taxRate), params.actorUserId);
+      await tx.quoteEvent.create({ data: { quoteId: quote.id, status: quote.status,
+        note: `Seller reviewed sale prices for ${params.items.length} purchasing item(s).`, actorUserId: params.actorUserId } });
+      return true;
+    }, { timeout: 20_000 });
+    return updated ? this.findById({ id: params.quoteId, scope: params.scope }) : null;
   }
 
   async removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null> {

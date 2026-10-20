@@ -744,7 +744,7 @@ export type QuoteWhereInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
   events?: Prisma.QuoteEventListRelationFilter
-  purchaseRequisition?: Prisma.XOR<Prisma.PurchaseRequisitionNullableScalarRelationFilter, Prisma.PurchaseRequisitionWhereInput> | null
+  purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
   attachments?: Prisma.QuoteAttachmentListRelationFilter
   whatsappPendingActions?: Prisma.WhatsAppPendingActionListRelationFilter
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestListRelationFilter
@@ -844,7 +844,7 @@ export type QuoteOrderByWithRelationInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptOrderByRelationAggregateInput
   orderExports?: Prisma.QuoteOrderExportOrderByRelationAggregateInput
   events?: Prisma.QuoteEventOrderByRelationAggregateInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionOrderByWithRelationInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionOrderByRelationAggregateInput
   attachments?: Prisma.QuoteAttachmentOrderByRelationAggregateInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionOrderByRelationAggregateInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestOrderByRelationAggregateInput
@@ -949,7 +949,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptListRelationFilter
   orderExports?: Prisma.QuoteOrderExportListRelationFilter
   events?: Prisma.QuoteEventListRelationFilter
-  purchaseRequisition?: Prisma.XOR<Prisma.PurchaseRequisitionNullableScalarRelationFilter, Prisma.PurchaseRequisitionWhereInput> | null
+  purchaseRequisitions?: Prisma.PurchaseRequisitionListRelationFilter
   attachments?: Prisma.QuoteAttachmentListRelationFilter
   whatsappPendingActions?: Prisma.WhatsAppPendingActionListRelationFilter
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestListRelationFilter
@@ -1177,7 +1177,7 @@ export type QuoteCreateInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -1261,7 +1261,7 @@ export type QuoteUncheckedCreateInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -1345,7 +1345,7 @@ export type QuoteUpdateInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -1429,7 +1429,7 @@ export type QuoteUncheckedUpdateInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -2603,18 +2603,18 @@ export type QuoteUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutItemsInput, Prisma.QuoteUpdateWithoutItemsInput>, Prisma.QuoteUncheckedUpdateWithoutItemsInput>
 }
 
-export type QuoteCreateNestedOneWithoutPurchaseRequisitionInput = {
-  create?: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionInput>
-  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutPurchaseRequisitionInput
+export type QuoteCreateNestedOneWithoutPurchaseRequisitionsInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutPurchaseRequisitionsInput
   connect?: Prisma.QuoteWhereUniqueInput
 }
 
-export type QuoteUpdateOneRequiredWithoutPurchaseRequisitionNestedInput = {
-  create?: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionInput>
-  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutPurchaseRequisitionInput
-  upsert?: Prisma.QuoteUpsertWithoutPurchaseRequisitionInput
+export type QuoteUpdateOneRequiredWithoutPurchaseRequisitionsNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutPurchaseRequisitionsInput
+  upsert?: Prisma.QuoteUpsertWithoutPurchaseRequisitionsInput
   connect?: Prisma.QuoteWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutPurchaseRequisitionInput, Prisma.QuoteUpdateWithoutPurchaseRequisitionInput>, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutPurchaseRequisitionsInput, Prisma.QuoteUpdateWithoutPurchaseRequisitionsInput>, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionsInput>
 }
 
 export type QuoteCreateNestedOneWithoutAttachmentsInput = {
@@ -2882,7 +2882,7 @@ export type QuoteCreateWithoutBranchInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -2965,7 +2965,7 @@ export type QuoteUncheckedCreateWithoutBranchInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -3145,7 +3145,7 @@ export type QuoteCreateWithoutCreatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -3228,7 +3228,7 @@ export type QuoteUncheckedCreateWithoutCreatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -3321,7 +3321,7 @@ export type QuoteCreateWithoutUpdatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -3404,7 +3404,7 @@ export type QuoteUncheckedCreateWithoutUpdatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -3497,7 +3497,7 @@ export type QuoteCreateWithoutRejectedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -3580,7 +3580,7 @@ export type QuoteUncheckedCreateWithoutRejectedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -3673,7 +3673,7 @@ export type QuoteCreateWithoutCancelledByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -3756,7 +3756,7 @@ export type QuoteUncheckedCreateWithoutCancelledByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -3849,7 +3849,7 @@ export type QuoteCreateWithoutArchivedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -3932,7 +3932,7 @@ export type QuoteUncheckedCreateWithoutArchivedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -4025,7 +4025,7 @@ export type QuoteCreateWithoutProvidedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -4108,7 +4108,7 @@ export type QuoteUncheckedCreateWithoutProvidedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -4201,7 +4201,7 @@ export type QuoteCreateWithoutProvidedByAssignedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -4284,7 +4284,7 @@ export type QuoteUncheckedCreateWithoutProvidedByAssignedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -4377,7 +4377,7 @@ export type QuoteCreateWithoutErpQuoteRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -4460,7 +4460,7 @@ export type QuoteUncheckedCreateWithoutErpQuoteRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -4553,7 +4553,7 @@ export type QuoteCreateWithoutErpOrderRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -4636,7 +4636,7 @@ export type QuoteUncheckedCreateWithoutErpOrderRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -4873,7 +4873,7 @@ export type QuoteCreateWithoutCustomerInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -4956,7 +4956,7 @@ export type QuoteUncheckedCreateWithoutCustomerInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -5065,7 +5065,7 @@ export type QuoteCreateWithoutCustomerContactInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -5148,7 +5148,7 @@ export type QuoteUncheckedCreateWithoutCustomerContactInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -5258,7 +5258,7 @@ export type QuoteCreateWithoutCustomerOnboardingInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -5341,7 +5341,7 @@ export type QuoteUncheckedCreateWithoutCustomerOnboardingInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -5440,7 +5440,7 @@ export type QuoteUpdateWithoutCustomerOnboardingInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -5523,7 +5523,7 @@ export type QuoteUncheckedUpdateWithoutCustomerOnboardingInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -5605,7 +5605,7 @@ export type QuoteCreateWithoutRevisionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -5688,7 +5688,7 @@ export type QuoteUncheckedCreateWithoutRevisionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -5776,7 +5776,7 @@ export type QuoteCreateWithoutRootQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -5859,7 +5859,7 @@ export type QuoteUncheckedCreateWithoutRootQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -5952,7 +5952,7 @@ export type QuoteCreateWithoutNextVersionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -6035,7 +6035,7 @@ export type QuoteUncheckedCreateWithoutNextVersionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -6123,7 +6123,7 @@ export type QuoteCreateWithoutPreviousVersionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -6206,7 +6206,7 @@ export type QuoteUncheckedCreateWithoutPreviousVersionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -6299,7 +6299,7 @@ export type QuoteCreateWithoutSupersedesQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -6382,7 +6382,7 @@ export type QuoteUncheckedCreateWithoutSupersedesQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -6470,7 +6470,7 @@ export type QuoteCreateWithoutSupersededByQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -6553,7 +6553,7 @@ export type QuoteUncheckedCreateWithoutSupersededByQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -6652,7 +6652,7 @@ export type QuoteUpdateWithoutRevisionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -6735,7 +6735,7 @@ export type QuoteUncheckedUpdateWithoutRevisionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -6845,7 +6845,7 @@ export type QuoteUpdateWithoutNextVersionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -6928,7 +6928,7 @@ export type QuoteUncheckedUpdateWithoutNextVersionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -7038,7 +7038,7 @@ export type QuoteUpdateWithoutSupersedesQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -7121,7 +7121,7 @@ export type QuoteUncheckedUpdateWithoutSupersedesQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -7215,7 +7215,7 @@ export type QuoteUpdateWithoutSupersededByQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -7298,7 +7298,7 @@ export type QuoteUncheckedUpdateWithoutSupersededByQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -7381,7 +7381,7 @@ export type QuoteCreateWithoutItemsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -7464,7 +7464,7 @@ export type QuoteUncheckedCreateWithoutItemsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -7563,7 +7563,7 @@ export type QuoteUpdateWithoutItemsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -7646,7 +7646,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -7656,7 +7656,7 @@ export type QuoteUncheckedUpdateWithoutItemsInput = {
   customerOnboarding?: Prisma.CustomerOnboardingUncheckedUpdateOneWithoutAcceptedQuoteNestedInput
 }
 
-export type QuoteCreateWithoutPurchaseRequisitionInput = {
+export type QuoteCreateWithoutPurchaseRequisitionsInput = {
   id?: string
   quoteNumber: string
   clientDraftId?: string | null
@@ -7739,7 +7739,7 @@ export type QuoteCreateWithoutPurchaseRequisitionInput = {
   customerOnboarding?: Prisma.CustomerOnboardingCreateNestedOneWithoutAcceptedQuoteInput
 }
 
-export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
+export type QuoteUncheckedCreateWithoutPurchaseRequisitionsInput = {
   id?: string
   quoteNumber: string
   clientDraftId?: string | null
@@ -7822,23 +7822,23 @@ export type QuoteUncheckedCreateWithoutPurchaseRequisitionInput = {
   customerOnboarding?: Prisma.CustomerOnboardingUncheckedCreateNestedOneWithoutAcceptedQuoteInput
 }
 
-export type QuoteCreateOrConnectWithoutPurchaseRequisitionInput = {
+export type QuoteCreateOrConnectWithoutPurchaseRequisitionsInput = {
   where: Prisma.QuoteWhereUniqueInput
-  create: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionsInput>
 }
 
-export type QuoteUpsertWithoutPurchaseRequisitionInput = {
-  update: Prisma.XOR<Prisma.QuoteUpdateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionInput>
-  create: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionInput>
+export type QuoteUpsertWithoutPurchaseRequisitionsInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionsInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedCreateWithoutPurchaseRequisitionsInput>
   where?: Prisma.QuoteWhereInput
 }
 
-export type QuoteUpdateToOneWithWhereWithoutPurchaseRequisitionInput = {
+export type QuoteUpdateToOneWithWhereWithoutPurchaseRequisitionsInput = {
   where?: Prisma.QuoteWhereInput
-  data: Prisma.XOR<Prisma.QuoteUpdateWithoutPurchaseRequisitionInput, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionInput>
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutPurchaseRequisitionsInput, Prisma.QuoteUncheckedUpdateWithoutPurchaseRequisitionsInput>
 }
 
-export type QuoteUpdateWithoutPurchaseRequisitionInput = {
+export type QuoteUpdateWithoutPurchaseRequisitionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
   clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -7921,7 +7921,7 @@ export type QuoteUpdateWithoutPurchaseRequisitionInput = {
   customerOnboarding?: Prisma.CustomerOnboardingUpdateOneWithoutAcceptedQuoteNestedInput
 }
 
-export type QuoteUncheckedUpdateWithoutPurchaseRequisitionInput = {
+export type QuoteUncheckedUpdateWithoutPurchaseRequisitionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quoteNumber?: Prisma.StringFieldUpdateOperationsInput | string
   clientDraftId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -8078,7 +8078,7 @@ export type QuoteCreateWithoutAttachmentsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
@@ -8161,7 +8161,7 @@ export type QuoteUncheckedCreateWithoutAttachmentsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
@@ -8260,7 +8260,7 @@ export type QuoteUpdateWithoutAttachmentsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
@@ -8343,7 +8343,7 @@ export type QuoteUncheckedUpdateWithoutAttachmentsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
@@ -8425,7 +8425,7 @@ export type QuoteCreateWithoutEventsInput = {
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -8508,7 +8508,7 @@ export type QuoteUncheckedCreateWithoutEventsInput = {
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -8607,7 +8607,7 @@ export type QuoteUpdateWithoutEventsInput = {
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -8690,7 +8690,7 @@ export type QuoteUncheckedUpdateWithoutEventsInput = {
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -8773,7 +8773,7 @@ export type QuoteCreateWithoutDeliveryAttemptsInput = {
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -8856,7 +8856,7 @@ export type QuoteUncheckedCreateWithoutDeliveryAttemptsInput = {
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -8955,7 +8955,7 @@ export type QuoteUpdateWithoutDeliveryAttemptsInput = {
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -9038,7 +9038,7 @@ export type QuoteUncheckedUpdateWithoutDeliveryAttemptsInput = {
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -9121,7 +9121,7 @@ export type QuoteCreateWithoutWhatsappLeadInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -9204,7 +9204,7 @@ export type QuoteUncheckedCreateWithoutWhatsappLeadInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -9313,7 +9313,7 @@ export type QuoteCreateWithoutWhatsappQuoteRequestInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -9396,7 +9396,7 @@ export type QuoteUncheckedCreateWithoutWhatsappQuoteRequestInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -9495,7 +9495,7 @@ export type QuoteUpdateWithoutWhatsappQuoteRequestInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -9578,7 +9578,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappQuoteRequestInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -9662,7 +9662,7 @@ export type QuoteCreateWithoutWhatsappConversationAccessesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -9745,7 +9745,7 @@ export type QuoteUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -9844,7 +9844,7 @@ export type QuoteUpdateWithoutWhatsappConversationAccessesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -9927,7 +9927,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -10010,7 +10010,7 @@ export type QuoteCreateWithoutWhatsappOutboundMessagesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -10093,7 +10093,7 @@ export type QuoteUncheckedCreateWithoutWhatsappOutboundMessagesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -10192,7 +10192,7 @@ export type QuoteUpdateWithoutWhatsappOutboundMessagesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -10275,7 +10275,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappOutboundMessagesInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -10358,7 +10358,7 @@ export type QuoteCreateWithoutWhatsappPendingActionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
@@ -10441,7 +10441,7 @@ export type QuoteUncheckedCreateWithoutWhatsappPendingActionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
@@ -10540,7 +10540,7 @@ export type QuoteUpdateWithoutWhatsappPendingActionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
@@ -10623,7 +10623,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappPendingActionsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
@@ -10706,7 +10706,7 @@ export type QuoteCreateWithoutWhatsappChangeRequestsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutQuoteInput
@@ -10789,7 +10789,7 @@ export type QuoteUncheckedCreateWithoutWhatsappChangeRequestsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutQuoteInput
@@ -10888,7 +10888,7 @@ export type QuoteUpdateWithoutWhatsappChangeRequestsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutQuoteNestedInput
@@ -10971,7 +10971,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappChangeRequestsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutQuoteNestedInput
@@ -11054,7 +11054,7 @@ export type QuoteCreateWithoutWhatsappInternalAlertsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -11137,7 +11137,7 @@ export type QuoteUncheckedCreateWithoutWhatsappInternalAlertsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   orderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -11236,7 +11236,7 @@ export type QuoteUpdateWithoutWhatsappInternalAlertsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -11319,7 +11319,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -11401,7 +11401,7 @@ export type QuoteCreateWithoutOrderExportsInput = {
   items?: Prisma.QuoteItemCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestCreateNestedManyWithoutQuoteInput
@@ -11484,7 +11484,7 @@ export type QuoteUncheckedCreateWithoutOrderExportsInput = {
   items?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutQuoteInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutQuoteInput
   events?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutQuoteInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedCreateNestedOneWithoutQuoteInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutQuoteInput
   attachments?: Prisma.QuoteAttachmentUncheckedCreateNestedManyWithoutQuoteInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedCreateNestedManyWithoutQuoteInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedCreateNestedManyWithoutQuoteInput
@@ -11583,7 +11583,7 @@ export type QuoteUpdateWithoutOrderExportsInput = {
   items?: Prisma.QuoteItemUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -11666,7 +11666,7 @@ export type QuoteUncheckedUpdateWithoutOrderExportsInput = {
   items?: Prisma.QuoteItemUncheckedUpdateManyWithoutQuoteNestedInput
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -11816,7 +11816,7 @@ export type QuoteUpdateWithoutBranchInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -11899,7 +11899,7 @@ export type QuoteUncheckedUpdateWithoutBranchInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -12652,7 +12652,7 @@ export type QuoteUpdateWithoutCreatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -12735,7 +12735,7 @@ export type QuoteUncheckedUpdateWithoutCreatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -12885,7 +12885,7 @@ export type QuoteUpdateWithoutUpdatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -12968,7 +12968,7 @@ export type QuoteUncheckedUpdateWithoutUpdatedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -13118,7 +13118,7 @@ export type QuoteUpdateWithoutRejectedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -13201,7 +13201,7 @@ export type QuoteUncheckedUpdateWithoutRejectedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -13351,7 +13351,7 @@ export type QuoteUpdateWithoutCancelledByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -13434,7 +13434,7 @@ export type QuoteUncheckedUpdateWithoutCancelledByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -13584,7 +13584,7 @@ export type QuoteUpdateWithoutArchivedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -13667,7 +13667,7 @@ export type QuoteUncheckedUpdateWithoutArchivedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -13817,7 +13817,7 @@ export type QuoteUpdateWithoutProvidedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -13900,7 +13900,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -14050,7 +14050,7 @@ export type QuoteUpdateWithoutProvidedByAssignedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -14133,7 +14133,7 @@ export type QuoteUncheckedUpdateWithoutProvidedByAssignedByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -14283,7 +14283,7 @@ export type QuoteUpdateWithoutErpQuoteRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -14366,7 +14366,7 @@ export type QuoteUncheckedUpdateWithoutErpQuoteRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -14516,7 +14516,7 @@ export type QuoteUpdateWithoutErpOrderRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -14599,7 +14599,7 @@ export type QuoteUncheckedUpdateWithoutErpOrderRegisteredByUserInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -14816,7 +14816,7 @@ export type QuoteUpdateWithoutCustomerInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -14899,7 +14899,7 @@ export type QuoteUncheckedUpdateWithoutCustomerInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -15116,7 +15116,7 @@ export type QuoteUpdateWithoutCustomerContactInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -15199,7 +15199,7 @@ export type QuoteUncheckedUpdateWithoutCustomerContactInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -15483,7 +15483,7 @@ export type QuoteUpdateWithoutRootQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -15566,7 +15566,7 @@ export type QuoteUncheckedUpdateWithoutRootQuoteInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -15716,7 +15716,7 @@ export type QuoteUpdateWithoutPreviousVersionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -15799,7 +15799,7 @@ export type QuoteUncheckedUpdateWithoutPreviousVersionInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -16016,7 +16016,7 @@ export type QuoteUpdateWithoutWhatsappLeadInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUpdateManyWithoutQuoteNestedInput
@@ -16099,7 +16099,7 @@ export type QuoteUncheckedUpdateWithoutWhatsappLeadInput = {
   deliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutQuoteNestedInput
   orderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutQuoteNestedInput
   events?: Prisma.QuoteEventUncheckedUpdateManyWithoutQuoteNestedInput
-  purchaseRequisition?: Prisma.PurchaseRequisitionUncheckedUpdateOneWithoutQuoteNestedInput
+  purchaseRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutQuoteNestedInput
   attachments?: Prisma.QuoteAttachmentUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappPendingActions?: Prisma.WhatsAppPendingActionUncheckedUpdateManyWithoutQuoteNestedInput
   whatsappChangeRequests?: Prisma.WhatsAppCustomerChangeRequestUncheckedUpdateManyWithoutQuoteNestedInput
@@ -16188,6 +16188,7 @@ export type QuoteCountOutputType = {
   deliveryAttempts: number
   orderExports: number
   events: number
+  purchaseRequisitions: number
   attachments: number
   whatsappPendingActions: number
   whatsappChangeRequests: number
@@ -16203,6 +16204,7 @@ export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   deliveryAttempts?: boolean | QuoteCountOutputTypeCountDeliveryAttemptsArgs
   orderExports?: boolean | QuoteCountOutputTypeCountOrderExportsArgs
   events?: boolean | QuoteCountOutputTypeCountEventsArgs
+  purchaseRequisitions?: boolean | QuoteCountOutputTypeCountPurchaseRequisitionsArgs
   attachments?: boolean | QuoteCountOutputTypeCountAttachmentsArgs
   whatsappPendingActions?: boolean | QuoteCountOutputTypeCountWhatsappPendingActionsArgs
   whatsappChangeRequests?: boolean | QuoteCountOutputTypeCountWhatsappChangeRequestsArgs
@@ -16261,6 +16263,13 @@ export type QuoteCountOutputTypeCountOrderExportsArgs<ExtArgs extends runtime.Ty
  */
 export type QuoteCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.QuoteEventWhereInput
+}
+
+/**
+ * QuoteCountOutputType without action
+ */
+export type QuoteCountOutputTypeCountPurchaseRequisitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseRequisitionWhereInput
 }
 
 /**
@@ -16396,7 +16405,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   deliveryAttempts?: boolean | Prisma.Quote$deliveryAttemptsArgs<ExtArgs>
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
   events?: boolean | Prisma.Quote$eventsArgs<ExtArgs>
-  purchaseRequisition?: boolean | Prisma.Quote$purchaseRequisitionArgs<ExtArgs>
+  purchaseRequisitions?: boolean | Prisma.Quote$purchaseRequisitionsArgs<ExtArgs>
   attachments?: boolean | Prisma.Quote$attachmentsArgs<ExtArgs>
   whatsappPendingActions?: boolean | Prisma.Quote$whatsappPendingActionsArgs<ExtArgs>
   whatsappChangeRequests?: boolean | Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>
@@ -16669,7 +16678,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   deliveryAttempts?: boolean | Prisma.Quote$deliveryAttemptsArgs<ExtArgs>
   orderExports?: boolean | Prisma.Quote$orderExportsArgs<ExtArgs>
   events?: boolean | Prisma.Quote$eventsArgs<ExtArgs>
-  purchaseRequisition?: boolean | Prisma.Quote$purchaseRequisitionArgs<ExtArgs>
+  purchaseRequisitions?: boolean | Prisma.Quote$purchaseRequisitionsArgs<ExtArgs>
   attachments?: boolean | Prisma.Quote$attachmentsArgs<ExtArgs>
   whatsappPendingActions?: boolean | Prisma.Quote$whatsappPendingActionsArgs<ExtArgs>
   whatsappChangeRequests?: boolean | Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>
@@ -16743,7 +16752,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     deliveryAttempts: Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>[]
     orderExports: Prisma.$QuoteOrderExportPayload<ExtArgs>[]
     events: Prisma.$QuoteEventPayload<ExtArgs>[]
-    purchaseRequisition: Prisma.$PurchaseRequisitionPayload<ExtArgs> | null
+    purchaseRequisitions: Prisma.$PurchaseRequisitionPayload<ExtArgs>[]
     attachments: Prisma.$QuoteAttachmentPayload<ExtArgs>[]
     whatsappPendingActions: Prisma.$WhatsAppPendingActionPayload<ExtArgs>[]
     whatsappChangeRequests: Prisma.$WhatsAppCustomerChangeRequestPayload<ExtArgs>[]
@@ -17236,7 +17245,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   deliveryAttempts<T extends Prisma.Quote$deliveryAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$deliveryAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteDeliveryAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderExports<T extends Prisma.Quote$orderExportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$orderExportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteOrderExportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Quote$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  purchaseRequisition<T extends Prisma.Quote$purchaseRequisitionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$purchaseRequisitionArgs<ExtArgs>>): Prisma.Prisma__PurchaseRequisitionClient<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  purchaseRequisitions<T extends Prisma.Quote$purchaseRequisitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$purchaseRequisitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseRequisitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attachments<T extends Prisma.Quote$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappPendingActions<T extends Prisma.Quote$whatsappPendingActionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappPendingActionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppPendingActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   whatsappChangeRequests<T extends Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$whatsappChangeRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WhatsAppCustomerChangeRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -18163,9 +18172,9 @@ export type Quote$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Quote.purchaseRequisition
+ * Quote.purchaseRequisitions
  */
-export type Quote$purchaseRequisitionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Quote$purchaseRequisitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the PurchaseRequisition
    */
@@ -18179,6 +18188,11 @@ export type Quote$purchaseRequisitionArgs<ExtArgs extends runtime.Types.Extensio
    */
   include?: Prisma.PurchaseRequisitionInclude<ExtArgs> | null
   where?: Prisma.PurchaseRequisitionWhereInput
+  orderBy?: Prisma.PurchaseRequisitionOrderByWithRelationInput | Prisma.PurchaseRequisitionOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseRequisitionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseRequisitionScalarFieldEnum | Prisma.PurchaseRequisitionScalarFieldEnum[]
 }
 
 /**

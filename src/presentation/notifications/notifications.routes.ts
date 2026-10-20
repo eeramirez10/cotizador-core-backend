@@ -5,13 +5,19 @@ import { requireAuth } from "../middlewares/auth.middleware";
 export class NotificationsRoutes {
   static routes(): Router {
     const router = Router();
+    const visibleTypes = ["CUSTOMER_ONBOARDING_ERP_LINKED", "PURCHASE_PRICE_REQUESTED", "PURCHASE_PRICE_READY"] as const;
+    const titles = {
+      CUSTOMER_ONBOARDING_ERP_LINKED: "Cliente vinculado en ERP",
+      PURCHASE_PRICE_REQUESTED: "Nueva solicitud de precios",
+      PURCHASE_PRICE_READY: "Precios de Compras listos",
+    } as const;
     router.use(requireAuth);
 
     router.get("/", async (req, res) => {
       if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
       try {
         const rows = await prisma.whatsAppInternalAlert.findMany({
-          where: { recipientUserId: req.user.id, type: "CUSTOMER_ONBOARDING_ERP_LINKED" },
+          where: { recipientUserId: req.user.id, type: { in: [...visibleTypes] } },
           orderBy: { createdAt: "desc" },
           take: 50,
           select: { id: true, type: true, customerName: true, reference: true, detail: true, targetPath: true, createdAt: true, readAt: true },
@@ -19,7 +25,7 @@ export class NotificationsRoutes {
         res.json({ items: rows.map((row) => ({
           id: row.id,
           type: row.type,
-          title: "Cliente vinculado en ERP",
+          title: titles[row.type as keyof typeof titles],
           message: `${row.customerName}: ${row.detail}`,
           reference: row.reference,
           targetPath: row.targetPath || "/clients",
@@ -40,7 +46,7 @@ export class NotificationsRoutes {
       }
       try {
         const result = await prisma.whatsAppInternalAlert.updateMany({
-          where: { id, recipientUserId: req.user.id, type: "CUSTOMER_ONBOARDING_ERP_LINKED" },
+          where: { id, recipientUserId: req.user.id, type: { in: [...visibleTypes] } },
           data: { readAt: new Date() },
         });
         if (!result.count) return void res.status(404).json({ error: "Notificación no encontrada." });

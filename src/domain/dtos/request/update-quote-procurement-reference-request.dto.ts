@@ -8,6 +8,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     public readonly sellerSupplierId: string,
     public readonly sellerSupplierName: string,
     public readonly sellerQuotedUnitCost: number,
+    public readonly unitPrice: number | null,
     public readonly sellerCostSource: PurchaseCostSource,
     public readonly sellerQuotedCurrency: Currency,
     public readonly sellerQuotedExchangeRate: number | null,
@@ -35,6 +36,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     const supplierId = optionalText(body.sellerSupplierId);
     const supplierName = optionalText(body.sellerSupplierName);
     const unitCost = Number(body.sellerQuotedUnitCost);
+    const unitPrice = body.unitPrice === undefined || body.unitPrice === null ? null : Number(body.unitPrice);
     const costSource = body.sellerCostSource;
     const currency = body.sellerQuotedCurrency;
     const exchangeRate = body.sellerQuotedExchangeRate === null || body.sellerQuotedExchangeRate === ""
@@ -49,6 +51,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     if (!supplierId) return ["sellerSupplierId is required."];
     if (!supplierName) return ["sellerSupplierName is required."];
     if (!Number.isFinite(unitCost) || unitCost <= 0) return ["sellerQuotedUnitCost must be greater than zero."];
+    if (unitPrice !== null && (!Number.isFinite(unitPrice) || unitPrice <= 0)) return ["unitPrice must be greater than zero."];
     if (!["ERP_COST", "SELLER_SUPPLIER_QUOTE", "PRICE_LIST", "ESTIMATED"].includes(String(costSource))) {
       return ["sellerCostSource is invalid."];
     }
@@ -58,6 +61,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     }
     if (!deliveryState) return ["sellerDeliveryState is required."];
     if (!deliveryTime) return ["sellerSupplierDeliveryTime is required."];
+    if (!optionalText(body.sellerSupplierOrigin)) return ["sellerSupplierOrigin is required."];
 
     let validUntil: Date | null = null;
     if (body.sellerSupplierQuoteValidUntil) {
@@ -71,6 +75,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     const restrictions = Array.isArray(body.sellerOriginRestrictions)
       ? [...new Set(body.sellerOriginRestrictions.filter((value): value is string => typeof value === "string").map((value) => value.trim().toUpperCase()).filter(Boolean))]
       : [];
+    if (restrictions.length === 0) return ["Selecciona una restricción o Sin restricción."];
     const technicalAttributes = body.technicalAttributes && typeof body.technicalAttributes === "object" && !Array.isArray(body.technicalAttributes)
       ? Object.fromEntries(Object.entries(body.technicalAttributes as Record<string, unknown>)
           .filter((entry): entry is [string, string] => typeof entry[1] === "string")
@@ -79,7 +84,7 @@ export class UpdateQuoteProcurementReferenceRequestDto {
       : {};
 
     return [, new UpdateQuoteProcurementReferenceRequestDto(
-      supplierId, supplierName, unitCost, costSource as PurchaseCostSource, currency, currency === "USD" ? exchangeRate : null,
+      supplierId, supplierName, unitCost, unitPrice, costSource as PurchaseCostSource, currency, currency === "USD" ? exchangeRate : null,
       optionalText(body.sellerQuotedBrand), optionalText(body.sellerSupplierDescription), supplierProductCode,
       optionalText(body.sellerSupplierOrigin), validUntil,
       optionalText(body.sellerSupplierQuoteReference), optionalText(body.sellerSupplierQuoteNotes),

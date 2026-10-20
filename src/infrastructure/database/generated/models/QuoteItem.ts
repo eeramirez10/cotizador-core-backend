@@ -40,6 +40,7 @@ export type QuoteItemAvgAggregateOutputType = {
   sourceUnitPrice: runtime.Decimal | null
   sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
+  purchaseSuggestedUnitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
 }
 
@@ -57,6 +58,7 @@ export type QuoteItemSumAggregateOutputType = {
   sourceUnitPrice: runtime.Decimal | null
   sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
+  purchaseSuggestedUnitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
 }
 
@@ -113,6 +115,8 @@ export type QuoteItemMinAggregateOutputType = {
   sourceUnitPrice: runtime.Decimal | null
   sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
+  salePriceReviewRequired: boolean | null
+  purchaseSuggestedUnitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   sourceRequiresReview: boolean | null
   requiresReview: boolean | null
@@ -173,6 +177,8 @@ export type QuoteItemMaxAggregateOutputType = {
   sourceUnitPrice: runtime.Decimal | null
   sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal | null
+  salePriceReviewRequired: boolean | null
+  purchaseSuggestedUnitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal | null
   sourceRequiresReview: boolean | null
   requiresReview: boolean | null
@@ -235,6 +241,8 @@ export type QuoteItemCountAggregateOutputType = {
   sourceUnitPrice: number
   sourceSubtotal: number
   unitPrice: number
+  salePriceReviewRequired: number
+  purchaseSuggestedUnitPrice: number
   subtotal: number
   sourceRequiresReview: number
   requiresReview: number
@@ -258,6 +266,7 @@ export type QuoteItemAvgAggregateInputType = {
   sourceUnitPrice?: true
   sourceSubtotal?: true
   unitPrice?: true
+  purchaseSuggestedUnitPrice?: true
   subtotal?: true
 }
 
@@ -275,6 +284,7 @@ export type QuoteItemSumAggregateInputType = {
   sourceUnitPrice?: true
   sourceSubtotal?: true
   unitPrice?: true
+  purchaseSuggestedUnitPrice?: true
   subtotal?: true
 }
 
@@ -331,6 +341,8 @@ export type QuoteItemMinAggregateInputType = {
   sourceUnitPrice?: true
   sourceSubtotal?: true
   unitPrice?: true
+  salePriceReviewRequired?: true
+  purchaseSuggestedUnitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
   requiresReview?: true
@@ -391,6 +403,8 @@ export type QuoteItemMaxAggregateInputType = {
   sourceUnitPrice?: true
   sourceSubtotal?: true
   unitPrice?: true
+  salePriceReviewRequired?: true
+  purchaseSuggestedUnitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
   requiresReview?: true
@@ -453,6 +467,8 @@ export type QuoteItemCountAggregateInputType = {
   sourceUnitPrice?: true
   sourceSubtotal?: true
   unitPrice?: true
+  salePriceReviewRequired?: true
+  purchaseSuggestedUnitPrice?: true
   subtotal?: true
   sourceRequiresReview?: true
   requiresReview?: true
@@ -602,6 +618,8 @@ export type QuoteItemGroupByOutputType = {
   sourceUnitPrice: runtime.Decimal | null
   sourceSubtotal: runtime.Decimal | null
   unitPrice: runtime.Decimal
+  salePriceReviewRequired: boolean
+  purchaseSuggestedUnitPrice: runtime.Decimal | null
   subtotal: runtime.Decimal
   sourceRequiresReview: boolean
   requiresReview: boolean
@@ -687,6 +705,8 @@ export type QuoteItemWhereInput = {
   sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFilter<"QuoteItem"> | boolean
+  purchaseSuggestedUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
   requiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -755,6 +775,8 @@ export type QuoteItemOrderByWithRelationInput = {
   sourceUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  salePriceReviewRequired?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
   requiresReview?: Prisma.SortOrder
@@ -828,6 +850,8 @@ export type QuoteItemWhereUniqueInput = Prisma.AtLeast<{
   sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFilter<"QuoteItem"> | boolean
+  purchaseSuggestedUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
   requiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -896,6 +920,8 @@ export type QuoteItemOrderByWithAggregationInput = {
   sourceUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  salePriceReviewRequired?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
   requiresReview?: Prisma.SortOrder
@@ -966,6 +992,8 @@ export type QuoteItemScalarWhereWithAggregatesInput = {
   sourceUnitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolWithAggregatesFilter<"QuoteItem"> | boolean
+  purchaseSuggestedUnitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalWithAggregatesFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolWithAggregatesFilter<"QuoteItem"> | boolean
   requiresReview?: Prisma.BoolWithAggregatesFilter<"QuoteItem"> | boolean
@@ -1023,6 +1051,8 @@ export type QuoteItemCreateInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -1091,6 +1121,8 @@ export type QuoteItemUncheckedCreateInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -1149,6 +1181,8 @@ export type QuoteItemUpdateInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1217,6 +1251,8 @@ export type QuoteItemUncheckedUpdateInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1280,6 +1316,8 @@ export type QuoteItemCreateManyInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -1337,6 +1375,8 @@ export type QuoteItemUpdateManyMutationInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1399,6 +1439,8 @@ export type QuoteItemUncheckedUpdateManyInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1489,6 +1531,8 @@ export type QuoteItemCountOrderByAggregateInput = {
   sourceUnitPrice?: Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  salePriceReviewRequired?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
   requiresReview?: Prisma.SortOrder
@@ -1510,6 +1554,7 @@ export type QuoteItemAvgOrderByAggregateInput = {
   sourceUnitPrice?: Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
 }
 
@@ -1566,6 +1611,8 @@ export type QuoteItemMaxOrderByAggregateInput = {
   sourceUnitPrice?: Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  salePriceReviewRequired?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
   requiresReview?: Prisma.SortOrder
@@ -1626,6 +1673,8 @@ export type QuoteItemMinOrderByAggregateInput = {
   sourceUnitPrice?: Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  salePriceReviewRequired?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   sourceRequiresReview?: Prisma.SortOrder
   requiresReview?: Prisma.SortOrder
@@ -1647,6 +1696,7 @@ export type QuoteItemSumOrderByAggregateInput = {
   sourceUnitPrice?: Prisma.SortOrder
   sourceSubtotal?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  purchaseSuggestedUnitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
 }
 
@@ -1946,6 +1996,8 @@ export type QuoteItemCreateWithoutCustomerDescriptionEditedByUserInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2012,6 +2064,8 @@ export type QuoteItemUncheckedCreateWithoutCustomerDescriptionEditedByUserInput 
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2080,6 +2134,8 @@ export type QuoteItemCreateWithoutEffectiveCostEvaluatedByUserInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2146,6 +2202,8 @@ export type QuoteItemUncheckedCreateWithoutEffectiveCostEvaluatedByUserInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2238,6 +2296,8 @@ export type QuoteItemScalarWhereInput = {
   sourceUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFilter<"QuoteItem"> | boolean
+  purchaseSuggestedUnitPrice?: Prisma.DecimalNullableFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFilter<"QuoteItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
   requiresReview?: Prisma.BoolFilter<"QuoteItem"> | boolean
@@ -2311,6 +2371,8 @@ export type QuoteItemCreateWithoutProductInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2377,6 +2439,8 @@ export type QuoteItemUncheckedCreateWithoutProductInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2461,6 +2525,8 @@ export type QuoteItemCreateWithoutQuoteInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2527,6 +2593,8 @@ export type QuoteItemUncheckedCreateWithoutQuoteInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2611,6 +2679,8 @@ export type QuoteItemCreateWithoutSellerSupplierInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2677,6 +2747,8 @@ export type QuoteItemUncheckedCreateWithoutSellerSupplierInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2761,6 +2833,8 @@ export type QuoteItemCreateWithoutPurchaseRequisitionItemInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2828,6 +2902,8 @@ export type QuoteItemUncheckedCreateWithoutPurchaseRequisitionItemInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -2901,6 +2977,8 @@ export type QuoteItemUpdateWithoutPurchaseRequisitionItemInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2968,6 +3046,8 @@ export type QuoteItemUncheckedUpdateWithoutPurchaseRequisitionItemInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3029,6 +3109,8 @@ export type QuoteItemCreateManyCustomerDescriptionEditedByUserInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -3090,6 +3172,8 @@ export type QuoteItemCreateManyEffectiveCostEvaluatedByUserInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -3147,6 +3231,8 @@ export type QuoteItemUpdateWithoutCustomerDescriptionEditedByUserInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3213,6 +3299,8 @@ export type QuoteItemUncheckedUpdateWithoutCustomerDescriptionEditedByUserInput 
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3275,6 +3363,8 @@ export type QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserIn
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3332,6 +3422,8 @@ export type QuoteItemUpdateWithoutEffectiveCostEvaluatedByUserInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3398,6 +3490,8 @@ export type QuoteItemUncheckedUpdateWithoutEffectiveCostEvaluatedByUserInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3460,6 +3554,8 @@ export type QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserInput
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3521,6 +3617,8 @@ export type QuoteItemCreateManyProductInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -3578,6 +3676,8 @@ export type QuoteItemUpdateWithoutProductInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3644,6 +3744,8 @@ export type QuoteItemUncheckedUpdateWithoutProductInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3706,6 +3808,8 @@ export type QuoteItemUncheckedUpdateManyWithoutProductInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3767,6 +3871,8 @@ export type QuoteItemCreateManyQuoteInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -3824,6 +3930,8 @@ export type QuoteItemUpdateWithoutQuoteInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3890,6 +3998,8 @@ export type QuoteItemUncheckedUpdateWithoutQuoteInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3952,6 +4062,8 @@ export type QuoteItemUncheckedUpdateManyWithoutQuoteInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4013,6 +4125,8 @@ export type QuoteItemCreateManySellerSupplierInput = {
   sourceUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -4070,6 +4184,8 @@ export type QuoteItemUpdateWithoutSellerSupplierInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4136,6 +4252,8 @@ export type QuoteItemUncheckedUpdateWithoutSellerSupplierInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4198,6 +4316,8 @@ export type QuoteItemUncheckedUpdateManyWithoutSellerSupplierInput = {
   sourceUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sourceSubtotal?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   unitPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePriceReviewRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  purchaseSuggestedUnitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   sourceRequiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
   requiresReview?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4262,6 +4382,8 @@ export type QuoteItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sourceUnitPrice?: boolean
   sourceSubtotal?: boolean
   unitPrice?: boolean
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -4330,6 +4452,8 @@ export type QuoteItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sourceUnitPrice?: boolean
   sourceSubtotal?: boolean
   unitPrice?: boolean
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -4397,6 +4521,8 @@ export type QuoteItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   sourceUnitPrice?: boolean
   sourceSubtotal?: boolean
   unitPrice?: boolean
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -4464,6 +4590,8 @@ export type QuoteItemSelectScalar = {
   sourceUnitPrice?: boolean
   sourceSubtotal?: boolean
   unitPrice?: boolean
+  salePriceReviewRequired?: boolean
+  purchaseSuggestedUnitPrice?: boolean
   subtotal?: boolean
   sourceRequiresReview?: boolean
   requiresReview?: boolean
@@ -4471,7 +4599,7 @@ export type QuoteItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "position" | "clientItemId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerDescriptionOriginal" | "customerDescriptionEditedAt" | "customerDescriptionEditedByUserId" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerCostSource" | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand" | "sellerSupplierDescription" | "sellerSupplierProductCode" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil" | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily" | "technicalAttributes" | "cost" | "costCurrency" | "erpSaleCurrency" | "marginPct" | "effectiveCostAtQuote" | "isBelowEffectiveCost" | "effectiveCostVariance" | "effectiveCostVariancePct" | "effectiveCostEvaluatedAt" | "effectiveCostEvaluatedByUserId" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
+export type QuoteItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "position" | "clientItemId" | "productId" | "externalProductCode" | "ean" | "customerDescription" | "customerDescriptionOriginal" | "customerDescriptionEditedAt" | "customerDescriptionEditedByUserId" | "customerUnit" | "erpDescription" | "unit" | "qty" | "stock" | "deliveryTime" | "itemComment" | "sellerSupplierId" | "sellerSupplierNameSnapshot" | "sellerQuotedUnitCost" | "sellerCostSource" | "sellerQuotedCurrency" | "sellerQuotedExchangeRate" | "sellerQuotedBrand" | "sellerSupplierDescription" | "sellerSupplierProductCode" | "sellerSupplierOrigin" | "sellerSupplierQuoteValidUntil" | "sellerSupplierQuoteReference" | "sellerSupplierQuoteNotes" | "sellerOriginRestrictions" | "sellerDeliveryState" | "sellerSupplierDeliveryTime" | "purchaseStandard" | "purchaseDiameter" | "purchaseThickness" | "purchaseBore" | "technicalFamily" | "technicalAttributes" | "cost" | "costCurrency" | "erpSaleCurrency" | "marginPct" | "effectiveCostAtQuote" | "isBelowEffectiveCost" | "effectiveCostVariance" | "effectiveCostVariancePct" | "effectiveCostEvaluatedAt" | "effectiveCostEvaluatedByUserId" | "sourceCurrency" | "sourceUnitPrice" | "sourceSubtotal" | "unitPrice" | "salePriceReviewRequired" | "purchaseSuggestedUnitPrice" | "subtotal" | "sourceRequiresReview" | "requiresReview" | "createdAt" | "updatedAt", ExtArgs["result"]["quoteItem"]>
 export type QuoteItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   product?: boolean | Prisma.QuoteItem$productArgs<ExtArgs>
@@ -4560,6 +4688,8 @@ export type $QuoteItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sourceUnitPrice: runtime.Decimal | null
     sourceSubtotal: runtime.Decimal | null
     unitPrice: runtime.Decimal
+    salePriceReviewRequired: boolean
+    purchaseSuggestedUnitPrice: runtime.Decimal | null
     subtotal: runtime.Decimal
     sourceRequiresReview: boolean
     requiresReview: boolean
@@ -5048,6 +5178,8 @@ export interface QuoteItemFieldRefs {
   readonly sourceUnitPrice: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly sourceSubtotal: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly unitPrice: Prisma.FieldRef<"QuoteItem", 'Decimal'>
+  readonly salePriceReviewRequired: Prisma.FieldRef<"QuoteItem", 'Boolean'>
+  readonly purchaseSuggestedUnitPrice: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly subtotal: Prisma.FieldRef<"QuoteItem", 'Decimal'>
   readonly sourceRequiresReview: Prisma.FieldRef<"QuoteItem", 'Boolean'>
   readonly requiresReview: Prisma.FieldRef<"QuoteItem", 'Boolean'>

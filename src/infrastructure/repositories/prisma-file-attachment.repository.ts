@@ -26,12 +26,16 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (input.actor.role !== "SELLER") throw new Error("Only sellers can attach quote documents.");
     const quote = await prisma.quote.findFirst({
       where: { clientDraftId: input.clientDraftId, createdByUserId: input.actor.id },
-      select: { id: true, status: true, purchaseRequisition: { select: { status: true } } },
+      select: { id: true, status: true, purchaseRequisitions: { select: { status: true, items: { select: { quoteItem: { select: { clientItemId: true } } } } } } },
     });
+    const attachmentItemsAreDraft = quote && (input.clientItemIds.length > 0
+      ? quote.purchaseRequisitions.every((requisition) => requisition.status === "DRAFT"
+        || requisition.items.every((item) => !item.quoteItem.clientItemId || !input.clientItemIds.includes(item.quoteItem.clientItemId)))
+      : quote.purchaseRequisitions.every((requisition) => requisition.status === "DRAFT"));
     const canAttachPurchasingReference = input.category === "SELLER_SUPPLIER_QUOTE" && Boolean(
       quote && (
         quote.status === "QUOTED"
-        || (quote.status === "APPROVED" && quote.purchaseRequisition?.status === "DRAFT")
+        || (quote.status === "APPROVED" && attachmentItemsAreDraft)
       )
     );
     if (quote && !["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(quote.status) && !canAttachPurchasingReference) {
@@ -234,16 +238,28 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
   async listPurchaseRequisition(requisitionId: string, actor: FileAttachmentActor): Promise<FileAttachmentEntity[]> {
     const requisition = await prisma.purchaseRequisition.findFirst({
       where: { id: requisitionId, ...this.requisitionScope(actor) },
-      select: { id: true, quoteId: true, quote: { select: { rootQuoteId: true } } },
+      select: {
+        id: true,
+        quoteId: true,
+        quote: { select: { rootQuoteId: true } },
+        items: { select: { quoteItem: { select: { clientItemId: true } } } },
+      },
     });
     if (!requisition) throw new Error("Purchase requisition not found.");
     const quoteIds = await this.quoteChainIds(requisition.quoteId, requisition.quote.rootQuoteId);
+    const clientItemIds = requisition.items.flatMap((item) => item.quoteItem.clientItemId ? [item.quoteItem.clientItemId] : []);
     const [quoteFiles, offerFiles] = await Promise.all([
       prisma.fileAsset.findMany({
         where: {
           status: "READY",
           quoteAttachments: {
-            some: { quoteId: { in: quoteIds }, category: { not: "CUSTOMER_QUOTE_PDF" } },
+            some: {
+              quoteId: { in: quoteIds },
+              OR: [
+                { category: { notIn: ["CUSTOMER_QUOTE_PDF", "SELLER_SUPPLIER_QUOTE"] } },
+                { category: "SELLER_SUPPLIER_QUOTE", clientItemId: { in: clientItemIds } },
+              ],
+            },
           },
         },
         include: assetInclude,
@@ -291,7 +307,8 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
         if (["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(link.quote.status)) return false;
         return !(link.category === "SELLER_SUPPLIER_QUOTE" && (
           link.quote.status === "QUOTED"
-          || (link.quote.status === "APPROVED" && link.quote.purchaseRequisition?.status === "DRAFT")
+          || (link.quote.status === "APPROVED" && link.quote.purchaseRequisitions.every((requisition) => requisition.status === "DRAFT"
+            || Boolean(link.clientItemId && requisition.items.every((item) => item.quoteItem.clientItemId !== link.clientItemId))))
         ));
       });
       if (hasLockedQuoteAttachment) return null;
@@ -320,7 +337,22 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
       where: { id: fileId, status: "READY" },
       include: {
         quoteAttachments: {
-          include: { quote: { select: { branchId: true, createdByUserId: true, status: true, purchaseRequisition: { select: { id: true, status: true } } } } },
+          include: {
+            quote: {
+              select: {
+                branchId: true,
+                createdByUserId: true,
+                status: true,
+                purchaseRequisitions: {
+                  select: {
+                    id: true,
+                    status: true,
+                    items: { select: { quoteItem: { select: { clientItemId: true } } } },
+                  },
+                },
+              },
+            },
+          },
         },
         purchaseOfferAttachments: {
           include: {
@@ -340,7 +372,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (actor.role === "PURCHASING" && (
       requisitions.some((req) => req.status !== "DRAFT")
       || quotes.some((quote) => Boolean(
-        quote.purchaseRequisition && quote.purchaseRequisition.status !== "DRAFT"
+        quote.purchaseRequisitions.some((requisition) => requisition.status !== "DRAFT")
       ))
     )) return row;
     return null;
@@ -350,7 +382,7 @@ export class PrismaFileAttachmentRepository extends FileAttachmentRepository {
     if (actor.role === "SELLER") return { createdByUserId: actor.id };
     if (actor.role === "MANAGER") return { branchId: actor.branchId };
     if (actor.role === "PURCHASING") {
-      return { purchaseRequisition: { is: { status: { not: "DRAFT" } } } };
+      return { purchaseRequisitions: { some: { status: { not: "DRAFT" } } } };
     }
     return {};
   }

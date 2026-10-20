@@ -17,18 +17,27 @@ export class PurchaseRequisitionRepositoryImpl extends PurchaseRequisitionReposi
   constructor(private readonly datasource: PurchaseRequisitionDatasource) { super(); }
 
   ensureForApprovedQuote(quote: QuoteEntity) { return this.datasource.ensureForApprovedQuote(quote); }
+  listBuyersForBranch(branchId: string) { return this.datasource.listBuyersForBranch(branchId); }
+  sendUnquotedItemsToPurchasing(quote: QuoteEntity, itemIds: string[], buyerUserId: string, actor: PurchaseRequisitionActor) {
+    return this.datasource.sendUnquotedItemsToPurchasing(quote, itemIds, buyerUserId, actor);
+  }
   findPaginated(params: FindPurchaseRequisitionsParams) { return this.datasource.findPaginated(params); }
   findById(id: string, actor: PurchaseRequisitionActor) { return this.datasource.findById(id, actor); }
+  listBuyers(id: string, actor: PurchaseRequisitionActor) { return this.datasource.listBuyers(id, actor); }
   findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor) { return this.datasource.findByQuoteId(quoteId, actor); }
+  deletePermanently(id: string, confirmation: string, actor: PurchaseRequisitionActor) { return this.datasource.deletePermanently(id, confirmation, actor); }
   updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor) { return this.datasource.updateDocument(id, data, actor); }
   updateSupplierCode(id: string, itemId: string, offerId: string, supplierProductCode: string | null, actor: PurchaseRequisitionActor) { return this.datasource.updateSupplierCode(id, itemId, offerId, supplierProductCode, actor); }
   updateItem(id: string, itemId: string, data: UpdatePurchaseRequisitionItemData, actor: PurchaseRequisitionActor) { return this.datasource.updateItem(id, itemId, data, actor); }
   linkItemToErp(id: string, itemId: string, data: LinkPurchaseRequisitionItemToErpData, actor: PurchaseRequisitionActor) { return this.datasource.linkItemToErp(id, itemId, data, actor); }
-  submit(id: string, actor: PurchaseRequisitionActor) { return this.datasource.submit(id, actor); }
+  submit(id: string, buyerUserId: string, actor: PurchaseRequisitionActor) { return this.datasource.submit(id, buyerUserId, actor); }
   assign(id: string, buyerUserId: string, actor: PurchaseRequisitionActor) { return this.datasource.assign(id, buyerUserId, actor); }
   createOffer(id: string, data: SavePurchaseSupplierOfferData, actor: PurchaseRequisitionActor) { return this.datasource.createOffer(id, data, actor); }
+  createOffersBatch(id: string, offers: SavePurchaseSupplierOfferData[], actor: PurchaseRequisitionActor) { return this.datasource.createOffersBatch(id, offers, actor); }
+  updateOffersBatch(id: string, supplierQuoteId: string, offers: Array<SavePurchaseSupplierOfferData & { offerId: string | null }>, actor: PurchaseRequisitionActor) { return this.datasource.updateOffersBatch(id, supplierQuoteId, offers, actor); }
   selectOffer(id: string, itemId: string, offerId: string, actor: PurchaseRequisitionActor) { return this.datasource.selectOffer(id, itemId, offerId, actor); }
   allocateOffers(id: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor) { return this.datasource.allocateOffers(id, itemId, allocations, actor); }
+  finalizePricesForQuote(quoteId: string, actor: PurchaseRequisitionActor) { return this.datasource.finalizePricesForQuote(quoteId, actor); }
   generateSupplierRequisitions(id: string, actor: PurchaseRequisitionActor) { return this.datasource.generateSupplierRequisitions(id, actor); }
   approveCostVariance(id: string, actor: PurchaseRequisitionActor) { return this.datasource.approveCostVariance(id, actor); }
   isReadyForOrder(quoteId: string) { return this.datasource.isReadyForOrder(quoteId); }

@@ -2,6 +2,7 @@ import type { Currency, PurchaseCostSource } from "../../infrastructure/database
 
 export interface QuoteItemProductSummary {
   id: string;
+  source?: "ERP" | "LOCAL_TEMP";
   code: string | null;
   ean: string | null;
   description: string;
@@ -63,6 +64,8 @@ export interface QuoteItemEntity {
   sourceUnitPrice: number | null;
   sourceSubtotal: number | null;
   unitPrice: number;
+  salePriceReviewRequired: boolean;
+  purchaseSuggestedUnitPrice: number | null;
   subtotal: number;
   sourceRequiresReview: boolean;
   requiresReview: boolean;
