@@ -20,6 +20,7 @@ import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quo
 import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { ReorderQuotedItemsUseCase } from "../../domain/use-cases/reorder-quoted-items.use-case";
+import { ReviewQuoteSalePricesUseCase } from "../../domain/use-cases/review-quote-sale-prices.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -205,6 +206,7 @@ export class QuotesRoutes {
       registerErpOrderUseCase,
       sendQuoteWhatsAppUseCase,
       new ListQuoteDeliveryAttemptsUseCase(quoteRepository, new PrismaQuoteDeliveryAttemptRepository()),
+      new ReviewQuoteSalePricesUseCase(quoteRepository),
     );
     const changeRequestsController = new QuoteCustomerChangeRequestsController(
       new GetQuoteCustomerChangeRequestsUseCase(quoteRepository, new PrismaWhatsAppAssistantRepository()),
@@ -237,6 +239,7 @@ export class QuotesRoutes {
     router.delete("/:id", requireAuth, requireRoles("ADMIN"), controller.deletePermanently);
     router.patch("/:id", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.update);
     router.patch("/:id/items/order", requireAuth, requireRoles("SELLER"), controller.reorderQuotedItems);
+    router.post("/:id/sale-prices/review", requireAuth, requireRoles("SELLER"), controller.reviewSalePrices);
 
     router.post("/:id/items", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.addItem);
     router.patch(

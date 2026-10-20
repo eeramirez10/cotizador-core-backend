@@ -330,6 +330,8 @@ enum WhatsAppInternalAlertType {
   CUSTOMER_ONBOARDING_PENDING
   CUSTOMER_ONBOARDING_CORRECTION
   CUSTOMER_ONBOARDING_ERP_LINKED
+  PURCHASE_PRICE_REQUESTED
+  PURCHASE_PRICE_READY
   LEAD_ASSIGNED
   INFORMATION_REQUESTED
   QUOTE_CHANGE_REQUESTED
@@ -899,7 +901,7 @@ model Quote {
   deliveryAttempts             QuoteDeliveryAttempt[]
   orderExports                 QuoteOrderExport[]
   events                       QuoteEvent[]
-  purchaseRequisition          PurchaseRequisition?
+  purchaseRequisitions         PurchaseRequisition[]
   attachments                  QuoteAttachment[]
   whatsappPendingActions       WhatsAppPendingAction[]
   whatsappChangeRequests       WhatsAppCustomerChangeRequest[]
@@ -989,6 +991,8 @@ model QuoteItem {
   sourceUnitPrice                   Decimal?            @map("source_unit_price") @db.Decimal(14, 4)
   sourceSubtotal                    Decimal?            @map("source_subtotal") @db.Decimal(14, 4)
   unitPrice                         Decimal             @map("unit_price") @db.Decimal(14, 4)
+  salePriceReviewRequired           Boolean             @default(false) @map("sale_price_review_required")
+  purchaseSuggestedUnitPrice        Decimal?            @map("purchase_suggested_unit_price") @db.Decimal(14, 4)
   subtotal                          Decimal             @db.Decimal(14, 4)
   sourceRequiresReview              Boolean             @default(false) @map("source_requires_review")
   requiresReview                    Boolean             @default(false) @map("requires_review")
@@ -1047,6 +1051,7 @@ model Supplier {
   updatedBy              User?                     @relation("SupplierUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
   offers                 PurchaseSupplierOffer[]
   supplierRequisitions   PurchaseSupplierRequisition[]
+  purchaseRequisitions   PurchaseRequisition[]
   supplierQuotes         PurchaseSupplierQuote[]
   sellerQuotedItems      QuoteItem[]               @relation("QuoteItemSellerSupplier")
   sellerRequisitionItems PurchaseRequisitionItem[] @relation("RequisitionSellerSupplier")
@@ -1090,7 +1095,9 @@ model SupplierContact {
 model PurchaseRequisition {
   id                   String                    @id @default(uuid()) @db.Uuid
   requisitionNumber    String                    @unique @map("requisition_number") @db.VarChar(40)
-  quoteId              String                    @unique @map("quote_id") @db.Uuid
+  quoteId              String                    @map("quote_id") @db.Uuid
+  supplierId           String?                   @map("supplier_id") @db.Uuid
+  supplierName         String?                   @map("supplier_name") @db.VarChar(220)
   branchId             String                    @map("branch_id") @db.Uuid
   requestedByUserId    String                    @map("requested_by_user_id") @db.Uuid
   assignedBuyerUserId  String?                   @map("assigned_buyer_user_id") @db.Uuid
@@ -1112,6 +1119,7 @@ model PurchaseRequisition {
   updatedAt            DateTime                  @updatedAt @map("updated_at")
 
   quote          Quote                     @relation(fields: [quoteId], references: [id], onDelete: Restrict)
+  supplier       Supplier?                 @relation(fields: [supplierId], references: [id], onDelete: SetNull)
   branch         Branch                    @relation(fields: [branchId], references: [id], onDelete: Restrict)
   requestedBy    User                      @relation("PurchaseRequisitionRequestedBy", fields: [requestedByUserId], references: [id], onDelete: Restrict)
   assignedBuyer  User?                     @relation("PurchaseRequisitionAssignedBuyer", fields: [assignedBuyerUserId], references: [id], onDelete: SetNull)
@@ -1121,6 +1129,9 @@ model PurchaseRequisition {
   supplierRequisitions PurchaseSupplierRequisition[]
 
   @@index([status, createdAt])
+  @@unique([quoteId, supplierId])
+  @@index([quoteId])
+  @@index([supplierId])
   @@index([branchId])
   @@index([requestedByUserId])
   @@index([assignedBuyerUserId])

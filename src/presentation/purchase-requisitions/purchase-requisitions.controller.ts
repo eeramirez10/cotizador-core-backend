@@ -2,9 +2,12 @@ import type { Request, Response } from "express";
 import {
   AssignPurchaseRequisitionRequestDto,
   CreatePurchaseSupplierOfferRequestDto,
+  CreatePurchaseSupplierOffersBatchRequestDto,
+  UpdatePurchaseSupplierOffersBatchRequestDto,
   GetPurchaseRequisitionsQueryDto,
   LinkPurchaseRequisitionItemToErpRequestDto,
   SaveSupplierRequestDto,
+  SendUnquotedRequisitionRequestDto,
   SetSupplierActiveRequestDto,
   SyncErpSupplierRequestDto,
   UpdatePurchaseRequisitionItemRequestDto,
@@ -38,16 +41,78 @@ export class PurchaseRequisitionsController {
     }
   };
 
+  deletePermanently = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    if (!id) return void res.status(400).json({ error: "Purchase requisition id is required." });
+    const confirmation = typeof req.body?.confirmation === "string" ? req.body.confirmation.trim() : "";
+    if (!confirmation) return void res.status(400).json({ error: "Requisition number confirmation is required." });
+    try {
+      await this.useCase.deletePermanently(id, confirmation, req.user);
+      res.status(204).send();
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while deleting purchase requisition.");
+    }
+  };
+
+  listBuyers = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    if (!id) return void res.status(400).json({ error: "Purchase requisition id is required." });
+    try {
+      res.status(200).json(await this.useCase.listBuyers(id, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while listing purchasing users.");
+    }
+  };
+
   getByQuoteId = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
     const quoteId = this.param(req.params.quoteId);
     if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
     try {
       const result = await this.useCase.getByQuoteId(quoteId, req.user);
-      if (!result) return void res.status(404).json({ error: "Purchase requisition not found." });
-      res.status(200).json(result.toJSON());
+      res.status(200).json(result.map((requisition) => requisition.toJSON()));
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while getting purchase requisition.");
+    }
+  };
+
+  finalizePricesForQuote = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.param(req.params.quoteId);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    try {
+      if (req.body?.suggestions !== undefined) {
+        return void res.status(400).json({ error: "El precio de venta se define en la cotización, no en Compras." });
+      }
+      res.status(200).json(await this.useCase.finalizePricesForQuote(quoteId, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while finalizing purchasing prices.");
+    }
+  };
+
+  listBuyersForQuote = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.param(req.params.quoteId);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    try {
+      res.status(200).json(await this.useCase.listBuyersForQuote(quoteId, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while listing purchasing users.");
+    }
+  };
+
+  sendUnquotedItemsToPurchasing = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.param(req.params.quoteId);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    const [error, dto] = SendUnquotedRequisitionRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(201).json((await this.useCase.sendUnquotedItemsToPurchasing(quoteId, dto!, req.user)).toJSON());
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while sending items to purchasing.");
     }
   };
 
@@ -57,13 +122,13 @@ export class PurchaseRequisitionsController {
     if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
     try {
       const result = await this.useCase.createFromApprovedQuote(quoteId, req.user);
-      if (!result) {
+      if (result.length === 0) {
         return void res.status(200).json({
-          requisition: null,
-          message: "Quote does not contain items that require purchasing.",
+          requisitions: [],
+          message: "No supplier-assigned items are ready for a requisition.",
         });
       }
-      res.status(201).json(result.toJSON());
+      res.status(201).json(result.map((requisition) => requisition.toJSON()));
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while creating purchase requisition.");
     }
@@ -129,8 +194,10 @@ export class PurchaseRequisitionsController {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
     const id = this.param(req.params.id);
     if (!id) return void res.status(400).json({ error: "Purchase requisition id is required." });
+    const [error, dto] = AssignPurchaseRequisitionRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
     try {
-      res.status(200).json((await this.useCase.submit(id, req.user)).toJSON());
+      res.status(200).json((await this.useCase.submit(id, dto!, req.user)).toJSON());
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while submitting purchase requisition.");
     }
@@ -160,6 +227,33 @@ export class PurchaseRequisitionsController {
       res.status(201).json((await this.useCase.createOffer(id, itemId, dto!, req.user)).toJSON());
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while saving supplier offer.");
+    }
+  };
+
+  createOffersBatch = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    if (!id) return void res.status(400).json({ error: "Requisition id is required." });
+    const [error, dto] = CreatePurchaseSupplierOffersBatchRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(201).json(await this.useCase.createOffersBatch(id, dto!, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while saving supplier offers.");
+    }
+  };
+
+  updateOffersBatch = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    const supplierQuoteId = this.param(req.params.supplierQuoteId);
+    if (!id || !supplierQuoteId) return void res.status(400).json({ error: "Requisition and supplier quote ids are required." });
+    const [error, dto] = UpdatePurchaseSupplierOffersBatchRequestDto.create(req.body);
+    if (error) return void res.status(400).json({ error });
+    try {
+      res.status(200).json(await this.useCase.updateOffersBatch(id, supplierQuoteId, dto!, req.user));
+    } catch (cause) {
+      this.handleError(res, cause, "Unexpected error while updating supplier offers.");
     }
   };
 
@@ -321,8 +415,11 @@ export class PurchaseRequisitionsController {
       message.startsWith("Select at least") ||
       message.startsWith("Supplier requisitions") ||
       message.startsWith("Supplier offers") ||
+      message.startsWith("Requisition number confirmation") ||
+      message.startsWith("A requisition linked to an ERP order") ||
       message.startsWith("USD supplier") ||
       message.startsWith("Closed requisitions");
-    res.status(isBusinessError ? 400 : 500).json({ error: message || fallback });
+    const isDirectRequestError = ["La cotización", "Las partidas", "La partida", "Una partida", "Selecciona ", "No repitas partidas", "El lote requiere"].some((prefix) => message.startsWith(prefix));
+    res.status(isBusinessError || isDirectRequestError ? 400 : 500).json({ error: message || fallback });
   }
 }

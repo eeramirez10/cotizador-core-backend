@@ -107,7 +107,7 @@ export interface WhatsAppRealtimeEvent {
   systemNotification?: {
     id: string;
     recipientUserId: string;
-    type: "CUSTOMER_ONBOARDING_ERP_LINKED";
+    type: "CUSTOMER_ONBOARDING_ERP_LINKED" | "PURCHASE_PRICE_REQUESTED" | "PURCHASE_PRICE_READY";
     title: string;
     message: string;
     targetPath: string;

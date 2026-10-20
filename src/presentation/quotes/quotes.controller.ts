@@ -35,6 +35,7 @@ import { RegisterErpQuoteUseCase } from "../../domain/use-cases/register-erp-quo
 import { RegisterErpOrderUseCase } from "../../domain/use-cases/register-erp-order.use-case";
 import { SaveQuoteDraftUseCase } from "../../domain/use-cases/save-quote-draft.use-case";
 import { ReorderQuotedItemsUseCase } from "../../domain/use-cases/reorder-quoted-items.use-case";
+import { ReviewQuoteSalePricesUseCase } from "../../domain/use-cases/review-quote-sale-prices.use-case";
 import { UpdateQuoteItemUseCase } from "../../domain/use-cases/update-quote-item.use-case";
 import { UpdateQuoteProcurementReferenceUseCase } from "../../domain/use-cases/update-quote-procurement-reference.use-case";
 import { UpdateQuoteUseCase } from "../../domain/use-cases/update-quote.use-case";
@@ -68,7 +69,20 @@ export class QuotesController {
     private readonly registerErpOrderUseCase: RegisterErpOrderUseCase,
     private readonly sendQuoteWhatsAppUseCase: SendQuoteWhatsAppUseCase,
     private readonly listQuoteDeliveryAttemptsUseCase: ListQuoteDeliveryAttemptsUseCase,
+    private readonly reviewQuoteSalePricesUseCase: ReviewQuoteSalePricesUseCase,
   ) {}
+
+  reviewSalePrices = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const quoteId = this.getSingleParam(req.params.id);
+    if (!quoteId) return void res.status(400).json({ error: "Quote id is required." });
+    try {
+      const quote = await this.reviewQuoteSalePricesUseCase.execute(quoteId, req.body, req.user);
+      res.status(200).json(quote.toJSON());
+    } catch (err) {
+      this.handleError(res, err, "No se pudieron confirmar los precios de venta.");
+    }
+  };
 
   saveDraft = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) return void res.status(401).json({ error: "Unauthorized." });

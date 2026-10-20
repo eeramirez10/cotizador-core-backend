@@ -60,6 +60,8 @@ export class QuoteItemResponseDto {
       sourceUnitPrice: this.item.sourceUnitPrice,
       sourceSubtotal: this.item.sourceSubtotal,
       unitPrice: this.item.unitPrice,
+      salePriceReviewRequired: this.item.salePriceReviewRequired,
+      purchaseSuggestedUnitPrice: this.item.purchaseSuggestedUnitPrice,
       subtotal: this.item.subtotal,
       sourceRequiresReview: this.item.sourceRequiresReview,
       requiresReview: this.item.requiresReview,

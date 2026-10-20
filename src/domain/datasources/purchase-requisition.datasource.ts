@@ -9,7 +9,7 @@ import type {
   PurchaseOfferSource,
   UserRole,
 } from "../../infrastructure/database/generated/enums";
-import type { PurchaseRequisitionEntity, SupplierEntity } from "../entities/purchase-requisition.entity";
+import type { ProcurementUserSummary, PurchaseRequisitionEntity, SupplierEntity } from "../entities/purchase-requisition.entity";
 import type { QuoteEntity } from "../entities/quote.entity";
 
 export interface PurchaseRequisitionActor {
@@ -29,6 +29,10 @@ export interface FindPurchaseRequisitionsParams {
 export interface FindPurchaseRequisitionsResult {
   items: PurchaseRequisitionEntity[];
   total: number;
+}
+
+export interface DeletedPurchaseRequisition {
+  storageKeysToDelete: string[];
 }
 
 export interface UpdatePurchaseRequisitionItemData {
@@ -123,6 +127,9 @@ export interface SaveErpSupplierData {
 
 export interface SavePurchaseSupplierOfferData {
   requisitionItemId: string;
+  deliveryState?: string | null;
+  itemDetails?: Pick<UpdatePurchaseRequisitionItemData,
+    "standard" | "diameter" | "thickness" | "bore" | "technicalFamily" | "technicalAttributes" | "originRestrictions">;
   supplierId: string;
   source: PurchaseOfferSource;
   supplierProductCode: string | null;
@@ -160,10 +167,14 @@ export interface SavePurchaseSupplierOfferData {
 export interface SupplierOfferAllocation { offerId: string; qty: number }
 
 export abstract class PurchaseRequisitionDatasource {
-  abstract ensureForApprovedQuote(quote: QuoteEntity): Promise<PurchaseRequisitionEntity | null>;
+  abstract ensureForApprovedQuote(quote: QuoteEntity): Promise<PurchaseRequisitionEntity[]>;
+  abstract listBuyersForBranch(branchId: string): Promise<ProcurementUserSummary[]>;
+  abstract sendUnquotedItemsToPurchasing(quote: QuoteEntity, itemIds: string[], buyerUserId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity>;
   abstract findPaginated(params: FindPurchaseRequisitionsParams): Promise<FindPurchaseRequisitionsResult>;
   abstract findById(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
-  abstract findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract listBuyers(id: string, actor: PurchaseRequisitionActor): Promise<ProcurementUserSummary[] | null>;
+  abstract findByQuoteId(quoteId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity[]>;
+  abstract deletePermanently(id: string, confirmation: string, actor: PurchaseRequisitionActor): Promise<DeletedPurchaseRequisition | null>;
   abstract updateDocument(id: string, data: UpdatePurchaseRequisitionDocumentData, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract updateSupplierCode(id: string, itemId: string, offerId: string, supplierProductCode: string | null, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract updateItem(
@@ -178,13 +189,24 @@ export abstract class PurchaseRequisitionDatasource {
     data: LinkPurchaseRequisitionItemToErpData,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null>;
-  abstract submit(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract submit(id: string, buyerUserId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract assign(id: string, buyerUserId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract createOffer(
     requisitionId: string,
     data: SavePurchaseSupplierOfferData,
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null>;
+  abstract createOffersBatch(
+    requisitionId: string,
+    offers: SavePurchaseSupplierOfferData[],
+    actor: PurchaseRequisitionActor,
+  ): Promise<{ requisition: PurchaseRequisitionEntity; offerIds: string[] } | null>;
+  abstract updateOffersBatch(
+    requisitionId: string,
+    supplierQuoteId: string,
+    offers: Array<SavePurchaseSupplierOfferData & { offerId: string | null }>,
+    actor: PurchaseRequisitionActor,
+  ): Promise<{ requisition: PurchaseRequisitionEntity; offerIds: string[] } | null>;
   abstract selectOffer(
     requisitionId: string,
     itemId: string,
@@ -192,6 +214,7 @@ export abstract class PurchaseRequisitionDatasource {
     actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null>;
   abstract allocateOffers(requisitionId: string, itemId: string, allocations: SupplierOfferAllocation[], actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
+  abstract finalizePricesForQuote(quoteId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity[] | null>;
   abstract generateSupplierRequisitions(requisitionId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract approveCostVariance(id: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null>;
   abstract isReadyForOrder(quoteId: string): Promise<boolean>;

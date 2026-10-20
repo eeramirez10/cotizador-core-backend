@@ -321,6 +321,13 @@ export interface UpdateQuoteProcurementReferenceDatasourceParams {
   scope: QuoteAccessScope;
 }
 
+export interface ReviewQuoteSalePricesDatasourceParams {
+  quoteId: string;
+  scope: QuoteAccessScope;
+  actorUserId: string;
+  items: Array<{ itemId: string; expectedUnitCost: number; unitPrice: number }>;
+}
+
 export interface RemoveQuoteItemDatasourceParams {
   quoteId: string;
   itemId: string;
@@ -434,6 +441,7 @@ export abstract class QuoteDatasource {
   abstract addItem(params: AddQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateItem(params: UpdateQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract updateProcurementReference(params: UpdateQuoteProcurementReferenceDatasourceParams): Promise<QuoteEntity | null>;
+  abstract reviewSalePrices(params: ReviewQuoteSalePricesDatasourceParams): Promise<QuoteEntity | null>;
   abstract removeItem(params: RemoveQuoteItemDatasourceParams): Promise<QuoteEntity | null>;
   abstract changeStatus(params: ChangeQuoteStatusDatasourceParams): Promise<QuoteEntity | null>;
   abstract createRevision(params: CreateQuoteRevisionDatasourceParams): Promise<QuoteEntity>;
