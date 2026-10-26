@@ -464,6 +464,7 @@ model User {
   assignedRequisitions          PurchaseRequisition[]           @relation("PurchaseRequisitionAssignedBuyer")
   approvedCostRequisitions      PurchaseRequisition[]           @relation("PurchaseRequisitionCostApprovedBy")
   erpLinkedRequisitionItems     PurchaseRequisitionItem[]       @relation("PurchaseRequisitionItemErpLinkedBy")
+  updatedErpDrafts              PurchaseRequisitionItemErpDraft[] @relation("ErpDraftUpdatedBy")
   createdSupplierOffers         PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferCreatedBy")
   updatedSupplierOffers         PurchaseSupplierOffer[]         @relation("PurchaseSupplierOfferUpdatedBy")
   createdSupplierRequisitions   PurchaseSupplierRequisition[]   @relation("PurchaseSupplierRequisitionCreatedBy")
@@ -1183,6 +1184,7 @@ model PurchaseRequisitionItem {
   offers         PurchaseSupplierOffer[] @relation("PurchaseRequisitionItemOffers")
   selectedOffer  PurchaseSupplierOffer?  @relation("SelectedPurchaseSupplierOffer", fields: [selectedOfferId], references: [id], onDelete: SetNull)
   supplierRequisitionLines PurchaseSupplierRequisitionLine[]
+  erpDraft      PurchaseRequisitionItemErpDraft?
 
   @@unique([requisitionId, position])
   @@index([requisitionId, status])
@@ -1190,6 +1192,19 @@ model PurchaseRequisitionItem {
   @@index([sellerSupplierId])
   @@index([erpLinkedByUserId])
   @@map("purchase_requisition_items")
+}
+
+model PurchaseRequisitionItemErpDraft {
+  requisitionItemId String                  @id @map("requisition_item_id") @db.Uuid
+  data              Json                    @default("{}")
+  updatedByUserId   String                  @map("updated_by_user_id") @db.Uuid
+  createdAt         DateTime                @default(now()) @map("created_at")
+  updatedAt         DateTime                @updatedAt @map("updated_at")
+
+  requisitionItem PurchaseRequisitionItem @relation(fields: [requisitionItemId], references: [id], onDelete: Cascade)
+  updatedBy       User                    @relation("ErpDraftUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: Restrict)
+
+  @@map("purchase_requisition_item_erp_drafts")
 }
 
 model PurchaseSupplierOffer {

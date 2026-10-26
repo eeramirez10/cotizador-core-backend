@@ -29,6 +29,9 @@ import { erpCodeForQuoteItem, quotationOwnerForSupplierReference, selectUnquoted
 import { areSupplierRequisitionsReadyForOrder, groupRequisitionItemsBySupplier } from "../../domain/use-cases/requisitions-per-supplier-rule";
 import { assertRequisitionCanBeDeleted } from "../../domain/use-cases/requisition-deletion-rule";
 import { canIssueSupplierRequisitions } from "../../domain/use-cases/supplier-requisition-eligibility";
+import { mergeSelectedOfferIntoErpDraft } from "../../domain/use-cases/purchase-item-erp-draft.defaults";
+import { erpDraftBranchDefaults } from "../../domain/use-cases/purchase-item-erp-draft.branch-defaults";
+import { parseErpDraftData } from "../../domain/use-cases/purchase-item-erp-draft.validation";
 import { supplierRequisitionGroupKey, validateSupplierOfferAllocations } from "../../domain/use-cases/supplier-offer-allocation";
 import { resolveSupplierErpSyncTarget } from "../../domain/use-cases/supplier-erp-sync-target";
 import { resolveRuntimeValue, type RuntimeValue } from "../../domain/services/runtime-value";
@@ -46,7 +49,7 @@ const requisitionInclude = {
       customer: { select: { legalName: true, displayName: true } },
     },
   },
-  branch: { select: { name: true, address: true, phone: true } },
+  branch: { select: { code: true, name: true, address: true, phone: true } },
   requestedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
   assignedBuyer: { select: { id: true, firstName: true, lastName: true, role: true } },
   costApprovedBy: { select: { id: true, firstName: true, lastName: true, role: true } },
@@ -241,6 +244,7 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
   quoteCurrency: row.quote.currency,
   quoteExchangeRate: number(row.quote.exchangeRate),
   branchId: row.branchId,
+  branchCode: row.branch.code,
   branchName: row.branch.name,
   branchAddress: row.branch.address,
   branchPhone: row.branch.phone,
@@ -1273,6 +1277,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
         where: { id: requisitionId, ...this.scopeWhere(actor) },
         include: {
           quote: { select: { status: true, currency: true, exchangeRate: true } },
+          branch: { select: { code: true } },
           supplierRequisitions: { select: { id: true } },
           items: { where: { id: itemId }, include: { offers: { include: { supplier: true } } } },
         },
@@ -1283,6 +1288,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
       if (["DRAFT", "COMPLETED", "CANCELLED"].includes(requisition.status)) throw new Error("Closed requisitions cannot change supplier awards.");
       const item = requisition.items[0];
       if (!item) return false;
+      const previousSelectedOffer = item.offers.find((offer) => offer.isSelected);
       validateSupplierOfferAllocations(number(item.qty), allocations, item.offers.map((offer) => ({
         id: offer.id, qty: number(offer.qty), isActive: offer.isActive,
         minimumQty: offer.minimumQty === null ? null : number(offer.minimumQty),
@@ -1312,6 +1318,25 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           status: item.source === "LOCAL_NEW" && !item.erpCode ? "PENDING_ERP_CODE" : "READY",
         },
       });
+      if (item.source === "LOCAL_NEW" && !item.erpLinkedAt && allocations.length === 1) {
+        const selectedOffer = item.offers.find((offer) => offer.id === allocations[0].offerId)!;
+        const existingDraft = await tx.purchaseRequisitionItemErpDraft.findUnique({ where: { requisitionItemId: itemId } });
+        const offerReference = (offer: typeof selectedOffer) => ({
+          currency: offer.currency,
+        });
+        const draftData = mergeSelectedOfferIntoErpDraft(
+          item,
+          offerReference(selectedOffer),
+          existingDraft ? parseErpDraftData(existingDraft.data) : undefined,
+          previousSelectedOffer ? offerReference(previousSelectedOffer) : undefined,
+        );
+        Object.assign(draftData, erpDraftBranchDefaults(requisition.branch.code));
+        await tx.purchaseRequisitionItemErpDraft.upsert({
+          where: { requisitionItemId: itemId },
+          create: { requisitionItemId: itemId, data: draftData, updatedByUserId: actor.id },
+          update: { data: draftData, updatedByUserId: actor.id },
+        });
+      }
       if (["DRAFT", "PENDING", "CHANGES_REQUESTED"].includes(requisition.quote.status)) {
         const weightedQuoteCost = allocations.reduce((total, allocation) => {
           const offer = item.offers.find((candidate) => candidate.id === allocation.offerId)!;

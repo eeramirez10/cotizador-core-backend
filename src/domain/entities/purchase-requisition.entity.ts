@@ -175,6 +175,7 @@ export interface PurchaseRequisitionEntity {
   quoteCurrency: Currency;
   quoteExchangeRate: number;
   branchId: string;
+  branchCode: string;
   branchName: string;
   branchAddress: string | null;
   branchPhone: string | null;

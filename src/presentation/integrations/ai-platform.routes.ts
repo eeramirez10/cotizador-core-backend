@@ -43,6 +43,7 @@ export class AiPlatformRoutes {
     router.post("/procurement/technical-data/suggest-batch", controller.suggestTechnicalDataBatch);
     router.post("/quote-catalogs/suggest-code", controller.suggestCatalogCode);
     router.post("/parties/extract", controller.extractPartyData);
+    router.post("/sat-catalog/search", controller.searchSatCatalog);
     router.post("/ai/products/similar", controller.searchSimilar);
     router.post("/ai/products/similar-v2", controller.searchSimilarV2);
     router.post("/ai/products/similar-v2/semantic", controller.searchSimilarV2Semantic);

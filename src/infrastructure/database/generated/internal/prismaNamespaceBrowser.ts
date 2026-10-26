@@ -70,6 +70,7 @@ export const ModelName = {
   SupplierContact: 'SupplierContact',
   PurchaseRequisition: 'PurchaseRequisition',
   PurchaseRequisitionItem: 'PurchaseRequisitionItem',
+  PurchaseRequisitionItemErpDraft: 'PurchaseRequisitionItemErpDraft',
   PurchaseSupplierOffer: 'PurchaseSupplierOffer',
   PurchaseSupplierRequisition: 'PurchaseSupplierRequisition',
   PurchaseSupplierRequisitionLine: 'PurchaseSupplierRequisitionLine',
@@ -673,6 +674,17 @@ export const PurchaseRequisitionItemScalarFieldEnum = {
 } as const
 
 export type PurchaseRequisitionItemScalarFieldEnum = (typeof PurchaseRequisitionItemScalarFieldEnum)[keyof typeof PurchaseRequisitionItemScalarFieldEnum]
+
+
+export const PurchaseRequisitionItemErpDraftScalarFieldEnum = {
+  requisitionItemId: 'requisitionItemId',
+  data: 'data',
+  updatedByUserId: 'updatedByUserId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseRequisitionItemErpDraftScalarFieldEnum = (typeof PurchaseRequisitionItemErpDraftScalarFieldEnum)[keyof typeof PurchaseRequisitionItemErpDraftScalarFieldEnum]
 
 
 export const PurchaseSupplierOfferScalarFieldEnum = {
