@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-WORKSPACE="$(cd -- "$ROOT/../.." && pwd)"
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
 COMMAND="${1:-help}"
 COMPOSE=(docker compose --project-name tuvansa-staging --env-file "$ROOT/.env.staging" -f "$ROOT/compose.staging.yaml")
 
@@ -24,11 +23,23 @@ case "$COMMAND" in
   down) "${COMPOSE[@]}" down; exit ;;
 esac
 
+# Mount each checkout directly: mounting only an ancestor may hide nested paths.
+AI_TARGET="$(dirname -- "$ROOT")/tuvansa-ai-platform"
+ERP_TARGET="$(cd -- "$ROOT/../.." && pwd -P)/tuvansa-backend-ca"
+AI_ROOT="$(cd -- "$AI_TARGET" && pwd -P)"
+ERP_ROOT="$(cd -- "$ERP_TARGET" && pwd -P)"
+if [[ ! -f "$ROOT/scripts/staging.mjs" ]]; then
+  echo "Missing scripts/staging.mjs; update the staging checkout before continuing." >&2
+  exit 1
+fi
+
 # Keep rendered secrets in the pipe, not in arguments, logs or temporary files.
 if ! "${COMPOSE[@]}" --profile maintenance config --format json 2>/dev/null |
   docker run --rm -i --network none --read-only --cap-drop ALL \
     --security-opt no-new-privileges \
-    --mount "type=bind,source=$WORKSPACE,target=$WORKSPACE,readonly" \
+    --mount "type=bind,source=$ROOT,target=$ROOT,readonly" \
+    --mount "type=bind,source=$AI_ROOT,target=$AI_TARGET,readonly" \
+    --mount "type=bind,source=$ERP_ROOT,target=$ERP_TARGET,readonly" \
     --workdir "$ROOT" node:22-bookworm-slim \
     node scripts/staging.mjs doctor --config-stdin; then
   echo "Staging validation failed. No deployment commands were executed." >&2

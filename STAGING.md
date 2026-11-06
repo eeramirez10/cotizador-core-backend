@@ -109,8 +109,9 @@ Generar secretos diferentes con `openssl rand -hex 32`. Nunca pegarlos en el cha
 
 Requiere Bash, Docker y Docker Compose v2 en el host. No requiere instalar Node,
 Corepack, pnpm ni dependencias del core en Ubuntu. El lanzador ejecuta el validador
-en un contenedor temporal Node 22, sin red ni acceso al socket Docker, con el
-directorio de staging montado en solo lectura. La primera ejecucion descarga la
+en un contenedor temporal Node 22, sin red ni acceso al socket Docker, con
+los tres checkouts (core, IA y ERP) montados directamente en solo lectura, sin
+depender de la visibilidad de una carpeta padre. La primera ejecucion descarga la
 imagen oficial `node:22-bookworm-slim`. Mantener los repositorios dentro de la
 estructura indicada arriba para que el validador pueda leer los cinco .env.
 Las imagenes se compilan con `--parallel 1` para reducir el pico de memoria.

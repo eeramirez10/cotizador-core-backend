@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, readFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync, readFileSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -93,6 +93,16 @@ test("Docker-only launcher validates read-only without mounting the Docker socke
     assert.ok(helper.includes("none"));
     assert.ok(helper.includes("--config-stdin"));
     assert.match(helper[helper.indexOf("--mount") + 1], /,readonly$/);
+    const mounts = helper.flatMap((arg, index) => arg === "--mount" ? [helper[index + 1]] : []);
+    const core = realpathSync(f.core);
+    const ai = resolve(dirname(core), "tuvansa-ai-platform");
+    const erp = resolve(core, "../../tuvansa-backend-ca");
+    assert.deepEqual(mounts, [
+      `type=bind,source=${core},target=${core},readonly`,
+      `type=bind,source=${realpathSync(f.ai)},target=${ai},readonly`,
+      `type=bind,source=${realpathSync(erp)},target=${erp},readonly`,
+    ]);
+    assert.equal(helper[helper.indexOf("--workdir") + 1], core);
     assert.doesNotMatch(JSON.stringify(calls), /docker\.sock|postgresql:|password@/);
   } finally { f.close(); }
 });
