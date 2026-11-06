@@ -107,17 +107,20 @@ Generar secretos diferentes con `openssl rand -hex 32`. Nunca pegarlos en el cha
 
 ## 3. Despliegue guiado
 
-Requiere Docker Compose v2 y Node.js 22 en el host. Para que el validador pueda leer
-los .env se necesita dotenv, ya declarado en el proyecto. Si no estan instaladas
-las dependencias del core, ejecutar `corepack pnpm install --frozen-lockfile`.
-Respetar el gestor de cada proyecto: core/IA usan pnpm; frontend/ERP usan npm.
+Requiere Bash, Docker y Docker Compose v2 en el host. No requiere instalar Node,
+Corepack, pnpm ni dependencias del core en Ubuntu. El lanzador ejecuta el validador
+en un contenedor temporal Node 22, sin red ni acceso al socket Docker, con el
+directorio de staging montado en solo lectura. La primera ejecucion descarga la
+imagen oficial `node:22-bookworm-slim`. Mantener los repositorios dentro de la
+estructura indicada arriba para que el validador pueda leer los cinco .env.
+Las imagenes se compilan con `--parallel 1` para reducir el pico de memoria.
 
 ```sh
 cd /srv/staging/tuvansa/cotizador-core-backend
-node scripts/staging.mjs doctor
-node scripts/staging.mjs deploy
-node scripts/staging.mjs seed
-node scripts/staging.mjs status
+sudo bash scripts/staging.sh doctor
+sudo bash scripts/staging.sh deploy
+sudo bash scripts/staging.sh seed
+sudo bash scripts/staging.sh status
 ```
 
 `doctor` no escribe ni imprime secretos. Verifica hosts, claves compartidas,
@@ -125,7 +128,7 @@ URLs y aislamiento de los volumenes. `deploy` compila, levanta PostgreSQL/Redis,
 aplica `prisma migrate deploy` exclusivamente en staging y levanta los servicios.
 No ejecuta migrate dev, reset, db push, restores ni borrados de datos.
 Los comandos Docker necesitan permisos sobre el daemon; si tu servidor usa sudo,
-ejecutar `sudo node scripts/staging.mjs ...` con Node disponible para root.
+usar `sudo bash scripts/staging.sh ...`, como en los ejemplos.
 
 `seed` crea las sucursales 01,02,03,04,05,06,07 y usuarios SELLER, PURCHASING y
 CREDIT_COLLECTIONS por sucursal, mas `admin-01`. Ejemplos: `seller-03`,
@@ -141,7 +144,7 @@ Importar el mismo catalogo SAT que se utiliza en desarrollo, en PostgreSQL de IA
 (no en Neon). Poner el XLSX en la ruta `STAGING_SAT_CATALOG_FILE` y ejecutar:
 
 ```sh
-node scripts/staging.mjs sat-import
+sudo bash scripts/staging.sh sat-import
 ```
 
 El comando utiliza el importador existente y deja metadatos de la version cargada;
@@ -213,7 +216,7 @@ deben apuntar al endpoint staging, no a produccion ni al equipo local:
 
 Habilitar TWILIO_WHATSAPP_ENABLED, WHATSAPP_INBOX_ENABLED y
 WHATSAPP_ASSISTANT_ENABLED cuando las URLs, plantillas y lista esten listas;
-recrear solo staging con `node scripts/staging.mjs up`. Revisar tambien los
+recrear solo staging con `sudo bash scripts/staging.sh up`. Revisar tambien los
 switches en Administracion, porque los valores de base de datos tienen prioridad.
 WHATSAPP_INTERNAL_VERIFICATION_ENABLED permanece deshabilitado en staging.
 Para reportes programados activar STAGING_MANAGER_REPORT_SCHEDULER_ENABLED y
@@ -235,9 +238,9 @@ PDF se entrego. No intentar saltar la ventana de 24 horas sin plantilla aprobada
   lista son rechazados y los embeddings ERP no se pueden sobrescribir.
 
 ```sh
-node scripts/staging.mjs logs
-node scripts/staging.mjs down     # Detiene solo staging y conserva los volumenes
-node scripts/staging.mjs up
+sudo bash scripts/staging.sh logs
+sudo bash scripts/staging.sh down     # Detiene solo staging y conserva los volumenes
+sudo bash scripts/staging.sh up
 ```
 
 Antes de actualizar staging, respaldar su Neon y sus volumenes si se desean

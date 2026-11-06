@@ -2,11 +2,16 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
-import { parse } from "dotenv";
+import { parseEnv } from "node:util";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const envPath = resolve(root, ".env.staging");
 const command = process.argv[2] || "help";
+const configFromStdin = process.argv.includes("--config-stdin");
+if (configFromStdin && command !== "doctor") {
+  console.error("--config-stdin is only supported by doctor.");
+  process.exit(1);
+}
 const commands = ["doctor", "build", "deploy", "migrate", "seed", "sat-import", "up", "status", "logs", "down"];
 if (command === "help" || !commands.includes(command)) {
   console.log(`Usage: node scripts/staging.mjs <${commands.join("|")}>`);
@@ -30,7 +35,7 @@ function compose(args, capture = false) {
 
 function readEnv(path) {
   if (!existsSync(path)) throw new Error(`Missing environment file: ${path}`);
-  return parse(readFileSync(path));
+  return parseEnv(readFileSync(path, "utf8"));
 }
 function required(env, key, minimum = 1) {
   const value = env[key] || "";
@@ -60,7 +65,7 @@ function doctor() {
   // Catch a new production hostname too, without printing its credentials.
   const productionFile = resolve(root, ".env");
   if (existsSync(productionFile)) {
-    const url = parse(readFileSync(productionFile)).DATABASE_URL;
+    const url = readEnv(productionFile).DATABASE_URL;
     if (url && new URL(url).hostname.replace(/-pooler(?=\.)/, "") === host) throw new Error("Staging cannot use this checkout's production database.");
   }
   const jwt = required(core, "JWT_SEED", 32);
@@ -96,7 +101,14 @@ function doctor() {
     if (phones.some((phone) => !/^\+[1-9]\d{7,14}$/.test(phone))) throw new Error("Use complete E.164 phones in the staging allowlist.");
     if (!/^whatsapp:\+[1-9]\d{7,14}$/.test(core.STAGING_TWILIO_WHATSAPP_FROM)) throw new Error("Configure the development WhatsApp sender in E.164 format.");
   }
-  const config = JSON.parse(compose(["--profile", "maintenance", "config", "--format", "json"], true));
+  let config;
+  try {
+    config = JSON.parse(configFromStdin ? readFileSync(0, "utf8")
+      : compose(["--profile", "maintenance", "config", "--format", "json"], true));
+  } catch {
+    // JSON parser errors can include snippets containing credentials.
+    throw new Error("Could not read staging Compose configuration; secrets were not printed.");
+  }
   if (config.name !== "tuvansa-staging") throw new Error("Refusing a non-staging Compose project.");
   for (const service of Object.values(config.services)) {
     for (const port of service.ports || []) {
@@ -128,7 +140,7 @@ try {
     compose(command === "logs" ? ["logs", "--tail", "100", "-f"] : command === "status" ? ["ps", "-a"] : ["down"]);
   } else {
     const env = doctor();
-    if (["build", "deploy"].includes(command)) compose(["--profile", "maintenance", "build"]);
+    if (["build", "deploy"].includes(command)) compose(["--parallel", "1", "--profile", "maintenance", "build"]);
     if (["migrate", "deploy"].includes(command)) migrate();
     if (["up", "deploy"].includes(command)) compose(["up", "-d", "--wait", "--wait-timeout", "180"]);
     if (command === "seed") compose(["--profile", "maintenance", "run", "--rm", "--no-deps", "core-seed"]);
