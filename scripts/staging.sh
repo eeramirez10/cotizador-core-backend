@@ -28,6 +28,10 @@ AI_TARGET="$(dirname -- "$ROOT")/tuvansa-ai-platform"
 ERP_TARGET="$(cd -- "$ROOT/../.." && pwd -P)/tuvansa-backend-ca"
 AI_ROOT="$(cd -- "$AI_TARGET" && pwd -P)"
 ERP_ROOT="$(cd -- "$ERP_TARGET" && pwd -P)"
+# With all capabilities dropped, container root cannot bypass mode 600 files.
+# Match the invoking user instead, including when Docker is called through sudo.
+VALIDATOR_UID="${SUDO_UID:-$(id -u)}"
+VALIDATOR_GID="${SUDO_GID:-$(id -g)}"
 if [[ ! -f "$ROOT/scripts/staging.mjs" ]]; then
   echo "Missing scripts/staging.mjs; update the staging checkout before continuing." >&2
   exit 1
@@ -36,6 +40,7 @@ fi
 # Keep rendered secrets in the pipe, not in arguments, logs or temporary files.
 if ! "${COMPOSE[@]}" --profile maintenance config --format json 2>/dev/null |
   docker run --rm -i --network none --read-only --cap-drop ALL \
+    --user "$VALIDATOR_UID:$VALIDATOR_GID" \
     --security-opt no-new-privileges \
     --mount "type=bind,source=$ROOT,target=$ROOT,readonly" \
     --mount "type=bind,source=$AI_ROOT,target=$AI_TARGET,readonly" \

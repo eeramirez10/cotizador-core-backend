@@ -114,6 +114,9 @@ los tres checkouts (core, IA y ERP) montados directamente en solo lectura, sin
 depender de la visibilidad de una carpeta padre. La primera ejecucion descarga la
 imagen oficial `node:22-bookworm-slim`. Mantener los repositorios dentro de la
 estructura indicada arriba para que el validador pueda leer los cinco .env.
+El contenedor usa el UID/GID del usuario invocante (SUDO_UID/SUDO_GID al usar sudo).
+Los .env deben pertenecer a ese usuario y pueden conservar permisos 600: no se
+agregan capacidades de root para saltar sus permisos.
 Las imagenes se compilan con `--parallel 1` para reducir el pico de memoria.
 
 ```sh

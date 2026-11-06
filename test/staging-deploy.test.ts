@@ -48,12 +48,14 @@ if (args.includes('config')) {
 `, { mode: 0o700 });
   return {
     root, core, ai, files, config,
-    run(command = "doctor", options: { wrapper?: boolean; input?: string; stdin?: boolean } = {}) {
-      for (const [path, values] of Object.entries(files)) writeFileSync(path, Object.entries(values).map(([key, value]) => `${key}=${value}`).join("\n"));
+    run(command = "doctor", options: { wrapper?: boolean; input?: string; stdin?: boolean; sudoIdentity?: [string, string] } = {}) {
+      for (const [path, values] of Object.entries(files)) writeFileSync(path, Object.entries(values).map(([key, value]) => `${key}=${value}`).join("\n"), { mode: 0o600 });
       writeFileSync(resolve(root, "compose.json"), JSON.stringify(config));
       return spawnSync(options.wrapper ? "bash" : process.execPath,
         [resolve(core, options.wrapper ? "scripts/staging.sh" : "scripts/staging.mjs"), command, ...(options.stdin ? ["--config-stdin"] : [])], {
-        input: options.input, encoding: "utf8", env: { ...process.env, PATH: `${resolve(root, "bin")}${delimiter}${dirname(process.execPath)}${delimiter}${process.env.PATH}` },
+        input: options.input, encoding: "utf8", env: { ...process.env,
+          SUDO_UID: options.sudoIdentity?.[0] ?? "", SUDO_GID: options.sudoIdentity?.[1] ?? "",
+          PATH: `${resolve(root, "bin")}${delimiter}${dirname(process.execPath)}${delimiter}${process.env.PATH}` },
       });
     },
     close() { rmSync(root, { recursive: true, force: true }); },
@@ -92,6 +94,7 @@ test("Docker-only launcher validates read-only without mounting the Docker socke
     assert.ok(helper.includes("--read-only"));
     assert.ok(helper.includes("none"));
     assert.ok(helper.includes("--config-stdin"));
+    assert.equal(helper[helper.indexOf("--user") + 1], `${process.getuid!()}:${process.getgid!()}`);
     assert.match(helper[helper.indexOf("--mount") + 1], /,readonly$/);
     const mounts = helper.flatMap((arg, index) => arg === "--mount" ? [helper[index + 1]] : []);
     const core = realpathSync(f.core);
@@ -104,6 +107,21 @@ test("Docker-only launcher validates read-only without mounting the Docker socke
     ]);
     assert.equal(helper[helper.indexOf("--workdir") + 1], core);
     assert.doesNotMatch(JSON.stringify(calls), /docker\.sock|postgresql:|password@/);
+  } finally { f.close(); }
+});
+
+test("Docker-only launcher preserves the original caller identity under sudo", () => {
+  const f = fixture();
+  try {
+    const result = f.run("doctor", { wrapper: true, sudoIdentity: ["1234", "4321"] });
+    assert.equal(result.status, 0, result.stderr);
+    const calls: string[][] = readFileSync(resolve(f.root, "docker.log"), "utf8").trim().split("\n").map(line => JSON.parse(line));
+    const helper = calls.find(args => args[0] === "run")!;
+    assert.equal(helper[helper.indexOf("--user") + 1], "1234:4321");
+    assert.ok(helper.includes("--cap-drop"));
+    assert.ok(helper.includes("ALL"));
+    assert.ok(helper.includes("no-new-privileges"));
+    assert.ok(!helper.includes("--cap-add"));
   } finally { f.close(); }
 });
 
