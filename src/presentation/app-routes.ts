@@ -23,6 +23,7 @@ import { WhatsAppInboxRoutes } from "./whatsapp/whatsapp-inbox.routes";
 import { refreshSystemSettings } from "./middlewares/system-settings.middleware";
 import { CustomerOnboardingsRoutes } from "./customer-onboardings/customer-onboardings.routes";
 import { NotificationsRoutes } from "./notifications/notifications.routes";
+import { stagingErpRoutes } from "./integrations/staging-erp.routes";
 
 export class AppRoutes {
   public static routes(): Router {
@@ -35,6 +36,7 @@ export class AppRoutes {
     router.use(refreshSystemSettings);
 
     router.use("/auth", AuthRoutes.routes());
+    router.use("/staging/erp", stagingErpRoutes());
     router.use("/branches", BranchesRoutes.routes());
     router.use("/users", UsersRoutes.routes());
     router.use("/customers", CustomersRoutes.routes());

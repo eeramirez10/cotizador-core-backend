@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { config } from "dotenv";
 import { get } from "env-var";
+import { assertStagingDatabase } from "./staging-safety";
 
 const isDevelopment = (process.env.NODE_ENV || "").toLowerCase() === "development";
 const primaryEnvFile = isDevelopment ? ".env.development" : ".env";
@@ -15,6 +16,8 @@ if (existsSync(primaryPath)) {
 } else if (existsSync(fallbackPath)) {
   config({ path: fallbackPath, override: false });
 }
+
+if (process.env.STAGING_MODE === "true") assertStagingDatabase(process.env);
 
 export class Envs {
   static get port(): number {

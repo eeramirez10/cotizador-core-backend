@@ -14,12 +14,15 @@ x-core-environment: &core-environment
   DATABASE_URL: ${STAGING_DATABASE_URL:?STAGING_DATABASE_URL is required}
   NODE_ENV: production
   STAGING_MODE: "true"
+  STAGING_DATABASE_HOST: ${STAGING_DATABASE_HOST:?Pin the staging Neon hostname}
+  PRODUCTION_DATABASE_HOST: ${PRODUCTION_DATABASE_HOST:-ep-cold-queen-aiakczbm.c-4.us-east-1.aws.neon.tech}
   PORT: "4600"
   FILE_STORAGE_ROOT: /app/storage/documents/attachments
   ERP_OUTBOX_DIR: /app/storage/documents/erp-outbox
   REALTIME_REDIS_URL: redis://redis:6379
   AI_PLATFORM_BASE_URL: http://ai-api:4700
   GPT_LOCAL_PRODUCTS_URL: http://ai-api:4700/api/local-products-semantic
+  ERP_API_URL: http://erp-api:3500
   TWILIO_WHATSAPP_FROM: ${STAGING_TWILIO_WHATSAPP_FROM:-}
   TWILIO_WHATSAPP_QUOTE_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_QUOTE_CONTENT_SID:-}
   TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID: ${STAGING_TWILIO_WHATSAPP_MANAGER_REPORT_CONTENT_SID:-}
@@ -29,12 +32,50 @@ x-core-environment: &core-environment
 
 x-ai-environment: &ai-environment
   NODE_ENV: production
+  STAGING_MODE: "true"
   API_PORT: "4700"
   REDIS_URL: redis://redis:6379
   DOCUMENT_STORAGE_DIRECTORY: /app/storage/uploads
   CORE_BACKEND_BASE_URL: http://core:4600
+  ERP_PRODUCTS_BASE_URL: http://erp-api:3500/api/erp/products
+  PINECONE_LOCAL_PRODUCTS_NAMESPACE: local-products-staging
+  # Query the existing ERP vectors, but never run indexing against them.
+  URL_MYSQL: ""
+  USER_MYSQL: ""
+  PASSWORD_MYSQL: ""
+  DB_MYSQL: ""
 
 services:
+  erp-api:
+    build:
+      context: ${STAGING_ERP_BUILD_CONTEXT:-../../tuvansa-backend-ca}
+      dockerfile: Dockerfile.staging
+      target: runtime
+    env_file: ${STAGING_ERP_ENV_FILE:-../../tuvansa-backend-ca/.env.staging}
+    environment:
+      NODE_ENV: production
+      STAGING_MODE: "true"
+      PORT: "3500"
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3500/health/ready').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    init: true
+    read_only: true
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: [ALL]
+    tmpfs: ["/tmp:mode=1777,size=64m"]
+    restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    stop_grace_period: 30s
+    networks: [staging]
+
   redis:
     image: redis:7-alpine
     command: [redis-server, --appendonly, "yes", --maxmemory-policy, noeviction]
@@ -46,6 +87,11 @@ services:
       timeout: 3s
       retries: 20
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks: [staging]
 
   postgres:
@@ -63,6 +109,11 @@ services:
       retries: 20
       start_period: 10s
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks: [staging]
 
   core-volume-init:
@@ -129,9 +180,16 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
+      erp-api:
+        condition: service_healthy
     init: true
     read_only: true
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     security_opt: ["no-new-privileges:true"]
     cap_drop: [ALL]
     tmpfs: ["/tmp:mode=1777,size=64m"]
@@ -162,6 +220,11 @@ services:
     init: true
     read_only: true
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     security_opt: ["no-new-privileges:true"]
     cap_drop: [ALL]
     tmpfs: ["/tmp:mode=1777,size=128m"]
@@ -191,6 +254,11 @@ services:
     init: true
     read_only: true
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     security_opt: ["no-new-privileges:true"]
     cap_drop: [ALL]
     tmpfs: ["/tmp:mode=1777,size=128m"]
@@ -202,6 +270,8 @@ services:
     env_file: .env.staging
     environment: *core-environment
     command: [node, dist/presentation/whatsapp-assistant-worker.js]
+    volumes:
+      - core_documents:/app/storage/documents
     depends_on:
       core:
         condition: service_healthy
@@ -210,6 +280,11 @@ services:
     init: true
     read_only: true
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     security_opt: ["no-new-privileges:true"]
     cap_drop: [ALL]
     tmpfs: ["/tmp:mode=1777,size=64m"]
@@ -221,16 +296,56 @@ services:
     env_file: .env.staging
     environment: *core-environment
     command: [node, dist/presentation/manager-report-worker.js]
+    volumes:
+      - core_documents:/app/storage/documents
     depends_on:
       core:
         condition: service_healthy
     init: true
     read_only: true
     restart: unless-stopped
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
     security_opt: ["no-new-privileges:true"]
     cap_drop: [ALL]
     tmpfs: ["/tmp:mode=1777,size=64m"]
     stop_grace_period: 30s
+    networks: [staging]
+
+  core-seed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: migrate
+    env_file: .env.staging
+    environment: *core-environment
+    command: [pnpm, exec, tsx, prisma/staging-seed.ts]
+    profiles: [maintenance]
+    init: true
+    restart: "no"
+    networks: [staging]
+
+  ai-sat-import:
+    build: *ai-build
+    env_file: ../tuvansa-ai-platform/.env.staging
+    environment: *ai-environment
+    command: [node, dist/scripts/import-sat-catalog.js, /catalog/sat.xlsx]
+    volumes:
+      - type: bind
+        source: ${STAGING_SAT_CATALOG_FILE:-./catalogs/sat.xlsx}
+        target: /catalog/sat.xlsx
+        read_only: true
+        bind:
+          create_host_path: false
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: [maintenance]
+    init: true
+    restart: "no"
     networks: [staging]
 
 volumes:
