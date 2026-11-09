@@ -1,5 +1,13 @@
 # Staging del cotizador
 
+## Flujo obligatorio de codigo
+
+Leer [DEVELOPMENT_WORKFLOW.md](DEVELOPMENT_WORKFLOW.md) y [AGENTS.md](AGENTS.md)
+antes de modificar o promover cambios. Las ramas de trabajo nacen de development:
+feature -> development -> staging -> main. No promover a main sin validar antes
+en staging los mismos commits. Este documento describe la operacion del entorno,
+no autoriza a saltar el flujo ni a desplegar automaticamente.
+
 Mismo comportamiento que desarrollo, desplegado junto a produccion pero aislado.
 No se integra codigo a main ni se modifica Heroku para habilitar este entorno.
 
@@ -187,6 +195,11 @@ Conservar las barras finales. Ejecutar `nginx -t` antes de recargar Nginx.
 No publicar el puerto ni una ruta publica directa de erp-api.
 El frontend consulta ERP por el puente autenticado del core; se conservan los
 contratos de respuesta, y las claves internas solo se agregan del lado servidor.
+
+El frontend consulta IA por el core autenticado: `VITE_AI_API_URL` y
+`VITE_CORE_API_URL` deben apuntar ambos a `https://HOST/cotizador-staging`.
+La ruta `/ia-staging/` no es el destino de las extracciones del navegador: la API
+de IA exige una clave interna que solo agrega el core, nunca una variable VITE.
 
 En el frontend, crear .env.staging desde su ejemplo y reemplazar STAGING_PUBLIC_HOST.
 No modificar .env.production. Desplegar en un proyecto Firebase diferente:
