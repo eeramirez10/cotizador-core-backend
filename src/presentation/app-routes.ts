@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { erpInventoryRoutes } from "./inventory/erp-inventory.routes";
 import { AuthRoutes } from "./auth/auth.routes";
 import { BranchesRoutes } from "./branches/branches.routes";
 import { CustomersRoutes } from "./customers/customers.routes";
@@ -53,6 +54,7 @@ export class AppRoutes {
     router.use("/attachments", AttachmentsRoutes.routes());
     router.use("/erp-warehouses", ErpWarehousesRoutes.managementRoutes());
     router.use("/erp-products", ErpWarehousesRoutes.productRoutes());
+    router.use("/inventory/erp", erpInventoryRoutes());
     router.use("/erp-product-catalogs", ErpProductCatalogsRoutes.routes());
     router.use("/integrations/twilio", TwilioRoutes.routes());
     router.use("/internal/whatsapp-assistant", WhatsAppAssistantRoutes.routes());
