@@ -24,8 +24,15 @@ existente, incluidos inactivos. Los desconocidos se muestran como `Almacen XX`
 (con acento en la interfaz), nunca se ocultan ni se infieren por el codigo del
 producto. Sin FALM: nombre `Sin registro de almacen`, codigo y existencia null.
 
-La consulta es global. No usa las asignaciones de cotizacion ni cambia sus
-permisos. Administracion de almacenes sigue restringida a ADMIN.
+La visibilidad es global y se administra con `GET` y `PUT` en
+`/api/inventory/erp/settings` (solo ADMIN). El cuerpo de PUT usa
+`{ "warehouseCodes": null }` para todos, `[]` para ninguno o hasta 128 codigos
+validos de Proscai para restringir. La configuracion y auditoria usan las
+tablas existentes; por defecto se muestran todos. En modo restringido solo
+se muestran filas y opciones de los almacenes elegidos, sin productos sin
+FALM. El core exige confirmacion del alcance por parte del ERP antes de
+mostrar resultados, incluso si el ERP devuelve una pagina vacia.
+No usa las asignaciones de cotizacion ni cambia sus permisos.
 Validacion invalida: 400; sin sesion/usuario inactivo: 401; fallo ERP: 502;
 timeout: 504. No se devuelven SQL ni credenciales en los errores.
 

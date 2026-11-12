@@ -17,6 +17,14 @@ export function normalizeInventoryWarehouseCode(value: unknown): string {
   return /^\d+$/.test(code) ? code.padStart(2, "0") : code;
 }
 
+export function parseErpInventoryVisibility(value: unknown): string[] | null {
+  if (value === null) return null;
+  if (!Array.isArray(value) || value.length > 128) {
+    throw new Error("Indica todos los almacenes o selecciona hasta 128 almacenes.");
+  }
+  return [...new Set(value.map(normalizeInventoryWarehouseCode))].sort();
+}
+
 export function parseErpInventoryQuery(input: Record<string, unknown>): ErpInventoryQuery {
   const text = (key: string, fallback = ""): string => {
     const value = input[key];

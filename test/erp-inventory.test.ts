@@ -7,8 +7,8 @@ import ts from "typescript";
 import express from "express";
 import type { AddressInfo } from "node:net";
 import { ErpInventoryAdapter, ErpInventoryGatewayError } from "../src/infrastructure/http/erp-inventory.adapter";
-import { ErpInventoryUseCase } from "../src/domain/use-cases/erp-inventory.use-case";
-import { parseErpInventoryQuery, normalizeInventoryWarehouseCode } from "../src/domain/dtos/request/erp-inventory-query.dto";
+import { ErpInventoryUseCase, ErpInventoryVisibilityError } from "../src/domain/use-cases/erp-inventory.use-case";
+import { parseErpInventoryQuery, normalizeInventoryWarehouseCode, parseErpInventoryVisibility } from "../src/domain/dtos/request/erp-inventory-query.dto";
 import type { ErpInventoryPage } from "../src/domain/contracts/erp-inventory.port";
 
 const query = parseErpInventoryQuery({});
@@ -73,13 +73,32 @@ test("warehouse listing preserves real ERP codes, removes duplicates and rejects
   } finally { globalThis.fetch = previous; }
 });
 
+test("scoped adapter rejects old ERP responses and out-of-scope items or totals", async () => {
+  const previous = globalThis.fetch;
+  const adapter = new ErpInventoryAdapter("https://erp.example", "/products", 1000, "key");
+  const scoped = { ...fixture(), items: fixture().items.slice(0, 1), total: 1 };
+  try {
+    globalThis.fetch = async () => Response.json(scoped);
+    await assert.rejects(adapter.list(query, ["06"]), /no confirmó/);
+    globalThis.fetch = async () => Response.json({ ...scoped, warehouseCodes: ["06", "98"] });
+    await assert.rejects(adapter.list(query, ["06"]), /no confirmó/);
+    globalThis.fetch = async () => Response.json({ ...fixture(), warehouseCodes: ["06"] });
+    await assert.rejects(adapter.list(query, ["06"]), /fuera de los almacenes/);
+    globalThis.fetch = async url => {
+      assert.deepEqual(new URL(String(url)).searchParams.getAll("warehouseCodes"), ["06", "|"]);
+      return Response.json({ ...scoped, warehouseCodes: ["06", "|"] });
+    };
+    assert.deepEqual(await adapter.list(query, ["06", "|"]), scoped);
+  } finally { globalThis.fetch = previous; }
+});
+
 test("inventory uses the existing warehouse names without filtering by assignments or guessing branches", async () => {
   const useCase = new ErpInventoryUseCase({ list: async () => fixture(), warehouses: async () => ["06", "98", "15", "ANOID", "|"] }, {
     list: async includeInactive => {
       assert.equal(includeInactive, true);
       return [{ id: "id", code: "06", name: "Cancún", companyCode: null, isActive: true, createdAt: new Date(), updatedAt: new Date() }];
     },
-  });
+  }, { read: async () => null, save: async () => assert.fail("Unexpected save") });
   const result = await useCase.list(query);
   assert.equal(result.items[0].warehouseName, "Cancún");
   assert.equal(result.items[1].warehouseName, "Almacén 98");
@@ -91,6 +110,35 @@ test("inventory uses the existing warehouse names without filtering by assignmen
   assert.equal(warehouses[4].name, "Almacén |");
 });
 
+test("inventory visibility applies to totals, direct filters and the warehouse list, not the admin catalog", async () => {
+  let stored: string[] | null = null;
+  let calls = 0;
+  const useCase = new ErpInventoryUseCase({
+    list: async (_query, codes) => {
+      calls++;
+      assert.deepEqual(codes, ["06", "|"]);
+      return { ...fixture(), items: fixture().items.slice(0, 1), total: 1 };
+    },
+    warehouses: async () => ["06", "98", "|"],
+  }, { list: async () => [] }, {
+    read: async () => stored,
+    save: async (codes, actor) => { assert.equal(actor, "admin"); stored = codes; },
+  });
+  assert.equal((await useCase.settings()).warehouseCodes, null);
+  await assert.rejects(useCase.updateSettings(["unknown"], "admin"), ErpInventoryVisibilityError);
+  await useCase.updateSettings(["06", "|"], "admin");
+  assert.deepEqual((await useCase.warehouses()).map(({ code }) => code), ["06", "|"]);
+  assert.deepEqual((await useCase.settings()).warehouses.map(({ code }) => code), ["06", "98", "|"]);
+  assert.equal((await useCase.list(query)).total, 1);
+  assert.equal((await useCase.list({ ...query, warehouseCode: "98", page: 3 })).total, 0);
+  await useCase.updateSettings([], "admin");
+  assert.deepEqual(await useCase.warehouses(), []);
+  assert.equal((await useCase.list(query)).total, 0);
+  assert.equal(calls, 1);
+  await useCase.updateSettings(null, "admin");
+  assert.equal((await useCase.warehouses()).length, 3);
+});
+
 test("core validates parameters independently of the ERP service", () => {
   assert.equal(parseErpInventoryQuery({ warehouseCode: "6" }).warehouseCode, "06");
   assert.equal(parseErpInventoryQuery({ query: " tSc " }).query, "TSC");
@@ -100,6 +148,38 @@ test("core validates parameters independently of the ERP service", () => {
     assert.throws(() => parseErpInventoryQuery(input));
   }
   assert.equal(normalizeInventoryWarehouseCode("0|"), "0|");
+  assert.equal(parseErpInventoryVisibility(null), null);
+  assert.deepEqual(parseErpInventoryVisibility(["6", "06", "003", "ANOID", "|"]), ["003", "06", "ANOID", "|"]);
+  assert.deepEqual(parseErpInventoryVisibility([]), []);
+  for (const value of [undefined, "01", [null], ["A\n"], Array(129).fill("01")]) {
+    assert.throws(() => parseErpInventoryVisibility(value));
+  }
+});
+
+test("visibility repository uses the existing setting and audits updates atomically", async () => {
+  let value: unknown;
+  const writes: any[] = [];
+  const systemSetting = { findUnique: async () => value === undefined ? null : { value } };
+  const { PrismaErpInventoryVisibilityRepository } = load("src/infrastructure/repositories/prisma-erp-inventory-visibility.repository.ts", {
+    "../../domain/dtos/request/erp-inventory-query.dto": { parseErpInventoryVisibility },
+    "../database/prisma-client": { prisma: { systemSetting, $transaction: async (callback: (tx: unknown) => Promise<void>) => callback({
+      systemSetting: { ...systemSetting, upsert: async (input: any) => {
+        writes.push(input); value = input.create.value;
+      } },
+      auditLog: { create: async (input: any) => { writes.push(input); } },
+    }) } },
+  });
+  const repository = new PrismaErpInventoryVisibilityRepository();
+  assert.equal(await repository.read(), null);
+  await repository.save(["06"], "admin");
+  assert.deepEqual(await repository.read(), ["06"]);
+  await repository.save([], "admin");
+  assert.deepEqual(await repository.read(), []);
+  assert.equal(writes[0].where.key, "ERP_INVENTORY_VISIBLE_WAREHOUSES");
+  assert.equal(writes[1].data.actorUserId, "admin");
+  assert.equal(writes[3].data.payload.previousValue.warehouseCodes[0], "06");
+  value = { warehouseCodes: "invalid" };
+  await assert.rejects(repository.read());
 });
 
 const requireModule = createRequire(`${process.cwd()}/package.json`);
@@ -121,19 +201,30 @@ test("both core endpoints allow every active role but reject inactive, unauthent
     }) } } },
   });
   let calls = 0;
+  let settingsCalls = 0;
+  const { requireRoles } = load("src/presentation/middlewares/rbac.middleware.ts", {});
   const { erpInventoryRoutes } = load("src/presentation/inventory/erp-inventory.routes.ts", {
     "../../config/envs": { Envs: {} },
-    "../../domain/dtos/request/erp-inventory-query.dto": { parseErpInventoryQuery },
-    "../../domain/use-cases/erp-inventory.use-case": { ErpInventoryUseCase: class {
+    "../../domain/dtos/request/erp-inventory-query.dto": { parseErpInventoryQuery, parseErpInventoryVisibility },
+    "../../domain/use-cases/erp-inventory.use-case": { ErpInventoryVisibilityError, ErpInventoryUseCase: class {
       async list() { calls++; return fixture(); }
       async warehouses() { calls++; return [{ code: "06", name: "Cancún" }]; }
+      async settings() { settingsCalls++; return { warehouseCodes: null, warehouses: [] }; }
+      async updateSettings(codes: string[] | null, actor: string) {
+        assert.equal(actor, "ADMIN");
+        if (codes?.includes("98")) throw new ErpInventoryVisibilityError("Almacén no disponible");
+        settingsCalls++;
+        return { warehouseCodes: codes, warehouses: [] };
+      }
     } },
     "../../infrastructure/datasources/prisma-erp-warehouse.datasource": { PrismaErpWarehouseDatasource: class {} },
     "../../infrastructure/http/erp-inventory.adapter": { ErpInventoryAdapter: class {}, ErpInventoryGatewayError },
     "../../infrastructure/repositories/erp-warehouse.repository-impl": { ErpWarehouseRepositoryImpl: class {} },
+    "../../infrastructure/repositories/prisma-erp-inventory-visibility.repository": { PrismaErpInventoryVisibilityRepository: class {} },
     "../middlewares/auth.middleware": { requireAuth },
+    "../middlewares/rbac.middleware": { requireRoles },
   });
-  const app = express(); app.use("/api/inventory/erp", erpInventoryRoutes());
+  const app = express(); app.use(express.json()); app.use("/api/inventory/erp", erpInventoryRoutes());
   const server = app.listen(0, "127.0.0.1");
   await new Promise<void>(resolve => server.once("listening", resolve));
   const base = `http://127.0.0.1:${(server.address() as AddressInfo).port}/api/inventory/erp`;
@@ -142,6 +233,24 @@ test("both core endpoints allow every active role but reject inactive, unauthent
       assert.equal((await fetch(`${base}${path}`, { headers: { Authorization: `Bearer ${role}` } })).status, 200);
     }
     assert.equal(calls, 10);
+    const getSettings = (role: string) => fetch(`${base}/settings`, { headers: { Authorization: `Bearer ${role}` } });
+    const putSettings = (role: string, warehouseCodes?: unknown) => fetch(`${base}/settings`, {
+      method: "PUT", headers: { Authorization: `Bearer ${role}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ warehouseCodes }),
+    });
+    assert.equal((await getSettings("INACTIVE")).status, 401);
+    for (const role of roles.filter(role => role !== "ADMIN")) {
+      assert.equal((await getSettings(role)).status, 403);
+      assert.equal((await putSettings(role, null)).status, 403);
+    }
+    assert.equal(settingsCalls, 0);
+    const response = await getSettings("ADMIN");
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.equal((await putSettings("ADMIN")).status, 400);
+    assert.equal((await putSettings("ADMIN", ["98"])).status, 400);
+    assert.deepEqual((await (await putSettings("ADMIN", ["6"])).json()).warehouseCodes, ["06"]);
+    assert.equal(settingsCalls, 2);
     assert.equal((await fetch(base)).status, 401);
     assert.equal((await fetch(`${base}/warehouses`, { headers: { Authorization: "Bearer INACTIVE" } })).status, 401);
     assert.equal((await fetch(`${base}?page=0`, { headers: { Authorization: "Bearer SELLER" } })).status, 400);

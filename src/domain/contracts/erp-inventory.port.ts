@@ -17,6 +17,10 @@ export interface ErpInventoryPage {
   totalPages: number;
 }
 export interface ErpInventoryPort {
-  list(query: ErpInventoryQuery): Promise<ErpInventoryPage>;
+  list(query: ErpInventoryQuery, warehouseCodes?: readonly string[]): Promise<ErpInventoryPage>;
   warehouses(): Promise<string[]>;
+}
+export interface ErpInventoryVisibilityRepository {
+  read(): Promise<string[] | null>;
+  save(warehouseCodes: string[] | null, actorUserId: string): Promise<void>;
 }
