@@ -3,7 +3,7 @@ import {
   ProductCostSource,
   ProductCostStatus,
 } from "../../../infrastructure/database/generated/enums";
-import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { parseLocalMeasurementUnit } from "../../utils/local-measurement-unit";
 import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface UpdateLocalTempProductRequestDtoProps {
@@ -82,7 +82,7 @@ export class UpdateLocalTempProductRequestDto {
     }
 
     const unitRaw = UpdateLocalTempProductRequestDto.normalizeOptionalString(body.unit);
-    const normalizedUnit = typeof unitRaw === "string" ? normalizeMeasurementUnit(unitRaw) : undefined;
+    const normalizedUnit = typeof unitRaw === "string" ? parseLocalMeasurementUnit(unitRaw) : undefined;
     if (unitRaw === "") {
       return ["unit cannot be empty."];
     }

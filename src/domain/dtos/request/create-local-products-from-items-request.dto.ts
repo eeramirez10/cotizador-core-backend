@@ -1,5 +1,5 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
-import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { parseLocalMeasurementUnit } from "../../utils/local-measurement-unit";
 import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface LocalProductItemInput {
@@ -77,14 +77,14 @@ export class CreateLocalProductsFromItemsRequestDto {
           row.descriptionOriginal ??
           row.description_original
       );
-      const rawUnit = CreateLocalProductsFromItemsRequestDto.normalizeNullableString(
-        row.unitNormalized ??
+      const suppliedUnit = row.unitNormalized ??
           row.unit_normalized ??
           row.unit ??
           row.unitOriginal ??
-          row.unit_original
-      );
-      const unit = normalizeMeasurementUnit(rawUnit);
+          row.unit_original;
+      if (suppliedUnit != null && typeof suppliedUnit !== "string") return [`items[${i}].unit is invalid.`];
+      const rawUnit = CreateLocalProductsFromItemsRequestDto.normalizeNullableString(suppliedUnit);
+      const unit = parseLocalMeasurementUnit(rawUnit);
       const [technicalError, technicalAttributes = {}] = parseTechnicalAttributes(
         row.technicalAttributes ?? row.technical_attributes,
       );

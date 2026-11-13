@@ -1,3 +1,4 @@
+import { InactiveLocalUnitError, parseLocalMeasurementUnit } from "../../domain/utils/local-measurement-unit";
 import {
   CreateLocalTempProductDatasourceParams,
   FindLocalTempByDescriptionAndUnitDatasourceParams,
@@ -127,10 +128,18 @@ export class PrismaProductDatasource implements ProductDatasource {
         isActive: true,
         ...(params.scope.role === "ADMIN" ? {} : { branchId: params.scope.branchId }),
       },
-      select: { id: true },
+      select: { id: true, unit: true },
     });
 
     if (!existing) return null;
+
+    const requestedUnit = params.data.unit;
+    const unitChanged = requestedUnit !== undefined && requestedUnit !== existing.unit
+      && requestedUnit !== parseLocalMeasurementUnit(existing.unit);
+    if (unitChanged && !await prisma.quoteCatalogOption.findFirst({
+      where: { type: "MEASUREMENT_UNIT", code: requestedUnit, branchId: null, isActive: true },
+      select: { id: true },
+    })) throw new InactiveLocalUnitError(requestedUnit);
 
     const row = await prisma.product.update({
       where: { id: existing.id },
@@ -144,7 +153,7 @@ export class PrismaProductDatasource implements ProductDatasource {
         subfamily: params.data.subfamily,
         brand: params.data.brand,
         technicalAttributes: params.data.technicalAttributes,
-        unit: params.data.unit,
+        unit: unitChanged ? requestedUnit : undefined,
         currency: params.data.currency,
         averageCost: params.data.averageCost,
         lastCost: params.data.lastCost,

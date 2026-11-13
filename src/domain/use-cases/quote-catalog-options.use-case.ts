@@ -1,3 +1,4 @@
+import { normalizeMeasurementUnit } from "../constants/measurement-unit.constants";
 import { QuoteCatalogActorScope } from "../datasources/quote-catalog.datasource";
 import { UpsertQuoteCatalogOptionRequestDto } from "../dtos/request/upsert-quote-catalog-option-request.dto";
 import { QuoteCatalogOptionResponseDto } from "../dtos/response/quote-catalog-option-response.dto";
@@ -23,12 +24,17 @@ export class QuoteCatalogOptionsUseCase {
   async listManaged(actor: QuoteCatalogActorScope): Promise<QuoteCatalogOptionResponseDto[]> {
     const options = await this.repository.listManaged(actor);
     return options
+      .filter((option) => option.type !== "MEASUREMENT_UNIT" || actor.role === "ADMIN")
       .filter((option) => actor.role !== "PURCHASING" || procurementCatalogTypes.has(option.type))
       .map((option) => new QuoteCatalogOptionResponseDto(option));
   }
 
   async create(dto: UpsertQuoteCatalogOptionRequestDto, actor: QuoteCatalogActorScope): Promise<QuoteCatalogOptionResponseDto> {
     this.assertCanManageType(actor, dto.type);
+    if (dto.type === "MEASUREMENT_UNIT") {
+      const canonical = normalizeMeasurementUnit(dto.code);
+      if (canonical && canonical !== dto.code) throw new Error(`El código ya corresponde a la unidad ${canonical}.`);
+    }
     const branchId = actor.role === "MANAGER" ? actor.branchId : actor.role === "PURCHASING" ? null : dto.branchId;
     if (await this.repository.existsInScope(dto.type, dto.code, branchId)) throw new Error("Catalog option code already exists in this scope.");
     const option = await this.repository.create({
@@ -79,6 +85,9 @@ export class QuoteCatalogOptionsUseCase {
   }
 
   private assertCanManageType(actor: QuoteCatalogActorScope, type: QuoteCatalogType): void {
+    if (type === "MEASUREMENT_UNIT" && actor.role !== "ADMIN") {
+      throw new Error("Solo un administrador puede gestionar unidades de medida.");
+    }
     if (actor.role === "PURCHASING" && !procurementCatalogTypes.has(type)) {
       throw new Error("PURCHASING can only manage procurement catalog options.");
     }

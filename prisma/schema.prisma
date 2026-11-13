@@ -192,6 +192,7 @@ enum QuoteStatus {
 }
 
 enum QuoteCatalogType {
+  MEASUREMENT_UNIT
   VALIDITY_DAYS
   PAYMENT_TERMS
   COMMERCIAL_CONDITIONS
@@ -840,6 +841,7 @@ model Quote {
   total                        Decimal               @db.Decimal(14, 4)
   deliveryPlace                String?               @map("delivery_place") @db.VarChar(255)
   paymentTerms                 String                @default("CONTADO") @map("payment_terms") @db.VarChar(220)
+  customerReference            String?               @map("customer_reference") @db.VarChar(120)
   commercialConditions         String?               @map("commercial_conditions") @db.Text
   validityDays                 Int                   @default(10) @map("validity_days")
   validUntil                   DateTime              @map("valid_until") @db.Date

@@ -118,6 +118,7 @@ export interface QuoteEntity {
   total: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  customerReference: string | null;
   commercialConditions: string | null;
   validityDays: number;
   validUntil: Date;

@@ -1,9 +1,7 @@
+import { requireActiveLocalUnits, type LocalUnitCatalog } from "../utils/local-measurement-unit";
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
-import {
-  DEFAULT_MEASUREMENT_UNIT,
-  normalizeMeasurementUnit,
-} from "../constants/measurement-unit.constants";
+import { DEFAULT_MEASUREMENT_UNIT } from "../constants/measurement-unit.constants";
 import { CreateLocalProductsFromItemsRequestDto } from "../dtos/request/create-local-products-from-items-request.dto";
 import { CreateLocalProductsFromItemsResponseDto } from "../dtos/response/create-local-products-from-items-response.dto";
 import { ProductResponseDto } from "../dtos/response/product-response.dto";
@@ -22,6 +20,7 @@ export class CreateLocalProductsFromItemsUseCase {
     private readonly productRepository: ProductRepository,
     private readonly branchRepository: BranchRepository,
     private readonly semanticPort: LocalProductSemanticPort,
+    private readonly units: LocalUnitCatalog,
   ) {}
 
   async execute(
@@ -40,6 +39,8 @@ export class CreateLocalProductsFromItemsUseCase {
       targetBranchId = branch.id;
     }
 
+    await requireActiveLocalUnits(this.units, targetBranchId, dto.items.map(item => item.unit ?? DEFAULT_MEASUREMENT_UNIT));
+
     const resultItems: Array<{
       itemId: string;
       action: "created" | "matched";
@@ -49,8 +50,7 @@ export class CreateLocalProductsFromItemsUseCase {
     for (const item of dto.items) {
       const normalizedDescription = normalizeProductDisplayText(item.description);
       const canonicalDescription = canonicalizeProductText(item.description);
-      const candidateUnit = normalizeProductDisplayText(item.unit || "");
-      const normalizedUnit = normalizeMeasurementUnit(candidateUnit) ?? DEFAULT_MEASUREMENT_UNIT;
+      const normalizedUnit = item.unit ?? DEFAULT_MEASUREMENT_UNIT;
       const hasEstimatedCost = Math.max(item.averageCost ?? 0, item.lastCost ?? 0) > 0;
 
       const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({

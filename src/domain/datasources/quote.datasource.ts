@@ -56,6 +56,7 @@ export interface CreateQuoteDatasourceParams {
   taxRate: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  customerReference?: string | null;
   commercialConditions?: string | null;
   validityDays: number;
   branchId: string;
@@ -167,6 +168,7 @@ export interface UpdateQuoteDatasourceData {
   taxRate?: number;
   deliveryPlace?: string | null;
   paymentTerms?: string;
+  customerReference?: string | null;
   commercialConditions?: string | null;
   validityDays?: number;
   notes?: string | null;

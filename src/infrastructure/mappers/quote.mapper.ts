@@ -41,6 +41,7 @@ interface QuoteRow {
   total: number | DecimalLike;
   deliveryPlace: string | null;
   paymentTerms: string;
+  customerReference: string | null;
   commercialConditions: string | null;
   validityDays: number;
   validUntil: Date;
@@ -300,6 +301,7 @@ export class QuoteMapper {
       total: Number(toNumber(row.total)),
       deliveryPlace: row.deliveryPlace,
       paymentTerms: row.paymentTerms,
+      customerReference: row.customerReference ?? null,
       commercialConditions: row.commercialConditions,
       validityDays: row.validityDays,
       validUntil: row.validUntil,

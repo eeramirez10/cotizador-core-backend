@@ -1,5 +1,5 @@
 import { Currency } from "../../../infrastructure/database/generated/enums";
-import { normalizeMeasurementUnit } from "../../constants/measurement-unit.constants";
+import { parseLocalMeasurementUnit } from "../../utils/local-measurement-unit";
 import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface CreateLocalTempProductRequestDtoProps {
@@ -57,7 +57,7 @@ export class CreateLocalTempProductRequestDto {
     const body = input as Record<string, unknown>;
     const description = CreateLocalTempProductRequestDto.normalizeRequiredString(body.description);
     const rawUnit = CreateLocalTempProductRequestDto.normalizeRequiredString(body.unit);
-    const unit = normalizeMeasurementUnit(rawUnit);
+    const unit = parseLocalMeasurementUnit(rawUnit);
     if (!description) return ["description is required."];
     if (!rawUnit) return ["unit is required."];
     if (!unit) return ["unit is invalid."];

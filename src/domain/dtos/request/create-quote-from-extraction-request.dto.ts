@@ -1,3 +1,4 @@
+import { parseCustomerReference } from "../../utils/customer-reference";
 import {
   Currency,
   QuoteCaptureMethod,
@@ -24,6 +25,7 @@ interface CreateQuoteFromExtractionRequestDtoProps {
   taxRate: number;
   deliveryPlace: string | null;
   paymentTerms: string;
+  customerReference?: string | null;
   commercialConditions: string | null;
   validityDays: number;
   origin: QuoteOrigin;
@@ -44,6 +46,7 @@ export class CreateQuoteFromExtractionRequestDto {
   public readonly taxRate: number;
   public readonly deliveryPlace: string | null;
   public readonly paymentTerms: string;
+  public readonly customerReference?: string | null;
   public readonly commercialConditions: string | null;
   public readonly validityDays: number;
   public readonly origin: QuoteOrigin;
@@ -63,6 +66,7 @@ export class CreateQuoteFromExtractionRequestDto {
     this.taxRate = props.taxRate;
     this.deliveryPlace = props.deliveryPlace;
     this.paymentTerms = props.paymentTerms;
+    this.customerReference = props.customerReference;
     this.commercialConditions = props.commercialConditions;
     this.validityDays = props.validityDays;
     this.origin = props.origin;
@@ -80,6 +84,8 @@ export class CreateQuoteFromExtractionRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const [referenceError, customerReference] = parseCustomerReference(body.customerReference);
+    if (referenceError) return [referenceError];
 
     const customerId = typeof body.customerId === "string" ? body.customerId.trim() : "";
     if (!customerId) return ["customerId is required."];
@@ -254,6 +260,7 @@ export class CreateQuoteFromExtractionRequestDto {
         taxRate,
         deliveryPlace,
         paymentTerms,
+        customerReference,
         commercialConditions,
         validityDays,
         origin: originRaw as QuoteOrigin,

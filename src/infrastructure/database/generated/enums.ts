@@ -278,6 +278,7 @@ export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
 
 
 export const QuoteCatalogType = {
+  MEASUREMENT_UNIT: 'MEASUREMENT_UNIT',
   VALIDITY_DAYS: 'VALIDITY_DAYS',
   PAYMENT_TERMS: 'PAYMENT_TERMS',
   COMMERCIAL_CONDITIONS: 'COMMERCIAL_CONDITIONS',

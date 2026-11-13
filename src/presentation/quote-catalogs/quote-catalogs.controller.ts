@@ -71,6 +71,15 @@ export class QuoteCatalogsController {
 
   private handleError(res: Response, error: unknown, fallback: string): void {
     const message = error instanceof Error ? error.message : fallback;
+    if (message === "Solo un administrador puede gestionar unidades de medida.") {
+      res.status(403).json({ error: message });
+      return;
+    }
+    if (message.startsWith("El código ya corresponde a la unidad ")
+      || (typeof error === "object" && error !== null && "code" in error && error.code === "P2002")) {
+      res.status(409).json({ error: message.startsWith("El código") ? message : "El código ya existe en el catálogo." });
+      return;
+    }
     if (["Catalog option not found.", "You can only manage catalog options from your branch.", "Catalog option type and code cannot be changed.", "Catalog option code already exists in this scope.", "PURCHASING can only manage procurement catalog options.", "Procurement catalog options are managed by ADMIN or PURCHASING."].includes(message)) {
       res.status(message === "Catalog option not found." ? 404 : message.includes("already exists") ? 409 : 403).json({ error: message });
       return;

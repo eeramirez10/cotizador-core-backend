@@ -1,3 +1,4 @@
+import { parseLocalMeasurementUnitCode } from "../../utils/local-measurement-unit";
 import { QuoteCatalogType } from "../../../infrastructure/database/generated/enums";
 
 export interface UpsertQuoteCatalogOptionRequestDtoProps {
@@ -59,10 +60,11 @@ export class UpsertQuoteCatalogOptionRequestDto {
     if (!label) return ["label is required."];
     if (label.length > 260) return ["label must contain at most 260 characters."];
     const providedCode = options?.allowCode && typeof body.code === "string" ? body.code : label;
-    const code = normalizeCode(providedCode);
-    if (!code) return ["code is invalid."];
+    const isUnit = type === "MEASUREMENT_UNIT";
+    const code = isUnit ? parseLocalMeasurementUnitCode(body.code) : normalizeCode(providedCode);
+    if (!code) return [isUnit ? "La unidad necesita un código de 1 a 30 letras o números." : "code is invalid."];
     const valueRaw = typeof body.value === "string" ? body.value.trim() : "";
-    const value = type === "VALIDITY_DAYS" || reasonTypes.has(type) ? null : (valueRaw || label);
+    const value = isUnit || type === "VALIDITY_DAYS" || reasonTypes.has(type) ? null : (valueRaw || label);
     if (value && value.length > 2_000) return ["value must contain at most 2000 characters."];
     const numericRaw = body.numericValue;
     const numericValue = numericRaw === null || numericRaw === undefined || numericRaw === ""
@@ -75,7 +77,7 @@ export class UpsertQuoteCatalogOptionRequestDto {
     const requiresComment = Boolean(body.requiresComment);
     const sortOrder = Number.isFinite(Number(body.sortOrder)) ? Math.trunc(Number(body.sortOrder)) : 0;
     if (sortOrder < 0 || sortOrder > 10_000) return ["sortOrder must be between 0 and 10000."];
-    const branchId = options?.allowBranchId && typeof body.branchId === "string" && body.branchId.trim()
+    const branchId = !isUnit && options?.allowBranchId && typeof body.branchId === "string" && body.branchId.trim()
       ? body.branchId.trim()
       : null;
     const isActive = body.isActive === undefined ? true : Boolean(body.isActive);

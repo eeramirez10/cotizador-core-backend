@@ -43,6 +43,7 @@ export class QuoteResponseDto {
       total: this.quote.total,
       deliveryPlace: this.quote.deliveryPlace,
       paymentTerms: this.quote.paymentTerms,
+      customerReference: this.quote.customerReference,
       commercialConditions: this.quote.commercialConditions,
       validityDays: this.quote.validityDays,
       validUntil: this.quote.validUntil.toISOString().split("T")[0],

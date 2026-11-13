@@ -1,3 +1,4 @@
+import { PrismaQuoteCatalogDatasource } from "../../infrastructure/datasources/prisma-quote-catalog.datasource";
 import { Router } from "express";
 import { CreateLocalProductsFromItemsUseCase } from "../../domain/use-cases/create-local-products-from-items.use-case";
 import { CreateLocalTempProductUseCase } from "../../domain/use-cases/create-local-temp-product.use-case";
@@ -20,6 +21,7 @@ export class ProductsRoutes {
     const productDatasource = new PrismaProductDatasource();
 
     const branchRepository = new BranchRepositoryImpl(branchDatasource);
+    const units = new PrismaQuoteCatalogDatasource();
     const productRepository = new ProductRepositoryImpl(productDatasource);
     const semanticAdapter = new GptLocalProductSemanticAdapter(
       Envs.gptLocalProductsUrl,
@@ -32,11 +34,13 @@ export class ProductsRoutes {
       productRepository,
       branchRepository,
       semanticAdapter,
+      units,
     );
     const createLocalProductsFromItemsUseCase = new CreateLocalProductsFromItemsUseCase(
       productRepository,
       branchRepository,
       semanticAdapter,
+      units,
     );
 
     const controller = new ProductsController(

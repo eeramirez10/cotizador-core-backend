@@ -76,6 +76,7 @@ export class CreateQuoteUseCase {
       taxRate: dto.taxRate,
       deliveryPlace: dto.deliveryPlace,
       paymentTerms: dto.paymentTerms,
+      customerReference: dto.customerReference,
       commercialConditions: dto.commercialConditions,
       validityDays: dto.validityDays,
       branchId,

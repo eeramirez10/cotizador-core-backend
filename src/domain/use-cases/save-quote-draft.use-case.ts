@@ -338,6 +338,7 @@ export class SaveQuoteDraftUseCase {
         taxRate: dto.quote.taxRate,
         deliveryPlace: dto.quote.deliveryPlace,
         paymentTerms: dto.quote.paymentTerms,
+        customerReference: dto.quote.customerReference,
         commercialConditions: dto.quote.commercialConditions,
         validityDays: dto.quote.validityDays,
         branchId: actor.branchId,

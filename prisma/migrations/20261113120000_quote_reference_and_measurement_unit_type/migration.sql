@@ -1,0 +1,2 @@
+ALTER TABLE "quotes" ADD COLUMN "customer_reference" VARCHAR(120);
+ALTER TYPE "QuoteCatalogType" ADD VALUE 'MEASUREMENT_UNIT';

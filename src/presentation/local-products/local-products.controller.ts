@@ -1,3 +1,4 @@
+import { InactiveLocalUnitError } from "../../domain/utils/local-measurement-unit";
 import { Request, Response } from "express";
 import { CreateLocalProductsFromItemsRequestDto } from "../../domain/dtos/request/create-local-products-from-items-request.dto";
 import { CreateLocalTempProductRequestDto } from "../../domain/dtos/request/create-local-temp-product-request.dto";
@@ -180,6 +181,10 @@ export class LocalProductsController {
   };
 
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
+    if (error instanceof InactiveLocalUnitError) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
     const message = error instanceof Error ? error.message : fallbackMessage;
 
     if (message === "Branch not found.") {

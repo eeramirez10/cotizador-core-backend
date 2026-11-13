@@ -443,6 +443,7 @@ export const QuoteScalarFieldEnum = {
   total: 'total',
   deliveryPlace: 'deliveryPlace',
   paymentTerms: 'paymentTerms',
+  customerReference: 'customerReference',
   commercialConditions: 'commercialConditions',
   validityDays: 'validityDays',
   validUntil: 'validUntil',

@@ -1,3 +1,4 @@
+import { requireActiveLocalUnits, type LocalUnitCatalog } from "../utils/local-measurement-unit";
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
 import { CreateLocalTempProductRequestDto } from "../dtos/request/create-local-temp-product-request.dto";
@@ -17,6 +18,7 @@ export class CreateLocalTempProductUseCase {
     private readonly productRepository: ProductRepository,
     private readonly branchRepository: BranchRepository,
     private readonly semanticPort: LocalProductSemanticPort,
+    private readonly units: LocalUnitCatalog,
   ) {}
 
   async execute(
@@ -37,7 +39,8 @@ export class CreateLocalTempProductUseCase {
 
     const description = normalizeProductDisplayText(dto.description);
     const canonicalDescription = canonicalizeProductText(dto.description);
-    const unit = normalizeProductDisplayText(dto.unit);
+    const unit = dto.unit;
+    await requireActiveLocalUnits(this.units, targetBranchId, [unit]);
     const hasEstimatedCost = Math.max(dto.averageCost ?? 0, dto.lastCost ?? 0) > 0;
     const existing = await this.productRepository.findActiveLocalTempByDescriptionAndUnit({ canonicalDescription, unit });
     if (existing) {
