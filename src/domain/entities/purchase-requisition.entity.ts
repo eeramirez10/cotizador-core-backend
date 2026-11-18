@@ -139,6 +139,8 @@ export interface PurchaseRequisitionItemEntity {
   unit: string;
   description: string;
   customerDescription: string | null;
+  productDescription?: string | null;
+  productTechnicalAttributes?: Record<string, string>;
   erpDescription: string | null;
   standard: string | null;
   diameter: string | null;
@@ -170,6 +172,7 @@ export interface PurchaseRequisitionEntity {
   quoteId: string;
   quoteNumber: string;
   quoteStatus: QuoteStatus;
+  quoteErpLinkLocked?: boolean;
   supplierId: string | null;
   supplierName: string | null;
   quoteCurrency: Currency;

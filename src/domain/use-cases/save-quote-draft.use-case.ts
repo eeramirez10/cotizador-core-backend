@@ -146,6 +146,7 @@ export class SaveQuoteDraftUseCase {
         {
           qty: item.qty,
           stock: item.stock,
+          productId: item.productId,
           externalProductCode: item.externalProductCode,
           cost: item.cost,
           costCurrency: item.costCurrency,
@@ -197,6 +198,7 @@ export class SaveQuoteDraftUseCase {
       }
 
       const effectiveCostAudit = getQuoteItemEffectiveCostAudit({
+        productId: item.productId,
         qty: item.qty,
         stock: item.stock,
         externalProductCode: item.externalProductCode,

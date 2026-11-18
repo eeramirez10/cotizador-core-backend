@@ -31,3 +31,9 @@ test("non-ERP costs continue using their actual cost currency", () => {
   );
   assert.equal(result, 1_725);
 });
+
+test("a branch code on a local product does not reinterpret its cost currency", () => {
+  assert.equal(getQuoteItemEffectiveUnitCost({
+    ...erpItem, productId: "local", cost: 8, costCurrency: "USD", stock: 0,
+  }, "MXN", 17.25), 138);
+});

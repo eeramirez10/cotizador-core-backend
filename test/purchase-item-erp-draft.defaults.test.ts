@@ -9,6 +9,8 @@ const second = { currency: "USD" as const };
 test("selecting an offer prepares only reference data for a local ERP draft", () => {
   assert.deepEqual(erpDraftDefaultsFromOffer(item, first), {
     description: item.description,
+    extendedDescription: item.description,
+
     productType: 1,
     unitCode: "PZ",
     erpCurrency: 1,

@@ -396,6 +396,7 @@ export const ModelName = {
   CustomerContact: 'CustomerContact',
   CustomerOnboarding: 'CustomerOnboarding',
   Product: 'Product',
+  LocalProductErpLink: 'LocalProductErpLink',
   LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
@@ -446,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "managerReportRun" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseRequisitionItemErpDraft" | "purchaseSupplierOffer" | "purchaseSupplierRequisition" | "purchaseSupplierRequisitionLine" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
+    modelProps: "branch" | "quoteCatalogOption" | "user" | "managerReportSubscription" | "managerReportRun" | "erpWarehouse" | "branchErpWarehouse" | "userErpWarehouse" | "customer" | "customerContact" | "customerOnboarding" | "product" | "localProductErpLink" | "localProductProcurementOffer" | "quote" | "quoteItem" | "supplier" | "supplierContact" | "purchaseRequisition" | "purchaseRequisitionItem" | "purchaseRequisitionItemErpDraft" | "purchaseSupplierOffer" | "purchaseSupplierRequisition" | "purchaseSupplierRequisitionLine" | "purchaseSupplierQuote" | "fileAsset" | "quoteAttachment" | "purchaseOfferAttachment" | "quoteEvent" | "quoteDeliveryAttempt" | "whatsAppConversation" | "whatsAppLead" | "whatsAppQuoteRequest" | "whatsAppLeadAssignment" | "whatsAppInternalVerification" | "whatsAppConversationAccess" | "whatsAppConversationReadState" | "whatsAppInboundMessage" | "whatsAppInboundAttachment" | "whatsAppOutboundMessage" | "whatsAppAssistantJob" | "whatsAppPendingAction" | "whatsAppCustomerChangeRequest" | "whatsAppInternalAlert" | "quoteOrderExport" | "refreshToken" | "auditLog" | "systemSetting"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1335,6 +1336,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductCountAggregateOutputType> | number
+        }
+      }
+    }
+    LocalProductErpLink: {
+      payload: Prisma.$LocalProductErpLinkPayload<ExtArgs>
+      fields: Prisma.LocalProductErpLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LocalProductErpLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LocalProductErpLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.LocalProductErpLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LocalProductErpLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        findMany: {
+          args: Prisma.LocalProductErpLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>[]
+        }
+        create: {
+          args: Prisma.LocalProductErpLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        createMany: {
+          args: Prisma.LocalProductErpLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LocalProductErpLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.LocalProductErpLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        update: {
+          args: Prisma.LocalProductErpLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.LocalProductErpLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LocalProductErpLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LocalProductErpLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.LocalProductErpLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LocalProductErpLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.LocalProductErpLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLocalProductErpLink>
+        }
+        groupBy: {
+          args: Prisma.LocalProductErpLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocalProductErpLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LocalProductErpLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LocalProductErpLinkCountAggregateOutputType> | number
         }
       }
     }
@@ -4240,6 +4315,20 @@ export const ProductScalarFieldEnum = {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
+export const LocalProductErpLinkScalarFieldEnum = {
+  productId: 'productId',
+  branchId: 'branchId',
+  erpCode: 'erpCode',
+  erpEan: 'erpEan',
+  erpDescription: 'erpDescription',
+  erpUnit: 'erpUnit',
+  verifiedAt: 'verifiedAt',
+  verifiedByUserId: 'verifiedByUserId'
+} as const
+
+export type LocalProductErpLinkScalarFieldEnum = (typeof LocalProductErpLinkScalarFieldEnum)[keyof typeof LocalProductErpLinkScalarFieldEnum]
+
+
 export const LocalProductProcurementOfferScalarFieldEnum = {
   id: 'id',
   productId: 'productId',
@@ -5986,6 +6075,7 @@ export type GlobalOmitConfig = {
   customerContact?: Prisma.CustomerContactOmit
   customerOnboarding?: Prisma.CustomerOnboardingOmit
   product?: Prisma.ProductOmit
+  localProductErpLink?: Prisma.LocalProductErpLinkOmit
   localProductProcurementOffer?: Prisma.LocalProductProcurementOfferOmit
   quote?: Prisma.QuoteOmit
   quoteItem?: Prisma.QuoteItemOmit

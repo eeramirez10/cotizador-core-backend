@@ -8,6 +8,7 @@ interface QuoteItemFulfillmentInput {
 }
 
 interface QuoteItemEffectiveCostInput extends QuoteItemFulfillmentInput {
+  productId?: string | null;
   cost: number;
   costCurrency: Currency;
   sellerQuotedUnitCost: number | null;
@@ -50,7 +51,7 @@ export const getQuoteItemEffectiveUnitCost = (
   exchangeRate: number,
 ): number => {
   const fulfillment = getQuoteItemFulfillment(item);
-  const erpCostCurrency: Currency = item.externalProductCode?.trim() ? "MXN" : item.costCurrency;
+  const erpCostCurrency: Currency = item.externalProductCode?.trim() && !item.productId ? "MXN" : item.costCurrency;
   const erpUnitCost = positive(convertQuoteAmount(
     positive(item.cost),
     erpCostCurrency,

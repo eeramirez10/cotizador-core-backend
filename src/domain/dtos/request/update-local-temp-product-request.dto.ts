@@ -7,7 +7,6 @@ import { parseLocalMeasurementUnit } from "../../utils/local-measurement-unit";
 import { normalizeOptionalCatalogText, parseTechnicalAttributes } from "../../utils/product-catalog-fields";
 
 interface UpdateLocalTempProductRequestDtoProps {
-  code?: string | null;
   ean?: string | null;
   description?: string;
   commercialDescription?: string | null;
@@ -26,7 +25,6 @@ interface UpdateLocalTempProductRequestDtoProps {
 }
 
 export class UpdateLocalTempProductRequestDto {
-  public readonly code?: string | null;
   public readonly ean?: string | null;
   public readonly description?: string;
   public readonly commercialDescription?: string | null;
@@ -44,7 +42,6 @@ export class UpdateLocalTempProductRequestDto {
   public readonly isActive?: boolean;
 
   constructor(props: UpdateLocalTempProductRequestDtoProps) {
-    this.code = props.code;
     this.ean = props.ean;
     this.description = props.description;
     this.commercialDescription = props.commercialDescription;
@@ -68,6 +65,7 @@ export class UpdateLocalTempProductRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    if (Object.hasOwn(body, "code")) return ["El código ERP se confirma desde la partida de requisición."];
 
     const commercialDescription = normalizeOptionalCatalogText(body.commercialDescription, 500);
     const family = normalizeOptionalCatalogText(body.family, 80);
@@ -152,15 +150,11 @@ export class UpdateLocalTempProductRequestDto {
       isActive = body.isActive;
     }
 
-    const code = UpdateLocalTempProductRequestDto.normalizeOptionalNullableString(
-      body.code
-    );
     const ean = UpdateLocalTempProductRequestDto.normalizeOptionalNullableString(
       body.ean
     );
 
     const hasAnyField =
-      typeof code !== "undefined" ||
       typeof ean !== "undefined" ||
       typeof description !== "undefined" ||
       typeof commercialDescription !== "undefined" ||
@@ -184,7 +178,6 @@ export class UpdateLocalTempProductRequestDto {
     return [
       ,
       new UpdateLocalTempProductRequestDto({
-        code,
         ean,
         description,
         commercialDescription,

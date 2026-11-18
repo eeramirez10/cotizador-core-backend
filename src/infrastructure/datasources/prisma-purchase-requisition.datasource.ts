@@ -1,3 +1,4 @@
+import { assertRequisitionErpLinkAllowed, erpUnitsMatch, RequisitionErpLinkError } from "../../domain/use-cases/requisition-erp-link-rule";
 import { randomUUID } from "node:crypto";
 import type {
   DeletedPurchaseRequisition,
@@ -44,6 +45,10 @@ const requisitionInclude = {
     select: {
       quoteNumber: true,
       status: true,
+      archivedAt: true,
+      orderStatus: true,
+      erpOrderNumber: true,
+      nextVersions: { where: { status: { notIn: ["CANCELLED", "REJECTED"] as const } }, select: { id: true }, take: 1 },
       currency: true,
       exchangeRate: true,
       customer: { select: { legalName: true, displayName: true } },
@@ -61,6 +66,7 @@ const requisitionInclude = {
     orderBy: { position: "asc" as const },
     include: {
       quoteItem: { select: { clientItemId: true, customerDescription: true, erpDescription: true } },
+      product: { select: { description: true, commercialDescription: true, technicalAttributes: true } },
       offers: {
         where: { isActive: true },
         orderBy: [{ isSelected: "desc" as const }, { createdAt: "desc" as const }],
@@ -239,6 +245,7 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
   quoteId: row.quoteId,
   quoteNumber: row.quote.quoteNumber,
   quoteStatus: row.quote.status,
+  quoteErpLinkLocked: Boolean(row.quote.archivedAt || row.quote.orderStatus === "GENERATED" || row.quote.erpOrderNumber || row.quote.nextVersions.length),
   supplierId: row.supplierId,
   supplierName: row.supplierName,
   quoteCurrency: row.quote.currency,
@@ -282,6 +289,8 @@ const requisitionEntity = (row: RequisitionRow): PurchaseRequisitionEntity => ({
     unit: item.unit,
     description: item.description,
     customerDescription: item.quoteItem.customerDescription,
+    productDescription: item.product?.commercialDescription || item.product?.description || null,
+    productTechnicalAttributes: jsonStringRecord(item.product?.technicalAttributes ?? null),
     erpDescription: item.quoteItem.erpDescription || (item.source === "ERP_NO_STOCK" ? item.description : null),
     standard: item.standard,
     diameter: item.diameter,
@@ -831,64 +840,87 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
   }
 
   async linkItemToErp(
-    requisitionId: string,
-    itemId: string,
-    data: LinkPurchaseRequisitionItemToErpData,
-    actor: PurchaseRequisitionActor,
+    requisitionId: string, itemId: string, data: LinkPurchaseRequisitionItemToErpData, actor: PurchaseRequisitionActor,
   ): Promise<PurchaseRequisitionEntity | null> {
-    await this.assertNotFinalized(requisitionId);
-    const requisition = await prisma.purchaseRequisition.findFirst({
-      where: { id: requisitionId, ...this.scopeWhere(actor) },
-      include: { items: { where: { id: itemId }, select: { id: true, productId: true, selectedOfferId: true, offers: { where: { isSelected: true }, select: { id: true } } } } },
-    });
-    const item = requisition?.items[0];
-    if (!requisition || !item) return null;
     if (!["ADMIN", "PURCHASING"].includes(actor.role)) {
-      throw new Error("Only ADMIN or PURCHASING can link an ERP product.");
+      throw new RequisitionErpLinkError("Solo Compras o Administración puede confirmar códigos ERP.", 403);
     }
-    if (["COMPLETED", "CANCELLED"].includes(requisition.status)) {
-      throw new Error("Closed requisitions are read-only.");
-    }
-
-    await prisma.$transaction(async (tx) => {
-      const updatedItem = await tx.purchaseRequisitionItem.update({
-        where: { id: itemId },
-        data: {
-          erpCode: data.erpCode,
-          erpEan: data.erpEan,
-          erpLinkedAt: new Date(),
-          erpLinkedByUserId: data.actorUserId,
-          status: item.offers.length > 0 ? "READY" : undefined,
+    const found = await prisma.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${requisitionId}))`;
+      const requisition = await tx.purchaseRequisition.findFirst({
+        where: { id: requisitionId, ...this.scopeWhere(actor) },
+        include: {
+          branch: { select: { code: true } },
+          supplierRequisitions: { select: { lines: { where: { requisitionItemId: itemId }, select: { erpCode: true } } } },
+          items: { where: { id: itemId }, include: { offers: { where: { isActive: true, isSelected: true }, select: { id: true } } } },
         },
-        select: { quoteItemId: true, productId: true },
       });
+      const item = requisition?.items[0];
+      if (!requisition || !item) return false;
 
-      await tx.quoteItem.update({
-        where: { id: updatedItem.quoteItemId },
-        data: { externalProductCode: data.erpCode, ean: data.erpEan },
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${requisition.quoteId}))`;
+      await tx.$queryRaw`SELECT id FROM quotes WHERE id = ${requisition.quoteId}::uuid FOR UPDATE`;
+      const quote = await tx.quote.findUniqueOrThrow({
+        where: { id: requisition.quoteId },
+        select: {
+          status: true, archivedAt: true, orderStatus: true, erpOrderNumber: true, branchId: true,
+          nextVersions: { where: { status: { notIn: ["CANCELLED", "REJECTED"] } }, select: { id: true }, take: 1 },
+          items: { where: { id: item.quoteItemId }, select: { id: true, unit: true, productId: true, externalProductCode: true, product: { select: { source: true } } } },
+        },
       });
-
-      if (updatedItem.productId) {
-        await tx.product.update({
-          where: { id: updatedItem.productId },
-          data: {
-            source: "ERP",
-            code: data.erpCode,
-            ean: data.erpEan,
-            externalId: data.erpCode,
-            externalSystem: "ERP",
-            procurementStatus: "ERP_LINKED",
-            procurementUpdatedAt: new Date(),
-            procurementUpdatedByUserId: data.actorUserId,
-            updatedByUserId: data.actorUserId,
-          },
+      const quoteItem = quote.items[0];
+      if (!quoteItem) return false;
+      if (quote.branchId !== requisition.branchId || erpDraftBranchDefaults(requisition.branch.code)?.primaryAccount !== data.primaryAccount) {
+        throw new RequisitionErpLinkError("La sucursal de la partida cambió. Verifica el código nuevamente.", 409);
+      }
+      assertRequisitionErpLinkAllowed({
+        quoteStatus: quote.status, quoteLocked: Boolean(quote.archivedAt || quote.orderStatus === "GENERATED" || quote.erpOrderNumber || quote.nextVersions.length),
+        requisitionStatus: requisition.status, itemStatus: item.status, source: item.source,
+        erpCode: item.erpCode || quoteItem.externalProductCode, issued: requisition.supplierRequisitions.length > 0,
+        issuedLineCodes: requisition.supplierRequisitions.flatMap(document => document.lines.map(line => line.erpCode)),
+      });
+      if (!erpUnitsMatch(item.unit, data.erpUnit) || !erpUnitsMatch(quoteItem.unit, data.erpUnit) || item.productId !== quoteItem.productId) {
+        throw new RequisitionErpLinkError("El material o la unidad de la partida no coincide. Revisa la requisición y la cotización.", 409);
+      }
+      const now = new Date();
+      if (item.productId && quoteItem.product?.source === "LOCAL_TEMP") {
+        const key = { productId: item.productId, branchId: requisition.branchId };
+        const lockKey = `local-product-erp:${key.productId}:${key.branchId}`;
+        await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${lockKey}))`;
+        const link = await tx.localProductErpLink.findUnique({ where: { productId_branchId: key } });
+        if (link && link.erpCode !== data.erpCode) {
+          throw new RequisitionErpLinkError("Este producto local ya tiene otro código verificado para esta sucursal. Revisa el vínculo antes de continuar.", 409);
+        }
+        const identity = { erpCode: data.erpCode, erpEan: data.erpEan || null, erpDescription: data.erpDescription, erpUnit: data.erpUnit, verifiedByUserId: actor.id, verifiedAt: now };
+        await tx.localProductErpLink.upsert({
+          where: { productId_branchId: key },
+          create: { ...key, ...identity },
+          update: identity,
         });
       }
 
+      await tx.purchaseRequisitionItem.update({
+        where: { id: itemId },
+        data: {
+          erpCode: data.erpCode, erpEan: data.erpEan || null, erpLinkedAt: now, erpLinkedByUserId: actor.id,
+          status: item.offers.length > 0 ? "READY" : undefined,
+        },
+      });
+      await tx.quoteItem.update({
+        where: { id: quoteItem.id },
+        data: { externalProductCode: data.erpCode, ean: data.erpEan || null, erpDescription: data.erpDescription || null },
+      });
+      await tx.auditLog.create({
+        data: {
+          actorUserId: actor.id, entityType: "PURCHASE_REQUISITION_ITEM", entityId: itemId, action: "ERP_CODE_VERIFIED",
+          payload: { requisitionId, quoteItemId: quoteItem.id, productId: item.productId, branchId: requisition.branchId,
+            previousCode: item.erpCode, erpCode: data.erpCode, erpEan: data.erpEan, erpUnit: data.erpUnit, primaryAccount: data.primaryAccount },
+        },
+      });
       await this.recomputeStatus(tx, requisitionId, actor.id);
+      return true;
     });
-
-    return this.findById(requisitionId, actor);
+    return found ? this.findById(requisitionId, actor) : null;
   }
 
   async submit(id: string, buyerUserId: string, actor: PurchaseRequisitionActor): Promise<PurchaseRequisitionEntity | null> {
@@ -1279,7 +1311,7 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           quote: { select: { status: true, currency: true, exchangeRate: true } },
           branch: { select: { code: true } },
           supplierRequisitions: { select: { id: true } },
-          items: { where: { id: itemId }, include: { offers: { include: { supplier: true } } } },
+          items: { where: { id: itemId }, include: { offers: { include: { supplier: true } }, product: { select: { description: true, commercialDescription: true, technicalAttributes: true } }, quoteItem: { select: { customerDescription: true } } } },
         },
       });
       if (!requisition) return false;
@@ -1325,7 +1357,9 @@ export class PrismaPurchaseRequisitionDatasource extends PurchaseRequisitionData
           currency: offer.currency,
         });
         const draftData = mergeSelectedOfferIntoErpDraft(
-          item,
+          { ...item, productDescription: item.product?.commercialDescription || item.product?.description,
+            customerDescription: item.quoteItem.customerDescription,
+            technicalAttributes: { ...jsonStringRecord(item.product?.technicalAttributes ?? null), ...jsonStringRecord(item.technicalAttributes) } },
           offerReference(selectedOffer),
           existingDraft ? parseErpDraftData(existingDraft.data) : undefined,
           previousSelectedOffer ? offerReference(previousSelectedOffer) : undefined,

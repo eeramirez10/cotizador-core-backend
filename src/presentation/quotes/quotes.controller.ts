@@ -1,3 +1,4 @@
+import { RequisitionErpLinkError } from "../../domain/use-cases/requisition-erp-link-rule";
 import { Request, Response } from "express";
 import { ChangeQuoteStatusRequestDto } from "../../domain/dtos/request/change-quote-status-request.dto";
 import { ArchiveQuoteRequestDto } from "../../domain/dtos/request/archive-quote-request.dto";
@@ -658,6 +659,7 @@ export class QuotesController {
   }
 
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
+    if (error instanceof RequisitionErpLinkError) return void res.status(error.status).json({ error: error.message });
     const message = error instanceof Error ? error.message : fallbackMessage;
 
     if (message.startsWith("ERP_QUOTE_LOOKUP_")) {

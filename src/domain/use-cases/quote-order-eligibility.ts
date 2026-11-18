@@ -10,7 +10,7 @@ export const isCustomerEligibleForOrderFile = (customer: OrderCustomer | null, a
 };
 
 export const getOrderItemErpCode = (item: Pick<OrderItem, "externalProductCode" | "product">): string =>
-  item.externalProductCode?.trim() || item.product?.code?.trim() || "";
+  item.externalProductCode?.trim() || (item.product?.source === "ERP" ? item.product.code?.trim() : null) || "";
 
 export const evaluateQuoteOrderItems = (items: OrderItem[], allowWithoutStock: boolean) => {
   const requiresPurchasing = items.some((item) => Math.max(0, item.stock ?? 0) < item.qty);

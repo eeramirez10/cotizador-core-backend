@@ -1,3 +1,4 @@
+import { listLocalProductErpLinks } from "../../infrastructure/datasources/local-product-erp-links";
 import { PrismaQuoteCatalogDatasource } from "../../infrastructure/datasources/prisma-quote-catalog.datasource";
 import { Router } from "express";
 import { CreateLocalProductsFromItemsUseCase } from "../../domain/use-cases/create-local-products-from-items.use-case";
@@ -69,6 +70,18 @@ export class LocalProductsRoutes {
     router.post("/", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.create);
     router.post("/similar", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER"), controller.searchSimilar);
     router.post("/semantic/reindex", requireAuth, requireRoles("ADMIN"), controller.reindexSemantic);
+    router.get("/:id/erp-links", requireAuth, requireRoles("ADMIN", "MANAGER", "SELLER", "PURCHASING"), async (req, res) => {
+      if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+      const id = String(req.params.id);
+      if (!/^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(id)) return void res.status(400).json({ error: "Producto no válido." });
+      try {
+        const result = await listLocalProductErpLinks(id, req.user, req.query.includeRequisitions === "true");
+        if (!result) return void res.status(404).json({ error: "Producto local no encontrado." });
+        res.json(result);
+      } catch {
+        res.status(500).json({ error: "No se pudieron consultar los vínculos ERP." });
+      }
+    });
     router.patch(
       "/:id",
       requireAuth,

@@ -20,7 +20,7 @@ interface ProcurementActor {
 const allowedTransitions: Record<ProductProcurementStatus, ProductProcurementStatus[]> = {
   PENDING_REVIEW: ["QUOTING", "REJECTED"],
   QUOTING: ["PENDING_REVIEW", "REJECTED"],
-  COSTED: ["QUOTING", "PENDING_ERP", "REJECTED"],
+  COSTED: ["QUOTING", "REJECTED"],
   PENDING_ERP: ["QUOTING"],
   ERP_LINKED: [],
   REJECTED: ["PENDING_REVIEW", "QUOTING"],

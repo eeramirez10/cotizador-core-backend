@@ -1,3 +1,4 @@
+import { getOrderItemErpCode } from "./quote-order-eligibility";
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { UpdateQuoteProcurementReferenceRequestDto } from "../dtos/request/update-quote-procurement-reference-request.dto";
 import { QuoteResponseDto } from "../dtos/response/quote-response.dto";
@@ -40,7 +41,7 @@ export class UpdateQuoteProcurementReferenceUseCase {
     if (dto.unitPrice !== null && Math.abs(item.unitPrice - dto.unitPrice) > 0.0001) {
       throw new Error("El precio de venta se modifica en la cotización, no en la referencia de Compras.");
     }
-    const erpCode = (item.externalProductCode || item.product?.code || "").trim();
+    const erpCode = getOrderItemErpCode(item);
     if (erpCode && Math.max(0, item.stock ?? 0) >= item.qty) {
       throw new Error("This quote item does not require purchasing.");
     }

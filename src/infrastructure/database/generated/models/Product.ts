@@ -432,6 +432,7 @@ export type ProductWhereInput = {
   createdByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   procurementUpdatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  erpLinks?: Prisma.LocalProductErpLinkListRelationFilter
   procurementOffers?: Prisma.LocalProductProcurementOfferListRelationFilter
   selectedProcurementOffer?: Prisma.XOR<Prisma.LocalProductProcurementOfferNullableScalarRelationFilter, Prisma.LocalProductProcurementOfferWhereInput> | null
   quoteItems?: Prisma.QuoteItemListRelationFilter
@@ -474,6 +475,7 @@ export type ProductOrderByWithRelationInput = {
   createdByUser?: Prisma.UserOrderByWithRelationInput
   updatedByUser?: Prisma.UserOrderByWithRelationInput
   procurementUpdatedByUser?: Prisma.UserOrderByWithRelationInput
+  erpLinks?: Prisma.LocalProductErpLinkOrderByRelationAggregateInput
   procurementOffers?: Prisma.LocalProductProcurementOfferOrderByRelationAggregateInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferOrderByWithRelationInput
   quoteItems?: Prisma.QuoteItemOrderByRelationAggregateInput
@@ -519,6 +521,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   createdByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   procurementUpdatedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  erpLinks?: Prisma.LocalProductErpLinkListRelationFilter
   procurementOffers?: Prisma.LocalProductProcurementOfferListRelationFilter
   selectedProcurementOffer?: Prisma.XOR<Prisma.LocalProductProcurementOfferNullableScalarRelationFilter, Prisma.LocalProductProcurementOfferWhereInput> | null
   quoteItems?: Prisma.QuoteItemListRelationFilter
@@ -632,6 +635,7 @@ export type ProductCreateInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -670,6 +674,7 @@ export type ProductUncheckedCreateInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -706,6 +711,7 @@ export type ProductUpdateInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -744,6 +750,7 @@ export type ProductUncheckedUpdateInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1166,6 +1173,20 @@ export type EnumProductProcurementStatusFieldUpdateOperationsInput = {
   set?: $Enums.ProductProcurementStatus
 }
 
+export type ProductCreateNestedOneWithoutErpLinksInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutErpLinksInput, Prisma.ProductUncheckedCreateWithoutErpLinksInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutErpLinksInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutErpLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutErpLinksInput, Prisma.ProductUncheckedCreateWithoutErpLinksInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutErpLinksInput
+  upsert?: Prisma.ProductUpsertWithoutErpLinksInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutErpLinksInput, Prisma.ProductUpdateWithoutErpLinksInput>, Prisma.ProductUncheckedUpdateWithoutErpLinksInput>
+}
+
 export type ProductCreateNestedOneWithoutProcurementOffersInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutProcurementOffersInput, Prisma.ProductUncheckedCreateWithoutProcurementOffersInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutProcurementOffersInput
@@ -1274,6 +1295,7 @@ export type ProductCreateWithoutBranchInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -1311,6 +1333,7 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -1409,6 +1432,7 @@ export type ProductCreateWithoutCreatedByUserInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -1446,6 +1470,7 @@ export type ProductUncheckedCreateWithoutCreatedByUserInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -1491,6 +1516,7 @@ export type ProductCreateWithoutUpdatedByUserInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutProductsInput
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -1528,6 +1554,7 @@ export type ProductUncheckedCreateWithoutUpdatedByUserInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -1573,6 +1600,7 @@ export type ProductCreateWithoutProcurementUpdatedByUserInput = {
   branch?: Prisma.BranchCreateNestedOneWithoutProductsInput
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -1610,6 +1638,7 @@ export type ProductUncheckedCreateWithoutProcurementUpdatedByUserInput = {
   procurementUpdatedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -1673,6 +1702,170 @@ export type ProductUpdateManyWithWhereWithoutProcurementUpdatedByUserInput = {
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserInput>
 }
 
+export type ProductCreateWithoutErpLinksInput = {
+  id?: string
+  source?: $Enums.ProductSource
+  externalId?: string | null
+  externalSystem?: string | null
+  code?: string | null
+  ean?: string | null
+  description: string
+  canonicalDescription?: string
+  commercialDescription?: string | null
+  family?: string | null
+  subfamily?: string | null
+  brand?: string | null
+  technicalAttributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  unit: string
+  currency?: $Enums.Currency
+  averageCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costStatus?: $Enums.ProductCostStatus
+  costSource?: $Enums.ProductCostSource | null
+  stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isActive?: boolean
+  procurementStatus?: $Enums.ProductProcurementStatus
+  procurementNotes?: string | null
+  procurementUpdatedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch?: Prisma.BranchCreateNestedOneWithoutProductsInput
+  createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
+  updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
+  procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
+  selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
+  quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutErpLinksInput = {
+  id?: string
+  source?: $Enums.ProductSource
+  externalId?: string | null
+  externalSystem?: string | null
+  code?: string | null
+  ean?: string | null
+  description: string
+  canonicalDescription?: string
+  commercialDescription?: string | null
+  family?: string | null
+  subfamily?: string | null
+  brand?: string | null
+  technicalAttributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  unit: string
+  currency?: $Enums.Currency
+  averageCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costStatus?: $Enums.ProductCostStatus
+  costSource?: $Enums.ProductCostSource | null
+  stock?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  branchId?: string | null
+  isActive?: boolean
+  createdByUserId?: string | null
+  updatedByUserId?: string | null
+  procurementStatus?: $Enums.ProductProcurementStatus
+  procurementNotes?: string | null
+  selectedProcurementOfferId?: string | null
+  procurementUpdatedAt?: Date | string | null
+  procurementUpdatedByUserId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
+  quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutErpLinksInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutErpLinksInput, Prisma.ProductUncheckedCreateWithoutErpLinksInput>
+}
+
+export type ProductUpsertWithoutErpLinksInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutErpLinksInput, Prisma.ProductUncheckedUpdateWithoutErpLinksInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutErpLinksInput, Prisma.ProductUncheckedCreateWithoutErpLinksInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutErpLinksInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutErpLinksInput, Prisma.ProductUncheckedUpdateWithoutErpLinksInput>
+}
+
+export type ProductUpdateWithoutErpLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  family?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subfamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  averageCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costStatus?: Prisma.EnumProductCostStatusFieldUpdateOperationsInput | $Enums.ProductCostStatus
+  costSource?: Prisma.NullableEnumProductCostSourceFieldUpdateOperationsInput | $Enums.ProductCostSource | null
+  stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  procurementStatus?: Prisma.EnumProductProcurementStatusFieldUpdateOperationsInput | $Enums.ProductProcurementStatus
+  procurementNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneWithoutProductsNestedInput
+  createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
+  updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
+  procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
+  selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
+  quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutErpLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumProductSourceFieldUpdateOperationsInput | $Enums.ProductSource
+  externalId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalSystem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ean?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  canonicalDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  commercialDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  family?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subfamily?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAttributes?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  averageCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  lastCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  costStatus?: Prisma.EnumProductCostStatusFieldUpdateOperationsInput | $Enums.ProductCostStatus
+  costSource?: Prisma.NullableEnumProductCostSourceFieldUpdateOperationsInput | $Enums.ProductCostSource | null
+  stock?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementStatus?: Prisma.EnumProductProcurementStatusFieldUpdateOperationsInput | $Enums.ProductProcurementStatus
+  procurementNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedProcurementOfferId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  procurementUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
+  quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
+  purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
 export type ProductCreateWithoutProcurementOffersInput = {
   id?: string
   source?: $Enums.ProductSource
@@ -1704,6 +1897,7 @@ export type ProductCreateWithoutProcurementOffersInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
@@ -1741,6 +1935,7 @@ export type ProductUncheckedCreateWithoutProcurementOffersInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -1781,6 +1976,7 @@ export type ProductCreateWithoutSelectedProcurementOfferInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
@@ -1817,6 +2013,7 @@ export type ProductUncheckedCreateWithoutSelectedProcurementOfferInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
@@ -1869,6 +2066,7 @@ export type ProductUpdateWithoutProcurementOffersInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
@@ -1906,6 +2104,7 @@ export type ProductUncheckedUpdateWithoutProcurementOffersInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -1952,6 +2151,7 @@ export type ProductUpdateWithoutSelectedProcurementOfferInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
@@ -1988,6 +2188,7 @@ export type ProductUncheckedUpdateWithoutSelectedProcurementOfferInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2024,6 +2225,7 @@ export type ProductCreateWithoutQuoteItemsInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutProductInput
@@ -2061,6 +2263,7 @@ export type ProductUncheckedCreateWithoutQuoteItemsInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2112,6 +2315,7 @@ export type ProductUpdateWithoutQuoteItemsInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutProductNestedInput
@@ -2149,6 +2353,7 @@ export type ProductUncheckedUpdateWithoutQuoteItemsInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2184,6 +2389,7 @@ export type ProductCreateWithoutPurchaseRequisitionItemsInput = {
   createdByUser?: Prisma.UserCreateNestedOneWithoutCreatedProductsInput
   updatedByUser?: Prisma.UserCreateNestedOneWithoutUpdatedProductsInput
   procurementUpdatedByUser?: Prisma.UserCreateNestedOneWithoutProcurementProductsInput
+  erpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutProductInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferCreateNestedOneWithoutSelectedForProductInput
   quoteItems?: Prisma.QuoteItemCreateNestedManyWithoutProductInput
@@ -2221,6 +2427,7 @@ export type ProductUncheckedCreateWithoutPurchaseRequisitionItemsInput = {
   procurementUpdatedByUserId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutProductInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutProductInput
   quoteItems?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutProductInput
 }
@@ -2272,6 +2479,7 @@ export type ProductUpdateWithoutPurchaseRequisitionItemsInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -2309,6 +2517,7 @@ export type ProductUncheckedUpdateWithoutPurchaseRequisitionItemsInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
 }
@@ -2376,6 +2585,7 @@ export type ProductUpdateWithoutBranchInput = {
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -2413,6 +2623,7 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2580,6 +2791,7 @@ export type ProductUpdateWithoutCreatedByUserInput = {
   branch?: Prisma.BranchUpdateOneWithoutProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -2617,6 +2829,7 @@ export type ProductUncheckedUpdateWithoutCreatedByUserInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2685,6 +2898,7 @@ export type ProductUpdateWithoutUpdatedByUserInput = {
   branch?: Prisma.BranchUpdateOneWithoutProductsNestedInput
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   procurementUpdatedByUser?: Prisma.UserUpdateOneWithoutProcurementProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -2722,6 +2936,7 @@ export type ProductUncheckedUpdateWithoutUpdatedByUserInput = {
   procurementUpdatedByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2790,6 +3005,7 @@ export type ProductUpdateWithoutProcurementUpdatedByUserInput = {
   branch?: Prisma.BranchUpdateOneWithoutProductsNestedInput
   createdByUser?: Prisma.UserUpdateOneWithoutCreatedProductsNestedInput
   updatedByUser?: Prisma.UserUpdateOneWithoutUpdatedProductsNestedInput
+  erpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutProductNestedInput
   selectedProcurementOffer?: Prisma.LocalProductProcurementOfferUpdateOneWithoutSelectedForProductNestedInput
   quoteItems?: Prisma.QuoteItemUpdateManyWithoutProductNestedInput
@@ -2827,6 +3043,7 @@ export type ProductUncheckedUpdateWithoutProcurementUpdatedByUserInput = {
   procurementUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  erpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutProductNestedInput
   procurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutProductNestedInput
   quoteItems?: Prisma.QuoteItemUncheckedUpdateManyWithoutProductNestedInput
   purchaseRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2871,12 +3088,14 @@ export type ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserInput = {
  */
 
 export type ProductCountOutputType = {
+  erpLinks: number
   procurementOffers: number
   quoteItems: number
   purchaseRequisitionItems: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  erpLinks?: boolean | ProductCountOutputTypeCountErpLinksArgs
   procurementOffers?: boolean | ProductCountOutputTypeCountProcurementOffersArgs
   quoteItems?: boolean | ProductCountOutputTypeCountQuoteItemsArgs
   purchaseRequisitionItems?: boolean | ProductCountOutputTypeCountPurchaseRequisitionItemsArgs
@@ -2890,6 +3109,13 @@ export type ProductCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProductCountOutputType
    */
   select?: Prisma.ProductCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountErpLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocalProductErpLinkWhereInput
 }
 
 /**
@@ -2950,6 +3176,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdByUser?: boolean | Prisma.Product$createdByUserArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Product$updatedByUserArgs<ExtArgs>
   procurementUpdatedByUser?: boolean | Prisma.Product$procurementUpdatedByUserArgs<ExtArgs>
+  erpLinks?: boolean | Prisma.Product$erpLinksArgs<ExtArgs>
   procurementOffers?: boolean | Prisma.Product$procurementOffersArgs<ExtArgs>
   selectedProcurementOffer?: boolean | Prisma.Product$selectedProcurementOfferArgs<ExtArgs>
   quoteItems?: boolean | Prisma.Product$quoteItemsArgs<ExtArgs>
@@ -3075,6 +3302,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdByUser?: boolean | Prisma.Product$createdByUserArgs<ExtArgs>
   updatedByUser?: boolean | Prisma.Product$updatedByUserArgs<ExtArgs>
   procurementUpdatedByUser?: boolean | Prisma.Product$procurementUpdatedByUserArgs<ExtArgs>
+  erpLinks?: boolean | Prisma.Product$erpLinksArgs<ExtArgs>
   procurementOffers?: boolean | Prisma.Product$procurementOffersArgs<ExtArgs>
   selectedProcurementOffer?: boolean | Prisma.Product$selectedProcurementOfferArgs<ExtArgs>
   quoteItems?: boolean | Prisma.Product$quoteItemsArgs<ExtArgs>
@@ -3103,6 +3331,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdByUser: Prisma.$UserPayload<ExtArgs> | null
     updatedByUser: Prisma.$UserPayload<ExtArgs> | null
     procurementUpdatedByUser: Prisma.$UserPayload<ExtArgs> | null
+    erpLinks: Prisma.$LocalProductErpLinkPayload<ExtArgs>[]
     procurementOffers: Prisma.$LocalProductProcurementOfferPayload<ExtArgs>[]
     selectedProcurementOffer: Prisma.$LocalProductProcurementOfferPayload<ExtArgs> | null
     quoteItems: Prisma.$QuoteItemPayload<ExtArgs>[]
@@ -3538,6 +3767,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   createdByUser<T extends Prisma.Product$createdByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$createdByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedByUser<T extends Prisma.Product$updatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$updatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   procurementUpdatedByUser<T extends Prisma.Product$procurementUpdatedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$procurementUpdatedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  erpLinks<T extends Prisma.Product$erpLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$erpLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocalProductErpLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procurementOffers<T extends Prisma.Product$procurementOffersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$procurementOffersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocalProductProcurementOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   selectedProcurementOffer<T extends Prisma.Product$selectedProcurementOfferArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$selectedProcurementOfferArgs<ExtArgs>>): Prisma.Prisma__LocalProductProcurementOfferClient<runtime.Types.Result.GetResult<Prisma.$LocalProductProcurementOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   quoteItems<T extends Prisma.Product$quoteItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$quoteItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4071,6 +4301,30 @@ export type Product$procurementUpdatedByUserArgs<ExtArgs extends runtime.Types.E
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Product.erpLinks
+ */
+export type Product$erpLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocalProductErpLink
+   */
+  select?: Prisma.LocalProductErpLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocalProductErpLink
+   */
+  omit?: Prisma.LocalProductErpLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocalProductErpLinkInclude<ExtArgs> | null
+  where?: Prisma.LocalProductErpLinkWhereInput
+  orderBy?: Prisma.LocalProductErpLinkOrderByWithRelationInput | Prisma.LocalProductErpLinkOrderByWithRelationInput[]
+  cursor?: Prisma.LocalProductErpLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocalProductErpLinkScalarFieldEnum | Prisma.LocalProductErpLinkScalarFieldEnum[]
 }
 
 /**

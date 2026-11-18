@@ -1,3 +1,4 @@
+import { assertVerifiedLocalQuoteLinks } from "../../infrastructure/datasources/local-product-erp-links";
 import type { UserRole } from "../../infrastructure/database/generated/enums";
 import { prisma } from "../../infrastructure/database/prisma-client";
 import { GenerateOrderResponseDto } from "../dtos/response/generate-order-response.dto";
@@ -68,6 +69,7 @@ export class GenerateQuoteOrderUseCase {
       throw new Error("Purchase requisition must be READY_FOR_ORDER before generating order.");
     }
 
+    await assertVerifiedLocalQuoteLinks(prisma, quote.branchId, quote.items);
     const result = await this.orderGenerationRepository.generateOrderFromQuote(quote);
 
     const updatedQuote = await this.quoteRepository.markOrderGenerated({

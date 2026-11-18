@@ -273,6 +273,7 @@ export type UserWhereInput = {
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   createdCustomers?: Prisma.CustomerListRelationFilter
   updatedCustomers?: Prisma.CustomerListRelationFilter
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkListRelationFilter
   createdProducts?: Prisma.ProductListRelationFilter
   updatedProducts?: Prisma.ProductListRelationFilter
   procurementProducts?: Prisma.ProductListRelationFilter
@@ -348,6 +349,7 @@ export type UserOrderByWithRelationInput = {
   branch?: Prisma.BranchOrderByWithRelationInput
   createdCustomers?: Prisma.CustomerOrderByRelationAggregateInput
   updatedCustomers?: Prisma.CustomerOrderByRelationAggregateInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkOrderByRelationAggregateInput
   createdProducts?: Prisma.ProductOrderByRelationAggregateInput
   updatedProducts?: Prisma.ProductOrderByRelationAggregateInput
   procurementProducts?: Prisma.ProductOrderByRelationAggregateInput
@@ -426,6 +428,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   createdCustomers?: Prisma.CustomerListRelationFilter
   updatedCustomers?: Prisma.CustomerListRelationFilter
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkListRelationFilter
   createdProducts?: Prisma.ProductListRelationFilter
   updatedProducts?: Prisma.ProductListRelationFilter
   procurementProducts?: Prisma.ProductListRelationFilter
@@ -544,6 +547,7 @@ export type UserCreateInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -618,6 +622,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -692,6 +697,7 @@ export type UserUpdateInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -766,6 +772,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -1202,6 +1209,20 @@ export type UserUpdateOneWithoutProcurementProductsNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProcurementProductsInput, Prisma.UserUpdateWithoutProcurementProductsInput>, Prisma.UserUncheckedUpdateWithoutProcurementProductsInput>
+}
+
+export type UserCreateNestedOneWithoutVerifiedLocalProductErpLinksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedCreateWithoutVerifiedLocalProductErpLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifiedLocalProductErpLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutVerifiedLocalProductErpLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedCreateWithoutVerifiedLocalProductErpLinksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifiedLocalProductErpLinksInput
+  upsert?: Prisma.UserUpsertWithoutVerifiedLocalProductErpLinksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUpdateWithoutVerifiedLocalProductErpLinksInput>, Prisma.UserUncheckedUpdateWithoutVerifiedLocalProductErpLinksInput>
 }
 
 export type UserCreateNestedOneWithoutCreatedProcurementOffersInput = {
@@ -1862,6 +1883,7 @@ export type UserCreateWithoutBranchInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -1935,6 +1957,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2057,6 +2080,7 @@ export type UserCreateWithoutReceivedManagerReportsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2130,6 +2154,7 @@ export type UserUncheckedCreateWithoutReceivedManagerReportsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2208,6 +2233,7 @@ export type UserCreateWithoutCreatedManagerReportsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2281,6 +2307,7 @@ export type UserUncheckedCreateWithoutCreatedManagerReportsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2359,6 +2386,7 @@ export type UserCreateWithoutUpdatedManagerReportsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2432,6 +2460,7 @@ export type UserUncheckedCreateWithoutUpdatedManagerReportsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -2521,6 +2550,7 @@ export type UserUpdateWithoutReceivedManagerReportsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2594,6 +2624,7 @@ export type UserUncheckedUpdateWithoutReceivedManagerReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2678,6 +2709,7 @@ export type UserUpdateWithoutCreatedManagerReportsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2751,6 +2783,7 @@ export type UserUncheckedUpdateWithoutCreatedManagerReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2835,6 +2868,7 @@ export type UserUpdateWithoutUpdatedManagerReportsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2908,6 +2942,7 @@ export type UserUncheckedUpdateWithoutUpdatedManagerReportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -2981,6 +3016,7 @@ export type UserCreateWithoutAssignedBranchWarehousesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3054,6 +3090,7 @@ export type UserUncheckedCreateWithoutAssignedBranchWarehousesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3143,6 +3180,7 @@ export type UserUpdateWithoutAssignedBranchWarehousesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3216,6 +3254,7 @@ export type UserUncheckedUpdateWithoutAssignedBranchWarehousesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3289,6 +3328,7 @@ export type UserCreateWithoutErpWarehouseAssignmentsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3362,6 +3402,7 @@ export type UserUncheckedCreateWithoutErpWarehouseAssignmentsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3440,6 +3481,7 @@ export type UserCreateWithoutAssignedUserWarehousesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3513,6 +3555,7 @@ export type UserUncheckedCreateWithoutAssignedUserWarehousesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3602,6 +3645,7 @@ export type UserUpdateWithoutErpWarehouseAssignmentsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3675,6 +3719,7 @@ export type UserUncheckedUpdateWithoutErpWarehouseAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3759,6 +3804,7 @@ export type UserUpdateWithoutAssignedUserWarehousesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3832,6 +3878,7 @@ export type UserUncheckedUpdateWithoutAssignedUserWarehousesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -3904,6 +3951,7 @@ export type UserCreateWithoutCreatedCustomersInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -3977,6 +4025,7 @@ export type UserUncheckedCreateWithoutCreatedCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4055,6 +4104,7 @@ export type UserCreateWithoutUpdatedCustomersInput = {
   updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4128,6 +4178,7 @@ export type UserUncheckedCreateWithoutUpdatedCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4217,6 +4268,7 @@ export type UserUpdateWithoutCreatedCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4290,6 +4342,7 @@ export type UserUncheckedUpdateWithoutCreatedCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4374,6 +4427,7 @@ export type UserUpdateWithoutUpdatedCustomersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4447,6 +4501,7 @@ export type UserUncheckedUpdateWithoutUpdatedCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4521,6 +4576,7 @@ export type UserCreateWithoutCustomerOnboardingsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4594,6 +4650,7 @@ export type UserUncheckedCreateWithoutCustomerOnboardingsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4672,6 +4729,7 @@ export type UserCreateWithoutReviewedCustomerOnboardingsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4745,6 +4803,7 @@ export type UserUncheckedCreateWithoutReviewedCustomerOnboardingsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -4834,6 +4893,7 @@ export type UserUpdateWithoutCustomerOnboardingsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4907,6 +4967,7 @@ export type UserUncheckedUpdateWithoutCustomerOnboardingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -4991,6 +5052,7 @@ export type UserUpdateWithoutReviewedCustomerOnboardingsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -5064,6 +5126,7 @@ export type UserUncheckedUpdateWithoutReviewedCustomerOnboardingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -5137,6 +5200,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
@@ -5210,6 +5274,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
@@ -5288,6 +5353,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
@@ -5361,6 +5427,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
@@ -5439,6 +5506,7 @@ export type UserCreateWithoutProcurementProductsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
@@ -5512,6 +5580,7 @@ export type UserUncheckedCreateWithoutProcurementProductsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
@@ -5601,6 +5670,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
@@ -5674,6 +5744,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
@@ -5758,6 +5829,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
@@ -5831,6 +5903,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
@@ -5915,6 +5988,7 @@ export type UserUpdateWithoutProcurementProductsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
@@ -5988,8 +6062,321 @@ export type UserUncheckedUpdateWithoutProcurementProductsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUncheckedUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  erpRegisteredOrders?: Prisma.QuoteUncheckedUpdateManyWithoutErpOrderRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUncheckedUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUncheckedUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedUpdateManyWithoutErpLinkedByNestedInput
+  updatedErpDrafts?: Prisma.PurchaseRequisitionItemErpDraftUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierRequisitions?: Prisma.PurchaseSupplierRequisitionUncheckedUpdateManyWithoutCreatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedUpdateManyWithoutRecipientUserNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutSellerNestedInput
+  reviewedCustomerOnboardings?: Prisma.CustomerOnboardingUncheckedUpdateManyWithoutReviewedByUserNestedInput
+}
+
+export type UserCreateWithoutVerifiedLocalProductErpLinksInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutUsersInput
+  createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  erpRegisteredOrders?: Prisma.QuoteCreateNestedManyWithoutErpOrderRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemCreateNestedManyWithoutErpLinkedByInput
+  updatedErpDrafts?: Prisma.PurchaseRequisitionItemErpDraftCreateNestedManyWithoutUpdatedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferCreateNestedManyWithoutUpdatedByInput
+  createdSupplierRequisitions?: Prisma.PurchaseSupplierRequisitionCreateNestedManyWithoutCreatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertCreateNestedManyWithoutRecipientUserInput
+  customerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutSellerInput
+  reviewedCustomerOnboardings?: Prisma.CustomerOnboardingCreateNestedManyWithoutReviewedByUserInput
+}
+
+export type UserUncheckedCreateWithoutVerifiedLocalProductErpLinksInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  username: string
+  email: string
+  passwordHash: string
+  role: $Enums.UserRole
+  isActive?: boolean
+  phone?: string | null
+  whatsappPhoneE164?: string | null
+  whatsappInboxEnabled?: boolean
+  branchId: string
+  erpUserCode?: string | null
+  warehouseAccessMode?: $Enums.WarehouseAccessMode
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  createdQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  rejectedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutRejectedByUserInput
+  cancelledQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCancelledByUserInput
+  archivedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutArchivedByUserInput
+  providedQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByUserInput
+  providerAssignments?: Prisma.QuoteUncheckedCreateNestedManyWithoutProvidedByAssignedByUserInput
+  erpRegisteredQuotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpQuoteRegisteredByUserInput
+  erpRegisteredOrders?: Prisma.QuoteUncheckedCreateNestedManyWithoutErpOrderRegisteredByUserInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUncheckedCreateNestedManyWithoutSentByUserInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUncheckedCreateNestedManyWithoutGeneratedByUserInput
+  quoteEvents?: Prisma.QuoteEventUncheckedCreateNestedManyWithoutActorUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorUserInput
+  createdSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSuppliers?: Prisma.SupplierUncheckedCreateNestedManyWithoutUpdatedByInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutRequestedByInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutAssignedBuyerInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUncheckedCreateNestedManyWithoutCostApprovedByInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUncheckedCreateNestedManyWithoutErpLinkedByInput
+  updatedErpDrafts?: Prisma.PurchaseRequisitionItemErpDraftUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdSupplierRequisitions?: Prisma.PurchaseSupplierRequisitionUncheckedCreateNestedManyWithoutCreatedByInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUncheckedCreateNestedManyWithoutUpdatedByInput
+  uploadedFileAssets?: Prisma.FileAssetUncheckedCreateNestedManyWithoutUploadedByInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutCustomerDescriptionEditedByUserInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUncheckedCreateNestedManyWithoutEffectiveCostEvaluatedByUserInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutUserInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUncheckedCreateNestedManyWithoutAssignedByInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutHandledByUserInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUncheckedCreateNestedManyWithoutUserInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUncheckedCreateNestedManyWithoutUserInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUncheckedCreateNestedManyWithoutSentByUserInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUncheckedCreateNestedManyWithoutInternalUserInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUncheckedCreateNestedOneWithoutUserInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutAssignedSellerInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutSellerInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUncheckedCreateNestedManyWithoutAssignedByInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUncheckedCreateNestedManyWithoutConvertedByInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutRecipientUserInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutCreatedByUserInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUncheckedCreateNestedManyWithoutRecipientUserInput
+  customerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutSellerInput
+  reviewedCustomerOnboardings?: Prisma.CustomerOnboardingUncheckedCreateNestedManyWithoutReviewedByUserInput
+}
+
+export type UserCreateOrConnectWithoutVerifiedLocalProductErpLinksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedCreateWithoutVerifiedLocalProductErpLinksInput>
+}
+
+export type UserUpsertWithoutVerifiedLocalProductErpLinksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedUpdateWithoutVerifiedLocalProductErpLinksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedCreateWithoutVerifiedLocalProductErpLinksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVerifiedLocalProductErpLinksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVerifiedLocalProductErpLinksInput, Prisma.UserUncheckedUpdateWithoutVerifiedLocalProductErpLinksInput>
+}
+
+export type UserUpdateWithoutVerifiedLocalProductErpLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
+  createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
+  createdProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutCreatedByUserNestedInput
+  updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUpdateManyWithoutUpdatedByUserNestedInput
+  createdQuotes?: Prisma.QuoteUpdateManyWithoutCreatedByUserNestedInput
+  updatedQuotes?: Prisma.QuoteUpdateManyWithoutUpdatedByUserNestedInput
+  rejectedQuotes?: Prisma.QuoteUpdateManyWithoutRejectedByUserNestedInput
+  cancelledQuotes?: Prisma.QuoteUpdateManyWithoutCancelledByUserNestedInput
+  archivedQuotes?: Prisma.QuoteUpdateManyWithoutArchivedByUserNestedInput
+  providedQuotes?: Prisma.QuoteUpdateManyWithoutProvidedByUserNestedInput
+  providerAssignments?: Prisma.QuoteUpdateManyWithoutProvidedByAssignedByUserNestedInput
+  erpRegisteredQuotes?: Prisma.QuoteUpdateManyWithoutErpQuoteRegisteredByUserNestedInput
+  erpRegisteredOrders?: Prisma.QuoteUpdateManyWithoutErpOrderRegisteredByUserNestedInput
+  quoteDeliveryAttempts?: Prisma.QuoteDeliveryAttemptUpdateManyWithoutSentByUserNestedInput
+  quoteOrderExports?: Prisma.QuoteOrderExportUpdateManyWithoutGeneratedByUserNestedInput
+  quoteEvents?: Prisma.QuoteEventUpdateManyWithoutActorUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorUserNestedInput
+  createdSuppliers?: Prisma.SupplierUpdateManyWithoutCreatedByNestedInput
+  updatedSuppliers?: Prisma.SupplierUpdateManyWithoutUpdatedByNestedInput
+  requestedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutRequestedByNestedInput
+  assignedRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutAssignedBuyerNestedInput
+  approvedCostRequisitions?: Prisma.PurchaseRequisitionUpdateManyWithoutCostApprovedByNestedInput
+  erpLinkedRequisitionItems?: Prisma.PurchaseRequisitionItemUpdateManyWithoutErpLinkedByNestedInput
+  updatedErpDrafts?: Prisma.PurchaseRequisitionItemErpDraftUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierOffers?: Prisma.PurchaseSupplierOfferUpdateManyWithoutUpdatedByNestedInput
+  createdSupplierRequisitions?: Prisma.PurchaseSupplierRequisitionUpdateManyWithoutCreatedByNestedInput
+  createdSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutCreatedByNestedInput
+  updatedSupplierQuotes?: Prisma.PurchaseSupplierQuoteUpdateManyWithoutUpdatedByNestedInput
+  uploadedFileAssets?: Prisma.FileAssetUpdateManyWithoutUploadedByNestedInput
+  editedQuoteItemDescriptions?: Prisma.QuoteItemUpdateManyWithoutCustomerDescriptionEditedByUserNestedInput
+  evaluatedQuoteItemCosts?: Prisma.QuoteItemUpdateManyWithoutEffectiveCostEvaluatedByUserNestedInput
+  erpWarehouseAssignments?: Prisma.UserErpWarehouseUpdateManyWithoutUserNestedInput
+  assignedBranchWarehouses?: Prisma.BranchErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  assignedUserWarehouses?: Prisma.UserErpWarehouseUpdateManyWithoutAssignedByNestedInput
+  handledWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutHandledByUserNestedInput
+  whatsappConversationAccesses?: Prisma.WhatsAppConversationAccessUpdateManyWithoutUserNestedInput
+  whatsappConversationReads?: Prisma.WhatsAppConversationReadStateUpdateManyWithoutUserNestedInput
+  sentWhatsAppMessages?: Prisma.WhatsAppOutboundMessageUpdateManyWithoutSentByUserNestedInput
+  internalWhatsAppConversations?: Prisma.WhatsAppConversationUpdateManyWithoutInternalUserNestedInput
+  whatsappInternalVerification?: Prisma.WhatsAppInternalVerificationUpdateOneWithoutUserNestedInput
+  assignedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutAssignedSellerNestedInput
+  assignedWhatsAppLeadHistory?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutSellerNestedInput
+  madeWhatsAppLeadAssignments?: Prisma.WhatsAppLeadAssignmentUpdateManyWithoutAssignedByNestedInput
+  convertedWhatsAppLeads?: Prisma.WhatsAppLeadUpdateManyWithoutConvertedByNestedInput
+  receivedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutRecipientUserNestedInput
+  createdManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutCreatedByUserNestedInput
+  updatedManagerReports?: Prisma.ManagerReportSubscriptionUpdateManyWithoutUpdatedByUserNestedInput
+  whatsappInternalAlerts?: Prisma.WhatsAppInternalAlertUpdateManyWithoutRecipientUserNestedInput
+  customerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutSellerNestedInput
+  reviewedCustomerOnboardings?: Prisma.CustomerOnboardingUpdateManyWithoutReviewedByUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVerifiedLocalProductErpLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappPhoneE164?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsappInboxEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  erpUserCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warehouseAccessMode?: Prisma.EnumWarehouseAccessModeFieldUpdateOperationsInput | $Enums.WarehouseAccessMode
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
   createdProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProcurementOffers?: Prisma.LocalProductProcurementOfferUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   createdQuotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByUserNestedInput
@@ -6061,6 +6448,7 @@ export type UserCreateWithoutCreatedProcurementOffersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6134,6 +6522,7 @@ export type UserUncheckedCreateWithoutCreatedProcurementOffersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6212,6 +6601,7 @@ export type UserCreateWithoutUpdatedProcurementOffersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6285,6 +6675,7 @@ export type UserUncheckedCreateWithoutUpdatedProcurementOffersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6374,6 +6765,7 @@ export type UserUpdateWithoutCreatedProcurementOffersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -6447,6 +6839,7 @@ export type UserUncheckedUpdateWithoutCreatedProcurementOffersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -6531,6 +6924,7 @@ export type UserUpdateWithoutUpdatedProcurementOffersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -6604,6 +6998,7 @@ export type UserUncheckedUpdateWithoutUpdatedProcurementOffersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -6677,6 +7072,7 @@ export type UserCreateWithoutCreatedQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6750,6 +7146,7 @@ export type UserUncheckedCreateWithoutCreatedQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6828,6 +7225,7 @@ export type UserCreateWithoutUpdatedQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6901,6 +7299,7 @@ export type UserUncheckedCreateWithoutUpdatedQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -6979,6 +7378,7 @@ export type UserCreateWithoutProvidedQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7052,6 +7452,7 @@ export type UserUncheckedCreateWithoutProvidedQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7130,6 +7531,7 @@ export type UserCreateWithoutProviderAssignmentsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7203,6 +7605,7 @@ export type UserUncheckedCreateWithoutProviderAssignmentsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7281,6 +7684,7 @@ export type UserCreateWithoutRejectedQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7354,6 +7758,7 @@ export type UserUncheckedCreateWithoutRejectedQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7432,6 +7837,7 @@ export type UserCreateWithoutCancelledQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7505,6 +7911,7 @@ export type UserUncheckedCreateWithoutCancelledQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7583,6 +7990,7 @@ export type UserCreateWithoutArchivedQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7656,6 +8064,7 @@ export type UserUncheckedCreateWithoutArchivedQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7734,6 +8143,7 @@ export type UserCreateWithoutErpRegisteredQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7807,6 +8217,7 @@ export type UserUncheckedCreateWithoutErpRegisteredQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7885,6 +8296,7 @@ export type UserCreateWithoutErpRegisteredOrdersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -7958,6 +8370,7 @@ export type UserUncheckedCreateWithoutErpRegisteredOrdersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -8047,6 +8460,7 @@ export type UserUpdateWithoutCreatedQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8120,6 +8534,7 @@ export type UserUncheckedUpdateWithoutCreatedQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8204,6 +8619,7 @@ export type UserUpdateWithoutUpdatedQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8277,6 +8693,7 @@ export type UserUncheckedUpdateWithoutUpdatedQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8361,6 +8778,7 @@ export type UserUpdateWithoutProvidedQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8434,6 +8852,7 @@ export type UserUncheckedUpdateWithoutProvidedQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8518,6 +8937,7 @@ export type UserUpdateWithoutProviderAssignmentsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8591,6 +9011,7 @@ export type UserUncheckedUpdateWithoutProviderAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8675,6 +9096,7 @@ export type UserUpdateWithoutRejectedQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8748,6 +9170,7 @@ export type UserUncheckedUpdateWithoutRejectedQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8832,6 +9255,7 @@ export type UserUpdateWithoutCancelledQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8905,6 +9329,7 @@ export type UserUncheckedUpdateWithoutCancelledQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -8989,6 +9414,7 @@ export type UserUpdateWithoutArchivedQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9062,6 +9488,7 @@ export type UserUncheckedUpdateWithoutArchivedQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9146,6 +9573,7 @@ export type UserUpdateWithoutErpRegisteredQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9219,6 +9647,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9303,6 +9732,7 @@ export type UserUpdateWithoutErpRegisteredOrdersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9376,6 +9806,7 @@ export type UserUncheckedUpdateWithoutErpRegisteredOrdersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9449,6 +9880,7 @@ export type UserCreateWithoutEditedQuoteItemDescriptionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -9522,6 +9954,7 @@ export type UserUncheckedCreateWithoutEditedQuoteItemDescriptionsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -9600,6 +10033,7 @@ export type UserCreateWithoutEvaluatedQuoteItemCostsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -9673,6 +10107,7 @@ export type UserUncheckedCreateWithoutEvaluatedQuoteItemCostsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -9762,6 +10197,7 @@ export type UserUpdateWithoutEditedQuoteItemDescriptionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9835,6 +10271,7 @@ export type UserUncheckedUpdateWithoutEditedQuoteItemDescriptionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9919,6 +10356,7 @@ export type UserUpdateWithoutEvaluatedQuoteItemCostsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -9992,6 +10430,7 @@ export type UserUncheckedUpdateWithoutEvaluatedQuoteItemCostsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -10065,6 +10504,7 @@ export type UserCreateWithoutCreatedSuppliersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10138,6 +10578,7 @@ export type UserUncheckedCreateWithoutCreatedSuppliersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10216,6 +10657,7 @@ export type UserCreateWithoutUpdatedSuppliersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10289,6 +10731,7 @@ export type UserUncheckedCreateWithoutUpdatedSuppliersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10378,6 +10821,7 @@ export type UserUpdateWithoutCreatedSuppliersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -10451,6 +10895,7 @@ export type UserUncheckedUpdateWithoutCreatedSuppliersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -10535,6 +10980,7 @@ export type UserUpdateWithoutUpdatedSuppliersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -10608,6 +11054,7 @@ export type UserUncheckedUpdateWithoutUpdatedSuppliersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -10681,6 +11128,7 @@ export type UserCreateWithoutRequestedRequisitionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10754,6 +11202,7 @@ export type UserUncheckedCreateWithoutRequestedRequisitionsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10832,6 +11281,7 @@ export type UserCreateWithoutAssignedRequisitionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10905,6 +11355,7 @@ export type UserUncheckedCreateWithoutAssignedRequisitionsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -10983,6 +11434,7 @@ export type UserCreateWithoutApprovedCostRequisitionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -11056,6 +11508,7 @@ export type UserUncheckedCreateWithoutApprovedCostRequisitionsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -11145,6 +11598,7 @@ export type UserUpdateWithoutRequestedRequisitionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11218,6 +11672,7 @@ export type UserUncheckedUpdateWithoutRequestedRequisitionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11302,6 +11757,7 @@ export type UserUpdateWithoutAssignedRequisitionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11375,6 +11831,7 @@ export type UserUncheckedUpdateWithoutAssignedRequisitionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11459,6 +11916,7 @@ export type UserUpdateWithoutApprovedCostRequisitionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11532,6 +11990,7 @@ export type UserUncheckedUpdateWithoutApprovedCostRequisitionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11605,6 +12064,7 @@ export type UserCreateWithoutErpLinkedRequisitionItemsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -11678,6 +12138,7 @@ export type UserUncheckedCreateWithoutErpLinkedRequisitionItemsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -11767,6 +12228,7 @@ export type UserUpdateWithoutErpLinkedRequisitionItemsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11840,6 +12302,7 @@ export type UserUncheckedUpdateWithoutErpLinkedRequisitionItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -11913,6 +12376,7 @@ export type UserCreateWithoutUpdatedErpDraftsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -11986,6 +12450,7 @@ export type UserUncheckedCreateWithoutUpdatedErpDraftsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12075,6 +12540,7 @@ export type UserUpdateWithoutUpdatedErpDraftsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12148,6 +12614,7 @@ export type UserUncheckedUpdateWithoutUpdatedErpDraftsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12221,6 +12688,7 @@ export type UserCreateWithoutCreatedSupplierOffersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12294,6 +12762,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierOffersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12372,6 +12841,7 @@ export type UserCreateWithoutUpdatedSupplierOffersInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12445,6 +12915,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierOffersInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12534,6 +13005,7 @@ export type UserUpdateWithoutCreatedSupplierOffersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12607,6 +13079,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierOffersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12691,6 +13164,7 @@ export type UserUpdateWithoutUpdatedSupplierOffersInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12764,6 +13238,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierOffersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -12837,6 +13312,7 @@ export type UserCreateWithoutCreatedSupplierRequisitionsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12910,6 +13386,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierRequisitionsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -12999,6 +13476,7 @@ export type UserUpdateWithoutCreatedSupplierRequisitionsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13072,6 +13550,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierRequisitionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13145,6 +13624,7 @@ export type UserCreateWithoutCreatedSupplierQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13218,6 +13698,7 @@ export type UserUncheckedCreateWithoutCreatedSupplierQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13296,6 +13777,7 @@ export type UserCreateWithoutUpdatedSupplierQuotesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13369,6 +13851,7 @@ export type UserUncheckedCreateWithoutUpdatedSupplierQuotesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13458,6 +13941,7 @@ export type UserUpdateWithoutCreatedSupplierQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13531,6 +14015,7 @@ export type UserUncheckedUpdateWithoutCreatedSupplierQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13615,6 +14100,7 @@ export type UserUpdateWithoutUpdatedSupplierQuotesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13688,6 +14174,7 @@ export type UserUncheckedUpdateWithoutUpdatedSupplierQuotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13761,6 +14248,7 @@ export type UserCreateWithoutUploadedFileAssetsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13834,6 +14322,7 @@ export type UserUncheckedCreateWithoutUploadedFileAssetsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -13923,6 +14412,7 @@ export type UserUpdateWithoutUploadedFileAssetsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -13996,6 +14486,7 @@ export type UserUncheckedUpdateWithoutUploadedFileAssetsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -14069,6 +14560,7 @@ export type UserCreateWithoutQuoteEventsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14142,6 +14634,7 @@ export type UserUncheckedCreateWithoutQuoteEventsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14231,6 +14724,7 @@ export type UserUpdateWithoutQuoteEventsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -14304,6 +14798,7 @@ export type UserUncheckedUpdateWithoutQuoteEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -14377,6 +14872,7 @@ export type UserCreateWithoutQuoteDeliveryAttemptsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14450,6 +14946,7 @@ export type UserUncheckedCreateWithoutQuoteDeliveryAttemptsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14539,6 +15036,7 @@ export type UserUpdateWithoutQuoteDeliveryAttemptsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -14612,6 +15110,7 @@ export type UserUncheckedUpdateWithoutQuoteDeliveryAttemptsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -14685,6 +15184,7 @@ export type UserCreateWithoutHandledWhatsAppConversationsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14758,6 +15258,7 @@ export type UserUncheckedCreateWithoutHandledWhatsAppConversationsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14836,6 +15337,7 @@ export type UserCreateWithoutInternalWhatsAppConversationsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14909,6 +15411,7 @@ export type UserUncheckedCreateWithoutInternalWhatsAppConversationsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -14998,6 +15501,7 @@ export type UserUpdateWithoutHandledWhatsAppConversationsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15071,6 +15575,7 @@ export type UserUncheckedUpdateWithoutHandledWhatsAppConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15155,6 +15660,7 @@ export type UserUpdateWithoutInternalWhatsAppConversationsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15228,6 +15734,7 @@ export type UserUncheckedUpdateWithoutInternalWhatsAppConversationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15301,6 +15808,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -15374,6 +15882,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -15452,6 +15961,7 @@ export type UserCreateWithoutConvertedWhatsAppLeadsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -15525,6 +16035,7 @@ export type UserUncheckedCreateWithoutConvertedWhatsAppLeadsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -15614,6 +16125,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15687,6 +16199,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15771,6 +16284,7 @@ export type UserUpdateWithoutConvertedWhatsAppLeadsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15844,6 +16358,7 @@ export type UserUncheckedUpdateWithoutConvertedWhatsAppLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -15917,6 +16432,7 @@ export type UserCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -15990,6 +16506,7 @@ export type UserUncheckedCreateWithoutAssignedWhatsAppLeadHistoryInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16068,6 +16585,7 @@ export type UserCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16141,6 +16659,7 @@ export type UserUncheckedCreateWithoutMadeWhatsAppLeadAssignmentsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16230,6 +16749,7 @@ export type UserUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16303,6 +16823,7 @@ export type UserUncheckedUpdateWithoutAssignedWhatsAppLeadHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16387,6 +16908,7 @@ export type UserUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16460,6 +16982,7 @@ export type UserUncheckedUpdateWithoutMadeWhatsAppLeadAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16533,6 +17056,7 @@ export type UserCreateWithoutWhatsappInternalVerificationInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16606,6 +17130,7 @@ export type UserUncheckedCreateWithoutWhatsappInternalVerificationInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16695,6 +17220,7 @@ export type UserUpdateWithoutWhatsappInternalVerificationInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16768,6 +17294,7 @@ export type UserUncheckedUpdateWithoutWhatsappInternalVerificationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -16841,6 +17368,7 @@ export type UserCreateWithoutWhatsappConversationAccessesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -16914,6 +17442,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationAccessesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17003,6 +17532,7 @@ export type UserUpdateWithoutWhatsappConversationAccessesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17076,6 +17606,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationAccessesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17149,6 +17680,7 @@ export type UserCreateWithoutWhatsappConversationReadsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17222,6 +17754,7 @@ export type UserUncheckedCreateWithoutWhatsappConversationReadsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17311,6 +17844,7 @@ export type UserUpdateWithoutWhatsappConversationReadsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17384,6 +17918,7 @@ export type UserUncheckedUpdateWithoutWhatsappConversationReadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17457,6 +17992,7 @@ export type UserCreateWithoutSentWhatsAppMessagesInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17530,6 +18066,7 @@ export type UserUncheckedCreateWithoutSentWhatsAppMessagesInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17619,6 +18156,7 @@ export type UserUpdateWithoutSentWhatsAppMessagesInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17692,6 +18230,7 @@ export type UserUncheckedUpdateWithoutSentWhatsAppMessagesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -17765,6 +18304,7 @@ export type UserCreateWithoutWhatsappInternalAlertsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17838,6 +18378,7 @@ export type UserUncheckedCreateWithoutWhatsappInternalAlertsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -17927,6 +18468,7 @@ export type UserUpdateWithoutWhatsappInternalAlertsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18000,6 +18542,7 @@ export type UserUncheckedUpdateWithoutWhatsappInternalAlertsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18073,6 +18616,7 @@ export type UserCreateWithoutQuoteOrderExportsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18146,6 +18690,7 @@ export type UserUncheckedCreateWithoutQuoteOrderExportsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18235,6 +18780,7 @@ export type UserUpdateWithoutQuoteOrderExportsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18308,6 +18854,7 @@ export type UserUncheckedUpdateWithoutQuoteOrderExportsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18381,6 +18928,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18454,6 +19002,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18543,6 +19092,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18616,6 +19166,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18689,6 +19240,7 @@ export type UserCreateWithoutAuditLogsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutUsersInput
   createdCustomers?: Prisma.CustomerCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18762,6 +19314,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   updatedAt?: Date | string
   createdCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedCustomers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUpdatedByUserInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedCreateNestedManyWithoutVerifiedByInput
   createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByUserInput
   updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByUserInput
   procurementProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutProcurementUpdatedByUserInput
@@ -18851,6 +19404,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutUsersNestedInput
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -18924,6 +19478,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -19014,6 +19569,7 @@ export type UserUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -19087,6 +19643,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedCustomers?: Prisma.CustomerUncheckedUpdateManyWithoutUpdatedByUserNestedInput
+  verifiedLocalProductErpLinks?: Prisma.LocalProductErpLinkUncheckedUpdateManyWithoutVerifiedByNestedInput
   createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByUserNestedInput
   updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByUserNestedInput
   procurementProducts?: Prisma.ProductUncheckedUpdateManyWithoutProcurementUpdatedByUserNestedInput
@@ -19168,6 +19725,7 @@ export type UserUncheckedUpdateManyWithoutBranchInput = {
 export type UserCountOutputType = {
   createdCustomers: number
   updatedCustomers: number
+  verifiedLocalProductErpLinks: number
   createdProducts: number
   updatedProducts: number
   procurementProducts: number
@@ -19225,6 +19783,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   createdCustomers?: boolean | UserCountOutputTypeCountCreatedCustomersArgs
   updatedCustomers?: boolean | UserCountOutputTypeCountUpdatedCustomersArgs
+  verifiedLocalProductErpLinks?: boolean | UserCountOutputTypeCountVerifiedLocalProductErpLinksArgs
   createdProducts?: boolean | UserCountOutputTypeCountCreatedProductsArgs
   updatedProducts?: boolean | UserCountOutputTypeCountUpdatedProductsArgs
   procurementProducts?: boolean | UserCountOutputTypeCountProcurementProductsArgs
@@ -19301,6 +19860,13 @@ export type UserCountOutputTypeCountCreatedCustomersArgs<ExtArgs extends runtime
  */
 export type UserCountOutputTypeCountUpdatedCustomersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CustomerWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountVerifiedLocalProductErpLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LocalProductErpLinkWhereInput
 }
 
 /**
@@ -19688,6 +20254,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   createdCustomers?: boolean | Prisma.User$createdCustomersArgs<ExtArgs>
   updatedCustomers?: boolean | Prisma.User$updatedCustomersArgs<ExtArgs>
+  verifiedLocalProductErpLinks?: boolean | Prisma.User$verifiedLocalProductErpLinksArgs<ExtArgs>
   createdProducts?: boolean | Prisma.User$createdProductsArgs<ExtArgs>
   updatedProducts?: boolean | Prisma.User$updatedProductsArgs<ExtArgs>
   procurementProducts?: boolean | Prisma.User$procurementProductsArgs<ExtArgs>
@@ -19808,6 +20375,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   createdCustomers?: boolean | Prisma.User$createdCustomersArgs<ExtArgs>
   updatedCustomers?: boolean | Prisma.User$updatedCustomersArgs<ExtArgs>
+  verifiedLocalProductErpLinks?: boolean | Prisma.User$verifiedLocalProductErpLinksArgs<ExtArgs>
   createdProducts?: boolean | Prisma.User$createdProductsArgs<ExtArgs>
   updatedProducts?: boolean | Prisma.User$updatedProductsArgs<ExtArgs>
   procurementProducts?: boolean | Prisma.User$procurementProductsArgs<ExtArgs>
@@ -19876,6 +20444,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     branch: Prisma.$BranchPayload<ExtArgs>
     createdCustomers: Prisma.$CustomerPayload<ExtArgs>[]
     updatedCustomers: Prisma.$CustomerPayload<ExtArgs>[]
+    verifiedLocalProductErpLinks: Prisma.$LocalProductErpLinkPayload<ExtArgs>[]
     createdProducts: Prisma.$ProductPayload<ExtArgs>[]
     updatedProducts: Prisma.$ProductPayload<ExtArgs>[]
     procurementProducts: Prisma.$ProductPayload<ExtArgs>[]
@@ -20344,6 +20913,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdCustomers<T extends Prisma.User$createdCustomersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCustomersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedCustomers<T extends Prisma.User$updatedCustomersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCustomersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verifiedLocalProductErpLinks<T extends Prisma.User$verifiedLocalProductErpLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verifiedLocalProductErpLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LocalProductErpLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdProducts<T extends Prisma.User$createdProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedProducts<T extends Prisma.User$updatedProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   procurementProducts<T extends Prisma.User$procurementProductsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$procurementProductsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -20883,6 +21453,30 @@ export type User$updatedCustomersArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
+}
+
+/**
+ * User.verifiedLocalProductErpLinks
+ */
+export type User$verifiedLocalProductErpLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LocalProductErpLink
+   */
+  select?: Prisma.LocalProductErpLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LocalProductErpLink
+   */
+  omit?: Prisma.LocalProductErpLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LocalProductErpLinkInclude<ExtArgs> | null
+  where?: Prisma.LocalProductErpLinkWhereInput
+  orderBy?: Prisma.LocalProductErpLinkOrderByWithRelationInput | Prisma.LocalProductErpLinkOrderByWithRelationInput[]
+  cursor?: Prisma.LocalProductErpLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LocalProductErpLinkScalarFieldEnum | Prisma.LocalProductErpLinkScalarFieldEnum[]
 }
 
 /**

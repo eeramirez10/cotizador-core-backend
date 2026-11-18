@@ -63,6 +63,7 @@ export const ModelName = {
   CustomerContact: 'CustomerContact',
   CustomerOnboarding: 'CustomerOnboarding',
   Product: 'Product',
+  LocalProductErpLink: 'LocalProductErpLink',
   LocalProductProcurementOffer: 'LocalProductProcurementOffer',
   Quote: 'Quote',
   QuoteItem: 'QuoteItem',
@@ -387,6 +388,20 @@ export const ProductScalarFieldEnum = {
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const LocalProductErpLinkScalarFieldEnum = {
+  productId: 'productId',
+  branchId: 'branchId',
+  erpCode: 'erpCode',
+  erpEan: 'erpEan',
+  erpDescription: 'erpDescription',
+  erpUnit: 'erpUnit',
+  verifiedAt: 'verifiedAt',
+  verifiedByUserId: 'verifiedByUserId'
+} as const
+
+export type LocalProductErpLinkScalarFieldEnum = (typeof LocalProductErpLinkScalarFieldEnum)[keyof typeof LocalProductErpLinkScalarFieldEnum]
 
 
 export const LocalProductProcurementOfferScalarFieldEnum = {

@@ -266,11 +266,12 @@ export class CreateQuoteItemRequestDto {
         )
       : {};
 
+    const productId = CreateQuoteItemRequestDto.normalizeNullableString(body.productId);
     return [
       ,
       new CreateQuoteItemRequestDto({
         clientItemId,
-        productId: CreateQuoteItemRequestDto.normalizeNullableString(body.productId),
+        productId,
         externalProductCode,
         ean: CreateQuoteItemRequestDto.normalizeNullableString(body.ean),
         customerDescription: CreateQuoteItemRequestDto.normalizeNullableString(body.customerDescription),
@@ -310,7 +311,7 @@ export class CreateQuoteItemRequestDto {
         technicalFamily: CreateQuoteItemRequestDto.normalizeNullableString(body.technicalFamily),
         technicalAttributes,
         cost,
-        costCurrency: externalProductCode ? "MXN" as Currency : costCurrencyRaw as Currency,
+        costCurrency: externalProductCode && !productId ? "MXN" as Currency : costCurrencyRaw as Currency,
         erpSaleCurrency,
         marginPct,
         sourceCurrency,

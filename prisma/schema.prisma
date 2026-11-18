@@ -383,6 +383,7 @@ model Branch {
 
   users                        User[]
   quotes                       Quote[]
+  localProductErpLinks         LocalProductErpLink[]
   products                     Product[]
   quoteCatalogOptions          QuoteCatalogOption[]
   purchaseRequisitions         PurchaseRequisition[]
@@ -440,6 +441,7 @@ model User {
 
   createdCustomers              Customer[]                      @relation("CustomerCreatedBy")
   updatedCustomers              Customer[]                      @relation("CustomerUpdatedBy")
+  verifiedLocalProductErpLinks  LocalProductErpLink[]
   createdProducts               Product[]                       @relation("ProductCreatedBy")
   updatedProducts               Product[]                       @relation("ProductUpdatedBy")
   procurementProducts           Product[]                       @relation("ProductProcurementUpdatedBy")
@@ -762,6 +764,7 @@ model Product {
   createdByUser            User?                          @relation("ProductCreatedBy", fields: [createdByUserId], references: [id], onDelete: SetNull)
   updatedByUser            User?                          @relation("ProductUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
   procurementUpdatedByUser User?                          @relation("ProductProcurementUpdatedBy", fields: [procurementUpdatedByUserId], references: [id], onDelete: SetNull)
+  erpLinks                 LocalProductErpLink[]
   procurementOffers        LocalProductProcurementOffer[] @relation("LocalProductProcurementOffers")
   selectedProcurementOffer LocalProductProcurementOffer?  @relation("SelectedLocalProductProcurementOffer", fields: [selectedProcurementOfferId], references: [id], onDelete: SetNull)
 
@@ -778,6 +781,25 @@ model Product {
   @@index([procurementStatus])
   @@index([procurementUpdatedByUserId])
   @@map("products")
+}
+
+model LocalProductErpLink {
+  productId        String   @map("product_id") @db.Uuid
+  branchId         String   @map("branch_id") @db.Uuid
+  erpCode          String   @map("erp_code") @db.VarChar(80)
+  erpEan           String?  @map("erp_ean") @db.VarChar(120)
+  erpDescription   String   @map("erp_description") @db.VarChar(500)
+  erpUnit          String   @map("erp_unit") @db.VarChar(30)
+  verifiedAt       DateTime @default(now()) @map("verified_at")
+  verifiedByUserId String   @map("verified_by_user_id") @db.Uuid
+
+  product    Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  branch     Branch  @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  verifiedBy User    @relation(fields: [verifiedByUserId], references: [id], onDelete: Restrict)
+
+  @@id([productId, branchId])
+  @@index([branchId, erpCode])
+  @@map("local_product_erp_links")
 }
 
 model LocalProductProcurementOffer {

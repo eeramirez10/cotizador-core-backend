@@ -78,6 +78,11 @@ export type CustomerOnboarding = Prisma.CustomerOnboardingModel
  */
 export type Product = Prisma.ProductModel
 /**
+ * Model LocalProductErpLink
+ * 
+ */
+export type LocalProductErpLink = Prisma.LocalProductErpLinkModel
+/**
  * Model LocalProductProcurementOffer
  * 
  */

@@ -1,4 +1,5 @@
-import { LocalProductSemanticPort } from "../contracts/local-product-semantic.port";
+import { erpDraftBranchDefaults } from "./purchase-item-erp-draft.branch-defaults";
+import { assertRequisitionErpLinkAllowed, erpUnitsMatch, RequisitionErpLinkError } from "./requisition-erp-link-rule";
 import type { PurchasePriceNotificationPort } from "../contracts/purchase-price-notification.port";
 import { FileStoragePort } from "../contracts/file-storage.port";
 import { ErpProductLookupPort } from "../contracts/erp-product-lookup.port";
@@ -36,7 +37,6 @@ export class PurchaseRequisitionUseCase {
   constructor(
     private readonly repository: PurchaseRequisitionRepository,
     private readonly quoteRepository: QuoteRepository,
-    private readonly semanticPort: LocalProductSemanticPort,
     private readonly erpProductLookup: ErpProductLookupPort,
     private readonly erpSupplierLookup: ErpSupplierLookupPort,
     private readonly fileStorage: FileStoragePort,
@@ -151,31 +151,47 @@ export class PurchaseRequisitionUseCase {
     return new PurchaseRequisitionResponseDto(updated);
   }
 
+  async previewErpIdentity(id: string, itemId: string, code: string, actor: PurchaseRequisitionActor) {
+    if (!["ADMIN", "PURCHASING"].includes(actor.role)) {
+      throw new RequisitionErpLinkError("Solo Compras o Administración puede verificar códigos ERP.", 403);
+    }
+    const uuid = /^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
+    if (!uuid.test(id) || !uuid.test(itemId)) throw new RequisitionErpLinkError("Requisición o partida no válida.", 400);
+    if (!/^[A-Z0-9][A-Z0-9./_-]{0,12}$/.test(code)) throw new RequisitionErpLinkError("Captura un código ERP válido.", 400);
+    const requisition = await this.repository.findById(id, actor);
+    const item = requisition?.items.find(candidate => candidate.id === itemId);
+    if (!requisition || !item) throw new RequisitionErpLinkError("Partida de requisición no encontrada.", 404);
+    if (actor.role !== "ADMIN" && actor.branchId !== requisition.branchId) {
+      throw new RequisitionErpLinkError("La partida pertenece a otra sucursal.", 403);
+    }
+    const lines = requisition.supplierRequisitions.flatMap(document => document.lines).filter(line => line.requisitionItemId === itemId);
+    assertRequisitionErpLinkAllowed({
+      quoteStatus: requisition.quoteStatus, quoteLocked: requisition.quoteErpLinkLocked, requisitionStatus: requisition.status,
+      itemStatus: item.status, source: item.source, erpCode: item.erpCode,
+      issued: requisition.supplierRequisitions.length > 0, issuedLineCodes: lines.map(line => line.erpCode),
+    });
+    const primaryAccount = erpDraftBranchDefaults(requisition.branchCode)?.primaryAccount;
+    if (!primaryAccount) throw new RequisitionErpLinkError("La sucursal no tiene una cuenta primaria ERP configurada.", 409);
+    const identity = await this.erpProductLookup.findByCodeAndAccount(code, primaryAccount);
+    if (!identity) throw new RequisitionErpLinkError("El código no existe en Proscai para esta sucursal.", 404);
+    if (!erpUnitsMatch(item.unit, identity.unit)) {
+      throw new RequisitionErpLinkError(`La unidad en Proscai (${identity.unit}) no coincide con la cotizada (${item.unit}). Revisa la partida; no se convertirán cantidades ni precios.`, 409);
+    }
+    return { ...identity, primaryAccount };
+  }
+
   async linkItemToErp(
-    id: string,
-    itemId: string,
-    dto: LinkPurchaseRequisitionItemToErpRequestDto,
-    actor: PurchaseRequisitionActor,
+    id: string, itemId: string, dto: LinkPurchaseRequisitionItemToErpRequestDto, actor: PurchaseRequisitionActor,
   ) {
-    const erpProduct = await this.erpProductLookup.findByCodeInMexico(dto.erpCode);
-    if (!erpProduct) throw new Error("ERP product was not found in Mexico branch.");
-    if (erpProduct.ean.trim().toUpperCase() !== dto.erpEan.trim().toUpperCase()) {
-      throw new Error("ERP product EAN changed. Search and select the product again.");
+    const identity = await this.previewErpIdentity(id, itemId, dto.erpCode, actor);
+    if (identity.ean.toUpperCase() !== dto.erpEan.toUpperCase()) {
+      throw new RequisitionErpLinkError("El EAN de Proscai cambió. Verifica el código nuevamente.", 409);
     }
-
     const updated = await this.repository.linkItemToErp(id, itemId, {
-      erpCode: erpProduct.code,
-      erpEan: erpProduct.ean,
-      actorUserId: actor.id,
+      erpCode: identity.code, erpEan: identity.ean, erpDescription: identity.description,
+      erpUnit: identity.unit, primaryAccount: identity.primaryAccount, actorUserId: actor.id,
     }, actor);
-    if (!updated) throw new Error("Purchase requisition item not found.");
-
-    const productId = updated.items.find((item) => item.id === itemId)?.productId;
-    if (productId) {
-      await this.semanticPort.remove(productId).catch((cause) => {
-        console.error("Unable to remove ERP-linked product from semantic index.", { productId, cause });
-      });
-    }
+    if (!updated) throw new RequisitionErpLinkError("Partida de requisición no encontrada.", 404);
     return new PurchaseRequisitionResponseDto(updated);
   }
 

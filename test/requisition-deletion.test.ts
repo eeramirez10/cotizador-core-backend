@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { FileStoragePort } from "../src/domain/contracts/file-storage.port";
-import type { LocalProductSemanticPort } from "../src/domain/contracts/local-product-semantic.port";
 import type { ErpProductLookupPort } from "../src/domain/contracts/erp-product-lookup.port";
 import type { ErpSupplierLookupPort } from "../src/domain/contracts/erp-supplier-lookup.port";
 import type { PurchaseRequisitionActor } from "../src/domain/datasources/purchase-requisition.datasource";
@@ -41,7 +40,6 @@ test("only admin can delete a requisition and exclusive files are removed after 
   const useCase = new PurchaseRequisitionUseCase(
     repository,
     {} as QuoteRepository,
-    {} as LocalProductSemanticPort,
     {} as ErpProductLookupPort,
     {} as ErpSupplierLookupPort,
     storage,

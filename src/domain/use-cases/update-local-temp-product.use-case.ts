@@ -31,7 +31,6 @@ export class UpdateLocalTempProductUseCase {
         branchId: actor.branchId,
       },
       data: {
-        code: typeof dto.code === "string" ? normalizeProductDisplayText(dto.code) : dto.code,
         ean: typeof dto.ean === "string" ? normalizeProductDisplayText(dto.ean) : dto.ean,
         description: typeof dto.description === "string" ? normalizeProductDisplayText(dto.description) : undefined,
         canonicalDescription: typeof dto.description === "string" ? canonicalizeProductText(dto.description) : undefined,

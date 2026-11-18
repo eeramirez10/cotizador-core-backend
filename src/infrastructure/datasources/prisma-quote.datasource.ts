@@ -1,3 +1,4 @@
+import { assertVerifiedLocalQuoteLinks } from "./local-product-erp-links";
 import {
   AddQuoteItemDatasourceParams,
   ChangeQuoteStatusDatasourceParams,
@@ -509,6 +510,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
               status: true,
               archivedAt: true,
               providedByUserId: true,
+              branchId: true,
             },
           })
         : await tx.quote.findUnique({
@@ -525,6 +527,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
               status: true,
               archivedAt: true,
               providedByUserId: true,
+              branchId: true,
             },
           });
 
@@ -649,6 +652,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           status: true,
           archivedAt: true,
           providedByUserId: true,
+          branchId: true,
         },
       });
 
@@ -697,6 +701,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         },
       });
       const positionedItems = assignQuoteItemPositions(existingItems, params.items, params.reorderItems);
+      await assertVerifiedLocalQuoteLinks(tx, quote.branchId, positionedItems);
       if (existingItems.some((item) => item.purchaseRequisitionItem)) {
         const incomingByClientId = new Map(positionedItems.map((item) => [item.clientItemId, item]));
         for (const current of existingItems.filter((item) => item.purchaseRequisitionItem)) {
@@ -1285,10 +1290,12 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: true,
           status: true,
           taxRate: true,
+          branchId: true,
         },
       });
 
       if (!quote) return null;
+      await assertVerifiedLocalQuoteLinks(tx, quote.branchId, [params.data]);
 
       const lastItem = await tx.quoteItem.aggregate({
         where: { quoteId: quote.id },
@@ -1375,9 +1382,22 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
           id: true,
           status: true,
           taxRate: true,
+          branchId: true,
         },
       });
       if (!quote) return null;
+      if (params.data.productId !== undefined || params.data.externalProductCode !== undefined || params.data.unit !== undefined) {
+        const current = await tx.quoteItem.findFirst({
+          where: { id: params.itemId, quoteId: quote.id },
+          select: { productId: true, externalProductCode: true, unit: true },
+        });
+        if (!current) return null;
+        await assertVerifiedLocalQuoteLinks(tx, quote.branchId, [{
+          productId: params.data.productId === undefined ? current.productId : params.data.productId,
+          externalProductCode: params.data.externalProductCode === undefined ? current.externalProductCode : params.data.externalProductCode,
+          unit: params.data.unit ?? current.unit,
+        }]);
+      }
 
       const updated = await tx.quoteItem.updateMany({
         where: {
@@ -1465,7 +1485,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
       if (!currentItem) return null;
       const costAudit = getQuoteItemEffectiveCostAudit({
         qty: Number(currentItem.qty), stock: currentItem.stock === null ? null : Number(currentItem.stock),
-        externalProductCode: currentItem.externalProductCode, cost: Number(currentItem.cost), costCurrency: currentItem.costCurrency,
+        productId: currentItem.productId, externalProductCode: currentItem.externalProductCode, cost: Number(currentItem.cost), costCurrency: currentItem.costCurrency,
         sellerQuotedUnitCost: params.data.sellerQuotedUnitCost ?? null,
         sellerQuotedCurrency: params.data.sellerQuotedCurrency ?? null,
         sellerQuotedExchangeRate: params.data.sellerQuotedExchangeRate ?? null,
@@ -1544,7 +1564,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         if (!row.salePriceReviewRequired) throw new Error("La partida ya no requiere revisión de precio. Actualiza la pantalla.");
         const currentCost = getQuoteItemEffectiveUnitCost({
           qty: Number(row.qty), stock: row.stock === null ? null : Number(row.stock),
-          externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
+          productId: row.productId, externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
           sellerQuotedUnitCost: row.sellerQuotedUnitCost === null ? null : Number(row.sellerQuotedUnitCost),
           sellerQuotedCurrency: row.sellerQuotedCurrency,
           sellerQuotedExchangeRate: row.sellerQuotedExchangeRate === null ? null : Number(row.sellerQuotedExchangeRate),
@@ -1555,7 +1575,7 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
         const unitPrice = Number(input.unitPrice.toFixed(4));
         const costAudit = getQuoteItemEffectiveCostAudit({
           qty: Number(row.qty), stock: row.stock === null ? null : Number(row.stock),
-          externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
+          productId: row.productId, externalProductCode: row.externalProductCode, cost: Number(row.cost), costCurrency: row.costCurrency,
           sellerQuotedUnitCost: row.sellerQuotedUnitCost === null ? null : Number(row.sellerQuotedUnitCost),
           sellerQuotedCurrency: row.sellerQuotedCurrency,
           sellerQuotedExchangeRate: row.sellerQuotedExchangeRate === null ? null : Number(row.sellerQuotedExchangeRate),

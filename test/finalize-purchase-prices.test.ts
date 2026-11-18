@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { FileStoragePort } from "../src/domain/contracts/file-storage.port";
-import type { LocalProductSemanticPort } from "../src/domain/contracts/local-product-semantic.port";
 import type { ErpProductLookupPort } from "../src/domain/contracts/erp-product-lookup.port";
 import type { ErpSupplierLookupPort } from "../src/domain/contracts/erp-supplier-lookup.port";
 import type { PurchasePriceNotificationPort } from "../src/domain/contracts/purchase-price-notification.port";
@@ -37,7 +36,7 @@ test("buyer notifies the seller only on explicit quote-level price finalization"
     ready: async (items: PurchaseRequisitionEntity[]) => { notifications.push(items.map((item) => item.id)); },
   } as PurchasePriceNotificationPort;
   const useCase = new PurchaseRequisitionUseCase(
-    repository, {} as QuoteRepository, {} as LocalProductSemanticPort,
+    repository, {} as QuoteRepository,
     {} as ErpProductLookupPort, {} as ErpSupplierLookupPort, {} as FileStoragePort, notifier,
   );
   await useCase.selectOffer("req-a", "item", "offer", actor);

@@ -3,10 +3,8 @@ export interface ErpProductReference {
   ean: string;
   description: string;
   unit: string;
-  currency: "MXN" | "USD";
-  stock: number;
 }
 
 export abstract class ErpProductLookupPort {
-  abstract findByCodeInMexico(code: string): Promise<ErpProductReference | null>;
+  abstract findByCodeAndAccount(code: string, primaryAccount: string): Promise<ErpProductReference | null>;
 }

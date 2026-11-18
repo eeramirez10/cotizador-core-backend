@@ -53,7 +53,8 @@ export class UpdateQuoteItemUseCase {
     const nextExternalProductCode = dto.externalProductCode !== undefined
       ? dto.externalProductCode
       : existingItem.externalProductCode;
-    const costCurrency = nextExternalProductCode ? "MXN" : requestedCostCurrency;
+    const nextProductId = dto.productId !== undefined ? dto.productId : existingItem.productId;
+    const costCurrency = nextExternalProductCode && !nextProductId ? "MXN" : requestedCostCurrency;
     const erpSaleCurrency = nextExternalProductCode
       ? dto.erpSaleCurrency ?? existingItem.erpSaleCurrency ?? requestedCostCurrency
       : null;
@@ -67,6 +68,7 @@ export class UpdateQuoteItemUseCase {
       ? dto.sellerQuotedExchangeRate
       : existingItem.sellerQuotedExchangeRate;
     const effectiveCostInput = {
+      productId: nextProductId,
       qty,
       stock: nextStock,
       externalProductCode: nextExternalProductCode,
@@ -106,7 +108,6 @@ export class UpdateQuoteItemUseCase {
       quote.currency,
       quote.exchangeRate
     );
-    const nextProductId = dto.productId !== undefined ? dto.productId : existingItem.productId;
     const nextEan = dto.ean !== undefined ? dto.ean : existingItem.ean;
     const nextErpDescription =
       dto.erpDescription !== undefined ? dto.erpDescription : existingItem.erpDescription;

@@ -64,6 +64,9 @@ export interface UpdatePurchaseRequisitionDocumentData {
 export interface LinkPurchaseRequisitionItemToErpData {
   erpCode: string;
   erpEan: string;
+  erpDescription: string;
+  erpUnit: string;
+  primaryAccount: string;
   actorUserId: string;
 }
 

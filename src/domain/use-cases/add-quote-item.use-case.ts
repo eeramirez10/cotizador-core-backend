@@ -46,6 +46,7 @@ export class AddQuoteItemUseCase {
     let unitPrice: number;
     let marginPct: number;
     const quoteCurrencyCost = getQuoteItemEffectiveUnitCost({
+      productId: dto.productId,
       qty: dto.qty,
       stock: dto.stock,
       externalProductCode: dto.externalProductCode,
@@ -72,6 +73,7 @@ export class AddQuoteItemUseCase {
 
     const subtotal = round4(dto.qty * unitPrice);
     const effectiveCostAudit = getQuoteItemEffectiveCostAudit({
+      productId: dto.productId,
       qty: dto.qty,
       stock: dto.stock,
       externalProductCode: dto.externalProductCode,

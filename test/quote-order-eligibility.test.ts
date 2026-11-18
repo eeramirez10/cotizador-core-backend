@@ -39,7 +39,7 @@ test("items with enough stock do not require a purchase requisition", () => {
 });
 
 test("order export resolves an ERP product code if the external field is blank", () => {
-  const productItem = { ...item("  ", 5), product: { code: " 03-123 ", id: "", ean: null, description: "", unit: "PZ", currency: "MXN" as const } };
+  const productItem = { ...item("  ", 5), product: { source: "ERP" as const, code: " 03-123 ", id: "", ean: null, description: "", unit: "PZ", currency: "MXN" as const } };
   assert.equal(getOrderItemErpCode(productItem), "03-123");
 });
 
@@ -53,4 +53,9 @@ test("ERP customers still require a code when local export is enabled", () => {
   assert.equal(isCustomerEligibleForOrderFile({ source: "ERP", code: "  " }, true), false);
   assert.equal(isCustomerEligibleForOrderFile({ source: "ERP", code: " 123 " }, false), true);
   assert.equal(isCustomerEligibleForOrderFile(null, true), false);
+});
+
+test("a code typed on a local product is never an ERP code for the TXT", () => {
+  const local = { ...item(null, 100), product: { source: "LOCAL_TEMP" as const, code: "01300938", id: "", ean: null, description: "", unit: "PZ", currency: "MXN" as const } };
+  assert.equal(evaluateQuoteOrderItems([local], true).missingErpCode, true);
 });

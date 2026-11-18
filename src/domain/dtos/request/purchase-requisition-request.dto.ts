@@ -184,8 +184,8 @@ export class LinkPurchaseRequisitionItemToErpRequestDto {
     const body = input as Record<string, unknown>;
     const erpCode = typeof body.erpCode === "string" ? body.erpCode.trim().toUpperCase() : "";
     const erpEan = typeof body.erpEan === "string" ? body.erpEan.trim() : "";
-    if (!erpCode) return ["erpCode is required."];
-    if (!erpEan) return ["erpEan is required."];
+    if (!/^[A-Z0-9][A-Z0-9./_-]{0,12}$/.test(erpCode)) return ["Captura un código ERP válido."];
+    if (typeof body.erpEan !== "string" || erpEan.length > 120) return ["Verifica el EAN en Proscai."];
     return [, new LinkPurchaseRequisitionItemToErpRequestDto(erpCode, erpEan)];
   }
 }

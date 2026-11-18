@@ -1,3 +1,4 @@
+import { RequisitionErpLinkError } from "../../domain/use-cases/requisition-erp-link-rule";
 import type { Request, Response } from "express";
 import {
   AssignPurchaseRequisitionRequestDto,
@@ -173,6 +174,20 @@ export class PurchaseRequisitionsController {
       res.status(200).json((await this.useCase.updateSupplierCode(id, itemId, offerId, dto!, req.user)).toJSON());
     } catch (cause) {
       this.handleError(res, cause, "Unexpected error while updating supplier code.");
+    }
+  };
+
+  previewErpIdentity = async (req: Request, res: Response): Promise<void> => {
+    if (!req.user) return void res.status(401).json({ error: "Unauthorized." });
+    const id = this.param(req.params.id);
+    const itemId = this.param(req.params.itemId);
+    if (!id || !itemId) return void res.status(400).json({ error: "Requisition and item ids are required." });
+    const code = typeof req.query.code === "string" ? req.query.code.trim().toUpperCase() : "";
+    try {
+      const { primaryAccount: _account, ...identity } = await this.useCase.previewErpIdentity(id, itemId, code, req.user);
+      res.json(identity);
+    } catch (cause) {
+      this.handleError(res, cause, "No se pudo verificar el producto en Proscai.");
     }
   };
 
@@ -386,6 +401,7 @@ export class PurchaseRequisitionsController {
   }
 
   private handleError(res: Response, cause: unknown, fallback: string): void {
+    if (cause instanceof RequisitionErpLinkError) return void res.status(cause.status).json({ error: cause.message });
     const message = cause instanceof Error ? cause.message : fallback;
     if (message.includes("not found")) {
       res.status(404).json({ error: message });
