@@ -25,7 +25,17 @@ const logo = readFileSync(path.resolve(__dirname, "assets/logo-tuvansa.jpg"));
 export class ManagerReportPdfAdapter extends ManagerReportPdfPort {
   create(snapshot: ManagerReportSnapshot): Buffer {
     const chunks = this.chunkSellers(snapshot.sellers);
-    const streams = chunks.map((rows, index) => this.pageStream(snapshot, rows, index, chunks.length));
+    const extraPages = (snapshot.sections || []).flatMap(section => {
+      if (!section.rows.length) return [{ section, rows: [] as string[][] }];
+      const pages: Array<{ section: typeof section; rows: string[][] }> = [];
+      for (let at = 0; at < section.rows.length; at += 14) pages.push({ section, rows: section.rows.slice(at, at + 14) });
+      return pages;
+    });
+    const count = chunks.length + extraPages.length;
+    const streams = [
+      ...chunks.map((rows, index) => this.pageStream(snapshot, rows, index, count)),
+      ...extraPages.map(({ section, rows }, index) => this.sectionStream(snapshot, section, rows, chunks.length + index, count)),
+    ];
     const fontRegularId = 3;
     const fontBoldId = 4;
     const logoImageId = 5;
@@ -68,7 +78,8 @@ export class ManagerReportPdfAdapter extends ManagerReportPdfPort {
     };
     commands.push("q 106 0 0 35.55 36 543 cm /Logo Do Q");
     text(156, 565, "Reporte de rendimiento de cotizaciones", "F2", 14);
-    text(156, 548, `Alcance: ${snapshot.scopeName}  |  Periodo: ${snapshot.periodFrom} al ${snapshot.periodTo}`, "F1", 9);
+    const scopeLabel = snapshot.sections && snapshot.scopeName.length > 45 ? snapshot.scopeName.slice(0, 42) + "..." : snapshot.scopeName;
+    text(156, 548, `Alcance: ${scopeLabel}  |  Periodo: ${snapshot.periodFrom} al ${snapshot.periodTo}`, "F1", 9);
     text(690, 570, `Pagina ${pageIndex + 1}/${pageCount}`, "F1", 8);
     line(36, 528, 756, 528);
 
@@ -135,6 +146,61 @@ export class ManagerReportPdfAdapter extends ManagerReportPdfPort {
     for (const edge of [36, 190, 334, 544, 756]) line(edge, top, edge, top - 20);
     line(36, tableBottom, 756, tableBottom);
     text(36, 24, `Generado: ${snapshot.generatedAt.slice(0, 19).replace("T", " ")} UTC`, "F1", 7);
+    return commands.join("\n");
+  }
+
+  private sectionStream(snapshot: ManagerReportSnapshot, section: import("../../domain/contracts/commercial-report").ReportPdfSection, rows: string[][], page: number, pages: number): string {
+    const commands: string[] = [];
+    const text = (x: number, y: number, value: string, bold = false, color = "0.13 0.20 0.28", size = 7.5) => {
+      commands.push(`BT ${color} rg /${bold ? "F2" : "F1"} ${size} Tf 1 0 0 1 ${x} ${y} Tm (${escapePdf(value)}) Tj ET`);
+    };
+    const rect = (x: number, y: number, width: number, height: number, color: string) => {
+      commands.push(`q ${color} rg ${x} ${y} ${width} ${height} re f Q`);
+    };
+    const line = (x1: number, y1: number, x2: number, y2: number) => {
+      commands.push(`q 0.79 0.84 0.88 RG 0.5 w ${x1} ${y1} m ${x2} ${y2} l S Q`);
+    };
+    const wrap = (value: string, width: number): string[] => {
+      const capacity = Math.max(4, Math.floor((width - 14) / 4.2));
+      const source = latinToAscii(value).replace(/\s+/g, " ").trim();
+      if (source.length <= capacity) return [source];
+      let cut = source.lastIndexOf(" ", capacity);
+      if (cut < capacity / 2) cut = capacity;
+      const rest = source.slice(cut).trim();
+      return [source.slice(0, cut), rest.length > capacity ? rest.slice(0, capacity - 3) + "..." : rest];
+    };
+    commands.push("q 106 0 0 35.55 36 543 cm /Logo Do Q");
+    text(156, 565, "Reporte de rendimiento de cotizaciones", true, undefined, 14);
+    text(156, 548, `Periodo: ${snapshot.periodFrom} al ${snapshot.periodTo}`, false, undefined, 9);
+    text(690, 570, `Pagina ${page + 1}/${pages}`);
+    line(36, 528, 756, 528);
+    text(36, 507, section.title, true, undefined, 11);
+    text(36, 488, "MXN y USD se presentan separados. Los textos largos se abrevian solo en el PDF.");
+    rect(36, 449, 720, 22, "0.08 0.22 0.35");
+    let x = 36;
+    for (const column of section.columns) {
+      text(x + 7, 457, column.label, true, "1 1 1", 7);
+      x += column.width;
+    }
+    const body = rows.length ? rows : [section.columns.map((_, index) => index ? "" : "Sin registros para los filtros seleccionados.")];
+    body.forEach((row, index) => {
+      const top = 449 - index * 26;
+      if (index % 2 === 0) rect(36, top - 26, 720, 26, "0.97 0.98 0.99");
+      let left = 36;
+      section.columns.forEach((column, at) => {
+        const value = row[at] || "";
+        if (column.align === "right") {
+          const size = Math.min(7, (column.width - 14) / Math.max(1, numericWidth(value, 1)));
+          text(left + column.width - 7 - numericWidth(value, size), top - 15, value, false, undefined, size);
+        }
+        else wrap(value, column.width).forEach((part, position) => text(left + 7, top - 10 - position * 9, part, false, undefined, 7));
+        line(left, 449, left, top - 26);
+        left += column.width;
+      });
+      line(756, top, 756, top - 26);
+      line(36, top - 26, 756, top - 26);
+    });
+    text(36, 24, `Generado: ${snapshot.generatedAt.slice(0, 19).replace("T", " ")} UTC`, false, undefined, 7);
     return commands.join("\n");
   }
 

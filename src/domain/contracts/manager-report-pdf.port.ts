@@ -11,6 +11,7 @@ export interface ManagerReportSellerRow {
 }
 
 export interface ManagerReportSnapshot {
+  sections?: import("./commercial-report").ReportPdfSection[];
   scopeName: string;
   periodFrom: string;
   periodTo: string;

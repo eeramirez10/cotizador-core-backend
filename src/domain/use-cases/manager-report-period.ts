@@ -17,7 +17,7 @@ const dateKeyInTimezone = (date: Date, timezone: string): string => {
   return `${value("year")}-${value("month")}-${value("day")}`;
 };
 
-const startOfLocalDate = (dateKey: string, timezone: string): Date => {
+export const startOfLocalDate = (dateKey: string, timezone: string): Date => {
   const [year, month, day] = dateKey.split("-").map(Number);
   const targetAsUtc = Date.UTC(year, month - 1, day);
   let candidate = targetAsUtc;

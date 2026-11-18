@@ -1,3 +1,4 @@
+import type { ReportFilters, ReportQuoteRow } from "../contracts/commercial-report";
 export type AnalyticsScopeType = "GLOBAL" | "BRANCH" | "USER";
 
 export interface AnalyticsDatasourceParams {
@@ -7,6 +8,7 @@ export interface AnalyticsDatasourceParams {
   from: Date;
   toExclusive: Date;
   currency: "MXN" | "USD";
+  reportFilters?: ReportFilters;
 }
 
 export interface AnalyticsKpis {
@@ -24,6 +26,7 @@ export interface AnalyticsKpis {
 }
 
 export interface AnalyticsDashboard {
+  reportRows?: ReportQuoteRow[];
   scope: { type: AnalyticsScopeType; id: string; name: string };
   period: { from: string; to: string; currency: "MXN" | "USD" };
   kpis: AnalyticsKpis;

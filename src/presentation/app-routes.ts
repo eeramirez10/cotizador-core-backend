@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { commercialReportsRoutes } from "./reports/commercial-reports.routes";
 import { erpInventoryRoutes } from "./inventory/erp-inventory.routes";
 import { AuthRoutes } from "./auth/auth.routes";
 import { BranchesRoutes } from "./branches/branches.routes";
@@ -47,6 +48,7 @@ export class AppRoutes {
     router.use("/local-products", LocalProductsRoutes.routes());
     router.use("/quotes", QuotesRoutes.routes());
     router.use("/analytics", AnalyticsRoutes.routes());
+    router.use("/reports", commercialReportsRoutes());
     router.use("/report-subscriptions", ReportSubscriptionsRoutes.routes());
     router.use("/quote-catalogs", QuoteCatalogsRoutes.routes());
     router.use("/purchase-requisitions", PurchaseRequisitionsRoutes.routes());

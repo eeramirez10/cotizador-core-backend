@@ -3,6 +3,7 @@ import {
   AnalyticsDatasource,
   AnalyticsDatasourceParams,
 } from "../../domain/datasources/analytics.datasource";
+import { CommercialReportError } from "../../domain/contracts/commercial-report";
 import { prisma } from "../database/prisma-client";
 
 const round2 = (value: number): number => Number(value.toFixed(2));
@@ -27,10 +28,15 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
         where: {
           ...scopeWhere,
           createdAt: { gte: params.from, lt: params.toExclusive },
-          currency: params.currency,
+          ...(params.reportFilters ? { ...(params.reportFilters.sellerId ? { createdByUserId: params.reportFilters.sellerId } : {}) } : { currency: params.currency }),
         },
         select: {
           id: true,
+          currency: true,
+          customerReference: true,
+          customerId: true,
+          branchId: true,
+          branch: { select: { name: true } },
           rootQuoteId: true,
           revisionNumber: true,
           quoteNumber: true,
@@ -56,8 +62,10 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
           },
         },
         orderBy: { createdAt: "asc" },
+        ...(params.reportFilters ? { take: 10001 } : {}),
       });
 
+    if (params.reportFilters && rows.length > 10000) throw new CommercialReportError("El periodo contiene más de 10,000 versiones. Reduce el periodo o filtra por sucursal o vendedor.", 422);
     const effectiveByFamily = new Map<string, (typeof rows)[number]>();
     const statusRank = (status: string): number => status === "SUPERSEDED" ? -2 : status === "CANCELLED" ? -1 : 0;
     for (const row of rows) {
@@ -71,7 +79,13 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
         effectiveByFamily.set(familyId, row);
       }
     }
-    const effectiveRows = [...effectiveByFamily.values()];
+    const filters = params.reportFilters;
+    const effectiveRows = [...effectiveByFamily.values()].filter(row => !filters || (
+      row.currency === params.currency
+      && (!filters.statuses.length || filters.statuses.includes(row.status))
+      && (!filters.sourceChannel || row.sourceChannel === filters.sourceChannel)
+      && (!filters.captureMethod || row.captureMethod === filters.captureMethod)
+    ));
     const workedRows = params.scopeType === "USER" ? effectiveRows.filter((row) => row.createdByUserId === params.scopeId) : effectiveRows;
     const providedRows = params.scopeType === "USER" ? effectiveRows.filter((row) => row.providedByUserId === params.scopeId) : [];
     const quotedRows = workedRows.filter((row) => quotedStatuses.has(row.status));
@@ -176,9 +190,20 @@ export class PrismaAnalyticsDatasource implements AnalyticsDatasource {
     const to = new Date(params.toExclusive);
     to.setUTCDate(to.getUTCDate() - 1);
 
+    const localDate = (date: Date) => filters
+      ? new Intl.DateTimeFormat("en-CA", { timeZone: filters.timezone, year: "numeric", month: "2-digit", day: "2-digit" }).format(date)
+      : toDateKey(date);
     return {
+      ...(filters ? { reportRows: workedRows.map(row => ({
+        id: row.id, quoteNumber: row.quoteNumber, customerReference: row.customerReference, status: row.status,
+        currency: row.currency, total: round2(Number(row.total)), createdAt: row.createdAt.toISOString(),
+        branchId: row.branchId, branchName: row.branch.name, sellerId: row.createdByUserId,
+        sellerName: `${row.createdByUser.firstName} ${row.createdByUser.lastName}`.trim(),
+        customerId: row.customerId, customerName: row.customer.legalName || row.customer.displayName,
+        sourceChannel: row.sourceChannel, captureMethod: row.captureMethod, orderGenerated: row.orderStatus === "GENERATED",
+      })) } : {}),
       scope: { type: params.scopeType, id: params.scopeId, name: params.scopeName },
-      period: { from: toDateKey(params.from), to: toDateKey(to), currency: params.currency },
+      period: { from: localDate(params.from), to: filters ? localDate(new Date(params.toExclusive.getTime() - 1)) : toDateKey(to), currency: params.currency },
       kpis: {
         created: workedRows.length,
         quoted: quotedRows.length,
