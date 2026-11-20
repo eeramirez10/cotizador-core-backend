@@ -44,6 +44,8 @@ import { SendQuoteWhatsAppUseCase } from "../../domain/use-cases/send-quote-what
 import { SendQuoteWhatsAppRequestDto } from "../../domain/dtos/request/send-quote-whatsapp-request.dto";
 import { ListQuoteDeliveryAttemptsUseCase } from "../../domain/use-cases/list-quote-delivery-attempts.use-case";
 
+import { QuoteItemTextValidationError } from "../../domain/utils/quote-item-text-fields";
+
 export class QuotesController {
   constructor(
     private readonly createQuoteUseCase: CreateQuoteUseCase,
@@ -659,6 +661,7 @@ export class QuotesController {
   }
 
   private handleError(res: Response, error: unknown, fallbackMessage: string): void {
+    if (error instanceof QuoteItemTextValidationError) return void res.status(400).json({ error: error.message });
     if (error instanceof RequisitionErpLinkError) return void res.status(error.status).json({ error: error.message });
     const message = error instanceof Error ? error.message : fallbackMessage;
 

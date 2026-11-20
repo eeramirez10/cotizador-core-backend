@@ -1,3 +1,4 @@
+import { validateQuoteItemTextFields } from "../../utils/quote-item-text-fields";
 import { Currency } from "../../../infrastructure/database/generated/enums";
 
 interface MatchQuoteItemErpRequestDtoProps {
@@ -56,6 +57,8 @@ export class MatchQuoteItemErpRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const textError = validateQuoteItemTextFields(body);
+    if (textError) return [textError];
 
     const externalProductCode =
       typeof body.externalProductCode === "string" ? body.externalProductCode.trim() : "";

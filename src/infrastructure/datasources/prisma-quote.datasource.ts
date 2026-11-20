@@ -1,3 +1,4 @@
+import { QuoteItemTextValidationError, validateQuoteItemTextFields } from "../../domain/utils/quote-item-text-fields";
 import { assertVerifiedLocalQuoteLinks } from "./local-product-erp-links";
 import {
   AddQuoteItemDatasourceParams,
@@ -499,6 +500,10 @@ export class PrismaQuoteDatasource implements QuoteDatasource {
   }
 
   async saveDraft(params: SaveQuoteDraftDatasourceParams): Promise<SaveQuoteDraftDatasourceResult> {
+    for (const [index, item] of params.items.entries()) {
+      const error = validateQuoteItemTextFields(item);
+      if (error) throw new QuoteItemTextValidationError(`Partida ${index + 1}: ${error}`);
+    }
     const execute = async (): Promise<SaveQuoteDraftDatasourceResult> => prisma.$transaction(async (tx) => {
       const existing = params.quoteId
         ? await tx.quote.findFirst({

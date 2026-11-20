@@ -40,7 +40,7 @@ export class SaveQuoteDraftRequestDto {
     const items: CreateQuoteItemRequestDto[] = [];
     for (let index = 0; index < body.items.length; index += 1) {
       const [itemError, item] = CreateQuoteItemRequestDto.create(body.items[index]);
-      if (itemError || !item) return [`items[${index}]: ${itemError ?? "is invalid."}`];
+      if (itemError || !item) return [`Partida ${index + 1}: ${itemError ?? "Datos inválidos."}`];
       items.push(item);
     }
 

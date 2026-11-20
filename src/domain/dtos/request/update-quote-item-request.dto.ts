@@ -1,3 +1,4 @@
+import { validateQuoteItemTextFields } from "../../utils/quote-item-text-fields";
 import { Currency } from "../../../infrastructure/database/generated/enums";
 
 interface UpdateQuoteItemRequestDtoProps {
@@ -125,11 +126,10 @@ export class UpdateQuoteItemRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const textError = validateQuoteItemTextFields(body);
+    if (textError) return [textError];
     if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
       && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
-    if (typeof body.sellerSupplierProductCode === "string" && body.sellerSupplierProductCode.trim().length > 120) {
-      return ["sellerSupplierProductCode must not exceed 120 characters."];
-    }
     if (Object.keys(body).length === 0) {
       return ["At least one field is required to update item."];
     }

@@ -969,12 +969,12 @@ model QuoteItem {
   productId                         String?             @map("product_id") @db.Uuid
   externalProductCode               String?             @map("external_product_code") @db.VarChar(80)
   ean                               String?             @db.VarChar(120)
-  customerDescription               String?             @map("customer_description") @db.VarChar(500)
-  customerDescriptionOriginal       String?             @map("customer_description_original") @db.VarChar(500)
+  customerDescription               String?             @map("customer_description") @db.Text
+  customerDescriptionOriginal       String?             @map("customer_description_original") @db.Text
   customerDescriptionEditedAt       DateTime?           @map("customer_description_edited_at")
   customerDescriptionEditedByUserId String?             @map("customer_description_edited_by_user_id") @db.Uuid
   customerUnit                      String?             @map("customer_unit") @db.VarChar(30)
-  erpDescription                    String?             @map("erp_description") @db.VarChar(500)
+  erpDescription                    String?             @map("erp_description") @db.Text
   unit                              String              @db.VarChar(30)
   qty                               Decimal             @db.Decimal(14, 4)
   stock                             Decimal?            @db.Decimal(14, 4)
@@ -987,7 +987,7 @@ model QuoteItem {
   sellerQuotedCurrency              Currency?           @map("seller_quoted_currency")
   sellerQuotedExchangeRate          Decimal?            @map("seller_quoted_exchange_rate") @db.Decimal(14, 6)
   sellerQuotedBrand                 String?             @map("seller_quoted_brand") @db.VarChar(160)
-  sellerSupplierDescription         String?             @map("seller_supplier_description") @db.VarChar(500)
+  sellerSupplierDescription         String?             @map("seller_supplier_description") @db.Text
   sellerSupplierProductCode         String?             @map("seller_supplier_product_code") @db.VarChar(120)
   sellerSupplierOrigin              String?             @map("seller_supplier_origin") @db.VarChar(120)
   sellerSupplierQuoteValidUntil     DateTime?           @map("seller_supplier_quote_valid_until") @db.Date
@@ -1177,7 +1177,7 @@ model PurchaseRequisitionItem {
   erpLinkedByUserId   String?                       @map("erp_linked_by_user_id") @db.Uuid
   qty                 Decimal                       @db.Decimal(14, 4)
   unit                String                        @db.VarChar(30)
-  description         String                        @db.VarChar(500)
+  description         String                        @db.Text
   standard            String?                       @db.VarChar(120)
   diameter            String?                       @db.VarChar(120)
   thickness           String?                       @db.VarChar(120)
@@ -1239,7 +1239,7 @@ model PurchaseSupplierOffer {
   source              PurchaseOfferSource @default(PURCHASING)
   supplierProductCode String?             @map("supplier_product_code") @db.VarChar(120)
   alternateCodes      String[]            @default([]) @map("alternate_codes")
-  supplierDescription String?             @map("supplier_description") @db.VarChar(500)
+  supplierDescription String?             @map("supplier_description") @db.Text
   qty                 Decimal             @db.Decimal(14, 4)
   unit                String?             @db.VarChar(30)
   listUnitPrice       Decimal?            @map("list_unit_price") @db.Decimal(14, 4)
@@ -1311,7 +1311,7 @@ model PurchaseSupplierRequisitionLine {
   requisitionItemId     String   @map("requisition_item_id") @db.Uuid
   offerId               String   @unique @map("offer_id") @db.Uuid
   position              Int
-  description           String   @db.VarChar(500)
+  description           String   @db.Text
   erpCode               String?  @map("erp_code") @db.VarChar(80)
   supplierProductCode   String?  @map("supplier_product_code") @db.VarChar(120)
   unit                  String   @db.VarChar(30)

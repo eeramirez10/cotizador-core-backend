@@ -1,3 +1,4 @@
+import { validateQuoteItemTextFields } from "../../utils/quote-item-text-fields";
 import type { Currency, PurchaseCostSource } from "../../../infrastructure/database/generated/enums";
 
 const optionalText = (value: unknown): string | null =>
@@ -33,6 +34,8 @@ export class UpdateQuoteProcurementReferenceRequestDto {
   static create(input: unknown): [string?, UpdateQuoteProcurementReferenceRequestDto?] {
     if (!input || typeof input !== "object") return ["Invalid request body."];
     const body = input as Record<string, unknown>;
+    const textError = validateQuoteItemTextFields({ ...body, sellerSupplierNameSnapshot: body.sellerSupplierName });
+    if (textError) return [textError];
     const supplierId = optionalText(body.sellerSupplierId);
     const supplierName = optionalText(body.sellerSupplierName);
     const unitCost = Number(body.sellerQuotedUnitCost);
@@ -47,7 +50,6 @@ export class UpdateQuoteProcurementReferenceRequestDto {
     if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
       && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
     const supplierProductCode = optionalText(body.sellerSupplierProductCode)?.toUpperCase() ?? null;
-    if (supplierProductCode && supplierProductCode.length > 120) return ["sellerSupplierProductCode must not exceed 120 characters."];
     if (!supplierId) return ["sellerSupplierId is required."];
     if (!supplierName) return ["sellerSupplierName is required."];
     if (!Number.isFinite(unitCost) || unitCost <= 0) return ["sellerQuotedUnitCost must be greater than zero."];

@@ -1,3 +1,4 @@
+import { validateQuoteItemTextFields } from "../../utils/quote-item-text-fields";
 import { Currency, PurchaseCostSource } from "../../../infrastructure/database/generated/enums";
 
 interface CreateQuoteItemRequestDtoProps {
@@ -156,13 +157,12 @@ export class CreateQuoteItemRequestDto {
     }
 
     const body = input as Record<string, unknown>;
+    const textError = validateQuoteItemTextFields(body);
+    if (textError) return [textError];
     if (body.sellerSupplierProductCode !== undefined && body.sellerSupplierProductCode !== null
       && typeof body.sellerSupplierProductCode !== "string") return ["sellerSupplierProductCode is invalid."];
-    if (typeof body.sellerSupplierProductCode === "string" && body.sellerSupplierProductCode.trim().length > 120) {
-      return ["sellerSupplierProductCode must not exceed 120 characters."];
-    }
     const clientItemId = typeof body.clientItemId === "string" ? body.clientItemId.trim() : "";
-    if (!clientItemId || clientItemId.length > 80) return ["clientItemId must contain between 1 and 80 characters."];
+    if (!clientItemId) return ["clientItemId must contain between 1 and 80 characters."];
     const unit = typeof body.unit === "string" ? body.unit.trim() : "";
     if (!unit) return ["unit is required."];
 
